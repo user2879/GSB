@@ -1,0 +1,57 @@
+# AED streaming boundary reconstruction - current processing configuration.
+audio:
+  sample_rate_hz: 16000
+  frame_length_ms: 20
+  frame_shift_ms: 10
+  total_duration_ms: 4000
+
+classes:
+  current_codebook_version: codebook_v2
+  current_grid_version: frame_grid_v1
+  canonical_order: [alarm, music, noise, speech]
+  codebooks:
+    codebook_v1:
+      "0": alarm
+      "1": music
+      "2": noise
+      "3": speech
+    codebook_v2:
+      "10": speech
+      "20": music
+      "30": alarm
+      "40": noise
+      "50": dog_bark   # intentionally absent from the canonical four classes
+    codebook_v3:
+      "100": alarm
+      "200": music
+      "300": noise
+      "400": speech
+  grids:
+    frame_grid_v1: {frame_length_ms: 20, frame_shift_ms: 10}
+    frame_grid_v2: {frame_length_ms: 20, frame_shift_ms: 8}
+
+thresholds:
+  frame_posterior: 0.45
+  boundary_mean_min: 0.35
+  boundary_mean_diff_max: 0.18
+  overlap_ratio: 0.30
+  min_trajectory_ms: 60
+  min_gap_ms: 40
+
+boundary:
+  neighborhood_frames: 4
+
+smoothing:
+  method: linear_crossfade
+  window_frames: 3
+
+runtime:
+  max_workers: 4
+
+paths:
+  manifest: samples/sample_manifest.yaml
+  truth: samples/global_truth.yaml
+  shard_dir: samples/shards
+  wav: samples/aed_synthetic.wav
+  snapshot_dir: output/snapshot
+  report: output/diagnostic_report.json

@@ -1,0 +1,28 @@
+# Global event ground truth - the only truth source used by evaluation.
+# The reconstruction stages never read this file.
+sample_id: aed_deterministic_demo
+events:
+  - event_id: evt_01
+    class: speech
+    start_ms: 250
+    end_ms: 950
+  - event_id: evt_02
+    class: music
+    start_ms: 1100
+    end_ms: 1750
+  - event_id: evt_03
+    class: noise
+    start_ms: 1900
+    end_ms: 2650
+  - event_id: evt_04
+    class: alarm
+    start_ms: 2850
+    end_ms: 3450
+  - event_id: evt_05
+    class: speech
+    start_ms: 3600
+    end_ms: 3950
+  - event_id: evt_06
+    class: music
+    start_ms: 50
+    end_ms: 90      # shorter than min_trajectory_ms, expected to be filtered

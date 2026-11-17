@@ -1,0 +1,9 @@
+# Optional fault/exit injection. Empty values mean a clean run.
+# Boundary ids look like b00_00800ms; inspect the diagnostic report for the
+# exact ids generated from the manifest.
+fail_boundary_id: null
+fail_smoothing_boundary_id: null
+# One of load_align / boundary_decision / trajectory_build / match_evaluation.
+# When set, the pipeline finishes the named stage, atomically commits its
+# snapshot, records graceful exit and returns exit code 0.
+exit_after_stage: null

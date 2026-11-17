@@ -1,0 +1,185 @@
+{
+  "decisions": [
+    {
+      "boundary_id": "b00_00800ms",
+      "sort_key_ms": 800,
+      "left_shard_id": "shard_01",
+      "right_shard_id": "shard_02",
+      "boundary_ms": 800,
+      "left_mean": {
+        "alarm": 0.012942,
+        "music": 0.012942,
+        "noise": 0.085055,
+        "speech": 0.889061
+      },
+      "right_mean": {
+        "alarm": 0.04486,
+        "music": 0.012206,
+        "noise": 0.012206,
+        "speech": 0.930728
+      },
+      "mean_diff": {
+        "alarm": 0.031918,
+        "music": 0.000736,
+        "noise": 0.07285,
+        "speech": 0.041667
+      },
+      "criterion": "dominant=speech; left_mean>=0.35; right_mean>=0.35; abs_mean_diff<=0.18",
+      "continuous": true,
+      "dominant_class": "speech",
+      "evidence": {
+        "left_frames": [
+          77,
+          78,
+          79,
+          80
+        ],
+        "right_frames": [
+          81,
+          82,
+          83,
+          84
+        ],
+        "dominant_left_mean": 0.889061,
+        "dominant_right_mean": 0.930728,
+        "dominant_mean_diff": 0.041667
+      }
+    },
+    {
+      "boundary_id": "b01_01600ms",
+      "sort_key_ms": 1600,
+      "left_shard_id": "shard_02",
+      "right_shard_id": "shard_03",
+      "boundary_ms": 1600,
+      "left_mean": {
+        "alarm": 0.056558,
+        "music": 0.911744,
+        "noise": 0.014717,
+        "speech": 0.016981
+      },
+      "right_mean": {
+        "alarm": 0.011006,
+        "music": 0.825423,
+        "noise": 0.067219,
+        "speech": 0.096351
+      },
+      "mean_diff": {
+        "alarm": 0.045552,
+        "music": 0.08632,
+        "noise": 0.052502,
+        "speech": 0.07937
+      },
+      "criterion": "dominant=music; left_mean>=0.35; right_mean>=0.35; abs_mean_diff<=0.18",
+      "continuous": true,
+      "dominant_class": "music",
+      "evidence": {
+        "left_frames": [
+          157,
+          158,
+          159,
+          160
+        ],
+        "right_frames": [
+          161,
+          162,
+          163,
+          164
+        ],
+        "dominant_left_mean": 0.911744,
+        "dominant_right_mean": 0.825423,
+        "dominant_mean_diff": 0.08632
+      }
+    },
+    {
+      "boundary_id": "b02_02400ms",
+      "sort_key_ms": 2400,
+      "left_shard_id": "shard_03",
+      "right_shard_id": "shard_04",
+      "boundary_ms": 2400,
+      "left_mean": {
+        "alarm": 0.011069,
+        "music": 0.055061,
+        "noise": 0.833769,
+        "speech": 0.1001
+      },
+      "right_mean": {
+        "alarm": 0.010419,
+        "music": 0.188504,
+        "noise": 0.790658,
+        "speech": 0.010419
+      },
+      "mean_diff": {
+        "alarm": 0.00065,
+        "music": 0.133443,
+        "noise": 0.043112,
+        "speech": 0.089681
+      },
+      "criterion": "dominant=noise; left_mean>=0.35; right_mean>=0.35; abs_mean_diff<=0.18",
+      "continuous": true,
+      "dominant_class": "noise",
+      "evidence": {
+        "left_frames": [
+          237,
+          238,
+          239,
+          240
+        ],
+        "right_frames": [
+          241,
+          242,
+          243,
+          244
+        ],
+        "dominant_left_mean": 0.833769,
+        "dominant_right_mean": 0.790658,
+        "dominant_mean_diff": 0.043112
+      }
+    },
+    {
+      "boundary_id": "b03_03200ms",
+      "sort_key_ms": 3200,
+      "left_shard_id": "shard_04",
+      "right_shard_id": "shard_05",
+      "boundary_ms": 3200,
+      "left_mean": {
+        "alarm": 0.684708,
+        "music": 0.189137,
+        "noise": 0.115439,
+        "speech": 0.010716
+      },
+      "right_mean": {
+        "alarm": 0.926841,
+        "music": 0.018402,
+        "noise": 0.011328,
+        "speech": 0.043429
+      },
+      "mean_diff": {
+        "alarm": 0.242133,
+        "music": 0.170735,
+        "noise": 0.104111,
+        "speech": 0.032714
+      },
+      "criterion": "dominant=alarm; left_mean>=0.35; right_mean>=0.35; abs_mean_diff<=0.18",
+      "continuous": false,
+      "dominant_class": "alarm",
+      "evidence": {
+        "left_frames": [
+          317,
+          318,
+          319,
+          320
+        ],
+        "right_frames": [
+          321,
+          322,
+          323,
+          324
+        ],
+        "dominant_left_mean": 0.684708,
+        "dominant_right_mean": 0.926841,
+        "dominant_mean_diff": 0.242133
+      }
+    }
+  ],
+  "failures": []
+}
