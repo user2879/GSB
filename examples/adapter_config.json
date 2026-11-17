@@ -1,0 +1,19 @@
+{
+  "adapter_type": "linear_probe",
+  "batch_size": 8,
+  "concurrency": 4,
+  "convergence_tolerance": 1e-12,
+  "epochs": 160,
+  "learning_rate": 0.4,
+  "lora_scale": 0.2,
+  "rank": 2,
+  "snapshot_commit_interval": 2,
+  "task_overrides": {
+    "intent": {
+      "adapter_type": "low_rank",
+      "learning_rate": 0.2,
+      "rank": 2
+    }
+  },
+  "validation_threshold": 0.7
+}
