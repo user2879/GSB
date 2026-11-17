@@ -19,3 +19,19 @@
 
 验收：
 运行本地三版本样本，验证转换保真、编辑后增量与全量结果一致以及异常注入与快照恢复行为。
+
+---
+
+## 构建与运行（本交付）
+
+```bash
+# 环境：Python 3.11 + NumPy 1.26（本地虚拟环境 .venv，已就绪）
+./run.sh                      # 生成样本 + 端到端演示（转换/编辑/增量一致性/注入/报告）
+.venv/bin/python -m app.main test    # 运行 18 项验收测试
+.venv/bin/python -m app.main run --resume   # 从快照续跑
+```
+
+- 样本：`data/sample.{v1.txt,v2.json,v3.bin}`（固定种子 20261118）
+- 配置：`config/step_name_map.json`、`config/inject_config.json`
+- 产物：`output/`（cache、sidecar、snapshot、report.json）
+- 技术说明与验证结果：`docs/TECHNICAL.md`

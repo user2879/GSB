@@ -1,0 +1,201 @@
+{
+ "entities": {
+  "ent_000": {
+   "f_click": 0.83069,
+   "f_ctr": 0.04547,
+   "f_depth": 0.018091,
+   "f_price": 0.342882
+  },
+  "ent_001": {
+   "f_age": 0.381299,
+   "f_click": 0.494677,
+   "f_ctr": 0.16517,
+   "f_depth": 0.677203,
+   "f_price": 0.423508
+  },
+  "ent_002": {
+   "f_age": 0.003418,
+   "f_click": null,
+   "f_ctr": 0.00631,
+   "f_depth": 0.275397,
+   "f_price": 0.053509
+  },
+  "ent_003": {
+   "f_age": 0.743445,
+   "f_click": 0.57002,
+   "f_ctr": 0.208415,
+   "f_depth": 0.144145,
+   "f_price": 0.92052
+  },
+  "ent_004": {
+   "f_age": 0.583173,
+   "f_click": 0.107081,
+   "f_ctr": 0.051261,
+   "f_depth": 0.899033
+  },
+  "ent_005": {
+   "f_age": 0.180523,
+   "f_click": 0.82002,
+   "f_ctr": 0.926672,
+   "f_depth": 0.153233,
+   "f_price": 0.560127
+  },
+  "ent_006": {
+   "f_age": 0.401593,
+   "f_click": 0.375817,
+   "f_ctr": null,
+   "f_depth": 0.719748,
+   "f_price": 0.719486
+  },
+  "ent_007": {
+   "f_age": 0.295769,
+   "f_click": 0.596526,
+   "f_ctr": 0.376767,
+   "f_depth": 0.664126,
+   "f_price": 0.679503
+  },
+  "ent_008": {
+   "f_age": 0.398362,
+   "f_click": 0.269645,
+   "f_ctr": 0.797981,
+   "f_price": 0.701113
+  },
+  "ent_009": {
+   "f_age": 0.110796,
+   "f_click": 0.196431,
+   "f_ctr": 0.836952,
+   "f_depth": 0.434012,
+   "f_price": 0.564074
+  },
+  "ent_010": {
+   "f_age": 0.878719,
+   "f_click": 0.626533,
+   "f_ctr": 0.065796,
+   "f_depth": 0.739356,
+   "f_price": 0.560597
+  },
+  "ent_011": {
+   "f_age": null,
+   "f_click": 0.466349,
+   "f_ctr": 0.278033,
+   "f_depth": 0.958399,
+   "f_price": 0.534895
+  }
+ },
+ "precision": {
+  "ent_000": {
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_001": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_002": {
+   "f_age": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_003": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_004": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double"
+  },
+  "ent_005": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_006": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_007": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_008": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_price": "double"
+  },
+  "ent_009": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_010": {
+   "f_age": "double",
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  },
+  "ent_011": {
+   "f_click": "double",
+   "f_ctr": "double",
+   "f_depth": "double",
+   "f_price": "double"
+  }
+ },
+ "steps": [
+  {
+   "name": "normalize",
+   "params": {
+    "features": [
+     "f_age",
+     "f_click",
+     "f_price"
+    ]
+   }
+  },
+  {
+   "name": "cross",
+   "params": {
+    "pairs": [
+     [
+      "f_age",
+      "f_click"
+     ]
+    ]
+   }
+  },
+  {
+   "name": "bucket",
+   "params": {
+    "boundaries": [
+     0.25,
+     0.5,
+     0.75
+    ],
+    "feature": "f_ctr",
+    "output": "f_ctr_bucket"
+   }
+  }
+ ],
+ "version": 2
+}

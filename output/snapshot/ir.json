@@ -1,0 +1,190 @@
+{
+ "features": {
+  "explicit_null": {
+   "ent_001": [],
+   "ent_002": [],
+   "ent_006": [],
+   "ent_011": []
+  },
+  "missing": {
+   "ent_001": [],
+   "ent_002": [
+    "f_click"
+   ],
+   "ent_006": [
+    "f_ctr"
+   ],
+   "ent_011": [
+    "f_age"
+   ]
+  },
+  "precision": {
+   "ent_000": {
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_001": {},
+   "ent_002": {
+    "f_age": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_003": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_005": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_006": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_007": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_008": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_price": "float32"
+   },
+   "ent_009": {
+    "f_age": "float32",
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   },
+   "ent_011": {
+    "f_click": "float32",
+    "f_ctr": "float32",
+    "f_depth": "float32",
+    "f_price": "float32"
+   }
+  },
+  "values": {
+   "ent_000": {
+    "f_click": 0.8309999704360962,
+    "f_ctr": 0.04500000178813934,
+    "f_depth": 0.017999999225139618,
+    "f_price": 0.34299999475479126
+   },
+   "ent_001": {
+    "f_age": 0.5,
+    "f_click": 0.25,
+    "f_ctr": 0.4,
+    "f_depth": 0.6,
+    "f_price": 0.75
+   },
+   "ent_002": {
+    "f_age": 0.003000000026077032,
+    "f_ctr": 0.006000000052154064,
+    "f_depth": 0.2750000059604645,
+    "f_price": 0.05400000140070915
+   },
+   "ent_003": {
+    "f_age": 0.7429999709129333,
+    "f_click": 0.5699999928474426,
+    "f_ctr": 0.20800000429153442,
+    "f_depth": 0.14399999380111694,
+    "f_price": 0.9210000038146973
+   },
+   "ent_005": {
+    "f_age": 0.1809999942779541,
+    "f_click": 0.8199999928474426,
+    "f_ctr": 0.9269999861717224,
+    "f_depth": 0.15299999713897705,
+    "f_price": 0.5600000023841858
+   },
+   "ent_006": {
+    "f_age": 0.4020000100135803,
+    "f_click": 0.37599998712539673,
+    "f_depth": 0.7200000286102295,
+    "f_price": 0.718999981880188
+   },
+   "ent_007": {
+    "f_age": 0.29600000381469727,
+    "f_click": 0.597000002861023,
+    "f_ctr": 0.37700000405311584,
+    "f_depth": 0.6639999747276306,
+    "f_price": 0.6800000071525574
+   },
+   "ent_008": {
+    "f_age": 0.39800000190734863,
+    "f_click": 0.27000001072883606,
+    "f_ctr": 0.7979999780654907,
+    "f_price": 0.7009999752044678
+   },
+   "ent_009": {
+    "f_age": 0.11100000143051147,
+    "f_click": 0.19599999487400055,
+    "f_ctr": 0.8370000123977661,
+    "f_depth": 0.4339999854564667,
+    "f_price": 0.5640000104904175
+   },
+   "ent_011": {
+    "f_click": 0.4659999907016754,
+    "f_ctr": 0.27799999713897705,
+    "f_depth": 0.9580000042915344,
+    "f_price": 0.5350000262260437
+   }
+  }
+ },
+ "source_version": "v2",
+ "steps": [
+  {
+   "name": "normalize",
+   "params": {
+    "features": [
+     "f_age",
+     "f_click",
+     "f_price",
+     "f_depth"
+    ]
+   }
+  },
+  {
+   "name": "bucket",
+   "params": {
+    "boundaries": [
+     0.25,
+     0.5,
+     0.75
+    ],
+    "feature": "f_ctr",
+    "output": "f_ctr_bucket"
+   }
+  },
+  {
+   "name": "cross",
+   "params": {
+    "pairs": [
+     [
+      "f_age",
+      "f_click"
+     ]
+    ]
+   }
+  }
+ ],
+ "version_diffs": [
+  "步骤列表长度不一致: {'v1': 3, 'v2': 3, 'v3': 4}"
+ ]
+}
