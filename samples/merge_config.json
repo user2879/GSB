@@ -1,0 +1,29 @@
+{
+  "batch_size": 8,
+  "conflict_priority": "source_version",
+  "feature_whitelist": [
+    "f_income",
+    "f_age_score",
+    "f_risk_level",
+    "f_engagement",
+    "f_stability",
+    "f_velocity"
+  ],
+  "max_workers": 4,
+  "missing_fill": {
+    "strategy": "mean"
+  },
+  "numeric_tolerance": 0.02,
+  "percentile_tie_rule": "average_rank",
+  "precision_rank": [
+    "float64",
+    "float32",
+    "per_mille"
+  ],
+  "scaling_method": "zscore",
+  "source_order": [
+    "v1",
+    "v2",
+    "v3"
+  ]
+}
