@@ -1,22 +1,68 @@
-当前为空白工作区，需要从零构建一个面向本地 Windows 环境的跨组件共享缓冲区访问平台。平台管理若干本地模拟的组件节点（每个节点为独立子进程，通过回环 TCP 上的 JSON 行协议与平台通信），节点之间共享若干确定性数值缓冲区，每个缓冲区分为多个扇区，每个扇区归属某个属主节点。业务方按批次提交读写操作请求，请求需经过平台裁决：平台按“操作租约”机制为每次访问授予带过期毫秒数与操作序号范围的租约，节点只能在租约覆盖的扇区与序号范围内读写，平台对请求与响应按字段白名单校验。平台在 Tkinter 界面或命令循环中展示裁决轨迹，并把租约、扇区版本与批量计算结果持久化到本地 SQLite。进程被强制终止后只能依据已持久化的租约与扇区版本恢复。
+# sharedbuf — 本地跨组件共享缓冲区访问平台
 
-任务环境与准备：
-安装 Python 3.11 及以上版本并确保 pip 可用；执行 pip install numpy 安装 NumPy，Tkinter 使用 Python 自带组件无需额外安装。
-准备任务目录，确认 127.0.0.1 上若干高位端口可用，关闭可能占用这些端口的本地服务。
-样本数据、扇区属主关系与节点模拟脚本均由题目要求自行构造，不依赖网络、真实账号或外部数据集。
-确认 Windows 控制台可启动子进程并进行 SQLite 本地文件读写，工作目录具备写入权限。
+面向本地 Windows 环境（同样可在 Linux/macOS 运行）的纯 Python 实现，
+仅依赖 NumPy，Tkinter 使用标准库自带组件，不使用 Docker 等容器。
 
-业务要求：
-1. 实现组件节点与共享缓冲区的本地编排：平台以 Windows 子进程启动注册节点，每个节点绑定唯一端口与一组扇区属主关系，通过回环 TCP 的 JSON 行协议通信；端口占用、节点启动失败与握手超时须分别以 E_PORT、E_NODE、E_HANDSHAKE 报告并写入结构化日志，启动仅改变参数不修改样本与源码。
-2. 实现扇区属主与租约授予裁决：每次访问请求须由平台裁定授予带过期毫秒数、操作序号下界与上界、扇区集合的租约，租约过期以本地单调时钟真实计时判定；租约覆盖范围外的扇区、越界序号或非属主节点对该扇区的写请求须分别以 E_SCOPE、E_SEQ、E_OWNER 拒绝，拒绝不得对缓冲区产生任何副作用。
-3. 实现请求与响应的字段白名单校验：平台与节点之间双向按显式字段白名单校验消息结构，缺失必需字段、出现多余字段或字段类型不符须以 E_FIELD 拒绝整条消息；白名单版本随会话变化，校验须使用当前白名单版本且拒绝原因记录字段路径与白名单版本。
-4. 实现租约状态机与过期回收：租约在 granted、active、expired、revoked 间迁移，每次迁移记录触发原因、操作序号进度与单调时刻；节点上报完成或出错须更新租约进度，租约过期后其缓存条目须真实回收且不得再被命中，同一扇区的新租约须在其旧租约结束状态落定后才授予。
-5. 实现批量读写计算的确定性执行与结果绑定：节点在租约范围内对扇区数据用 NumPy 执行声明的批量聚合，输出摘要须记录租约标识、扇区集合、序号范围与所用扇区版本；平台按摘要重算期望摘要逐条比较，租约越界或版本不符须以 E_VER 报告并列出偏差节点、租约与首个差异环节。
-6. 实现并行裁决与租约预算控制：平台按全局并发上限与每节点并发配额并行处理访问请求，配额耗尽时请求排队且不得绕过配额；同一扇区存在冲突租约申请时须按稳定序号规则串行化，单次裁决须有真实超时，超时重试不得改变授予范围，重试结果须与首次结果分列记录。
-7. 实现强制终止后的恢复与租约重建校验：租约、扇区版本与批次结果持久化到本地 SQLite，进程被强制终止后重启只能依据已完整写入的记录恢复；处于 active 未落定的租约须标记为未知并要求重新申请，不得声称生成退出报告，恢复后须校验扇区版本与租约进度对应关系，不一致以 E_RECOVER 报告。
-8. 实现会话快照的版本识别与重放校验：快照持久化白名单版本、租约集合、扇区版本与裁决轨迹，重开时比较快照版本与当前状态，不一致须整体替换租约与扇区状态而非增量合并；恢复后按记录的租约序列重放裁决与批量计算，差异须定位到首个不一致的租约标识、扇区与字段，不可复现须以 E_REPLAY 报明具体依据。
+## 结构
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- `sharedbuf/protocol.py` — JSON 行协议与随会话变化的字段白名单（`wl1.<会话序号>`）。
+  缺失/多余/类型不符字段均以 `E_FIELD` 拒绝，拒绝原因含字段路径与白名单版本。
+- `sharedbuf/lease.py` — 租约状态机 `granted→active→expired/revoked`（恢复时另有
+  终态 `unknown`）。每次迁移记录原因、序号进度与单调时刻；过期租约的缓存条目被
+  真实回收（`reap()` 后 `cached()` 不再命中）；同一扇区存在未落定租约时 `grant`
+  以 `E_BUSY` 拒绝，裁决层等待旧租约终态落定后才授予新租约。
+- `sharedbuf/arbiter.py` — 并行裁决：全局并发上限（线程池）+ 每节点配额
+  （信号量，配额耗尽排队不得绕过）+ 每扇区 FIFO 票锁按稳定序号串行化冲突申请；
+  单次裁决有真实超时，超时重试不改变授予范围，各次尝试分列写入裁决轨迹。
+- `sharedbuf/platform.py` — 平台核心：租约授予、按摘要重算期望并逐条比较
+  （`E_VER` 含偏差节点、租约与首个差异环节）、恢复（`E_RECOVER`）与快照重放
+  （`E_REPLAY` 定位首个不一致的租约/扇区/字段）。
+- `sharedbuf/node.py` — 组件节点子进程：绑定唯一回环端口，NumPy 执行批量聚合，
+  双向白名单校验。
+- `sharedbuf/orchestrator.py` — 编排：端口占用 `E_PORT`、启动失败 `E_NODE`、
+  握手超时 `E_HANDSHAKE`，均写入 JSON 结构化日志；启动仅改参数，不改样本与源码。
+- `sharedbuf/store.py` — SQLite 持久化（租约、迁移、扇区版本、批量结果、裁决
+  轨迹、快照），每次写入立即提交，强杀后仅依据完整落库记录恢复。
+- `sharedbuf/ui.py` / `main.py` — Tkinter 界面或命令循环展示裁决轨迹。
 
-验收：
-用本地样本验证租约越界拒绝、字段白名单、并行裁决预算与强制终止后的租约重建重放。
+## 运行
+
+```bash
+pip install -r requirements.txt
+python main.py                 # CLI + 真实节点子进程
+python main.py --mode ui       # Tkinter 界面
+python main.py --no-nodes      # 本地执行器（不起子进程）
+python main.py --recover --replay
+```
+
+## 关键语义
+
+- 租约含过期毫秒数（单调时钟真实计时）、操作序号下界/上界与扇区集合；越界扇区
+  `E_SCOPE`、越界序号 `E_SEQ`、非属主写 `E_OWNER`，拒绝无任何副作用。
+- 批量计算为纯函数（`buffer.run_batch`），平台与节点由同一种子导出确定性数据，
+  平台按摘要（租约标识、扇区集合、序号范围、扇区版本）重算并逐条比对。
+- 恢复快照版本（白名单版本）与当前会话不一致时整体替换租约与扇区状态，不做
+  增量合并；active 未落定租约恢复时标记 `unknown` 并要求重新申请，不生成退出报告。
+
+## 验证结果（本机 Python 3.11 + NumPy 2.4）
+
+`python3.11 -m pytest tests/ -q` → **18 passed**，覆盖：
+
+- 租约越界/越序拒绝（`test_lease_scope_seq_and_expiry_recycling` 等）：E_SCOPE/E_SEQ，
+  过期缓存真实回收，新租约在旧租约终态后授予。
+- 字段白名单（`test_field_whitelist`、`test_node_rejects_malformed_message_over_wire`）：
+  缺字段/多字段/错类型/白名单版本不符均 E_FIELD 且记录路径与版本，含真实 TCP 链路。
+- 并行裁决预算（`test_budget_queueing_and_global_limit`、
+  `test_adjudication_timeout_retry_same_scope`）：全局上限与节点配额可观测不超发，
+  超时重试范围不变且分列记录。
+- 强制终止恢复（`test_recovery_after_forced_kill`、`test_recover_detects_version_mismatch`、
+  `test_snapshot_restore_wholesale_and_replay`、`test_replay_divergence_locates_first_mismatch`）：
+  active 租约标记 unknown，扇区版本不一致报 E_RECOVER，快照版本不符整体替换，
+  重放差异以 E_REPLAY 定位首个租约/扇区/字段。
+- 编排故障（`test_port_occupied_reports_e_port`、`test_handshake_timeout_reports_e_handshake`、
+  `test_node_exit_reports_e_node`）：E_PORT/E_HANDSHAKE/E_NODE 并写结构化日志。
+- 端到端（`test_end_to_end_read_write_over_tcp`、`test_corrupt_node_flagged_e_ver`）：
+  真实子进程经回环 TCP 完成读写并持久化，篡改节点被 E_VER 识别。
+
+另用 `os._exit(0)` 模拟 kill -9 后经 `main.py --recover` 验证：悬挂租约
+`Ls1-2` 标记为 `unknown`，重放 `ok`。
