@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "injections": [
+    {
+      "injection_id": "INJ-001",
+      "sample_id": "s-inj-nonfinite",
+      "stage": "encoding",
+      "fault": "nonfinite_feature",
+      "target": "query_features",
+      "index": 2,
+      "value": "nan"
+    },
+    {
+      "injection_id": "INJ-002",
+      "sample_id": "s-inj-position",
+      "stage": "scoring",
+      "fault": "position_out_of_range",
+      "target": "key_position",
+      "key_index": 0,
+      "position": 96
+    },
+    {
+      "injection_id": "INJ-003",
+      "sample_id": "s-inj-base",
+      "scheme": "RoPE",
+      "stage": "encoding",
+      "fault": "base_zero"
+    },
+    {
+      "injection_id": "INJ-004",
+      "sample_id": "s-inj-scale",
+      "scheme": "LinearInterpolation",
+      "stage": "encoding",
+      "fault": "scale_nonpositive",
+      "value": -1.0
+    }
+  ]
+}
