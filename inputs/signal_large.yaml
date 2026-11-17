@@ -1,0 +1,32 @@
+experiment:
+  name: signal-graceful-exit
+  start_date: "2024-01-01"
+  block_size: 32
+
+prediction:
+  lag_orders: [1, 2, 3, 4]
+  diff_order: 1
+  seasonal_period: 12
+  seasonal_terms: 3
+  rolling_window: 10
+  forecast_steps: 2
+  feature_rules: ["lag", "rolling_mean"]
+  precision_tier: "high"
+  concurrency: 1
+  snapshot_interval: 1
+
+series:
+  - series_id: "LONG-1"
+    seed: 99001
+    length: 240
+    trend: {slope: 0.02, intercept: 5.0}
+    seasonal: {period: 12, amplitude: 2.0, phase: 0.3}
+    noise: {mean: 0.0, std: 0.3}
+    anomalies: [{index: 100, delta: 3.0}]
+  - series_id: "LONG-2"
+    seed: 99002
+    length: 240
+    trend: {slope: -0.01, intercept: 9.0}
+    seasonal: {period: 8, amplitude: 1.5, phase: 0.9}
+    noise: {mean: 0.0, std: 0.25}
+    anomalies: []

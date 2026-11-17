@@ -1,0 +1,76 @@
+== [1/4] incremental batch run ==
+{
+  "batches_processed": [
+    1,
+    2,
+    3
+  ],
+  "failures": [],
+  "final_global_version": 3,
+  "mode": "incremental",
+  "recovery": {
+    "reason": "fresh workspace",
+    "recovered": false
+  },
+  "reuse_counts": [
+    {
+      "batch_id": 1,
+      "recomputed": 606,
+      "reused": 0
+    },
+    {
+      "batch_id": 2,
+      "recomputed": 191,
+      "reused": 415
+    },
+    {
+      "batch_id": 3,
+      "recomputed": 307,
+      "reused": 308
+    }
+  ],
+  "status": "ok"
+}
+== [2/4] one-shot full rebuild of the final state ==
+{
+  "data_fingerprint": "76182c5ad55d184fa8423d8643b91c5c71d210eeb5966ab5dfff27380e01a313",
+  "failures": [],
+  "global_version": 1,
+  "mode": "full-final",
+  "series": [
+    "S-A",
+    "S-B",
+    "S-C"
+  ],
+  "status": "ok"
+}
+== [3/4] field-by-field consistency (covers 2 forecast steps, all series) ==
+{
+  "forecast_steps_covered": 2,
+  "identical": true,
+  "mismatches": [],
+  "series_compared": [
+    "S-A",
+    "S-B",
+    "S-C"
+  ],
+  "status": "ok"
+}
+== [4/4] recovery point ==
+{
+  "completed_series": [
+    "S-A",
+    "S-B",
+    "S-C"
+  ],
+  "data_fingerprint": "76182c5ad55d184fa8423d8643b91c5c71d210eeb5966ab5dfff27380e01a313",
+  "global_version": 3,
+  "last_batch": 3,
+  "recovered": true,
+  "stage_versions": {
+    "backtest": 3,
+    "features": 3,
+    "models": 3,
+    "preprocess": 3
+  }
+}

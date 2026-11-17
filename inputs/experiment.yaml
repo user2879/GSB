@@ -1,0 +1,65 @@
+experiment:
+  name: deterministic-incremental-ts-bench
+  start_date: "2024-01-01"
+  block_size: 16
+
+prediction:
+  lag_orders: [1, 2, 3]
+  diff_order: 1
+  seasonal_period: 7
+  seasonal_terms: 2
+  rolling_window: 8
+  forecast_steps: 2
+  feature_rules: ["lag", "rolling_mean"]
+  precision_tier: "standard"
+  concurrency: 3
+  snapshot_interval: 1
+
+series:
+  - series_id: "S-A"
+    seed: 20240101
+    length: 72
+    trend:
+      slope: 0.08
+      intercept: 10.0
+    seasonal:
+      period: 7
+      amplitude: 2.5
+      phase: 0.0
+    noise:
+      mean: 0.0
+      std: 0.4
+    anomalies:
+      - {index: 17, delta: 4.0}
+      - {index: 55, delta: -3.5}
+
+  - series_id: "S-B"
+    seed: 20240202
+    length: 64
+    trend:
+      slope: -0.05
+      intercept: 24.0
+    seasonal:
+      period: 14
+      amplitude: 1.8
+      phase: 1.2
+    noise:
+      mean: 0.0
+      std: 0.3
+    anomalies:
+      - {index: 40, delta: 2.8}
+
+  - series_id: "S-C"
+    seed: 20240303
+    length: 80
+    trend:
+      slope: 0.03
+      intercept: 6.0
+    seasonal:
+      period: 5
+      amplitude: 1.2
+      phase: 0.6
+    noise:
+      mean: 0.0
+      std: 0.25
+    anomalies: []
