@@ -1,0 +1,20 @@
+{
+  "experiment": "qdemo-sample",
+  "weights_path": "data/weights.npz",
+  "calib_path": "data/calib.npz",
+  "layers": {
+    "default": {"bits": 4, "group_size": 8, "scheme": "asymmetric", "per_channel": true},
+    "overrides": {
+      "head": {"bits": 8, "scheme": "symmetric"}
+    }
+  },
+  "whitelist": [],
+  "distill": {"temperature": 2.0, "soft_label_weight": 0.5},
+  "interaction": {
+    "budget_ms": 500,
+    "concurrency": 4,
+    "snapshot_interval": 1,
+    "compute_delay_ms_per_layer": 0
+  },
+  "rounding": {"scale_sig_digits": 12}
+}
