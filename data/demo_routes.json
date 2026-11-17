@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "route_version": "2026-11-18-demo-v1",
+  "global": {
+    "bandwidth_kbps": 24,
+    "max_sessions": 5,
+    "fragment_timeout_ms": 300,
+    "peer_timeout_ms": 500,
+    "connect_timeout_ms": 300
+  },
+  "peers": [
+    {
+      "id": "peer-normal",
+      "host": "127.0.0.1",
+      "port": 19101,
+      "behavior": "normal",
+      "delay_ms": 0
+    },
+    {
+      "id": "peer-delay",
+      "host": "127.0.0.1",
+      "port": 19102,
+      "behavior": "delay-script",
+      "delay_ms": 1200,
+      "script": "data/peer_script.json"
+    },
+    {
+      "id": "peer-unreachable",
+      "host": "127.0.0.1",
+      "port": 19103,
+      "behavior": "unreachable",
+      "delay_ms": 0
+    },
+    {
+      "id": "peer-digest-error",
+      "host": "127.0.0.1",
+      "port": 19104,
+      "behavior": "digest-error",
+      "delay_ms": 0
+    }
+  ],
+  "routes": [
+    {
+      "id": "alpha",
+      "listen": {"host": "127.0.0.1", "port": 18101},
+      "target": {"host": "127.0.0.1", "port": 19101},
+      "peer_id": "peer-normal",
+      "mtu": 256,
+      "cipher": "AES-256-GCM",
+      "bandwidth_kbps": 8,
+      "max_sessions": 2
+    },
+    {
+      "id": "slow",
+      "listen": {"host": "127.0.0.1", "port": 18102},
+      "target": {"host": "127.0.0.1", "port": 19102},
+      "peer_id": "peer-delay",
+      "mtu": 512,
+      "cipher": "CHACHA20-POLY1305",
+      "bandwidth_kbps": 8,
+      "max_sessions": 1
+    },
+    {
+      "id": "dead",
+      "listen": {"host": "127.0.0.1", "port": 18103},
+      "target": {"host": "127.0.0.1", "port": 19103},
+      "peer_id": "peer-unreachable",
+      "mtu": 512,
+      "cipher": "AES-128-GCM",
+      "bandwidth_kbps": 8,
+      "max_sessions": 1
+    },
+    {
+      "id": "corrupt",
+      "listen": {"host": "127.0.0.1", "port": 18104},
+      "target": {"host": "127.0.0.1", "port": 19104},
+      "peer_id": "peer-digest-error",
+      "mtu": 512,
+      "cipher": "AES-256-GCM",
+      "bandwidth_kbps": 8,
+      "max_sessions": 1
+    }
+  ]
+}
