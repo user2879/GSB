@@ -1,0 +1,21 @@
+{
+  "set_id": "subs-core",
+  "set_version": 1,
+  "subscribers": [
+    {
+      "subscriber_id": "sub-audit",
+      "event_types": ["order.paid", "stock.released"],
+      "timeout_ms": 300
+    },
+    {
+      "subscriber_id": "sub-billing",
+      "event_types": ["order.created", "order.paid"],
+      "timeout_ms": 400
+    },
+    {
+      "subscriber_id": "sub-warehouse",
+      "event_types": ["order.created", "stock.reserved"],
+      "timeout_ms": 600
+    }
+  ]
+}
