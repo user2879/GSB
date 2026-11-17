@@ -1,0 +1,22 @@
+{
+  "select": [
+    "order_id",
+    "amount",
+    "region_id"
+  ],
+  "filter": {
+    "op": "and",
+    "args": [
+      {
+        "op": "eq",
+        "column": "region_id",
+        "value": 2
+      },
+      {
+        "op": "ge",
+        "column": "amount",
+        "value": 100
+      }
+    ]
+  }
+}

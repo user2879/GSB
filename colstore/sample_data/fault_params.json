@@ -1,0 +1,18 @@
+{
+  "payload_truncation": {
+    "inject": "payload_truncation",
+    "segment": "sales",
+    "description": "truncate one byte of the last block payload"
+  },
+  "encoding_mismatch": {
+    "inject": "encoding_mismatch",
+    "segment": "sales",
+    "description": "flip the block encoding marker but keep payload bytes"
+  },
+  "zero_budget": {
+    "inject": "zero_budget",
+    "max_parallelism": 4,
+    "memory_budget_bytes": 0,
+    "per_segment_concurrency": 2
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "name": "inventory",
+  "format_version": 1,
+  "columns": [
+    {
+      "name": "sku_id",
+      "dtype": "int32",
+      "compressed": false
+    },
+    {
+      "name": "warehouse_id",
+      "dtype": "int32",
+      "compressed": true
+    },
+    {
+      "name": "qty",
+      "dtype": "int64",
+      "compressed": false
+    }
+  ],
+  "row_group_rows": [
+    10,
+    10
+  ],
+  "values": {
+    "sku_id": [
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519
+    ],
+    "warehouse_id": [
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      9,
+      9,
+      9,
+      9,
+      9
+    ],
+    "qty": [
+      1,
+      5,
+      9,
+      4,
+      8,
+      3,
+      7,
+      2,
+      6,
+      1,
+      5,
+      9,
+      4,
+      8,
+      3,
+      7,
+      2,
+      6,
+      1,
+      5
+    ]
+  },
+  "block_specs": [
+    {
+      "row_group": 1,
+      "column": "qty",
+      "encoding": "dictionary"
+    }
+  ]
+}

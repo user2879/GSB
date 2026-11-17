@@ -1,0 +1,17 @@
+{"budget": {"max_parallelism": 4, "memory_budget_bytes": 65536, "per_segment_concurrency": 2}, "event": "scenario_1_first_scan", "level": "INFO", "seq": 1, "ts_ms": 10766855.103748}
+{"check": "canonical_query_id_stable_under_whitespace_and_parentheses", "detail": {"query_id": "97faee4fdec7880c"}, "event": "verification", "level": "INFO", "ok": true, "seq": 2, "ts_ms": 10766868.945655}
+{"check": "column_pruning_excludes_unreferenced_columns", "detail": {"pruned": ["sku_id", "warehouse_id", "qty"]}, "event": "verification", "level": "INFO", "ok": true, "seq": 3, "ts_ms": 10766869.063098}
+{"check": "scheduler_never_exceeds_memory_budget", "detail": {"budget_bytes": 65536, "peak_memory_bytes": 148}, "event": "verification", "level": "INFO", "ok": true, "seq": 4, "ts_ms": 10766869.121567}
+{"check": "all_tasks_record_lifecycle_timestamps", "detail": {"task_count": 9}, "event": "verification", "level": "INFO", "ok": true, "seq": 5, "ts_ms": 10766869.175799}
+{"budget": {"max_parallelism": 2, "memory_budget_bytes": 4096, "per_segment_concurrency": 1}, "event": "scenario_2_budget_change", "level": "INFO", "seq": 6, "ts_ms": 10766869.522811}
+{"check": "budget_version_monotonic_increase", "detail": {"budget_version": 2}, "event": "verification", "level": "INFO", "ok": true, "seq": 7, "ts_ms": 10766869.591299}
+{"check": "previous_generation_marked_stale", "detail": {"result_id": "59c3aa623d3d4993"}, "event": "verification", "level": "INFO", "ok": true, "seq": 8, "ts_ms": 10766869.643886}
+{"check": "replacement_lists_affected_blocks", "detail": {"affected": 9}, "event": "verification", "level": "INFO", "ok": true, "seq": 9, "ts_ms": 10766869.691812}
+{"check": "byte_identical_results_after_reschedule", "detail": {"first_hash": "767ad1c547e6beacaf4832a310d18eab4b0b6b7c6c3bdbacd6584c650c7cc95a", "second_hash": "767ad1c547e6beacaf4832a310d18eab4b0b6b7c6c3bdbacd6584c650c7cc95a"}, "event": "verification", "level": "INFO", "ok": true, "seq": 10, "ts_ms": 10766875.991176}
+{"check": "stale_generation_blocked_from_summary", "detail": {"current_result_id": "507f52606c51473a"}, "event": "verification", "level": "INFO", "ok": true, "seq": 11, "ts_ms": 10766876.892006}
+{"event": "scenario_3_snapshot", "level": "INFO", "seq": 12, "ts_ms": 10766877.013555}
+{"check": "snapshot_matches_disk_when_unchanged", "detail": {"diffs": []}, "event": "verification", "level": "INFO", "ok": true, "seq": 13, "ts_ms": 10766946.855928}
+{"check": "snapshot_detects_encoding_version_drift", "detail": {"diff_kinds": ["segment_field_changed", "segment_field_changed", "encoding_version_changed"]}, "event": "verification", "level": "INFO", "ok": true, "seq": 14, "ts_ms": 10766949.949545}
+{"check": "superseded_snapshot_frozen_read_only_with_diff_list", "detail": {"diff_count": 3}, "event": "verification", "level": "INFO", "ok": true, "seq": 15, "ts_ms": 10766962.51769}
+{"check": "restored_result_hash_matches_original_snapshot", "detail": {"restored_hash": "767ad1c547e6beacaf4832a310d18eab4b0b6b7c6c3bdbacd6584c650c7cc95a"}, "event": "verification", "level": "INFO", "ok": true, "seq": 16, "ts_ms": 10766962.64381}
+{"checks": 13, "event": "demo_finished", "level": "INFO", "seq": 17, "ts_ms": 10766964.15493, "verdict": "PASS"}
