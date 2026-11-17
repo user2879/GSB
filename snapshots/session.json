@@ -1,0 +1,688 @@
+{
+  "base_graph": {
+    "edges": [
+      [
+        "e1",
+        1,
+        2,
+        5,
+        "knows"
+      ],
+      [
+        "e2",
+        1,
+        3,
+        2,
+        "works_at"
+      ],
+      [
+        "e3",
+        2,
+        3,
+        1,
+        "works_at"
+      ],
+      [
+        "e4",
+        3,
+        5,
+        7,
+        "located_in"
+      ],
+      [
+        "e5",
+        4,
+        1,
+        3,
+        "knows"
+      ],
+      [
+        "e6",
+        4,
+        6,
+        4,
+        "works_at"
+      ],
+      [
+        "e7",
+        6,
+        7,
+        6,
+        "located_in"
+      ],
+      [
+        "e8",
+        2,
+        5,
+        9,
+        "visits"
+      ]
+    ],
+    "nodes": [
+      [
+        1,
+        "Person"
+      ],
+      [
+        2,
+        "Person"
+      ],
+      [
+        3,
+        "Org"
+      ],
+      [
+        4,
+        "Person"
+      ],
+      [
+        5,
+        "City"
+      ],
+      [
+        6,
+        "Org"
+      ],
+      [
+        7,
+        "City"
+      ]
+    ]
+  },
+  "changesets": [
+    {
+      "id": "cs1",
+      "ops": [
+        {
+          "edge": "e1",
+          "op": "set_edge_weight",
+          "weight": 8
+        },
+        {
+          "label": "Org",
+          "node": 4,
+          "op": "set_node_label"
+        }
+      ]
+    },
+    {
+      "id": "cs2",
+      "ops": [
+        {
+          "label": "Person",
+          "node": 8,
+          "op": "add_node"
+        },
+        {
+          "dst": 1,
+          "edge": "e9",
+          "label": "knows",
+          "op": "add_edge",
+          "src": 8,
+          "weight": 1
+        },
+        {
+          "edge": "e8",
+          "op": "remove_edge"
+        }
+      ]
+    },
+    {
+      "id": "cs3",
+      "ops": [
+        {
+          "edge": "e5",
+          "op": "remove_edge"
+        },
+        {
+          "edge": "e6",
+          "op": "remove_edge"
+        },
+        {
+          "node": 4,
+          "op": "remove_node"
+        }
+      ]
+    }
+  ],
+  "entries": {
+    "by_label": {
+      "City": {
+        "content": {
+          "label": "City",
+          "nodes": [
+            5,
+            7
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:ea6e37a5a502f1c092b67f5abfd74b337588e00b1308ecfac49293466c641eed",
+        "entry_version": 1,
+        "index": "by_label",
+        "key": "City",
+        "status": "valid"
+      },
+      "Org": {
+        "content": {
+          "label": "Org",
+          "nodes": [
+            3,
+            6
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:64a82a11a0b4aa9f6c68e2273368222f09cf1647790a52cbfe383ad37577446f",
+        "entry_version": 3,
+        "index": "by_label",
+        "key": "Org",
+        "status": "valid"
+      },
+      "Person": {
+        "content": {
+          "label": "Person",
+          "nodes": [
+            1,
+            2,
+            8
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:a40b00e15f2f39e96799d59249d59ffa4a5829ef16d7ad99532864048f405589",
+        "entry_version": 3,
+        "index": "by_label",
+        "key": "Person",
+        "status": "valid"
+      }
+    },
+    "by_weight": {
+      "1": {
+        "content": {
+          "edges": [
+            [
+              3,
+              2,
+              "works_at",
+              "e2"
+            ],
+            [
+              2,
+              8,
+              "knows",
+              "e1"
+            ]
+          ],
+          "src": 1
+        },
+        "def_version": 1,
+        "digest": "sha256:b14358f903d0166ed4b729a17b1d8e0b6a7b34e6665f9597aed6582bf3403794",
+        "entry_version": 2,
+        "index": "by_weight",
+        "key": "1",
+        "status": "valid"
+      },
+      "2": {
+        "content": {
+          "edges": [
+            [
+              3,
+              1,
+              "works_at",
+              "e3"
+            ]
+          ],
+          "src": 2
+        },
+        "def_version": 1,
+        "digest": "sha256:7681ffd3ecc089f77de7a077e0a282583d8fd1b97b761d8905fe360c5b4c3e1d",
+        "entry_version": 2,
+        "index": "by_weight",
+        "key": "2",
+        "status": "valid"
+      },
+      "3": {
+        "content": {
+          "edges": [
+            [
+              5,
+              7,
+              "located_in",
+              "e4"
+            ]
+          ],
+          "src": 3
+        },
+        "def_version": 1,
+        "digest": "sha256:ec6031db0313225c91f12b730f732b94507e753dd0370be1ca2a0b44c79a32d3",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "3",
+        "status": "valid"
+      },
+      "6": {
+        "content": {
+          "edges": [
+            [
+              7,
+              6,
+              "located_in",
+              "e7"
+            ]
+          ],
+          "src": 6
+        },
+        "def_version": 1,
+        "digest": "sha256:1665347336d4ff9dea6cbdac2f33c390521bebd0d2492a4e2ca1b521e22300a0",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "6",
+        "status": "valid"
+      },
+      "8": {
+        "content": {
+          "edges": [
+            [
+              1,
+              1,
+              "knows",
+              "e9"
+            ]
+          ],
+          "src": 8
+        },
+        "def_version": 1,
+        "digest": "sha256:9b191106965637ccd32a472f8a4d41db3b6fcbee33b6c61afdf0f7dfa3d17026",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "8",
+        "status": "valid"
+      }
+    }
+  },
+  "graph": {
+    "content": {
+      "edges": [
+        [
+          "e1",
+          1,
+          2,
+          8,
+          "knows"
+        ],
+        [
+          "e2",
+          1,
+          3,
+          2,
+          "works_at"
+        ],
+        [
+          "e3",
+          2,
+          3,
+          1,
+          "works_at"
+        ],
+        [
+          "e4",
+          3,
+          5,
+          7,
+          "located_in"
+        ],
+        [
+          "e7",
+          6,
+          7,
+          6,
+          "located_in"
+        ],
+        [
+          "e9",
+          8,
+          1,
+          1,
+          "knows"
+        ]
+      ],
+      "nodes": [
+        [
+          1,
+          "Person"
+        ],
+        [
+          2,
+          "Person"
+        ],
+        [
+          3,
+          "Org"
+        ],
+        [
+          5,
+          "City"
+        ],
+        [
+          6,
+          "Org"
+        ],
+        [
+          7,
+          "City"
+        ],
+        [
+          8,
+          "Person"
+        ]
+      ]
+    },
+    "digest": "sha256:1434bc01f5d9a6daefb48debcad9b9c70a19d461cf48bdae8f92d52fb64a572b",
+    "version": 3
+  },
+  "index_def_version": "sha256:215d5240db72b1f3eb7189f72ef66cf746fde3295d06bfee3b9b2e1a1d31fecd",
+  "index_defs": [
+    {
+      "name": "by_label",
+      "type": "label_inverted",
+      "version": 1
+    },
+    {
+      "name": "by_weight",
+      "type": "weight_adjacency",
+      "version": 1
+    }
+  ],
+  "invalidation_trace": [
+    {
+      "affected_entries": [
+        [
+          "by_label",
+          "Org"
+        ],
+        [
+          "by_label",
+          "Person"
+        ],
+        [
+          "by_weight",
+          "1"
+        ]
+      ],
+      "changeset": "cs1",
+      "entries": [
+        {
+          "index": "by_label",
+          "key": "Org",
+          "previous_version": 1
+        },
+        {
+          "index": "by_label",
+          "key": "Person",
+          "previous_version": 1
+        },
+        {
+          "index": "by_weight",
+          "key": "1",
+          "previous_version": 1
+        }
+      ],
+      "graph_digest": "sha256:bc23c30b32ac361bebc4512bacc0443b487bb01d2a4adf8dda72c1b2c52fdd10",
+      "graph_version": 1,
+      "invalid_views": [
+        "reach_from_1",
+        "reach_team"
+      ]
+    },
+    {
+      "affected_entries": [
+        [
+          "by_label",
+          "Person"
+        ],
+        [
+          "by_weight",
+          "2"
+        ],
+        [
+          "by_weight",
+          "8"
+        ]
+      ],
+      "changeset": "cs2",
+      "entries": [
+        {
+          "index": "by_label",
+          "key": "Person",
+          "previous_version": 2
+        },
+        {
+          "index": "by_weight",
+          "key": "2",
+          "previous_version": 1
+        },
+        {
+          "index": "by_weight",
+          "key": "8",
+          "previous_version": null
+        }
+      ],
+      "graph_digest": "sha256:029f6656b00abab6115a546113a8ee823f1a5a9c22c04c984583a9c7f8ea211a",
+      "graph_version": 2,
+      "invalid_views": [
+        "reach_from_1",
+        "reach_team"
+      ]
+    },
+    {
+      "affected_entries": [
+        [
+          "by_label",
+          "Org"
+        ],
+        [
+          "by_weight",
+          "4"
+        ]
+      ],
+      "changeset": "cs3",
+      "entries": [
+        {
+          "index": "by_label",
+          "key": "Org",
+          "previous_version": 2
+        },
+        {
+          "index": "by_weight",
+          "key": "4",
+          "previous_version": 1
+        }
+      ],
+      "graph_digest": "sha256:1434bc01f5d9a6daefb48debcad9b9c70a19d461cf48bdae8f92d52fb64a572b",
+      "graph_version": 3,
+      "invalid_views": [
+        "reach_from_1",
+        "reach_team"
+      ]
+    }
+  ],
+  "params": {
+    "budget": 4,
+    "concurrency": 4
+  },
+  "recompute_ledger": [
+    {
+      "budget": 1,
+      "end_ms": 19100100,
+      "kind": "index",
+      "seq": 0,
+      "start_ms": 19100099,
+      "status": "done",
+      "target": "by_label:Org"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100100,
+      "kind": "index",
+      "seq": 1,
+      "start_ms": 19100100,
+      "status": "done",
+      "target": "by_label:Person"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100100,
+      "kind": "index",
+      "seq": 2,
+      "start_ms": 19100100,
+      "status": "done",
+      "target": "by_weight:1"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100101,
+      "kind": "view",
+      "seq": 3,
+      "start_ms": 19100101,
+      "status": "done",
+      "target": "reach_from_1"
+    },
+    {
+      "budget": 0,
+      "kind": "view",
+      "queued_at_ms": 19100099,
+      "seq": 4,
+      "status": "queued",
+      "target": "reach_team"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100103,
+      "kind": "index",
+      "seq": 5,
+      "start_ms": 19100103,
+      "status": "done",
+      "target": "by_label:Person"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100103,
+      "kind": "index",
+      "seq": 6,
+      "start_ms": 19100103,
+      "status": "done",
+      "target": "by_weight:2"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100103,
+      "kind": "index",
+      "seq": 7,
+      "start_ms": 19100103,
+      "status": "done",
+      "target": "by_weight:8"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100104,
+      "kind": "view",
+      "seq": 8,
+      "start_ms": 19100104,
+      "status": "done",
+      "target": "reach_from_1"
+    },
+    {
+      "budget": 0,
+      "kind": "view",
+      "queued_at_ms": 19100102,
+      "seq": 9,
+      "status": "queued",
+      "target": "reach_team"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100105,
+      "kind": "index",
+      "seq": 10,
+      "start_ms": 19100105,
+      "status": "done",
+      "target": "by_label:Org"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100106,
+      "kind": "index",
+      "seq": 11,
+      "start_ms": 19100105,
+      "status": "done",
+      "target": "by_weight:4"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100106,
+      "kind": "view",
+      "seq": 12,
+      "start_ms": 19100106,
+      "status": "done",
+      "target": "reach_from_1"
+    },
+    {
+      "budget": 1,
+      "end_ms": 19100107,
+      "kind": "view",
+      "seq": 13,
+      "start_ms": 19100107,
+      "status": "done",
+      "target": "reach_team"
+    }
+  ],
+  "snapshot_version": 1,
+  "view_defs": [
+    {
+      "depends_on": [],
+      "name": "reach_from_1",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "depends_on": [
+        "reach_from_1"
+      ],
+      "name": "reach_team",
+      "sources": [
+        4
+      ]
+    }
+  ],
+  "views": {
+    "reach_from_1": {
+      "content": {
+        "reachable": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "view": "reach_from_1"
+      },
+      "digest": "sha256:bbb523d1f3fc6230def9626334f1e4f19035d599c26499a1d2a4b9868962ae39",
+      "status": "valid",
+      "version": 4,
+      "view": "reach_from_1"
+    },
+    "reach_team": {
+      "content": {
+        "reachable": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "view": "reach_team"
+      },
+      "digest": "sha256:aa5ed627544f788ef64eebbd16b499637a2f2ce3fffb2c4d70db9ec556f9c644",
+      "status": "valid",
+      "version": 2,
+      "view": "reach_team"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {"id": 1, "label": "Person"},
+    {"id": 2, "label": "Person"},
+    {"id": 3, "label": "Org"},
+    {"id": 4, "label": "Person"},
+    {"id": 5, "label": "City"},
+    {"id": 6, "label": "Org"},
+    {"id": 7, "label": "City"}
+  ],
+  "edges": [
+    {"id": "e1", "src": 1, "dst": 2, "weight": 5, "label": "knows"},
+    {"id": "e2", "src": 1, "dst": 3, "weight": 2, "label": "works_at"},
+    {"id": "e3", "src": 2, "dst": 3, "weight": 1, "label": "works_at"},
+    {"id": "e4", "src": 3, "dst": 5, "weight": 7, "label": "located_in"},
+    {"id": "e5", "src": 4, "dst": 1, "weight": 3, "label": "knows"},
+    {"id": "e6", "src": 4, "dst": 6, "weight": 4, "label": "works_at"},
+    {"id": "e7", "src": 6, "dst": 7, "weight": 6, "label": "located_in"},
+    {"id": "e8", "src": 2, "dst": 5, "weight": 9, "label": "visits"}
+  ]
+}

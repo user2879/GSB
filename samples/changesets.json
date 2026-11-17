@@ -1,0 +1,27 @@
+{
+  "changesets": [
+    {
+      "id": "cs1",
+      "ops": [
+        {"op": "set_edge_weight", "edge": "e1", "weight": 8},
+        {"op": "set_node_label", "node": 4, "label": "Org"}
+      ]
+    },
+    {
+      "id": "cs2",
+      "ops": [
+        {"op": "add_node", "node": 8, "label": "Person"},
+        {"op": "add_edge", "edge": "e9", "src": 8, "dst": 1, "weight": 1, "label": "knows"},
+        {"op": "remove_edge", "edge": "e8"}
+      ]
+    },
+    {
+      "id": "cs3",
+      "ops": [
+        {"op": "remove_edge", "edge": "e5"},
+        {"op": "remove_edge", "edge": "e6"},
+        {"op": "remove_node", "node": 4}
+      ]
+    }
+  ]
+}

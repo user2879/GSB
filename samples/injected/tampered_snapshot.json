@@ -1,0 +1,425 @@
+{
+  "base_graph": {
+    "edges": [
+      [
+        "e1",
+        1,
+        2,
+        5,
+        "knows"
+      ],
+      [
+        "e2",
+        1,
+        3,
+        2,
+        "works_at"
+      ],
+      [
+        "e3",
+        2,
+        3,
+        1,
+        "works_at"
+      ],
+      [
+        "e4",
+        3,
+        5,
+        7,
+        "located_in"
+      ],
+      [
+        "e5",
+        4,
+        1,
+        3,
+        "knows"
+      ],
+      [
+        "e6",
+        4,
+        6,
+        4,
+        "works_at"
+      ],
+      [
+        "e7",
+        6,
+        7,
+        6,
+        "located_in"
+      ],
+      [
+        "e8",
+        2,
+        5,
+        9,
+        "visits"
+      ]
+    ],
+    "nodes": [
+      [
+        1,
+        "Person"
+      ],
+      [
+        2,
+        "Person"
+      ],
+      [
+        3,
+        "Org"
+      ],
+      [
+        4,
+        "Person"
+      ],
+      [
+        5,
+        "City"
+      ],
+      [
+        6,
+        "Org"
+      ],
+      [
+        7,
+        "City"
+      ]
+    ]
+  },
+  "changesets": [],
+  "entries": {
+    "by_label": {
+      "City": {
+        "content": {
+          "label": "City",
+          "nodes": [
+            5,
+            7
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "entry_version": 1,
+        "index": "by_label",
+        "key": "City",
+        "status": "valid"
+      },
+      "Org": {
+        "content": {
+          "label": "Org",
+          "nodes": [
+            3,
+            6
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:64a82a11a0b4aa9f6c68e2273368222f09cf1647790a52cbfe383ad37577446f",
+        "entry_version": 1,
+        "index": "by_label",
+        "key": "Org",
+        "status": "valid"
+      },
+      "Person": {
+        "content": {
+          "label": "Person",
+          "nodes": [
+            1,
+            2,
+            4
+          ]
+        },
+        "def_version": 1,
+        "digest": "sha256:d677129058630b19af0dd11e96e39048e852c3385f27ec18bad3c562620fa9c0",
+        "entry_version": 1,
+        "index": "by_label",
+        "key": "Person",
+        "status": "valid"
+      }
+    },
+    "by_weight": {
+      "1": {
+        "content": {
+          "edges": [
+            [
+              3,
+              2,
+              "works_at",
+              "e2"
+            ],
+            [
+              2,
+              5,
+              "knows",
+              "e1"
+            ]
+          ],
+          "src": 1
+        },
+        "def_version": 1,
+        "digest": "sha256:80b051fd936b00455b364fd5c09eeed52387557b59547544e8425f26bdeb4edd",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "1",
+        "status": "valid"
+      },
+      "2": {
+        "content": {
+          "edges": [
+            [
+              3,
+              1,
+              "works_at",
+              "e3"
+            ],
+            [
+              5,
+              9,
+              "visits",
+              "e8"
+            ]
+          ],
+          "src": 2
+        },
+        "def_version": 1,
+        "digest": "sha256:8be8abdbe7c5509f6334d2cdf9153f3149f4d255bb819914be9db0807717e528",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "2",
+        "status": "valid"
+      },
+      "3": {
+        "content": {
+          "edges": [
+            [
+              5,
+              7,
+              "located_in",
+              "e4"
+            ]
+          ],
+          "src": 3
+        },
+        "def_version": 1,
+        "digest": "sha256:ec6031db0313225c91f12b730f732b94507e753dd0370be1ca2a0b44c79a32d3",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "3",
+        "status": "valid"
+      },
+      "4": {
+        "content": {
+          "edges": [
+            [
+              1,
+              3,
+              "knows",
+              "e5"
+            ],
+            [
+              6,
+              4,
+              "works_at",
+              "e6"
+            ]
+          ],
+          "src": 4
+        },
+        "def_version": 1,
+        "digest": "sha256:c7ba110fd62eef569c035830ebbce374d70f7367793f3bc3296c964bd91b89ce",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "4",
+        "status": "valid"
+      },
+      "6": {
+        "content": {
+          "edges": [
+            [
+              7,
+              6,
+              "located_in",
+              "e7"
+            ]
+          ],
+          "src": 6
+        },
+        "def_version": 1,
+        "digest": "sha256:1665347336d4ff9dea6cbdac2f33c390521bebd0d2492a4e2ca1b521e22300a0",
+        "entry_version": 1,
+        "index": "by_weight",
+        "key": "6",
+        "status": "valid"
+      }
+    }
+  },
+  "graph": {
+    "content": {
+      "edges": [
+        [
+          "e1",
+          1,
+          2,
+          5,
+          "knows"
+        ],
+        [
+          "e2",
+          1,
+          3,
+          2,
+          "works_at"
+        ],
+        [
+          "e3",
+          2,
+          3,
+          1,
+          "works_at"
+        ],
+        [
+          "e4",
+          3,
+          5,
+          7,
+          "located_in"
+        ],
+        [
+          "e5",
+          4,
+          1,
+          3,
+          "knows"
+        ],
+        [
+          "e6",
+          4,
+          6,
+          4,
+          "works_at"
+        ],
+        [
+          "e7",
+          6,
+          7,
+          6,
+          "located_in"
+        ],
+        [
+          "e8",
+          2,
+          5,
+          9,
+          "visits"
+        ]
+      ],
+      "nodes": [
+        [
+          1,
+          "Person"
+        ],
+        [
+          2,
+          "Person"
+        ],
+        [
+          3,
+          "Org"
+        ],
+        [
+          4,
+          "Person"
+        ],
+        [
+          5,
+          "City"
+        ],
+        [
+          6,
+          "Org"
+        ],
+        [
+          7,
+          "City"
+        ]
+      ]
+    },
+    "digest": "sha256:92e04c08d30a334b067ca6340583d14a7b9a7a5e57506a9830f285e0197ccebe",
+    "version": 0
+  },
+  "index_def_version": "sha256:215d5240db72b1f3eb7189f72ef66cf746fde3295d06bfee3b9b2e1a1d31fecd",
+  "index_defs": [
+    {
+      "name": "by_label",
+      "type": "label_inverted",
+      "version": 1
+    },
+    {
+      "name": "by_weight",
+      "type": "weight_adjacency",
+      "version": 1
+    }
+  ],
+  "invalidation_trace": [],
+  "params": {
+    "budget": 100,
+    "concurrency": 4
+  },
+  "recompute_ledger": [],
+  "snapshot_version": 1,
+  "view_defs": [
+    {
+      "depends_on": [],
+      "name": "reach_from_1",
+      "sources": [
+        1
+      ]
+    },
+    {
+      "depends_on": [
+        "reach_from_1"
+      ],
+      "name": "reach_team",
+      "sources": [
+        4
+      ]
+    }
+  ],
+  "views": {
+    "reach_from_1": {
+      "content": {
+        "reachable": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "view": "reach_from_1"
+      },
+      "digest": "sha256:bbb523d1f3fc6230def9626334f1e4f19035d599c26499a1d2a4b9868962ae39",
+      "status": "valid",
+      "version": 1,
+      "view": "reach_from_1"
+    },
+    "reach_team": {
+      "content": {
+        "reachable": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "view": "reach_team"
+      },
+      "digest": "sha256:63642c6f43afb554e8187477fb66f8ef340b9e4b26600f38e3c9833136ad2a5a",
+      "status": "valid",
+      "version": 1,
+      "view": "reach_team"
+    }
+  }
+}
