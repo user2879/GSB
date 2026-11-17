@@ -1,21 +1,129 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的混沌工程故障注入与可复现验证组件，交付形式为可集成的领域组件与完整示例。用户以本地 JSON 文件声明一次混沌实验：包含目标服务集合（每个服务以本地回环 TCP 端口上的确定性模拟进程表示，可配置每请求固定耗时与按规则产生的错误）、注入项（网络延迟毫秒、错误返回比例、进程暂停或子进程终止）以及每个注入项的持续时间、生效目标与实验预算（总注入数上限与并行注入上限）。实验编排器须按可复现的顺序与随机种子推进注入时间轴，采集注入前后目标服务的请求成功率与延迟观测，生成实验账本，并支持从中断处恢复继续实验。核心业务难点在于：注入必须只改变输入参数与目标进程状态而不得依赖篡改源码；同一实验声明与种子在重复执行时必须产生逐位一致的注入序列与可比较的观测结论，而强制终止后的恢复只能依赖已持久化账本，且不得承诺一定生成退出报告。
+# 本地确定性混沌工程故障注入与可复现验证组件
 
-任务环境与准备：
-安装 Python 3.11 或以上，确认可用标准库 tkinter、sqlite3、subprocess、socket，全部为本地离线依赖，无需第三方包。
-确认 Windows 本地回环端口 127.0.0.1 上若干高位端口可绑定，示例所用端口不与系统服务冲突，无需外网访问。
-准备确定性样本实验声明 JSON、目标服务模拟脚本与演示脚本，均置于工作区内，由演示脚本按顺序调用，不依赖真实账号或线上服务。
+面向 Windows 本地回环环境的混沌工程领域组件。用一份本地 JSON 声明实验，编排器以整数
+随机种子推进可复现的注入时间轴，通过四种**真实机制**对回环端口上的确定性模拟进程注入
+故障，采集注入前后的成功率与延迟观测，写入 SQLite 账本，并支持强制终止后仅依据已提交
+账本恢复、整体替换与重放差异定位。
 
-业务要求：
-1. 实现实验声明与目标服务的加载及强校验：从本地 JSON 读取目标服务（标识唯一、回环端口在 1 至 65535 内且不重复、固定耗时与错误规则参数合法）、注入项（类型属于受支持集合、时长为正整数毫秒、目标必须存在于服务集合）与实验预算（总注入数与并行注入上限为正整数）；任一不合法须以 E_SPEC 业务码整体拒绝加载并输出具体字段路径，不得部分生效。
-2. 实现以整数随机种子驱动的注入时间轴生成：按种子与注入项集合生成逐条注入的开始时刻、目标与参数，时间轴必须与声明中注入项的书写顺序无关而与排序后的稳定键一致地得到同一结果；相同声明与种子多次生成须得到逐字节一致的时间轴摘要，摘要与时间轴须一并写入账本，摘要不一致时须以 E_TIMELINE 报告首个偏差注入序号。
-3. 实现本地确定性目标服务与四种真实注入机制：以子进程在回环端口启动目标服务，注入须分别通过真实机制生效（连接层延迟由本地代理引入、错误返回比例由服务按种子规则拒绝、进程暂停通过真实挂起子进程实现、终止通过强制终止子进程实现）；注入只改变输入参数与目标进程状态，不得修改任何源码；服务不可达或端口占用须以 E_TARGET 报告，注入后须能区分进程暂停与进程被终止两种状态。
-4. 实现注入期间的观测采集与观测口径声明：在每个注入生效前后按固定采样间隔采集目标服务的成功数、失败数与延迟毫秒，须声明时钟基准为本地单调计数毫秒，真值来源为账本中逐次请求记录；成功率与延迟分位数以整数定点表示并给出量化误差上界，观测口径（采样间隔、样本数）须随账本持久化，样本不足时须标记为不充分而不得伪造数值。
-5. 实现强制终止后的账本恢复与未知状态标注：每完成一条注入的采集即在同一 SQLite 事务中写入注入记录、观测摘要与进度游标，进程被强制终止后重启只能依据已完整提交的记录恢复；处于生效中且未提交的注入须标记为 unknown 并要求重跑，恢复报告须列出已恢复注入数、未知注入序号与未完成预算，不得声称一定生成退出报告。
-6. 实现账本版本识别与整体替换恢复：账本携带整数格式版本与内容摘要，重新打开时须比较快照中的声明版本、种子与账本内容摘要同当前会话是否一致，不一致须整体替换当前注入集合、观测与进度状态而非增量合并；替换前的旧账本保留为只读备份，替换须记录新旧版本号与跳过的注入数并在界面与报告中稳定列出。
-7. 实现恢复后的可复现重放校验与差异定位：从账本恢复后按记录的种子与时间轴重新生成注入序列并重放已完成注入，将逐条注入的开始时刻、目标、参数与观测摘要同账本逐项比较，差异须定位到首个不一致的注入序号、字段名与两次取值并输出 E_REPLAY；因种子变化或目标服务配置不一致导致不可复现时同样须以 E_REPLAY 报明具体依据。
-8. 提供可集成的 Python 包 API、Tkinter 诊断界面与完整示例：以包暴露声明加载、时间轴生成、注入执行、观测聚合、账本保存与恢复、重放校验接口；界面展示时间轴、注入状态、观测曲线与误差界、账本版本与未知注入，渲染顺序稳定；附带本地样本声明与演示脚本，顺序执行正常实验、中断后恢复并重放两个场景。
+* 仅依赖 Python 3.11+ 标准库：`tkinter`、`sqlite3`、`subprocess`、`socket`、`threading`、`ctypes`
+* 不使用 Docker/容器，不访问外网，不需要账号或第三方包
+* 所有目标均为 `127.0.0.1` 高位端口上的本地子进程
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录结构
 
-验收：
-用本地样本验证同种子注入时间轴与观测结论可复现，中断后账本恢复与重放差异定位正确。
+```
+chaoskit/                可集成 Python 包
+  spec.py                声明加载与强校验（E_SPEC，整体拒绝，输出字段路径）
+  rng.py                 自研 SplitMix64 确定性整数 PRNG
+  timeline.py            种子驱动时间轴、摘要与 E_TIMELINE 首偏差校验
+  mock_service.py        确定性目标服务（真实子进程，行协议）
+  process_control.py     Windows/POSIX 真实挂起、恢复、强杀
+  target.py              子进程托管、孤儿回收、延迟代理、状态区分
+  observe.py             单调时钟采样、定点成功率/分位数与量化误差界
+  ledger.py              SQLite 账本、事务、unknown、版本识别、整体替换
+  engine.py              编排器与四种注入执行
+  replay.py              重放校验与 E_REPLAY 字段级差异定位
+  viewmodel.py / gui.py  无 Tk 视图模型 + Tkinter 诊断界面
+  cli.py                 命令行入口
+examples/                样本声明、漂移声明、演示脚本
+tests/                   单元与端到端集成测试（29 个）
+docs/DESIGN.md           设计与技术说明（确定性证明、口径、Windows 要点）
+artifacts/demo/          演示产物（账本、只读备份、汇总）
+```
+
+## 快速开始
+
+```bash
+# 强校验声明
+python -m chaoskit.cli validate examples/sample_experiment.json
+
+# 查看确定性时间轴（两份乱序声明摘要一致）
+python -m chaoskit.cli timeline examples/sample_experiment.json
+python -m chaoskit.cli timeline examples/sample_experiment_shuffled.json
+
+# 运行实验（生成 artifacts/run/ledger.sqlite3）
+python -m chaoskit.cli run examples/sample_experiment.json --workdir artifacts/run
+
+# 中断后恢复续跑（未提交的在途注入标记 unknown 并重跑）
+python -m chaoskit.cli recover examples/sample_experiment.json --workdir artifacts/run
+
+# 重放校验（结构 + 可选观测容差比对）
+python -m chaoskit.cli replay examples/sample_experiment.json --workdir artifacts/run --observations
+
+# 诊断界面（Windows 带显示环境）；无显示环境用 --headless 输出同一数据的文本报告
+python -m chaoskit.cli gui examples/sample_experiment.json --workdir artifacts/run --headless
+```
+
+## 一键演示（正常 / 强杀恢复 / 重放差异 三场景）
+
+```bash
+python examples/demo_run.py
+```
+
+演示顺序执行：
+
+1. **可复现性**：乱序声明时间轴摘要逐字节一致；两次独立运行的成功率结论严格相等。
+2. **强杀恢复**：父进程 `kill -9` 工作进程，重启后仅依据已提交事务恢复，在途注入标
+   `unknown` 并重跑，报告已恢复数、unknown 序号与剩余预算（不承诺退出报告）。
+3. **重放差异定位**：用漂移声明（种子与目标配置变化）触发 `E_REPLAY`，定位首个不一致
+   注入序号、字段与两侧取值；随后演示账本整体替换、只读备份与替换记录。
+3b. 两次独立运行的观测摘要在量化/调度容差内通过重放校验。
+
+## 声明示例（节选）
+
+```json
+{
+  "version": 1,
+  "experiment_id": "loopback-chaos-demo",
+  "seed": 20261118,
+  "budget": {"max_injections": 8, "max_parallel": 1},
+  "observation": {"sample_interval_ms": 20, "min_samples": 4},
+  "services": [
+    {"service_id": "orders", "host": "127.0.0.1", "data_port": 18081,
+     "proxy_port": 19081, "fixed_cost_ms": 12, "base_error_bps": 0}
+  ],
+  "injections": [
+    {"injection_id": "inj-orders-delay", "type": "network_delay",
+     "target_id": "orders", "duration_ms": 160, "params": {"delay_ms": 60}},
+    {"injection_id": "inj-orders-errors", "type": "error_rate",
+     "target_id": "orders", "duration_ms": 160, "params": {"error_bps": 5000}},
+    {"injection_id": "inj-payments-suspend", "type": "suspend",
+     "target_id": "payments", "duration_ms": 140, "params": {}},
+    {"injection_id": "inj-payments-kill", "type": "terminate",
+     "target_id": "payments", "duration_ms": 120, "params": {}}
+  ]
+}
+```
+
+错误比例以基点 `error_bps`（0–10000）整数定点表示；服务端口仅允许 `127.0.0.1` 且
+1–65535 不重复；任一字段非法即以 `E_SPEC` 整体拒绝并给出全部 JSON 路径，绝不部分生效。
+
+## 包 API
+
+```python
+from chaoskit import (
+    load_spec, build_timeline, timeline_digest,   # 声明 + 时间轴
+    ChaosEngine,                                   # 注入执行
+    aggregate, collect_phase,                      # 观测聚合
+    Ledger, open_or_replace_ledger,                # 账本保存/恢复/替换
+    verify_identity, verify_timeline_entries, verify_observations,  # 重放
+)
+```
+
+## 业务码
+
+| 码 | 含义 |
+| --- | --- |
+| `E_SPEC` | 声明非法，`details.paths` 列出全部字段路径，整体拒绝 |
+| `E_TIMELINE` | 重生成时间轴与账本摘要偏差，含首个偏差注入序号与两侧值 |
+| `E_TARGET` | 服务不可达/端口被未知进程占用/挂起后仍可达等 |
+| `E_LEDGER` | 账本格式未知或内容摘要不匹配（疑似损坏/外部篡改） |
+| `E_REPLAY` | 重放不可复现，含依据、注入序号、字段名与两侧取值 |
+
+## 测试
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+确定性原理、观测口径与量化误差界、事务恢复与 Windows 原语细节见 `docs/DESIGN.md`。

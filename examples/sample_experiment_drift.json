@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "experiment_id": "loopback-chaos-demo",
+  "seed": 999999,
+  "budget": {
+    "max_injections": 8,
+    "max_parallel": 1
+  },
+  "observation": {
+    "sample_interval_ms": 20,
+    "min_samples": 4
+  },
+  "services": [
+    {
+      "service_id": "orders",
+      "host": "127.0.0.1",
+      "data_port": 18081,
+      "proxy_port": 19081,
+      "fixed_cost_ms": 12,
+      "base_error_bps": 0
+    },
+    {
+      "service_id": "payments",
+      "host": "127.0.0.1",
+      "data_port": 18082,
+      "proxy_port": 19082,
+      "fixed_cost_ms": 25,
+      "base_error_bps": 100
+    }
+  ],
+  "injections": [
+    {
+      "injection_id": "inj-orders-delay",
+      "type": "network_delay",
+      "target_id": "orders",
+      "duration_ms": 222,
+      "params": {
+        "delay_ms": 60
+      }
+    },
+    {
+      "injection_id": "inj-payments-kill",
+      "type": "terminate",
+      "target_id": "payments",
+      "duration_ms": 120,
+      "params": {}
+    },
+    {
+      "injection_id": "inj-orders-errors",
+      "type": "error_rate",
+      "target_id": "orders",
+      "duration_ms": 160,
+      "params": {
+        "error_bps": 5000
+      }
+    },
+    {
+      "injection_id": "inj-payments-suspend",
+      "type": "suspend",
+      "target_id": "payments",
+      "duration_ms": 140,
+      "params": {}
+    },
+    {
+      "injection_id": "inj-payments-delay",
+      "type": "network_delay",
+      "target_id": "payments",
+      "duration_ms": 140,
+      "params": {
+        "delay_ms": 40
+      }
+    }
+  ]
+}
