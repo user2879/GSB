@@ -1,0 +1,192 @@
+{
+  "history": [],
+  "library_id": "local-demo-experiment",
+  "library_schema": 1,
+  "runs": [
+    {
+      "final_metrics": {
+        "accuracy": 0.6415656927217167,
+        "loss": 0.922102690159001
+      },
+      "format_version": 1,
+      "parameters": {
+        "hyperparameters": {
+          "dropout": 0.1,
+          "steps": 12
+        },
+        "learning_rate": 0.01,
+        "model_dim": 32,
+        "seed": 11
+      },
+      "run_id": "baseline",
+      "run_version": 1
+    },
+    {
+      "final_metrics": {
+        "accuracy": 0.636852009107837,
+        "loss": 0.9269185738919822
+      },
+      "format_version": 2,
+      "parameters": {
+        "hyperparameters": {
+          "dropout": 0.05,
+          "steps": 12
+        },
+        "learning_rate": 0.015,
+        "model_dim": 48,
+        "seed": 29
+      },
+      "run_id": "tuned",
+      "run_version": 1,
+      "step_metrics": [
+        {
+          "accuracy": 0.5117721772359695,
+          "loss": 1.1741894888831013,
+          "step": 1
+        },
+        {
+          "accuracy": 0.5306794346626137,
+          "loss": 1.1240072260587166,
+          "step": 2
+        },
+        {
+          "accuracy": 0.5481354505332885,
+          "loss": 1.1084852116630397,
+          "step": 3
+        },
+        {
+          "accuracy": 0.5638761075738384,
+          "loss": 1.0931398266716212,
+          "step": 4
+        },
+        {
+          "accuracy": 0.5623751123928361,
+          "loss": 1.0447680388384524,
+          "step": 5
+        },
+        {
+          "accuracy": 0.5765536085680785,
+          "loss": 1.0333965498080693,
+          "step": 6
+        },
+        {
+          "accuracy": 0.5901211792475091,
+          "loss": 1.0262680967700561,
+          "step": 7
+        },
+        {
+          "accuracy": 0.6076534326273444,
+          "loss": 0.9827162637513613,
+          "step": 8
+        },
+        {
+          "accuracy": 0.6213360481537069,
+          "loss": 0.9736008730707909,
+          "step": 9
+        },
+        {
+          "accuracy": 0.6121071818515926,
+          "loss": 0.9336250245642164,
+          "step": 10
+        },
+        {
+          "accuracy": 0.6253920107741529,
+          "loss": 0.9319798565844769,
+          "step": 11
+        },
+        {
+          "accuracy": 0.636852009107837,
+          "loss": 0.9269185738919822,
+          "step": 12
+        }
+      ],
+      "timestamp": 1700000029
+    },
+    {
+      "aggregation": {
+        "name": "mean_last_5",
+        "version": "agg-v1"
+      },
+      "final_metrics": {
+        "accuracy": 0.6324339704961157,
+        "loss": 0.9291579825032766
+      },
+      "format_version": 3,
+      "parameters": {
+        "hyperparameters": {
+          "momentum": 0.9,
+          "steps": 12
+        },
+        "learning_rate": 0.012,
+        "model_dim": 64,
+        "seed": 7
+      },
+      "parent_run_id": "baseline",
+      "run_id": "ensemble",
+      "run_version": 1,
+      "step_metrics": [
+        {
+          "accuracy": 0.5163765165533749,
+          "loss": 1.1716903193081132,
+          "step": 1
+        },
+        {
+          "accuracy": 0.5380392218126789,
+          "loss": 1.1518863270211235,
+          "step": 2
+        },
+        {
+          "accuracy": 0.557952527476755,
+          "loss": 1.0968181741275018,
+          "step": 3
+        },
+        {
+          "accuracy": 0.5564563940498595,
+          "loss": 1.076660456409881,
+          "step": 4
+        },
+        {
+          "accuracy": 0.5755430344676444,
+          "loss": 1.0621913947869317,
+          "step": 5
+        },
+        {
+          "accuracy": 0.5914600997256247,
+          "loss": 1.0172213343157825,
+          "step": 6
+        },
+        {
+          "accuracy": 0.6066707298386094,
+          "loss": 1.0004892355763804,
+          "step": 7
+        },
+        {
+          "accuracy": 0.6230228450716915,
+          "loss": 0.9600772228633857,
+          "step": 8
+        },
+        {
+          "accuracy": 0.614487711706744,
+          "loss": 0.9511903128775406,
+          "step": 9
+        },
+        {
+          "accuracy": 0.628088119383989,
+          "loss": 0.9416988752227209,
+          "step": 10
+        },
+        {
+          "accuracy": 0.6429122399428545,
+          "loss": 0.8991685892830813,
+          "step": 11
+        },
+        {
+          "accuracy": 0.6536589363752995,
+          "loss": 0.8936549122696541,
+          "step": 12
+        }
+      ],
+      "timestamp": 1700000007
+    }
+  ]
+}

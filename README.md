@@ -1,22 +1,178 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的实验追踪与版本管理应用。用户在本地 JSON 文件中声明一次训练实验：若干次运行（run），每次运行含整数随机种子、模型维度、学习率、超参数集合，以及按步记录的训练指标序列（损失、准确率，均以确定性规则从种子与步数推导产生）。实验记录存在三种历史格式版本：v1 仅含运行标识、参数与最终指标；v2 增加逐步指标序列与整数时间戳；v3 再增加指标聚合口径与父运行引用。系统须把三版本记录归一为同一内部模型，并在打开记录库时把低版本记录升级为当前版本写回；同一实验可因参数变更产生新记录版本，新版本提交时须整体替换当前记录条目而非增量合并。工作台以 Tkinter 界面与命令行脚本两种方式展示运行列表、指标曲线、记录格式版本、聚合口径与快照列表，并须支持将整个实验会话（记录库、快照、升级检查点）保存与恢复。核心的技术冲突在于格式互操作与版本兼容：旧版本记录必须能被读取升级，而不支持的新版本要明确拒绝；快照恢复必须识别版本差异并整体替换；升级过程被强制终止后只能依据持久化检查点继续。
+# 本地实验追踪与版本管理
 
-任务环境与准备：
-安装 Python 3.11 或以上，确认 sqlite3 与 tkinter 可用（tkinter 随 Windows 官方安装包提供），无需网络与外部服务。
-安装 NumPy（pip install numpy），仅用于本地确定性指标推导，版本以能 import numpy 为准。
-在工作区预留目录用于记录库、检查点文件、快照数据库与只读备份；准备本地确定性样本运行声明 JSON 与演示脚本，全部为本地文件。
-确认 Windows 控制台可运行 python 脚本与 tkinter 窗口；所有端口与外部依赖均不需要，验证在单机完成。
+这是一个面向 Windows 本地环境的实验追踪应用，同时提供命令行与 Tkinter 工作台。项目不启动端口、不访问网络、不依赖外部服务；记录库、升级检查点、快照数据库、只读备份和运行报告全部位于本地工作区。
 
-业务要求：
-1. 实现实验运行记录在 v1、v2、v3 三种格式版本下的编解码与归一：v1 仅含运行标识、参数与最终指标，v2 增加逐步指标序列与整数时间戳，v3 再增加指标聚合口径与父运行引用；加载时检测格式版本，未知版本、字段缺失或类型不符须以 E_FORMAT 整体拒绝并给出生效路径，不得部分导入。
-2. 实现记录库打开时的自动升级与中断续做：记录库中存在低于当前版本的旧记录时，逐条在内存中完成归一与升级并以当前版本重写，每完成一条即原子更新检查点文件；强制终止后重启只能依据检查点继续升级，已升级条目不得重复处理，旧记录保留为只读备份。
-3. 实现内部归一模型与父运行引用校验：把三版本记录统一为带参数集合、指标序列、聚合口径与父运行引用的内部结构，校验父运行引用存在且无环、同一次运行的多次记录版本号单调递增、运行标识唯一；违反约束须以 E_RUN 整体拒绝并输出冲突的运行标识与引用链。
-4. 实现确定性的指标推导与聚合：按运行参数与整数种子用 NumPy 生成逐步指标序列，终值指标须与逐步序列、聚合口径一致；相同参数组合多次生成必须得到逐位一致的指标序列与聚合结果，指标摘要须写入运行报告，摘要不一致须以 E_METRIC 报告首个偏移步数与字段。
-5. 实现记录版本提交与整体替换：同一次运行因参数或聚合口径变化产生新记录版本时，版本号单调递增，当前视图须整体替换该运行的旧记录而非增量合并；替换时须稳定列出变动的参数字段、指标变化量与口径版本，旧版本保留为只读并可对比，禁止新旧字段混排。
-6. 实现实验会话快照的版本识别与恢复：快照持久化记录库格式版本集合、每条运行记录的内容摘要、升级检查点位置与聚合口径版本；重新打开快照时须比较快照内容摘要集合与当前磁盘记录库，不一致须整体替换当前会话状态而非增量合并，并输出差异摘要。
-7. 实现恢复后的重放校验与不可复现报告：从快照恢复后按快照记录的参数与口径版本重新生成各运行指标并重算摘要，与快照保存的摘要逐项比较；若因记录格式版本升级导致口径变化或摘要缺失而不可复现，须以 E_REPLAY 报明具体运行标识、版本与依据，不得静默通过。
-8. 实现 Tkinter 工作台与可重复演示脚本：界面展示运行列表、记录格式版本、逐步指标曲线、聚合口径、替换前后的变化与快照列表，渲染顺序稳定；附带确定性样本运行声明与演示脚本，顺序执行首次导入并升级旧版本记录、参数变更后提交新记录版本、快照恢复后重放三个场景，每个场景输出稳定报告。
+## 功能概览
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 严格读取 v1、v2、v3 三种历史记录格式，未知版本、缺字段、类型错误整体拒绝并返回 `E_FORMAT` 与生效 JSON 路径。
+- 将 v1/v2/v3 归一为同一内部模型，校验运行唯一性、记录版本单调递增、父运行存在且无环，失败返回 `E_RUN` 和引用链。
+- 打开记录库时逐条升级旧记录，每完成一条原子写检查点；支持中断后续做，旧记录写入只读备份。
+- 使用 NumPy 按参数和整数种子确定性地生成逐步损失/准确率，支持 `last`、`mean_last_5`、`mean` 聚合口径并计算 SHA-256 指标摘要。
+- 同一 `run_id` 提交更高 `run_version` 时整体替换当前记录，旧记录进入只读历史；输出参数变化、指标变化量和聚合版本差异。
+- 将完整记录库、检查点位置与内容、格式版本集合、各运行内容摘要和聚合口径版本保存到 SQLite 快照。
+- 恢复快照时先比较摘要集合，再整体替换记录库和检查点，不增量合并；随后重新生成指标并与快照摘要逐项重放校验。
+- CLI 输出稳定 JSON；Tkinter 工作台展示运行列表、格式来源、指标曲线、聚合口径、替换历史和快照列表。
 
-验收：
-用本地样本验证三版本记录归一升级、整体替换与快照恢复重放的一致性及异常业务码。
+## Windows 环境准备
+
+要求 Python 3.11 或以上。Windows 官方 Python 安装包默认包含 Tcl/Tk 与 `sqlite3`。
+
+```bat
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+python -m pip install numpy
+python -c "import tkinter, sqlite3, numpy; print(tkinter.TkVersion, sqlite3.sqlite_version, numpy.__version__)"
+```
+
+也可直接执行 `python -m pip install -r requirements.txt`。除 NumPy 外无第三方运行时依赖。
+
+## 快速开始
+
+在项目根目录运行三个确定性场景：
+
+```bat
+run_demo.bat
+```
+
+等价命令：
+
+```bat
+python scripts\demo.py
+```
+
+演示写入 `demo_workspace/`，依次输出：
+
+1. 首次导入 `samples/legacy_experiment.json`，将 v1/v2 升级到 v3，并生成检查点与只读备份。
+2. 修改 `baseline` 参数后提交 `run_version=2`，整体替换记录并保留 v1 历史。
+3. 保存快照、提交 v3 变更、从快照整体恢复，并对三条运行执行重放校验。
+
+CLI 常用命令：
+
+```bat
+python -m exp_tracker init --workspace demo_workspace --from samples\legacy_experiment.json --force
+python -m exp_tracker status --workspace demo_workspace
+python -m exp_tracker list --workspace demo_workspace
+python -m exp_tracker show baseline --workspace demo_workspace
+python -m exp_tracker curve baseline --workspace demo_workspace
+python -m exp_tracker commit --workspace demo_workspace --record replacement.json
+python -m exp_tracker snapshot --workspace demo_workspace --label after-v2
+python -m exp_tracker snapshots --workspace demo_workspace
+python -m exp_tracker restore --workspace demo_workspace --id 1
+python -m exp_tracker replay --workspace demo_workspace --id 1
+```
+
+启动工作台：
+
+```bat
+run_gui.bat
+```
+
+也可运行 `python -m exp_tracker gui --workspace demo_workspace`。若工作区尚无记录库，可使用界面中的 `Init from JSON` 选择声明文件。界面中的 `Save Snapshot`、`Restore Snapshot`、`Replay Snapshot` 与 CLI 使用完全相同的服务层。
+
+## 工作区与文件
+
+```text
+demo_workspace/
+  records.json                 当前记录库与历史记录
+  upgrade-checkpoint.json      原子升级检查点
+  snapshots.sqlite3            快照数据库
+  backups/                     v1/v2 原记录和替换前记录，只读
+  reports/runs/                每条运行的格式、聚合口径和指标摘要
+  reports/replacements/        整体替换差异报告
+  reports/demo-report.json     三场景演示报告
+```
+
+关键源码：
+
+- `exp_tracker/codec.py`：三版本严格编解码、归一与 E_FORMAT/E_RUN 校验。
+- `exp_tracker/metrics.py`：NumPy 确定性指标、聚合、摘要、首个偏移比较与重放。
+- `exp_tracker/repository.py`：记录库写入、逐条升级、备份与检查点恢复。
+- `exp_tracker/service.py`：提交替换、快照恢复编排与差异报告。
+- `exp_tracker/snapshots.py`：SQLite 快照、内容摘要集合比较、E_REPLAY。
+- `exp_tracker/gui.py`：Tkinter 工作台。
+- `samples/legacy_experiment.json`：静态确定性三格式样本。
+
+## 记录格式约定
+
+每条记录都包含 `format_version`、`run_id`、`run_version`、`parameters` 和 `final_metrics`。`parameters` 必须含整数 `seed`、正整数 `model_dim`、正数 `learning_rate`，以及对象 `hyperparameters`；`hyperparameters.steps` 是必填正整数。
+
+v1：
+
+```json
+{
+  "format_version": 1,
+  "run_id": "baseline",
+  "run_version": 1,
+  "parameters": {
+    "seed": 11,
+    "model_dim": 32,
+    "learning_rate": 0.01,
+    "hyperparameters": {"dropout": 0.1, "steps": 12}
+  },
+  "final_metrics": {"loss": 0.85, "accuracy": 0.64}
+}
+```
+
+v2 在 v1 基础上增加：
+
+```json
+{
+  "step_metrics": [{"step": 1, "loss": 1.2, "accuracy": 0.53}],
+  "timestamp": 1700000011
+}
+```
+
+v3 在 v2 基础上增加：
+
+```json
+{
+  "aggregation": {"name": "mean_last_5", "version": "agg-v1"},
+  "parent_run_id": "baseline"
+}
+```
+
+`step_metrics` 必须从 1 连续递增，且逐点与确定性生成器完全一致；`final_metrics` 必须等于所选聚合口径的结果。v1/v2 归一升级时使用 `last` 口径，并在 provenance 中标记 `aggregation_defaulted=true`。v1 的整数时间戳由种子派生，仅用于统一内部结构。
+
+库文件外层结构：
+
+```json
+{
+  "library_schema": 1,
+  "library_id": "local-demo-experiment",
+  "runs": [],
+  "history": []
+}
+```
+
+## 确定性与版本语义
+
+- 生成器固定使用 NumPy PCG64 均匀流、float64 基础 IEEE 运算和整数扰动，不使用跨平台可能产生末位差异的 `exp/sin/cos`；相同参数与种子重复生成时逐步数组逐位相等。
+- 指标摘要覆盖算法版本、聚合口径、完整逐步序列和最终指标，可用于快照重放比较。
+- 升级按 `(run_id, run_version)` 稳定排序，逐条执行；先写活动检查点，再原子替换记录库，最后原子写完成条目。若进程在文件替换与完成标记之间终止，重启时通过活动条目的源/目标摘要判定记录是否已经升级。
+- 替换提交必须使用完整 v3 记录，`run_version` 必须严格大于当前版本。当前条目由新对象整体替换，旧对象进入 `history` 并写只读备份，不进行字段级合并。
+- 快照恢复固定使用 `mode=whole_replace`；记录库中快照不存在的运行会被移除，快照版本较新的运行会被恢复。差异摘要包含新增、移除和变更运行。
+- 重放按快照中的参数和聚合口径重新生成序列并重算摘要。摘要缺失、口径版本不支持、序列或摘要不一致都会返回 `E_REPLAY`，并携带运行 ID、记录版本、口径版本与依据。
+
+## 异常码
+
+| 代码 | 含义 | 关键字段 |
+| --- | --- | --- |
+| `E_FORMAT` | 未知格式版本、缺字段、类型错误、未知字段、JSON 无效 | `path`、`effective_path`、`reason` |
+| `E_RUN` | 运行标识冲突、版本非单调、父引用缺失或成环 | `run_id`、`chain`、`constraint` |
+| `E_METRIC` | 确定性序列或终值不一致 | `run_id`、`step`、`field`、`expected`、`actual` |
+| `E_REPLAY` | 快照无法按记录参数/口径复现 | `run_id`、`version`、`basis`、`failures` |
+| `E_STATE` | 工作区缺失、快照不存在、非法操作状态 | `path`、`hint` 等 |
+
+CLI 业务错误输出到标准输出，退出码为 2；中断升级模拟退出码为 3。
+
+## 测试与验证
+
+```bat
+python -m unittest discover -v
+python -m compileall -q exp_tracker tests scripts tools
+python scripts\demo.py
+```
+
+当前交付已执行 33 项自动化测试，覆盖三版本归一、E_FORMAT 原子拒绝、父引用环、指标首个偏移、检查点中断续做、活动检查点恢复、整体替换、只读历史、快照整体恢复、四类异常码和演示输出稳定性。实际环境结果见 `VERIFICATION.md`。
+
+本项目的验证容器没有安装 Tk，因此无法在该环境创建真实窗口；`exp_tracker.gui` 已验证可在无 Tk 时安全导入，窗口代码使用 Windows 官方 Python 自带的 Tkinter。CLI、SQLite、NumPy、文件持久化与全部业务场景均已在本地完成验证。
