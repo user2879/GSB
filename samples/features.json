@@ -1,0 +1,104 @@
+{
+  "features": [
+    {
+      "aggregation": "count",
+      "empty_value": 0,
+      "entity": "user",
+      "filter": {
+        "equals": "purchase",
+        "field": "event_type"
+      },
+      "name": "user_purchase_count_10s",
+      "upstream_features": [],
+      "window_ms": 10000
+    },
+    {
+      "aggregation": "sum",
+      "empty_value": 0,
+      "entity": "user",
+      "filter": {
+        "equals": "purchase",
+        "field": "event_type"
+      },
+      "name": "user_purchase_value_10s",
+      "source_field": "context.price",
+      "upstream_features": [],
+      "window_ms": 10000
+    },
+    {
+      "aggregation": "count",
+      "empty_value": 0,
+      "entity": "user",
+      "filter": {
+        "equals": "view",
+        "field": "event_type"
+      },
+      "name": "user_view_count_5s",
+      "upstream_features": [],
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "mean",
+      "empty_value": 0,
+      "entity": "item",
+      "name": "item_avg_price_10s",
+      "source_field": "context.price",
+      "upstream_features": [],
+      "window_ms": 10000
+    },
+    {
+      "aggregation": "count",
+      "empty_value": 0,
+      "entity": "item",
+      "filter": {
+        "equals": "view",
+        "field": "event_type"
+      },
+      "name": "item_view_count_5s",
+      "upstream_features": [],
+      "window_ms": 9000
+    },
+    {
+      "aggregation": "mean",
+      "empty_value": -1,
+      "entity": "item",
+      "name": "item_latest_dwell_8s",
+      "source_field": "context.dwell_ms",
+      "upstream_features": [],
+      "window_ms": 8000
+    },
+    {
+      "aggregation": "mean",
+      "empty_value": 0,
+      "entity": "user",
+      "name": "user_purchase_value_smooth_12s",
+      "source_feature": "user_purchase_value_10s",
+      "upstream_features": [
+        "user_purchase_value_10s"
+      ],
+      "window_ms": 12000
+    },
+    {
+      "aggregation": "mean",
+      "empty_value": 0,
+      "entity": "item",
+      "name": "item_avg_price_smooth_15s",
+      "source_feature": "item_avg_price_10s",
+      "upstream_features": [
+        "item_avg_price_10s"
+      ],
+      "window_ms": 15000
+    },
+    {
+      "aggregation": "mean",
+      "empty_value": 0,
+      "entity": "item",
+      "name": "item_price_chain_20s",
+      "source_feature": "item_avg_price_smooth_15s",
+      "upstream_features": [
+        "item_avg_price_smooth_15s"
+      ],
+      "window_ms": 20000
+    }
+  ]
+}

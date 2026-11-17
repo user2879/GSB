@@ -1,0 +1,40 @@
+{
+  "delay_ms": 5000,
+  "feature_names": [
+    "user_purchase_count_10s",
+    "user_purchase_value_10s",
+    "item_avg_price_10s"
+  ],
+  "name": "purchase_quality",
+  "negative_rule": {
+    "any": [
+      {
+        "feature": "user_purchase_count_10s",
+        "operator": "lt",
+        "value": 1
+      },
+      {
+        "feature": "item_avg_price_10s",
+        "operator": "lt",
+        "value": 60
+      }
+    ]
+  },
+  "positive_rule": {
+    "all": [
+      {
+        "feature": "user_purchase_count_10s",
+        "operator": "ge",
+        "value": 1
+      },
+      {
+        "feature": "item_avg_price_10s",
+        "operator": "ge",
+        "value": 60
+      }
+    ]
+  },
+  "trigger_event_types": [
+    "purchase"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "edits": [
+    {
+      "feature": "item_view_count_5s",
+      "kind": "feature_window",
+      "window_ms": 9000
+    },
+    {
+      "aggregation": "mean",
+      "feature": "item_latest_dwell_8s",
+      "kind": "feature_aggregation"
+    },
+    {
+      "delay_ms": 5000,
+      "kind": "label_delay"
+    },
+    {
+      "event_id": "e0010",
+      "kind": "backfill",
+      "patch": {
+        "context.dwell_ms": 2170,
+        "context.price": 56.75
+      },
+      "timestamp": 10000
+    }
+  ]
+}

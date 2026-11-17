@@ -1,0 +1,38 @@
+{
+  "injections": [
+    {
+      "event_id": "e0004",
+      "field": "context.price",
+      "id": "INJ-01",
+      "kind": "non_finite_context",
+      "stage": "parse"
+    },
+    {
+      "event_id": "e0007",
+      "id": "INJ-02",
+      "kind": "unknown_event_type",
+      "stage": "parse",
+      "value": "teleport"
+    },
+    {
+      "event_id": "e0012",
+      "field": "injected_marker",
+      "id": "INJ-03",
+      "kind": "unknown_event_field",
+      "stage": "parse",
+      "value": true
+    },
+    {
+      "feature": "ghost_feature",
+      "id": "INJ-04",
+      "kind": "missing_label_feature",
+      "stage": "label"
+    },
+    {
+      "event_id": "e0020",
+      "id": "INJ-05",
+      "kind": "backfill_before_cursor",
+      "stage": "backfill"
+    }
+  ]
+}
