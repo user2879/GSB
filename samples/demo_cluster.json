@@ -1,0 +1,95 @@
+{
+  "declaration_version": "demo-v1",
+  "global_replica_budget": 6,
+  "aggregation_threshold": 20,
+  "window_size": 3,
+  "workloads": [
+    {
+      "id": "checkout",
+      "concurrency_per_replica": 25,
+      "min_replicas": 1,
+      "max_replicas": 4,
+      "cooldown_ms": 180000,
+      "rules": [
+        {
+          "id": "checkout-requests",
+          "metric": "requests",
+          "target_value": 60,
+          "per_replica_capacity": 50
+        }
+      ],
+      "observations": [
+        {"minute": 0, "requests": 10, "avg_latency_ms": 90, "errors": 0},
+        {"minute": 1, "requests": 90, "avg_latency_ms": 110, "errors": 0},
+        {"minute": 2, "requests": 0, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 3, "requests": 0, "avg_latency_ms": 95, "errors": 0},
+        {"minute": 4, "requests": 120, "avg_latency_ms": 130, "errors": 1},
+        {"minute": 5, "requests": 120, "avg_latency_ms": 140, "errors": 1},
+        {"minute": 6, "requests": 0, "avg_latency_ms": 90, "errors": 0},
+        {"minute": 7, "requests": 0, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 8, "requests": 180, "avg_latency_ms": 160, "errors": 2},
+        {"minute": 9, "requests": 180, "avg_latency_ms": 180, "errors": 2},
+        {"minute": 10, "requests": 0, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 11, "requests": 0, "avg_latency_ms": 75, "errors": 0}
+      ]
+    },
+    {
+      "id": "payments",
+      "concurrency_per_replica": 20,
+      "min_replicas": 1,
+      "max_replicas": 3,
+      "cooldown_ms": 120000,
+      "rules": [
+        {
+          "id": "payments-errors",
+          "metric": "error_rate",
+          "target_value": 50,
+          "per_replica_capacity": 10000
+        }
+      ],
+      "observations": [
+        {"minute": 0, "requests": 100, "avg_latency_ms": 70, "errors": 1},
+        {"minute": 1, "requests": 100, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 2, "requests": 100, "avg_latency_ms": 70, "errors": 0},
+        {"minute": 3, "requests": 100, "avg_latency_ms": 90, "errors": 2},
+        {"minute": 4, "requests": 100, "avg_latency_ms": 100, "errors": 3},
+        {"minute": 5, "requests": 100, "avg_latency_ms": 90, "errors": 0},
+        {"minute": 6, "requests": 100, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 7, "requests": 100, "avg_latency_ms": 70, "errors": 0},
+        {"minute": 8, "requests": 100, "avg_latency_ms": 90, "errors": 1},
+        {"minute": 9, "requests": 100, "avg_latency_ms": 100, "errors": 2},
+        {"minute": 10, "requests": 100, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 11, "requests": 100, "avg_latency_ms": 70, "errors": 0}
+      ]
+    },
+    {
+      "id": "search",
+      "concurrency_per_replica": 30,
+      "min_replicas": 1,
+      "max_replicas": 4,
+      "cooldown_ms": 240000,
+      "rules": [
+        {
+          "id": "search-latency",
+          "metric": "latency",
+          "target_value": 80,
+          "per_replica_capacity": 200
+        }
+      ],
+      "observations": [
+        {"minute": 0, "requests": 100, "avg_latency_ms": 80, "errors": 0},
+        {"minute": 1, "requests": 100, "avg_latency_ms": 500, "errors": 0},
+        {"minute": 2, "requests": 100, "avg_latency_ms": 500, "errors": 0},
+        {"minute": 3, "requests": 100, "avg_latency_ms": 500, "errors": 0},
+        {"minute": 4, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 5, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 6, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 7, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 8, "requests": 100, "avg_latency_ms": 500, "errors": 0},
+        {"minute": 9, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 10, "requests": 100, "avg_latency_ms": 100, "errors": 0},
+        {"minute": 11, "requests": 100, "avg_latency_ms": 500, "errors": 0}
+      ]
+    }
+  ]
+}
