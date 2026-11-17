@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cluster-config-diagnostics"
+version = "1.0.0"
+description = "Deterministic local multi-cluster configuration distribution diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24,<3"]
+
+[project.scripts]
+cluster-diag = "cluster_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cluster_diag*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

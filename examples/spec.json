@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "seed": 20261118,
+  "description": "Two-cluster local deterministic distribution sample",
+  "clusters": [
+    {
+      "id": "edge-a",
+      "host": "127.0.0.1",
+      "port": 45201,
+      "nodes": ["edge-a-01", "edge-a-02", "edge-a-03"]
+    },
+    {
+      "id": "edge-b",
+      "host": "127.0.0.1",
+      "port": 45202,
+      "nodes": ["edge-b-01", "edge-b-02"]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-network",
+      "config_keys": ["net.timeout_ms", "net.retry_budget"],
+      "targets": ["edge-b"],
+      "aggregation": "mean",
+      "sample_count": 256
+    },
+    {
+      "id": "edge-cache",
+      "config_keys": ["cache.size_mb"],
+      "targets": ["edge-a"],
+      "aggregation": "sum",
+      "sample_count": 128
+    }
+  ],
+  "revisions": [
+    {
+      "version": 1,
+      "parent": null,
+      "config": {
+        "net.timeout_ms": 1200,
+        "net.retry_budget": 3,
+        "cache.size_mb": 512
+      },
+      "task_ids": ["edge-cache", "core-network"]
+    },
+    {
+      "version": 2,
+      "parent": 1,
+      "config": {
+        "net.timeout_ms": 900,
+        "net.retry_budget": 4,
+        "cache.size_mb": 512
+      },
+      "task_ids": ["core-network"]
+    },
+    {
+      "version": 3,
+      "parent": 2,
+      "config": {
+        "net.timeout_ms": 900,
+        "net.retry_budget": 4,
+        "cache.size_mb": 1024
+      },
+      "task_ids": ["edge-cache"]
+    }
+  ]
+}
