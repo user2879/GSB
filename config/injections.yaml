@@ -1,0 +1,44 @@
+schema_version: 1
+injections:
+  - id: INJ-NONFINITE-001
+    stage: data
+    sample: 7
+    column: income
+    fault: non_finite_feature
+    value: NaN
+  - id: INJ-MISSING-CATEGORY-002
+    stage: preprocess
+    sample: 11
+    column: region
+    fault: missing_category_mapping
+    value: __UNSEEN_REGION__
+  - id: INJ-KMEANS-ZERO-CLUSTERS-003
+    stage: clustering
+    method: kmeans
+    candidate_params:
+      n_clusters: 3
+      max_iter: 80
+      tol: 0.000001
+    parameter: n_clusters
+    value: 0
+    fault: hyperparameter_out_of_range
+  - id: INJ-DBSCAN-NEGATIVE-RADIUS-004
+    stage: clustering
+    method: dbscan
+    candidate_params:
+      eps: 7.0
+      min_samples: 5
+    parameter: eps
+    value: -0.5
+    fault: negative_neighborhood_radius
+  - id: INJ-GMM-COVARIANCE-005
+    stage: clustering
+    method: gaussian_mixture
+    candidate_params:
+      n_components: 3
+      covariance_type: full
+      max_iter: 80
+      tol: 0.000001
+    parameter: covariance_type
+    value: banana
+    fault: hyperparameter_out_of_range

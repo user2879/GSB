@@ -1,0 +1,81 @@
+schema_version: 1
+experiment:
+  name: deterministic_clustering_lab
+  seed: 20261118
+target:
+  task: clustering
+  sample_id: row_index
+data:
+  description: data_description.yaml
+preprocessing:
+  method: standardize
+  fit_fraction: 0.8
+  include_columns: [age, income, spend, tenure, region, plan, device_id, age_copy, spend_copy]
+  expected_types:
+    age: numeric
+    income: numeric
+    spend: numeric
+    tenure: numeric
+    region: categorical
+    plan: categorical
+    device_id: categorical
+    age_copy: numeric
+    spend_copy: numeric
+  drop_columns: []
+  quantile:
+    n_quantiles: 32
+    output_distribution: normal
+clustering:
+  methods: [kmeans, dbscan, gaussian_mixture]
+  candidates:
+    kmeans:
+      - n_clusters: 2
+        max_iter: 80
+        tol: 0.000001
+      - n_clusters: 3
+        max_iter: 80
+        tol: 0.000001
+      - n_clusters: 4
+        max_iter: 80
+        tol: 0.000001
+      - n_clusters: 5
+        max_iter: 80
+        tol: 0.000001
+    dbscan:
+      - eps: 1.0
+        min_samples: 8
+      - eps: 7.0
+        min_samples: 5
+      - eps: 8.5
+        min_samples: 5
+      - eps: 10.0
+        min_samples: 5
+    gaussian_mixture:
+      - n_components: 3
+        covariance_type: full
+        max_iter: 80
+        tol: 0.000001
+      - n_components: 3
+        covariance_type: diag
+        max_iter: 80
+        tol: 0.000001
+      - n_components: 4
+        covariance_type: full
+        max_iter: 80
+        tol: 0.000001
+      - n_components: 4
+        covariance_type: diag
+        max_iter: 80
+        tol: 0.000001
+evaluation:
+  metrics: [silhouette, calinski_harabasz, log_likelihood]
+  primary: composite
+  weights:
+    silhouette: 0.40
+    calinski_harabasz: 0.30
+    log_likelihood: 0.30
+execution:
+  concurrency: 4
+  snapshot_commit_interval: 2
+  interaction_latency_budget_ms: 3000
+  snapshot_version: 1

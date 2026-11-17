@@ -1,22 +1,145 @@
-在空白工作区构建一个面向表格数据的聚类与密度估计专业工作台，用于在本地确定性样本上反复调参与验证聚类结果的可复现性，并支持通过独立注入配置对处理链路施加真实输入故障以验证异常处理。输入为一份本地 YAML 实验配置与按固定种子生成的合成表格数据描述（数值列、类别列、缺失值、高基数类别列与冗余列），配置包含预处理方式（标准化或分位数变换）、聚类方法集合（KMeans、DBSCAN 与高斯混合）、各方法的超参数候选（簇数、邻域半径、最小样本数、协方差类型）、评估指标、并发数、快照提交间隔与交互延迟预算毫秒。工作台需完成特征预处理、聚类与密度估计、评估指标计算、注入故障处理与阶段化快照恢复，并输出可重复演示的诊断报告。
+# 表格聚类与密度估计专业工作台
 
-任务环境与准备：
-安装 Python 3.11，使用 pip 安装 numpy、scikit-learn、PyYAML，版本以本地可用为准。
-在空白工作区创建项目目录，准备由题目配置驱动的本地合成数据描述与 YAML 实验配置，不依赖任何外部数据集或网络。
-准备独立注入配置样例，用于对指定样本与阶段施加输入故障。
-Windows 环境使用整数进程退出码表示成功与失败，业务错误以 E_ 前缀符号写入 JSON 报告与 stderr。
+本项目在本地确定性合成表格数据上完成特征预处理、KMeans / DBSCAN / 高斯混合聚类、轮廓系数与 Calinski-Harabasz 指数、密度对数似然评估、双跑可复现性验证、独立故障注入和阶段化快照恢复。项目不依赖外部数据集或网络服务。
 
-业务要求：
-1. 实现配置与数据加载层：读取本地 YAML 配置与合成数据描述，按列类型与固定种子确定性生成表格数据，完成缺失值填充与类别编码；对未知列、类型不符、目标结构缺失、簇数为零、并发数非正与种子非法分别输出 E_CONFIG_INVALID 业务码并进入失败清单，其余合法配置继续执行。
-2. 实现特征预处理阶段：按配置选择标准化或分位数变换，缺失值以训练部分统计量填充，所有统计量以固定累加顺序计算并保留在产物中；同一输入与配置下两次运行的预处理结果必须逐元素一致，且预处理产物需携带由列描述与参数派生的内容指纹。
-3. 实现三种聚类与密度估计方法：KMeans 以固定初始质心选取规则与固定迭代上限执行；DBSCAN 以固定邻域遍历顺序完成核心点判定与簇扩展；高斯混合按固定初始化与固定迭代收敛规则训练，输出每个样本的硬分配与软责任度；同分或边界样本按样本行号稳定决断。
-4. 实现聚类质量评估与模型选择：计算轮廓系数、Calinski-Harabasz 指数与按密度估计对数似然的指标，并列按方法名与超参数字典序排序输出候选模型排名；当某候选出现空簇或全噪声簇时不得静默丢弃，须记录诊断条目并参与排名。
-5. 实现独立注入配置驱动的可复现异常实验：注入配置可对指定样本与指定阶段施加非有限特征值、缺失类别映射、超参数越界与邻域半径为负等真实输入故障，每项故障须命中唯一注入编号并映射到对应业务码；同一注入配置与同一输入必须产出逐字段一致的注入命中清单与失败清单。
-6. 实现阶段化快照整体替换与恢复一致性：将预处理、聚类、评估划分为阶段，每阶段以临时目录整体替换方式持久化快照，清单文件记录全局版本号、配置哈希、注入配置哈希与各阶段产物版本；恢复时若版本号、配置哈希或注入哈希不符输出 E_CONFIG_MISMATCH 并拒绝续跑。
-7. 实现并发执行与串行结果一致性：使用线程池并发训练各候选模型，最大并发数取自配置；每个候选任务携带由方法名与超参数指纹派生的稳定排序键，无论线程调度顺序与并发度如何，最终候选排名、逐样本分配、指标表顺序与失败清单顺序必须与单线程按排名键顺序执行逐字段一致。
-8. 实现数值精度可观测与诊断报告输出：对每个候选记录两次独立运行的指标差值以证明可复现性，并输出 JSON 报告包含候选排名、各候选指标、空簇与噪声诊断、注入命中清单、配置与注入哈希、快照版本号、各阶段耗时与失败清单；报告以临时文件加原子替换方式写盘。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+环境使用 Python 3.11。本机验证版本为 NumPy 2.4.6、scikit-learn 1.9.1、PyYAML 5.4.1。
 
-验收：
-用本地样本验证聚类与密度估计排名、注入故障命中及快照恢复，输出诊断报告与运行结果。
+```bash
+python3.11 -m pip install -r requirements.txt
+python3.11 -m pip install -e .
+```
+
+运行干净基线：
+
+```bash
+python3.11 -m tcw \
+  --config config/experiment.yaml \
+  --no-injections \
+  --snapshot-dir artifacts/snapshots-clean \
+  --report artifacts/runs/clean_report.json
+```
+
+运行独立故障注入样例：
+
+```bash
+python3.11 -m tcw \
+  --config config/experiment.yaml \
+  --injections config/injections.yaml \
+  --snapshot-dir artifacts/snapshots \
+  --report artifacts/runs/diagnostic_report.json
+```
+
+恢复同一配置、同一注入配置和同一数据哈希对应的快照：
+
+```bash
+python3.11 -m tcw \
+  --config config/experiment.yaml \
+  --injections config/injections.yaml \
+  --snapshot-dir artifacts/snapshots \
+  --report artifacts/runs/diagnostic_report_resume.json \
+  --resume
+```
+
+验证版本不匹配时会拒绝续跑：
+
+```bash
+python3.11 -m tcw \
+  --config config/experiment.yaml \
+  --injections config/injections.yaml \
+  --snapshot-dir artifacts/snapshots \
+  --report artifacts/runs/mismatch_report.json \
+  --snapshot-version 2 --resume
+# stderr: E_CONFIG_MISMATCH ...
+# 退出码: 2
+```
+
+测试：
+
+```bash
+python3.11 -m unittest discover -s tests -v
+```
+
+## 目录
+
+- `src/tcw/config.py`：YAML 配置、候选超参数、逐项校验与合法项继续执行。
+- `src/tcw/data.py`：固定种子合成表格、缺失值训练段填充、类别映射与 one-hot 编码。
+- `src/tcw/preprocessing.py`：标准化 / 分位数变换、固定累加顺序统计量、内容指纹。
+- `src/tcw/models.py`：手写确定性 KMeans、DBSCAN 和固定初始化 GMM。
+- `src/tcw/evaluation.py`：三项指标、密度对数似然、双跑差值、加权排名与稳定并列规则。
+- `src/tcw/injection.py`：独立注入配置、真实阶段校验探针、唯一注入编号与业务码映射。
+- `src/tcw/snapshot.py`：临时目录整体提交、manifest、阶段版本与恢复校验。
+- `src/tcw/pipeline.py`：线程池候选执行、检查点、阶段恢复、诊断报告原子落盘。
+- `config/`：实验、数据描述与注入样例。
+- `tests/test_workbench.py`：六组端到端及边界测试。
+- `artifacts/runs/`：实际运行报告。
+
+## 配置协议
+
+`config/experiment.yaml` 的必要结构：
+
+- `experiment.seed`：运行种子；非法时回退到数据描述种子并记录 `E_CONFIG_INVALID`。
+- `target.task`：目标结构；缺失或非聚类任务会记录 `E_CONFIG_INVALID`，其余合法项继续。
+- `data.description`：相对配置文件目录或绝对路径的数据描述。
+- `preprocessing.method`：`standardize` 或 `quantile`。
+- `preprocessing.fit_fraction`：仅前 `ceil(rows * fit_fraction)` 行参与填充和变换统计量拟合。
+- `preprocessing.include_columns` / `drop_columns`：未知列记录配置失败并从合法特征中移除。
+- `preprocessing.expected_types`：列类型校验；类型不符记录配置失败并移除该列。
+- `clustering.methods`：`kmeans`、`dbscan`、`gaussian_mixture`。
+- `clustering.candidates`：按方法给出超参数列表；也可使用带 `method` 的列表形式。
+- `evaluation.metrics`：`silhouette`、`calinski_harabasz`、`log_likelihood`。
+- `evaluation.primary` / `weights`：默认使用归一化加权 `composite`；并列按方法名、超参数字典序、稳定键排序。
+- `execution.concurrency`：线程池上限；非正数回退为 1 并记录失败。
+- `execution.snapshot_commit_interval`：每若干稳定候选组提交一次聚类检查点。
+- `execution.interaction_latency_budget_ms`：预处理、聚类、评估阶段预算检查。
+- `execution.snapshot_version`：全局快照版本号。
+
+数据描述支持数值列、类别列、高基数类别列与冗余列。生成、缺失掩码和冗余噪声都使用固定 `PCG64` 随机序列；类别映射按字典序稳定生成。
+
+## 确定性规则
+
+- 候选稳定键为 `method:sha256(canonical_params)[:16]`；配置、检查点和指标表按该键排序，失败清单按失败码、阶段、注入编号、候选键和消息组成固定键排序。
+- 每个候选在独立任务中训练两次；报告记录标签是否相等、逐样本分配差异数、各指标绝对差和 GMM 责任度最大绝对差。
+- KMeans 使用确定性的最远点初始质心、固定迭代上限和行号稳定同分决策。
+- DBSCAN 以样本行号顺序遍历，邻域按行号排序，使用稳定 BFS 扩簇；噪声标签保留为 `-1`。
+- GMM 使用固定 KMeans 初始化、`n_init=1`、固定收敛阈值和由种子与稳定键派生的 `random_state`；硬分配由软责任度按行号稳定决断。
+- GMM 的密度指标直接使用拟合模型的 `score_samples` 均值；KMeans / DBSCAN 使用硬分配簇的对角高斯混合密度。
+- 空簇和全噪声候选不会被丢弃，均记录诊断并进入排名。
+- 报告通过同目录临时文件、`fsync` 和 `os.replace` 原子写入。业务字段在并发度和恢复前后保持一致；实际耗时字段会随机器负载变化。
+
+## 故障注入
+
+注入配置与实验配置独立。每个注入项必须有唯一 `id`。样例使用以下真实路径：
+
+| 故障 | 阶段 | 业务码 |
+| --- | --- | --- |
+| `non_finite_feature` | `data` / `preprocess` / `evaluation` | `E_INPUT_NON_FINITE` |
+| `missing_category_mapping` | `preprocess` | `E_CATEGORY_UNMAPPED` |
+| `hyperparameter_out_of_range` | `clustering` | `E_HYPERPARAM_OUT_OF_RANGE` |
+| `negative_neighborhood_radius` | `clustering` | `E_DBSCAN_RADIUS_INVALID` |
+
+注入探针复制当前真实阶段输入并调用相同校验/编码/训练参数检查路径，不污染干净基线。命中清单和失败清单均按稳定键排序；相同输入、配置和注入配置重复运行时逐字段一致。
+
+## 快照协议
+
+manifest 记录：
+
+- 全局 `snapshot_version`
+- `config_hash`、`injection_hash`、`data_hash`
+- `preprocess`、`clustering`、`evaluation` 三阶段产物版本和内容哈希
+- 聚类提交间隔生成的检查点版本
+
+每阶段先写入同父目录的 `.tmp-*` 目录，再整体重命名为 `units/<stage>/<version>`；manifest 本身同样原子替换。恢复时版本、配置哈希、注入哈希或数据哈希任一不符均输出 `E_CONFIG_MISMATCH` 并拒绝续跑；阶段内容哈希不符输出 `E_SNAPSHOT_CORRUPT`。
+
+## 退出码与输出
+
+- `0`：干净运行，无业务失败。
+- `1`：流水线完成，但存在配置、注入或可复现性失败；失败项已进入报告。
+- `2`：致命配置/快照/内部错误，拒绝继续执行。
+
+所有业务错误均以 `E_` 前缀写入 JSON 报告的 `failure_list` 和 stderr。诊断报告包含候选排名、三项指标、逐样本硬分配、GMM 软责任度、空簇/噪声诊断、注入命中、失败清单、配置与注入哈希、快照版本、阶段耗时和延迟预算检查。
+
+## 实际验收结果
+
+详见 `RESULTS.md`。完整样本产生 12 个候选；5 个注入全部命中；快照恢复后的排名、指标表、逐样本分配、注入命中、失败清单和哈希与首跑一致；自动测试 6/6 通过。
