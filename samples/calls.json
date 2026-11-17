@@ -1,0 +1,28 @@
+{
+  "calls": [
+    {
+      "call_id": "call-row-axis",
+      "sequence": 1,
+      "rows": 6,
+      "cols": 8,
+      "softmax_axis": 1,
+      "layernorm_axis": 1,
+      "epsilon": 0.00001,
+      "stabilize": true,
+      "layernorm_scale": 1.0,
+      "reference_precision": "float64"
+    },
+    {
+      "call_id": "call-mixed-axis",
+      "sequence": 2,
+      "rows": 6,
+      "cols": 8,
+      "softmax_axis": -1,
+      "layernorm_axis": 0,
+      "epsilon": 0.0001,
+      "stabilize": true,
+      "layernorm_scale": 1.25,
+      "reference_precision": "float64"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "calls": [
+    {
+      "call_id": "call-row-axis",
+      "cols": 8,
+      "epsilon": 1e-06,
+      "layernorm_axis": 0,
+      "layernorm_scale": 1.0,
+      "reference_precision": "float64",
+      "rows": 6,
+      "sequence": 1,
+      "softmax_axis": 0,
+      "stabilize": false
+    },
+    {
+      "call_id": "call-mixed-axis",
+      "cols": 8,
+      "epsilon": 2e-05,
+      "layernorm_axis": 0,
+      "layernorm_scale": 1.25,
+      "reference_precision": "float64",
+      "rows": 6,
+      "sequence": 2,
+      "softmax_axis": 1,
+      "stabilize": true
+    }
+  ],
+  "failures": [
+    {
+      "call_id": "call-row-axis",
+      "call_sequence": 1,
+      "code": "E_EXP_OVERFLOW",
+      "command_id": null,
+      "command_index": null,
+      "details": {
+        "column": 7,
+        "max_subtraction": false,
+        "sum": "Infinity"
+      },
+      "lane": 7,
+      "message": "softmax exponent overflow with max subtraction disabled at column 7",
+      "row": null,
+      "stage": "softmax"
+    }
+  ],
+  "summary": {
+    "affected_rows": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "calls": [
+      {
+        "call_id": "call-row-axis",
+        "cols": 8,
+        "completed_lanes": {
+          "layernorm": 8,
+          "softmax": 8
+        },
+        "completed_rows": 6,
+        "epsilon": 1e-06,
+        "layernorm_axis": 0,
+        "layernorm_scale": 1.0,
+        "progress": {
+          "layernorm": 1.0,
+          "softmax": 1.0
+        },
+        "rows": 6,
+        "sequence": 1,
+        "softmax_axis": 0,
+        "softmax_max_subtraction": false,
+        "total_lanes": {
+          "layernorm": 8,
+          "softmax": 8
+        }
+      },
+      {
+        "call_id": "call-mixed-axis",
+        "cols": 8,
+        "completed_lanes": {
+          "layernorm": 8,
+          "softmax": 6
+        },
+        "completed_rows": 6,
+        "epsilon": 2e-05,
+        "layernorm_axis": 0,
+        "layernorm_scale": 1.25,
+        "progress": {
+          "layernorm": 1.0,
+          "softmax": 1.0
+        },
+        "rows": 6,
+        "sequence": 2,
+        "softmax_axis": 1,
+        "softmax_max_subtraction": true,
+        "total_lanes": {
+          "layernorm": 8,
+          "softmax": 6
+        }
+      }
+    ],
+    "completed_lanes": 30,
+    "completed_rows": 12,
+    "current_max_subtraction": {
+      "call-mixed-axis": true,
+      "call-row-axis": false
+    },
+    "progress": 1.0,
+    "total_lanes": 30
+  }
+}

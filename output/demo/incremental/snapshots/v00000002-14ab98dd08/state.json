@@ -1,0 +1,564 @@
+{
+  "active_business_code_counts": {
+    "E_EXP_OVERFLOW": 1
+  },
+  "call_states": [
+    {
+      "layernorm_failures": {},
+      "layernorm_keys": [
+        "0a2a64e4413bcc251ff114fa589e0c0655548ee639200850d3c06b6decb16b2f",
+        "514dc8c347bb65e5edfe9e995064ddde4c037e77c40cbd359d1550271549470f",
+        "c821a4cb52f978c2535b43d84a408713cc764429876fd3ae3e7abda7246470f0",
+        "723ec4e2a9b2c9106319342a636ad8c3d25c51411d6a64c4826a89506514917f",
+        "38daea11472dddbdeba89324302a824e2a404ba6c7cd4590765d795646176063",
+        "059aa09fb3a6f99b17baf3a4228e6c327631040299f917a4e65443ec1b028cba"
+      ],
+      "softmax_failures": {
+        "0": {
+          "call_id": "call-row-axis",
+          "call_sequence": 1,
+          "code": "E_EXP_OVERFLOW",
+          "command_id": null,
+          "command_index": null,
+          "details": {
+            "max_subtraction": false,
+            "row": 0,
+            "sum": "Infinity"
+          },
+          "lane": 0,
+          "message": "softmax exponent overflow with max subtraction disabled at row 0",
+          "row": 0,
+          "stage": "softmax"
+        }
+      },
+      "softmax_keys": [
+        "290b6d534d871094ad1f0dcdd0d102c22006beb496d1a0476ce39c30da9905e1",
+        "4c76829ababcea7bbe8d07f2aebd06efe7977779fa8681be8c8acf12103dab04",
+        "e8ad090f007af5f3e92f3c817bc4a8f75607411fb1019f299d1113e6c6ec5480",
+        "e6c78a0fc0a263f3732508ca2a865a613b17aa7850c66d6d450bcaec97ace261",
+        "f4254ef74aaf03ef99922abe2d694c07c8ff25e7fcc97a8c3ca0a25066fbddae",
+        "b0e9d3ca262cfb1d86994619b4705e9bbe71fb1a5bb4b4eb3ffead20b05ef198"
+      ],
+      "spec": {
+        "call_id": "call-row-axis",
+        "cols": 8,
+        "epsilon": 1e-06,
+        "layernorm_axis": 1,
+        "layernorm_scale": 1.0,
+        "reference_precision": "float64",
+        "rows": 6,
+        "sequence": 1,
+        "softmax_axis": 1,
+        "stabilize": false
+      }
+    },
+    {
+      "layernorm_failures": {},
+      "layernorm_keys": [
+        "0d3a981fa3a2ac58aba7afc805d81d233089372511c342f331a01579c9318739",
+        "ca5d6faf5e932abfa34d9bc34ae10d50b81b3d823239143d2e669df266d3cd2c",
+        "20e1642d91792221ff7b33f70474110cd38564dea5a72c1595024e4d9a606afc",
+        "e289b016bf9f94a3c178b6fde6c0806ab489704b8a8ae8fe328a474670118dec",
+        "854bb731a4fac48c4fc6b68e42e0636d58d9b6f8403eb48870d641b5f78c1c8d",
+        "077901a1df58d32819f1494b3d4d221edac6abcc70bb7b1d6a26329cb24f7328",
+        "3b904a2fca23dbb7a209e80065216e02fac1ea6ba8c47c40bc8fd26fa832a091",
+        "79337aed1c625aba6751392c722f0266653289e7d00a65116e34440b082762a3"
+      ],
+      "softmax_failures": {},
+      "softmax_keys": [
+        "585810c447b6d87f9584be9a15e83c7d0810159a453e84a6b0ad4ca3927537aa",
+        "8f76d6cb7582fbadffcff3ca165a94dda564c97b7a13fa4011b58f27ad27b866",
+        "095d5f013143222f50758aec92fb96c4033241d3201b017d99e1ccf74fadbc3e",
+        "a63a736400b518a71bb72cf7e7c61ac8d69670be6210c3bbc0f08c67b978e092",
+        "976e0ff880094ac0fa6e4c554e582399b5b2d87d4edf9948376aae4c71349f48",
+        "1aa9ffa0c489eb1ae76017eb36fb6b69559c8fa8d8daac8ec4fe5d4bd476dbe5"
+      ],
+      "spec": {
+        "call_id": "call-mixed-axis",
+        "cols": 8,
+        "epsilon": 1e-06,
+        "layernorm_axis": 0,
+        "layernorm_scale": 1.25,
+        "reference_precision": "float64",
+        "rows": 6,
+        "sequence": 2,
+        "softmax_axis": 1,
+        "stabilize": true
+      }
+    }
+  ],
+  "command_errors": [],
+  "command_records": [
+    {
+      "affected_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "business_codes": [],
+      "command_id": "cmd-001-epsilon",
+      "command_index": 0,
+      "command_type": "set_epsilon",
+      "completion_latency_ms": 3.4080159985023784,
+      "error_message": null,
+      "initial_status": "ok",
+      "over_budget": false,
+      "recomputed_lanes": 14,
+      "recomputed_rows": 6,
+      "response_latency_ms": 4.12428399977216,
+      "reused_lanes": 12,
+      "reused_rows": 6,
+      "snapshot_version": null,
+      "status": "ok"
+    },
+    {
+      "affected_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "business_codes": [],
+      "command_id": "cmd-002-replace-rows",
+      "command_index": 1,
+      "command_type": "replace_rows",
+      "completion_latency_ms": 2.8635430007852847,
+      "error_message": null,
+      "initial_status": "ok",
+      "over_budget": false,
+      "recomputed_lanes": 14,
+      "recomputed_rows": 6,
+      "response_latency_ms": 3.190186000210815,
+      "reused_lanes": 12,
+      "reused_rows": 4,
+      "snapshot_version": null,
+      "status": "ok"
+    },
+    {
+      "affected_rows": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "business_codes": [],
+      "command_id": "cmd-003-softmax-unstable-call-1",
+      "command_index": 2,
+      "command_type": "set_stabilize",
+      "completion_latency_ms": 2.32666500050982,
+      "error_message": null,
+      "initial_status": "queued",
+      "over_budget": false,
+      "recomputed_lanes": 6,
+      "recomputed_rows": 6,
+      "response_latency_ms": 0.0,
+      "reused_lanes": 20,
+      "reused_rows": 6,
+      "snapshot_version": null,
+      "status": "ok"
+    }
+  ],
+  "commands_digest": "ca6b6f634327466f5512e85fce782e2200400dfc066b7d459b5f99ca0bd364c2",
+  "config_hash": "93bce25179f204a643df67ad7637ca8c9549c3264dc482c694fba9af81eaacf8",
+  "current_input_fingerprint": "a968931943925cec14c22d14475d9baaef4b71b0ef687e9e06904475a0c42986",
+  "event_business_code_counts": {
+    "E_EXP_OVERFLOW": 1
+  },
+  "format_version": 1,
+  "global_version": 3,
+  "last_affected_rows": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "latest_summary": {
+    "affected_rows": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "calls": [
+      {
+        "call_id": "call-row-axis",
+        "cols": 8,
+        "completed_lanes": {
+          "layernorm": 6,
+          "softmax": 6
+        },
+        "completed_rows": 6,
+        "epsilon": 1e-06,
+        "layernorm_axis": 1,
+        "layernorm_scale": 1.0,
+        "progress": {
+          "layernorm": 1.0,
+          "softmax": 1.0
+        },
+        "rows": 6,
+        "sequence": 1,
+        "softmax_axis": 1,
+        "softmax_max_subtraction": false,
+        "total_lanes": {
+          "layernorm": 6,
+          "softmax": 6
+        }
+      },
+      {
+        "call_id": "call-mixed-axis",
+        "cols": 8,
+        "completed_lanes": {
+          "layernorm": 8,
+          "softmax": 6
+        },
+        "completed_rows": 6,
+        "epsilon": 1e-06,
+        "layernorm_axis": 0,
+        "layernorm_scale": 1.25,
+        "progress": {
+          "layernorm": 1.0,
+          "softmax": 1.0
+        },
+        "rows": 6,
+        "sequence": 2,
+        "softmax_axis": 1,
+        "softmax_max_subtraction": true,
+        "total_lanes": {
+          "layernorm": 8,
+          "softmax": 6
+        }
+      }
+    ],
+    "completed_lanes": 26,
+    "completed_rows": 12,
+    "current_max_subtraction": {
+      "call-mixed-axis": true,
+      "call-row-axis": false
+    },
+    "progress": 1.0,
+    "total_lanes": 26
+  },
+  "next_command_index": 3,
+  "reference_comparison": {
+    "call-mixed-axis": {
+      "layernorm_max_abs_difference": 1.9075250889954987e-07,
+      "mean_max_abs_difference": 1.0927518090397825e-07,
+      "reference_precision": "float64",
+      "softmax_max_abs_difference": 5.0955475339176104e-08,
+      "variance_max_abs_difference": 9.770468386705033e-05
+    },
+    "call-row-axis": {
+      "layernorm_max_abs_difference": 2.497691884428832e-07,
+      "mean_max_abs_difference": 4.842877388000488e-08,
+      "reference_precision": "float64",
+      "softmax_max_abs_difference": "NaN",
+      "variance_max_abs_difference": 0.00010025506890087854
+    }
+  },
+  "reuse_recompute_history": [
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-001-epsilon",
+      "command_index": 0,
+      "command_type": "set_epsilon",
+      "total_recomputed_lanes": 14,
+      "total_reused_lanes": 12
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-002-replace-rows",
+      "command_index": 1,
+      "command_type": "replace_rows",
+      "total_recomputed_lanes": 14,
+      "total_reused_lanes": 12
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-003-softmax-unstable-call-1",
+      "command_index": 2,
+      "command_type": "set_stabilize",
+      "total_recomputed_lanes": 6,
+      "total_reused_lanes": 20
+    }
+  ],
+  "snapshot_version": 2,
+  "source_input_fingerprint": "3082a101d65663192388cddaac5729cf7b12eb7df2263dcc109c2d1627c91595"
+}

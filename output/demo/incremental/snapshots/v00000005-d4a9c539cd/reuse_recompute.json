@@ -1,0 +1,988 @@
+{
+  "history": [
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-001-epsilon",
+      "command_index": 0,
+      "command_type": "set_epsilon",
+      "total_recomputed_lanes": 14,
+      "total_reused_lanes": 12
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              1,
+              2
+            ],
+            "recomputed_rows": [
+              1,
+              2
+            ],
+            "reused_lanes": [
+              0,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-002-replace-rows",
+      "command_index": 1,
+      "command_type": "replace_rows",
+      "total_recomputed_lanes": 14,
+      "total_reused_lanes": 12
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-003-softmax-unstable-call-1",
+      "command_index": 2,
+      "command_type": "set_stabilize",
+      "total_recomputed_lanes": 6,
+      "total_reused_lanes": 20
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-004-softmax-axis-call-1",
+      "command_index": 3,
+      "command_type": "set_softmax_axis",
+      "total_recomputed_lanes": 8,
+      "total_reused_lanes": 20
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              4,
+              5
+            ],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              4,
+              5
+            ],
+            "recomputed_rows": [
+              4,
+              5
+            ],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-005-replace-high-magnitude",
+      "command_index": 4,
+      "command_type": "replace_rows",
+      "total_recomputed_lanes": 20,
+      "total_reused_lanes": 8
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-006-layernorm-axis-call-1",
+      "command_index": 5,
+      "command_type": "set_layernorm_axis",
+      "total_recomputed_lanes": 8,
+      "total_reused_lanes": 22
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      },
+      "command_id": "cmd-007-epsilon-call-2",
+      "command_index": 6,
+      "command_type": "set_epsilon",
+      "total_recomputed_lanes": 8,
+      "total_reused_lanes": 22
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-008-restore-stable-call-1",
+      "command_index": 7,
+      "command_type": "set_stabilize",
+      "total_recomputed_lanes": 8,
+      "total_reused_lanes": 22
+    },
+    {
+      "calls": {
+        "call-mixed-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "call-row-axis": {
+          "layernorm": {
+            "recomputed_lanes": [],
+            "recomputed_rows": [],
+            "reused_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "reused_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "softmax": {
+            "recomputed_lanes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "recomputed_rows": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "reused_lanes": [],
+            "reused_rows": []
+          }
+        }
+      },
+      "command_id": "cmd-009-final-unstable-call-1",
+      "command_index": 8,
+      "command_type": "set_stabilize",
+      "total_recomputed_lanes": 8,
+      "total_reused_lanes": 22
+    }
+  ],
+  "latest": {
+    "calls": {
+      "call-mixed-axis": {
+        "layernorm": {
+          "recomputed_lanes": [],
+          "recomputed_rows": [],
+          "reused_lanes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "reused_rows": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "softmax": {
+          "recomputed_lanes": [],
+          "recomputed_rows": [],
+          "reused_lanes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "reused_rows": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      },
+      "call-row-axis": {
+        "layernorm": {
+          "recomputed_lanes": [],
+          "recomputed_rows": [],
+          "reused_lanes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "reused_rows": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "softmax": {
+          "recomputed_lanes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "recomputed_rows": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "reused_lanes": [],
+          "reused_rows": []
+        }
+      }
+    },
+    "command_id": "cmd-009-final-unstable-call-1",
+    "command_index": 8,
+    "command_type": "set_stabilize",
+    "total_recomputed_lanes": 8,
+    "total_reused_lanes": 22
+  }
+}
