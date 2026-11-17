@@ -1,0 +1,37 @@
+{
+  "rules": [
+    {
+      "rule_id": "rule-orders",
+      "prefix": "/api/orders",
+      "stable_target": "orders-v1",
+      "gray_target": "orders-v2-canary",
+      "gray_weight": 3333,
+      "mirror_rate": 2500,
+      "gray_retries": 2,
+      "mirror_timeout_ms": 800,
+      "mirror_target": "orders-mirror"
+    },
+    {
+      "rule_id": "rule-users",
+      "prefix": "/api/users",
+      "stable_target": "users-v1",
+      "gray_target": "users-v2-canary",
+      "gray_weight": 1111,
+      "mirror_rate": 700,
+      "gray_retries": 1,
+      "mirror_timeout_ms": 500,
+      "mirror_target": "users-mirror"
+    },
+    {
+      "rule_id": "rule-orders-deep",
+      "prefix": "/api/orders/refund",
+      "stable_target": "refund-v1",
+      "gray_target": "refund-v2-canary",
+      "gray_weight": 600,
+      "mirror_rate": 9000,
+      "gray_retries": 0,
+      "mirror_timeout_ms": 1200,
+      "mirror_target": "refund-mirror"
+    }
+  ]
+}
