@@ -1,0 +1,15 @@
+status
+algo disable random_partition_depth
+settle
+param set histogram_density bins 20
+settle
+preprocess set mode standardize
+settle
+threshold set 0.61
+settle
+algo enable random_partition_depth
+param set random_partition_depth trees 40
+settle
+compare full
+report
+quit

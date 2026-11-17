@@ -1,0 +1,72 @@
+version: 1
+
+data:
+  description: data_description.yaml
+  target_field: is_anomaly
+  feature_columns:
+    - amount
+    - latency_ms
+    - visits
+    - channel
+    - region
+    - amount_copy
+
+preprocessing:
+  mode: robust_standardize
+  numeric_fill: median
+  categorical_fill: mode
+  constant_value: "__MISSING__"
+  numeric_columns:
+    - amount
+    - latency_ms
+    - visits
+    - amount_copy
+  categorical_columns:
+    - channel
+    - region
+  candidates:
+    mode: [robust_standardize, standardize, raw]
+    numeric_fill: [median, mean, zero]
+    categorical_fill: [mode, constant]
+
+algorithms:
+  robust_mahalanobis:
+    enabled: true
+    weight: 1.0
+    params:
+      regularization: 0.000001
+    candidates:
+      regularization: [0.000001, 0.00001, 0.0001]
+  histogram_density:
+    enabled: true
+    weight: 1.0
+    params:
+      bins: 12
+      neighborhood: 1
+    candidates:
+      bins: [8, 12, 20]
+      neighborhood: [0, 1, 2]
+  random_partition_depth:
+    enabled: true
+    weight: 1.0
+    params:
+      trees: 24
+      sample_size: 192
+      max_depth: 9
+    candidates:
+      trees: [16, 24, 40]
+      sample_size: [96, 192, 320]
+      max_depth: [6, 9, 12]
+
+threshold: 0.68
+
+interaction:
+  latency_budget_ms: 35
+  concurrency: 4
+  snapshot_interval: 1
+
+storage:
+  snapshot_dir: .workbench/snapshots
+  cache_dir: .workbench/cache
+  report_path: .workbench/report.json
+  injection_report_path: .workbench/injection_report.json

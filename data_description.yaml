@@ -1,0 +1,44 @@
+version: 1
+
+dataset:
+  name: local_deterministic_anomaly_diagnostics
+  seed: 20261118
+  sample_count: 1400
+  id_prefix: S
+  id_width: 6
+  missing_ratio: 0.018
+  target:
+    field: is_anomaly
+    anomaly_ratio: 0.07
+  columns:
+    - name: amount
+      type: numeric
+      distribution: normal
+      mean: 120.0
+      std: 32.0
+      anomaly_shift: 165.0
+    - name: latency_ms
+      type: numeric
+      distribution: normal
+      mean: 75.0
+      std: 18.0
+      anomaly_shift: 82.0
+    - name: visits
+      type: numeric
+      distribution: normal
+      mean: 12.0
+      std: 4.0
+      anomaly_shift: 15.0
+    - name: channel
+      type: categorical
+      categories: [web, ios, android, partner]
+      anomaly_category: partner
+    - name: region
+      type: categorical
+      categories: [east, west, north, south]
+      anomaly_category: south
+    - name: amount_copy
+      type: numeric
+      distribution: redundant
+      source: amount
+      noise: 0.05
