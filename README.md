@@ -1,21 +1,146 @@
-在空白工作区构建一个本地确定性的文生图与图生图多阶段渲染诊断工作台，用于在数据规模连续变化时诊断提示词编码、去噪采样、解码与图生图分支的算法取舍。输入为一个本地配置 YAML 与按固定种子生成的渲染样本描述：包含若干提示词片段（受限词表与词袋嵌入维度）、种子列表、去噪步数、引导强度、分辨率档位集合（如 32x32、64x64 两档）、噪声表与引导表长度、批大小档位、缓存预算（以潜变量块计）、首帧预览延迟预算毫秒、并发数与快照提交间隔。工作台需完成确定性提示词编码、潜变量初始化、逐去噪步、解码与多档位预览，并在同一配置下支持多档规模重复试验，输出可复现的决策记录与精度诊断，供渲染参数取舍分析。
+# Deterministic render diagnostics workbench
 
-任务环境与准备：
-安装 Python 3.11 及以上版本与 NumPy，从命令行确认 Python 与 NumPy 可导入。
-在空白工作区创建项目目录，编写本地 YAML 配置与提示词样本描述，运行前确认噪声表与引导表由脚本生成且长度与去噪步数一致。
-准备本地临时目录用于阶段快照与 PNG 输出，确认无需网络、GPU 或外部模型权重。
+`renderlab` is a local, CPU-only, deterministic multi-stage text-to-image and
+image-to-image diagnostic harness. It uses a local YAML config, a local prompt
+sample, a SHA-256 random stream and NumPy only. There is no network access, GPU
+requirement, model download or external weight file.
 
-业务要求：
-1. 实现渲染配置与样本加载层：读取本地 YAML 配置与提示词样本描述，按词表与固定种子确定性构造词袋嵌入与张量；对未知配置键、词袋维度与词表不匹配、种子越界、分辨率档位非递增、噪声表长度与去噪步数不符、缓存预算为零等情况分别输出 E_CONFIG_INVALID 或 E_NOISE_TABLE_MISMATCH 业务码并进入失败清单，失败项不得参与后续渲染。
-2. 实现确定性提示词编码与潜变量初始化阶段：按受限词表生成归一化词袋嵌入，以配置种子与提示词内容指纹派生的固定随机源生成各分辨率档位初始潜变量，不使用任何运行时随机数；同一提示词与种子在同一档位下多次运行必须得到逐元素一致的嵌入与潜变量，并输出阶段指纹供下游依赖判定使用。
-3. 实现逐去噪步与解码阶段：每步读取上一步潜变量，叠加噪声表与由引导强度缩放的条件项，全部累加按固定运算顺序执行；解码以线性投影加逐像素裁剪到 0-255 输出 PNG 字节；图生图分支以初始图编码潜变量替代配置指定的早期去噪步，替代步数超过总步数时输出 E_IMG2IMG_STEP_INVALID，同一输入与配置下输出 PNG 逐字节一致。
-4. 实现数据规模自适应策略选择器：依据提示词条数、批大小档、当前分辨率档位单帧估计代价、缓存预算与去噪步数，从预置策略表中选择本批次启用的分辨率档位、每批提示词条数、去噪步数与是否启用潜变量分块，输出含所参考规模指标数值、候选策略评分、最终选择理由与策略表版本号的决策记录，且同一策略在同一规模下必须稳定复现。
-5. 实现基于内容指纹的阶段级增量失效与精确重算范围判定：为编码、初始化、每步去噪与解码产物计算由上游内容指纹、参数指纹与策略表版本派生的缓存键；当切换规模档、修改种子或引导强度、替换某提示词或调整分辨率档位集合时，仅将受影响阶段及其全部下游标记失效并纳入重算集合，未失效阶段必须直接复用已持久化产物且不得重新执行。
-6. 实现潜变量分块缓存驻留与淘汰：潜变量以配置的块大小为单位驻留，驻留块数受缓存预算约束；新块加入超过预算时按最近最少使用淘汰，同访问序号按块键字典序决断；被淘汰块在被下游步骤再次引用时必须重算且重算结果与首次计算逐元素一致，重算与复用次数须计入诊断报告，以验证缓存机制而非延迟替代。
-7. 实现规模档编辑序列下增量运行与全量重建的逐像素一致：从任意初始状态执行包含档位收窄或扩张、批大小切换、种子与引导强度修改、提示词替换与局部潜变量补丁的编辑序列，每次增量运行得到的各档位最终像素、中间潜变量摘要、失效复用清单与决策记录，必须与从空白工作区按相同最终输入一次性全量运行逐字段一致。
-8. 实现并发执行一致性与首帧预算响应：使用线程池并发执行去噪步与解码，最大并发数取自配置，每个任务携带由档位、提示词序号、步序号与帧序号派生的稳定排序键；交互命令触达后在配置的首帧预算内优先返回最近一次已完成的最低档位首帧预览与进度摘要，预算内无法得到最新参数下结果时返回带 E_PREVIEW_BUDGET_PENDING 业务码的中间状态而非阻塞等待，最终输出顺序须与串行执行一致。
+The pipeline is deliberately explicit:
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+1. strict config/sample validation;
+2. normalized restricted-vocabulary bag-of-words encoding;
+3. seeded per-tier latent initialisation and optional img2img projection;
+4. ordered denoise steps with noise and guidance terms;
+5. fixed linear decoding, clipping and deterministic PNG encoding;
+6. content-addressed stage persistence, bounded LRU latent blocks and edit-time
+   invalidation;
+7. thread-pool execution with stable task keys and a non-blocking preview budget.
 
-验收：
-用本地样本验证多档规模下的渲染、增量失效与缓存复用，核对增量结果与全量重建逐像素一致。
+## Environment
+
+Confirmed in this workspace:
+
+- Python `3.11.0rc1` at `/usr/bin/python3`
+- NumPy `2.4.6`
+- PyYAML `5.4.1`
+
+```bash
+cd /home/zsl/feedback/uid201
+python3 --version
+python3 -c 'import numpy, yaml; print(numpy.__version__, yaml.__version__)'
+python3 scripts/generate_inputs.py
+python3 scripts/validate_inputs.py
+```
+
+The generator writes `samples/noise_table.yaml`, `samples/guidance_table.yaml`
+and `samples/initial.ppm`. It asserts that both tables have exactly six entries,
+matching `render.denoise_steps: 6` in `configs/workbench.yaml`.
+
+## Quick start
+
+```bash
+# One cold/current-cache render. PNGs and stage metadata stay under .renderlab.
+python3 -m renderlab run \
+  --config configs/workbench.yaml \
+  --temp-dir .renderlab/run-report \
+  --batch-size 2 \
+  --report reports/run_report.json
+
+# Seven-edit incremental sequence, followed by an independent cold rebuild.
+python3 -m renderlab demo \
+  --config configs/workbench.yaml \
+  --edits configs/edit_sequence.yaml \
+  --batch-size 2 \
+  --incremental-dir .renderlab/demo-incremental \
+  --fresh-dir .renderlab/demo-fresh \
+  --report-dir reports
+
+# The first request is expected to return E_PREVIEW_BUDGET_PENDING with budget 0.
+python3 -m renderlab preview-probe \
+  --config configs/workbench.yaml \
+  --temp-dir .renderlab/preview-probe \
+  --budget-ms 0 \
+  --report reports/preview_probe.json
+
+# Full local test suite.
+python3 -m unittest discover -s tests -v
+```
+
+JSON reports include the strategy table version, metrics, candidate scores,
+selected policy and reason, frame-level embedding/initial-latent/step summaries,
+PNG hashes, stage cache keys, invalidation/reuse events, concurrency order, LRU
+diagnostics, snapshots and preview state.
+
+## Configuration
+
+`configs/workbench.yaml` controls the pipeline; `samples/prompts.yaml` contains
+the restricted vocabulary, embedding dimension, seeds and prompt token bags.
+Unknown keys and invalid structural values are rejected rather than silently
+ignored.
+
+Important business codes:
+
+- `E_CONFIG_INVALID`: unknown key, dimension/vocabulary mismatch, seed outside
+  range, non-increasing tier area, zero cache budget and other structural input
+  errors;
+- `E_NOISE_TABLE_MISMATCH`: declared or actual noise/guidance table length does
+  not equal `render.denoise_steps`;
+- `E_IMG2IMG_STEP_INVALID`: img2img replacement count exceeds configured or
+  selected denoise steps;
+- `E_PREVIEW_BUDGET_PENDING`: no current-parameter preview is ready within the
+  budget; a previously completed low-tier preview is returned when available.
+
+Invalid individual seeds or prompts are removed from the render set and appear
+in the failure list. Structural failures prevent the run from starting.
+
+## Determinism and cache model
+
+- Prompt embeddings are normalized bag-of-words vectors; canonical token sorting
+  makes token order irrelevant.
+- Latent noise comes from a SHA-256 counter stream derived from seed, prompt
+  fingerprint, tier geometry and fixed initializer version. Python/NumPy global
+  RNG state is never used.
+- Every stage key is derived from upstream content fingerprint, a parameter
+  fingerprint and `strategy-table-v1`.
+- Stage artifacts are validated before reuse; malformed or partial entries are
+  misses. A cache hit does not execute the stage again.
+- Latent blocks use bounded LRU. Equal access-sequence ties evict the lexical
+  smallest block key. Evicted blocks requested again are recomputed through a
+  pure replay function and compared by digest.
+- Thread-pool results are assembled by `(tier rank, prompt index, step, frame
+  index)`, so output order is independent of completion order.
+
+## Actual validation result
+
+Full details are in `reports/equivalence.json` and `docs/VALIDATION.md`.
+
+- 22 unit tests passed (`python3 -m unittest discover -s tests -v`).
+- The edit sequence made seven incremental runs and then a cold rebuild.
+- Both runs produced 18 frames across `tier32` and `tier64`.
+- All 18 PNG files compared byte-for-byte equal.
+- Incremental and cold canonical fingerprints both equal
+  `57faa6f52d72a747984db5fccf731af87f254c7618d5d4c56ef78cc83fe6e522`.
+- Final incremental execution reused 179 stage artifacts, computed one patched
+  initialization, and performed 120 LRU block hits, 330 deterministic
+  recomputations, and zero recompute digest mismatches.
+- The preview probe returned `E_PREVIEW_BUDGET_PENDING` immediately, then the
+  completed `tier32` first frame after the render finished.
+
+One diagnostic distinction is intentional: actual `computed_stages` /
+`reused_stages` execution telemetry depends on whether a persistent cache was
+present. The canonical equivalence view contains the final pixels, latent
+summaries, strategy decision, snapshots and logical stage keys; those fields are
+identical between the incremental and cold rebuild. See `docs/DESIGN.md` for the
+cache and invalidation contract.
+
+## Project layout
+
+```text
+renderlab/        package: config, engine, strategy, cache, preview, CLI, PNG
+configs/          workbench config and edit sequence
+samples/          generated tables, prompt description and starter image
+scripts/          deterministic input generator and input validator
+tests/            unit and integration tests (stdlib unittest)
+reports/          generated verification evidence
+docs/             design and validation notes
+```

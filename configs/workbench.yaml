@@ -1,0 +1,37 @@
+schema_version: 1
+project:
+  name: deterministic-render-diagnostics
+prompt:
+  samples_path: ../samples/prompts.yaml
+  embedding_dim: 8
+render:
+  denoise_steps: 6
+  guidance_scale: 3.25
+  resolution_tiers:
+    - name: tier32
+      width: 32
+      height: 32
+    - name: tier64
+      width: 64
+      height: 64
+  batch_sizes: [1, 2, 4]
+  latent_block_size: 2048
+  cache_budget_blocks: 24
+  seed_max: 2147483647
+  noise_table:
+    path: ../samples/noise_table.yaml
+    expected_length: 6
+  guidance_table:
+    path: ../samples/guidance_table.yaml
+    expected_length: 6
+img2img:
+  enabled: true
+  replace_early_steps: 2
+  initial_image_path: ../samples/initial.ppm
+runtime:
+  temp_dir: ../.renderlab
+  concurrency: 4
+  preview_budget_ms: 25
+  snapshot_interval: 2
+strategy:
+  version: strategy-table-v1

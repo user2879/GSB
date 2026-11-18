@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "renderlab"
+version = "1.0.0"
+description = "Local deterministic text-to-image and image-to-image diagnostics workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "PyYAML>=6.0"]
+
+[project.scripts]
+renderlab = "renderlab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["renderlab*"]
