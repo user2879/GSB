@@ -1,0 +1,50 @@
+{
+  "format_version": 3,
+  "metadata": {
+    "generated_by": "scripts/generate_samples.py"
+  },
+  "name": "sample-v3-derivation",
+  "revision": 3,
+  "volumes": [
+    {
+      "burst_capacity": 2,
+      "capacity_bytes": 1000,
+      "derivation": null,
+      "id": "root",
+      "limit_dimension": "operations",
+      "ops_per_sec": 2
+    },
+    {
+      "burst_capacity": 400,
+      "capacity_bytes": 700,
+      "derivation": {
+        "factor": 1,
+        "offset": 100,
+        "upstream_id": "root"
+      },
+      "id": "child",
+      "limit_dimension": "bytes",
+      "ops_per_sec": 5
+    },
+    {
+      "burst_capacity": 0,
+      "capacity_bytes": 50,
+      "derivation": null,
+      "id": "archive",
+      "limit_dimension": "bytes",
+      "ops_per_sec": 0
+    },
+    {
+      "burst_capacity": 1,
+      "capacity_bytes": 5000,
+      "derivation": {
+        "factor": 1,
+        "offset": 0,
+        "upstream_id": "root"
+      },
+      "id": "mirror",
+      "limit_dimension": "operations",
+      "ops_per_sec": 1
+    }
+  ]
+}

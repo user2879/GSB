@@ -1,22 +1,132 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向本地 Windows 环境的存储配额与限流配置编辑应用，交付领域数据编辑与操作应用。系统以本地 JSON 文件声明一组存储卷及其配额限流策略：每个卷含卷标识、容量上限字节数、每秒操作数上限、突发桶容量、限流维度（按写入字节或按操作数）以及与其他卷的派生关系（某卷的配额由上游卷按整数系数与偏移量派生）。配置存在三种历史格式版本：v1 仅含卷标识与容量上限，v2 增加每秒操作数上限与突发桶容量，v3 再增加限流维度与派生系数。用户在 Tkinter 界面或脚本中编辑配置、录入确定性访问事件流，应用须按生效策略判定每次访问是放行、限流还是超配额，并把每次配置演进、判定结果与用量账本持久化到本地 SQLite。应用须在各格式版本间互操作、在编辑配置时保持界面响应并给出判定与账本。
+# 本地存储配额与限流配置编辑器
 
-任务环境与准备：
-安装 Python 3.11 或以上，确认标准库 sqlite3 与 tkinter 可用（Windows 官方安装包默认包含）。
-在工作区根目录创建项目目录与空的数据目录，准备本地确定性样本：三版本配额限流配置 JSON、派生关系声明与事件流 NDJSON，均由脚本生成且不依赖网络。
-确认可在本地命令行运行 Python 脚本与 pytest（如未安装 pytest，可用标准库 unittest 执行测试）。
-任务执行前检查端口与文件路径均为本地路径，不访问真实存储服务或线上站点。
+这是一个只依赖 Python 标准库的本地应用。它读取本地 JSON 配置和 NDJSON 访问事件，完成配置格式升级、派生配额解析、整数定点配额/令牌桶判定，并把配置版本、逐事件判定、误差界、用量和恢复进度写入本地 SQLite。Tkinter 界面只在本机 Windows 上启动，不访问网络、端口或真实存储服务。
 
-业务要求：
-1. 实现三版本配额限流配置的编解码与加载归一：v1 仅含卷标识与容量上限字节数，v2 增加每秒操作数上限与突发桶容量，v3 再增加限流维度与派生系数；加载时检测格式版本，未知版本、字段缺失或数值为负须以 E_FORMAT 整体拒绝加载并输出首个出错卷标识与字段路径，不得部分生效。
-2. 实现配置自动升级与中断续做：打开配置目录时检测低于当前版本的条目，逐条在内存中完成记录级升级并以当前版本重写，每完成一条即原子更新检查点文件，旧条目保留为只读备份；强制终止后重启只能依据检查点继续升级，已升级条目不得重复处理，不可读取的旧条目须以 E_UPGRADE 报告并跳过其余继续。
-3. 实现配额与限流判定的定点计算：按卷生效策略对确定性访问事件流逐条判定放行、限流或超配额，每秒操作数补充量与突发桶余量、写入字节累计与容量上限的比较均以整数运算完成并显式声明截断方向与边界判定规则；须给出单值与聚合判定的量化误差上界，判定结果与误差界写入账本。
-4. 实现派生配额的依赖图与一致性校验：按派生系数与偏移量由上游卷推导下游卷的配额上限，校验派生图无环、系数与偏移为整数、派生链可逐级回溯；派生结果与显式声明的配额冲突时须按显式规则仲裁并记录依据，成环或引用缺失须以 E_DERIVE 报告并列出环上卷标识序列。
-5. 实现在编辑与判定并行时的交互响应与一致视图：界面编辑走快速路径即时展示当前配置摘要与判定预览，同时提供权威重算按账本事件流逐条重放得出判定结论；任一交互预览与权威重放不一致须以 E_PREVIEW 报告卷标识、事件序号与差异字段，且单次预览超过显式整数毫秒预算时须记录 E_LATENCY 而不阻塞后续编辑。
-6. 实现用量账本与版本识别的整体替换：账本持久化配置版本、升级检查点、逐事件判定结果、误差界与用量统计；配置被编辑后版本号单调递增，旧版本下的判定与统计须标记为陈旧且不得参与当前视图，当前视图与账本须整体替换而非增量合并，替换时须稳定列出受影响卷与变动字段。
-7. 实现强制终止后的恢复与历史重放校验：账本每完成一个事件批次须在同一 SQLite 事务中写入判定结果、用量与进度游标，强制终止后重启只能依据已完整提交的批次恢复，未完成批次须标记为未知并要求重跑，不得声称能生成退出时的报告；恢复后按账本记录的配置版本重放已完成批次并与保存结论逐项比较，不可复现须以 E_REPLAY 报明依据。
-8. 实现异常链路与 Tkinter 编辑应用：支持以命令行参数分别注入配置文件损坏、升级检查点缺失、事件流时间戳倒退三类异常，分别以 E_FORMAT、E_UPGRADE、E_ORDER 业务码报告并写入结构化日志；界面展示卷列表与格式版本、生效配额与派生依据、逐事件判定与用量曲线、误差界及陈旧标记，渲染顺序稳定。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+Windows 官方 Python 3.11+ 安装包默认包含 `tkinter` 与 `sqlite3`。
 
-验收：
-用本地样本验证三版本配置互操作、配额限流判定与账本恢复的一致性，并确认异常均返回约定业务码。
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python .\scripts\generate_samples.py --output .\data
+python -m quota_app upgrade --config-dir .\data\configs --events .\data\events\access-events.ndjson --ledger .\data\ledger.sqlite3 --log .\data\logs\quota-app.jsonl
+python -m quota_app run --config-dir .\data\configs --events .\data\events\access-events.ndjson --ledger .\data\ledger.sqlite3 --log .\data\logs\quota-app.jsonl --batch-size 3
+python -m quota_app gui --config-dir .\data\configs --events .\data\events\access-events.ndjson --ledger .\data\ledger.sqlite3 --log .\data\logs\quota-app.jsonl --preview-budget-ms 50
+```
+
+Linux/WSL 上可替换为 `python3`。无 Tkinter 的环境仍可运行完整核心、测试和命令行；GUI 命令会返回 `E_GUI`。
+
+测试不依赖 pytest：
+
+```bash
+python -m unittest discover -s tests -t . -v
+```
+
+## 本地样本
+
+`scripts/generate_samples.py` 只写本地文件，生成：
+
+- `data/configs/config-v1.json`：v1，只含卷标识和容量。
+- `data/configs/config-v2.json`：v2，增加 `ops_per_sec`、`burst_capacity`。
+- `data/configs/config-v3.json`：v3，增加 `limit_dimension` 和派生关系。
+- `data/configs/upgrade_checkpoint.json`：初始空检查点。
+- `data/metadata/derivations.json`：派生声明与预期仲裁结果说明。
+- `data/events/access-events.ndjson`：10 条确定性访问事件。
+
+第一次打开配置目录时，v1/v2 会在内存中校验、升级并原子重写为 v3；原文件内容保存在只读 `data/configs/backups/*.bak`。
+
+## 配置格式
+
+当前编码版本为 v3。加载器同时接受整数版本字段 `format_version`、`version` 或 `schema_version`。
+
+```json
+{
+  "format_version": 3,
+  "revision": 3,
+  "name": "sample-v3-derivation",
+  "volumes": [
+    {
+      "id": "root",
+      "capacity_bytes": 1000,
+      "ops_per_sec": 2,
+      "burst_capacity": 2,
+      "limit_dimension": "operations",
+      "derivation": null
+    },
+    {
+      "id": "child",
+      "capacity_bytes": 700,
+      "ops_per_sec": 5,
+      "burst_capacity": 400,
+      "limit_dimension": "bytes",
+      "derivation": {"upstream_id": "root", "factor": 1, "offset": 100}
+    }
+  ]
+}
+```
+
+- `revision` 是配置修订号，必须随编辑单调递增；它不同于格式版本。
+- `limit_dimension` 取 `bytes` 或 `operations`，也接受 `write_bytes`、`ops` 等别名并在录入时归一。
+- v1 归一后 `ops_per_sec=burst_capacity=0`、维度为 `bytes`，表示不启用限流。
+- v3 也接受扁平派生字段 `derived_from`、`factor`、`offset`，但应用总是输出嵌套 `derivation`。
+- 所有数值必须是非负整数；布尔值不视为整数。
+
+## 事件格式
+
+每行一个 JSON。规范字段如下，也支持常见别名 `sequence`、`ts_ms`、`ops`、`bytes` 等：
+
+```json
+{"operation_count":1,"seq":1,"timestamp_ms":0,"volume_id":"root","write_bytes":100}
+```
+
+`seq` 必须严格递增，`timestamp_ms` 必须是非负整数且全流不倒退。事件流在写账本前完整校验，因此 `E_ORDER` 不会留下部分批次。
+
+## 命令
+
+所有命令都使用本地路径：
+
+```text
+python -m quota_app validate  --config-dir ... --events ...
+python -m quota_app upgrade   --config-dir ... --ledger ... --log ...
+python -m quota_app run       --config-dir ... --events ... --ledger ... --log ... --batch-size 3
+python -m quota_app recover   --ledger ... --log ...
+python -m quota_app preview   --config-dir ... --volume child --capacity-bytes 800 --preview-budget-ms 50 ...
+python -m quota_app edit      --config-dir ... --volume child --capacity-bytes 800 --ingest --batch-size 3 ...
+python -m quota_app view      --ledger ...
+python -m quota_app gui       --config-dir ... --events ... --ledger ... --log ...
+```
+
+异常注入使用临时副本，不破坏样本：
+
+```text
+python -m quota_app inject corrupt-config       --config-dir data/configs --events data/events/access-events.ndjson --log data/logs/injection.jsonl
+python -m quota_app inject missing-checkpoint   --config-dir data/configs --events data/events/access-events.ndjson --log data/logs/injection.jsonl
+python -m quota_app inject timestamp-regression --config-dir data/configs --events data/events/access-events.ndjson --log data/logs/injection.jsonl
+```
+
+等价的 `run --inject corrupt-config|missing-checkpoint|timestamp-regression` 也可用；也提供 `--inject-corrupt-config`、`--inject-missing-checkpoint`、`--inject-timestamp-regression` 三个独立开关。注入自检成功时退出码为 0，输出中的 `code` 分别固定为 `E_FORMAT`、`E_UPGRADE`、`E_ORDER`。
+
+## 判定规则摘要
+
+- 容量：`累计已放行写入字节 + 本次 write_bytes <= capacity_bytes` 放行；超过则 `OVER_QUOTA`。
+- 令牌桶：令牌按 1/1000 单位量整数存储；`增量 = delta_ms * rate_per_sec`，上限为 `burst_capacity * 1000`。
+- 顺序：先判断配额，再判断限流；同时越界时返回 `OVER_QUOTA`。拒绝事件不消耗令牌、不增加已放行写入量。
+- 边界：容量和令牌均采用“等于可通过”。时间戳只接受整数毫秒；换算采用向下取整到 1/1000 单位，但整数公式无余数。
+- 误差：单事件和聚合量化误差上界均为 0，并逐条写入 `judgments`，同时记录在账本计算策略元数据中。
+- 派生：`derived = upstream_effective_capacity * factor + offset`；与显式容量冲突时取较小值，即同时满足显式上限和派生上限，并记录仲裁依据。成环或缺失引用返回 `E_DERIVE`。
+
+## 业务码与日志
+
+| 业务码 | 含义 |
+| --- | --- |
+| `E_FORMAT` | 配置/事件格式、未知版本、缺字段、负数、损坏 JSON |
+| `E_UPGRADE` | 旧条目不可读、检查点缺失/损坏、升级无法安全继续 |
+| `E_DERIVE` | 派生成环或引用缺失 |
+| `E_ORDER` | 事件序号或时间戳倒退 |
+| `E_PREVIEW` | 快速预览与权威重放不一致 |
+| `E_LATENCY` | 单次预览超过显式整数毫秒预算 |
+| `E_REPLAY` | 已提交批次无法按账本输入逐项复现 |
+| `E_GUI` | 当前 Python 无 Tkinter 或无法创建窗口 |
+
+每条业务错误写入 JSONL 结构化日志（时间、业务码、操作、卷、字段路径、详情），账本也会保存关键错误到 `structured_events`。详细设计见 `TECHNICAL.md`，实际验证结果见 `VERIFICATION.md`。

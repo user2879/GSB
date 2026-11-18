@@ -1,0 +1,25 @@
+{
+  "arbitration_rule": "effective_capacity = min(explicit_capacity, derived_capacity)",
+  "derived_capacity_rule": "upstream_effective_capacity * factor + offset",
+  "relationships": [
+    {
+      "expected_arbitration": "explicit",
+      "expected_derived_capacity_bytes": 1100,
+      "explicit_capacity_bytes": 700,
+      "factor": 1,
+      "offset": 100,
+      "upstream_id": "root",
+      "volume_id": "child"
+    },
+    {
+      "expected_arbitration": "derived",
+      "expected_derived_capacity_bytes": 1000,
+      "explicit_capacity_bytes": 5000,
+      "factor": 1,
+      "offset": 0,
+      "upstream_id": "root",
+      "volume_id": "mirror"
+    }
+  ],
+  "schema_version": 3
+}

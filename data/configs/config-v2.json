@@ -1,0 +1,25 @@
+{
+  "format_version": 2,
+  "name": "sample-v2-rate-fields",
+  "revision": 2,
+  "volumes": [
+    {
+      "burst_capacity": 2,
+      "capacity_bytes": 1000,
+      "id": "root",
+      "ops_per_sec": 2
+    },
+    {
+      "burst_capacity": 400,
+      "capacity_bytes": 700,
+      "id": "child",
+      "ops_per_sec": 5
+    },
+    {
+      "burst_capacity": 0,
+      "capacity_bytes": 50,
+      "id": "archive",
+      "ops_per_sec": 0
+    }
+  ]
+}
