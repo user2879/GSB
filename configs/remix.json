@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "sample_rate": 16000,
+  "gain_quantization": 1024,
+  "render_frame_length": 512,
+  "thread_pool_size": 4,
+  "snapshot_interval_fragments": 3,
+  "snapshot_interval_clips": 3,
+  "defaults": {
+    "start_ms": 0.0,
+    "end_ms": null,
+    "tracks": {}
+  },
+  "clips": [
+    {
+      "clip_id": "clip_000",
+      "source_format": "v1",
+      "source_package": "clip_000/packages/v1",
+      "start_ms": 8.0,
+      "end_ms": 780.0,
+      "tracks": {
+        "bass": {
+          "gain": 0.68,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "drums": {
+          "gain": 0.82,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "vocal": {
+          "gain": 0.76,
+          "mute": false,
+          "start_ms": 30.0,
+          "end_ms": 720.0
+        }
+      }
+    },
+    {
+      "clip_id": "clip_001",
+      "source_format": "v2",
+      "source_package": "clip_001/packages/v2",
+      "start_ms": 12.0,
+      "end_ms": 850.0,
+      "tracks": {
+        "bass": {
+          "gain": 0.68,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "drums": {
+          "gain": 0.82,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "vocal": {
+          "gain": 0.76,
+          "mute": false,
+          "start_ms": 30.0,
+          "end_ms": 800.0
+        }
+      }
+    },
+    {
+      "clip_id": "clip_002",
+      "source_format": "v3",
+      "source_package": "clip_002/packages/v3",
+      "start_ms": 6.0,
+      "end_ms": 940.0,
+      "tracks": {
+        "bass": {
+          "gain": 0.68,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "drums": {
+          "gain": 0.82,
+          "mute": false,
+          "start_ms": 0.0,
+          "end_ms": null
+        },
+        "vocal": {
+          "gain": 0.76,
+          "mute": false,
+          "start_ms": 30.0,
+          "end_ms": 900.0
+        }
+      }
+    }
+  ],
+  "track_overrides": {},
+  "conversions": [
+    {
+      "id": "CONV_V1_TO_V3",
+      "clip_id": "clip_000",
+      "source_format": "v1",
+      "target_format": "v3",
+      "source_package": "clip_000/packages/v1"
+    },
+    {
+      "id": "CONV_V3_TO_V2",
+      "clip_id": "clip_000",
+      "source_format": "v3",
+      "target_format": "v2",
+      "source_package": "clip_000/packages/v3"
+    },
+    {
+      "id": "CONV_V2_TO_V1",
+      "clip_id": "clip_000",
+      "source_format": "v2",
+      "target_format": "v1",
+      "source_package": "clip_000/packages/v2"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "base_config": "configs/remix.json",
+  "edits": [
+    {
+      "id": "E01_GAIN",
+      "op": "set_gain",
+      "clip_id": "clip_000",
+      "track": "drums",
+      "gain": 0.55
+    },
+    {
+      "id": "E02_MUTE",
+      "op": "set_mute",
+      "clip_id": "clip_001",
+      "track": "bass",
+      "mute": true
+    },
+    {
+      "id": "E03_TRIM",
+      "op": "set_trim",
+      "clip_id": "clip_002",
+      "target": "track",
+      "track": "vocal",
+      "start_ms": 120.0,
+      "end_ms": 800.0
+    },
+    {
+      "id": "E04_REPLACE",
+      "op": "replace_track",
+      "clip_id": "clip_001",
+      "track": "drums",
+      "wav": "replacements/clip_001_drums.wav"
+    },
+    {
+      "id": "E05_SWITCH_V3",
+      "op": "set_format_version",
+      "clip_id": "clip_000",
+      "format_version": "v3"
+    },
+    {
+      "id": "E06_SWITCH_V2",
+      "op": "set_format_version",
+      "clip_id": "clip_002",
+      "format_version": "v2"
+    },
+    {
+      "id": "E07_SWITCH_V3",
+      "op": "set_format_version",
+      "clip_id": "clip_001",
+      "format_version": "v3"
+    }
+  ]
+}

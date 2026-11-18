@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "injections": [
+    {
+      "id": "INJ001",
+      "stage": "parse",
+      "kind": "truncate_wav_bytes",
+      "clip_id": "clip_001",
+      "track": "bass",
+      "format_version": "v2",
+      "bytes": 11,
+      "expected_code": "E_TRACK_FORMAT"
+    },
+    {
+      "id": "INJ002",
+      "stage": "parse",
+      "kind": "offset_table_out_of_bounds",
+      "clip_id": "clip_002",
+      "track": "vocal",
+      "format_version": "v3",
+      "expected_code": "E_TRACK_FORMAT"
+    },
+    {
+      "id": "INJ003",
+      "stage": "parse",
+      "kind": "frame_count_mismatch",
+      "clip_id": "clip_001",
+      "track": "drums",
+      "format_version": "v2",
+      "expected_code": "E_TRACK_FORMAT"
+    },
+    {
+      "id": "INJ004",
+      "stage": "gain",
+      "kind": "gain_nonfinite",
+      "clip_id": "clip_000",
+      "track": "drums",
+      "value": "NaN",
+      "expected_code": "E_MIX_CONFIG"
+    },
+    {
+      "id": "INJ005",
+      "stage": "config",
+      "kind": "quantization_out_of_range",
+      "clip_id": "clip_002",
+      "value": 0,
+      "expected_code": "E_MIX_CONFIG"
+    }
+  ]
+}
