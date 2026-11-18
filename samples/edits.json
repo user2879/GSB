@@ -1,0 +1,163 @@
+{
+  "batches": [
+    {
+      "appends": [
+        {
+          "behavior": "cart",
+          "context": {
+            "amount": 323.496727,
+            "dwell_ms": 29707,
+            "risk_score": 0.205308,
+            "session_depth": 29
+          },
+          "event_id": "evt-000043",
+          "item_id": "i-004",
+          "timestamp_ms": 1700000400037,
+          "user_id": "u-006"
+        },
+        {
+          "behavior": "purchase",
+          "context": {
+            "amount": 183.394204,
+            "dwell_ms": 16547,
+            "risk_score": 0.555538,
+            "session_depth": 16
+          },
+          "event_id": "evt-000044",
+          "item_id": "i-002",
+          "timestamp_ms": 1700000403724,
+          "user_id": "u-001"
+        },
+        {
+          "behavior": "purchase",
+          "context": {
+            "amount": 253.104975,
+            "dwell_ms": 34913,
+            "risk_score": 0.760739,
+            "session_depth": 34
+          },
+          "event_id": "evt-000045",
+          "item_id": "i-001",
+          "timestamp_ms": 1700000412472,
+          "user_id": "u-001"
+        },
+        {
+          "behavior": "favorite",
+          "context": {
+            "amount": 128.069312,
+            "dwell_ms": 66090,
+            "risk_score": 0.517833,
+            "session_depth": 66
+          },
+          "event_id": "evt-000046",
+          "item_id": "i-001",
+          "timestamp_ms": 1700000420491,
+          "user_id": "u-006"
+        }
+      ],
+      "backfills": [],
+      "batch_id": "append-4",
+      "definition_changes": []
+    },
+    {
+      "appends": [],
+      "backfills": [
+        {
+          "event_id": "evt-000039",
+          "patch": {
+            "context": {
+              "amount": 485.124056,
+              "risk_score": 0.651813
+            }
+          }
+        }
+      ],
+      "batch_id": "backfill-amount",
+      "definition_changes": []
+    },
+    {
+      "appends": [],
+      "backfills": [],
+      "batch_id": "change-composite-precision",
+      "definition_changes": [
+        {
+          "definition": {
+            "aggregate": "sum",
+            "decimal_places": 8,
+            "name": "user_value_composite_10m",
+            "quantization_step": "0.00000001",
+            "side": "user",
+            "source_field": null,
+            "upstream_features": [
+              "user_amount_sum_10m",
+              "user_risk_latest_5m"
+            ],
+            "window_ms": 900000
+          },
+          "op": "upsert"
+        }
+      ]
+    },
+    {
+      "appends": [
+        {
+          "behavior": "favorite",
+          "context": {
+            "amount": 515.100471,
+            "dwell_ms": 41109,
+            "risk_score": 0.534928,
+            "session_depth": 41
+          },
+          "event_id": "evt-000047",
+          "item_id": "i-001",
+          "timestamp_ms": 1700000428982,
+          "user_id": "u-002"
+        },
+        {
+          "behavior": "favorite",
+          "context": {
+            "amount": 574.376159,
+            "dwell_ms": 40195,
+            "risk_score": 0.632607,
+            "session_depth": 40
+          },
+          "event_id": "evt-000048",
+          "item_id": "i-004",
+          "timestamp_ms": 1700000438940,
+          "user_id": "u-002"
+        },
+        {
+          "behavior": "cart",
+          "context": {
+            "amount": 182.504998,
+            "dwell_ms": 33562,
+            "risk_score": 0.932972,
+            "session_depth": 33
+          },
+          "event_id": "evt-000049",
+          "item_id": "i-004",
+          "timestamp_ms": 1700000450502,
+          "user_id": "u-001"
+        }
+      ],
+      "backfills": [],
+      "batch_id": "append-3-and-count-window",
+      "definition_changes": [
+        {
+          "definition": {
+            "aggregate": "count",
+            "decimal_places": 0,
+            "name": "user_event_count_5m",
+            "quantization_step": "1",
+            "side": "user",
+            "source_field": null,
+            "upstream_features": [],
+            "window_ms": 600000
+          },
+          "op": "upsert"
+        }
+      ]
+    }
+  ],
+  "seed": 188
+}

@@ -1,0 +1,127 @@
+{
+  "features": [
+    {
+      "aggregate": "count",
+      "decimal_places": 0,
+      "name": "user_event_count_5m",
+      "quantization_step": "1",
+      "side": "user",
+      "source_field": null,
+      "upstream_features": [],
+      "window_ms": 300000
+    },
+    {
+      "aggregate": "sum",
+      "decimal_places": 4,
+      "name": "user_amount_sum_10m",
+      "quantization_step": "0.0001",
+      "side": "user",
+      "source_field": "amount",
+      "upstream_features": [],
+      "window_ms": 600000
+    },
+    {
+      "aggregate": "latest",
+      "decimal_places": 4,
+      "name": "user_risk_latest_5m",
+      "quantization_step": "0.0001",
+      "side": "user",
+      "source_field": "risk_score",
+      "upstream_features": [],
+      "window_ms": 300000
+    },
+    {
+      "aggregate": "sum",
+      "decimal_places": 6,
+      "name": "user_value_composite_10m",
+      "quantization_step": "0.000001",
+      "side": "user",
+      "source_field": null,
+      "upstream_features": [
+        "user_amount_sum_10m",
+        "user_risk_latest_5m"
+      ],
+      "window_ms": 600000
+    },
+    {
+      "aggregate": "count",
+      "decimal_places": 0,
+      "name": "item_event_count_5m",
+      "quantization_step": "1",
+      "side": "item",
+      "source_field": null,
+      "upstream_features": [],
+      "window_ms": 300000
+    },
+    {
+      "aggregate": "sum",
+      "decimal_places": 2,
+      "name": "item_amount_sum_10m",
+      "quantization_step": "0.01",
+      "side": "item",
+      "source_field": "amount",
+      "upstream_features": [],
+      "window_ms": 600000
+    },
+    {
+      "aggregate": "mean",
+      "decimal_places": 4,
+      "name": "item_risk_mean_10m",
+      "quantization_step": "0.0001",
+      "side": "item",
+      "source_field": "risk_score",
+      "upstream_features": [],
+      "window_ms": 600000
+    },
+    {
+      "aggregate": "sum",
+      "decimal_places": 4,
+      "name": "item_value_composite_10m",
+      "quantization_step": "0.0001",
+      "side": "item",
+      "source_field": null,
+      "upstream_features": [
+        "item_amount_sum_10m",
+        "item_risk_mean_10m"
+      ],
+      "window_ms": 600000
+    },
+    {
+      "_injection_id": "INJ-004",
+      "aggregate": "count",
+      "decimal_places": 0,
+      "name": "cycle_alpha",
+      "quantization_step": "1",
+      "side": "user",
+      "source_field": null,
+      "upstream_features": [
+        "cycle_beta"
+      ],
+      "window_ms": 60000
+    },
+    {
+      "_injection_id": "INJ-004",
+      "aggregate": "count",
+      "decimal_places": 0,
+      "name": "cycle_beta",
+      "quantization_step": "1",
+      "side": "user",
+      "source_field": null,
+      "upstream_features": [
+        "cycle_alpha"
+      ],
+      "window_ms": 60000
+    },
+    {
+      "_injection_id": "INJ-005",
+      "aggregate": "sum",
+      "decimal_places": 2,
+      "name": "bad_quantum",
+      "quantization_step": "0.0000001",
+      "side": "item",
+      "source_field": "amount",
+      "upstream_features": [],
+      "window_ms": 60000
+    }
+  ]
+}

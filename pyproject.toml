@@ -1,0 +1,11 @@
+[project]
+name = "feature-diagnostic-workbench"
+version = "0.1.0"
+description = "Deterministic local fixed-point feature service diagnostics"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+

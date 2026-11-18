@@ -1,0 +1,27 @@
+version: 1
+weights:
+  user_event_count_5m: 0.2
+  user_amount_sum_10m: 0.5
+  user_risk_latest_5m: 0.3
+  user_value_composite_10m: 0.4
+  item_event_count_5m: 0.15
+  item_amount_sum_10m: 0.45
+  item_risk_mean_10m: -0.25
+  item_value_composite_10m: 0.35
+fusion_temperature: 2.0
+fusion_bias: 0.05
+clamp_interval:
+  min: -50.0
+  max: 50.0
+concurrency: 4
+point_budget_per_batch: 20
+snapshot_commit_interval: 1
+score_decimal_places: 4
+score_quantization_step: '0.0001'
+allowed_behaviors:
+- view
+- click
+- favorite
+- cart
+- purchase
+- refund
