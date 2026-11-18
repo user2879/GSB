@@ -1,0 +1,14 @@
+{
+  "term": 1,
+  "tokens": [
+    {"id": "upstream-health", "healthy": true, "version": 1}
+  ],
+  "members": [
+    {"id": "A", "lease_ms": 2200, "dependencies": []},
+    {"id": "B", "lease_ms": 2200, "dependencies": ["member:A"]},
+    {"id": "C", "lease_ms": 2200, "dependencies": ["member:B"]},
+    {"id": "D", "lease_ms": 2200, "dependencies": []},
+    {"id": "E", "lease_ms": 2200, "dependencies": ["token:upstream-health"]}
+  ]
+}
+
