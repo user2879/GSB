@@ -1,0 +1,127 @@
+{
+  "char_table": [
+    "的",
+    "一",
+    "是",
+    "不",
+    "了",
+    "人",
+    "在",
+    "我",
+    "有",
+    "他",
+    "这",
+    "中",
+    "大",
+    "来",
+    "上",
+    "个",
+    "国",
+    "和",
+    "地",
+    "到",
+    "说",
+    "为",
+    "子",
+    "道",
+    "再",
+    "入",
+    "她",
+    "个",
+    "条"
+  ],
+  "confusion_pairs": [
+    {
+      "correct": "再",
+      "rule_id": "W001",
+      "wrong": "在"
+    },
+    {
+      "correct": "入",
+      "rule_id": "W002",
+      "wrong": "人"
+    },
+    {
+      "correct": "她",
+      "rule_id": "W003",
+      "wrong": "他"
+    },
+    {
+      "correct": "道",
+      "rule_id": "W004",
+      "wrong": "到"
+    },
+    {
+      "correct": "中",
+      "rule_id": "W005",
+      "wrong": "大"
+    }
+  ],
+  "omission_rules": [
+    {
+      "insert_offset": 1,
+      "pattern": "条国道",
+      "replacement": "大",
+      "rule_id": "RULE_OMI_001"
+    },
+    {
+      "insert_offset": 1,
+      "pattern": "条人道",
+      "replacement": "大",
+      "rule_id": "RULE_OMI_002"
+    }
+  ],
+  "repeat_rules": [
+    {
+      "edit_type": "replace",
+      "pattern": "一一",
+      "replacement": "一",
+      "rule_id": "R001"
+    },
+    {
+      "edit_type": "replace",
+      "pattern": "个个",
+      "replacement": "个",
+      "rule_id": "R002"
+    },
+    {
+      "edit_type": "replace",
+      "pattern": "了了",
+      "replacement": "了",
+      "rule_id": "R003"
+    },
+    {
+      "edit_type": "replace",
+      "pattern": "在在",
+      "replacement": "在",
+      "rule_id": "R004"
+    }
+  ],
+  "rule_weights": {
+    "R001": 1.2,
+    "R002": 1.2,
+    "R003": 0.78,
+    "R004": 1.2,
+    "RULE_OMI_001": 1.2,
+    "RULE_OMI_002": 1.2,
+    "T001": 1.2,
+    "T002": 1.15,
+    "W001": 1.05,
+    "W002": 1.05,
+    "W003": 1.1,
+    "W004": 1.05,
+    "W005": 1.0
+  },
+  "term_rules": [
+    {
+      "pattern": "中国国人",
+      "replacement": "中国人",
+      "rule_id": "T001"
+    },
+    {
+      "pattern": "大国",
+      "replacement": "中国",
+      "rule_id": "T002"
+    }
+  ]
+}

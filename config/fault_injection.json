@@ -1,0 +1,13 @@
+{
+  "description": "确定性异常注入配置，仅使用本地构造数据，不引用任何真实站点、账号或外部模型",
+  "no_network": true,
+  "no_external_model": true,
+  "cases": [
+    {"code": "E_EMPTY_TEXT", "target": "samples/sentences_invalid.jsonl:B002", "expect": "failure_list"},
+    {"code": "E_PARSE_INVALID", "target": "samples/sentences_invalid.jsonl:B003", "expect": "failure_list"},
+    {"code": "E_RULE_UNKNOWN", "target": "samples/sentences_invalid.jsonl:B004", "expect": "failure_list"},
+    {"code": "E_DUPLICATE_ID", "target": "samples/sentences_invalid.jsonl:S001", "expect": "failure_list"},
+    {"code": "E_CONFIG_INVALID", "target": "config/invalid_config.yaml", "expect": "startup_abort"},
+    {"code": "E_CONFIG_MISMATCH", "target": "state/snapshots/manifest.json", "expect": "resume_reject"}
+  ]
+}
