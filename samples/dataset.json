@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "seed": 157,
+  "customers": {
+    "count": 2000,
+    "seed": 157,
+    "base_date": "2023-01-01",
+    "cities": ["Shanghai", "Beijing", "Shenzhen", "Hangzhou", "Chengdu", "Wuhan"],
+    "segments": ["retail", "business", "partner"]
+  },
+  "orders": {
+    "count": 20000,
+    "seed": 157,
+    "base_date": "2023-01-01",
+    "statuses": ["paid", "pending", "shipped", "cancelled"]
+  },
+  "indexes": [
+    {"name": "idx_orders_customer", "table": "orders", "columns": ["customer_id"]},
+    {"name": "idx_orders_status_amount", "table": "orders", "columns": ["status", "amount"]},
+    {"name": "idx_customers_city", "table": "customers", "columns": ["city"]}
+  ],
+  "thresholds": {
+    "slow_ms": 1,
+    "scan_rows": 1000
+  }
+}

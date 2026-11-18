@@ -1,0 +1,20 @@
+[
+  {
+    "name": "slow_join_city_status",
+    "sql": "SELECT * FROM orders o JOIN customers c ON o.customer_id = c.id WHERE o.status = 'paid' AND o.amount >= 10 AND o.amount >= 100 AND c.city IN ('Shanghai', 'Beijing') ORDER BY o.id",
+    "timeout_ms": 500,
+    "budget_ms": 4000
+  },
+  {
+    "name": "slow_customer_segment",
+    "sql": "SELECT * FROM orders o JOIN customers c ON o.customer_id = c.id WHERE o.amount >= 0 AND c.segment = 'retail' ORDER BY o.created_at",
+    "timeout_ms": 500,
+    "budget_ms": 4000
+  },
+  {
+    "name": "single_table_range",
+    "sql": "SELECT id, amount, status FROM orders WHERE amount BETWEEN 100 AND 200 AND status IN ('paid', 'shipped')",
+    "timeout_ms": 500,
+    "budget_ms": 4000
+  }
+]
