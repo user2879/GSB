@@ -1,0 +1,65 @@
+[
+  {
+    "rule_id": "R1_BASE",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [14]},
+    "shaping": {"rate_kbps": 256, "burst_bytes": 8192, "queue_limit_packets": 8},
+    "upstream": [],
+    "actions": ["police"]
+  },
+  {
+    "rule_id": "R2_BASE",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [15]},
+    "shaping": {"rate_kbps": 128, "burst_bytes": 4096, "queue_limit_packets": 6},
+    "upstream": [],
+    "actions": ["police", "mark"]
+  },
+  {
+    "rule_id": "R3_CHILD",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [140]},
+    "shaping": {"rate_kbps": 192, "burst_bytes": 6144, "queue_limit_packets": 7},
+    "upstream": ["R1_BASE"],
+    "actions": ["shape"]
+  },
+  {
+    "rule_id": "R4_CHILD",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [141]},
+    "shaping": {"rate_kbps": 160, "burst_bytes": 5120, "queue_limit_packets": 5},
+    "upstream": ["R1_BASE"],
+    "actions": ["shape", "mark"]
+  },
+  {
+    "rule_id": "R5_CHILD",
+    "match": {"dst_addr": "::1", "port_prefixes": [150]},
+    "shaping": {"rate_kbps": 96, "burst_bytes": 3072, "queue_limit_packets": 4},
+    "upstream": ["R2_BASE"],
+    "actions": ["shape"]
+  },
+  {
+    "rule_id": "R6_GRAND",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [1400]},
+    "shaping": {"rate_kbps": 144, "burst_bytes": 4608, "queue_limit_packets": 6},
+    "upstream": ["R3_CHILD"],
+    "actions": ["shape", "queue"]
+  },
+  {
+    "rule_id": "R7_GRAND",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [1410]},
+    "shaping": {"rate_kbps": 112, "burst_bytes": 3584, "queue_limit_packets": 5},
+    "upstream": ["R4_CHILD"],
+    "actions": ["shape", "queue"]
+  },
+  {
+    "rule_id": "R8_GRAND",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [1500]},
+    "shaping": {"rate_kbps": 80, "burst_bytes": 2560, "queue_limit_packets": 3},
+    "upstream": ["R5_CHILD"],
+    "actions": ["shape"]
+  },
+  {
+    "rule_id": "R9_SIBLING",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [142, 143]},
+    "shaping": {"rate_kbps": 176, "burst_bytes": 4000, "queue_limit_packets": 0},
+    "upstream": ["R1_BASE", "R2_BASE"],
+    "actions": ["police", "shape"]
+  }
+]

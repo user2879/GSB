@@ -1,0 +1,13 @@
+{
+  "upserts": [
+    {
+      "rule_id": "R1_BASE",
+      "match": {"dst_addr": "127.0.0.1", "port_prefixes": [14]},
+      "shaping": {"rate_kbps": 300, "burst_bytes": 9000, "queue_limit_packets": 10},
+      "upstream": [],
+      "actions": ["police", "shape"]
+    }
+  ],
+  "delete_rule_ids": [],
+  "remove_edges": []
+}

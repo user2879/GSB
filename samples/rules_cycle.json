@@ -1,0 +1,23 @@
+[
+  {
+    "rule_id": "R_CYC_A",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [160]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": ["R_CYC_C"],
+    "actions": ["shape"]
+  },
+  {
+    "rule_id": "R_CYC_B",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [161]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": ["R_CYC_A"],
+    "actions": ["shape"]
+  },
+  {
+    "rule_id": "R_CYC_C",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [162]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": ["R_CYC_B"],
+    "actions": ["shape"]
+  }
+]

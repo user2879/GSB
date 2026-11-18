@@ -1,0 +1,37 @@
+[
+  {
+    "rule_id": "R_OK",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [170]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": [],
+    "actions": []
+  },
+  {
+    "rule_id": "R_BAD_ADDR",
+    "match": {"dst_addr": "8.8.8.8", "port_prefixes": [171]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": [],
+    "actions": []
+  },
+  {
+    "rule_id": "R_BAD_PORT",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [70000]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": 4},
+    "upstream": [],
+    "actions": []
+  },
+  {
+    "rule_id": "R_BAD_QUEUE",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [172]},
+    "shaping": {"rate_kbps": 100, "burst_bytes": 2048, "queue_limit_packets": -1},
+    "upstream": ["R_GHOST"],
+    "actions": []
+  },
+  {
+    "rule_id": "R_BAD_RATE",
+    "match": {"dst_addr": "127.0.0.1", "port_prefixes": [173]},
+    "shaping": {"rate_kbps": true, "burst_bytes": 0, "queue_limit_packets": 4},
+    "upstream": [],
+    "actions": []
+  }
+]
