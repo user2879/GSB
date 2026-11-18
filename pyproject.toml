@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tier-mover"
+version = "1.0.0"
+description = "Deterministic hot/cold storage tiering and migration component with SQLite ledger"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+license = { text = "Proprietary" }
+authors = [{ name = "tier_mover" }]
+keywords = ["storage", "tiering", "migration", "sqlite", "deterministic"]
+
+[project.scripts]
+tier-mover = "tier_mover.cli:main"
+
+[tool.setuptools]
+packages = ["tier_mover"]
