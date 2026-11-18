@@ -1,0 +1,44 @@
+{
+  "spec_version": "2026-11-18",
+  "formats": {
+    "v1": {
+      "format_version": 1,
+      "name": "compact-binary",
+      "magic": "XMF1",
+      "endian": "little",
+      "header_size": 48,
+      "header_fields": [
+        "magic:8B", "version:u16", "reserved:u16", "reserved2:u16", "block_count:u32",
+        "block_dim:u32", "text_dim:u32", "n_weights:u32",
+        "n_labels:u32", "sample_len:u32", "table_offset:u32",
+        "data_offset:u32"
+      ],
+      "offset_table": {
+        "entry_size": 4,
+        "entries": ["image_off", "image_len", "text_off", "text_len",
+                    "weight_off", "weight_len"]
+      },
+      "data_sections": ["sample_name", "image_blocks:f32",
+                        "text_vector:f32", "weights:name\\0+f32",
+                        "precision_labels:json"],
+      "precision": "float32",
+      "sidecar": ".sidecar.json"
+    },
+    "v2": {
+      "format_version": 2,
+      "name": "text-json",
+      "root_fields": ["format_version", "sample", "align_weights",
+                      "precision_labels", "features", "features_text"],
+      "feature_mapping": "entity/block name -> float array",
+      "precision": "float64-json",
+      "precision_labels": ["float32-roundtrip", "float32-rounded",
+                           "native-float64"],
+      "sidecar": ".sidecar.json"
+    }
+  },
+  "conversion": {
+    "v1_to_v2": "float32 数值转 JSON 浮点并标注 float32-roundtrip",
+    "v2_to_v1": "JSON 浮点四舍五入写 float32，残差写入 sidecar",
+    "lossy_rule": "非有限值或超出 float32 范围输出 E_FORMAT_LOSSY 并记录特征键"
+  }
+}

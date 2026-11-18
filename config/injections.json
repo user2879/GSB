@@ -1,0 +1,49 @@
+{
+  "injections": [
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "id": "INJ-001",
+      "keep_ratio": 0.4,
+      "sample": "sample_002",
+      "stage": "validate",
+      "type": "truncate_png"
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "field": "assertions",
+      "id": "INJ-002",
+      "sample": "sample_004",
+      "stage": "validate",
+      "type": "missing_text_field"
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "id": "INJ-003",
+      "sample": "sample_006",
+      "stage": "convert",
+      "type": "offset_table_oob"
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "id": "INJ-004",
+      "sample": "sample_001",
+      "stage": "convert",
+      "type": "non_finite_float"
+    },
+    {
+      "expected_code": "E_RETRIEVAL_LOW_SCORE",
+      "id": "INJ-005",
+      "note": "阈值取第二名得分：边界样本恰好等于阈值，更低样本触发低分审计",
+      "rank": 1,
+      "stage": "retrieve",
+      "type": "threshold_boundary"
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "id": "INJ-006",
+      "sample": "sample_003",
+      "stage": "convert",
+      "type": "unknown_format_version"
+    }
+  ]
+}
