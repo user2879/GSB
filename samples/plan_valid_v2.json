@@ -1,0 +1,82 @@
+{
+  "plan_id": "core-link-drill",
+  "name": "核心链路应急预案演练（修订）",
+  "version": 2,
+  "failure_policy": "continue_downstream",
+  "stages": [
+    {
+      "seq": 1,
+      "name": "告警确认与节点隔离",
+      "estimated_seconds": 2,
+      "depends_on": [],
+      "actions": ["ack_alert", "isolate_node"],
+      "success_criteria": ["alert_acknowledged", "source_node_isolated"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 2,
+      "name": "流量切换",
+      "estimated_seconds": 4,
+      "depends_on": [1],
+      "actions": ["switch_traffic", "force_switchover"],
+      "success_criteria": ["traffic_switched", "health_check_passed"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 3,
+      "name": "副本扩容",
+      "estimated_seconds": 2,
+      "depends_on": [2],
+      "actions": ["scale_replicas"],
+      "success_criteria": ["replica_ready", "quorum_reached"],
+      "failure_policy": "skip_downstream"
+    },
+    {
+      "seq": 4,
+      "name": "数据一致性校验",
+      "estimated_seconds": 3,
+      "depends_on": [3],
+      "actions": ["verify_consistency", "retry_validation"],
+      "success_criteria": ["checksum_match"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 5,
+      "name": "回切",
+      "estimated_seconds": 2,
+      "depends_on": [4],
+      "actions": ["switch_back"],
+      "success_criteria": ["primary_healthy"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 6,
+      "name": "业务探活",
+      "estimated_seconds": 1,
+      "depends_on": [5],
+      "actions": ["probe_business"],
+      "success_criteria": ["business_ready"],
+      "failure_policy": "continue_downstream"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-node-lost-1",
+      "type": "node_lost",
+      "offset_ms": 500,
+      "stage_seq": 1
+    },
+    {
+      "event_id": "evt-switch-failed-2",
+      "type": "switchover_failed",
+      "offset_ms": 2500,
+      "stage_seq": 2
+    },
+    {
+      "event_id": "evt-validation-timeout-4",
+      "type": "validation_timeout",
+      "offset_ms": 9000,
+      "stage_seq": 4
+    }
+  ]
+}

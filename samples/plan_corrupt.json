@@ -1,0 +1,36 @@
+{
+  "plan_id": "broken-drill",
+  "name": "损坏预案样本",
+  "version": 1,
+  "failure_policy": "continue_downstream",
+  "stages": [
+    {
+      "seq": 1,
+      "name": "告警确认",
+      "estimated_seconds": 2,
+      "depends_on": [],
+      "actions": ["ack_alert"],
+      "success_criteria": ["alert_acknowledged"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 2,
+      "name": "流量切换",
+      "estimated_seconds": "3",
+      "depends_on": [1],
+      "actions": [],
+      "success_criteria": ["traffic_switched"],
+      "failure_policy": "continue_downstream"
+    },
+    {
+      "seq": 3,
+      "name": "回切",
+      "estimated_seconds": 2,
+      "depends_on": [2],
+      "actions": ["switch_back"],
+      "success_criteria": ["primary_healthy"],
+      "failure_policy": "continue_downstream"
+    }
+  ],
+  "events": []
+}

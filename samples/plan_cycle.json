@@ -1,0 +1,36 @@
+{
+  "plan_id": "cycle-drill",
+  "name": "前置引用成环预案样本",
+  "version": 1,
+  "failure_policy": "skip_downstream",
+  "stages": [
+    {
+      "seq": 1,
+      "name": "告警确认",
+      "estimated_seconds": 1,
+      "depends_on": [],
+      "actions": ["ack_alert"],
+      "success_criteria": ["alert_acknowledged"],
+      "failure_policy": "skip_downstream"
+    },
+    {
+      "seq": 2,
+      "name": "流量切换",
+      "estimated_seconds": 1,
+      "depends_on": [1, 3],
+      "actions": ["switch_traffic"],
+      "success_criteria": ["traffic_switched"],
+      "failure_policy": "skip_downstream"
+    },
+    {
+      "seq": 3,
+      "name": "副本扩容",
+      "estimated_seconds": 1,
+      "depends_on": [2],
+      "actions": ["scale_replicas"],
+      "success_criteria": ["replica_ready"],
+      "failure_policy": "skip_downstream"
+    }
+  ],
+  "events": []
+}
