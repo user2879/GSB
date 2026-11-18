@@ -1,0 +1,31 @@
+{
+  "manifest_id": "vp-pairs-001",
+  "samples": [
+    {"sample_id": "spk_01_utt_01", "speaker_id": "spk_01"},
+    {"sample_id": "spk_01_utt_02", "speaker_id": "spk_01"},
+    {"sample_id": "spk_01_utt_03", "speaker_id": "spk_01"},
+    {"sample_id": "spk_02_utt_01", "speaker_id": "spk_02"},
+    {"sample_id": "spk_02_utt_02", "speaker_id": "spk_02"},
+    {"sample_id": "spk_02_utt_03", "speaker_id": "spk_02"},
+    {"sample_id": "spk_03_utt_01", "speaker_id": "spk_03"},
+    {"sample_id": "spk_03_utt_02", "speaker_id": "spk_03"},
+    {"sample_id": "spk_03_utt_03", "speaker_id": "spk_03"},
+    {"sample_id": "spk_04_utt_01", "speaker_id": "spk_04"},
+    {"sample_id": "spk_04_utt_02", "speaker_id": "spk_04"},
+    {"sample_id": "spk_04_utt_03", "speaker_id": "spk_04"}
+  ],
+  "pairs": [
+    {"pair_id": "pair_same_01", "sample_a": "spk_01_utt_01", "sample_b": "spk_01_utt_02", "relation": "same_speaker"},
+    {"pair_id": "pair_same_02", "sample_a": "spk_01_utt_01", "sample_b": "spk_01_utt_03", "relation": "same_speaker"},
+    {"pair_id": "pair_same_03", "sample_a": "spk_02_utt_01", "sample_b": "spk_02_utt_02", "relation": "same_speaker"},
+    {"pair_id": "pair_same_04", "sample_a": "spk_02_utt_01", "sample_b": "spk_02_utt_03", "relation": "same_speaker"},
+    {"pair_id": "pair_same_05", "sample_a": "spk_03_utt_01", "sample_b": "spk_03_utt_02", "relation": "same_speaker"},
+    {"pair_id": "pair_same_06", "sample_a": "spk_04_utt_01", "sample_b": "spk_04_utt_02", "relation": "same_speaker"},
+    {"pair_id": "pair_diff_01", "sample_a": "spk_01_utt_01", "sample_b": "spk_02_utt_01", "relation": "different_speaker"},
+    {"pair_id": "pair_diff_02", "sample_a": "spk_01_utt_01", "sample_b": "spk_03_utt_01", "relation": "different_speaker"},
+    {"pair_id": "pair_diff_03", "sample_a": "spk_02_utt_01", "sample_b": "spk_04_utt_01", "relation": "different_speaker"},
+    {"pair_id": "pair_diff_04", "sample_a": "spk_03_utt_01", "sample_b": "spk_04_utt_01", "relation": "different_speaker"},
+    {"pair_id": "pair_diff_05", "sample_a": "spk_01_utt_02", "sample_b": "spk_04_utt_02", "relation": "different_speaker"},
+    {"pair_id": "pair_diff_06", "sample_a": "spk_02_utt_02", "sample_b": "spk_03_utt_02", "relation": "different_speaker"}
+  ]
+}

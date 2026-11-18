@@ -1,0 +1,59 @@
+{
+  "injection_id": "vp-injection-001",
+  "seed_protocol": "sha256(speaker_id|utterance_id) -> PCG64",
+  "sample_rate": 16000,
+  "channels": 1,
+  "sample_width_bits": 16,
+  "speaker_profiles": [
+    {
+      "speaker_id": "spk_01",
+      "f0_mean_hz": 120.0,
+      "f0_std_hz": 6.0,
+      "formants_hz": [730.0, 1090.0, 2440.0],
+      "formant_gains": [1.0, 0.7, 0.4],
+      "envelope_hz": 3.5
+    },
+    {
+      "speaker_id": "spk_02",
+      "f0_mean_hz": 210.0,
+      "f0_std_hz": 9.0,
+      "formants_hz": [860.0, 1320.0, 2800.0],
+      "formant_gains": [1.0, 0.65, 0.35],
+      "envelope_hz": 4.2
+    },
+    {
+      "speaker_id": "spk_03",
+      "f0_mean_hz": 160.0,
+      "f0_std_hz": 7.5,
+      "formants_hz": [650.0, 980.0, 2250.0],
+      "formant_gains": [1.05, 0.75, 0.45],
+      "envelope_hz": 3.8
+    },
+    {
+      "speaker_id": "spk_04",
+      "f0_mean_hz": 255.0,
+      "f0_std_hz": 11.0,
+      "formants_hz": [950.0, 1450.0, 3050.0],
+      "formant_gains": [0.95, 0.6, 0.3],
+      "envelope_hz": 4.8
+    }
+  ],
+  "utterances": [
+    {"utterance_id": "spk_01_utt_01", "speaker_id": "spk_01", "duration_s": 1.0},
+    {"utterance_id": "spk_01_utt_02", "speaker_id": "spk_01", "duration_s": 1.0},
+    {"utterance_id": "spk_01_utt_03", "speaker_id": "spk_01", "duration_s": 1.0},
+    {"utterance_id": "spk_02_utt_01", "speaker_id": "spk_02", "duration_s": 1.0},
+    {"utterance_id": "spk_02_utt_02", "speaker_id": "spk_02", "duration_s": 1.0},
+    {"utterance_id": "spk_02_utt_03", "speaker_id": "spk_02", "duration_s": 1.0},
+    {"utterance_id": "spk_03_utt_01", "speaker_id": "spk_03", "duration_s": 1.0},
+    {"utterance_id": "spk_03_utt_02", "speaker_id": "spk_03", "duration_s": 1.0},
+    {"utterance_id": "spk_03_utt_03", "speaker_id": "spk_03", "duration_s": 1.0},
+    {"utterance_id": "spk_04_utt_01", "speaker_id": "spk_04", "duration_s": 1.0},
+    {"utterance_id": "spk_04_utt_02", "speaker_id": "spk_04", "duration_s": 1.0},
+    {"utterance_id": "spk_04_utt_03", "speaker_id": "spk_04", "duration_s": 1.0}
+  ],
+  "invalid_audio": [
+    {"file_name": "bad_rate_8k.wav", "kind": "bad_rate"},
+    {"file_name": "bad_stereo.wav", "kind": "stereo"}
+  ]
+}
