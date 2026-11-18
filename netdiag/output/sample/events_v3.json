@@ -1,0 +1,27 @@
+{
+  "format": "loss-event-list",
+  "version": "v3",
+  "events": [
+    {
+      "event_id": 20,
+      "flow": "tcp:10.0.0.1:40001-10.0.0.2:50001",
+      "link_id": "L1",
+      "window_ms": [
+        1000,
+        1130
+      ],
+      "loss_count": 4,
+      "retransmitted": true,
+      "ooo_depth": 3,
+      "direction": "10.0.0.1:40001->10.0.0.2:50001"
+    }
+  ],
+  "coverage": {
+    "tcp:10.0.0.1:40001-10.0.0.2:50001": {
+      "10.0.0.1:40001->10.0.0.2:50001": [
+        1,
+        13
+      ]
+    }
+  }
+}
