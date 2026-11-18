@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dbml"
+version = "0.1.0"
+description = "Local SQLite schema migration and fixed-point precision ledger"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+dbml-build-sample = "dbml.sample:main"
+dbml-demo = "dbml.demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

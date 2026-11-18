@@ -1,0 +1,22 @@
+{
+  "chain_id": "orders-derived-chain-v1",
+  "table": "orders",
+  "columns": {
+    "total_cents": {
+      "expression": "unit_price_cents * quantity * (1 - discount_rate)",
+      "scale": 2,
+      "truncation": "toward_zero",
+      "depends_on_derived": []
+    },
+    "net_cents": {
+      "expression": "total_cents - tax_cents",
+      "scale": 2,
+      "truncation": "toward_zero",
+      "depends_on_derived": ["total_cents"]
+    }
+  },
+  "expected_edges": [
+    ["orders.total_cents", "orders.net_cents"]
+  ],
+  "topological_order": ["orders.total_cents", "orders.net_cents"]
+}

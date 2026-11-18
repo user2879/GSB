@@ -1,0 +1,76 @@
+{
+  "manifest_version": 1,
+  "manifest_id": "orders-fixedpoint-v1",
+  "description": "Widen cents, backfill a derived chain, then add an index and check constraint.",
+  "table_row_keys": {
+    "orders": ["id"]
+  },
+  "initial_calibrations": {
+    "orders": {
+      "id": {"scale": 0, "truncation": "toward_zero", "saturation": "reject"},
+      "quantity": {"scale": 0, "truncation": "toward_zero", "saturation": "reject"},
+      "unit_price_cents": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"},
+      "tax_cents": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"},
+      "total_cents": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"},
+      "net_cents": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"},
+      "discount_rate": {"scale": 4, "truncation": "toward_zero", "saturation": "reject"}
+    }
+  },
+  "steps": [
+    {
+      "step_id": "widen-unit-price",
+      "version": 1,
+      "depends_on": [],
+      "operation": "widen_column",
+      "table": "orders",
+      "column": "unit_price_cents",
+      "from_type": "INTEGER",
+      "to_type": "DECIMAL",
+      "quantization": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"}
+    },
+    {
+      "step_id": "backfill-total",
+      "version": 2,
+      "depends_on": ["widen-unit-price"],
+      "operation": "backfill",
+      "table": "orders",
+      "column": "total_cents",
+      "expression": "unit_price_cents * quantity * (1 - discount_rate)",
+      "quantization": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"}
+    },
+    {
+      "step_id": "backfill-net",
+      "version": 3,
+      "depends_on": ["backfill-total"],
+      "operation": "backfill",
+      "table": "orders",
+      "column": "net_cents",
+      "expression": "total_cents - tax_cents",
+      "quantization": {"scale": 2, "truncation": "toward_zero", "saturation": "reject"}
+    },
+    {
+      "step_id": "index-customer",
+      "version": 4,
+      "depends_on": ["backfill-net"],
+      "operation": "create_index",
+      "table": "orders",
+      "index": {
+        "name": "ix_orders_customer",
+        "columns": ["customer"],
+        "unique": false
+      }
+    },
+    {
+      "step_id": "constraint-quantity",
+      "version": 5,
+      "depends_on": ["index-customer"],
+      "operation": "add_constraint",
+      "table": "orders",
+      "constraint": {
+        "name": "ck_orders_quantity",
+        "kind": "check",
+        "expression": "quantity >= 1"
+      }
+    }
+  ]
+}
