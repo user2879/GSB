@@ -1,0 +1,99 @@
+{
+  "sample_data_version": "1",
+  "pool": {
+    "max_connections": 4,
+    "workload_quotas": {
+      "wl_a": 2,
+      "wl_b": 1,
+      "wl_c": 1
+    },
+    "hold_timeout_ms": 100,
+    "acquire_timeout_ms": 60
+  },
+  "tasks": [
+    {
+      "task_id": "t01",
+      "workload": "wl_a",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 20,
+      "sql": "UPDATE inventory SET qty = qty + 1, updated_ms = wb_sleep(20) WHERE item_id = 1"
+    },
+    {
+      "task_id": "t02",
+      "workload": "wl_a",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 30,
+      "sql": "SELECT item_id, wb_sleep(30) FROM inventory WHERE item_id = 2"
+    },
+    {
+      "task_id": "t03",
+      "workload": "wl_a",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 25,
+      "sql": "SELECT item_id, wb_sleep(25) FROM inventory WHERE item_id = 3"
+    },
+    {
+      "task_id": "t04",
+      "workload": "wl_a",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 20,
+      "sql": "INSERT INTO ops_log (workload, task_id, note) SELECT 'wl_a', 't04', wb_sleep(20)"
+    },
+    {
+      "task_id": "t05",
+      "workload": "wl_a",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 10,
+      "sql": "SELECT item_id, wb_sleep(10) FROM inventory WHERE item_id = 1"
+    },
+    {
+      "task_id": "t06",
+      "workload": "wl_b",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 40,
+      "sql": "UPDATE inventory SET qty = qty + 2, updated_ms = wb_sleep(40) WHERE item_id = 4"
+    },
+    {
+      "task_id": "t07",
+      "workload": "wl_b",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 35,
+      "sql": "SELECT item_id, wb_sleep(35) FROM inventory WHERE item_id = 2"
+    },
+    {
+      "task_id": "t08",
+      "workload": "wl_b",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 120,
+      "sql": "UPDATE inventory SET qty = qty + 3, updated_ms = wb_sleep(120) WHERE item_id = 2"
+    },
+    {
+      "task_id": "t09",
+      "workload": "wl_b",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 15,
+      "sql": "SELECT item_id, wb_sleep(15) FROM inventory WHERE item_id = 3"
+    },
+    {
+      "task_id": "t10",
+      "workload": "wl_b",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 10,
+      "sql": "INSERT INTO ops_log (workload, task_id, note) SELECT 'wl_b', 't10', wb_sleep(10)"
+    },
+    {
+      "task_id": "t11",
+      "workload": "wl_c",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 20,
+      "sql": "SELECT item_id, wb_sleep(20) FROM inventory WHERE item_id = 1"
+    },
+    {
+      "task_id": "t12",
+      "workload": "wl_b",
+      "conn_type": "READ_WRITE",
+      "estimated_ms": 10,
+      "sql": "INSERT INTO ops_log (workload, task_id) SELECT 'wl_b', wb_sleep(10)"
+    }
+  ]
+}

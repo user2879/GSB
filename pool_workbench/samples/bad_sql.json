@@ -1,0 +1,28 @@
+{
+  "sample_data_version": "1",
+  "pool": {
+    "max_connections": 2,
+    "workload_quotas": {
+      "wl_a": 1,
+      "wl_b": 1
+    },
+    "hold_timeout_ms": 100,
+    "acquire_timeout_ms": 60
+  },
+  "tasks": [
+    {
+      "task_id": "x",
+      "workload": "wl_a",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 10,
+      "sql": "DELETE FROM inventory"
+    },
+    {
+      "task_id": "y",
+      "workload": "wl_b",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 10,
+      "sql": "SELECT * FROM secret_table"
+    }
+  ]
+}

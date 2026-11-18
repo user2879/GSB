@@ -1,0 +1,20 @@
+{
+  "sample_data_version": "1",
+  "pool": {
+    "max_connections": -1,
+    "workload_quotas": {
+      "wl_a": 1
+    },
+    "hold_timeout_ms": 100,
+    "acquire_timeout_ms": 60
+  },
+  "tasks": [
+    {
+      "task_id": "x",
+      "workload": "wl_a",
+      "conn_type": "READ_ONLY",
+      "estimated_ms": 10,
+      "sql": "SELECT * FROM inventory"
+    }
+  ]
+}
