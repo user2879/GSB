@@ -1,0 +1,16 @@
+{
+  "rank": 2,
+  "alpha": 3.0,
+  "target_layers": [0, 3],
+  "learning_rate": 0.02,
+  "batch_size": 4,
+  "epochs": 4,
+  "metric": "mse",
+  "metric_threshold": 0.4,
+  "concurrency": 2,
+  "commit_interval": 4,
+  "task_overrides": {
+    "cls_mod4": {"rank": 3, "alpha": 5.0},
+    "cls_parity": {"rank": 3, "alpha": 5.0}
+  }
+}
