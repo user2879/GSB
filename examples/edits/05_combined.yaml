@@ -1,0 +1,19 @@
+operations:
+  - op: switch_calibration
+    scheme: histogram
+    enabled: false
+  - op: set_bins
+    scheme: isotonic
+    bins: 6
+  - op: set_regularization
+    scheme: isotonic
+    strength: "0.25"
+  - op: set_threshold_step
+    step: "0.05"
+  - op: replace_sample
+    sample_id: 42
+    values:
+      activity: 88.0
+      risk_score: -1.2
+    target: 0
+

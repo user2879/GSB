@@ -1,0 +1,73 @@
+seed: 20261118
+n_samples: 96
+columns:
+  - name: sample_id
+    type: identifier
+  - name: age
+    type: numeric
+    generator: normal
+    mean: 42.0
+    std: 12.0
+    digits: 3
+    missing_rate: 0.04
+  - name: income
+    type: numeric
+    generator: lognormal
+    mean: 10.72
+    sigma: 0.32
+    digits: 4
+    missing_rate: 0.03
+  - name: tenure
+    type: numeric
+    generator: uniform
+    low: 0.0
+    high: 12.0
+    digits: 3
+    missing_rate: 0.01
+  - name: activity
+    type: numeric
+    generator: normal
+    mean: 54.0
+    std: 18.0
+    digits: 3
+    missing_rate: 0.05
+  - name: region
+    type: categorical
+    values: [north, south, east, west]
+    weights: [0.32, 0.28, 0.22, 0.18]
+    missing_rate: 0.02
+  - name: segment
+    type: categorical
+    values: [basic, plus, premium]
+    weights: [0.52, 0.30, 0.18]
+    missing_rate: 0.03
+  - name: income_redundant
+    type: numeric
+    generator: normal
+    mean: 0.0
+    std: 1.0
+    redundant_of: income
+    scale: 1.03
+    offset: 5.0
+    digits: 4
+    missing_rate: 0.02
+  - name: risk_score
+    type: numeric
+    generator: normal
+    mean: 0.0
+    std: 1.0
+    digits: 4
+    missing_rate: 0.02
+  - name: target
+    type: target
+    positive_rate: 0.24
+    noise_std: 0.85
+    driver_weights:
+      age: 0.35
+      income: 0.55
+      tenure: 0.20
+      activity: -0.18
+      risk_score: 0.70
+      region: 0.20
+      segment: -0.22
+
