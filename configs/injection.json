@@ -1,0 +1,28 @@
+{
+  "injections": [
+    {
+      "id": "INJ-001",
+      "type": "nonfinite_vector",
+      "stage": "validate",
+      "word_id": 1005
+    },
+    {
+      "id": "INJ-002",
+      "type": "id_out_of_range",
+      "stage": "gather",
+      "request_index": 2,
+      "out_of_range_id": 999999
+    },
+    {
+      "id": "INJ-003",
+      "type": "stale_snapshot_layout",
+      "stage": "snapshot"
+    },
+    {
+      "id": "INJ-004",
+      "type": "zero_quota",
+      "stage": "schedule",
+      "request_index": 3
+    }
+  ]
+}
