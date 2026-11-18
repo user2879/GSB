@@ -1,0 +1,8 @@
+{"args": {"b": 0.85, "k1": 1.8}, "op": "set_bm25", "seq": 1}
+{"args": {"recall_top_k": 5}, "op": "set_recall_top_k", "seq": 2}
+{"args": {"overlap_weight": 0.2, "title_weight": 0.35}, "op": "set_fusion_weights", "seq": 3}
+{"args": {"template": "concise"}, "op": "set_template", "seq": 4}
+{"args": {"context_ref": [1, 2], "is_followup": true, "session_id": "S-A", "turn_no": 3}, "op": "set_context", "seq": 5}
+{"args": {"query": "laptop memory warranty options", "session_id": "S-B", "turn_no": 2}, "op": "replace_turn_query", "seq": 6}
+{"args": {"body": "Q:{query}|A:{top_snippet}|C:{citation_count}|D:{top_doc_id}", "template": "concise"}, "op": "update_template", "seq": 7}
+{"args": {"template": "standard"}, "op": "set_template", "seq": 8}
