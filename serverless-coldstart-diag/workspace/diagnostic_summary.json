@@ -1,0 +1,346 @@
+{
+  "analytics": {
+    "cold_ratio_heat_hist": {
+      "high": 0,
+      "low": 0,
+      "medium": 0,
+      "severe": 12
+    },
+    "current_declaration": 3,
+    "wait_percentiles": {
+      "p50": 84,
+      "p90": 154,
+      "p95": 160,
+      "p99": 166
+    }
+  },
+  "runs": [
+    {
+      "created_seq": 1,
+      "declaration_version": 1,
+      "expected_minutes": 12,
+      "ledger_format_version": 1,
+      "manifest_digest": "802696fa5ab5d2daf35d22295ac281961498544f8ad232556e6a567f1e8bb0b9",
+      "run_id": "run-v1-crash",
+      "scale": 10000,
+      "status": "COMPLETE"
+    },
+    {
+      "created_seq": 2,
+      "declaration_version": 1,
+      "expected_minutes": 12,
+      "ledger_format_version": 1,
+      "manifest_digest": "802696fa5ab5d2daf35d22295ac281961498544f8ad232556e6a567f1e8bb0b9",
+      "run_id": "run-v1-full",
+      "scale": 10000,
+      "status": "COMPLETE"
+    },
+    {
+      "created_seq": 3,
+      "declaration_version": 2,
+      "expected_minutes": 12,
+      "ledger_format_version": 1,
+      "manifest_digest": "1f2059ca70cf884350c75ed024f3bb5140071d01b59c302faa22b16a47a50689",
+      "run_id": "run-v2-full",
+      "scale": 10000,
+      "status": "COMPLETE"
+    },
+    {
+      "created_seq": 4,
+      "declaration_version": 3,
+      "expected_minutes": 12,
+      "ledger_format_version": 1,
+      "manifest_digest": "8edff008d50601cc65c2d12801fc54747b8cbf0a6e021b2911fd6ee9f5153095",
+      "run_id": "run-v3-full",
+      "scale": 100000,
+      "status": "COMPLETE"
+    }
+  ],
+  "scenarios": [
+    {
+      "aggregate": {
+        "agg_error_bound_ulp": 802,
+        "avg_cold_ratio_q": 7301,
+        "avg_occupancy_q": 12720,
+        "avg_wait_ms": 92,
+        "avg_wait_ratio_q": 1894,
+        "declaration_version": 1,
+        "minutes": 12,
+        "overall_cold_ratio_q": 7311,
+        "overall_wait_ratio_q": 2193,
+        "rounding": "floor（向下截断）",
+        "scale": 10000,
+        "total_calls": 2712,
+        "total_cold_calls": 1983,
+        "total_cold_starts": 155,
+        "total_prewarm_starts": 16,
+        "total_queued_calls": 595,
+        "total_wait_ms": 249900
+      },
+      "declaration_version": 1,
+      "recovery": {
+        "committed_minutes": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "declaration_version": 1,
+        "expected_minutes": 12,
+        "ledger_format_version": 1,
+        "note": "未决分钟状态为 UNKNOWN，必须重跑；无法生成强制终止时刻的退出报告",
+        "pending_minutes": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "recovered_minutes": 5,
+        "run_id": "run-v1-crash",
+        "scale": 10000,
+        "status": "INTERRUPTED"
+      },
+      "replay": {
+        "fields_checked": [
+          "calls",
+          "burst_calls",
+          "eff_concurrency",
+          "required_instances_raw",
+          "required_instances",
+          "global_cap_instances",
+          "memory_cap_instances",
+          "available_instances",
+          "warm_target",
+          "warm_instances",
+          "prewarm_starts",
+          "cold_starts",
+          "init_starts",
+          "hot_calls",
+          "cold_calls",
+          "queued_calls",
+          "total_wait_ms",
+          "avg_wait_ms",
+          "reserved_used",
+          "reserved_target",
+          "cold_ratio_q",
+          "wait_ratio_q",
+          "occupancy_q",
+          "reserved_occupancy_q",
+          "instance_set",
+          "warm_set",
+          "cold_set",
+          "allocation",
+          "arbitration_reasons",
+          "error_block"
+        ],
+        "minutes_verified": 12,
+        "run_id": "run-v1-crash",
+        "status": "REPRODUCIBLE"
+      },
+      "scenario": "S1_full_push_with_crash_recovery"
+    },
+    {
+      "aggregate": {
+        "agg_error_bound_ulp": 973,
+        "avg_cold_ratio_q": 5737,
+        "avg_occupancy_q": 12720,
+        "avg_wait_ms": 92,
+        "avg_wait_ratio_q": 1894,
+        "declaration_version": 2,
+        "minutes": 12,
+        "overall_cold_ratio_q": 5752,
+        "overall_wait_ratio_q": 2193,
+        "rounding": "floor（向下截断）",
+        "scale": 10000,
+        "total_calls": 2712,
+        "total_cold_calls": 1560,
+        "total_cold_starts": 108,
+        "total_prewarm_starts": 25,
+        "total_queued_calls": 595,
+        "total_wait_ms": 249900
+      },
+      "change_count": 84,
+      "changed_minutes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "declaration_version": 2,
+      "sample_changes": [
+        {
+          "field": "warm_target",
+          "minute": 0,
+          "new": 8,
+          "old": 5
+        },
+        {
+          "field": "warm_instances",
+          "minute": 0,
+          "new": 8,
+          "old": 5
+        },
+        {
+          "field": "hot_calls",
+          "minute": 0,
+          "new": 72,
+          "old": 45
+        },
+        {
+          "field": "cold_calls",
+          "minute": 0,
+          "new": 88,
+          "old": 115
+        },
+        {
+          "field": "cold_starts",
+          "minute": 0,
+          "new": 10,
+          "old": 13
+        }
+      ],
+      "scenario": "S2_warmup_ratio_changed_full_replace",
+      "stale_minutes_marked": 24,
+      "version_compare_v1_v2": [
+        {
+          "abs_diff": 0,
+          "bound_ulp": 973,
+          "field": "avg_occupancy_q",
+          "tie_rule": "差值落界内判不可区分；并列时按字段名字典序稳定排序",
+          "value_a": 12720,
+          "value_b": 12720,
+          "verdict": "INDISTINGUISHABLE"
+        },
+        {
+          "abs_diff": 1559,
+          "bound_ulp": 973,
+          "field": "overall_cold_ratio_q",
+          "tie_rule": "差值落界内判不可区分；并列时按字段名字典序稳定排序",
+          "value_a": 7311,
+          "value_b": 5752,
+          "verdict": "DISTINGUISHABLE"
+        },
+        {
+          "abs_diff": 0,
+          "bound_ulp": 973,
+          "field": "overall_wait_ratio_q",
+          "tie_rule": "差值落界内判不可区分；并列时按字段名字典序稳定排序",
+          "value_a": 2193,
+          "value_b": 2193,
+          "verdict": "INDISTINGUISHABLE"
+        }
+      ]
+    },
+    {
+      "aggregate": {
+        "agg_error_bound_ulp": 9717,
+        "avg_cold_ratio_q": 57377,
+        "avg_occupancy_q": 127211,
+        "avg_wait_ms": 92,
+        "avg_wait_ratio_q": 18944,
+        "declaration_version": 3,
+        "minutes": 12,
+        "overall_cold_ratio_q": 57522,
+        "overall_wait_ratio_q": 21939,
+        "rounding": "floor（向下截断）",
+        "scale": 100000,
+        "total_calls": 2712,
+        "total_cold_calls": 1560,
+        "total_cold_starts": 108,
+        "total_prewarm_starts": 25,
+        "total_queued_calls": 595,
+        "total_wait_ms": 249900
+      },
+      "config_mismatch_report": {
+        "code": "E_REPLAY",
+        "details": [
+          {
+            "field": "scale",
+            "ledger": 10000,
+            "manifest": 100000
+          },
+          {
+            "field": "declaration_version",
+            "ledger": 1,
+            "manifest": 3
+          }
+        ]
+      },
+      "declaration_version": 3,
+      "replay_current": {
+        "fields_checked": [
+          "calls",
+          "burst_calls",
+          "eff_concurrency",
+          "required_instances_raw",
+          "required_instances",
+          "global_cap_instances",
+          "memory_cap_instances",
+          "available_instances",
+          "warm_target",
+          "warm_instances",
+          "prewarm_starts",
+          "cold_starts",
+          "init_starts",
+          "hot_calls",
+          "cold_calls",
+          "queued_calls",
+          "total_wait_ms",
+          "avg_wait_ms",
+          "reserved_used",
+          "reserved_target",
+          "cold_ratio_q",
+          "wait_ratio_q",
+          "occupancy_q",
+          "reserved_occupancy_q",
+          "instance_set",
+          "warm_set",
+          "cold_set",
+          "allocation",
+          "arbitration_reasons",
+          "error_block"
+        ],
+        "minutes_verified": 12,
+        "run_id": "run-v3-full",
+        "status": "REPRODUCIBLE"
+      },
+      "scenario": "S3_scale_factor_perturbation",
+      "stale_minutes_marked": 12
+    }
+  ],
+  "snapshots": [
+    {
+      "declaration_version": 1,
+      "minutes": 12,
+      "path": "/home/zsl/feedback/uid189/serverless-coldstart-diag/workspace/snapshots/run-v1-full.snapshot.json",
+      "run_id": "run-v1-full",
+      "scale": 10000
+    },
+    {
+      "declaration_version": 2,
+      "minutes": 12,
+      "path": "/home/zsl/feedback/uid189/serverless-coldstart-diag/workspace/snapshots/run-v2-full.snapshot.json",
+      "run_id": "run-v2-full",
+      "scale": 10000
+    },
+    {
+      "declaration_version": 3,
+      "minutes": 12,
+      "path": "/home/zsl/feedback/uid189/serverless-coldstart-diag/workspace/snapshots/run-v3-full.snapshot.json",
+      "run_id": "run-v3-full",
+      "scale": 100000
+    }
+  ]
+}

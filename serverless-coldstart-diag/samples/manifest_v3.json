@@ -1,0 +1,109 @@
+{
+  "call_sequence": [
+    {
+      "burst_permyriad": 500,
+      "calls": 160,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 0
+    },
+    {
+      "burst_permyriad": 2229,
+      "calls": 218,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 1
+    },
+    {
+      "burst_permyriad": 957,
+      "calls": 276,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 2
+    },
+    {
+      "burst_permyriad": 2686,
+      "calls": 175,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 3
+    },
+    {
+      "burst_permyriad": 1414,
+      "calls": 233,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 4
+    },
+    {
+      "burst_permyriad": 3143,
+      "calls": 286,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 5
+    },
+    {
+      "burst_permyriad": 1871,
+      "calls": 190,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 6
+    },
+    {
+      "burst_permyriad": 599,
+      "calls": 248,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 7
+    },
+    {
+      "burst_permyriad": 2328,
+      "calls": 301,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 8
+    },
+    {
+      "burst_permyriad": 1056,
+      "calls": 205,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 9
+    },
+    {
+      "burst_permyriad": 2785,
+      "calls": 258,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 10
+    },
+    {
+      "burst_permyriad": 1513,
+      "calls": 162,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "minute": 11
+    }
+  ],
+  "declaration_version": 3,
+  "functions": [
+    {
+      "concurrency": 10,
+      "function_id": "fn-order-processor",
+      "function_version": 3,
+      "init_ms": 420,
+      "max_instances": 40,
+      "memory_mib": 512,
+      "min_instances": 2
+    }
+  ],
+  "manifest_id": "order-processor-manifest",
+  "policy": {
+    "global_concurrency_cap": 180,
+    "global_memory_mib": 16384,
+    "instance_concurrency_cap": 10,
+    "reserved_instances": 4,
+    "warmup_permyriad": 4000
+  },
+  "scale": 100000
+}
