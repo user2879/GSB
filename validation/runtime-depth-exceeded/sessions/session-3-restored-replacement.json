@@ -1,0 +1,396 @@
+{
+  "aggregation": {
+    "forced": false,
+    "full_total_weight_threshold": 4096,
+    "full_unique_stack_threshold": 64,
+    "memory_estimate": {
+      "components": {
+        "context_edge_index": 2880,
+        "fixed_depth_working_buffer": 672,
+        "frame_registry": 777,
+        "frame_stat_arrays": 440,
+        "full_stack_fold_table": 1024,
+        "metadata_unique_stack_digest_set": 392
+      },
+      "estimated_peak_bytes": 6185,
+      "fixed_depth_working_buffer_bytes": 512,
+      "method": "deterministic structural estimate; excludes interpreter and allocator overhead",
+      "streaming_no_path_strings": false
+    },
+    "path": "full",
+    "rule": "full iff unique_stack_count < full_unique_stack_threshold and selected_total_weight < full_total_weight_threshold",
+    "selected_total_weight": 17,
+    "stack_fold_table_included": true,
+    "unique_stack_count": 8
+  },
+  "conclusion_sha256": "d08dc37155b93291cb64063fa27f2467a8b9442cd61825c56da19b63c3c15b93",
+  "created_by": "slowprof",
+  "error_annotation": {
+    "combined_pair_error_bound": {
+      "denominator": 1000000,
+      "explanation": "two half-unit errors; fixed values within one unit have overlapping intervals",
+      "fixed_point_units": 1,
+      "numerator": 1
+    },
+    "error_bound_dominated_pair_count": 0,
+    "error_bound_dominated_pairs": [],
+    "fixed_point_scale": 1000000,
+    "one_fixed_point_unit": {
+      "denominator": 1000000,
+      "numerator": 1
+    },
+    "quantization_rule": "round-half-up using integer arithmetic",
+    "single_frame_max_quantization_error": {
+      "denominator": 2000000,
+      "explanation": "absolute error is at most half a fixed-point unit",
+      "numerator": 1
+    },
+    "stable_tie_break": "self_time_ms desc, cumulative_time_ms desc, frame lexicographic asc",
+    "top_k_boundary_check": {
+      "excluded_is_not_better": true,
+      "first_excluded_frame": "auth.verify",
+      "first_excluded_self_ratio_fixed": 30905,
+      "first_excluded_self_time_ms": 70,
+      "last_selected_frame": "redis.get",
+      "last_selected_self_ratio_fixed": 35320,
+      "last_selected_self_time_ms": 80,
+      "quantization_order_error_bound_dominated_with_first_excluded": false
+    },
+    "top_k_contains_true_top_k": true,
+    "top_k_membership_basis": "ranking uses exact unbounded integer self_time_ms, cumulative_time_ms and frame name; fixed-point ratios are presentation-only, so the reported set is exactly the true comparator top-k set",
+    "top_k_quantization_error": {
+      "denominator": 453000000,
+      "numerator": 139
+    },
+    "top_k_quantized_ratio_sum": 922737,
+    "top_k_total_ratio_error_upper_bound": {
+      "denominator": 400000,
+      "explanation": "sum of k half-unit per-frame bounds",
+      "numerator": 1,
+      "source_denominator": 2000000,
+      "source_numerator": 5
+    }
+  },
+  "folded_result": {
+    "frame_count": 11,
+    "frames": [
+      {
+        "cumulative_time_ms": 2140,
+        "frame": "api.handle",
+        "occurrence_count": 7,
+        "participant_weight": 12,
+        "self_time_ms": 0
+      },
+      {
+        "cumulative_time_ms": 70,
+        "frame": "auth.verify",
+        "occurrence_count": 1,
+        "participant_weight": 2,
+        "self_time_ms": 70
+      },
+      {
+        "cumulative_time_ms": 1570,
+        "frame": "billing.charge",
+        "occurrence_count": 3,
+        "participant_weight": 4,
+        "self_time_ms": 90
+      },
+      {
+        "cumulative_time_ms": 60,
+        "frame": "cache.get",
+        "occurrence_count": 1,
+        "participant_weight": 2,
+        "self_time_ms": 60
+      },
+      {
+        "cumulative_time_ms": 440,
+        "frame": "db.query",
+        "occurrence_count": 2,
+        "participant_weight": 4,
+        "self_time_ms": 0
+      },
+      {
+        "cumulative_time_ms": 1480,
+        "frame": "http.call",
+        "occurrence_count": 2,
+        "participant_weight": 3,
+        "self_time_ms": 1480
+      },
+      {
+        "cumulative_time_ms": 200,
+        "frame": "parser.parse",
+        "occurrence_count": 1,
+        "participant_weight": 1,
+        "self_time_ms": 200
+      },
+      {
+        "cumulative_time_ms": 125,
+        "frame": "queue.poll",
+        "occurrence_count": 2,
+        "participant_weight": 5,
+        "self_time_ms": 45
+      },
+      {
+        "cumulative_time_ms": 80,
+        "frame": "redis.get",
+        "occurrence_count": 1,
+        "participant_weight": 2,
+        "self_time_ms": 80
+      },
+      {
+        "cumulative_time_ms": 240,
+        "frame": "sql.execute",
+        "occurrence_count": 1,
+        "participant_weight": 3,
+        "self_time_ms": 240
+      },
+      {
+        "cumulative_time_ms": 125,
+        "frame": "worker.run",
+        "occurrence_count": 2,
+        "participant_weight": 5,
+        "self_time_ms": 0
+      }
+    ],
+    "metric_definition": {
+      "cumulative_time": "weight * duration_ms once for every stack observation containing the frame; recursive duplicate frame names in one stack still count once",
+      "fold_key": "the ordered frame path only; weights merge for identical paths",
+      "metric_version": "self-leaf-cum-presence-v1",
+      "ordering": "input-row order independent; output frames sorted lexicographically",
+      "participant_weight": "sum of weights of stack observations containing the frame at least once",
+      "self_time": "weight * duration_ms for a frame only when it is the leaf/top frame; a frame participates at most once per stack observation"
+    },
+    "stack_folds": [
+      {
+        "frames": [
+          "api.handle",
+          "auth.verify"
+        ],
+        "weight": 2
+      },
+      {
+        "frames": [
+          "api.handle",
+          "billing.charge"
+        ],
+        "weight": 1
+      },
+      {
+        "frames": [
+          "api.handle",
+          "billing.charge",
+          "http.call"
+        ],
+        "weight": 3
+      },
+      {
+        "frames": [
+          "api.handle",
+          "cache.get"
+        ],
+        "weight": 2
+      },
+      {
+        "frames": [
+          "api.handle",
+          "db.query",
+          "parser.parse"
+        ],
+        "weight": 1
+      },
+      {
+        "frames": [
+          "api.handle",
+          "db.query",
+          "sql.execute"
+        ],
+        "weight": 3
+      },
+      {
+        "frames": [
+          "worker.run",
+          "queue.poll"
+        ],
+        "weight": 3
+      },
+      {
+        "frames": [
+          "worker.run",
+          "queue.poll",
+          "redis.get"
+        ],
+        "weight": 2
+      }
+    ],
+    "stack_folds_omitted_reason": null,
+    "total_time_ms": 2265,
+    "total_weight": 17
+  },
+  "hotspot_ranking": [
+    {
+      "callees": [],
+      "callers": [
+        {
+          "frame": "billing.charge",
+          "inclusive_time_ms": 1480,
+          "participant_weight": 3
+        }
+      ],
+      "cumulative_time_ms": 1480,
+      "error_band_ties": [],
+      "frame": "http.call",
+      "occurrence_count": 2,
+      "participant_weight": 3,
+      "quantization_error": {
+        "denominator": 226500000,
+        "numerator": 83
+      },
+      "quantization_order_error_bound_dominated": false,
+      "rank": 1,
+      "self_ratio_exact_denominator": 2265,
+      "self_ratio_exact_numerator": 1480,
+      "self_ratio_fixed": 653422,
+      "self_time_ms": 1480
+    },
+    {
+      "callees": [],
+      "callers": [
+        {
+          "frame": "db.query",
+          "inclusive_time_ms": 240,
+          "participant_weight": 3
+        }
+      ],
+      "cumulative_time_ms": 240,
+      "error_band_ties": [],
+      "frame": "sql.execute",
+      "occurrence_count": 1,
+      "participant_weight": 3,
+      "quantization_error": {
+        "denominator": 3775000,
+        "numerator": 1
+      },
+      "quantization_order_error_bound_dominated": false,
+      "rank": 2,
+      "self_ratio_exact_denominator": 2265,
+      "self_ratio_exact_numerator": 240,
+      "self_ratio_fixed": 105960,
+      "self_time_ms": 240
+    },
+    {
+      "callees": [],
+      "callers": [
+        {
+          "frame": "db.query",
+          "inclusive_time_ms": 200,
+          "participant_weight": 1
+        }
+      ],
+      "cumulative_time_ms": 200,
+      "error_band_ties": [],
+      "frame": "parser.parse",
+      "occurrence_count": 1,
+      "participant_weight": 1,
+      "quantization_error": {
+        "denominator": 4530000,
+        "numerator": 1
+      },
+      "quantization_order_error_bound_dominated": false,
+      "rank": 3,
+      "self_ratio_exact_denominator": 2265,
+      "self_ratio_exact_numerator": 200,
+      "self_ratio_fixed": 88300,
+      "self_time_ms": 200
+    },
+    {
+      "callees": [
+        {
+          "frame": "http.call",
+          "inclusive_time_ms": 1480,
+          "participant_weight": 3
+        }
+      ],
+      "callers": [
+        {
+          "frame": "api.handle",
+          "inclusive_time_ms": 1570,
+          "participant_weight": 4
+        }
+      ],
+      "cumulative_time_ms": 1570,
+      "error_band_ties": [],
+      "frame": "billing.charge",
+      "occurrence_count": 3,
+      "participant_weight": 4,
+      "quantization_error": {
+        "denominator": 30200000,
+        "numerator": 3
+      },
+      "quantization_order_error_bound_dominated": false,
+      "rank": 4,
+      "self_ratio_exact_denominator": 2265,
+      "self_ratio_exact_numerator": 90,
+      "self_ratio_fixed": 39735,
+      "self_time_ms": 90
+    },
+    {
+      "callees": [],
+      "callers": [
+        {
+          "frame": "queue.poll",
+          "inclusive_time_ms": 80,
+          "participant_weight": 2
+        }
+      ],
+      "cumulative_time_ms": 80,
+      "error_band_ties": [],
+      "frame": "redis.get",
+      "occurrence_count": 1,
+      "participant_weight": 2,
+      "quantization_error": {
+        "denominator": 11325000,
+        "numerator": 1
+      },
+      "quantization_order_error_bound_dominated": false,
+      "rank": 5,
+      "self_ratio_exact_denominator": 2265,
+      "self_ratio_exact_numerator": 80,
+      "self_ratio_fixed": 35320,
+      "self_time_ms": 80
+    }
+  ],
+  "interval": {
+    "bounds": "inclusive",
+    "end_ms": 1700000020000,
+    "interval_version": "obs-narrow-v2",
+    "start_ms": 1700000004000
+  },
+  "metric_version": "self-leaf-cum-presence-v1",
+  "policy": {
+    "full_total_weight_threshold": 4096,
+    "full_unique_stack_threshold": 64,
+    "max_depth": 64,
+    "metric_version": "self-leaf-cum-presence-v1",
+    "scale": 1000000,
+    "top_k": 5
+  },
+  "ranking_rule": "self_time_ms desc, cumulative_time_ms desc, frame lexicographic asc",
+  "reported_k": 5,
+  "requested_k": 5,
+  "sample": {
+    "file_sha256": "0b8f594a06d9708c5601f5027c6592fe7634b992be196e9cbfb73af048b534a2",
+    "first_timestamp_ms": 1700000001000,
+    "frame_count": 11,
+    "frame_name_bytes": 238,
+    "last_timestamp_ms": 1700000012000,
+    "line_count": 12,
+    "path": "/home/zsl/feedback/uid187/samples/small.ndjson",
+    "selected_max_depth": 3,
+    "selected_row_count": 9,
+    "selected_samples_sha256": "197ed4834d4b307ad9b2992876506d6ecc496d88d08c7780d61f63c446e58425",
+    "selected_total_depth": 23,
+    "selected_total_weight": 17,
+    "unique_stack_count": 8
+  },
+  "snapshot_schema_version": "slowprof.snapshot.v1"
+}
