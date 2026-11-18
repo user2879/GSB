@@ -1,0 +1,38 @@
+{
+  "compression_window": 3,
+  "concurrency": 4,
+  "dedupe_similarity_threshold": 0.58,
+  "max_candidates_per_round": 4,
+  "max_summary_length": 42,
+  "point_weights": {
+    "base": 1.5,
+    "position_decay": 0.82,
+    "sentence_bonus": 0.25,
+    "term_weights": {
+      "decide": 1.6,
+      "delivery": 1.4,
+      "risk": 2.0,
+      "交付": 1.4,
+      "决定": 1.6,
+      "风险": 2.0
+    }
+  },
+  "snapshot_interval": 2,
+  "template_weights": [
+    {
+      "format": "记录要点：{point}",
+      "id": "zh_record",
+      "weight": 3.0
+    },
+    {
+      "format": "讨论结论：{point}",
+      "id": "zh_conclusion",
+      "weight": 2.0
+    },
+    {
+      "format": "Key point: {point}",
+      "id": "en_summary",
+      "weight": 2.0
+    }
+  ]
+}
