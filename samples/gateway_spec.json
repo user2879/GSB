@@ -1,0 +1,115 @@
+{
+  "format_version": 1,
+  "gateway": {
+    "host": "127.0.0.1",
+    "port": 48100
+  },
+  "models": [
+    {
+      "version": "alpha-stable-v1",
+      "model_dim": 8,
+      "hidden_dim": 12,
+      "seed": 1101,
+      "host": "127.0.0.1",
+      "port": 48101
+    },
+    {
+      "version": "alpha-canary-v2",
+      "model_dim": 8,
+      "hidden_dim": 16,
+      "seed": 2202,
+      "host": "127.0.0.1",
+      "port": 48102
+    },
+    {
+      "version": "beta-stable-v1",
+      "model_dim": 10,
+      "hidden_dim": 14,
+      "seed": 3303,
+      "host": "127.0.0.1",
+      "port": 48103
+    },
+    {
+      "version": "beta-canary-v3",
+      "model_dim": 10,
+      "hidden_dim": 18,
+      "seed": 4404,
+      "host": "127.0.0.1",
+      "port": 48104
+    }
+  ],
+  "routes": [
+    {
+      "rule_id": "alpha-route",
+      "match_prefix": "alpha:",
+      "stable_version": "alpha-stable-v1",
+      "canary_version": "alpha-canary-v2",
+      "gray_weight_bp": 10000,
+      "batch_size": 4,
+      "stages": [
+        {
+          "stage_id": "alpha-0",
+          "start_request": 1,
+          "end_request": 120,
+          "gray_weight_bp": 0
+        },
+        {
+          "stage_id": "alpha-1",
+          "start_request": 121,
+          "end_request": 240,
+          "gray_weight_bp": 2500
+        },
+        {
+          "stage_id": "alpha-2",
+          "start_request": 241,
+          "end_request": 360,
+          "gray_weight_bp": 6000
+        },
+        {
+          "stage_id": "alpha-3",
+          "start_request": 361,
+          "end_request": 480,
+          "gray_weight_bp": 10000
+        }
+      ]
+    },
+    {
+      "rule_id": "beta-route",
+      "match_prefix": "beta:",
+      "stable_version": "beta-stable-v1",
+      "canary_version": "beta-canary-v3",
+      "gray_weight_bp": 10000,
+      "batch_size": 3,
+      "stages": [
+        {
+          "stage_id": "beta-0",
+          "start_request": 1,
+          "end_request": 120,
+          "gray_weight_bp": 0
+        },
+        {
+          "stage_id": "beta-1",
+          "start_request": 121,
+          "end_request": 240,
+          "gray_weight_bp": 2500
+        },
+        {
+          "stage_id": "beta-2",
+          "start_request": 241,
+          "end_request": 360,
+          "gray_weight_bp": 6000
+        },
+        {
+          "stage_id": "beta-3",
+          "start_request": 361,
+          "end_request": 480,
+          "gray_weight_bp": 10000
+        }
+      ]
+    }
+  ],
+  "rebuild_latency_budget_ms": 750,
+  "query_latency_budget_ms": 80,
+  "stream_threshold": 128
+}
+
