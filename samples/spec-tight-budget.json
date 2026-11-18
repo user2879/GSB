@@ -1,0 +1,19 @@
+{
+  "value_min": 0,
+  "value_max": 50,
+  "group_keys": ["a", "b", "c"],
+  "sources": [
+    {"source_id": "alpha", "seed": 42, "event_count": 12}
+  ],
+  "rules": [
+    {
+      "rule_id": "tight",
+      "window_seconds": 100,
+      "group_key": "group_key",
+      "aggregations": ["count", "sum", "max"],
+      "concurrency": 2,
+      "memory_budget": 1,
+      "version": 1
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "value_min": 0,
+  "value_max": 50,
+  "group_keys": ["a", "b", "c", "d"],
+  "sources": [
+    {"source_id": "alpha", "seed": 20261118, "event_count": 22},
+    {"source_id": "beta", "seed": 778899, "event_count": 22}
+  ],
+  "rules": [
+    {
+      "rule_id": "r2s-all",
+      "window_seconds": 3,
+      "group_key": "group_key",
+      "aggregations": ["count", "sum"],
+      "concurrency": 1,
+      "memory_budget": 8,
+      "version": 2
+    },
+    {
+      "rule_id": "r3s-all",
+      "window_seconds": 3,
+      "group_key": "group_key",
+      "aggregations": ["count", "sum"],
+      "concurrency": 2,
+      "memory_budget": 8,
+      "version": 1
+    },
+    {
+      "rule_id": "r5s-alpha",
+      "window_seconds": 5,
+      "group_key": "group_key",
+      "aggregations": ["count", "sum", "max"],
+      "concurrency": 1,
+      "memory_budget": 8,
+      "version": 1,
+      "source_ids": ["alpha"]
+    }
+  ]
+}

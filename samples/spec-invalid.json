@@ -1,0 +1,18 @@
+{
+  "value_min": 0,
+  "value_max": 50,
+  "sources": [
+    {"source_id": "alpha", "seed": 1, "event_count": 4},
+    {"source_id": "alpha", "seed": 2, "event_count": 4}
+  ],
+  "rules": [
+    {
+      "rule_id": "bad-rule",
+      "window_seconds": 0,
+      "group_key": "",
+      "aggregations": ["median"],
+      "concurrency": 0,
+      "memory_budget": -1
+    }
+  ]
+}
