@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "train_a",
+      "path": "samples/train_a.json",
+      "columns": {
+        "visits": {
+          "type": "int"
+        },
+        "score": {
+          "type": "float"
+        },
+        "label": {
+          "type": "int"
+        }
+      }
+    },
+    {
+      "id": "train_b",
+      "path": "samples/train_b.json",
+      "columns": {
+        "visits": {
+          "type": "int"
+        },
+        "score": {
+          "type": "float"
+        },
+        "label": {
+          "type": "int"
+        }
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "read",
+      "type": "read",
+      "version": 1,
+      "upstream": [],
+      "params": {
+        "chunk_rows": 4,
+        "source_ids": [
+          "train_a",
+          "train_b"
+        ]
+      }
+    },
+    {
+      "id": "types",
+      "type": "normalize_types",
+      "version": 1,
+      "upstream": [
+        "read"
+      ],
+      "params": {
+        "fixed_scale": 1000,
+        "rounding": "toward_zero"
+      }
+    },
+    {
+      "id": "fill",
+      "type": "fill_missing",
+      "version": 1,
+      "upstream": [
+        "types"
+      ],
+      "params": {
+        "fill_value": 0
+      }
+    },
+    {
+      "id": "scale",
+      "type": "normalize",
+      "version": 1,
+      "upstream": [
+        "fill"
+      ],
+      "params": {
+        "scale": 3,
+        "divisor": 1,
+        "rounding": "toward_zero"
+      }
+    },
+    {
+      "id": "clip",
+      "type": "clip",
+      "version": 1,
+      "upstream": [
+        "scale"
+      ],
+      "params": {
+        "lower": -20000,
+        "upper": 40000,
+        "max_outlier_bp": 2000
+      }
+    },
+    {
+      "id": "pack",
+      "type": "shard",
+      "version": 1,
+      "upstream": [
+        "clip"
+      ],
+      "params": {
+        "target_rows": 4,
+        "remainder_rule": "keep_partial"
+      }
+    }
+  ]
+}

@@ -1,22 +1,118 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向本地 Windows 环境的 ML 训练数据管线诊断工作台，交付形式为领域可视化与诊断工作台。用户在本地 JSON 文件中声明一条训练数据管线：若干数据源（本地确定性样本文件，含整数与浮点字段）、按顺序串联的处理阶段（读取、类型规范化、缺值填充、按列归一化、异常值截断与分片打包），每个阶段带整数参数、版本号与对上游阶段的引用，并声明训练分片的目标规模整数参数。工作台须把管线定义编译为确定性的执行计划，在本地样本上流式执行，以整数定点方式产出每阶段的输出摘要与列统计，把整份管线规格指纹（含每阶段参数、样本内容摘要与分片参数）与逐阶段观测写入 SQLite 账本，同时提供 Tkinter 诊断界面展示阶段依赖、逐阶段行数与摘要、分片分布、指纹与账本视图。核心业务是：同一管线规格与同一样本必须可复现地得到逐位一致的阶段摘要与分片结果；当规格、样本或分片参数演进时必须准确识别受影响阶段并整体替换结论；异常注入仅改变输入文件或参数，所有异常须以明确业务码报告且可据账本重放校验。
+# ML 训练数据管线诊断工作台
 
-任务环境与准备：
-安装 Python 3.10 及以上，并确保 NumPy 与 Tkinter 可用；Tkinter 随官方 Windows 安装包提供，若缺失需在安装时勾选 tcl/tk 组件。
-准备本地确定性样本 JSON 文件、管线规格 JSON 与演示脚本，全部由本仓库生成，不访问网络或真实数据集。
-确认工作区可写，SQLite 使用标准库 sqlite3，账本与快照文件放在工作区目录内。
-在 Windows 命令提示符下使用 python 运行演示脚本；不依赖容器、云服务或 GPU。
+面向本地 Windows 环境的确定性 ML 训练数据管线诊断工作台。管线在本地 JSON 中声明
+（数据源、顺序处理阶段、整数参数、版本号、上游引用、分片规模），工作台把规格编译为
+确定性执行计划，在本地确定性样本上分块流式执行，全部浮点中间量以整数定点表示，
+并把规格指纹、逐阶段观测与分片结果写入工作区目录内的 SQLite 账本。
 
-业务要求：
-1. 实现管线规格与本地样本的加载及强校验：从本地 JSON 读取数据源列定义、阶段链与分片参数，校验阶段标识唯一、上游引用存在且链无环、整数参数在边界内、样本列类型受支持且样本内容摘要可计算；任一不合法须以 E_SPEC 整体拒绝加载并输出出错阶段与字段路径。
-2. 实现管线规格指纹的确定性推导：指纹由各阶段类型、规范化参数、样本内容摘要与分片参数的稳定序列化共同推导，采用可复现的哈希组合规则；同一规格在不同加载顺序、不同并发执行下必须得到相同指纹，阶段参数或样本内容变化后指纹必须变化，加载态中须记录指纹版本序号。
-3. 实现按阶段链的确定性流式执行：逐阶段对数据块执行类型规范化、缺值填充、按列归一化与异常值截断，归一化缩放因子以会话整数参数指定，所有浮点中间量以整数定点表示并显式声明截断方向；相同输入多次执行必须得到逐字节一致的阶段输出摘要与列统计。
-4. 实现训练分片打包与分片结果绑定：按分片目标规模整数参数把处理后数据切分为确定性训练分片，每片记录所含行区间、分片指纹与来源阶段输出摘要；行数不能整除时余数分片的处理规则须显式声明；分片结果须与所引用的阶段输出摘要逐项对应，分片指纹不一致时以 E_SHARD 报告。
-5. 实现规格或样本演进后的失效传播与整体替换：规格、样本内容或分片参数变化后版本号单调递增，须沿阶段链准确推导受影响阶段与分片集合并标记失效，未受影响阶段的摘要必须保持不变且可校验；当前结论视图须整体替换而非增量合并，替换时须稳定列出变化阶段、旧新指纹与失效分片数。
-6. 实现异常注入与业务码链路：支持以命令行参数分别注入样本文件损坏、阶段参数越界、异常值比例放大三类异常，分别以 E_DATA、E_PARAM、E_OUTLIER 业务码报告并写入结构化日志；注入仅改变输入文件或参数，不得修改源码或执行逻辑，异常报告须指明触发的阶段标识与参数名。
-7. 实现账本持久化、强制终止后的恢复与重放校验：逐阶段观测、分片结果、指纹与执行进度写入本地 SQLite 账本，进程被强制终止后重启只能依据已完整提交的阶段记录恢复，未提交阶段须标记为未知并要求重跑，不得声称能生成退出报告；恢复后按账本记录的指纹版本重跑已完成阶段并逐项比较摘要，差异须定位到首个不一致阶段与字段并以 E_REPLAY 报告。
-8. 提供 Tkinter 诊断界面与可重复演示脚本：界面展示阶段依赖与状态、逐阶段行数与输出摘要、分片分布、当前指纹与版本序号、业务码与账本视图，渲染顺序稳定；附带确定性样本与演示脚本，顺序执行冷启动全管线、修改归一化参数后重跑、注入异常三类场景，每次输出稳定顺序的诊断总结。
+仅依赖 Python 3.10+ 标准库；Tkinter 用于图形界面，NumPy/Tkinter 的可用性通过
+`check-env` 子命令检查。不访问网络、不使用容器或 GPU。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录结构
 
-验收：
-用本地样本验证指纹一致性、阶段与分片摘要可复现、演进后失效替换及三类注入业务码；附运行结果。
+- `workbench/spec.py`：规格与样本加载、强校验（E_SPEC/E_PARAM）、确定性指纹推导
+- `workbench/fixedpoint.py`：基于 `decimal.Decimal` 的精确整数定点运算，显式截断方向
+- `workbench/canonical.py`：稳定序列化与带域分隔的 SHA-256 组合哈希
+- `workbench/engine.py`：执行计划编译、分块流式阶段执行、列统计、分片打包
+- `workbench/ledger.py`：SQLite 账本（指纹版本、运行、阶段、分片、事件、进度）
+- `workbench/runner.py`：演进分析、失效传播、强制终止恢复、重放校验、报告数据
+- `workbench/report.py`：稳定顺序的文本诊断报告
+- `workbench/inject.py`：三类异常注入，只改输入文件或参数，不改源码/执行逻辑
+- `workbench/demo_data.py`：确定性样本与管线规格生成器
+- `workbench/cli.py` / `workbench/ui.py`：命令行入口与 Tkinter 诊断界面
+- `tests/test_workbench.py`：12 个验收测试
+- `scripts/demo.py`：九场景可重复演示脚本
+- `run_demo.bat` / `run_tests.bat` / `launch_ui.bat`：Windows 命令提示符入口
+
+## 定点与确定性语义
+
+- 浮点输入先用 `Decimal(str(value))` 解析，避免宿主机二进制浮点误差。
+- 类型规范化阶段把数值统一为整数定点：`int_cell * fixed_scale`，
+  `float_cell` 经 `Decimal * fixed_scale` 后按声明方向截断（`toward_zero`）。
+- 归一化阶段：`out = trunc(value * scale / divisor)`，截断方向由参数显式声明，
+  支持 `toward_zero` 与 `floor`。
+- 异常截断按固定整数上下界逐单元格处理；异常比例以基点统计：
+  `outlier_bp = floor(10000 * outlier_cells / total_cells)`。
+- 快照为规范 JSON-lines（键排序、固定分隔符、LF 换行），输出摘要为带行号与
+  域前缀的链式 SHA-256；相同输入多次执行的快照文件逐字节一致。
+- 分片指纹绑定行区间、目标规模、余数规则、来源阶段输出摘要与内容哈希；
+  行数不能整除时，`keep_partial` 保留余数分片，`drop_partial` 丢弃并记录
+  `dropped_rows`。
+
+## 指纹与版本
+
+- 样本内容摘要覆盖声明列与逐行精确单元格（顺序敏感）。
+- 阶段指纹 = 哈希(阶段类型、版本、上游引用、规范化参数)。
+- 管线指纹 = 哈希(样本摘要, 全部阶段指纹)，与加载顺序、并发无关。
+- 指纹首次出现时在 `fingerprints` 表分配单调递增的版本序号，重复规格复用版本。
+- 演进时沿上游边做下游闭包推导受影响阶段；未受影响阶段摘要保持可校验不变，
+  当前结论整体替换，报告稳定列出变化阶段、旧/新指纹与失效分片数。
+
+## 业务码
+
+| 代码 | 触发条件 | 定位信息 |
+| --- | --- | --- |
+| `E_SPEC` | 结构/引用/环/类型等规格非法 | 阶段 id + JSON 指针字段路径 |
+| `E_PARAM` | 阶段整数参数越界（如 `scale=42`，边界 [0,9]） | 阶段 id + 参数名 |
+| `E_DATA` | 样本文件缺失、JSON 损坏、单元格类型不兼容 | 数据源 id + 字段路径 |
+| `E_OUTLIER` | 异常基点比例超过 `max_outlier_bp` | 阶段 id + 参数名 |
+| `E_SHARD` | 分片内容/指纹与来源阶段摘要绑定不一致 | 分片阶段 + 分片索引 |
+| `E_REPLAY` | 恢复/重放与账本记录不一致 | 首个不一致阶段与字段 |
+
+所有事件同时写入 SQLite `events` 表与工作区 `events.jsonl` 结构化日志。
+
+## 强制终止与恢复
+
+- 每个阶段在单个事务内提交阶段记录并推进 `progress`；裁剪阶段先写 `work/`
+  临时文件，提交时才原子替换为正式快照，因此被强制终止时不会留下半提交阶段。
+- 重启恢复时：已完整提交的阶段先在隔离临时目录重跑并逐项比对摘要/列统计；
+  未提交阶段在账本中标记为 `UNKNOWN` 并要求重跑，不会生成虚假退出报告。
+- 重放差异定位到首个不一致阶段与字段并报 `E_REPLAY`；分片篡改在重放时报
+  `E_SHARD`。
+
+## 使用方式（Windows 命令提示符）
+
+```bat
+:: 环境自检（python/numpy/tkinter/sqlite）
+python -m workbench.cli check-env
+
+:: 生成确定性夹具（fixtures/ 下的样本与 pipeline.json）
+python -c "from workbench.demo_data import generate_fixtures; generate_fixtures('fixtures')"
+
+:: 执行管线并输出诊断报告
+python -m workbench.cli run fixtures\pipeline.json --workspace workspace --report report.txt
+
+:: 强制终止模拟（在第 3 个阶段后停止）与恢复
+python -m workbench.cli run fixtures\pipeline.json --workspace workspace --kill-after 2
+python -m workbench.cli recover fixtures\pipeline.json --workspace workspace
+
+:: 三类异常注入（仅改输入/参数）
+python -m workbench.cli inject fixtures\pipeline.json --workspace ws_data --kind data
+python -m workbench.cli inject fixtures\pipeline.json --workspace ws_param --kind param
+python -m workbench.cli inject fixtures\pipeline.json --workspace ws_outlier --kind outlier
+
+:: 账本重放、无界面诊断导出、Tkinter 界面
+python -m workbench.cli replay 1 --workspace workspace
+python -m workbench.cli ui-dump --workspace workspace --out ui_model.json
+python -m workbench.cli ui --workspace workspace
+
+:: 一键演示与测试
+run_demo.bat
+run_tests.bat
+```
+
+无显示环境时 `ui` 会给出明确提示，可改用 `ui-dump` 获取同一视图模型的 JSON。
+
+## 验证结果
+
+在本机（Python 3.11，标准库 sqlite3）执行：
+
+- `python -m unittest tests.test_workbench -v`：12/12 通过，覆盖规格校验、
+  指纹稳定性、阶段与分片逐字节可复现、演进失效与保留、样本演进全链失效、
+  三类注入业务码、强制终止 UNKNOWN/恢复、重放首差异定位、分片篡改 E_SHARD。
+- `python scripts/demo.py`：九场景全部成功，输出保存于
+  `artifacts/demo_output/demo_run.txt`，诊断报告样例见
+  `artifacts/demo_output/diagnostic_report.txt`。
+- 关键确定性观测（13 行、目标分片 4）：分片分布 `[4,4,4,1]`；归一化 `scale=3`
+  下 `visits` 定点和 336000、裁剪后 303000（`clipped_high=3`，`outlier_bp=769`）；
+  二次运行的阶段摘要与分片指纹全部相同，指纹版本保持 v1。
