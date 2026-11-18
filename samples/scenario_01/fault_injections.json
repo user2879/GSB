@@ -1,0 +1,38 @@
+{
+  "description": "独立异常注入；默认仅 fault demo 启用",
+  "injections": [
+    {
+      "batch": 1,
+      "id": "INJ-UNKNOWN-TARGET",
+      "session_id": "S001",
+      "target": "teleported",
+      "turn": 4,
+      "type": "unknown_transition_target"
+    },
+    {
+      "batch": 2,
+      "id": "INJ-ILLEGAL-SLOT",
+      "session_id": "S002",
+      "slot": "party_size",
+      "turn": 2,
+      "type": "illegal_slot_value",
+      "value": 999
+    },
+    {
+      "batch": 3,
+      "id": "INJ-TURN-JUMP",
+      "offset": 2,
+      "session_id": "S003",
+      "turn": 1,
+      "type": "turn_jump"
+    },
+    {
+      "batch": 3,
+      "id": "INJ-QUOTA",
+      "quota": 1,
+      "session_id": "S005",
+      "turn": 3,
+      "type": "quota_overflow"
+    }
+  ]
+}

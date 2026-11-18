@@ -1,0 +1,155 @@
+{
+  "batches": [
+    {
+      "batch_id": 1,
+      "operations": [
+        {
+          "event": {
+            "role": "user",
+            "session_id": "S001",
+            "slot_updates": [
+              {
+                "confidence": "0.760000",
+                "slot": "budget",
+                "source": "inferred",
+                "value": "360.00"
+              }
+            ],
+            "text": "谢谢，保持这个安排",
+            "timestamp_ms": 4000,
+            "turn": 6
+          },
+          "op": "append"
+        },
+        {
+          "op": "replace_utterance",
+          "session_id": "S002",
+          "text": "改到后天，已经确认",
+          "turn": 3
+        },
+        {
+          "op": "patch_slot_schema",
+          "patch": {
+            "max": 20
+          },
+          "slot": "party_size"
+        }
+      ]
+    },
+    {
+      "batch_id": 2,
+      "operations": [
+        {
+          "op": "delete_turn",
+          "session_id": "S003",
+          "turn": 2
+        },
+        {
+          "event": {
+            "requested_target": "collecting",
+            "role": "user",
+            "session_id": "S004",
+            "slot_updates": [],
+            "text": "请回到收集状态",
+            "timestamp_ms": 4100,
+            "turn": 7
+          },
+          "op": "append"
+        },
+        {
+          "op": "set_merge_strategy",
+          "slot": "intent",
+          "strategy": "reject_overwrite"
+        },
+        {
+          "event": {
+            "role": "user",
+            "session_id": "S005",
+            "slot_updates": [
+              {
+                "confidence": "0.800000",
+                "slot": "intent",
+                "source": "explicit",
+                "value": "inquiry"
+              }
+            ],
+            "text": "我想咨询套餐",
+            "timestamp_ms": 5000,
+            "turn": 1
+          },
+          "op": "append"
+        },
+        {
+          "event": {
+            "role": "user",
+            "session_id": "S005",
+            "slot_updates": [
+              {
+                "confidence": "0.870000",
+                "slot": "party_size",
+                "source": "explicit",
+                "value": 2
+              },
+              {
+                "confidence": "0.780000",
+                "slot": "budget",
+                "source": "explicit",
+                "value": "400.00"
+              }
+            ],
+            "text": "两个人，预算四百",
+            "timestamp_ms": 5100,
+            "turn": 2
+          },
+          "op": "append"
+        },
+        {
+          "event": {
+            "role": "user",
+            "session_id": "S005",
+            "slot_updates": [],
+            "text": "确认，请继续",
+            "timestamp_ms": 5200,
+            "turn": 3
+          },
+          "op": "append"
+        }
+      ]
+    },
+    {
+      "batch_id": 3,
+      "operations": [
+        {
+          "op": "delete_turn",
+          "session_id": "S004",
+          "turn": 4
+        },
+        {
+          "op": "set_merge_strategy",
+          "slot": "budget",
+          "strategy": "max_value"
+        },
+        {
+          "op": "patch_slot_schema",
+          "patch": {
+            "max": "20000"
+          },
+          "slot": "budget"
+        },
+        {
+          "event": {
+            "requested_target": "collecting",
+            "role": "user",
+            "session_id": "S002",
+            "slot_updates": [],
+            "text": "仍想回到收集状态",
+            "timestamp_ms": 5300,
+            "turn": 6
+          },
+          "op": "append"
+        }
+      ]
+    }
+  ],
+  "description": "追加、替换、删除、槽位模式与合并策略切换的确定性编辑序列"
+}

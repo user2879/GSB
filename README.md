@@ -1,21 +1,182 @@
-在空白工作区构建一个面向多轮对话场景的会话状态管理数据处理管线与结果验证工具。输入为一个本地样本目录：会话事件流 JSONL（每行含会话 ID、轮序号、角色、话语文本、槽位更新指令与事件毫秒时间戳，文本由固定种子程序从受控词表生成）、一份对话状态机定义 YAML（状态集合、槽位模式与类型、转移规则表、槽位合并策略、冲突裁决优先级）、一份管线配置 JSON（线程池并发数、单批事件数上限、全局状态预算（按状态条目计）、单会话条数配额、快照提交间隔批次数、定点小数位宽用于状态置信度累积、业务码映射表），以及一份增量编辑计划 JSON（每批可包含若干事件的追加、某轮话语替换、某轮删除与槽位模式变更）。管线需要按事件到达顺序推进每个会话的状态机：解析槽位更新指令、按合并策略更新槽位取值与置信度、校验转移规则是否允许、记录被拒绝的转移；同时维护所有会话的全局状态表。核心挑战是状态演进与恢复一致性：事件被追加、替换或删除后，必须精确判定哪些会话槽位与状态受污染并只重算受影响部分；而进程在任意批次被中断或强制终止后，重启必须从最近一次完整替换的快照继续，且最终全局状态表与不中断运行逐字段一致。
+# 多轮会话状态管理管线与验证工具
 
-任务环境与准备：
-确认 Windows 上可用 Python 3.10 及以上版本，并安装 PyYAML（用于解析状态机定义 YAML），无需其他第三方依赖。
-在空白工作区创建项目目录，预置本地样本：会话事件流 JSONL、状态机定义 YAML、管线配置 JSON、增量编辑计划 JSON 与异常注入配置，全部由固定种子程序生成，不依赖任何外部服务或账号。
-准备一次串行全量构建脚本与一次增量运行脚本作为结果比对入口，测试数据规模控制在可离线重复运行的范围内。
+这是一个纯本地、确定性、可离线重复运行的会话状态处理项目。它按事件到达顺序推进每个会话的状态机，维护槽位、置信度、转移与被拒绝转移，并支持事件追加、话语替换、轮次删除、槽位模式变更和合并策略切换后的精确增量重算。
 
-业务要求：
-1. 实现会话事件流与状态机定义加载层：逐行解析事件 JSONL、状态机定义 YAML 与管线配置，校验会话 ID 非空、同一会话内轮序号严格递增且无空洞、状态集合非空且初始状态唯一、槽位模式引用的类型可实现、转移规则引用的状态均存在、事件毫秒时间戳非负且单调；任何不合规条目输出 E_INPUT_INVALID 业务码并进入失败清单，其余条目继续加载。
-2. 实现槽位更新解析与按模式的确定性合并：对每条事件解析其槽位更新指令，按槽位类型做取值解析与校验，再按配置的槽位合并策略（覆盖、取较大值、置信度加权累积、拒绝覆盖）更新槽位取值与置信度；置信度以定点整数按定点小数位宽累积，累加顺序固定为轮序号升序，冲突裁决在同值或同置信度时按配置优先级决断，输出每次槽位变更的前后取值、策略与裁决依据。
-3. 实现状态机转移推进与拒绝记录：依据转移规则表判断当前状态与事件是否允许转移到目标状态，允许时记录转移前后的状态、触发轮次与规则 ID；不允许时记录被拒绝的转移及对应业务码 E_TRANSITION_REJECTED，并保持原状态不变；同一轮存在多条候选转移时按规则 ID 字典序决断，转移轨迹顺序必须与串行按轮序执行一致。
-4. 实现事件追加、替换与删除后的精确污染判定：为每个槽位、会话状态与转移轨迹计算由上游事件内容指纹、状态机定义指纹与参数指纹派生的缓存键；当某轮被替换或删除、或槽位模式与合并策略变更时，仅将引用受影响事件或参数的槽位及其下游状态、转移与统计标记受污染并纳入重算集合，未受污染的会话必须直接复用持久化状态且不得重放其事件链。
-5. 保证增量重放与全量重建逐字段一致：从任意初始状态施加包含事件追加、话语替换、轮次删除、槽位模式变更与合并策略切换的编辑序列，每次编辑后增量运行得到的全部会话最终槽位取值与置信度、当前状态、转移轨迹、被拒绝转移清单与受污染复用清单，必须与从空白工作区按相同最终事件流与配置一次性全量构建的结果逐字段一致。
-6. 实现全局状态预算与单会话配额的调度控制：多会话通过线程池并发推进，最大并发数取自配置；调度器维护全局剩余状态预算并按会话 ID 稳定顺序分配单会话条数配额，某会话状态条目超出配额即中止该会话并以 E_SESSION_QUOTA_EXCEEDED 标记，全局预算耗尽时对未完成会话输出 E_STATE_BUDGET_EXHAUSTED 并保留其待处理游标，超预算不得静默截断已提交状态。
-7. 实现阶段化快照整体替换与中断恢复判定：将加载校验、状态推进、汇总统计划分为阶段，每阶段完成时先写临时目录再整体替换提交，清单文件记录全局版本号、配置哈希、状态机定义哈希、已完成批次数与各阶段产物版本；收到可处理的退出信号时完成当前批次快照提交后以整数退出码 0 退出，强制终止后重启仅依据已完整替换的快照与游标恢复并输出恢复点，不得承诺生成退出报告。
-8. 实现异常注入隔离与状态演进诊断报告输出：以独立注入配置对指定会话指定批次施加真实输入故障（非法槽位取值、轮序号跳变、未知转移目标与配额越界），注入项编号写入报告以证明命中；单条事件在解析、合并或转移阶段抛异常时记录会话 ID、轮序号、阶段名、业务码与异常类型到失败清单并继续其余会话；每次完整运行生成 JSON 诊断报告，含各会话状态摘要、受污染与复用计数、预算消耗、快照版本号与失败清单，报告以临时文件加原子替换方式写盘。
+项目只依赖 Python 3.10+ 与 PyYAML，不使用 Docker、数据库、网络服务或第三方编排组件。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录
 
-验收：
-用本地样本验证状态推进、受污染重算范围、快照恢复及增量与全量结果一致。
+```text
+session_pipeline/          核心库
+  loading.py               输入加载、YAML/JSONL 校验、规范化
+  merge.py                 类型解析、四类槽位合并、定点置信度
+  engine.py                单会话状态机、轮级检查点、缓存键
+  edits.py                 增量编辑计划应用
+  injections.py            独立异常注入
+  scheduler.py             线程池、会话配额、全局预算、稳定提交
+  snapshot.py              阶段产物、临时目录、整体替换、CURRENT 指针
+  runner.py                全量/增量入口、诊断报告
+scripts/
+  generate_samples.py      固定种子样本生成器
+  build_full.py            串行全量构建入口
+  run_incremental.py       增量运行/恢复入口
+  verify_consistency.py    逐批次全量与增量逐字段对照
+  fault_demo.py            异常注入演示
+samples/scenario_01/       固定种子输入样本
+tests/test_pipeline.py     自动化验收测试
+artifacts/                 本次实际运行报告与验证结果
+```
+
+## 环境与运行
+
+当前容器实际验证环境：Python `3.11.0rc1`、PyYAML `5.4.1`、Linux。代码只使用标准库与 PyYAML，路径和文件替换实现兼容 Windows；Windows 上可使用同样的命令（将 `python3` 换成 `py -3`）。
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 scripts/check_environment.py
+
+# 重新生成固定种子样本
+python3 scripts/generate_samples.py
+
+# 串行全量构建
+python3 scripts/build_full.py
+
+# 从空工作区做增量运行
+python3 scripts/run_incremental.py --reset
+
+# 中断或强制终止后省略 --reset，会从最近完整快照恢复
+python3 scripts/run_incremental.py
+
+# 每个编辑批次都与对应串行全量重建逐字段对照
+python3 scripts/verify_consistency.py
+
+# 独立异常注入演示（默认普通运行不启用注入）
+python3 scripts/fault_demo.py
+
+# 真实强制终止、重启恢复与全量重建对照
+python3 scripts/crash_recovery_demo.py
+
+# 自动化测试
+python3 -m unittest discover -s tests -v
+```
+
+Windows PowerShell 示例：
+
+```powershell
+py -3 -m pip install -r requirements.txt
+py scripts\check_environment.py
+py scripts\build_full.py
+py scripts\run_incremental.py --reset
+py scripts\verify_consistency.py
+py scripts\crash_recovery_demo.py
+py -m unittest discover -s tests -v
+```
+
+## 输入契约
+
+### 事件流 `events.jsonl`
+
+每行一个对象，核心字段示例：
+
+```json
+{"session_id":"S001","turn":1,"role":"user","text":"我想预订","slot_updates":[{"slot":"intent","value":"book","confidence":"0.800000","source":"explicit"}],"timestamp_ms":1000,"requested_target":"greeted"}
+```
+
+- `session_id` 必须非空；同一会话轮次从 1 开始严格递增且无空洞。
+- `timestamp_ms` 非负，并在全局接收顺序上单调不减。
+- `slot_updates` 可包含多个槽位更新；置信度使用十进制字符串或数值，范围为 `[0,1]`。
+- `requested_target` 可选；存在时必须引用已声明状态，否则记录 `E_INPUT_INVALID` 并跳过该条事件。
+- 单条事件合并异常记录 `E_SLOT_VALUE_INVALID`，单条事件转移异常记录对应业务码，其他事件与会话继续。
+
+### 状态机 `state_machine.yaml`
+
+包含状态集合、唯一初始状态、槽位模式、合并策略、冲突优先级与转移规则。槽位类型支持 `string`、`int`、`bool`、`decimal`、`enum`。规则按 `id` 字典序决定同一轮多个候选的胜者；规则条件支持 `eq/ne/gt/gte/lt/lte/exists/not_exists/in` 与 `text_contains`。
+
+### 管线配置 `pipeline_config.json`
+
+关键字段：
+
+- `worker_count`：线程池并发数。
+- `max_events_per_batch`：单个编辑批的事件变更上限。
+- `global_state_budget`：全局状态条目预算。
+- `session_state_quota`：单会话状态条目配额；条目数定义为 `1 + 已物化槽位数`。
+- `snapshot_interval_batches`：快照批次间隔。
+- `confidence_decimals`：置信度定点小数位宽。
+- `conflict_priority`：同值/同置信度时的来源优先级。
+- `business_codes`：业务码映射。
+- `merge_strategy_overrides`：可选槽位策略覆盖。
+
+### 增量编辑 `edit_plan.json`
+
+支持 `append`、`replace_utterance`、`delete_turn`、`patch_slot_schema`、`set_merge_strategy`、`set_conflict_priority`。删除中间轮次时，同一会话后续轮次自动前移一格，保证最终事件流无空洞。
+
+### 异常注入 `fault_injections.json`
+
+支持 `illegal_slot_value`、`turn_jump`、`unknown_transition_target`、`quota_overflow`。注入只针对指定批次、会话和轮次，并在报告 `injection_hits` 中保留注入项编号。注入默认关闭，只有 `--injections` 或 `fault_demo.py` 启用。
+
+## 状态演进语义
+
+### 槽位合并
+
+- `overwrite`：新值覆盖旧值；同值或同置信度时按来源优先级裁决。
+- `max_value`：保留较大值；同值先比较置信度，再按来源优先级；同置信度按优先级。
+- `weighted`：数值按置信度加权平均，置信度使用定点整数累积：
+  `new = old + ((scale - old) * incoming + scale/2) / scale`。
+- `reject_overwrite`：已有值时拒绝覆盖，原值保持不变。
+
+所有置信度在内部以 `confidence_fixed = round(confidence * 10^confidence_decimals)` 保存。事件按轮次升序处理；每次槽位更新输出前后值、策略、来源、接受/拒绝结果、裁决依据、事件/参数指纹和缓存键。
+
+### 转移
+
+规则只从当前状态（或 `from: "*"`）出发。候选规则按 ID 字典序排序，取第一条。显式 `requested_target` 没有匹配规则时，保持原状态并记录 `E_TRANSITION_REJECTED`。转移记录包含前后状态、触发轮次、规则 ID、候选 ID 列表、相关参数指纹和缓存键。
+
+## 增量污染与恢复
+
+每个会话持久化轮级检查点，包括该轮后的状态、槽位快照、转移/拒绝/变更/失败计数和状态缓存键。编辑批次完成后：
+
+1. 计算受影响会话、最早受影响轮次和污染槽位集合。
+2. 未受污染会话直接深拷贝复用持久化状态，不重放任何事件。
+3. 受污染会话从最早污染轮次之前的检查点恢复，只重放污染后缀。
+4. 话语替换、删除/轮次重排、槽位模式变化与合并策略切换均进入同一污染模型。
+5. 编辑后的结果与从空白状态按最终事件流全量重建的结果逐字段比较。
+
+缓存键分层构造：槽位键由相关事件内容、槽位模式、合并策略与冲突参数派生；转移键由事件指纹、相关规则和前置状态键派生；会话状态键由状态、槽位键集合和转移模式派生。
+
+## 调度、预算与快照
+
+- 受影响会话通过 `ThreadPoolExecutor` 并行计算；最终按会话 ID 稳定顺序整会话提交。
+- 单会话超过 `session_state_quota` 时停止该会话，记录 `E_SESSION_QUOTA_EXCEEDED` 和待处理游标。
+- 全局预算不足以完整容纳某个会话时，不提交截断状态，记录 `E_STATE_BUDGET_EXHAUSTED` 和游标。
+- 快照目录先写入临时目录，阶段产物 `loading/`、`state/`、`summary/` 完成后写清单，再整体重命名；最后原子替换 `CURRENT` 指针。
+- `manifest.json` 记录全局版本、配置/状态机哈希、已完成批次数、三个阶段的版本与产物哈希。
+- 中断信号只设置停止标记；当前批次完成并提交快照后以退出码 `0` 退出。
+- 恢复只读取完整清单指向的快照。强制终止不生成退出报告，重启报告中的 `recovery.recovery_point` 给出恢复版本和批次。
+
+## 输出
+
+- `artifacts/full-report.json`：串行全量诊断。
+- `artifacts/incremental-report.json`：最终增量诊断。
+- `artifacts/verification.json`：逐批次全量/增量对照。
+- `artifacts/fault-report.json`：异常注入命中与失败清单。
+- `artifacts/recovery-report.json`：强制终止、恢复点与全量对照证据。
+- `artifacts/test-results.txt`：自动化测试的实际运行输出。
+- `artifacts/full-snapshot-work/snapshots/`：串行全量构建的原子快照。
+- `artifacts/incremental-work/snapshots/`：原子快照与清单。
+
+报告包含会话摘要、完整槽位与置信度、状态、转移轨迹、拒绝转移、槽位变更、预算消耗、污染/复用计数、快照版本、恢复点、注入命中与失败清单。报告使用同目录临时文件加 `os.replace` 原子写入。
+
+## 本次实际验证结果
+
+- 自动化测试：`12` 项通过，覆盖固定种子样本字节级复现、加载校验、合并策略、转移候选、逐批一致性、预算、会话配额、注入、真实 SIGTERM 优雅停止与强制终止恢复。
+- 最终全量状态投影哈希：`981054ed8274a722bc64839c9dc6fb319ae3924cc8f3fe8bb51d3d1f37d1bdba`。
+- 最终增量状态投影哈希：同一哈希；5 个会话全部提交，13 条转移、3 条拒绝转移。
+- 增量最终批次只重算 4 个受影响会话、重放 12 条事件；`S003` 整会话复用且重放事件数为 0。
+- 四个批次逐批对照均相等：第 1、3 批各复用 `S003`；第 1 批污染 3 个槽位，第 2 批 8 个，第 3 批 4 个。
+- 强制终止测试在批次 1 快照后返回 `137`，且没有生成报告；重启从 `completed_batch=1` 的完整快照恢复，最终状态与全量重建一致。
+- 注入演示命中 `INJ-UNKNOWN-TARGET`、`INJ-ILLEGAL-SLOT`、`INJ-TURN-JUMP`、`INJ-QUOTA`，分别产生输入、槽位、轮次与配额隔离记录。
+
+## 判定边界
+
+- 全量/增量一致性比较槽位值与置信度、当前状态、转移轨迹、拒绝转移、槽位变更诊断、状态/轨迹缓存键、待处理游标和状态条目数。
+- `contamination` 与 `reuse` 是运行诊断字段：全量重建没有复用，增量运行会有污染和复用计数，因此不能把这两个运行元数据直接要求相等；验证器会单独确认复用会话逐字段不变且重放事件为 0。
+- 本项目的“状态条目”按 `1 + 已物化槽位数` 计，便于对预算和会话配额做确定性验证。

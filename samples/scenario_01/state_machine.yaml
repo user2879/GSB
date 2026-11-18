@@ -1,0 +1,113 @@
+machine_id: booking_support_v1
+initial_state: idle
+states:
+- idle
+- greeted
+- collecting
+- ready
+- escalated
+- closed
+slots:
+  intent:
+    type: enum
+    allowed:
+    - book
+    - cancel
+    - inquiry
+    - escalate
+    merge: overwrite
+  party_size:
+    type: int
+    min: 1
+    max: 12
+    merge: max_value
+  budget:
+    type: decimal
+    min: '0'
+    max: '10000'
+    decimal_places: 2
+    merge: weighted
+  phone:
+    type: string
+    pattern: ^[0-9]{3}-[0-9]{4}$
+    merge: overwrite
+  member:
+    type: bool
+    merge: reject_overwrite
+merge_strategies:
+  intent: overwrite
+  party_size: max_value
+  budget: weighted
+  phone: overwrite
+  member: reject_overwrite
+conflict_priority:
+- explicit
+- inferred
+- default
+transitions:
+- id: R010
+  from: idle
+  to: greeted
+  when:
+    intent:
+      op: eq
+      value: book
+- id: R011
+  from: idle
+  to: greeted
+  when:
+    intent:
+      op: eq
+      value: inquiry
+- id: R012
+  from: idle
+  to: greeted
+  when:
+    intent:
+      op: eq
+      value: cancel
+- id: R020
+  from: idle
+  to: escalated
+  when:
+    intent:
+      op: eq
+      value: escalate
+- id: R030
+  from: greeted
+  to: collecting
+  when:
+    party_size:
+      op: exists
+- id: R031
+  from: greeted
+  to: collecting
+  when:
+    budget:
+      op: exists
+- id: R013
+  from: greeted
+  to: closed
+  when:
+    intent:
+      op: eq
+      value: cancel
+- id: R040
+  from: collecting
+  to: ready
+  text_contains: 确认
+- id: R041
+  from: collecting
+  to: escalated
+  text_contains: 人工
+- id: R050
+  from: collecting
+  to: closed
+  when:
+    intent:
+      op: eq
+      value: cancel
+- id: R060
+  from: ready
+  to: closed
+  text_contains: 结束
