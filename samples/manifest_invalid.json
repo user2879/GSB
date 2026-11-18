@@ -1,0 +1,12 @@
+{
+  "versions": [
+    {
+      "version": 1,
+      "strategy": {"batch_size": 2, "timeout_ms": 1000, "max_retries": 1},
+      "items": [
+        {"key": "alpha", "value": 1.0, "targets": ["node-a"]},
+        {"key": "beta", "value": "not-a-number", "targets": ["ghost-node"]}
+      ]
+    }
+  ]
+}
