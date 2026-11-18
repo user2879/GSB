@@ -1,21 +1,199 @@
-当前为空白工作区，需要从零构建一个面向 Windows 本地环境的混合精度推理显存管理诊断台，交付可交互的专业应用与可重复演示脚本。系统使用固定随机种子的本地确定性样本，构造一个多层前馈推理模型与一批待推理样本；用户以本地 JSON 声明推理配置：显存预算（整数 MiB）、显存块尺寸（整数 KB）、精度模式（float32 与定点量化）、量化缩放因子（10 的整数幂）、批大小上限与预分配策略（按批预分配或按块池分配）。核心业务是：在显存预算约束下调度推理批次，按精度模式执行前向计算，记录显存池中每块的分配与释放、峰值占用与碎片量，并逐样本给出浮点参考输出与定点输出的偏差诊断；界面须持续展示显存占用曲线、批次进度、逐层误差界与最终一致性结论。所有样本、参数与测量均来自本地确定性输入，不依赖网络、GPU 或外部数据集。
+# 混合精度推理显存管理诊断台
 
-任务环境与准备：
-确认 Windows 本地 Python 3.11 可用，并在任务开始前安装 NumPy 与 Tkinter（Tkinter 随标准库提供，需确认图形环境可用）。
-准备本地确定性 JSON 配置样本与演示脚本目录，不引入网络、GPU 或外部数据集依赖。
-预留本地目录用于会话快照与运行报告，确认可写。
+面向 Windows 本地 Python 3.11 + Tkinter 的确定性诊断应用。它在一个**纯本地、无 GPU、无网络**的推理环境中，模拟块级显存预算、两种精度路径、批次调度、逐层误差归因、版本替换和界面查询延迟。
 
-业务要求：
-1. 实现本地确定性样本与模型参数的构造：以命令行参数指定的整数随机种子、样本数、输入维度与隐藏层维度生成固定数据集与各层权重偏置，相同参数组合多次运行必须得到逐位一致的输入矩阵与参数矩阵；须把数据摘要与参数摘要写入运行报告，摘要不一致须以 E_DATA 拒绝继续推理并输出出错位置。
-2. 实现推理配置与显存预算的加载和强校验：从本地 JSON 读取显存预算 MiB、显存块尺寸 KB、精度模式、量化缩放因子、批大小上限与预分配策略，校验块尺寸为受支持整数集合、预算为块尺寸整数倍或显式声明向下取整规则、缩放因子为 10 的整数幂、批大小为正整数；非法配置须以 E_CONFIG 整体拒绝并输出字段路径。
-3. 实现显存块池与分配器：以块为单位管理预算内显存，支持按批连续分配、单块分配与释放，记录每次分配的块序号集合、请求字节数与所属批次；分配不得超出预算，预算不足时须返回 E_OOM 并记录所需块数与当前空闲块数；同一块不得被两个在用批次同时占用，分配器状态须能在报告中完整重放。
-4. 实现 float32 与定点量化两条前向推理路径：浮点路径以 NumPy 前向计算作为参考输出，定点路径把权重、激活与累加按声明的缩放因子量化为整数并显式处理舍入方向与溢出饱和；两条路径须逐批产出输出摘要，并在相同输入下多次执行得到逐位一致的结果与摘要。
-5. 实现逐层数值偏差归因链：对每条样本逐层比较定点中间量与浮点中间量的偏差，输出偏差最大的层、各层误差界及累计误差占比；归因须与批大小和批内样本位置无关，同一样本无论落在哪个批次都必须得到相同的归因结果，误差界以整数定点表示并给出量化上限。
-6. 实现显存预算下的批调度与峰值占用核算：按批大小上限与显存块池可用容量调度批次，容量不足时批次排队且不得绕过预算；须记录每批次开始与结束的单调时钟毫秒、该批峰值占用块数与整体碎片量，碎片量与峰值占用须由块池状态推导而非另行估计，预算耗尽持续超过显式阈值须以 E_PRESSURE 报告。
-7. 实现配置版本演进后的整体替换刷新与陈旧结论防护：批大小、精度模式、缩放因子或显存预算变化后配置版本号单调递增，旧版本下的批次输出、显存统计与误差结论须标记为陈旧且不得参与当前报告，当前视图须整体替换而非增量合并，替换时须稳定列出受影响的批次与变化字段。
-8. 实现界面查询快速路径的交互延迟观测与预算判定，并提供 Tkinter 交互界面与可重复演示脚本：对每次界面查询记录单调时钟起止毫秒差，按批次与整体聚合为均值、P95 与最大值的整数定点表示并给出量化误差上界，声明时钟基准与真值来源为运行报告中的逐次查询记录，单次查询超出显式预算阈值时须记录 E_LATENCY 并在界面标注；界面展示批次列表、显存占用曲线、块池分配明细、逐层误差界与当前配置版本，演示脚本顺序执行浮点路径、定点路径与缩放因子扰动三次运行。
+## 快速开始（Windows）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bat
+py -3.11 --version
+py -3.11 -m pip install -r requirements.txt
+py -3.11 -c "import tkinter as tk; root=tk.Tk(); print('Tk', tk.TkVersion); root.destroy()"
+```
 
-验收：
-在本地样本上验证显存块池调度、两精度路径输出与误差归因一致性，并演示配置版本变更后的整体替换。
+确认当前目录可写后启动界面或运行无界面演示：
+
+```bat
+scripts\run_ui.bat
+scripts\demo.bat --expected-manifest configs\digest_manifest.json
+py -3.11 -m unittest discover -s tests -v
+```
+
+PowerShell 等价入口为 `scripts\run_ui.ps1` 与 `scripts\demo.ps1`。也可直接使用：
+
+```bat
+py -3.11 -m mixedprec_diag.cli demo --config-dir configs --report-dir reports --snapshot-dir snapshots --expected-manifest configs/digest_manifest.json
+```
+
+运行后：
+
+- `reports/current.json`：当前配置版本的完整报告，不混入旧版本数据。
+- `reports/version_000N.json`：每个配置版本的当前/历史报告。
+- `reports/session.json`：版本历史、陈旧状态与当前摘要。
+- `reports/demo_summary.json`：三次演示的摘要、摘要校验、重放与替换结论。
+- `snapshots/version_000N_stale.json`：被整体替换的旧版本快照，显式标记 `STALE`。
+
+## 演示流程
+
+`scripts/demo.py` 在同一个会话中顺序执行：
+
+1. `configs/float32.json`：float32 参考路径、按批连续预分配。
+2. `configs/fixed.json`：定点路径、块池分配，配置版本递增。
+3. `configs/scaled.json`：缩放因子扰动、批大小和预算变化，版本再次递增。
+
+每次运行都会重新生成同一随机种子下的数据集和模型参数；配置版本变化时旧版本批次输出、显存统计和误差结论被标为陈旧并从当前视图/当前聚合中排除。
+
+额外探针配置：
+
+- `configs/latency_strict.json`：将 UI 查询预算设为 0.001 ms，便于观察 `E_LATENCY`。
+- `configs/pressure_probe.json`：在 1 MiB 块、2 MiB 预算下令单批占用全部空闲块，触发 `E_PRESSURE`。
+- `configs/oom_probe.json`：模型常驻后没有样本工作区，触发 `E_OOM`。
+
+## 配置格式
+
+配置必须是本地 JSON 对象，字段强校验，未知字段也整体拒绝。示例：
+
+```json
+{
+  "schema_version": 1,
+  "memory_budget_mib": 1,
+  "block_size_kb": 16,
+  "precision": "fixed",
+  "quant_scale_power": 4,
+  "batch_size_limit": 8,
+  "preallocation": "block_pool",
+  "budget_rounding": "reject",
+  "pressure_threshold_ms": 25.0,
+  "ui_query_budget_ms": 16.0
+}
+```
+
+| 字段 | 规则 |
+| --- | --- |
+| `schema_version` | 当前仅接受 `1` |
+| `memory_budget_mib` | 正整数 MiB |
+| `block_size_kb` | 受支持整数集合：4/8/16/32/64/128/256/512/1024/1536/3072 |
+| `precision` | `float32` 或 `fixed` |
+| `quant_scale_power` | `10` 的整数幂指数，安全范围 `[-9,9]` |
+| `batch_size_limit` | 正整数，批次可因容量下降但不会越过该上限 |
+| `preallocation` | `per_batch` 或 `block_pool` |
+| `budget_rounding` | `reject` 或 `floor_to_block`；预算非块整数倍时只能显式向下取整 |
+| `pressure_threshold_ms` | 容量耗尽持续阈值，非负有限数 |
+| `ui_query_budget_ms` | 单次 UI 查询预算，正有限数 |
+
+已校验字段：
+
+```bat
+py -3.11 -m mixedprec_diag.cli validate-config --config configs\fixed.json
+```
+
+## 确定性、摘要与 E_DATA
+
+本地生成器使用 `numpy.random.PCG64(seed)`。在相同 Python/NumPy 平台和相同 `--seed --samples --input-dim --hidden-dim` 下，输入矩阵和各层权重/偏置逐字节一致。报告包含：
+
+- `data_sha256`：样本矩阵的 dtype、shape 和 C-order little-endian float32 字节摘要。
+- `params_sha256`：每层权重/偏置的名称、dtype、shape 和规范化字节摘要。
+
+生成并校验摘要清单：
+
+```bat
+py -3.11 -m mixedprec_diag.cli manifest --output configs\digest_manifest.json --seed 184 --samples 48 --input-dim 32 --hidden-dim 128
+py -3.11 -m mixedprec_diag.cli run --config configs\fixed.json --expected-manifest configs\digest_manifest.json
+```
+
+摘要不一致时返回 `E_DATA`，附带 `field_path` 与 `expected/actual`，不启动推理。会话同时写出 `reports/aborted_E_DATA.json` 和对应快照，其中 `inference_started=false`。
+
+## 显存模型与调度
+
+本地 CPU 推理不使用真实 GPU 显存；显存池是**可重放的块级会计模型**：
+
+- 预算先按块尺寸折算为整数块；模型参数常驻占用连续块。
+- `per_batch`：每批请求一个连续 arena，批量释放。
+- `block_pool`：输入激活、逐层输出激活和定点累加 scratch 分别从空闲块池分配，逐层释放前一阶段。
+- 调度按 `batch_size_limit`、空闲块数和连续空洞数决定可容纳样本数；容量不足的剩余样本进入队列，不会越过预算。
+- `fragmentation_blocks = free_blocks - largest_contiguous_free_extent`，完全由当前块池状态推导。
+- 每次分配/释放/OOM 均记录序号、块号集合、请求字节数、所属批次、阶段、分配后的完整空闲段和单调时钟。
+- 报告中的 `replay_events` 从初始块池重放日志，并校验 no-overlap、越界、释放匹配、逐事件 used/free/extent/fragmentation 状态。
+
+`E_OOM` 记录所需块数和当前空闲块数；`E_PRESSURE` 由事件流中“剩余空闲块不足以容纳一个样本”的持续时间与阈值推导。
+
+## 两条数值路径
+
+float32 路径用 NumPy 前向计算作为参考。定点路径：
+
+- 权重、输入、激活和偏置量化为 signed int32；缩放因子为 `S = 10^power`，负幂以精确整数分子/分母表示。
+- 舍入为最近整数，恰好 0.5 时远离零。
+- 点积使用 Python 大整数精确累加，再执行 `S² -> S` 的舍入，最后显式饱和到 int32；不会依赖静默整数回绕。
+- 报告记录权重/逐层激活饱和计数、最近舍入上界 `500 milli-int = 0.5 int`，以及每层保守整数误差界。
+
+逐样本诊断独立执行参考与定点前向，批次只影响调度和输出摘要，不影响单样本中间量、最大偏差层或误差归因。因此同一个样本落在任意批次和任意批内位置，归因结果一致。报告同时给出各层最大误差、绝对误差总和、误差占比、累计占比、主导层和最终一致性结论。
+
+## 配置版本与陈旧防护
+
+`batch_size_limit`、`precision`、`quant_scale_power`、`memory_budget_mib`、`block_size_kb` 或 `preallocation` 变化时版本号递增。替换行为：
+
+- `replaced_whole=true`，当前报告只包含新版本批次、显存统计和数值结论。
+- `changed_fields` 排序后稳定输出。
+- `affected_batches`、`stale_batch_ids` 排序后稳定输出。
+- 旧版本快照标记 `STALE`，并声明 `excluded_from_current_report=true`；当前报告不合并旧批次、旧曲线或旧误差结论。
+
+## UI 查询延迟
+
+界面查询使用 `time.perf_counter_ns` 单调时钟，逐次保存 `start_mono_ns`、`end_mono_ns` 和整数微秒 `duration_us`。报告声明真值来源为 `ui_latency.queries`，并给出：
+
+- 按批次和整体的均值、P95（nearest-rank）、最大值，全部以整数微秒定点表示。
+- 原始量化误差上界 `0.0005 ms`；均值重新取整附加 `0.001 ms` 上界。
+- 单次查询超过配置 `ui_query_budget_ms` 时记录 `E_LATENCY`，界面以红色延迟徽标和状态码标注。
+
+界面包含配置校验/执行、三版本演示、批次列表与进度、显存占用/碎片曲线、块池事件明细、逐层误差界、逐样本归因、查询延迟真值表和最终一致性结论。运行任务在后台线程执行，Tk 主线程只消费事件队列。
+
+## 错误码
+
+| 错误码 | 含义 |
+| --- | --- |
+| `E_CONFIG` | JSON 语法、重复键、未知字段、字段类型/取值或预算折算规则非法；整体拒绝 |
+| `E_DATA` | 本地数据/参数摘要与清单不一致；不启动推理并写出出错位置 |
+| `E_OOM` | 块预算或连续空洞不足；报告所需块数和空闲块数 |
+| `E_PRESSURE` | 容量耗尽持续超过阈值；报告事件区间 |
+| `E_LATENCY` | 单次 UI 查询超过预算 |
+| `E_IO` | 报告目录/图形环境等本地 I/O 或环境错误 |
+
+## 测试与当前验证
+
+```bat
+py -3.11 -m unittest discover -s tests -v
+```
+
+当前环境实际执行结果：**34 tests OK**。覆盖内容包括配置强校验、重复键、摘要拒绝位置、块池重叠/OOM/碎片/重放、int32 饱和与半远离零舍入、两路径重复性、批次与位置无关归因、容量拆分与压力区间、OOM 报告、版本整体替换、陈旧快照、E_DATA 中止报告、UI 延迟定点聚合。
+
+正式演示结果（seed=184，48 samples，input=32，hidden=128）：
+
+| 版本 | 路径/策略 | 批次 | 峰值块 | 输出摘要（前 16 位） | 结论 |
+| --- | --- | ---: | ---: | --- | --- |
+| v1 | float32 / per_batch | 6 | 7 | `9c5795a72a1ccfa4` | PASS |
+| v2 | fixed / block_pool | 6 | 9 | `441ad585bbcd9376` | PASS |
+| v3 | fixed / block_pool / scale 10^5 | 8 | 9 | `66dd630be6de3323` | PASS |
+
+演示摘要：数据 `36c21d83c44e75425469d80ef8c4eb541a4b7ba17abecf29baaaa47f9d3d2842`，参数 `bdb82888a59179f08d2c2388cddf7bf051a03f016303aff5f9b32f455d5c3ad8`；所有版本块池重放通过、版本严格递增、整体替换为真。最终 v3 单次 UI 查询整体 P95 约 `4.185 ms`、最大值约 `4.185 ms`，低于 16 ms 预算。
+
+## 目录
+
+```text
+mixedprec_diag/
+  config.py         配置解析与强校验
+  deterministic.py  PCG64 样本/模型与 SHA-256 摘要
+  memory.py         块池、碎片、OOM、重放
+  quantization.py   定点舍入、饱和、整数点积
+  inference.py      两条前向路径与误差归因
+  engine.py         调度、报告、版本化会话
+  versioning.py     整体替换与陈旧防护
+  latency.py        UI 查询单调时钟与定点聚合
+  ui.py             Tkinter 交互诊断台
+  cli.py            命令行入口
+configs/             三组演示配置与诊断探针
+scripts/             Windows/PS/演示脚本
+tests/               34 项本地测试
+```
+
+## 环境说明与限制
+
+当前代码交付验证环境为 Linux Python 3.11 + NumPy；该容器没有 `_tkinter`/Tk 动态库，因此这里完成了 UI 源码编译检查和“缺失 Tkinter 时 E_IO 诊断”验证，但未能在容器内打开真实窗口。Windows 桌面上的启动确认命令已列在快速开始中。应用自身不读取网络、GPU 或外部数据集；显存数据是本地确定性块级会计仿真，不声称测量真实显卡 VRAM。
