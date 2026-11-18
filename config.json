@@ -1,0 +1,51 @@
+{
+  "diagnostic": {
+    "tolerance_units": 200
+  },
+  "entity": {
+    "threshold": 0.5
+  },
+  "fixed": {
+    "bias": -0.2,
+    "confidence_threshold": 0.62,
+    "decimals": 4,
+    "entity_weight": 0.45,
+    "quantization_decimals": 3,
+    "relation_weight": 0.55,
+    "temperature": 0.75,
+    "threshold_equal_policy": "reject"
+  },
+  "paths": {
+    "evidence": "samples/evidence.json",
+    "injections": "samples/injections.json",
+    "model": "samples/model.json",
+    "report": "artifacts/report.json",
+    "sentences": "samples/sentences.jsonl",
+    "snapshot_dir": "artifacts/snapshot"
+  },
+  "relation": {
+    "relation_types": [
+      "任职于",
+      "位于",
+      "创办"
+    ],
+    "trigger_words": {
+      "任职于": [
+        "工作",
+        "加入",
+        "任教"
+      ],
+      "位于": [
+        "位于",
+        "在"
+      ],
+      "创办": [
+        "创办"
+      ]
+    }
+  },
+  "runtime": {
+    "snapshot_commit_interval": 2,
+    "workers": 4
+  }
+}
