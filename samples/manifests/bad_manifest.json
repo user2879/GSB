@@ -1,0 +1,14 @@
+{
+  "version": "",
+  "global_slots": 0,
+  "default_timeout_ms": -5,
+  "cache_capacity": 3,
+  "stages": [
+    {"name": "base", "depends_on": ["ghost"], "quota": 0,
+     "instructions": [
+       {"id": "x1", "type": "copy", "params": {"src": "files/missing.txt", "dst": "/x"}},
+       {"id": "x2", "type": "wat", "params": {}}
+     ]},
+    {"name": "base", "depends_on": [], "quota": 1, "instructions": []}
+  ]
+}

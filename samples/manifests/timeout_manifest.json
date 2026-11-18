@@ -1,0 +1,17 @@
+{
+  "version": "timeout-v1",
+  "global_slots": 1,
+  "default_timeout_ms": 20000,
+  "cache_capacity": 12,
+  "stages": [
+    {
+      "name": "slow",
+      "depends_on": [],
+      "quota": 1,
+      "instructions": [
+        {"id": "t-slow", "type": "run",
+         "params": {"command": "${PYTHON} scripts/slow.py", "inputs": ["scripts/slow.py"], "timeout_ms": 300}}
+      ]
+    }
+  ]
+}

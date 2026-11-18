@@ -1,0 +1,42 @@
+{
+  "version": "sample-v1",
+  "global_slots": 2,
+  "default_timeout_ms": 20000,
+  "cache_capacity": 12,
+  "stages": [
+    {
+      "name": "base",
+      "depends_on": [],
+      "quota": 2,
+      "instructions": [
+        {"id": "b-copy-conf", "type": "copy", "params": {"src": "files/app.conf", "dst": "/etc/app.conf"}},
+        {"id": "b-copy-notes", "type": "copy", "params": {"src": "files/notes.txt", "dst": "/etc/notes.txt"}},
+        {"id": "b-env-home", "type": "env", "params": {"name": "APP_HOME", "value": "/opt/layerbench"}},
+        {"id": "b-greet", "type": "run", "after": ["b-env-home"],
+         "params": {"command": "${PYTHON} scripts/greet.py layerbench", "inputs": ["scripts/greet.py"]}},
+        {"id": "b-label", "type": "label", "params": {"name": "maintainer", "value": "layerbench-local"}}
+      ]
+    },
+    {
+      "name": "builder",
+      "depends_on": ["base"],
+      "quota": 1,
+      "instructions": [
+        {"id": "bd-copy-data", "type": "copy", "params": {"src": "files/data.csv", "dst": "/work/data.csv"}},
+        {"id": "bd-compute", "type": "run", "after": ["bd-copy-data"],
+         "params": {"command": "${PYTHON} scripts/compute.py", "inputs": ["scripts/compute.py", "files/data.csv"]}},
+        {"id": "bd-env-build", "type": "env", "params": {"name": "BUILD_PROFILE", "value": "release"}}
+      ]
+    },
+    {
+      "name": "packager",
+      "depends_on": ["builder"],
+      "quota": 2,
+      "instructions": [
+        {"id": "pk-greet", "type": "run",
+         "params": {"command": "${PYTHON} scripts/greet.py package", "inputs": ["scripts/greet.py"]}},
+        {"id": "pk-label-version", "type": "label", "params": {"name": "image_version", "value": "1.0.0"}}
+      ]
+    }
+  ]
+}

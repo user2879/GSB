@@ -1,0 +1,20 @@
+{
+  "version": "tiny-v1",
+  "global_slots": 2,
+  "default_timeout_ms": 20000,
+  "cache_capacity": 2,
+  "stages": [
+    {
+      "name": "base",
+      "depends_on": [],
+      "quota": 2,
+      "instructions": [
+        {"id": "c1", "type": "copy", "params": {"src": "files/app.conf", "dst": "/a"}},
+        {"id": "c2", "type": "copy", "params": {"src": "files/notes.txt", "dst": "/b"}},
+        {"id": "c3", "type": "copy", "params": {"src": "files/data.csv", "dst": "/c"}},
+        {"id": "r1", "type": "run", "params": {"command": "${PYTHON} scripts/greet.py one", "inputs": ["scripts/greet.py"]}},
+        {"id": "r2", "type": "run", "params": {"command": "${PYTHON} scripts/greet.py two", "inputs": ["scripts/greet.py"]}}
+      ]
+    }
+  ]
+}

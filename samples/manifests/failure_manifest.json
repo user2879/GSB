@@ -1,0 +1,21 @@
+{
+  "version": "failure-v1",
+  "global_slots": 2,
+  "default_timeout_ms": 20000,
+  "cache_capacity": 12,
+  "stages": [
+    {
+      "name": "base",
+      "depends_on": [],
+      "quota": 2,
+      "instructions": [
+        {"id": "f-copy", "type": "copy", "params": {"src": "files/app.conf", "dst": "/etc/app.conf"}},
+        {"id": "f-run-bad", "type": "run",
+         "params": {"command": "${PYTHON} scripts/fail_on_purpose.py", "inputs": ["scripts/fail_on_purpose.py"]}},
+        {"id": "f-after-bad", "type": "run", "after": ["f-run-bad"],
+         "params": {"command": "${PYTHON} scripts/greet.py never", "inputs": ["scripts/greet.py"]}},
+        {"id": "f-label", "type": "label", "params": {"name": "note", "value": "after-failure"}}
+      ]
+    }
+  ]
+}
