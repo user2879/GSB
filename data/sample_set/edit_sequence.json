@@ -1,0 +1,72 @@
+{
+  "description": "Deterministic edit sequence applied in order by the test harness.",
+  "steps": [
+    {
+      "id": "edit-1-threshold",
+      "patch": {
+        "feature_thresholds": {
+          "ndvi": 0.2
+        }
+      },
+      "type": "config"
+    },
+    {
+      "id": "edit-2-weights",
+      "patch": {
+        "class_weights": {
+          "building": {
+            "edge": 3.0
+          }
+        }
+      },
+      "type": "config"
+    },
+    {
+      "id": "edit-3-adjacency",
+      "remove": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "type": "adjacency"
+    },
+    {
+      "band": 2,
+      "id": "edit-4-band-patch",
+      "seed_offset": 123,
+      "tile": [
+        1,
+        1
+      ],
+      "type": "band_patch"
+    },
+    {
+      "edge": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "id": "edit-5-restore-adjacency",
+      "type": "restore_adjacency"
+    },
+    {
+      "id": "edit-6-threshold-again",
+      "patch": {
+        "feature_thresholds": {
+          "ndwi": 0.15
+        }
+      },
+      "type": "config"
+    }
+  ]
+}

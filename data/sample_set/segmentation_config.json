@@ -1,0 +1,46 @@
+{
+  "class_weights": {
+    "building": {
+      "bias": 120.0,
+      "edge": 2.0,
+      "ndvi": -2.0,
+      "ndwi": -2.0,
+      "slope": 3.0
+    },
+    "farmland": {
+      "bias": 200.0,
+      "edge": -1.0,
+      "ndvi": 4.0,
+      "ndwi": -2.0,
+      "slope": -1.0
+    },
+    "road": {
+      "bias": 60.0,
+      "edge": 3.0,
+      "ndvi": -3.0,
+      "ndwi": -3.0,
+      "slope": 1.0
+    },
+    "water": {
+      "bias": 100.0,
+      "edge": -1.0,
+      "ndvi": -3.0,
+      "ndwi": 4.0,
+      "slope": 0.0
+    }
+  },
+  "context_overlap": 2,
+  "feature_thresholds": {
+    "edge": 18.0,
+    "ndvi": 0.12,
+    "ndwi": 0.08,
+    "slope": 6.0
+  },
+  "fusion_strategy": "distance_weighted",
+  "min_component_area": 20,
+  "recompute_budget": 12,
+  "snapshot_commit_interval": 2,
+  "stride": 10,
+  "window_size": 14,
+  "workers": 3
+}
