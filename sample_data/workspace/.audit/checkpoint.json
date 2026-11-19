@@ -1,0 +1,1750 @@
+{
+  "schema_version": "audit-checkpoint.v1",
+  "payload": {
+    "generation": 1,
+    "watermark": {
+      "generation": 1,
+      "unique_events": 13,
+      "processed_occurrences": 15,
+      "arrival_watermark": 14,
+      "max_ts": 1795046412000,
+      "max_seq_by_trace": {
+        "T-100": 3,
+        "T-200": 3,
+        "T-300": 2,
+        "T-400": 1,
+        "T-500": 1,
+        "T-600": 2,
+        "T-700": 1,
+        "T-800": 1
+      }
+    },
+    "rules": {
+      "version": "2026.11.1",
+      "digest": "e40ecd9246b68893c9d310eedb60d120f898de340d8960b1b5380f8598e84a53",
+      "config": {
+        "rules_version": "2026.11.1",
+        "rules": [
+          {
+            "rule_id": "R-VAULT-ACCESS",
+            "name": "Vault access correlation",
+            "conditions": {
+              "actors": [
+                "alice"
+              ],
+              "objects": [
+                "vault"
+              ],
+              "time_window": {
+                "start": "2026-11-19T00:00:00Z",
+                "end": "2026-11-19T23:59:59Z",
+                "window_ms": 600000
+              }
+            },
+            "group_by": [
+              "object"
+            ]
+          },
+          {
+            "rule_id": "R-HIGH-SEVERITY",
+            "name": "High severity by actor",
+            "conditions": {
+              "severities": [
+                "high",
+                "critical"
+              ],
+              "time_window": {
+                "start_ms": 1795046400000,
+                "end_ms": 1795132800000,
+                "window_ms": 300000
+              }
+            },
+            "group_by": [
+              "actor"
+            ]
+          },
+          {
+            "rule_id": "R-DB-OBJECT",
+            "name": "Database object activity",
+            "conditions": {
+              "objects": [
+                "db"
+              ]
+            },
+            "group_by": [
+              "object"
+            ]
+          }
+        ]
+      }
+    },
+    "events": [
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-100-001",
+          "trace_id": "T-100",
+          "actor": "alice",
+          "object": "vault",
+          "action": "login",
+          "ts": 1795046401000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "low",
+          "source": "endpoint-1"
+        },
+        "primary_sync_marker": "SYNC-120524cab51dad1078c8dfe5",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-120524cab51dad1078c8dfe5",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_primary.jsonl",
+            "position": "line:2",
+            "source_order": 1,
+            "position_order": 1,
+            "original_ts": 1795046401000,
+            "severity": "low",
+            "source_name": "endpoint-1",
+            "event_core": {
+              "event_id": "evt-100-001",
+              "trace_id": "T-100",
+              "actor": "alice",
+              "object": "vault",
+              "action": "login",
+              "ts": 1795046401000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      },
+      {
+        "status": "duplicate",
+        "event": {
+          "event_id": "evt-100-002",
+          "trace_id": "T-100",
+          "actor": "alice",
+          "object": "vault",
+          "action": "read",
+          "ts": 1795046402000,
+          "seq": 2,
+          "parent_event_id": "evt-100-001"
+        },
+        "attributes": {
+          "severity": "high",
+          "source": "collector-2"
+        },
+        "primary_sync_marker": "SYNC-886e74c717b540a11116f62c",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-886e74c717b540a11116f62c",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_primary.jsonl",
+            "position": "line:3",
+            "source_order": 2,
+            "position_order": 2,
+            "original_ts": 1795046402000,
+            "severity": null,
+            "source_name": "endpoint-1",
+            "event_core": {
+              "event_id": "evt-100-002",
+              "trace_id": "T-100",
+              "actor": "alice",
+              "object": "vault",
+              "action": "read",
+              "ts": 1795046402000,
+              "seq": 2,
+              "parent_event_id": "evt-100-001"
+            }
+          },
+          {
+            "sync_marker": "SYNC-4cae02ad08067c2f38439262",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:0",
+            "source_order": 6,
+            "position_order": 0,
+            "original_ts": "2026-11-19T00:00:02.000Z",
+            "severity": "high",
+            "source_name": "collector-2",
+            "event_core": {
+              "event_id": "evt-100-002",
+              "trace_id": "T-100",
+              "actor": "alice",
+              "object": "vault",
+              "action": "read",
+              "ts": 1795046402000,
+              "seq": 2,
+              "parent_event_id": "evt-100-001"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-100-003",
+          "trace_id": "T-100",
+          "actor": "alice",
+          "object": "vault",
+          "action": "export",
+          "ts": 1795046403000,
+          "seq": 3,
+          "parent_event_id": "evt-100-002"
+        },
+        "attributes": {
+          "severity": "high",
+          "source": "endpoint-1"
+        },
+        "primary_sync_marker": "SYNC-5a0b0f8f6e9b8fd7214ecf2d",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-5a0b0f8f6e9b8fd7214ecf2d",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_primary.jsonl",
+            "position": "line:1",
+            "source_order": 0,
+            "position_order": 0,
+            "original_ts": 1795046403000,
+            "severity": "high",
+            "source_name": "endpoint-1",
+            "event_core": {
+              "event_id": "evt-100-003",
+              "trace_id": "T-100",
+              "actor": "alice",
+              "object": "vault",
+              "action": "export",
+              "ts": 1795046403000,
+              "seq": 3,
+              "parent_event_id": "evt-100-002"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-200-001",
+          "trace_id": "T-200",
+          "actor": "bob",
+          "object": "db",
+          "action": "query",
+          "ts": 1795046404000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "high",
+          "source": "collector-2"
+        },
+        "primary_sync_marker": "SYNC-543e67cb71303190b372b5f0",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-543e67cb71303190b372b5f0",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:1",
+            "source_order": 7,
+            "position_order": 1,
+            "original_ts": 1795046404000,
+            "severity": "high",
+            "source_name": "collector-2",
+            "event_core": {
+              "event_id": "evt-200-001",
+              "trace_id": "T-200",
+              "actor": "bob",
+              "object": "db",
+              "action": "query",
+              "ts": 1795046404000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-200-003",
+          "trace_id": "T-200",
+          "actor": "bob",
+          "object": "db",
+          "action": "export",
+          "ts": 1795046406000,
+          "seq": 3,
+          "parent_event_id": "evt-200-001"
+        },
+        "attributes": {
+          "severity": "critical",
+          "source": "collector-2"
+        },
+        "primary_sync_marker": "SYNC-5e40ab7f6cce68876af4a9b4",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-5e40ab7f6cce68876af4a9b4",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:2",
+            "source_order": 8,
+            "position_order": 2,
+            "original_ts": "2026-11-19T00:00:06.000Z",
+            "severity": "critical",
+            "source_name": "collector-2",
+            "event_core": {
+              "event_id": "evt-200-003",
+              "trace_id": "T-200",
+              "actor": "bob",
+              "object": "db",
+              "action": "export",
+              "ts": 1795046406000,
+              "seq": 3,
+              "parent_event_id": "evt-200-001"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-300-001",
+          "trace_id": "T-300",
+          "actor": "carol",
+          "object": "file",
+          "action": "read",
+          "ts": 1795046405000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "low",
+          "source": "collector-3"
+        },
+        "primary_sync_marker": "SYNC-7a4c698a4429a53ae1ce03a2",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-7a4c698a4429a53ae1ce03a2",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:3",
+            "source_order": 9,
+            "position_order": 3,
+            "original_ts": 1795046405000,
+            "severity": "low",
+            "source_name": "collector-3",
+            "event_core": {
+              "event_id": "evt-300-001",
+              "trace_id": "T-300",
+              "actor": "carol",
+              "object": "file",
+              "action": "read",
+              "ts": 1795046405000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-300-002",
+          "trace_id": "T-300",
+          "actor": "carol",
+          "object": "file",
+          "action": "copy",
+          "ts": 1795046405500,
+          "seq": 2,
+          "parent_event_id": "evt-200-001"
+        },
+        "attributes": {
+          "severity": "medium",
+          "source": "collector-3"
+        },
+        "primary_sync_marker": "SYNC-10eca9523fe635f6af2a8d86",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-10eca9523fe635f6af2a8d86",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:4",
+            "source_order": 10,
+            "position_order": 4,
+            "original_ts": "2026-11-19T00:00:05.500Z",
+            "severity": "medium",
+            "source_name": "collector-3",
+            "event_core": {
+              "event_id": "evt-300-002",
+              "trace_id": "T-300",
+              "actor": "carol",
+              "object": "file",
+              "action": "copy",
+              "ts": 1795046405500,
+              "seq": 2,
+              "parent_event_id": "evt-200-001"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-400-001",
+          "trace_id": "T-400",
+          "actor": "dave",
+          "object": "host",
+          "action": "scan",
+          "ts": 1795046407000,
+          "seq": 1,
+          "parent_event_id": "evt-missing"
+        },
+        "attributes": {
+          "severity": "medium",
+          "source": "collector-3"
+        },
+        "primary_sync_marker": "SYNC-fb11eb18efacec38b3acc223",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-fb11eb18efacec38b3acc223",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:5",
+            "source_order": 11,
+            "position_order": 5,
+            "original_ts": 1795046407000,
+            "severity": "medium",
+            "source_name": "collector-3",
+            "event_core": {
+              "event_id": "evt-400-001",
+              "trace_id": "T-400",
+              "actor": "dave",
+              "object": "host",
+              "action": "scan",
+              "ts": 1795046407000,
+              "seq": 1,
+              "parent_event_id": "evt-missing"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-500-001",
+          "trace_id": "T-500",
+          "actor": "erin",
+          "object": "mailbox",
+          "action": "delete",
+          "ts": 1795046408000,
+          "seq": 1,
+          "parent_event_id": "evt-500-001"
+        },
+        "attributes": {
+          "severity": "medium",
+          "source": "collector-3"
+        },
+        "primary_sync_marker": "SYNC-878528683d36cd99030a3f52",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-878528683d36cd99030a3f52",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:6",
+            "source_order": 12,
+            "position_order": 6,
+            "original_ts": 1795046408000,
+            "severity": "medium",
+            "source_name": "collector-3",
+            "event_core": {
+              "event_id": "evt-500-001",
+              "trace_id": "T-500",
+              "actor": "erin",
+              "object": "mailbox",
+              "action": "delete",
+              "ts": 1795046408000,
+              "seq": 1,
+              "parent_event_id": "evt-500-001"
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-600-001",
+          "trace_id": "T-600",
+          "actor": "alice",
+          "object": "vault",
+          "action": "read",
+          "ts": 1795046409000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "high",
+          "source": "endpoint-2"
+        },
+        "primary_sync_marker": "SYNC-97f7b99baf833729f9fce979",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-97f7b99baf833729f9fce979",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_conflict.jsonl",
+            "position": "line:1",
+            "source_order": 3,
+            "position_order": 0,
+            "original_ts": 1795046409000,
+            "severity": "high",
+            "source_name": "endpoint-2",
+            "event_core": {
+              "event_id": "evt-600-001",
+              "trace_id": "T-600",
+              "actor": "alice",
+              "object": "vault",
+              "action": "read",
+              "ts": 1795046409000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-600-002",
+          "trace_id": "T-600",
+          "actor": "alice",
+          "object": "vault",
+          "action": "export",
+          "ts": 1795046410000,
+          "seq": 2,
+          "parent_event_id": "evt-600-001"
+        },
+        "attributes": {
+          "severity": "critical",
+          "source": "collector-2"
+        },
+        "primary_sync_marker": "SYNC-0f0281b9ed4422a0dfe2b923",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-0f0281b9ed4422a0dfe2b923",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:7",
+            "source_order": 13,
+            "position_order": 7,
+            "original_ts": "2026-11-19T00:00:10.000Z",
+            "severity": "critical",
+            "source_name": "collector-2",
+            "event_core": {
+              "event_id": "evt-600-002",
+              "trace_id": "T-600",
+              "actor": "alice",
+              "object": "vault",
+              "action": "export",
+              "ts": 1795046410000,
+              "seq": 2,
+              "parent_event_id": "evt-600-001"
+            }
+          }
+        ]
+      },
+      {
+        "status": "conflict",
+        "event": {
+          "event_id": "evt-700-001",
+          "trace_id": "T-700",
+          "actor": "frank",
+          "object": "host",
+          "action": "login",
+          "ts": 1795046411000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "high",
+          "source": "collector-2"
+        },
+        "primary_sync_marker": "SYNC-e56d81052e9f27f2431df132",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-e56d81052e9f27f2431df132",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_conflict.jsonl",
+            "position": "line:2",
+            "source_order": 4,
+            "position_order": 1,
+            "original_ts": 1795046411000,
+            "severity": "medium",
+            "source_name": "endpoint-1",
+            "event_core": {
+              "event_id": "evt-700-001",
+              "trace_id": "T-700",
+              "actor": "frank",
+              "object": "host",
+              "action": "login",
+              "ts": 1795046411000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          },
+          {
+            "sync_marker": "SYNC-babc469dae989482daabad27",
+            "source_format": "v2",
+            "source": "sample_data/input/v2_batch.json",
+            "position": "element:8",
+            "source_order": 14,
+            "position_order": 8,
+            "original_ts": "2026-11-19T00:00:11.000Z",
+            "severity": "high",
+            "source_name": "collector-2",
+            "event_core": {
+              "event_id": "evt-700-001",
+              "trace_id": "T-700",
+              "actor": "mallory",
+              "object": "host",
+              "action": "login",
+              "ts": 1795046411000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      },
+      {
+        "status": "accepted",
+        "event": {
+          "event_id": "evt-800-001",
+          "trace_id": "T-800",
+          "actor": "grace",
+          "object": "archive",
+          "action": "read",
+          "ts": 1795046412000,
+          "seq": 1,
+          "parent_event_id": null
+        },
+        "attributes": {
+          "severity": "info",
+          "source": "endpoint-3"
+        },
+        "primary_sync_marker": "SYNC-49dfbff4411625c4432c0df1",
+        "provenance": [
+          {
+            "sync_marker": "SYNC-49dfbff4411625c4432c0df1",
+            "source_format": "v1",
+            "source": "sample_data/input/v1_malformed.jsonl",
+            "position": "line:2",
+            "source_order": 5,
+            "position_order": 1,
+            "original_ts": 1795046412000,
+            "severity": "info",
+            "source_name": "endpoint-3",
+            "event_core": {
+              "event_id": "evt-800-001",
+              "trace_id": "T-800",
+              "actor": "grace",
+              "object": "archive",
+              "action": "read",
+              "ts": 1795046412000,
+              "seq": 1,
+              "parent_event_id": null
+            }
+          }
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "conflict_id": "CONFLICT-F7A305ECC86FCF6B3FC4E1D7",
+        "event_id": "evt-700-001",
+        "fields": [
+          "actor"
+        ],
+        "winner": {
+          "source_format": "v1",
+          "source": "sample_data/input/v1_conflict.jsonl",
+          "position": "line:2",
+          "sync_marker": "SYNC-e56d81052e9f27f2431df132",
+          "event": {
+            "event_id": "evt-700-001",
+            "trace_id": "T-700",
+            "actor": "frank",
+            "object": "host",
+            "action": "login",
+            "ts": 1795046411000,
+            "seq": 1,
+            "parent_event_id": null
+          }
+        },
+        "incoming": {
+          "source_format": "v2",
+          "source": "sample_data/input/v2_batch.json",
+          "position": "element:8",
+          "sync_marker": "SYNC-babc469dae989482daabad27",
+          "event": {
+            "event_id": "evt-700-001",
+            "trace_id": "T-700",
+            "actor": "mallory",
+            "object": "host",
+            "action": "login",
+            "ts": 1795046411000,
+            "seq": 1,
+            "parent_event_id": null
+          }
+        },
+        "source_formats": [
+          "v1",
+          "v2"
+        ]
+      }
+    ],
+    "file_results": [
+      {
+        "source_id": "796046af2e104d45fc3d4bc580a050b4873fb222b10bed528d1ad8f6812fc0ff",
+        "source": "sample_data/input/v1_conflict.jsonl",
+        "sha256": "04c2d1cc6bc59261c2fdf63022c519fc0c9e369c38a30590e6e89006ff9ab741",
+        "size_bytes": 326,
+        "detected_format": "v1",
+        "status": "ok",
+        "occurrences": 2,
+        "error_count": 0,
+        "error_codes": []
+      },
+      {
+        "source_id": "b8bfe8a9f257c8cc7f7953c2261a9ec9ce8130f468d9386b66d425552838413e",
+        "source": "sample_data/input/v1_malformed.jsonl",
+        "sha256": "8b472d7fe212891e4eb18b7335629f5d6b56dcd3668d7f31693072e9576f646e",
+        "size_bytes": 190,
+        "detected_format": "v1",
+        "status": "partial",
+        "occurrences": 1,
+        "error_count": 1,
+        "error_codes": [
+          "E_MALFORMED_JSON"
+        ]
+      },
+      {
+        "source_id": "3661701494b3fba59fdf94555f0c3709e41b6c608260caf2180f22b02a5f0c5b",
+        "source": "sample_data/input/v1_primary.jsonl",
+        "sha256": "cf931060a51b00ee8dc14639e6b33457c89eb117d79d52fe7b616eeacbd6dc8d",
+        "size_bytes": 534,
+        "detected_format": "v1",
+        "status": "ok",
+        "occurrences": 3,
+        "error_count": 0,
+        "error_codes": []
+      },
+      {
+        "source_id": "94e765169032c8ea1bb006a1f70710c27c8108af66c7562e1b698c332db3b585",
+        "source": "sample_data/input/v2_batch.json",
+        "sha256": "d232d7f669336a3235fe38c1ad98a9b7070f5f9a1d99dd71a3bef5b3855cfcc6",
+        "size_bytes": 2606,
+        "detected_format": "v2",
+        "status": "partial",
+        "occurrences": 9,
+        "error_count": 2,
+        "error_codes": [
+          "E_SCHEMA",
+          "E_TIMESTAMP"
+        ]
+      }
+    ],
+    "parse_errors": [
+      {
+        "code": "E_MALFORMED_JSON",
+        "message": "invalid JSONL line: Expecting ',' delimiter",
+        "source_format": "v1",
+        "source": "sample_data/input/v1_malformed.jsonl",
+        "position": "line:1",
+        "details": {
+          "line": 1,
+          "column": 26
+        }
+      },
+      {
+        "code": "E_SCHEMA",
+        "message": "actor must be a non-empty string",
+        "source_format": "v2",
+        "source": "sample_data/input/v2_batch.json",
+        "position": "element:10",
+        "event_id": "evt-missing-fields"
+      },
+      {
+        "code": "E_TIMESTAMP",
+        "message": "invalid ISO-8601 timestamp: 'not-an-iso-time'",
+        "source_format": "v2",
+        "source": "sample_data/input/v2_batch.json",
+        "position": "element:9",
+        "event_id": "evt-bad-ts",
+        "trace_id": "T-900"
+      }
+    ],
+    "trace_chains": [
+      {
+        "trace_id": "T-100",
+        "root_event_ids": [
+          "evt-100-001"
+        ],
+        "event_count": 3,
+        "order": [
+          "evt-100-001",
+          "evt-100-002",
+          "evt-100-003"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-100-001",
+            "parent_event_id": null,
+            "children": [
+              "evt-100-002"
+            ],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046401000
+          },
+          {
+            "event_id": "evt-100-002",
+            "parent_event_id": "evt-100-001",
+            "children": [
+              "evt-100-003"
+            ],
+            "depth": 1,
+            "seq": 2,
+            "ts": 1795046402000
+          },
+          {
+            "event_id": "evt-100-003",
+            "parent_event_id": "evt-100-002",
+            "children": [],
+            "depth": 2,
+            "seq": 3,
+            "ts": 1795046403000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-200",
+        "root_event_ids": [
+          "evt-200-001"
+        ],
+        "event_count": 2,
+        "order": [
+          "evt-200-001",
+          "evt-200-003"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-200-001",
+            "parent_event_id": null,
+            "children": [
+              "evt-200-003"
+            ],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046404000
+          },
+          {
+            "event_id": "evt-200-003",
+            "parent_event_id": "evt-200-001",
+            "children": [],
+            "depth": 1,
+            "seq": 3,
+            "ts": 1795046406000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-300",
+        "root_event_ids": [
+          "evt-300-001",
+          "evt-300-002"
+        ],
+        "event_count": 2,
+        "order": [
+          "evt-300-001",
+          "evt-300-002"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-300-001",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046405000
+          },
+          {
+            "event_id": "evt-300-002",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 2,
+            "ts": 1795046405500
+          }
+        ]
+      },
+      {
+        "trace_id": "T-400",
+        "root_event_ids": [
+          "evt-400-001"
+        ],
+        "event_count": 1,
+        "order": [
+          "evt-400-001"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-400-001",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046407000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-500",
+        "root_event_ids": [
+          "evt-500-001"
+        ],
+        "event_count": 1,
+        "order": [
+          "evt-500-001"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-500-001",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046408000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-600",
+        "root_event_ids": [
+          "evt-600-001"
+        ],
+        "event_count": 2,
+        "order": [
+          "evt-600-001",
+          "evt-600-002"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-600-001",
+            "parent_event_id": null,
+            "children": [
+              "evt-600-002"
+            ],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046409000
+          },
+          {
+            "event_id": "evt-600-002",
+            "parent_event_id": "evt-600-001",
+            "children": [],
+            "depth": 1,
+            "seq": 2,
+            "ts": 1795046410000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-700",
+        "root_event_ids": [
+          "evt-700-001"
+        ],
+        "event_count": 1,
+        "order": [
+          "evt-700-001"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-700-001",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046411000
+          }
+        ]
+      },
+      {
+        "trace_id": "T-800",
+        "root_event_ids": [
+          "evt-800-001"
+        ],
+        "event_count": 1,
+        "order": [
+          "evt-800-001"
+        ],
+        "nodes": [
+          {
+            "event_id": "evt-800-001",
+            "parent_event_id": null,
+            "children": [],
+            "depth": 0,
+            "seq": 1,
+            "ts": 1795046412000
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "E_CROSS_TRACE",
+        "message": "parent_event_id resolves to a different trace",
+        "event_id": "evt-300-002",
+        "trace_id": "T-300",
+        "details": {
+          "parent_event_id": "evt-200-001",
+          "parent_trace_id": "T-200"
+        }
+      },
+      {
+        "code": "E_ORPHAN",
+        "message": "parent_event_id does not exist in any input stream",
+        "event_id": "evt-400-001",
+        "trace_id": "T-400",
+        "details": {
+          "parent_event_id": "evt-missing"
+        }
+      },
+      {
+        "code": "E_CYCLE",
+        "message": "parent_event_id references the event itself",
+        "event_id": "evt-500-001",
+        "trace_id": "T-500",
+        "details": {
+          "cycle": [
+            "evt-500-001"
+          ]
+        }
+      },
+      {
+        "code": "E_SEQ_ROLLBACK",
+        "message": "seq did not increase in deterministic arrival order",
+        "source_format": "v1",
+        "source": "sample_data/input/v1_primary.jsonl",
+        "position": "line:2",
+        "event_id": "evt-100-001",
+        "trace_id": "T-100",
+        "details": {
+          "previous_seq": 3,
+          "current_seq": 1
+        }
+      },
+      {
+        "code": "E_SEQ_GAP",
+        "message": "seq gap detected in canonical trace state",
+        "source_format": "v2",
+        "source": "sample_data/input/v2_batch.json",
+        "position": "element:2",
+        "event_id": "evt-200-003",
+        "trace_id": "T-200",
+        "details": {
+          "previous_seq": 1,
+          "current_seq": 3,
+          "missing_seq": [
+            2
+          ]
+        }
+      },
+      {
+        "code": "E_SEQ_ROLLBACK",
+        "message": "seq did not increase in deterministic arrival order",
+        "source_format": "v2",
+        "source": "sample_data/input/v2_batch.json",
+        "position": "element:8",
+        "event_id": "evt-700-001",
+        "trace_id": "T-700",
+        "details": {
+          "previous_seq": 1,
+          "current_seq": 1
+        }
+      }
+    ],
+    "cases": [
+      {
+        "case_id": "CASE-55A36415BE5A5EABA7A4778F",
+        "rule_id": "R-VAULT-ACCESS",
+        "rule_name": "Vault access correlation",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_ids": [
+          "evt-100-001",
+          "evt-100-002",
+          "evt-100-003",
+          "evt-600-001",
+          "evt-600-002"
+        ],
+        "members": [
+          {
+            "event_id": "evt-100-001",
+            "trace_id": "T-100",
+            "ts": 1795046401000,
+            "seq": 1,
+            "actor": "alice",
+            "object": "vault",
+            "action": "login",
+            "severity": "low"
+          },
+          {
+            "event_id": "evt-100-002",
+            "trace_id": "T-100",
+            "ts": 1795046402000,
+            "seq": 2,
+            "actor": "alice",
+            "object": "vault",
+            "action": "read",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-100-003",
+            "trace_id": "T-100",
+            "ts": 1795046403000,
+            "seq": 3,
+            "actor": "alice",
+            "object": "vault",
+            "action": "export",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-600-001",
+            "trace_id": "T-600",
+            "ts": 1795046409000,
+            "seq": 1,
+            "actor": "alice",
+            "object": "vault",
+            "action": "read",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-600-002",
+            "trace_id": "T-600",
+            "ts": 1795046410000,
+            "seq": 2,
+            "actor": "alice",
+            "object": "vault",
+            "action": "export",
+            "severity": "critical"
+          }
+        ],
+        "trace_ids": [
+          "T-100",
+          "T-600"
+        ],
+        "start_ts": 1795046401000,
+        "end_ts": 1795046410000,
+        "association_basis": {
+          "rule_id": "R-VAULT-ACCESS",
+          "rules_version": "2026.11.1",
+          "conditions": {
+            "actors": [
+              "alice"
+            ],
+            "objects": [
+              "vault"
+            ],
+            "time_window": {
+              "start_ms": 1795046400000,
+              "end_ms": 1795132799000,
+              "window_ms": 600000
+            }
+          },
+          "group_by": [
+            "object"
+          ]
+        }
+      },
+      {
+        "case_id": "CASE-C8077311178C2AFEE36B008C",
+        "rule_id": "R-DB-OBJECT",
+        "rule_name": "Database object activity",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "db"
+        },
+        "member_event_ids": [
+          "evt-200-001",
+          "evt-200-003"
+        ],
+        "members": [
+          {
+            "event_id": "evt-200-001",
+            "trace_id": "T-200",
+            "ts": 1795046404000,
+            "seq": 1,
+            "actor": "bob",
+            "object": "db",
+            "action": "query",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-200-003",
+            "trace_id": "T-200",
+            "ts": 1795046406000,
+            "seq": 3,
+            "actor": "bob",
+            "object": "db",
+            "action": "export",
+            "severity": "critical"
+          }
+        ],
+        "trace_ids": [
+          "T-200"
+        ],
+        "start_ts": 1795046404000,
+        "end_ts": 1795046406000,
+        "association_basis": {
+          "rule_id": "R-DB-OBJECT",
+          "rules_version": "2026.11.1",
+          "conditions": {
+            "objects": [
+              "db"
+            ]
+          },
+          "group_by": [
+            "object"
+          ]
+        }
+      },
+      {
+        "case_id": "CASE-E0F76BE398FDDFBD63008BA4",
+        "rule_id": "R-HIGH-SEVERITY",
+        "rule_name": "High severity by actor",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "alice"
+        },
+        "member_event_ids": [
+          "evt-100-002",
+          "evt-100-003",
+          "evt-600-001",
+          "evt-600-002"
+        ],
+        "members": [
+          {
+            "event_id": "evt-100-002",
+            "trace_id": "T-100",
+            "ts": 1795046402000,
+            "seq": 2,
+            "actor": "alice",
+            "object": "vault",
+            "action": "read",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-100-003",
+            "trace_id": "T-100",
+            "ts": 1795046403000,
+            "seq": 3,
+            "actor": "alice",
+            "object": "vault",
+            "action": "export",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-600-001",
+            "trace_id": "T-600",
+            "ts": 1795046409000,
+            "seq": 1,
+            "actor": "alice",
+            "object": "vault",
+            "action": "read",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-600-002",
+            "trace_id": "T-600",
+            "ts": 1795046410000,
+            "seq": 2,
+            "actor": "alice",
+            "object": "vault",
+            "action": "export",
+            "severity": "critical"
+          }
+        ],
+        "trace_ids": [
+          "T-100",
+          "T-600"
+        ],
+        "start_ts": 1795046402000,
+        "end_ts": 1795046410000,
+        "association_basis": {
+          "rule_id": "R-HIGH-SEVERITY",
+          "rules_version": "2026.11.1",
+          "conditions": {
+            "severities": [
+              "high",
+              "critical"
+            ],
+            "time_window": {
+              "start_ms": 1795046400000,
+              "end_ms": 1795132800000,
+              "window_ms": 300000
+            }
+          },
+          "group_by": [
+            "actor"
+          ]
+        }
+      },
+      {
+        "case_id": "CASE-F7666705261BDF6757923819",
+        "rule_id": "R-HIGH-SEVERITY",
+        "rule_name": "High severity by actor",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "bob"
+        },
+        "member_event_ids": [
+          "evt-200-001",
+          "evt-200-003"
+        ],
+        "members": [
+          {
+            "event_id": "evt-200-001",
+            "trace_id": "T-200",
+            "ts": 1795046404000,
+            "seq": 1,
+            "actor": "bob",
+            "object": "db",
+            "action": "query",
+            "severity": "high"
+          },
+          {
+            "event_id": "evt-200-003",
+            "trace_id": "T-200",
+            "ts": 1795046406000,
+            "seq": 3,
+            "actor": "bob",
+            "object": "db",
+            "action": "export",
+            "severity": "critical"
+          }
+        ],
+        "trace_ids": [
+          "T-200"
+        ],
+        "start_ts": 1795046404000,
+        "end_ts": 1795046406000,
+        "association_basis": {
+          "rule_id": "R-HIGH-SEVERITY",
+          "rules_version": "2026.11.1",
+          "conditions": {
+            "severities": [
+              "high",
+              "critical"
+            ],
+            "time_window": {
+              "start_ms": 1795046400000,
+              "end_ms": 1795132800000,
+              "window_ms": 300000
+            }
+          },
+          "group_by": [
+            "actor"
+          ]
+        }
+      }
+    ],
+    "graph": {
+      "schema_version": "audit-case-graph.v1",
+      "nodes": [
+        {
+          "node_id": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "node_type": "case",
+          "case_id": "CASE-55A36415BE5A5EABA7A4778F",
+          "rule_id": "R-VAULT-ACCESS",
+          "rules_version": "2026.11.1",
+          "member_count": 5
+        },
+        {
+          "node_id": "case:CASE-C8077311178C2AFEE36B008C",
+          "node_type": "case",
+          "case_id": "CASE-C8077311178C2AFEE36B008C",
+          "rule_id": "R-DB-OBJECT",
+          "rules_version": "2026.11.1",
+          "member_count": 2
+        },
+        {
+          "node_id": "case:CASE-E0F76BE398FDDFBD63008BA4",
+          "node_type": "case",
+          "case_id": "CASE-E0F76BE398FDDFBD63008BA4",
+          "rule_id": "R-HIGH-SEVERITY",
+          "rules_version": "2026.11.1",
+          "member_count": 4
+        },
+        {
+          "node_id": "case:CASE-F7666705261BDF6757923819",
+          "node_type": "case",
+          "case_id": "CASE-F7666705261BDF6757923819",
+          "rule_id": "R-HIGH-SEVERITY",
+          "rules_version": "2026.11.1",
+          "member_count": 2
+        },
+        {
+          "node_id": "event:evt-100-001",
+          "node_type": "event",
+          "event_id": "evt-100-001",
+          "trace_id": "T-100",
+          "ts": 1795046401000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-100-002",
+          "node_type": "event",
+          "event_id": "evt-100-002",
+          "trace_id": "T-100",
+          "ts": 1795046402000,
+          "seq": 2,
+          "status": "duplicate"
+        },
+        {
+          "node_id": "event:evt-100-003",
+          "node_type": "event",
+          "event_id": "evt-100-003",
+          "trace_id": "T-100",
+          "ts": 1795046403000,
+          "seq": 3,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-200-001",
+          "node_type": "event",
+          "event_id": "evt-200-001",
+          "trace_id": "T-200",
+          "ts": 1795046404000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-200-003",
+          "node_type": "event",
+          "event_id": "evt-200-003",
+          "trace_id": "T-200",
+          "ts": 1795046406000,
+          "seq": 3,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-300-001",
+          "node_type": "event",
+          "event_id": "evt-300-001",
+          "trace_id": "T-300",
+          "ts": 1795046405000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-300-002",
+          "node_type": "event",
+          "event_id": "evt-300-002",
+          "trace_id": "T-300",
+          "ts": 1795046405500,
+          "seq": 2,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-400-001",
+          "node_type": "event",
+          "event_id": "evt-400-001",
+          "trace_id": "T-400",
+          "ts": 1795046407000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-500-001",
+          "node_type": "event",
+          "event_id": "evt-500-001",
+          "trace_id": "T-500",
+          "ts": 1795046408000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-600-001",
+          "node_type": "event",
+          "event_id": "evt-600-001",
+          "trace_id": "T-600",
+          "ts": 1795046409000,
+          "seq": 1,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-600-002",
+          "node_type": "event",
+          "event_id": "evt-600-002",
+          "trace_id": "T-600",
+          "ts": 1795046410000,
+          "seq": 2,
+          "status": "accepted"
+        },
+        {
+          "node_id": "event:evt-700-001",
+          "node_type": "event",
+          "event_id": "evt-700-001",
+          "trace_id": "T-700",
+          "ts": 1795046411000,
+          "seq": 1,
+          "status": "conflict"
+        },
+        {
+          "node_id": "event:evt-800-001",
+          "node_type": "event",
+          "event_id": "evt-800-001",
+          "trace_id": "T-800",
+          "ts": 1795046412000,
+          "seq": 1,
+          "status": "accepted"
+        }
+      ],
+      "edges": [
+        {
+          "edge_id": "EDGE-057D880EF68C4553B7F7DC81",
+          "from": "case:CASE-F7666705261BDF6757923819",
+          "to": "event:evt-200-001",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "bob"
+            },
+            "member_event_id": "evt-200-001"
+          }
+        },
+        {
+          "edge_id": "EDGE-05D90DF3C11E2F6DAB6DAB5F",
+          "from": "event:evt-200-001",
+          "to": "event:evt-200-003",
+          "kind": "causal_parent",
+          "basis": {
+            "field": "parent_event_id",
+            "parent_event_id": "evt-200-001",
+            "trace_id": "T-200"
+          }
+        },
+        {
+          "edge_id": "EDGE-1E47258568665B1EAAA1BC14",
+          "from": "event:evt-100-002",
+          "to": "event:evt-100-003",
+          "kind": "causal_parent",
+          "basis": {
+            "field": "parent_event_id",
+            "parent_event_id": "evt-100-002",
+            "trace_id": "T-100"
+          }
+        },
+        {
+          "edge_id": "EDGE-27D8A198CC630FEC3FA8E576",
+          "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+          "to": "event:evt-600-001",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "alice"
+            },
+            "member_event_id": "evt-600-001"
+          }
+        },
+        {
+          "edge_id": "EDGE-2D13409772C7D0FB21F35DBD",
+          "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "to": "event:evt-600-002",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-VAULT-ACCESS",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "vault"
+            },
+            "member_event_id": "evt-600-002"
+          }
+        },
+        {
+          "edge_id": "EDGE-503C772556CA00BEFC11677C",
+          "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+          "to": "event:evt-100-002",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "alice"
+            },
+            "member_event_id": "evt-100-002"
+          }
+        },
+        {
+          "edge_id": "EDGE-7072E8B511AED2E7C625574F",
+          "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "to": "event:evt-600-001",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-VAULT-ACCESS",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "vault"
+            },
+            "member_event_id": "evt-600-001"
+          }
+        },
+        {
+          "edge_id": "EDGE-82F4C34067C843FFB2CEB576",
+          "from": "case:CASE-C8077311178C2AFEE36B008C",
+          "to": "event:evt-200-003",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-DB-OBJECT",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "db"
+            },
+            "member_event_id": "evt-200-003"
+          }
+        },
+        {
+          "edge_id": "EDGE-8615BEBFA589364F857355F9",
+          "from": "case:CASE-F7666705261BDF6757923819",
+          "to": "event:evt-200-003",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "bob"
+            },
+            "member_event_id": "evt-200-003"
+          }
+        },
+        {
+          "edge_id": "EDGE-9C41E1ACF384D9C5BA4A7C83",
+          "from": "case:CASE-C8077311178C2AFEE36B008C",
+          "to": "event:evt-200-001",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-DB-OBJECT",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "db"
+            },
+            "member_event_id": "evt-200-001"
+          }
+        },
+        {
+          "edge_id": "EDGE-A7BC9A406669114CFCCFB37D",
+          "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+          "to": "event:evt-100-003",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "alice"
+            },
+            "member_event_id": "evt-100-003"
+          }
+        },
+        {
+          "edge_id": "EDGE-BDCA19459AF0A93203D43C44",
+          "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "to": "event:evt-100-001",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-VAULT-ACCESS",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "vault"
+            },
+            "member_event_id": "evt-100-001"
+          }
+        },
+        {
+          "edge_id": "EDGE-C79F67260BE7551E84CA7CBE",
+          "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "to": "event:evt-100-003",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-VAULT-ACCESS",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "vault"
+            },
+            "member_event_id": "evt-100-003"
+          }
+        },
+        {
+          "edge_id": "EDGE-D7B09323931BE51462726001",
+          "from": "event:evt-600-001",
+          "to": "event:evt-600-002",
+          "kind": "causal_parent",
+          "basis": {
+            "field": "parent_event_id",
+            "parent_event_id": "evt-600-001",
+            "trace_id": "T-600"
+          }
+        },
+        {
+          "edge_id": "EDGE-E5C514392C6D348029B45BF3",
+          "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+          "to": "event:evt-600-002",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-HIGH-SEVERITY",
+            "rules_version": "2026.11.1",
+            "group": {
+              "actor": "alice"
+            },
+            "member_event_id": "evt-600-002"
+          }
+        },
+        {
+          "edge_id": "EDGE-F371B2AFF619A4026DB2D23D",
+          "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+          "to": "event:evt-100-002",
+          "kind": "case_member",
+          "basis": {
+            "rule_id": "R-VAULT-ACCESS",
+            "rules_version": "2026.11.1",
+            "group": {
+              "object": "vault"
+            },
+            "member_event_id": "evt-100-002"
+          }
+        },
+        {
+          "edge_id": "EDGE-F5EA8432A2947B05B3B21EBA",
+          "from": "event:evt-100-001",
+          "to": "event:evt-100-002",
+          "kind": "causal_parent",
+          "basis": {
+            "field": "parent_event_id",
+            "parent_event_id": "evt-100-001",
+            "trace_id": "T-100"
+          }
+        }
+      ]
+    },
+    "rebuild": {
+      "required": false,
+      "reason": "none",
+      "details": {}
+    }
+  },
+  "checksum": "1b7e3c1329ba3c38e0e023d3b578a94c8893189b7137dd339aa989d4308792e8"
+}

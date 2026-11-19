@@ -1,0 +1,382 @@
+{
+  "schema_version": "audit-case-graph.v1",
+  "nodes": [
+    {
+      "node_id": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "node_type": "case",
+      "case_id": "CASE-55A36415BE5A5EABA7A4778F",
+      "rule_id": "R-VAULT-ACCESS",
+      "rules_version": "2026.11.1",
+      "member_count": 5
+    },
+    {
+      "node_id": "case:CASE-C8077311178C2AFEE36B008C",
+      "node_type": "case",
+      "case_id": "CASE-C8077311178C2AFEE36B008C",
+      "rule_id": "R-DB-OBJECT",
+      "rules_version": "2026.11.1",
+      "member_count": 2
+    },
+    {
+      "node_id": "case:CASE-E0F76BE398FDDFBD63008BA4",
+      "node_type": "case",
+      "case_id": "CASE-E0F76BE398FDDFBD63008BA4",
+      "rule_id": "R-HIGH-SEVERITY",
+      "rules_version": "2026.11.1",
+      "member_count": 4
+    },
+    {
+      "node_id": "case:CASE-F7666705261BDF6757923819",
+      "node_type": "case",
+      "case_id": "CASE-F7666705261BDF6757923819",
+      "rule_id": "R-HIGH-SEVERITY",
+      "rules_version": "2026.11.1",
+      "member_count": 2
+    },
+    {
+      "node_id": "event:evt-100-001",
+      "node_type": "event",
+      "event_id": "evt-100-001",
+      "trace_id": "T-100",
+      "ts": 1795046401000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-100-002",
+      "node_type": "event",
+      "event_id": "evt-100-002",
+      "trace_id": "T-100",
+      "ts": 1795046402000,
+      "seq": 2,
+      "status": "duplicate"
+    },
+    {
+      "node_id": "event:evt-100-003",
+      "node_type": "event",
+      "event_id": "evt-100-003",
+      "trace_id": "T-100",
+      "ts": 1795046403000,
+      "seq": 3,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-200-001",
+      "node_type": "event",
+      "event_id": "evt-200-001",
+      "trace_id": "T-200",
+      "ts": 1795046404000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-200-003",
+      "node_type": "event",
+      "event_id": "evt-200-003",
+      "trace_id": "T-200",
+      "ts": 1795046406000,
+      "seq": 3,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-300-001",
+      "node_type": "event",
+      "event_id": "evt-300-001",
+      "trace_id": "T-300",
+      "ts": 1795046405000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-300-002",
+      "node_type": "event",
+      "event_id": "evt-300-002",
+      "trace_id": "T-300",
+      "ts": 1795046405500,
+      "seq": 2,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-400-001",
+      "node_type": "event",
+      "event_id": "evt-400-001",
+      "trace_id": "T-400",
+      "ts": 1795046407000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-500-001",
+      "node_type": "event",
+      "event_id": "evt-500-001",
+      "trace_id": "T-500",
+      "ts": 1795046408000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-600-001",
+      "node_type": "event",
+      "event_id": "evt-600-001",
+      "trace_id": "T-600",
+      "ts": 1795046409000,
+      "seq": 1,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-600-002",
+      "node_type": "event",
+      "event_id": "evt-600-002",
+      "trace_id": "T-600",
+      "ts": 1795046410000,
+      "seq": 2,
+      "status": "accepted"
+    },
+    {
+      "node_id": "event:evt-700-001",
+      "node_type": "event",
+      "event_id": "evt-700-001",
+      "trace_id": "T-700",
+      "ts": 1795046411000,
+      "seq": 1,
+      "status": "conflict"
+    },
+    {
+      "node_id": "event:evt-800-001",
+      "node_type": "event",
+      "event_id": "evt-800-001",
+      "trace_id": "T-800",
+      "ts": 1795046412000,
+      "seq": 1,
+      "status": "accepted"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "EDGE-057D880EF68C4553B7F7DC81",
+      "from": "case:CASE-F7666705261BDF6757923819",
+      "to": "event:evt-200-001",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "bob"
+        },
+        "member_event_id": "evt-200-001"
+      }
+    },
+    {
+      "edge_id": "EDGE-05D90DF3C11E2F6DAB6DAB5F",
+      "from": "event:evt-200-001",
+      "to": "event:evt-200-003",
+      "kind": "causal_parent",
+      "basis": {
+        "field": "parent_event_id",
+        "parent_event_id": "evt-200-001",
+        "trace_id": "T-200"
+      }
+    },
+    {
+      "edge_id": "EDGE-1E47258568665B1EAAA1BC14",
+      "from": "event:evt-100-002",
+      "to": "event:evt-100-003",
+      "kind": "causal_parent",
+      "basis": {
+        "field": "parent_event_id",
+        "parent_event_id": "evt-100-002",
+        "trace_id": "T-100"
+      }
+    },
+    {
+      "edge_id": "EDGE-27D8A198CC630FEC3FA8E576",
+      "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+      "to": "event:evt-600-001",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "alice"
+        },
+        "member_event_id": "evt-600-001"
+      }
+    },
+    {
+      "edge_id": "EDGE-2D13409772C7D0FB21F35DBD",
+      "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "to": "event:evt-600-002",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-VAULT-ACCESS",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_id": "evt-600-002"
+      }
+    },
+    {
+      "edge_id": "EDGE-503C772556CA00BEFC11677C",
+      "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+      "to": "event:evt-100-002",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "alice"
+        },
+        "member_event_id": "evt-100-002"
+      }
+    },
+    {
+      "edge_id": "EDGE-7072E8B511AED2E7C625574F",
+      "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "to": "event:evt-600-001",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-VAULT-ACCESS",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_id": "evt-600-001"
+      }
+    },
+    {
+      "edge_id": "EDGE-82F4C34067C843FFB2CEB576",
+      "from": "case:CASE-C8077311178C2AFEE36B008C",
+      "to": "event:evt-200-003",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-DB-OBJECT",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "db"
+        },
+        "member_event_id": "evt-200-003"
+      }
+    },
+    {
+      "edge_id": "EDGE-8615BEBFA589364F857355F9",
+      "from": "case:CASE-F7666705261BDF6757923819",
+      "to": "event:evt-200-003",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "bob"
+        },
+        "member_event_id": "evt-200-003"
+      }
+    },
+    {
+      "edge_id": "EDGE-9C41E1ACF384D9C5BA4A7C83",
+      "from": "case:CASE-C8077311178C2AFEE36B008C",
+      "to": "event:evt-200-001",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-DB-OBJECT",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "db"
+        },
+        "member_event_id": "evt-200-001"
+      }
+    },
+    {
+      "edge_id": "EDGE-A7BC9A406669114CFCCFB37D",
+      "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+      "to": "event:evt-100-003",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "alice"
+        },
+        "member_event_id": "evt-100-003"
+      }
+    },
+    {
+      "edge_id": "EDGE-BDCA19459AF0A93203D43C44",
+      "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "to": "event:evt-100-001",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-VAULT-ACCESS",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_id": "evt-100-001"
+      }
+    },
+    {
+      "edge_id": "EDGE-C79F67260BE7551E84CA7CBE",
+      "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "to": "event:evt-100-003",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-VAULT-ACCESS",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_id": "evt-100-003"
+      }
+    },
+    {
+      "edge_id": "EDGE-D7B09323931BE51462726001",
+      "from": "event:evt-600-001",
+      "to": "event:evt-600-002",
+      "kind": "causal_parent",
+      "basis": {
+        "field": "parent_event_id",
+        "parent_event_id": "evt-600-001",
+        "trace_id": "T-600"
+      }
+    },
+    {
+      "edge_id": "EDGE-E5C514392C6D348029B45BF3",
+      "from": "case:CASE-E0F76BE398FDDFBD63008BA4",
+      "to": "event:evt-600-002",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-HIGH-SEVERITY",
+        "rules_version": "2026.11.1",
+        "group": {
+          "actor": "alice"
+        },
+        "member_event_id": "evt-600-002"
+      }
+    },
+    {
+      "edge_id": "EDGE-F371B2AFF619A4026DB2D23D",
+      "from": "case:CASE-55A36415BE5A5EABA7A4778F",
+      "to": "event:evt-100-002",
+      "kind": "case_member",
+      "basis": {
+        "rule_id": "R-VAULT-ACCESS",
+        "rules_version": "2026.11.1",
+        "group": {
+          "object": "vault"
+        },
+        "member_event_id": "evt-100-002"
+      }
+    },
+    {
+      "edge_id": "EDGE-F5EA8432A2947B05B3B21EBA",
+      "from": "event:evt-100-001",
+      "to": "event:evt-100-002",
+      "kind": "causal_parent",
+      "basis": {
+        "field": "parent_event_id",
+        "parent_event_id": "evt-100-001",
+        "trace_id": "T-100"
+      }
+    }
+  ]
+}

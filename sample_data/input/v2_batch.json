@@ -1,0 +1,122 @@
+[
+  {
+    "event_id": "evt-100-002",
+    "trace_id": "T-100",
+    "actor": "alice",
+    "object": "vault",
+    "action": "read",
+    "ts": "2026-11-19T00:00:02.000Z",
+    "seq": 2,
+    "parent_event_id": "evt-100-001",
+    "severity": "high",
+    "source": "collector-2"
+  },
+  {
+    "event_id": "evt-200-001",
+    "trace_id": "T-200",
+    "actor": "bob",
+    "object": "db",
+    "action": "query",
+    "ts": 1795046404000,
+    "seq": 1,
+    "severity": "high",
+    "source": "collector-2"
+  },
+  {
+    "event_id": "evt-200-003",
+    "trace_id": "T-200",
+    "actor": "bob",
+    "object": "db",
+    "action": "export",
+    "ts": "2026-11-19T00:00:06.000Z",
+    "seq": 3,
+    "parent_event_id": "evt-200-001",
+    "severity": "critical",
+    "source": "collector-2"
+  },
+  {
+    "event_id": "evt-300-001",
+    "trace_id": "T-300",
+    "actor": "carol",
+    "object": "file",
+    "action": "read",
+    "ts": 1795046405000,
+    "seq": 1,
+    "severity": "low",
+    "source": "collector-3"
+  },
+  {
+    "event_id": "evt-300-002",
+    "trace_id": "T-300",
+    "actor": "carol",
+    "object": "file",
+    "action": "copy",
+    "ts": "2026-11-19T00:00:05.500Z",
+    "seq": 2,
+    "parent_event_id": "evt-200-001",
+    "severity": "medium",
+    "source": "collector-3"
+  },
+  {
+    "event_id": "evt-400-001",
+    "trace_id": "T-400",
+    "actor": "dave",
+    "object": "host",
+    "action": "scan",
+    "ts": 1795046407000,
+    "seq": 1,
+    "parent_event_id": "evt-missing",
+    "severity": "medium",
+    "source": "collector-3"
+  },
+  {
+    "event_id": "evt-500-001",
+    "trace_id": "T-500",
+    "actor": "erin",
+    "object": "mailbox",
+    "action": "delete",
+    "ts": 1795046408000,
+    "seq": 1,
+    "parent_event_id": "evt-500-001",
+    "severity": "medium",
+    "source": "collector-3"
+  },
+  {
+    "event_id": "evt-600-002",
+    "trace_id": "T-600",
+    "actor": "alice",
+    "object": "vault",
+    "action": "export",
+    "ts": "2026-11-19T00:00:10.000Z",
+    "seq": 2,
+    "parent_event_id": "evt-600-001",
+    "severity": "critical",
+    "source": "collector-2"
+  },
+  {
+    "event_id": "evt-700-001",
+    "trace_id": "T-700",
+    "actor": "mallory",
+    "object": "host",
+    "action": "login",
+    "ts": "2026-11-19T00:00:11.000Z",
+    "seq": 1,
+    "severity": "high",
+    "source": "collector-2"
+  },
+  {
+    "event_id": "evt-bad-ts",
+    "trace_id": "T-900",
+    "actor": "heidi",
+    "object": "db",
+    "action": "query",
+    "ts": "not-an-iso-time",
+    "seq": 1,
+    "severity": "low",
+    "source": "collector-4"
+  },
+  {
+    "event_id": "evt-missing-fields",
+    "trace_id": "T-900"
+  }
+]

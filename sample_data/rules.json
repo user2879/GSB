@@ -1,0 +1,55 @@
+{
+  "rules_version": "2026.11.1",
+  "rules": [
+    {
+      "rule_id": "R-VAULT-ACCESS",
+      "name": "Vault access correlation",
+      "conditions": {
+        "actors": [
+          "alice"
+        ],
+        "objects": [
+          "vault"
+        ],
+        "time_window": {
+          "start": "2026-11-19T00:00:00Z",
+          "end": "2026-11-19T23:59:59Z",
+          "window_ms": 600000
+        }
+      },
+      "group_by": [
+        "object"
+      ]
+    },
+    {
+      "rule_id": "R-HIGH-SEVERITY",
+      "name": "High severity by actor",
+      "conditions": {
+        "severities": [
+          "high",
+          "critical"
+        ],
+        "time_window": {
+          "start_ms": 1795046400000,
+          "end_ms": 1795132800000,
+          "window_ms": 300000
+        }
+      },
+      "group_by": [
+        "actor"
+      ]
+    },
+    {
+      "rule_id": "R-DB-OBJECT",
+      "name": "Database object activity",
+      "conditions": {
+        "objects": [
+          "db"
+        ]
+      },
+      "group_by": [
+        "object"
+      ]
+    }
+  ]
+}

@@ -1,21 +1,212 @@
-某安全运营团队需要在离线 Windows 空白工作区从零开发一个审计事件关联与取证工作台，用于把来自不同采集器的本地审计事件流统一归一、关联成取证案件，并在格式版本演进下保持结论稳定。工作区没有现存代码与样本，需自行设计确定性的本地事件样本。输入为两类事件流：一类是 v1 逐行 JSONL 格式，字段为 event_id、trace_id、actor、object、action、ts（整数毫秒）、seq（同一 trace 内单调递增）与可选 parent_event_id；另一类是 v2 批量 JSON 格式，以数组封装事件，时间戳可为毫秒整数或 ISO-8601 字符串，并新增可选的 severity 与 source 字段。两种格式同一语义字段命名一致但封装与时间表示不同，且允许同一事件被不同采集器以不同格式重复投递。工具必须在不丢失归一口径的前提下，重建任意 trace 的因果链、按可配置规则聚合跨 trace 取证案件，输出原子写出的 JSON 取证报告与案件关联图数据，并在事件乱序到达、重复投递、丢失、进程被强制终止等情况下保持已持久化结论的一致性与可恢复性。
+# 审计事件关联与取证工作台
 
-任务环境与准备：
-在 Windows 空白工作区创建项目目录，使用 Python 3.11，仅依赖标准库与 jsonschema、pytest，安装说明写入项目文档但不预置代码或数据。
-准备确定性的本地样本生成脚本所需的固定随机种子与显式同步标记约定，全部事件流与规则配置均在本地生成，不访问网络与真实账号。
-确认工作目录具备文件锁与临时文件重命名能力，测试强制终止恢复时以独立子进程模拟强制终止，不使用容器或外部服务。
+这是一个仅使用 Python 3.11 标准库实现的离线工作台。它把 v1 JSONL 与 v2 批量 JSON 审计事件流归一到同一口径，重建 trace 内因果链，按带版本号的规则聚合跨 trace 案件，并以原子检查点、案件快照和 JSON 报告保证乱序、重复、丢失与强制终止场景下的可恢复性。
 
-业务要求：
-1. 实现 v1 JSONL 与 v2 批量 JSON 两类事件流的格式识别、解析与统一归一：识别依据须来自内容结构而非文件名，v2 的毫秒整数时间戳与 ISO-8601 字符串时间戳须归一为同一毫秒整数值，归一后两类格式中语义相同的同一事件必须产生完全相同的事件规范化记录；对畸形行或畸形元素需记录来源格式、位置与业务错误码并继续处理其余内容。
-2. 在归一层之上实现 trace 内因果链重建：按 parent_event_id 建立父子关系，检测缺失父事件、父事件自环与跨 trace 的父子引用，分别返回 E_ORPHAN、E_CYCLE 与 E_CROSS_TRACE；链重建结论不得依赖事件到达顺序，同一 trace 在 v1 与 v2 混合投递下父子关系必须一致。
-3. 实现跨格式重复投递与内容冲突判定：同一事件被 v1 与 v2 各投递一次时应按归一后事件键去重且以先到者为准，但若归一后同一 event_id 的内容存在实质差异（actor、action、object、ts、seq 任一不同）须进入冲突清单并给出两个来源格式；同 trace 内 seq 回退与 seq 空洞须独立成类，不得与重复投递混为一类。
-4. 实现跨 trace 的取证案件关联规则引擎：依据可配置规则把事件聚合为案件，规则条件可引用归一后的时间窗、actor、object 与 severity；规则配置须带独立规则版本号，规则版本变化时既有案件须整体重算而非增量续接，且同一组事件在任意合法到达顺序与任意格式混合比例下案件键与案件成员必须完全一致。
-5. 实现检查点与状态演进恢复：以已处理事件水位与案件聚合状态持久化检查点，恢复时只从最后一个完整检查点继续；检测到检查点结构版本或规则版本与当前不一致时须触发整体重建，不得将旧版本聚合结论与新规则混合；检查点与案件快照均先写临时文件再重命名整体替换，识别快照被整体替换时的版本变化。
-6. 实现基于同步标记的真值对照与报告输出：样本内显式记录每条事件的来源格式、发送端原始时间表示与同步标记，验证端只依据同步标记与归一结果比较，不得以生成器中间结果作为真值；取证报告为可解析 JSON，含文件级结论、归一后事件状态、冲突清单、每案件成员与业务错误码，另输出案件关联图数据（节点、边与关联依据），报告须原子写出且字段顺序稳定。
-7. 实现并发导入与强制终止边界：支持多事件流并发导入且并发度可配置，最终案件结论须与串行执行完全一致；同一工作目录并发写检查点须以文件锁串行化，锁冲突返回 E_LOCK；进程被强制终止后只允许恢复到最后一个完整检查点，不承诺生成退出报告，且不得留下半写文件或被后续加载当作有效状态。
-8. 提供可交互命令行与确定性本地样本测试集：实现导入、查询案件、导出报告、校验检查点四类子命令，单份事件流解析失败不得中断同批其他文件，退出码区分全部成功、部分失败与参数错误，业务错误码统一写入 JSON 报告；附确定性样本生成器与 pytest 测试，覆盖格式混合、乱序、重复投递、冲突、规则版本变化重建、锁冲突与强制终止恢复。
+运行期不访问网络、不依赖外部服务，也不使用 Docker。测试依赖只有 `pytest`；`jsonschema` 列入允许的可选开发依赖，但归一层不依赖它也可运行。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录
 
-验收：
-用本地确定性样本验证跨版本归一、案件关联跨顺序一致及检查点恢复正确，附运行结果。
+```text
+audit_forensics/       核心库与 CLI
+scripts/               确定性样本生成、同步真值核对脚本
+tests/                 pytest 回归测试
+sample_data/           可重新生成的确定性 v1/v2 样本、规则与同步清单
+```
+
+## 安装
+
+Windows PowerShell（Python 3.11）：
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e ".[test]"
+```
+
+也可仅安装项目后手工安装测试依赖：
+
+```powershell
+python -m pip install -e .
+python -m pip install -r requirements.txt
+```
+
+Linux/macOS 同理，将虚拟环境激活命令改为 `source .venv/bin/activate`。
+
+## 快速运行
+
+生成固定种子 `20261119` 的本地样本：
+
+```powershell
+python scripts/generate_samples.py --output sample_data --force
+```
+
+导入混合格式样本。样本故意包含畸形行、畸形元素、冲突、孤儿、循环、跨 trace 父引用、seq 回退与空洞，因此退出码为 `1`（部分成功/存在业务错误），但仍会处理其余合法事件：
+
+```powershell
+python -m audit_forensics import `
+  --workspace sample_data/workspace `
+  --rules sample_data/rules.json `
+  --input sample_data/input/v1_primary.jsonl sample_data/input/v1_conflict.jsonl sample_data/input/v1_malformed.jsonl sample_data/input/v2_batch.json `
+  --workers 4
+```
+
+查询案件、导出报告、校验检查点：
+
+```powershell
+python -m audit_forensics query-case --workspace sample_data/workspace
+python -m audit_forensics export-report --workspace sample_data/workspace `
+  --output sample_data/workspace/report.export.json `
+  --graph-output sample_data/workspace/case_graph.export.json
+python -m audit_forensics verify-checkpoint --workspace sample_data/workspace
+```
+
+核对同步标记真值：
+
+```powershell
+python scripts/verify_sync.py --manifest sample_data/sync_manifest.json --report sample_data/workspace/report.json
+```
+
+## 数据口径
+
+### 输入格式
+
+- v1：逐行 JSONL，每行一个对象；必需字段为 `event_id`、`trace_id`、`actor`、`object`、`action`、`ts`（整数毫秒）、`seq`；可选 `parent_event_id`。
+- v2：JSON 数组；字段口径与 v1 相同，`ts` 可为整数毫秒或 ISO-8601 字符串，可附带 `severity` 与 `source`。
+
+格式识别只读取内容结构：数组根为 v2，JSON 对象/JSONL 为 v1。文件名和扩展名不参与判断。单个畸形行或数组元素会产生带 `source_format`、`source`、`position` 和业务错误码的记录，随后继续处理余下内容。
+
+### 归一记录
+
+跨格式规范化核心固定为八字段，顺序稳定：
+
+```text
+event_id, trace_id, actor, object, action, ts, seq, parent_event_id
+```
+
+`ts` 一律转为整数毫秒。ISO-8601 的时区偏移会先换算为 UTC；无时区字符串按 UTC 解释。`severity` 与 `source` 保存在事件的扩展属性中，不进入八字段核心，因此同一语义事件从 v1 与 v2 到达时核心记录逐字段一致。重复投递的扩展属性按确定性规则合并：`severity` 取严重度最高值并做稳定排序，`source` 取稳定排序后的首个非空值。
+
+### 去重、冲突与序列诊断
+
+- 事件键为归一后的 `event_id`；首个到达的归一核心作为主记录。
+- 核心相同：计为重复投递，保留全部来源与同步标记，不产生冲突。
+- 核心的 `actor`、`object`、`action`、`ts`、`seq`（并包括 `trace_id`、`parent_event_id`）任一不同：产生 `E_EVENT_CONFLICT`，记录双方来源格式与完整归一变体。冲突事件被隔离在规则案件之外，避免不确定内容污染案件结论。
+- 到达顺序固定为 CLI 输入文件顺序加文件内位置；并发解析不会改变该顺序。
+- `E_SEQ_ROLLBACK` 基于去除重复投递后的确定性到达顺序检测；`E_SEQ_GAP` 基于归一后的最终 seq 集合检测。两者与重复投递分类独立。
+
+### 因果链
+
+按 `parent_event_id` 在全部归一事件中解析父引用：
+
+- 父事件不存在：`E_ORPHAN`
+- 父引用自环或形成环：`E_CYCLE`
+- 父事件存在但属于其他 trace：`E_CROSS_TRACE`
+
+每个 trace 输出稳定的根节点、DFS 顺序、节点深度、父/子关系与 seq/ts。结论只依赖归一事件集合，不依赖到达顺序或格式比例。
+
+## 规则与案件
+
+规则文件示例：
+
+```json
+{
+  "rules_version": "2026.11.1",
+  "rules": [
+    {
+      "rule_id": "R-VAULT",
+      "name": "Vault access",
+      "conditions": {
+        "actors": ["alice"],
+        "objects": ["vault"],
+        "severities": ["high", "critical"],
+        "time_window": {
+          "start": "2026-11-19T00:00:00Z",
+          "end": "2026-11-19T23:59:59Z",
+          "window_ms": 600000
+        }
+      },
+      "group_by": ["object"]
+    }
+  ]
+}
+```
+
+`conditions` 支持 `actors`、`objects`、`actions`、`severities`，以及绝对时间窗 `start_ms`/`end_ms` 或 `start`/`end`。`window_ms` 是可选的会话分段间隔。`group_by` 可从 `actor`、`object`、`action`、`severity`、`trace_id` 中选取。采集器字段 `source` 不参与规则，避免同一事件在不同采集格式间切换时改变案件结论。
+
+每次导入都从完整事件集合全量重算案件，没有增量续接路径。案件键由规则版本、规则 ID、分组值和排序后的成员事件 ID 哈希得到。规则版本变化，或同名版本下规则内容变化，都会记录重建原因并替换全部案件。排序、分组、成员 ID 和窗口切分均使用稳定排序，因此任意合法到达顺序及 v1/v2 混合比例下案件键和成员一致。
+
+## 状态、原子性与恢复
+
+工作状态位于 `<workspace>/.audit/`：
+
+```text
+checkpoint.json       权威检查点：归一事件、冲突、文件结论、水位、规则与全量案件
+checkpoint.prev.json  最近一次可读的完整旧检查点
+case_snapshot.json    派生案件快照
+workspace.lock        跨进程非阻塞文件锁
+```
+
+检查点与快照均使用同目录临时文件，`fsync` 后 `os.replace` 整体替换。加载端只读取固定最终文件名，并通过规范化 JSON 的 SHA-256 校验载荷完整性；半写临时文件不会被当作有效状态。检查点载荷先于快照提交，快照携带 `generation` 与 `checkpoint_checksum`；若进程在两者之间终止，读取端会识别 `E_SNAPSHOT_STALE` 并从检查点全量重建派生结论。
+
+当前检查点不可读时会回退到 `checkpoint.prev.json`。检查点结构版本、规则版本或规则内容与当前输入不一致时，会从保留的完整事件状态整体重建，不会把旧案件与新规则混合。工作区写操作使用非阻塞文件锁；POSIX 使用 `fcntl.flock`，Windows 使用 `msvcrt.locking`。锁冲突返回 `E_LOCK`。
+
+报告和案件图同样原子写出。报告不含运行时钟时间，字段按固定构造顺序序列化；同一状态重复导出得到完全相同的字节。
+
+### 确定性故障注入（仅测试）
+
+测试通过环境变量在独立子进程中选择确定性边界，不会在生产正常运行时生效：
+
+```text
+AUDIT_FORENSICS_TEST_PAUSE_AT=checkpoint|case_snapshot|report|graph
+AUDIT_FORENSICS_TEST_PAUSE_SECONDS=30
+AUDIT_FORENSICS_TEST_READY_FILE=<父进程等待的标记文件>
+AUDIT_FORENSICS_TEST_HOLD_LOCK_SECONDS=2
+AUDIT_FORENSICS_TEST_LOCK_READY_FILE=<持锁就绪标记文件>
+```
+
+暂停发生在临时文件已写入并 `fsync`、`os.replace` 尚未执行时，父进程可在此精确终止子进程并验证恢复行为。
+
+## CLI
+
+四个逻辑子命令（括号内为兼容别名）：
+
+```text
+import (ingest)                 导入多个 v1/v2 文件
+query-case (case, query)        查询全部案件或指定案件
+export-report (export, report)  导出报告与案件图
+verify-checkpoint (verify, checkpoint)  校验检查点、快照与全量重算
+```
+
+退出码：
+
+- `0`：全部成功且无业务错误
+- `1`：部分成功、存在业务错误、锁冲突、状态不可用或校验失败
+- `2`：命令行参数或规则配置错误
+
+所有命令输出可解析 JSON；导入与导出同时把完整业务错误码写入 JSON 报告。
+
+## 主要业务错误码
+
+| 错误码 | 含义 |
+|---|---|
+| `E_MALFORMED_JSON` / `E_MALFORMED_EVENT` / `E_SCHEMA` / `E_TIMESTAMP` | 畸形 JSON、畸形元素、字段结构或时间错误 |
+| `E_ORPHAN` / `E_CYCLE` / `E_CROSS_TRACE` | 缺失父事件、父引用环、跨 trace 父引用 |
+| `E_EVENT_CONFLICT` | 同一 event_id 的归一核心内容冲突 |
+| `E_SEQ_ROLLBACK` / `E_SEQ_GAP` / `E_SEQ_DUPLICATE` | 到达序回退、序空洞、同 trace 重复 seq |
+| `E_LOCK` | 工作区写锁冲突 |
+| `E_CHECKPOINT_*` / `E_SNAPSHOT_*` / `E_STATE_SCHEMA_MISMATCH` | 检查点和快照缺失、损坏、过期或结构版本变化 |
+| `E_RULES_VERSION_CHANGED` / `E_RULES_CONFIG_CHANGED` | 触发全量案件重建（记录在 `notices`） |
+
+## 样本同步标记
+
+`sample_data/sync_manifest.json` 为每个合法发送端事件显式记录 `source_format`、`source_file`、`position`、`original_ts` 与 `sync_marker`。标记由事件 ID、来源格式、文件名、位置和原始时间表示确定生成。验证端只使用该发送端记录与报告中的归一事件/来源记录进行比较，不读取生成器的预期归一对象。
+
+## 测试
+
+```powershell
+python -m pytest -q
+```
+
+测试覆盖跨版本归一、内容识别、畸形继续处理、重复与冲突、seq 回退/空洞、三类因果错误、规则版本重建、顺序及格式比例不变、串并行一致、锁冲突、检查点主备恢复、快照过期、两种强制终止边界、报告字节稳定性和同步标记真值核对。
+
+本机实际验证结果见 [VERIFICATION.md](VERIFICATION.md)。
