@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vecflow"
+version = "1.0.0"
+description = "Deterministic vectorized columnar execution with resource-budget scheduling and replayable SQLite ledger"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+authors = [{ name = "VecFlow" }]
+
+[project.scripts]
+vecflow = "vecflow.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vecflow*"]
+
+[tool.unittest]
+start-directory = "tests"

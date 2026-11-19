@@ -1,0 +1,82 @@
+{
+  "format_version": 1,
+  "global_budget": 4,
+  "parameter_version": 1,
+  "tasks": [
+    {
+      "aggregation": "sum",
+      "block": "orders",
+      "delay_ms": 45,
+      "expression": "if(active, (unit_price * qty) / (discount + 1.0), 0.0)",
+      "id": "revenue_guard",
+      "quota": 2,
+      "shards": [
+        {
+          "end": 5,
+          "resources": 2,
+          "start": 0
+        },
+        {
+          "end": 10,
+          "resources": 3,
+          "start": 5
+        },
+        {
+          "end": 15,
+          "resources": 2,
+          "start": 10
+        },
+        {
+          "end": 20,
+          "resources": 3,
+          "start": 15
+        },
+        {
+          "end": 24,
+          "resources": 2,
+          "start": 20
+        }
+      ]
+    },
+    {
+      "aggregation": "concat",
+      "block": "inventory",
+      "delay_ms": 55,
+      "expression": "((stock - reserve) * safety) / (safety + 1.0)",
+      "id": "inventory_margin",
+      "quota": 1,
+      "resources_per_shard": [
+        2,
+        1,
+        2
+      ],
+      "shard_rows": 4
+    },
+    {
+      "aggregation": "count",
+      "block": "orders",
+      "delay_ms": 35,
+      "expression": "qty >= 8 and active ? order_id : 0",
+      "id": "risk_rows",
+      "quota": 2,
+      "shards": [
+        {
+          "end": 8,
+          "resources": 1,
+          "start": 0
+        },
+        {
+          "end": 16,
+          "resources": 2,
+          "start": 8
+        },
+        {
+          "end": 24,
+          "resources": 1,
+          "start": 16
+        }
+      ]
+    }
+  ],
+  "threads": 4
+}
