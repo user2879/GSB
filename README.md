@@ -1,3 +1,27 @@
+# 备份完整性与防篡改恢复引擎
+
+这是一个仅使用 Python 3.11+ 标准库实现的离线备份恢复引擎。它按内容寻址快照指纹、检查点水位和不可变恢复代际来保证：乱序导入仍然得到稳定结论，分叉不被静默选择，强杀后只暴露最后一个完整检查点。
+
+快速开始：
+
+```bash
+python -m backup_engine samples --output samples
+python -m backup_engine recover --workspace .work --report report.json \
+  samples/valid/01.json samples/valid/02.json samples/valid/03.json
+python -m backup_engine status --workspace .work
+python -m backup_engine verify-checkpoint --workspace .work
+```
+
+实现与一致性设计见 [docs/design.md](docs/design.md)，实际验证记录见 [docs/validation-results.md](docs/validation-results.md)。运行测试：
+
+```bash
+python -m unittest discover -s tests -v
+# 若本机已安装 pytest，也可直接运行：
+pytest -q
+```
+
+## 原始任务说明
+
 某安全团队需要在离线 Windows 空白工作区从零开发一个备份完整性与防篡改恢复引擎，用于校验本地确定性备份清单并安全恢复状态。备份由一批版本化快照构成：每个快照声明版本号、文件条目列表（相对路径、内容摘要、声明长度、篡改标记），以及上一个快照的指纹链。恢复请求按顺序应用增量快照，必须验证指纹链完整性、拒绝被篡改的条目、检测快照回滚与分叉，并将恢复状态以原子快照持久化。核心难点在于恢复过程中状态演进与一致性：快照可能乱序到达、指纹链可能断裂或分叉、恢复可能被强制终止；引擎必须在任何中断点只暴露最后一个完整一致状态，且篡改检测、回滚判定与恢复结论必须与快照到达顺序无关。所有处理在本地完成，不依赖网络或外部数据。
 
 任务环境与准备：
