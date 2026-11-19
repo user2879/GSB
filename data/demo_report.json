@@ -1,0 +1,530 @@
+{
+  "environment": {
+    "platform": "linux",
+    "python": "3.11.0rc1"
+  },
+  "forced_termination_recovery": {
+    "final_cursor": 12,
+    "recovery": {
+      "committed_cursor": 4,
+      "recovered_batches": [
+        {
+          "batch_no": 1,
+          "committed_at": "2026-11-19T19:11:25.108+00:00",
+          "end_call_exclusive": 5,
+          "start_call": 1
+        }
+      ],
+      "rerun_required": true,
+      "session_id": "demo-crash",
+      "unknown_batches": [
+        {
+          "batch_no": 2,
+          "end_call_exclusive": 9,
+          "requires_rerun": true,
+          "start_call": 5,
+          "unknown_call_indexes": [
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    "rerun_processed_calls": 8,
+    "unknown_history": [
+      {
+        "batch_no": 2,
+        "detected_at": "2026-11-19T19:11:25.237+00:00",
+        "end_call_exclusive": 9,
+        "reason": "uncommitted_batch_after_process_termination",
+        "start_call": 5
+      }
+    ],
+    "worker_exit_code": 86
+  },
+  "injections": [
+    {
+      "details": {
+        "column": 1,
+        "field_path": "$",
+        "line": 37
+      },
+      "exit_code": 20,
+      "kind": "chain_corrupt",
+      "reported_code": "E_CHAIN"
+    },
+    {
+      "details": {
+        "actual": 999,
+        "field_path": "$.timestamp_ms",
+        "line": 2,
+        "previous": 1000
+      },
+      "exit_code": 21,
+      "kind": "timestamp_regression",
+      "reported_code": "E_TRACE"
+    },
+    {
+      "details": {
+        "actual": "c1d87ea86167666c97e91fe01ca604cf0b6ba218c04c071304b7d7fb3f40d70f",
+        "expected": "0000000000000000000000000000000000000000000000000000000000000000",
+        "field_path": "content_digest",
+        "snapshot_id": "snap-000001"
+      },
+      "exit_code": 22,
+      "kind": "snapshot_digest_mismatch",
+      "reported_code": "E_SNAPSHOT"
+    }
+  ],
+  "inputs": {
+    "calls": 12,
+    "chain_digest": "85d6a760d9533678238c7ecfdb9491a3eaf8876c73a8cfe787021cd7c7827f79",
+    "chain_version": "chain-2026.11.20-r1",
+    "trace_digest": "62f0ae48509fa759a03ba0861f8864b4e701c935a288e871e50a3ef77c5acc62"
+  },
+  "ok": true,
+  "snapshot_replay": {
+    "content_digest": "46175b19a94618071c157817183642ea9d58c811ce2265b895807484d9d7e3ee",
+    "replay": {
+      "compared_calls": 7,
+      "final_cursor": 12,
+      "ok": true,
+      "snapshot_id": "snap-000001",
+      "start_cursor": 5
+    },
+    "snapshot_cursor": 5,
+    "snapshot_id": "snap-000001"
+  },
+  "uninterrupted": {
+    "calls": 12,
+    "events": [
+      {
+        "budget_total": 1,
+        "call_index": 2,
+        "consecutive_failures": 1,
+        "cooldown_remaining_ms": 0,
+        "event_index": 1,
+        "failure_count": 2,
+        "kind": "budget_exhausted",
+        "raw_remaining": -1,
+        "reason": "error_budget_negative",
+        "sample_count": 2,
+        "service": "db",
+        "timestamp_ms": 2000
+      },
+      {
+        "call_index": 4,
+        "consecutive_failures": 2,
+        "cooldown_remaining_ms": 2000,
+        "event_index": 2,
+        "from": "closed",
+        "kind": "circuit_transition",
+        "reason": "failure_threshold_reached",
+        "service": "orders",
+        "timestamp_ms": 4000,
+        "to": "open"
+      },
+      {
+        "call_index": 6,
+        "consecutive_failures": 2,
+        "cooldown_remaining_ms": 0,
+        "event_index": 3,
+        "from": "open",
+        "kind": "circuit_transition",
+        "reason": "cooldown_elapsed",
+        "service": "orders",
+        "timestamp_ms": 9000,
+        "to": "half_open"
+      },
+      {
+        "call_index": 6,
+        "consecutive_failures": 0,
+        "cooldown_remaining_ms": 0,
+        "event_index": 4,
+        "from": "half_open",
+        "kind": "circuit_transition",
+        "reason": "half_open_probe_succeeded",
+        "service": "orders",
+        "timestamp_ms": 9000,
+        "to": "closed"
+      },
+      {
+        "budget_total": 1,
+        "call_index": 7,
+        "consecutive_failures": 0,
+        "cooldown_remaining_ms": 0,
+        "event_index": 5,
+        "failure_count": 2,
+        "kind": "budget_exhausted",
+        "raw_remaining": -1,
+        "reason": "error_budget_negative",
+        "sample_count": 3,
+        "service": "api",
+        "timestamp_ms": 10000
+      },
+      {
+        "call_index": 8,
+        "consecutive_failures": 2,
+        "cooldown_remaining_ms": 2000,
+        "event_index": 6,
+        "from": "closed",
+        "kind": "circuit_transition",
+        "reason": "failure_threshold_reached",
+        "service": "orders",
+        "timestamp_ms": 11000,
+        "to": "open"
+      },
+      {
+        "call_index": 10,
+        "consecutive_failures": 2,
+        "cooldown_remaining_ms": 0,
+        "event_index": 7,
+        "from": "open",
+        "kind": "circuit_transition",
+        "reason": "cooldown_elapsed",
+        "service": "orders",
+        "timestamp_ms": 15000,
+        "to": "half_open"
+      },
+      {
+        "call_index": 10,
+        "consecutive_failures": 3,
+        "cooldown_remaining_ms": 2000,
+        "event_index": 8,
+        "from": "half_open",
+        "kind": "circuit_transition",
+        "reason": "half_open_probe_failed",
+        "service": "orders",
+        "timestamp_ms": 15000,
+        "to": "open"
+      },
+      {
+        "call_index": 11,
+        "consecutive_failures": 3,
+        "cooldown_remaining_ms": 0,
+        "event_index": 9,
+        "from": "open",
+        "kind": "circuit_transition",
+        "reason": "cooldown_elapsed",
+        "service": "orders",
+        "timestamp_ms": 19000,
+        "to": "half_open"
+      },
+      {
+        "call_index": 11,
+        "consecutive_failures": 0,
+        "cooldown_remaining_ms": 0,
+        "event_index": 10,
+        "from": "half_open",
+        "kind": "circuit_transition",
+        "reason": "half_open_probe_succeeded",
+        "service": "orders",
+        "timestamp_ms": 19000,
+        "to": "closed"
+      }
+    ],
+    "fast_fail_chains": [
+      {
+        "call_index": 2,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "orders",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "api",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 3,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "db"
+      },
+      {
+        "call_index": 3,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "orders",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "api",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 3,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "db"
+      },
+      {
+        "call_index": 4,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "api",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "gateway",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          }
+        ],
+        "trigger_reason": "circuit_open",
+        "trigger_source": "orders"
+      },
+      {
+        "call_index": 5,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "api",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "gateway",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          }
+        ],
+        "trigger_reason": "circuit_open",
+        "trigger_source": "orders"
+      },
+      {
+        "call_index": 7,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "api"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "api"
+      },
+      {
+        "call_index": 8,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "api",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "gateway",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          }
+        ],
+        "trigger_reason": "circuit_open",
+        "trigger_source": "orders"
+      },
+      {
+        "call_index": 9,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "orders",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "api",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 3,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "db"
+      },
+      {
+        "call_index": 10,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "api",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "gateway",
+            "trigger_reason": "circuit_open",
+            "trigger_source": "orders"
+          }
+        ],
+        "trigger_reason": "circuit_open",
+        "trigger_source": "orders"
+      },
+      {
+        "call_index": 11,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "api"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "api"
+      },
+      {
+        "call_index": 12,
+        "chain": [
+          {
+            "propagation_depth": 1,
+            "service": "orders",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 2,
+            "service": "api",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          },
+          {
+            "propagation_depth": 3,
+            "service": "gateway",
+            "trigger_reason": "budget_exhausted",
+            "trigger_source": "db"
+          }
+        ],
+        "trigger_reason": "budget_exhausted",
+        "trigger_source": "db"
+      }
+    ],
+    "fast_failed_calls": 10,
+    "services": [
+      {
+        "budget_exhausted": true,
+        "budget_remaining": 0,
+        "budget_total": 1,
+        "circuit_state": "closed",
+        "consecutive_failures": 1,
+        "cooldown_remaining_ms": 0,
+        "failures": 2,
+        "min_samples": 3,
+        "open_count": 0,
+        "ratio_bp": 5000,
+        "service": "api",
+        "timeout_ms": 1800,
+        "upstream": [
+          "gateway"
+        ],
+        "window_hours": 1,
+        "window_samples": 3
+      },
+      {
+        "budget_exhausted": true,
+        "budget_remaining": 0,
+        "budget_total": 1,
+        "circuit_state": "closed",
+        "consecutive_failures": 2,
+        "cooldown_remaining_ms": 0,
+        "failures": 2,
+        "min_samples": 2,
+        "open_count": 0,
+        "ratio_bp": 5000,
+        "service": "db",
+        "timeout_ms": 700,
+        "upstream": [
+          "orders"
+        ],
+        "window_hours": 1,
+        "window_samples": 2
+      },
+      {
+        "budget_exhausted": false,
+        "budget_remaining": 0,
+        "budget_total": 1,
+        "circuit_state": "closed",
+        "consecutive_failures": 0,
+        "cooldown_remaining_ms": 0,
+        "failures": 1,
+        "min_samples": 3,
+        "open_count": 0,
+        "ratio_bp": 5000,
+        "service": "gateway",
+        "timeout_ms": 2500,
+        "upstream": [],
+        "window_hours": 1,
+        "window_samples": 2
+      },
+      {
+        "budget_exhausted": false,
+        "budget_remaining": 2,
+        "budget_total": 7,
+        "circuit_state": "closed",
+        "consecutive_failures": 0,
+        "cooldown_remaining_ms": 0,
+        "failures": 5,
+        "min_samples": 2,
+        "open_count": 3,
+        "ratio_bp": 10000,
+        "service": "orders",
+        "timeout_ms": 1200,
+        "upstream": [
+          "api"
+        ],
+        "window_hours": 1,
+        "window_samples": 7
+      }
+    ],
+    "trigger_reasons": {
+      "budget_exhausted": 6,
+      "circuit_open": 4
+    }
+  },
+  "whole_state_restore": {
+    "restore": {
+      "affected_services": [
+        "api",
+        "gateway",
+        "orders"
+      ],
+      "cursor": 4,
+      "invalidated_conclusions": 8,
+      "mode": "state_replaced",
+      "reason": "snapshot_state_whole_replacement",
+      "snapshot_id": "snap-000001"
+    },
+    "snapshot_cursor": 4,
+    "valid_conclusions_after_restore": 4
+  }
+}

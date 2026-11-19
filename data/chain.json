@@ -1,0 +1,71 @@
+{
+  "services": [
+    {
+      "budget": {
+        "min_samples": 3,
+        "ratio_bp": 5000,
+        "window_hours": 1
+      },
+      "circuit": {
+        "cooldown_ms": 2500,
+        "failure_threshold": 3,
+        "half_open_probes": 1
+      },
+      "id": "gateway",
+      "timeout_ms": 2500,
+      "upstream": []
+    },
+    {
+      "budget": {
+        "min_samples": 3,
+        "ratio_bp": 5000,
+        "window_hours": 1
+      },
+      "circuit": {
+        "cooldown_ms": 2000,
+        "failure_threshold": 3,
+        "half_open_probes": 1
+      },
+      "id": "api",
+      "timeout_ms": 1800,
+      "upstream": [
+        "gateway"
+      ]
+    },
+    {
+      "budget": {
+        "min_samples": 2,
+        "ratio_bp": 10000,
+        "window_hours": 1
+      },
+      "circuit": {
+        "cooldown_ms": 2000,
+        "failure_threshold": 2,
+        "half_open_probes": 1
+      },
+      "id": "orders",
+      "timeout_ms": 1200,
+      "upstream": [
+        "api"
+      ]
+    },
+    {
+      "budget": {
+        "min_samples": 2,
+        "ratio_bp": 5000,
+        "window_hours": 1
+      },
+      "circuit": {
+        "cooldown_ms": 1000,
+        "failure_threshold": 4,
+        "half_open_probes": 1
+      },
+      "id": "db",
+      "timeout_ms": 700,
+      "upstream": [
+        "orders"
+      ]
+    }
+  ],
+  "version": "chain-2026.11.20-r1"
+}
