@@ -1,0 +1,391 @@
+{
+  "artifacts": {
+    "full_diagnostics": "reports/demo/full/diagnostics.json",
+    "full_results": "reports/demo/full/retrieval_results.json",
+    "incremental_diagnostics": "reports/demo/incremental/diagnostics.json",
+    "incremental_results": "reports/demo/incremental/retrieval_results.json"
+  },
+  "budget_pending": {
+    "budget_event_file": "reports/demo/incremental_state/budget_events.jsonl",
+    "completed_stage": "command_received",
+    "completed_stages": [],
+    "ok": true,
+    "snapshot_version_after": 9,
+    "snapshot_version_before": 9,
+    "status": "E_INTERACT_BUDGET_PENDING",
+    "summary": {
+      "completed_queries": 8,
+      "progress": 1.0,
+      "result_count": 40
+    }
+  },
+  "checks": {
+    "concurrency_stable_order": true,
+    "dual_tier_lossless": true,
+    "incremental_equals_full_rebuild": true,
+    "interactive_budget_pending": true,
+    "position_switch_structural_and_lossless": true,
+    "resume_config_mismatch_rejected": true,
+    "snapshot_recovery_cleanup": true,
+    "v1_v2_roundtrip_lossless": true,
+    "validation_failure_codes": true
+  },
+  "concurrency": {
+    "deterministic_timing_equal": true,
+    "observational_wall_times_excluded_from_equality": true,
+    "ok": true,
+    "parallel_concurrency": 4,
+    "query_count": 8,
+    "result_order_equal": true,
+    "serial_concurrency": 1
+  },
+  "conversion": {
+    "checks": {
+      "tier_semantics_mapped": true,
+      "v1_has_checksum": true,
+      "v1_sidecar_skiplist": true,
+      "v1_to_v2_lossless": true,
+      "v2_has_skiplist": true,
+      "v2_sidecar_checksum": true,
+      "v2_to_v1_lossless": true
+    },
+    "ok": true,
+    "tier_mapping": {
+      "converted_back_v2": "delta_varint_lowfreq_sidecar",
+      "converted_v1": "delta_varint_lowfreq_tail",
+      "source_v2": "delta_varint_lowfreq_sidecar"
+    },
+    "v1_digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145",
+    "v1_loss_features": [
+      "position_skiplist"
+    ],
+    "v1_sidecar_blocks": 147,
+    "v2_back_digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145",
+    "v2_back_loss_features": [
+      "block_checksum"
+    ],
+    "v2_back_sidecar_blocks": 147,
+    "v2_digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145"
+  },
+  "dual_tier": {
+    "logical_digest": "7a68d967bf42a83924612497ff5b2c6a96e97c60e9ef5c1e269318b9243a106c",
+    "ok": true,
+    "tier1": {
+      "block_count": 147,
+      "digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145",
+      "fingerprint": "f8c7bb66bfdb041cfe37c4f66909c94b47a38ddee92c7f6cc9a6e5d1f73b59dc",
+      "semantic": "delta_varint"
+    },
+    "tier2": {
+      "block_count": 147,
+      "digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145",
+      "fingerprint": "cf376554f344598ec00f0c9278764bea4d75097e9b58f2cd79e140a9466a3557",
+      "semantic": "delta_varint_lowfreq_sidecar"
+    }
+  },
+  "edit_history": [
+    {
+      "command_id": "E001",
+      "global_version": 2,
+      "index_fingerprint": "f91aaa0b6a5cad0e9f1e5eaf0603b3e20a1c15f080a7a39e0b0a25156101c13c",
+      "op": "add_doc",
+      "rebuilt_blocks": 14,
+      "rebuilt_queries": 6,
+      "reused_blocks": 109,
+      "reused_queries": 2,
+      "status": "OK"
+    },
+    {
+      "command_id": "E002",
+      "global_version": 3,
+      "index_fingerprint": "38c417e3195235e7cdafe4f78ca5785e956182ffde64c882dc8d8de51414d52f",
+      "op": "fix_doc",
+      "rebuilt_blocks": 69,
+      "rebuilt_queries": 7,
+      "reused_blocks": 53,
+      "reused_queries": 1,
+      "status": "OK"
+    },
+    {
+      "command_id": "E003",
+      "global_version": 4,
+      "index_fingerprint": "6591c839cc4036a447be8f2ad732693db3ee5eaf9ae8ce4929f404c2485d2849",
+      "op": "set_config",
+      "rebuilt_blocks": 145,
+      "rebuilt_queries": 0,
+      "reused_blocks": 0,
+      "reused_queries": 8,
+      "status": "OK"
+    },
+    {
+      "command_id": "E004",
+      "global_version": 5,
+      "index_fingerprint": "82c7404456b2c37a97ec11ca0b0ee93858559a3cf2f5c937bdc6dbe0366df71b",
+      "op": "set_config",
+      "rebuilt_blocks": 145,
+      "rebuilt_queries": 0,
+      "reused_blocks": 0,
+      "reused_queries": 8,
+      "status": "OK"
+    },
+    {
+      "command_id": "E005",
+      "global_version": 6,
+      "index_fingerprint": "82c7404456b2c37a97ec11ca0b0ee93858559a3cf2f5c937bdc6dbe0366df71b",
+      "op": "set_config",
+      "rebuilt_blocks": 0,
+      "rebuilt_queries": 8,
+      "reused_blocks": 145,
+      "reused_queries": 0,
+      "status": "OK"
+    },
+    {
+      "command_id": "E006",
+      "global_version": 7,
+      "index_fingerprint": "53cacc555fefc0b9d41d6413aa90422245b4dfb48e937d0eca9363ef94660cd7",
+      "op": "set_config",
+      "rebuilt_blocks": 145,
+      "rebuilt_queries": 0,
+      "reused_blocks": 0,
+      "reused_queries": 8,
+      "status": "OK"
+    },
+    {
+      "command_id": "E007",
+      "global_version": 8,
+      "index_fingerprint": "75bdd28dcca63ff8cc5c0c7774cd580da9640108824be5673c81c1d7bbb05b05",
+      "op": "add_doc",
+      "rebuilt_blocks": 12,
+      "rebuilt_queries": 2,
+      "reused_blocks": 135,
+      "reused_queries": 6,
+      "status": "OK"
+    },
+    {
+      "command_id": "E008",
+      "global_version": 9,
+      "index_fingerprint": "cf376554f344598ec00f0c9278764bea4d75097e9b58f2cd79e140a9466a3557",
+      "op": "set_config",
+      "rebuilt_blocks": 147,
+      "rebuilt_queries": 0,
+      "reused_blocks": 0,
+      "reused_queries": 8,
+      "status": "OK"
+    }
+  ],
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1 (main, Jun 29 2026, 00:05:30) [GCC 11.4.0]",
+    "python_executable": "/home/zsl/feedback/uidfc5909d3-default-294/.venv/bin/python"
+  },
+  "generated_at": "2026-11-19T17:57:23.997789+00:00",
+  "incremental_vs_full": {
+    "checks": [
+      {
+        "name": "index_fingerprint",
+        "ok": true
+      },
+      {
+        "name": "logical_postings_digest",
+        "ok": true
+      },
+      {
+        "name": "degradation_losses",
+        "ok": true
+      },
+      {
+        "name": "index_payload",
+        "ok": true
+      },
+      {
+        "name": "failure_list",
+        "ok": true
+      },
+      {
+        "name": "per_query_results",
+        "ok": true
+      },
+      {
+        "name": "query_order",
+        "ok": true
+      },
+      {
+        "name": "deterministic_timing_statistics",
+        "ok": true
+      },
+      {
+        "name": "decoded_postings",
+        "ok": true
+      },
+      {
+        "name": "query_channel_decomposition",
+        "ok": true
+      }
+    ],
+    "decoded_postings_digest": "1658c2c5c7365e803ac7ffabcaacc76dbcd0f77a7bcf7923be40014dae1d4145",
+    "full": {
+      "completed_queries": 8,
+      "global_version": 1,
+      "index_fingerprint": "cf376554f344598ec00f0c9278764bea4d75097e9b58f2cd79e140a9466a3557",
+      "query_count": 8
+    },
+    "incremental": {
+      "completed_queries": 8,
+      "global_version": 9,
+      "index_fingerprint": "cf376554f344598ec00f0c9278764bea4d75097e9b58f2cd79e140a9466a3557",
+      "query_count": 8
+    },
+    "mismatches": {
+      "failures": [],
+      "index": [],
+      "results": []
+    },
+    "ok": true
+  },
+  "ok": true,
+  "position_switch": {
+    "fingerprints_differ": true,
+    "ok": true,
+    "structural_flag_distinct": true,
+    "term_frequencies_equal": true,
+    "with_positions_decoded": true,
+    "without_positions_decoded": true
+  },
+  "recovery": {
+    "cleanup": {
+      "removed_orphan_snapshots": [
+        "v00001009"
+      ],
+      "removed_staging": [
+        "staging-interruption-test"
+      ],
+      "resumed_from_version": 9
+    },
+    "ok": true,
+    "orphan_snapshot_removed": true,
+    "resumed_version": 9,
+    "staging_removed": true
+  },
+  "resume_mismatch": {
+    "code": "E_CONFIG_MISMATCH",
+    "message": "config hash differs from the committed snapshot; refusing to resume",
+    "ok": true
+  },
+  "sample_seed": 20261120,
+  "schema_version": 1,
+  "summary": {
+    "block_count": 147,
+    "compression_tier": 2,
+    "degradation_loss_count": 1,
+    "failure_count": 5,
+    "format_version": "v2",
+    "index_fingerprint": "cf376554f344598ec00f0c9278764bea4d75097e9b58f2cd79e140a9466a3557",
+    "keep_positions": true,
+    "logical_digest": "7a68d967bf42a83924612497ff5b2c6a96e97c60e9ef5c1e269318b9243a106c",
+    "max_fixed_error_units": 0.534527342490037,
+    "over_tolerance_doc_count": 1,
+    "query_reuse_final": {
+      "rebuilt_query_count": 0,
+      "rebuilt_query_ids": [],
+      "reused_query_count": 8,
+      "reused_query_ids": [
+        "Q0001",
+        "Q0002",
+        "Q0003",
+        "Q0004",
+        "Q0005",
+        "Q0006",
+        "Q0007",
+        "Q0008"
+      ]
+    },
+    "tier_semantic": "delta_varint_lowfreq_sidecar",
+    "valid_documents": 26,
+    "valid_queries": 8
+  },
+  "validation": {
+    "accepted_ids": [
+      "D8005",
+      "Q8004"
+    ],
+    "codes": [
+      "E_INDEX_INVALID",
+      "E_DOC_INVALID",
+      "E_INDEX_INVALID",
+      "E_DOC_INVALID",
+      "E_DOC_INVALID",
+      "E_INDEX_INVALID",
+      "E_INDEX_INVALID",
+      "E_INDEX_INVALID",
+      "E_INDEX_INVALID"
+    ],
+    "failure_count": 9,
+    "failures": [
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "",
+        "line": 1,
+        "message": "invalid JSON: Expecting property name enclosed in double quotes",
+        "source": "invalid_docs.jsonl"
+      },
+      {
+        "code": "E_DOC_INVALID",
+        "item_id": "D8002",
+        "line": 2,
+        "message": "body_terms must not be empty",
+        "source": "invalid_docs.jsonl"
+      },
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "D8003",
+        "line": 3,
+        "message": "unknown shard: shard-z",
+        "source": "invalid_docs.jsonl"
+      },
+      {
+        "code": "E_DOC_INVALID",
+        "item_id": "D8004",
+        "line": 4,
+        "message": "body_terms term outside controlled vocabulary: outside",
+        "source": "invalid_docs.jsonl"
+      },
+      {
+        "code": "E_DOC_INVALID",
+        "item_id": "D8005",
+        "line": 6,
+        "message": "duplicate document ID",
+        "source": "invalid_docs.jsonl"
+      },
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "Q8001",
+        "line": 1,
+        "message": "undeclared query stream version: q-unknown",
+        "source": "invalid_queries.jsonl"
+      },
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "Q8002",
+        "line": 2,
+        "message": "query terms must be a non-empty array",
+        "source": "invalid_queries.jsonl"
+      },
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "Q8003",
+        "line": 3,
+        "message": "query term outside controlled vocabulary: outside",
+        "source": "invalid_queries.jsonl"
+      },
+      {
+        "code": "E_INDEX_INVALID",
+        "item_id": "Q8004",
+        "line": 5,
+        "message": "duplicate query ID",
+        "source": "invalid_queries.jsonl"
+      }
+    ],
+    "ok": true
+  }
+}

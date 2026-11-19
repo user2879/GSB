@@ -1,0 +1,98 @@
+{
+  "artifact_versions": {
+    "v1": {
+      "compression_encoding": "delta_varint",
+      "features": {
+        "block_checksum": true,
+        "position_skiplist": false
+      },
+      "header": {
+        "fields": {
+          "checksum": {
+            "encoding": "uint",
+            "width": 4
+          },
+          "doc_count": {
+            "encoding": "uint",
+            "width": 2
+          },
+          "flags": {
+            "encoding": "uint",
+            "width": 1
+          },
+          "payload_length": {
+            "encoding": "uint",
+            "width": 4
+          },
+          "term_ref": {
+            "encoding": "uint",
+            "width": 4
+          },
+          "tier": {
+            "encoding": "uint",
+            "width": 1
+          }
+        },
+        "kind": "fixed"
+      },
+      "supported_tiers": [
+        1,
+        2
+      ],
+      "tier_semantics": {
+        "1": "delta_varint",
+        "2": "delta_varint_lowfreq_tail"
+      }
+    },
+    "v2": {
+      "compression_encoding": "delta_varint",
+      "features": {
+        "block_checksum": false,
+        "position_skiplist": true
+      },
+      "header": {
+        "fields": {
+          "doc_count": {
+            "encoding": "uvarint"
+          },
+          "flags": {
+            "encoding": "uvarint"
+          },
+          "payload_length": {
+            "encoding": "uvarint"
+          },
+          "term_ref": {
+            "encoding": "uvarint"
+          },
+          "tier": {
+            "encoding": "uvarint"
+          }
+        },
+        "kind": "varint"
+      },
+      "supported_tiers": [
+        1,
+        2
+      ],
+      "tier_semantics": {
+        "1": "delta_varint",
+        "2": "delta_varint_lowfreq_sidecar"
+      }
+    }
+  },
+  "query_stream_versions": [
+    "q1",
+    "q2"
+  ],
+  "schema_version": 1,
+  "tier_mapping": {
+    "v1": {
+      "1": "delta_varint",
+      "2": "delta_varint_lowfreq_tail"
+    },
+    "v2": {
+      "1": "delta_varint",
+      "2": "delta_varint_lowfreq_sidecar"
+    }
+  }
+}

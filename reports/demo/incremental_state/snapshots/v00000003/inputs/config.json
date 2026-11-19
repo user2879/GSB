@@ -1,0 +1,84 @@
+{
+  "active_compression_tier": 1,
+  "allowed_shards": [
+    "shard-a",
+    "shard-b",
+    "shard-c"
+  ],
+  "channel_weights": {
+    "cooccurrence": 0.35,
+    "lexical": 0.65
+  },
+  "compression_tiers": [
+    {
+      "codec": "delta_varint",
+      "id": 1,
+      "low_frequency_filter": false,
+      "low_frequency_threshold": 2
+    },
+    {
+      "codec": "delta_varint_lowfreq_filter",
+      "id": 2,
+      "low_frequency_filter": true,
+      "low_frequency_threshold": 3
+    }
+  ],
+  "concurrency": 4,
+  "controlled_vocabulary": [
+    "Alpha",
+    "Beta",
+    "Gamma",
+    "Delta",
+    "Epsilon",
+    "Zeta",
+    "Eta",
+    "Theta",
+    "Iota",
+    "Kappa",
+    "Lambda",
+    "Mu",
+    "Nu",
+    "Xi",
+    "Omicron",
+    "Pi",
+    "Rho",
+    "Sigma",
+    "Tau",
+    "Upsilon",
+    "Phi",
+    "Chi",
+    "Psi",
+    "Omega",
+    "Retrieval",
+    "Fusion",
+    "Index",
+    "Snapshot",
+    "Query",
+    "Document",
+    "Shard",
+    "Token",
+    "检索",
+    "融合",
+    "索引",
+    "快照",
+    "查询",
+    "文档",
+    "分片",
+    "词项"
+  ],
+  "fixed_decimal_bits": 16,
+  "fixed_tolerance_units": 0.5,
+  "fusion_temperature": 1.0,
+  "index_format_version": "v2",
+  "interaction_budget_ms": 250,
+  "keep_positions": true,
+  "normalization": {
+    "case_fold": true,
+    "whitespace_collapse": true,
+    "width_fold": true
+  },
+  "posting_block_size": 4,
+  "schema_version": 1,
+  "snapshot_interval_batches": 2,
+  "top_k": 5
+}
