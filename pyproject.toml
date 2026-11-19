@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cdn-edge-quant-pipeline"
+version = "1.0.0"
+description = "Deterministic local CDN edge-cache fixed-point precision and error-propagation diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+numeric = ["numpy>=1.26"]
+
+[project.scripts]
+cdn-edge = "cdn_edge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cdn_edge*"]
+
+[tool.setuptools.package-data]
+cdn_edge = ["data/*.json"]

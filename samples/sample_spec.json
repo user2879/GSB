@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "session": {
+    "session_id": "sample-session",
+    "grid_power": 3,
+    "batch_size": 6,
+    "source_port": 28400,
+    "host": "127.0.0.1"
+  },
+  "content": [
+    {
+      "path": "/catalog/base.json",
+      "etag": "base-v1",
+      "body": "catalog-base-v1",
+      "ttl_seconds": 2,
+      "derivation": null
+    },
+    {
+      "path": "/catalog/theme.json",
+      "etag": "theme-v1",
+      "body": "catalog-theme-v1",
+      "ttl_seconds": 4,
+      "derivation": null
+    },
+    {
+      "path": "/bundle.js",
+      "etag": "bundle-declared-v1",
+      "body": "unused-derived-placeholder",
+      "ttl_seconds": 2,
+      "derivation": {
+        "inputs": [
+          {"path": "/catalog/base.json", "coefficient": 2},
+          {"path": "/catalog/theme.json", "coefficient": 3}
+        ]
+      }
+    },
+    {
+      "path": "/promo.txt",
+      "etag": "promo-v1",
+      "body": "promo-content-v1",
+      "ttl_seconds": 5,
+      "derivation": null
+    },
+    {
+      "path": "/all.js",
+      "etag": "all-declared-v1",
+      "body": "unused-derived-placeholder",
+      "ttl_seconds": 2,
+      "derivation": {
+        "inputs": [
+          {"path": "/bundle.js", "coefficient": 2},
+          {"path": "/promo.txt", "coefficient": 1}
+        ]
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "edge-a",
+      "port": 28401,
+      "cache_key_fields": ["path", "query"],
+      "capacity": 4,
+      "eviction": "LRU"
+    },
+    {
+      "id": "edge-b",
+      "port": 28402,
+      "cache_key_fields": ["path", "variant"],
+      "capacity": 3,
+      "eviction": "LRU"
+    },
+    {
+      "id": "edge-c",
+      "port": 28403,
+      "cache_key_fields": ["path", "query", "tenant"],
+      "capacity": 4,
+      "eviction": "FIFO"
+    }
+  ],
+  "requests": [
+    {"request_id": "r001", "node_id": "edge-a", "path": "/catalog/base.json", "query": "q=main", "at_ms": 0, "batch": 1},
+    {"request_id": "r002", "node_id": "edge-a", "path": "/bundle.js", "query": "q=main", "at_ms": 100, "batch": 1},
+    {"request_id": "r003", "node_id": "edge-b", "path": "/catalog/theme.json", "key": {"variant": "blue"}, "at_ms": 200, "batch": 1},
+    {"request_id": "r004", "node_id": "edge-c", "path": "/promo.txt", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 300, "batch": 1},
+    {"request_id": "r005", "node_id": "edge-c", "path": "/all.js", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 400, "batch": 1},
+    {"request_id": "r006", "node_id": "edge-b", "path": "/catalog/base.json", "key": {"variant": "blue"}, "at_ms": 500, "batch": 1},
+    {"request_id": "r007", "node_id": "edge-a", "path": "/catalog/base.json", "query": "q=main", "at_ms": 1900, "batch": 2},
+    {"request_id": "r008", "node_id": "edge-a", "path": "/bundle.js", "query": "q=main", "at_ms": 2000, "batch": 2},
+    {"request_id": "r009", "node_id": "edge-b", "path": "/catalog/theme.json", "key": {"variant": "blue"}, "at_ms": 2100, "batch": 2},
+    {"request_id": "r010", "node_id": "edge-c", "path": "/promo.txt", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 2250, "batch": 2},
+    {"request_id": "r011", "node_id": "edge-c", "path": "/all.js", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 2350, "batch": 2},
+    {"request_id": "r012", "node_id": "edge-a", "path": "/catalog/base.json", "query": "q=main", "at_ms": 2600, "batch": 2},
+    {"request_id": "r013", "node_id": "edge-a", "path": "/bundle.js", "query": "q=main", "at_ms": 5000, "batch": 3},
+    {"request_id": "r014", "node_id": "edge-b", "path": "/catalog/base.json", "key": {"variant": "blue"}, "at_ms": 5100, "batch": 3},
+    {"request_id": "r015", "node_id": "edge-b", "path": "/catalog/theme.json", "key": {"variant": "green"}, "at_ms": 5200, "batch": 3},
+    {"request_id": "r016", "node_id": "edge-c", "path": "/promo.txt", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 5300, "batch": 3},
+    {"request_id": "r017", "node_id": "edge-c", "path": "/all.js", "query": "q=c", "key": {"tenant": "t1"}, "at_ms": 5400, "batch": 3},
+    {"request_id": "r018", "node_id": "edge-a", "path": "/catalog/theme.json", "query": "q=other", "at_ms": 5500, "batch": 3}
+  ],
+  "source_updates": [
+    {
+      "at_ms": 1800,
+      "path": "/catalog/base.json",
+      "etag": "base-v2",
+      "body": "catalog-base-v2",
+      "ttl_seconds": 2
+    }
+  ]
+}
