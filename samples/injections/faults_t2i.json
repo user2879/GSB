@@ -1,0 +1,38 @@
+{
+  "injections": [
+    {
+      "id": "INJ-001",
+      "type": "non_finite_latent",
+      "stage": "denoise_s002",
+      "step": 2,
+      "params": {
+        "coords": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "INJ-003",
+      "type": "noise_entry_truncated",
+      "stage": "denoise_s003",
+      "step": 3,
+      "params": {
+        "keep": 2
+      }
+    },
+    {
+      "id": "INJ-004",
+      "type": "patch_out_of_range",
+      "stage": "denoise_s005",
+      "step": 5,
+      "params": {
+        "top": 7,
+        "left": 7,
+        "height": 2,
+        "width": 2
+      }
+    }
+  ]
+}
