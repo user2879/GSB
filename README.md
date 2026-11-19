@@ -1,21 +1,51 @@
-当前是空白工作区，需在 Windows 上开发一个面向多人协作对局的状态同步数据处理管线与结果验证工具。本地提供确定性生成的操作事件流样本：每行 JSON 含 tick、peer_id、op_type、payload、base_snapshot_version 等字段，由固定种子程序化生成，模拟多个协作端在不同 tick 提交移动、生成、销毁与属性修改操作。管线需按 tick 与因果依赖把事件合成为权威状态快照，产出快照版本链与每步状态哈希；当多个端在同一 tick 对同一实体提交冲突操作时，按确定性裁决规则收敛，不得因到达顺序或并行调度产生不同状态。关键难点在于状态演进与恢复一致性：快照需支持增量追赶、断点续传与崩溃后从持久化快照链恢复到最近一致状态，恢复后的状态与未中断演进的结果逐字节相同。所有持久化产物均落在本地工作区目录，不依赖远程服务、真实账号或网络附件。
+# 多人协作对局状态同步管线（syncpipe）
 
-任务环境与准备：
-Windows 本地安装 Python 3.11，创建虚拟环境并安装 NumPy 与标准库即可，无需网络服务、外部账号或附件。
-确认工作区为空目录，具备可写磁盘用于快照链与操作日志持久化；生成样本与运行验证均通过本地固定种子完成。
-准备用于模拟强制终止的本地进程终止方式（如终止子进程），并准备独立的验证入口命令。
+确定性的事件流合成、冲突裁决、快照版本链、崩溃恢复与独立验证工具。固定种子
+生成样本，两次相同输入的所有持久化产物逐字节一致；仅依赖 Python 标准库与 NumPy，
+无 Docker、无远程服务、无账号。
 
-业务要求：
-1. 实现事件流解析与因果排序：按 tick 分组、按 (peer_id, 本地序号) 校验每端事件连续性，同一 tick 内按 peer_id 与本地序号升序形成确定性提交序；base_snapshot_version 与当前权威版本不匹配时判定为 E_BASE_VERSION 并挂起该事件等待追赶，不得静默丢弃或按到达顺序回退。
-2. 实现状态合成与冲突裁决：按确定性提交序把操作应用到权威状态，同 tick 对同一实体的并发写使用可复现的裁决规则（字段级最后写者按 peer_id 字典序与本地序号定序），裁决结果须记录被覆盖操作与裁决依据；应用后输出状态哈希与快照版本号，两次相同事件流运行须逐字节一致。
-3. 实现快照版本链与增量追赶：快照按版本号形成父子链，任一快照可基于祖先快照加操作日志重建；落后多版本的端只拉取缺失操作日志追赶，追赶结果与直接加载目标版本快照逐字段一致；链上快照数量超过阈值时须能压缩合并但不丢失可重建性与版本号连续语义。
-4. 实现持久化快照链与断点续传：将快照内容、版本戳、父版本戳与操作日志以原子方式写入工作区，写入完成前中断语义下不得出现半写快照；重启后从最新已提交快照恢复并回放未提交尾部日志，恢复后的状态哈希须与中断前已提交状态一致，尾部不完整日志按 E_LOG_TRUNCATED 报告并隔离。
-5. 区分受控退出与强制终止：正常退出时写完整链清单与关闭标记；强制终止后重启只依据持久化快照与日志恢复，不得声称生成了退出报告；快照目录整体替换时须识别版本变化并以版本戳与哈希判定新旧，禁止盲目录入。
-6. 实现恢复一致性验证器：独立于合成器，从持久化目录重新加载快照链并重放全部日志，与在线演进得到的状态哈希逐版本比对，定位首个不一致版本并输出该版本的上下文与参与操作；验证器不得复用在线合成器的内存状态或缓存。
-7. 定义业务错误码（E_BASE_VERSION、E_PEER_GAP、E_SNAPSHOT_HASH、E_LOG_TRUNCATED、E_VERSION_DIVERGE、E_CONFLICT_UNRESOLVED、E_CHAIN_BROKEN）并覆盖异常链路：非法 tick、同端序号断裂、快照哈希不匹配、日志截断、版本分叉；每类异常须给出出错版本与触发事件定位。
-8. 提供可重复验证入口：一条命令生成含正常局、并发冲突局、跨版本追赶局与强制终止局的样本集，执行合成、压缩、中断恢复与验证器比对，输出逐版本哈希清单与恢复报告；两次相同输入运行须产生逐字节相同的输出与哈希。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+# 1. 虚拟环境与依赖
+python -m venv .venv
+# Linux/macOS:
+.venv/bin/python -m pip install -r requirements.txt
+# Windows:
+# .venv\Scripts\python -m pip install -r requirements.txt
 
-验收：
-用本地样本验证事件合成、冲突裁决、快照链恢复与验证器比对，输出逐版本哈希清单与恢复报告，两次运行逐字节一致。
+# 2. 一条命令跑完整验收（生成样本→合成→压缩→强制终止→截断恢复→验证器比对）
+.venv/bin/python run_demo.py
+#   等价于：.venv/bin/python -m syncpipe.cli demo --workspace workspace --seed 20261119
+
+# 3. 独立验证入口
+.venv/bin/python -m syncpipe.cli validate --root workspace/runs/normal_game --seed 20261119
+
+# 4. 单元测试（23 个，覆盖 7 个错误码异常链路）
+.venv/bin/python run_tests.py
+```
+
+## 目录
+
+- `syncpipe/` — 管线实现（解析、状态原语、引擎、持久化、恢复、验证器、样本生成器）
+- `tests/` — 单元与集成测试
+- `docs/DESIGN.md` — 架构、错误码、确定性与恢复设计、实际验证结果
+- `workspace/` — demo 运行产物
+  - `samples/` 固定种子事件流（JSONL）
+  - `runs/<场景>/` 快照链、CRC 操作日志、manifest、隔离区
+  - `reports/version_hashes.txt` 逐版本状态哈希清单
+  - `reports/recovery_report.txt` 强制终止恢复报告
+  - `reports/demo_report.json`、`hash_manifest.json`、`validation_summaries.json`
+
+## 四个样本场景
+
+- `normal_game`：spawn/move/update/destroy 全操作常规局
+- `conflict_game`：同 tick 同实体并发写字段级 LWW 裁决
+- `catchup_game`：滞后 base 事件挂起（E_BASE_VERSION）后追赶应用
+- `kill_game`：子进程强制终止 + 日志截断（E_LOG_TRUNCATED）+ 恢复一致性
+
+## 错误码
+
+`E_BASE_VERSION`、`E_PEER_GAP`、`E_SNAPSHOT_HASH`、`E_LOG_TRUNCATED`、
+`E_VERSION_DIVERGE`、`E_CONFLICT_UNRESOLVED`、`E_CHAIN_BROKEN`，每条均带出错版本
+与触发事件定位，详见 `docs/DESIGN.md` 第 7 节。
