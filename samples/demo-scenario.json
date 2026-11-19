@@ -1,0 +1,67 @@
+{
+  "schema": "chunkdeps-scenario/v1",
+  "defaults": {
+    "commit": true,
+    "concurrency": 3,
+    "digest_algorithm": "sha256"
+  },
+  "steps": [
+    {
+      "op": "upload_file",
+      "object_key": "archive/demo/sample.bin",
+      "source": "windows-sample.bin",
+      "chunk_size": 1024,
+      "tags": {
+        "case": "v1",
+        "team": "storage"
+      }
+    },
+    {
+      "op": "create_session",
+      "object_key": "archive/demo/sample.bin",
+      "source": "windows-sample.bin",
+      "chunk_size": 2048,
+      "tags": {
+        "case": "v2",
+        "team": "storage"
+      },
+      "expected_base_version": 1
+    },
+    {
+      "op": "upload_session",
+      "session_id": "$last_session",
+      "source": "windows-sample.bin",
+      "concurrency": 3
+    },
+    {
+      "op": "abort",
+      "session_id": "$last_session",
+      "reason": "scenario abort before resume"
+    },
+    {
+      "op": "resume",
+      "session_id": "$last_session"
+    },
+    {
+      "op": "commit",
+      "session_id": "$last_session"
+    },
+    {
+      "op": "audit"
+    },
+    {
+      "op": "snapshot_save"
+    },
+    {
+      "op": "delete",
+      "object_key": "$last_object"
+    },
+    {
+      "op": "snapshot_restore"
+    },
+    {
+      "op": "audit"
+    }
+  ]
+}
+
