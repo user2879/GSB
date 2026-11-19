@@ -1,0 +1,80 @@
+{
+  "allowed_languages": [
+    "zh",
+    "en",
+    "mixed"
+  ],
+  "bm25": {
+    "b": 0.75,
+    "k1": 1.2,
+    "title_repeat": 2
+  },
+  "budget": {
+    "global_retrieval_points": 20000,
+    "per_query_quota": 400
+  },
+  "evaluation": {
+    "k": 10,
+    "metrics": [
+      "precision_at_k",
+      "recall_at_k",
+      "ndcg_at_k",
+      "mrr_at_k",
+      "grade_mae",
+      "grade_accuracy"
+    ]
+  },
+  "fixed_point": {
+    "bits": 64,
+    "scale": 1000000
+  },
+  "fusion": {
+    "cross_weight": 2.0,
+    "mono_weight": 1.0,
+    "temperature": 2.0
+  },
+  "index_languages": [
+    "zh",
+    "en"
+  ],
+  "language_detection": {
+    "enabled": true,
+    "mixed_ratio_threshold": 0.2
+  },
+  "max_relevance_grade": 3,
+  "normalization": {
+    "casefold": true,
+    "collapse_whitespace": true,
+    "nfkc": true,
+    "token_pattern": "[A-Za-z0-9_]+|[\\u3400-\\u4dbf\\u4e00-\\u9fff\\uf900-\\ufaff]+"
+  },
+  "pipeline_version": "1.0.0",
+  "recall_limit": 20,
+  "relevance_thresholds": [
+    {
+      "grade": 0,
+      "min_score": 0.0
+    },
+    {
+      "grade": 1,
+      "min_score": 0.08
+    },
+    {
+      "grade": 2,
+      "min_score": 0.14
+    },
+    {
+      "grade": 3,
+      "min_score": 0.2
+    }
+  ],
+  "snapshot": {
+    "batch_size": 4
+  },
+  "threads": {
+    "max_workers": 4
+  },
+  "translation": {
+    "bridge_weight": 0.75
+  }
+}

@@ -1,23 +1,99 @@
-在空白工作区从零构建一个面向本地确定性样本的跨语言相关性检索数据处理管线与结果验证工具，业务目标是在中英混合查询与多语言文档库之间建立可审计的相关性建模流程，并在有限计算预算下完成并行检索调度。输入为一个本地样本目录：多语言文档库 JSONL（每行含文档 ID、语言标签、标题与正文，文本由固定种子程序从受控中英词表生成）、查询集 JSONL（每行含查询 ID、查询文本与语言标签）、跨语言翻译对照表（中英词项对及对齐置信度）、相关性标注真值文件（查询 ID、文档 ID 与相关等级），以及一份管线配置 JSON（分词与归一化规则、语言识别开关、翻译桥接权重、BM25 参数、召回条数上限、评估指标口径、定点小数位宽与量化档位、线程池并发数、全局检索点数预算、单查询预算配额、快照提交间隔批次）。管线需完成归一化、语言识别、单语倒排检索、跨语言桥接检索、相关性打分融合与评估指标计算，并在并行调度与资源预算约束下保证结果可复现。文档库、查询集与翻译表均由固定种子程序从受控词表生成，样本规模与语言分布可配置，全部数据与真值在本地可重建。
+# Deterministic Cross-Lingual Retrieval Pipeline
 
-任务环境与准备：
-确认已安装 Python 3.10 及以上版本，并可在命令行直接调用 python。
-安装 NumPy 依赖（如 pip install numpy），版本以本地可离线获取为准。
-准备本地样本目录：文档库 JSONL、查询集 JSONL、翻译对照表、相关性真值文件与管线配置 JSON，均由固定种子程序生成，无需联网。
-确认工作目录可读写，用于存放快照临时目录、清单文件与 JSON 报告输出。
-不依赖任何真实账号、线上站点、容器环境或外部服务。
+本项目在本地确定性样本上实现一条可审计的中英跨语言相关性检索管线：归一化、语言识别、分语言 BM25 倒排检索、翻译桥接、定点打分融合、预算调度、阶段快照、异常注入隔离与评估报告。
 
-业务要求：
-1. 实现文档库、查询集、翻译对照表与真值文件的加载与归一化层：校验文档 ID 与查询 ID 唯一、语言标签在配置枚举内、字段非空、对齐置信度在 0 至 1 之间，并按配置做大小写折叠、全半角折叠与空白合并；非法条目分别输出 E_RECORD_INVALID 并进入失败清单，不得中断其余条目处理。
-2. 实现语言识别与单语倒排检索：依据词表脚本分布与翻译对照表覆盖率判定每条查询与文档的语言并输出判定依据；按语言建独立倒排索引与文档频率统计，使用配置 BM25 参数在查询同语言文档上检索，同分按文档 ID 字典序决断，输出每条查询的候选文档与逐词项得分分解。
-3. 实现跨语言桥接检索与权重衰减：对查询中未在本语言命中的词项，按翻译对照表中的词项对与对齐置信度生成跨语言扩展词项，扩展得分按翻译桥接权重衰减后并入检索得分；同一词项存在多个翻译时按置信度降序、词项字典序决断并记录被抑制项，无可用翻译时该词项不扩展且计入诊断统计。
-4. 实现相关性打分融合、定点量化与阈值判定：将单语得分与跨语言扩展得分按融合温度与配置权重以定点整数合成相关性得分并做稳定归一化，按相关等级阈值判定预测等级；同分依次按单语得分降序、文档 ID 字典序决断，输出每条查询的排序结果、相关性得分、等级判定与定点位宽记录。
-5. 实现全局检索点数预算与单查询配额的并行调度器：多查询通过线程池并发检索，最大并发数取自配置且不得超出；调度器维护全局剩余检索点数预算并按查询 ID 稳定顺序分配单查询配额，某查询累计评分的候选文档数超出配额即中止并以 E_QUERY_BUDGET_EXHAUSTED 标记，未开始查询以 E_BUDGET_EXHAUSTED 标记并保留其稳定位置。
-6. 保证并发执行与串行执行逐字段一致：每个查询任务与候选任务携带由查询 ID、候选文档 ID 与阶段名派生的稳定排序键，无论线程调度顺序与并发度如何，最终查询顺序、候选文档顺序、逐词项得分分解顺序、翻译抑制清单顺序、失败清单顺序与预算扣减序列，必须与单线程按查询 ID 字典序串行执行的结果逐字段相同。
-7. 实现分批执行的阶段快照整体替换与恢复一致性：归一化、索引构建、检索打分、评估划分为阶段，按配置分批大小执行，每批完成时先写临时目录再整体替换提交，清单记录全局版本号、配置哈希、翻译表哈希、已完成批次号与各阶段产物版本；启动时以版本号、配置哈希与翻译表哈希判定是否续跑，不一致输出 E_CONFIG_MISMATCH 并拒绝续跑。
-8. 实现异常注入隔离、可处理退出语义与评估报告输出：以独立注入配置对指定查询指定阶段施加真实输入故障（非有限对齐置信度、词项不在翻译表、召回上限为零、相关等级越界），注入项编号写入报告以证明命中；单条查询在任一阶段抛异常时记录标识、阶段名、业务码与异常类型并继续其余项；收到可处理的退出信号时完成当前批次快照提交后以整数退出码 0 退出。每次完整运行输出 JSON 报告，含逐查询排序结果、评估指标、预算消耗汇总、翻译抑制清单、快照版本号与各阶段耗时。
+所有数据由固定种子生成器从受控中英词表重建，不依赖账号、容器、线上服务或真实业务数据。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## Environment
 
-验收：
-使用本地样本验证跨语言检索结果、预算调度、增量与全量一致性及异常注入命中，附运行报告。
+- Python 3.10+
+- NumPy 1.26.4
+
+```bash
+python --version
+python -m pip install -r requirements.txt
+```
+
+## Quick Start
+
+```bash
+# 1. 用固定种子重建样本
+python run_pipeline.py generate \
+  --output samples/default \
+  --seed 20261120 \
+  --documents 48 \
+  --queries 20 \
+  --zh-ratio 0.5 \
+  --mixed-ratio 0.25
+
+# 2. 全量运行并生成 JSON 报告
+python run_pipeline.py run \
+  --sample-dir samples/default \
+  --state-dir artifacts/state-main \
+  --report artifacts/report.json \
+  --fresh
+
+# 3. 运行独立异常注入配置
+python run_pipeline.py run \
+  --sample-dir samples/default \
+  --state-dir artifacts/state-injection \
+  --report artifacts/injection-report.json \
+  --injections samples/default/injections.json \
+  --fresh
+
+# 4. 自动验证并发/串行、全量/增量、预算与注入
+python run_pipeline.py verify \
+  --sample-dir samples/default \
+  --config samples/default/config.json \
+  --injections samples/default/injections.json \
+  --output artifacts/verification.json
+
+# 5. 单元测试
+python -m unittest discover -s tests -v
+```
+
+主要产物：
+
+- `artifacts/report.json`：全量运行审计报告。
+- `artifacts/injection-report.json`：四类真实输入故障注入报告。
+- `artifacts/verification.json`：串行/并行、全量/增量、预算和注入验证清单。
+- `artifacts/state-main/manifest.json`：阶段快照清单、逻辑版本、哈希和已完成批次。
+
+## Sample Schema
+
+| File | Record fields |
+| --- | --- |
+| `documents.jsonl` | `doc_id`, `lang`, `title`, `body` |
+| `queries.jsonl` | `query_id`, `lang`, `query` |
+| `translations.jsonl` | `source_lang`, `source_term`, `target_lang`, `target_term`, `confidence` |
+| `qrels.jsonl` | `query_id`, `doc_id`, `relevance` |
+| `config.json` | 归一化、LID、翻译权重、BM25、召回、融合、定点、预算、线程和快照参数 |
+| `injections.json` | 独立注入项：指定注入 ID、查询 ID、阶段、故障类型与参数 |
+| `sample.json` | 生成种子、规模、语言比例与受控概念表 |
+
+语言枚举为 `zh`、`en`、`mixed`；倒排索引语言为 `zh`、`en`。非法记录统一记录为 `E_RECORD_INVALID` 并进入失败清单，不中断其他记录。
+
+## Determinism Contract
+
+- 查询、候选、词项分解、翻译抑制、失败、预算序列都使用稳定键排序。
+- 预算配额在查询 ID 字典序上一次性分配；线程只执行已获配额的查询。
+- 并行和串行执行产生相同的 `determinism.sha256`，并逐字段比较查询结果、预算、评估、失败与快照进度。
+- 快照使用逻辑版本号（已提交批次数），因此中断后续跑与一次性全量执行最终得到相同版本。
+- 报告中排除时间戳、耗时、观测线程数和 `threads.max_workers` 后再计算确定性摘要。
+
+## Exit Semantics
+
+- 完整运行或可处理中断：退出码 `0`，报告 `status` 为 `complete` 或 `interrupted`。
+- 快照身份、配置哈希、翻译哈希或输入哈希不一致：拒绝续跑，退出码 `2`，错误码 `E_CONFIG_MISMATCH`。
+- SIGINT/SIGTERM 只设置停止标志；当前批次完成并提交快照后退出。
+
+## Validation Status
+
+当前样本实际验证结果：
+
+- 9 个单元测试全部通过。
+- `verification.json` 中 12 项检查全部通过。
+- 默认样本跨语言扩展、翻译抑制、无翻译诊断和桥接结果均已命中。
+- 四类注入均命中并被限制在目标查询/阶段，其他查询继续产出结果。
+
+算法、字段、预算和快照细节见 `docs/TECHNICAL.md`。

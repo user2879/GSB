@@ -1,0 +1,39 @@
+{
+  "injections": [
+    {
+      "enabled": true,
+      "injection_id": "INJ-001",
+      "kind": "nonfinite_confidence",
+      "params": {},
+      "query_id": "q0001",
+      "stage": "retrieval_scoring"
+    },
+    {
+      "enabled": true,
+      "injection_id": "INJ-002",
+      "kind": "translation_term_missing",
+      "params": {
+        "source_lang": "en",
+        "term": "unmapped_probe_term"
+      },
+      "query_id": "q0007",
+      "stage": "retrieval_scoring"
+    },
+    {
+      "enabled": true,
+      "injection_id": "INJ-003",
+      "kind": "recall_limit_zero",
+      "params": {},
+      "query_id": "q0014",
+      "stage": "retrieval_scoring"
+    },
+    {
+      "enabled": true,
+      "injection_id": "INJ-004",
+      "kind": "relevance_grade_out_of_range",
+      "params": {},
+      "query_id": "q0020",
+      "stage": "evaluation"
+    }
+  ]
+}
