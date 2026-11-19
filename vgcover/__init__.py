@@ -1,0 +1,113 @@
+"""vgcover: deterministic vector-fill coverage and error-ledger component."""
+
+from .composite import (
+    COMPOSITE_POLICY,
+    CompositeResult,
+    SourceLayer,
+    build_source_layer,
+    compose_layers,
+)
+from .engine import (
+    ChangePlan,
+    IncrementalRenderer,
+    RegionState,
+    SceneRender,
+    UpdateReceipt,
+    render_scene,
+    verify_ledger,
+)
+from .errors import CoverageError, ErrorCode
+from .export import export_render, verify_export_manifest
+from .geometry import (
+    GEOMETRY_POLICY,
+    discretize_contour,
+    discretize_region,
+    geometry_point_sequence,
+    geometry_vertex_count,
+)
+from .hashing import hash_float32, hash_int32, hash_uint8, sha256_json
+from .ledger import LEDGER_SCHEMA, assemble_ledger, build_ledger_policy, ledger_hash
+from .quantize import (
+    QUANTIZATION_POLICY,
+    QuantizationResult,
+    quantize_coverage,
+    reconstruct_coverage,
+)
+from .raster import (
+    RASTER_POLICY,
+    CoverageMap,
+    DualCoverage,
+    coverage_difference,
+    rasterize_geometry,
+    rasterize_geometry_dual,
+    rasterize_polylines,
+    rasterize_polylines_dual,
+)
+from .scene import (
+    CATEGORIES,
+    SCENE_SCHEMA,
+    generate_category_scenes,
+    generate_scene,
+    load_scene,
+    save_scene,
+    scene_hash,
+    scene_content_hash,
+    scene_json_bytes,
+    scene_json_text,
+    validate_scene,
+)
+
+__all__ = [
+    "CATEGORIES",
+    "COMPOSITE_POLICY",
+    "ChangePlan",
+    "CompositeResult",
+    "CoverageError",
+    "CoverageMap",
+    "DualCoverage",
+    "ErrorCode",
+    "GEOMETRY_POLICY",
+    "IncrementalRenderer",
+    "LEDGER_SCHEMA",
+    "QUANTIZATION_POLICY",
+    "QuantizationResult",
+    "RASTER_POLICY",
+    "RegionState",
+    "SCENE_SCHEMA",
+    "SceneRender",
+    "SourceLayer",
+    "UpdateReceipt",
+    "assemble_ledger",
+    "build_ledger_policy",
+    "build_source_layer",
+    "compose_layers",
+    "coverage_difference",
+    "discretize_region",
+    "discretize_contour",
+    "export_render",
+    "generate_category_scenes",
+    "generate_scene",
+    "geometry_point_sequence",
+    "geometry_vertex_count",
+    "hash_float32",
+    "hash_int32",
+    "hash_uint8",
+    "ledger_hash",
+    "load_scene",
+    "quantize_coverage",
+    "rasterize_geometry",
+    "rasterize_geometry_dual",
+    "rasterize_polylines",
+    "rasterize_polylines_dual",
+    "reconstruct_coverage",
+    "render_scene",
+    "save_scene",
+    "scene_hash",
+    "scene_content_hash",
+    "scene_json_bytes",
+    "scene_json_text",
+    "sha256_json",
+    "validate_scene",
+    "verify_export_manifest",
+    "verify_ledger",
+]
