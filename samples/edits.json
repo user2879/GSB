@@ -1,0 +1,61 @@
+{
+  "concurrency": 2,
+  "edits": [
+    {
+      "args": {
+        "beat": 6,
+        "bpm": 132.0
+      },
+      "op": "tempo_upsert"
+    },
+    {
+      "args": {
+        "x": 96,
+        "y": 110
+      },
+      "op": "velocity_upsert"
+    },
+    {
+      "args": {
+        "factor": 1.18,
+        "name": "broad"
+      },
+      "op": "stretch_set"
+    },
+    {
+      "args": {
+        "gate": 0.45,
+        "name": "staccato"
+      },
+      "op": "articulation_set"
+    },
+    {
+      "args": {
+        "articulation": "staccato",
+        "note_id": "M03"
+      },
+      "op": "note_articulation_set"
+    },
+    {
+      "args": {
+        "end_beat": 15.0,
+        "pedal_id": "P3",
+        "start_beat": 13.0
+      },
+      "op": "pedal_add"
+    },
+    {
+      "args": {
+        "pedal_id": "P1"
+      },
+      "op": "pedal_remove"
+    },
+    {
+      "args": {
+        "beat": 10
+      },
+      "op": "tempo_delete"
+    }
+  ],
+  "memory_budget_chunks": 2
+}
