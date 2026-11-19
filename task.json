@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "allowed_sample_rates": [
+    16000,
+    44100,
+    48000
+  ],
+  "references": [
+    {
+      "id": "ref_song",
+      "path": "samples/reference_song.wav"
+    },
+    {
+      "id": "ref_other",
+      "path": "samples/reference_other.wav"
+    }
+  ],
+  "queries": [
+    {
+      "id": "q_speed_noise",
+      "path": "samples/query_speed_noise.wav"
+    },
+    {
+      "id": "q_gain_noise",
+      "path": "samples/query_gain_noise.wav"
+    },
+    {
+      "id": "q_cross_rate",
+      "path": "samples/query_cross_rate.wav"
+    },
+    {
+      "id": "q_truncated",
+      "path": "samples/query_truncated.wav"
+    },
+    {
+      "id": "q_silent",
+      "path": "samples/query_silent.wav"
+    },
+    {
+      "id": "q_rate_mismatch",
+      "path": "samples/query_rate_mismatch.wav",
+      "declared_sample_rate": 48000
+    },
+    {
+      "id": "q_bad_band",
+      "path": "samples/query_bad_band.wav",
+      "fingerprint_override": {
+        "bands": [
+          [
+            100.0,
+            7900.0
+          ],
+          [
+            7900.0,
+            9000.0
+          ]
+        ]
+      }
+    }
+  ],
+  "fingerprint": {
+    "frame_length": 1024,
+    "hop_length": 256,
+    "base_sample_rate": 16000,
+    "bands": [
+      [
+        80.0,
+        600.0
+      ],
+      [
+        600.0,
+        1400.0
+      ],
+      [
+        1400.0,
+        2600.0
+      ],
+      [
+        2600.0,
+        4500.0
+      ],
+      [
+        4500.0,
+        7600.0
+      ]
+    ],
+    "peak_neighborhood": {
+      "frequency_bins": 3,
+      "time_frames": 2
+    },
+    "min_peak_db": -42.0,
+    "fanout": 5,
+    "max_pair_delta_frames": 24,
+    "peaks_per_band": 2,
+    "window": "hann"
+  },
+  "retrieval": {
+    "bucket_capacity": 256,
+    "voting_window_frames": 16,
+    "min_matches": 40,
+    "max_candidates": 10,
+    "overlap_policy": "keep_highest",
+    "boundary_gap_frames": 21,
+    "boundary_padding_frames": 2
+  },
+  "tolerance": {
+    "score_scale": 1000,
+    "score_tolerance": 1e-12,
+    "time_offset_tolerance_samples": 1024.0
+  },
+  "concurrency": {
+    "max_workers": 3,
+    "spectrum_buffer_bytes": 524288
+  },
+  "state_dir": "state",
+  "outputs": {
+    "report": "output/report.json",
+    "results": "output/results.json"
+  },
+  "injections": [
+    {
+      "target_id": "q_truncated",
+      "kind": "truncated_file",
+      "expected_code": "E_TRUNC"
+    },
+    {
+      "target_id": "q_silent",
+      "kind": "silent_track",
+      "expected_code": "E_SILENT"
+    },
+    {
+      "target_id": "q_rate_mismatch",
+      "kind": "rate_declaration_mismatch",
+      "expected_code": "E_RATE",
+      "declared_sample_rate": 48000
+    },
+    {
+      "target_id": "q_bad_band",
+      "kind": "band_override",
+      "expected_code": "E_BAND",
+      "bands": [
+        [
+          100.0,
+          7900.0
+        ],
+        [
+          7900.0,
+          9000.0
+        ]
+      ]
+    }
+  ],
+  "ground_truth": {
+    "q_speed_noise": {
+      "segments": [
+        {
+          "reference_start_sample": 60000,
+          "reference_end_sample": 237600,
+          "query_start_sample": 55200,
+          "query_end_sample": 228468,
+          "speed_factor": 1.025
+        },
+        {
+          "reference_start_sample": 249600,
+          "reference_end_sample": 424800,
+          "query_start_sample": 245748,
+          "query_end_sample": 416675,
+          "speed_factor": 1.025
+        }
+      ],
+      "rate": 48000
+    },
+    "q_gain_noise": {
+      "segments": [
+        {
+          "reference_start_sample": 32000,
+          "reference_end_sample": 118400,
+          "query_start_sample": 12000,
+          "query_end_sample": 98400,
+          "speed_factor": 1.0
+        }
+      ],
+      "rate": 16000
+    },
+    "q_cross_rate": {
+      "segments": [
+        {
+          "reference_start_sample": 141120,
+          "reference_end_sample": 366030,
+          "query_start_sample": 24255,
+          "query_end_sample": 249165,
+          "speed_factor": 1.0
+        }
+      ],
+      "rate": 44100
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audiofp-local"
+version = "1.0.0"
+description = "Deterministic local audio fingerprint and similar-fragment retrieval engine"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3"]
+
+[project.scripts]
+audiofp = "audiofp.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["audiofp*"]
+

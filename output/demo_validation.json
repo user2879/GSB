@@ -1,0 +1,385 @@
+{
+  "business_code": "E_OK",
+  "business_codes": {
+    "q_bad_band/ref_other": "E_BAND",
+    "q_bad_band/ref_song": "E_BAND",
+    "q_cross_rate/ref_other": "E_OK",
+    "q_cross_rate/ref_song": "E_OK",
+    "q_gain_noise/ref_other": "E_OK",
+    "q_gain_noise/ref_song": "E_OK",
+    "q_rate_mismatch/ref_other": "E_RATE",
+    "q_rate_mismatch/ref_song": "E_RATE",
+    "q_silent/ref_other": "E_SILENT",
+    "q_silent/ref_song": "E_SILENT",
+    "q_speed_noise/ref_other": "E_OK",
+    "q_speed_noise/ref_song": "E_OK",
+    "q_truncated/ref_other": "E_TRUNC",
+    "q_truncated/ref_song": "E_TRUNC"
+  },
+  "deterministic_across_runs": true,
+  "first_exceed_tolerance_present": true,
+  "frame_mapping_max_error_samples": 0.8,
+  "injection_checks": [
+    {
+      "actual_code": "E_TRUNC",
+      "expected_code": "E_TRUNC",
+      "matched": true,
+      "target_id": "q_truncated"
+    },
+    {
+      "actual_code": "E_SILENT",
+      "expected_code": "E_SILENT",
+      "matched": true,
+      "target_id": "q_silent"
+    },
+    {
+      "actual_code": "E_RATE",
+      "expected_code": "E_RATE",
+      "matched": true,
+      "target_id": "q_rate_mismatch"
+    },
+    {
+      "actual_code": "E_BAND",
+      "expected_code": "E_BAND",
+      "matched": true,
+      "target_id": "q_bad_band"
+    }
+  ],
+  "local_insertion_gap_seconds": 0.36,
+  "localization": [
+    {
+      "drift": {
+        "direction": "decreasing",
+        "drift_percent": -2.044404487607554,
+        "drift_reference_samples_over_span": -3519.7776077523718,
+        "drift_seconds_over_span": -0.0798135511961989,
+        "note": "query_time ~= rate_ratio * reference_time + intercept",
+        "rate_ratio": 0.9795559551239245
+      },
+      "errors_ms": {
+        "query_end": 56.25,
+        "query_start": -78.0,
+        "reference_end": 73.991,
+        "reference_start": -130.0
+      },
+      "integer_frame_offset": -9,
+      "matched": true,
+      "max_abs_error_ms": 130.0,
+      "offset_conversion_error_samples": 1.3642420526593924e-11,
+      "offset_reference_samples_float": -6350.399999999986,
+      "query_id": "q_speed_noise",
+      "query_overlap_seconds": 3.6097500000000005,
+      "score": 6841.825,
+      "segment_index": 0
+    },
+    {
+      "drift": {
+        "direction": "decreasing",
+        "drift_percent": -1.3189788185533513,
+        "drift_reference_samples_over_span": -2131.2376305101507,
+        "drift_seconds_over_span": -0.0483273839117948,
+        "note": "query_time ~= rate_ratio * reference_time + intercept",
+        "rate_ratio": 0.9868102118144665
+      },
+      "errors_ms": {
+        "query_end": -8.729,
+        "query_start": -47.75,
+        "reference_end": -18.005,
+        "reference_start": -31.995
+      },
+      "integer_frame_offset": -8,
+      "matched": true,
+      "max_abs_error_ms": 47.75,
+      "offset_conversion_error_samples": 3.456079866737127e-11,
+      "offset_reference_samples_float": -5644.799999999966,
+      "query_id": "q_speed_noise",
+      "query_overlap_seconds": 3.552250000000001,
+      "score": 7231.737,
+      "segment_index": 1
+    },
+    {
+      "drift": {
+        "direction": "decreasing",
+        "drift_percent": -0.21589765661755855,
+        "drift_reference_samples_over_span": -530.1341050525356,
+        "drift_seconds_over_span": -0.012021181520465659,
+        "note": "query_time ~= rate_ratio * reference_time + intercept",
+        "rate_ratio": 0.9978410234338244
+      },
+      "errors_ms": {
+        "query_end": 74.0,
+        "query_start": -30.0,
+        "reference_end": 135.986,
+        "reference_start": -31.995
+      },
+      "integer_frame_offset": -78,
+      "matched": true,
+      "max_abs_error_ms": 135.986,
+      "offset_conversion_error_samples": 7.275957614183426e-12,
+      "offset_reference_samples_float": -55036.80000000001,
+      "query_id": "q_gain_noise",
+      "query_overlap_seconds": 5.4,
+      "score": 14150.315,
+      "segment_index": 0
+    },
+    {
+      "drift": {
+        "direction": "decreasing",
+        "drift_percent": -0.19540555448229746,
+        "drift_reference_samples_over_span": -459.1342702782213,
+        "drift_seconds_over_span": -0.01041120794281681,
+        "note": "query_time ~= rate_ratio * reference_time + intercept",
+        "rate_ratio": 0.998045944455177
+      },
+      "errors_ms": {
+        "query_end": 77.982,
+        "query_start": -70.0,
+        "reference_end": 147.982,
+        "reference_start": -80.0
+      },
+      "integer_frame_offset": -166,
+      "matched": true,
+      "max_abs_error_ms": 147.982,
+      "offset_conversion_error_samples": 1.4551915228366852e-11,
+      "offset_reference_samples_float": -117129.59999999999,
+      "query_id": "q_cross_rate",
+      "query_overlap_seconds": 5.1000000000000005,
+      "score": 13397.047,
+      "segment_index": 0
+    }
+  ],
+  "localization_tolerance_seconds": 0.36,
+  "max_localization_error_ms": 147.982,
+  "offset_conversion_checks": [
+    {
+      "conversion_error_samples": 2.9103830456733704e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 7.275957614183426e-12,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.4551915228366852e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 2.9103830456733704e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 7.275957614183426e-12,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.4551915228366852e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.4551915228366852e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 5.820766091346741e-11,
+      "query_id": "q_cross_rate",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.4551915228366852e-11,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 352.79999999998836,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 6.366462912410498e-12,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 2.1827872842550278e-11,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 7.275957614183426e-12,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 5.820766091346741e-11,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 2.9103830456733704e-11,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_gain_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.4551915228366852e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 5.820766091346741e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 7.275957614183426e-12,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 0.0,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_other",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 3.456079866737127e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 1.3642420526593924e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 2.9103830456733704e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 5.820766091346741e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    },
+    {
+      "conversion_error_samples": 2.9103830456733704e-11,
+      "query_id": "q_speed_noise",
+      "reference_id": "ref_song",
+      "within_tolerance": true
+    }
+  ],
+  "resource_control": {
+    "budget_exceeded": false,
+    "in_flight_spectrum_capacity_frames": 42,
+    "max_workers": 3,
+    "peak_in_flight_spectrum_frames": 42,
+    "spectrum_budget_acquisitions": 64,
+    "spectrum_budget_wait_count": 3
+  },
+  "result_sha256": "f01a8a9b609b53974a980877d213b01c4429b73356168b26ad78ec009a2f4732",
+  "run_count": 2,
+  "speed_drift_checks": [
+    {
+      "direction": "decreasing",
+      "drift_percent": -2.044404487607554,
+      "passed": true,
+      "query_id": "q_speed_noise",
+      "segment_index": 0
+    },
+    {
+      "direction": "decreasing",
+      "drift_percent": -1.3189788185533513,
+      "passed": true,
+      "query_id": "q_speed_noise",
+      "segment_index": 1
+    }
+  ]
+}
