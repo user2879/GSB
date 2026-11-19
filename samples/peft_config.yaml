@@ -1,0 +1,17 @@
+schema_version: 1
+base_dir: base_v1
+target_layer_whitelist: [layer_0, layer_1, layer_2]
+adapter:
+  rank_candidates: [2, 3]
+  scale_candidates: [0.75, 1.0, 1.25, 1.5]
+learning_rate: 0.04
+epochs: 10
+batch_size: 2
+quantization:
+  scale: 1000000
+  tolerance_steps: 1
+concurrency: 3
+merge_budget:
+  weight_elements: 1000000
+  compute_units: 50000000
+snapshot_commit_interval: 2
