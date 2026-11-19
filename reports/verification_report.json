@@ -1,0 +1,272 @@
+{
+  "acceptance": {
+    "all_injection_cases_rejected": true,
+    "forced_recovery_colors_match_baseline": true,
+    "forced_recovery_revision_is_last_committed": true,
+    "forced_recovery_snapshot_is_last_committed": true,
+    "forced_recovery_stage_hashes_match_baseline": true,
+    "incremental_vs_full_verification_ok": true,
+    "injection_error_codes": {
+      "invalid_injection_config": "E_INJECT_CONFIG",
+      "observer_invalid": "E_OBSERVER_INVALID",
+      "reflectance_out_of_range": "E_SPECTRUM_RANGE",
+      "stage_failure": "E_STAGE_STALE",
+      "white_point_zero": "E_WHITE_POINT"
+    },
+    "uncommitted_transaction_was_orphaned": true
+  },
+  "commands": {
+    "demo": "python3 app.py demo --out runtime/final_a --report reports/demo_report.json --force",
+    "determinism_repeat": "python3 app.py demo --out runtime/final_b --report reports/demo_report_second.json --force",
+    "tests": "python3 -m unittest discover -s tests -v"
+  },
+  "determinism": {
+    "cmp_exit_code": 0,
+    "report_sha256_hex": "858172cea5805f0f637aca8161d4855d1b0aadc3c8acaf3848741a8f823a18e3",
+    "second_run_report_was_removed_after_comparison": true,
+    "two_independent_reports_byte_equal": true
+  },
+  "environment": {
+    "containerized": false,
+    "network_dependency_at_runtime": false,
+    "numpy": "2.4.6",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1"
+  },
+  "final_colors": [
+    {
+      "aggregate_xyz": [
+        35.5661518544699,
+        38.119980996411,
+        23.746105231547
+      ],
+      "in_gamut": true,
+      "light_contributions": [
+        {
+          "adapted_stage_hash": "sha256:75bcf933c91b166f908ac86cab0a18ae243773f8f276cdd19522dd75cf99d5f2",
+          "adapted_xyz": [
+            35.6877506347034,
+            37.4780949136523,
+            23.7225745196923
+          ],
+          "light_id": "light_day",
+          "weight": 1.0
+        },
+        {
+          "adapted_stage_hash": "sha256:e5374a4b66bd6c2949acb7d3a0404803a1f46c0385174789d88215d4beb39fdf",
+          "adapted_xyz": [
+            35.4040201474919,
+            38.9758291067559,
+            23.7774795140199
+          ],
+          "light_id": "light_warm",
+          "weight": 0.75
+        }
+      ],
+      "linear_rgb": [
+        0.448178288434629,
+        0.380308791883811,
+        0.193041917647713
+      ],
+      "material_id": "mat_metal",
+      "rgb": [
+        0.700133316931063,
+        0.650195087975128,
+        0.476627334244737
+      ],
+      "rgb_unclipped": [
+        0.700133316931063,
+        0.650195087975128,
+        0.476627334244737
+      ],
+      "stage_content_hash": "sha256:4bfd6e2582940e9ba38ff3c9bc68fecb552c4abc704ca20058296d516692d49d",
+      "surface": {
+        "metallic": 0.91,
+        "roughness": 0.24,
+        "semantics": "retained surface metadata; colour XYZ remains colourimetric"
+      },
+      "target_color_space": "sRGB",
+      "transfer": "sRGB IEC 61966-2-1"
+    },
+    {
+      "aggregate_xyz": [
+        26.4223358047575,
+        22.4799825443148,
+        13.9811648371281
+      ],
+      "in_gamut": true,
+      "light_contributions": [
+        {
+          "adapted_stage_hash": "sha256:ffb6e26417d8afdf559273010d3f4889d5d78c4df01289274db3b241e40dcbc2",
+          "adapted_xyz": [
+            25.711216145889,
+            21.4143481499083,
+            14.21959951237
+          ],
+          "light_id": "light_day",
+          "weight": 1.0
+        },
+        {
+          "adapted_stage_hash": "sha256:031ccec9609b77c45905523a8666f9c535139c0e576b8fb5176934456a962000",
+          "adapted_xyz": [
+            27.3704953499154,
+            23.9008284035234,
+            13.6632519368056
+          ],
+          "light_id": "light_warm",
+          "weight": 0.75
+        }
+      ],
+      "linear_rgb": [
+        0.440969834539843,
+        0.17147568436137,
+        0.116638988981292
+      ],
+      "material_id": "mat_oxide",
+      "rgb": [
+        0.695048753532261,
+        0.451022917958292,
+        0.375960388488297
+      ],
+      "rgb_unclipped": [
+        0.695048753532261,
+        0.451022917958292,
+        0.375960388488297
+      ],
+      "stage_content_hash": "sha256:161d707156b0e224f636e39bc19cf9e40ec1cd20179039a7d7b20e18daaafa8b",
+      "surface": {
+        "metallic": 0.05,
+        "roughness": 0.36,
+        "semantics": "retained surface metadata; colour XYZ remains colourimetric"
+      },
+      "target_color_space": "sRGB",
+      "transfer": "sRGB IEC 61966-2-1"
+    },
+    {
+      "aggregate_xyz": [
+        27.1138159938096,
+        26.3294444002492,
+        21.3355978176079
+      ],
+      "in_gamut": true,
+      "light_contributions": [
+        {
+          "adapted_stage_hash": "sha256:fee3ff47924a74a5b4beee350c0ca72ac0d2d5670e615375d52c1cc529abac78",
+          "adapted_xyz": [
+            26.7692220297387,
+            25.7314264241326,
+            21.1272898343141
+          ],
+          "light_id": "light_day",
+          "weight": 1.0
+        },
+        {
+          "adapted_stage_hash": "sha256:02b03c426ffc6cdd6dd1ab7a70222f606da7b70ea7409c59ab95d78a8d3f4f4d",
+          "adapted_xyz": [
+            27.5732746125709,
+            27.1268017017381,
+            21.6133417953329
+          ],
+          "light_id": "light_warm",
+          "weight": 0.75
+        }
+      ],
+      "linear_rgb": [
+        0.367534811056171,
+        0.240036227990161,
+        0.186907597864159
+      ],
+      "material_id": "mat_polymer",
+      "rgb": [
+        0.640227313742045,
+        0.527149403673061,
+        0.469521979208804
+      ],
+      "rgb_unclipped": [
+        0.640227313742045,
+        0.527149403673061,
+        0.469521979208804
+      ],
+      "stage_content_hash": "sha256:4813a6b8a2bb86ed1d739ec36533c5313f89bd05fb92e16018f98b111ff409b7",
+      "surface": {
+        "metallic": 0.07,
+        "roughness": 0.61,
+        "semantics": "retained surface metadata; colour XYZ remains colourimetric"
+      },
+      "target_color_space": "sRGB",
+      "transfer": "sRGB IEC 61966-2-1"
+    }
+  ],
+  "forced_termination_recovery": {
+    "comparison": {
+      "color_max_abs_diff": 0.0,
+      "colors_byte_equal": true,
+      "first_color_difference": [],
+      "first_stage_difference": [],
+      "stage_max_abs_diff": 0.0,
+      "stages_byte_equal": true,
+      "status": "ok",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 0.0
+      }
+    },
+    "exit_report_fabricated": false,
+    "orphaned_transaction_count": 1,
+    "orphaned_transactions": [
+      {
+        "revision": 7,
+        "stage_count": 15,
+        "state_sha256": "sha256:d3fd2956fe8391c8ca09ea58a1cfa0ab6c0ba9ed47c49c06d563a02858c829ad",
+        "transaction_id": "txn-000000000007-d3fd2956fe83"
+      }
+    ],
+    "prior_exit_state": "forced_termination_recovered",
+    "recovered_revision": 6,
+    "recovered_snapshot_version": 6
+  },
+  "injection_error_codes": {
+    "invalid_injection_config": "E_INJECT_CONFIG",
+    "observer_invalid": "E_OBSERVER_INVALID",
+    "reflectance_out_of_range": "E_SPECTRUM_RANGE",
+    "stage_failure": "E_STAGE_STALE",
+    "white_point_zero": "E_WHITE_POINT"
+  },
+  "sample": {
+    "lights": 2,
+    "materials": 3,
+    "operations_sha256": "sha256:80887e84c1c9a5e480f4a6aa2d867c699e1757b9ede7cc757eb6106bdbce43c6",
+    "samples_per_spectrum": 81,
+    "seed": 20261119,
+    "sha256": "sha256:c3b163141cc7465b218bc6ae4eae02e3ddd6aec151fe884f21672f1b5da8420b",
+    "wavelength_range_nm": [
+      380,
+      780
+    ],
+    "wavelength_step_nm": 5
+  },
+  "schema": "spectral-workspace-verification-report/v1",
+  "stable_state": {
+    "final_scene_sha256": "sha256:281006198c55019f7393b543ee4e7c7c6249be1f4f25e1186a14c13c326a6b99",
+    "incremental_vs_full": {
+      "max_abs_diff": 0.0,
+      "stage_count": 15,
+      "status": "ok",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-12
+      }
+    },
+    "revision": 6,
+    "snapshot_version": 6,
+    "stage_count": 15,
+    "state_sha256": "sha256:c5e8e03670c89b88df1be48343b0a9d3f4c69c26c4fad4a78c261eb16c36e03b"
+  },
+  "tests": {
+    "count": 23,
+    "duration_seconds": 12.58,
+    "log": "reports/unittest.log",
+    "status": "OK"
+  },
+  "verification_date": "2026-11-19"
+}
