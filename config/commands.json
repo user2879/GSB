@@ -1,0 +1,49 @@
+{
+  "commands": [
+    {
+      "id": "edit_threshold",
+      "type": "set_threshold",
+      "payload": {"value": 168}
+    },
+    {
+      "id": "edit_window",
+      "type": "set_window",
+      "payload": {"window_scales": [8, 12], "window_step": 3}
+    },
+    {
+      "id": "edit_line_merge",
+      "type": "set_line_merge",
+      "payload": {"line_merge_projection_gap": 8, "line_connectivity_min_pixels": 2}
+    },
+    {
+      "id": "edit_width_first",
+      "type": "set_char_width_constraints",
+      "payload": {"char_min_width": 8, "char_max_width": 22}
+    },
+    {
+      "id": "edit_metric",
+      "type": "set_match_metric",
+      "payload": {"value": "ink_balance"}
+    },
+    {
+      "id": "replace_b",
+      "type": "replace_image",
+      "payload": {
+        "name": "sample_b",
+        "source_png": "data/replacements/sample_b_v2.png",
+        "source_truth": "data/replacements/sample_b_v2.truth.json"
+      }
+    },
+    {
+      "id": "edit_width_second",
+      "type": "set_char_width_constraints",
+      "payload": {"char_min_width": 9, "char_max_width": 23}
+    },
+    {
+      "id": "delete_c",
+      "type": "delete_image",
+      "payload": {"name": "sample_c"}
+    }
+  ]
+}
+
