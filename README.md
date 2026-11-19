@@ -1,22 +1,101 @@
-当前是空白工作区，需在 Windows 上开发一个面向矢量图形与路径合成的可集成领域组件及完整示例。输入为本地确定性生成的矢量路径场景：每条路径由若干子路径构成，子路径由三次贝塞尔段与直线段组成，带闭合标记、填充色与描边参数，以固定种子程序化生成多组场景（简单交叉、自相交环、重叠大面积路径、含退化段路径）。组件需完成路径扁平化、扫描线填充（非零环绕与奇偶两种规则）、描边生成、抗锯齿覆盖合成与合成分层输出，最终得到 BGRA 缓冲与每层内容哈希。核心难点在于可复现验证与异常注入：同一场景与参数两次合成须逐字节一致；需支持在参数层注入异常（坐标越界、退化段、非法填充规则、填充色 alpha 越界等）并由独立验证器复核，不得通过修改源码制造失败。
+# VGSynth：确定性矢量路径合成组件
 
-任务环境与准备：
-安装 Windows 版 Python 3.11 或以上，并创建独立虚拟环境。
-在虚拟环境中安装 numpy 与 PySide6；版本以当前可用稳定版为准，安装说明写入运行文档。
-无需外部素材或网络服务，所有场景由固定种子程序化生成；运行前确认工作区可写以输出 JSON、哈希清单与报告。
-确认可用本地命令行运行演示入口，图像与报告输出目录预先创建。
+VGSynth 是一个可在 Windows 本地运行的 Python 领域组件与完整示例。它从固定种子生成可复算的矢量路径场景，完成扁平化、扫描线填充、描边轮廓、预乘 Alpha 抗锯齿合成、分层哈希、参数级异常注入、独立验证和最小反例输出。
 
-业务要求：
-1. 实现路径场景的确定性生成器：由固定种子程序化产出多组场景（简单交叉、自相交环、重叠大面积路径、含退化段），每场景包含路径 ID、子路径列表、段类型、控制点、闭合标记、填充色与描边参数，输出可序列化 JSON 与内容哈希；两次生成同一场景与种子须逐字节一致，且生成清单须记录每个随机决策所用子种子，供独立复算核对。
-2. 实现子路径扁平化：按声明容差把三次贝塞尔段与直线段离散为折线，容差可配置且须给出每段实际误差估计与折线顶点数；同一子路径与容差两次扁平化须产生逐点相同的折线，容差收紧时顶点数单调不减，且退化段（零长或共线控制点）须按声明规则降级为直线或跳过并记录处理动作。
-3. 实现扫描线覆盖位图生成，支持非零环绕与奇偶两种填充规则：按像素中心水平射线与折线边求交，非零规则用有向环绕计数、奇偶规则用奇偶判定决定覆盖，输出 8 位覆盖率位图与描边覆盖位图；同一轮廓在两种规则下覆盖结果须可比较且差异位置可定位，两种规则各自的位图内容哈希须参与最终合成分层哈希。
-4. 实现抗锯齿覆盖合成与合成分层：把填充覆盖率、描边覆盖率与填充色/描边色按预乘 alpha 合成到 BGRA 缓冲，合成顺序须固定（填充在下、描边在上），每路径合成后产生一层缓冲与层内容哈希；给定相同像素覆盖率与颜色，两次合成同一层须逐字节相同，层哈希随层内容整体替换须识别版本变化。
-5. 实现异常注入机制：支持在参数层注入坐标越界、退化段、非法填充规则、填充色 alpha 越界、容差为负、描边宽度为零等异常，注入配置须可序列化并随运行记录，保证注入后运行可精确复现；注入不得修改源码，只通过参数与输入数据生效，且注入不得导致进程崩溃或产生未归类的错误。
-6. 实现独立验证器：验证器只消费已合成输出的 BGRA 缓冲、分层哈希清单、场景 JSON 与注入配置，不复用合成器内存状态，逐层复核层哈希与像素取值一致性、填充规则与覆盖率一致性、注入异常是否被正确归类；合成器与验证器结论不一致时返回 E_VERIFIER_MISMATCH，并输出首个不一致的层 ID 与像素坐标。
-7. 实现首个违规位置定位与最小反例输出：验证失败时按确定性遍历顺序（层 ID 升序、行优先、像素坐标升序）报告首个违规像素、违规类型与触发该位置的路径片段；最小反例须能在给定场景与注入配置下单独复现同一违规，且移除反例中任一元素后不再触发，以证明定位的必要性。
-8. 定义业务错误码（E_SCENE_INVALID、E_PATH_DEGENERATE、E_FILL_RULE、E_COLOR_RANGE、E_TOLERANCE_RANGE、E_LAYER_HASH、E_VERIFIER_MISMATCH、E_INJECTION_CONFLICT）并覆盖异常链路的分类、返回位置与可复现记录；提供可重复演示入口，生成含正常、自相交、退化段、alpha 越界注入与非法填充规则注入的样本集，执行生成、扁平化、填充、描边、合成、验证与最小反例定位的固定序列，输出结构化报告与各步内容哈希，两次相同输入与配置的运行须产生逐字节相同的输出与哈希。
+运行时不访问网络或外部素材。场景全部由固定种子程序化生成，输出为规范化 JSON、BGRA 原始缓冲、PNG 预览、覆盖率位图、层哈希清单和结构化报告。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-用本地样本运行生成、合成、注入与验证固定序列，检查分层哈希可复现及首个违规定位正确。
+Windows PowerShell：
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m vgsynth demo --out artifacts\demo
+.\.venv\Scripts\python.exe -m vgsynth verify --run-dir artifacts\demo\run_a
+```
+
+本仓库已在 Linux/WSL 的同版本 Python 3.11 环境中实际验证；代码只使用标准库、NumPy 与 PySide6，不包含平台专用路径。Windows 详细步骤见 [docs/RUNNING.md](docs/RUNNING.md)。
+
+## 固定演示序列
+
+`demo` 默认执行两次完全相同的运行，分别写入 `run_a` 与 `run_b`，并生成 `comparison.json` 逐文件比较哈希。固定序列覆盖：
+
+- 简单交叉、自相交五角星、大面积重叠路径、含退化段路径。
+- 填充色 Alpha 越界、非法填充规则、坐标越界、负容差、零描边宽度。
+- 两个注入操作写同一字段产生的 `E_INJECTION_CONFLICT`。
+- 参数级像素缓冲变异与层哈希清单变异，用于触发 `E_LAYER_HASH` / `E_VERIFIER_MISMATCH`。
+
+每次运行输出：
+
+```text
+artifacts/demo/
+├─ comparison.json
+├─ run_a/
+│  ├─ report.json
+│  ├─ run_manifest.json
+│  ├─ hashes.json
+│  └─ cases/<case_id>/
+│     ├─ scene.json
+│     ├─ injection.json
+│     ├─ generation.json
+│     ├─ flatten.json
+│     ├─ layers.json
+│     ├─ verification.json
+│     ├─ issues.json
+│     ├─ final.bgra
+│     ├─ final.png
+│     ├─ layers/*.bgra|*.png
+│     ├─ coverage/*.raw|*.png
+│     └─ minimal_counterexample/
+└─ run_b/...
+```
+
+PySide6 预览：
+
+```powershell
+.\.venv\Scripts\python.exe -m vgsynth view --run-dir artifacts\demo\run_a
+```
+
+## 可集成 API
+
+```python
+from vgsynth import generate_scene, flatten_scene, composite_scene, verify_case_dir
+
+scene = generate_scene("self_intersect_loop", seed=0xC0FFEE2026, scene_id="demo")
+flat = flatten_scene(scene, tolerance=0.25)
+result = composite_scene(scene, flat)
+
+print(result["canvas_hash"])
+print([(layer["layer_id"], layer["layer_hash"]) for layer in result["layers"]])
+```
+
+完整磁盘级运行与验证使用 `run_case`、`run_demo`、`verify_case_dir`。输入、输出与错误模型见 [docs/DESIGN.md](docs/DESIGN.md)。
+
+## 核心约定
+
+- 场景 JSON 使用排序键、紧凑分隔符和固定换行编码；随机决策记录子种子与确定性 PRNG 算法。
+- 扁平化对三次贝塞尔采用确定性自适应二分；每段记录误差上界、顶点数及退化处理动作。
+- 填充同时生成非零环绕与奇偶两张 8 位覆盖率位图；每像素使用 8 条子扫描线，每个采样行按像素中心水平射线求交。
+- 描边先生成圆角连接/端帽多边形轮廓，再用非零环绕规则光栅化。
+- 合成为 `BGRA8_PREMULTIPLIED`，固定顺序为填充在下、描边在上，最终画布按层 ID 升序继续预乘 Alpha 合成。
+- 层哈希覆盖层头、双填充规则覆盖率哈希、描边覆盖率哈希和完整 BGRA 字节。
+- 验证器从磁盘重新读取场景、注入配置、层清单及 BGRA 缓冲，重新计算并优先按层 ID、再按行优先像素顺序报告首个不一致。
+- 最小反例在保留目标违规的前提下缩减到路径/子路径/段/注入操作，并逐项执行删除测试证明不可再删。
+
+## 业务错误码
+
+`E_SCENE_INVALID`、`E_PATH_DEGENERATE`、`E_FILL_RULE`、`E_COLOR_RANGE`、`E_TOLERANCE_RANGE`、`E_LAYER_HASH`、`E_VERIFIER_MISMATCH`、`E_INJECTION_CONFLICT`。
+
+注入异常在参数层生效，不修改源码。非法值使用明确记录的恢复策略继续生成诊断输出，例如颜色钳制、坐标钳制、非法填充规则回退到 `nonzero`、负容差取绝对值、零宽描边跳过描边层。
+
+## 实际验证
+
+最终验证记录见 [docs/VERIFICATION_REPORT.md](docs/VERIFICATION_REPORT.md)。最近一次完整执行中：
+
+- 12 个固定样本全部完成生成、扁平化、双规则填充、描边、合成、验证与最小反例定位。
+- `run_a` 与 `run_b` 的全部输出文件哈希一致。
+- 10 项自动化测试通过。
