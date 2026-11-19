@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multichannel-sync-diag"
+version = "0.1.0"
+description = "Deterministic multichannel clock synchronization and drift compensation diagnostic workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<2", "scipy>=1.11,<2"]
+
+[project.scripts]
+sync-diag = "sync_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sync_diag*"]

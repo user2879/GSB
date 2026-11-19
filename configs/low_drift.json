@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "seed": 1101,
+  "duration_s": 30.0,
+  "drift_tolerance_ppm": 35.0,
+  "accuracy_target_samples": 0.75,
+  "detector": {
+    "pair_tolerance_s": 0.4
+  },
+  "strategy": {
+    "override": "auto",
+    "memory_budget_mb": 128.0,
+    "time_budget_s": 180.0,
+    "full_max_duration_s": 120.0,
+    "full_max_pulses": 1200,
+    "block_pulses": 6,
+    "sparse_stride": 4,
+    "min_memory_mb": 8.0
+  },
+  "channels": [
+    {"index": 0, "role": "reference", "base_ppm": 0.0, "temp_ppm_per_c": 0.0, "temperature_c": {"mean": 25.0, "amplitude_c": 0.0, "period_s": 600.0, "phase_rad": 0.0}, "delay_samples": 0.0},
+    {"index": 1, "role": "slave", "base_ppm": 3.5, "temp_ppm_per_c": 0.5, "temperature_c": {"mean": 25.0, "amplitude_c": 4.0, "period_s": 620.0, "phase_rad": 0.2}, "delay_samples": 157.18},
+    {"index": 2, "role": "slave", "base_ppm": -4.2, "temp_ppm_per_c": 0.4, "temperature_c": {"mean": 25.0, "amplitude_c": 5.0, "period_s": 580.0, "phase_rad": 1.1}, "delay_samples": 191.73},
+    {"index": 3, "role": "slave", "base_ppm": 2.1, "temp_ppm_per_c": 0.6, "temperature_c": {"mean": 25.0, "amplitude_c": 3.0, "period_s": 640.0, "phase_rad": 2.4}, "delay_samples": 225.31},
+    {"index": 4, "role": "slave", "base_ppm": -7.0, "temp_ppm_per_c": 0.7, "temperature_c": {"mean": 25.0, "amplitude_c": 4.0, "period_s": 700.0, "phase_rad": 3.0}, "delay_samples": 274.92},
+    {"index": 5, "role": "slave", "base_ppm": 5.6, "temp_ppm_per_c": 0.5, "temperature_c": {"mean": 25.0, "amplitude_c": 5.0, "period_s": 540.0, "phase_rad": 4.2}, "delay_samples": 303.87},
+    {"index": 6, "role": "slave", "base_ppm": -2.8, "temp_ppm_per_c": 0.3, "temperature_c": {"mean": 25.0, "amplitude_c": 3.0, "period_s": 660.0, "phase_rad": 5.1}, "delay_samples": 341.71},
+    {"index": 7, "role": "slave", "base_ppm": 6.8, "temp_ppm_per_c": 0.8, "temperature_c": {"mean": 25.0, "amplitude_c": 4.0, "period_s": 610.0, "phase_rad": 5.8}, "delay_samples": 383.36}
+  ]
+}
