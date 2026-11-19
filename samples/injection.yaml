@@ -1,0 +1,16 @@
+# This file is inactive unless passed explicitly with --inject.
+# Examples:
+# nonfinite:
+#   - {window: 1, worker_id: 1, tensor: layer_0.weight, index: [0, 0], value: .nan}
+# communication_failures:
+#   - {window: 1, origin_worker: 0, dst_worker: 1, tensor: layer_0.bias, error_type: InjectedSocketError}
+# link_budget_overrides:
+#   "0->1": 1
+# crash_after_phase: communicated
+# send_delay_ms: 25
+version: 1
+nonfinite: []
+communication_failures: []
+link_budget_overrides: {}
+crash_after_phase: null
+send_delay_ms: 0

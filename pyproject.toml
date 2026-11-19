@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dp-grad-sim"
+version = "0.1.0"
+description = "Deterministic multi-worker gradient communication simulator for local small language models"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<2", "PyYAML>=6"]
+
+[project.scripts]
+dp-grad-sim = "dp_grad_sim.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
