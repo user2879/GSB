@@ -1,22 +1,45 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向 Windows 本地环境的消息中间件实验工作台，交付算法实现与可复现的实验环境，核心技术问题是交互延迟与计算结果一致性。系统不实现消息投递语义，而是对一批确定性事件流做分区聚合与延迟水位观测：本地 NDJSON 事件流按整数毫秒时间戳给出事件，每条事件含分区键、事件序号与整数值；用户以本地 JSON 声明分区聚合规则（分区键对应的求和与计数口径）、允许乱序的整数毫秒水位、界面查询的整数毫秒延迟预算与定点缩放因子。工作台须把事件按分区键分配到分区聚合状态，按水位推进判定事件何时可被认定“已定稿”，并对已定稿部分计算定点聚合结果。界面须持续展示各分区进度、水位与被截断的迟到事件，且任一展示结论必须能由账本权威重算复现。全部数据来自本地确定性样本，不依赖外部服务。
+# 消息中间件实验工作台（本地确定性）
 
-任务环境与准备：
-确认 Windows 环境已安装 Python 3.11 或以上，并可在命令行调用 python 与 pip。
-安装依赖：pip install numpy；tkinter 随 Python 标准库提供；SQLite 使用 Python 内置 sqlite3 模块，无需额外安装。
-准备本地确定性样本：分区键若干（如 p0、p1、p2）、每分区带整数毫秒时间戳与整数值的事件序列、含迟到与乱序事件的变体样本，以及预期已定稿聚合结果，保存在工作区 samples 目录中。
-预留工作区目录用于存放快照、查询账本与结构化日志文件，运行时可通过命令行参数指定路径。
+对本地 NDJSON 确定性事件流做分区聚合、整数毫秒水位定稿、定点计算与交互延迟观测。
+不实现消息投递语义、不依赖外部服务、不使用容器。技术细节见
+[`TECH_DESIGN.md`](TECH_DESIGN.md)，Windows 运行步骤见
+[`docs-windows.md`](docs-windows.md)。
 
-业务要求：
-1. 实现事件流、分区规则与样本声明的加载及强校验：从本地 NDJSON 逐行读取事件（分区键、事件序号、整数毫秒时间戳、整数值）与本地 JSON 分区规则，校验分区键唯一且格式合法、同一分区事件序号连续单调、时间戳为非负整数、水位与延迟预算为正整数、缩放因子为 0 至 6 的整数；任一不合法须以 E_SPEC 整体拒绝并指出首个出错行与字段。
-2. 实现基于整数毫秒水位的定稿判定：每分区维护已见最大时间戳与事件时间戳水位，事件仅当满足“时间戳不晚于水位推进后的可定稿边界”时进入已定稿集合，迟到事件须被计入迟到计数并以 E_LATE 登记但不改变已定稿聚合；水位只允许单调推进，回退水位请求须以 E_WATER 拒绝并保留原水位，判定过程须输出每步水位变化与触发定稿的事件序号。
-3. 实现分区聚合状态的确定性计算与定点口径：对已定稿事件按分区累加求和与计数，求和以会话缩放因子按整数定点表示并显式声明截断方向与溢出饱和规则，给出单值与分区聚合误差上界；同一事件集合在任意到达顺序、任意批次划分与任意水位推进步长下必须得到逐字节一致的聚合结果与序列化视图。
-4. 实现界面增量缓存与账本权威重算的分离路径：界面从账本的增量缓存快速展示每分区已定稿计数、求和、当前水位与迟到计数；权威重算命令须从账本按分区逐事件重放并重算全部聚合与水位结论，逐字节比较两条路径的分区视图，不一致须以 E_VIEW 报告首个差异分区与字段，且不得以缓存结果代替权威结论。
-5. 实现界面查询的交互延迟观测与预算判定：对每次界面查询记录单调时钟起止毫秒差并声明真值来源为账本中的逐次查询记录，按分区与整体聚合均值、P95 与最大值的整数定点表示并给出量化误差上界；单次查询超出声明延迟预算时须记录 E_LAT 并写入查询账本，延迟统计的计算不得反过来改变聚合结论。
-6. 实现水位规则或缩放因子变更后的整体替换与陈旧结论防护：水位、延迟预算或缩放因子被修改后参数版本号单调递增，旧版本下的定稿结论、聚合视图与延迟统计须标记为陈旧且不得参与当前展示与汇总；当前视图须整体替换而非增量合并，替换时须稳定列出受影响分区、旧水位与新水位。
-7. 实现会话快照的版本识别与强制终止后的恢复：快照持久化参数版本、分区规则摘要、每分区已定稿聚合、水位、迟到计数与查询账本，并携带整数格式版本与内容摘要；重新打开快照时须比较快照参数版本与内容摘要同当前会话，不一致须整体替换分区状态与账本而非增量合并；进程被强制终止后重启只能依据已完整提交的记录恢复，处于已读未定稿状态的事件须标记为未知并要求重新加载，不得声称能生成强制终止时的退出报告。
-8. 实现恢复后的一致性重放校验与异常注入：从快照恢复后按快照记录的事件游标与水位参数继续加载剩余事件，将每分区已定稿聚合并、水位、迟到计数与延迟统计同快照逐项比较，差异须定位到首个不一致的分区键、事件序号与字段并以 E_REPLAY 报明依据；支持以命令行参数分别注入事件文件损坏、时间戳倒退超出水位、快照内容摘要不一致三类异常，分别以 E_SPEC、E_ORDER、E_SNAPSHOT 报告并写入结构化日志，注入仅改变输入文件或参数而不修改实现源码。
+## 环境
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Python 3.11+；`pip install numpy`（见 `requirements.txt`）。
+- tkinter、sqlite3 随标准 Python 提供；无 tkinter 环境自动降级为纯无头模式。
 
-验收：
-使用本地确定性样本验证水位定稿、分区定点聚合、界面与重算一致性及恢复重放，输出结构化总结。
+## 快速开始
+
+```bash
+python -m unittest discover -s tests -v
+python -m bench.acceptance --workdir run/acceptance \
+  --json-out artifacts/acceptance_summary.json
+```
+
+## 主要 CLI
+
+```bash
+python -m bench.mw.cli --workdir run init     --spec samples/basic/spec.json --events samples/basic/events.ndjson
+python -m bench.mw.cli --workdir run ingest   --spec samples/basic/spec.json --events samples/basic/events.ndjson --drain
+python -m bench.mw.cli --workdir run query    --spec samples/basic/spec.json --inject-delay-ms 80
+python -m bench.mw.cli --workdir run recompute --spec samples/basic/spec.json   # 缓存 vs 权威重放逐字节比对
+python -m bench.mw.cli --workdir run latency  --spec samples/basic/spec.json
+python -m bench.mw.cli --workdir run snapshot --spec samples/basic/spec.json
+python -m bench.mw.cli --workdir run inject   --spec samples/resume/spec.json --events samples/resume/events_part2.ndjson --kind regression --partition p0 --seq 2 --ts-ms 10
+python -m bench.mw.cli --workdir run gui
+```
+
+## 目录
+
+- `bench/mw/`：核心实现（校验、引擎、账本、快照、恢复、注入、延迟、GUI、CLI）。
+- `samples/`：确定性样本与预期聚合（basic、resume、invalid）。
+- `tests/`：31 个 unittest 用例，覆盖 8 项业务要求。
+- `artifacts/`：验收结构化总结。
+- `run/`：运行时账本、快照、结构化日志（可由 `--workdir`/独立参数指定）。
+
+## 错误码
+
+`E_SPEC`(2) `E_WATER`(3) `E_VIEW`(4) `E_ORDER`(5) `E_SNAPSHOT`(6) `E_REPLAY`(7)；
+`E_LATE`、`E_LAT` 为账本/日志中的观测记录而非抛出异常。
