@@ -1,0 +1,63 @@
+{
+  "entries": [
+    {
+      "key": 100,
+      "namespace": "catalog",
+      "expire_ms": 10000,
+      "digest": "9f07c2a1",
+      "digest_algorithm": "crc32",
+      "annotations": [
+        {"namespace": "pricing", "key": 200},
+        {"namespace": "inventory", "key": 300}
+      ]
+    },
+    {
+      "key": 101,
+      "namespace": "catalog",
+      "expire_ms": 20000,
+      "digest": "4d93f208",
+      "digest_algorithm": "crc32",
+      "annotations": [
+        {"namespace": "search", "key": 500}
+      ]
+    },
+    {
+      "key": 200,
+      "namespace": "pricing",
+      "expire_ms": 15000,
+      "digest": "sha256:7c5b8d0f",
+      "digest_algorithm": "sha256",
+      "annotations": [
+        {"namespace": "storefront", "key": 400}
+      ]
+    },
+    {
+      "key": 300,
+      "namespace": "inventory",
+      "expire_ms": 12000,
+      "digest": "sha1:2e1a99bc",
+      "digest_algorithm": "sha1",
+      "annotations": [
+        {"namespace": "storefront", "key": 400}
+      ]
+    },
+    {
+      "key": 400,
+      "namespace": "storefront",
+      "expire_ms": 30000,
+      "digest": "crc32:81ab22cd",
+      "digest_algorithm": "crc32",
+      "annotations": [
+        {"namespace": "search", "key": 500}
+      ]
+    },
+    {
+      "key": 500,
+      "namespace": "search",
+      "expire_ms": 40000,
+      "digest": "none",
+      "digest_algorithm": "none",
+      "annotations": []
+    }
+  ]
+}
