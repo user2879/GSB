@@ -1,3 +1,75 @@
+# 本地确定性扇出下发调度账本组件
+
+面向本地 Windows / Linux / macOS 容量评估与压测场景的扇出（fan-out）下发调度
+账本。所有目标节点由本仓库的确定性模拟服务在 `127.0.0.1` 高位端口提供，配合
+SQLite 账本、内容摘要快照、强制终止恢复与一致性重放。完整设计见
+[DESIGN.md](DESIGN.md)。
+
+## 环境准备（Python 3.11+）
+
+Windows（官方 python.org 安装包自带 Tkinter）：
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe scripts\setup_windows.ps1   # 可选的一键自检
+```
+
+Linux（当前验证环境无系统 Tk 库，UI 为可选导入，演示与测试无需 Tk）：
+
+```
+python3.11 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+## 快速开始
+
+```
+# 生成确定性样本场景
+python scripts/generate_samples.py
+
+# 三个顺序场景：冷启动 -> 收紧 SLO/调并发重跑 -> 强制终止后恢复重放
+python scripts/demo.py
+
+# 三类异常注入（仅改输入/启动参数，业务码分别为 E_SCENE/E_PORT/E_SNAPSHOT）
+python scripts/demo.py --inject corrupt-scene
+python scripts/demo.py --inject occupied-port
+python scripts/demo.py --inject bad-snapshot
+
+# 单元与集成测试（27 个用例）
+python -m unittest discover -s tests -v
+```
+
+## CLI
+
+```
+python -m fanout_ledger validate samples/scene_cold_start.json
+python -m fanout_ledger init-db run/cli_check
+python -m fanout_ledger run samples/scene_cold_start.json --run-dir run/s1
+python -m fanout_ledger replay samples/scene_cold_start.json --run-dir run/s1
+python -m fanout_ledger ui --run-dir run/demo/01_cold_start
+```
+
+## 业务码
+
+| 码 | 触发条件 | 来源模块 |
+|---|---|---|
+| `E_SCENE` | 场景 JSON 损坏或强校验失败（输出字段路径） | `config.py` |
+| `E_PORT` | 回环目标端口已被占用 | `mock_service.py` |
+| `E_RETRY` | 节点投递用尽尝试次数仍失败（记录尝试数与累计等待） | `scheduler.py` |
+| `E_SNAPSHOT` | 快照摘要不一致或场景/载荷/模拟配置不可复现 | `snapshot.py`/`recovery.py` |
+| `E_REPLAY` | 重放首个差异，定位节点/尝试序号/字段 | `recovery.py` |
+
+## 产物
+
+`run/` 下每个会话包含 `ledger.sqlite3`（WAL 账本）、`snapshots/`（原子快照）、
+`events.jsonl` / `demo.jsonl`（结构化日志）与 `report.txt`（稳定顺序总结）。
+
+---
+
+<details>
+<summary>原始任务说明</summary>
+
 当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向本地 Windows 环境的容量评估与压测场景下的扇出下发调度账本组件。系统以本地 JSON 场景文件声明一次扇出下发会话：包含若干目标节点（每个节点由本仓库附带的确定性本地模拟服务脚本在 127.0.0.1 高位端口上提供，可配置每请求固定处理毫秒、按确定性规则产生的失败率与慢响应比例）、一份下发任务定义（任务标识、载荷字节数、每节点尝试次数上限、单次尝试超时毫秒、重试退避毫秒整数序列）以及 SLO 门槛（成功率整数百分比与 P95 延迟毫秒上限）。调度器须在全局并发上限与每节点并发配额双重约束下把下发任务扇出到全部节点，按确定规则重试失败的尝试，把每次尝试的结局、耗时与预算消耗写入本地 SQLite 账本，聚合每节点与全局的成功率与延迟分位数并判定 SLO。难点在于并发预算、超时预算与重试预算三者互相挤占：提高并发会加剧超时从而消耗更多重试，而重试又反过来占用并发配额。要求会话可快照、可强制终止后恢复、可重放校验。
 
 任务环境与准备：
@@ -20,3 +92,4 @@
 
 验收：
 用本地样本与模拟服务验证扇出调度、预算约束、SLO 判定及快照恢复后重放一致，并核对业务码。
+</details>

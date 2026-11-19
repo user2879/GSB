@@ -1,0 +1,76 @@
+{
+  "scene_version": "retune-v2",
+  "nodes": [
+    {
+      "node_id": "n1",
+      "host": "127.0.0.1",
+      "port": 48901,
+      "process_ms": 20,
+      "failure_rate": 1000,
+      "slow_rate": 0,
+      "slow_extra_ms": 0,
+      "seed": 1
+    },
+    {
+      "node_id": "n2",
+      "host": "127.0.0.1",
+      "port": 48902,
+      "process_ms": 20,
+      "failure_rate": 7000,
+      "slow_rate": 0,
+      "slow_extra_ms": 0,
+      "seed": 2
+    },
+    {
+      "node_id": "n3",
+      "host": "127.0.0.1",
+      "port": 48903,
+      "process_ms": 20,
+      "failure_rate": 0,
+      "slow_rate": 9000,
+      "slow_extra_ms": 300,
+      "seed": 2
+    },
+    {
+      "node_id": "n4",
+      "host": "127.0.0.1",
+      "port": 48904,
+      "process_ms": 25,
+      "failure_rate": 1500,
+      "slow_rate": 0,
+      "slow_extra_ms": 0,
+      "seed": 1
+    },
+    {
+      "node_id": "n5",
+      "host": "127.0.0.1",
+      "port": 48905,
+      "process_ms": 25,
+      "failure_rate": 2000,
+      "slow_rate": 0,
+      "slow_extra_ms": 0,
+      "seed": 1
+    }
+  ],
+  "task": {
+    "task_id": "payload-broadcast-A",
+    "payload_bytes": 4096,
+    "max_attempts": 3,
+    "attempt_timeout_ms": 120,
+    "backoff_ms": [
+      10,
+      20,
+      40
+    ],
+    "deliveries_per_node": 1
+  },
+  "scheduling": {
+    "global_concurrency": 5,
+    "node_concurrency": 1,
+    "session_budget_ms": 60000
+  },
+  "slo": {
+    "success_rate_percent": 99,
+    "p95_latency_ms": 90
+  }
+}
