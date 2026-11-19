@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pano-mask-pipeline"
+version = "0.1.0"
+description = "Deterministic local panoramic segmentation mask pipeline"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy==2.4.6",
+  "Pillow==13.0.0",
+]
+
+[project.scripts]
+pano-pipeline = "panorama_pipeline.cli:main"
+
+[tool.setuptools]
+packages = ["panorama_pipeline", "tools"]

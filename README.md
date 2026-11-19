@@ -1,23 +1,91 @@
-在空白工作区构建一个面向本地确定性样本的全景分割像素掩码数据处理管线与结果验证工具，用于交互式调整掩码格式与融合策略并即时查看全景结果。输入为一个本地样本目录：若干程序生成的 PNG 全景分割标注图（固定分辨率，像素值为实例ID与语义类别编码，由固定种子生成）、一份实例元数据 JSON（实例ID、语义类别、置信度、是否crowd区域）、一份 v1 掩码包（每实例以行程编码存放在单个二进制文件，含实例ID与语义类别）、一份 v2 掩码包（JSON，每实例以base64逐像素掩码存储，含置信度、crowd标记与调色板）。另给出一份融合配置 JSON（IoU匹配阈值、像素保留策略、置信度默认值、调色板条目、交互延迟预算毫秒、并发数、快照提交间隔）。管线需要完成双格式解析、掩码融合、交互式参数调优与结果验证，并在交互延迟预算与计算结果一致性之间取得平衡：用户每次调整阈值或保留策略后，既要尽快拿到可用的预览摘要，又必须保证多次交互后的最终全景掩码与从空白工作区全量重建的结果逐像素一致。
+# 本地确定性全景分割掩码管线
 
-任务环境与准备：
-安装 Python 3.10 及以上，创建独立虚拟环境。
-安装 NumPy 与 Pillow，确认可读写 PNG 并进行本地数组运算。
-在本地新建空白工作目录，准备由固定种子脚本生成的样本图像、实例元数据、v1 二进制掩码包与 v2 JSON 掩码包，全部本地存放。
-准备融合配置 JSON，包含 IoU 阈值、像素保留策略、交互延迟预算毫秒、并发数与快照提交间隔。
-确认无需网络、外部账号或容器环境即可运行。
+本工作区实现了一个不依赖 Docker、外部账号或在线服务的全景分割像素掩码处理与验证工具。样本、配置、掩码包、快照和验证报告全部保存在本地，核心算法只依赖 NumPy 与 Pillow。
 
-业务要求：
-1. 实现双格式解析器与统一中间表示：分别读取 v1 二进制行程编码掩码包与 v2 base64 逐像素掩码包，解析为统一的实例掩码位图、语义类别、置信度、crowd 标记与调色板条目，校验行程不重叠不越界、base64 解码后像素数等于图像宽高乘积；格式损坏或字段缺失时输出 E_MASK_FORMAT_INVALID 并进入失败清单。
-2. 实现格式双向转换与信息保留策略：v1 升 v2 时为缺失置信度的实例生成可配置默认值、补默认 crowd 标记与调色板条目；v2 降 v1 时丢弃置信度与 crowd 语义但把其汇总为旁路元数据文件并记录降级损失清单，转换前后实例数、类别与掩码像素须逐像素可核对。
-3. 实现跨格式全景结果融合：按配置 IoU 阈值对来源不同版本的同类别实例做匹配，匹配成功按置信度加权合并掩码与元数据，冲突按 IoU 降序、置信度降序、实例 ID 字典序依次决断；crowd 区域按像素保留策略单独处理，融合结果输出全景类别栅格与实例清单。
-4. 实现版本指纹与增量失效识别：为每个实例掩码计算由行程内容指纹、语义类别、元数据指纹与格式版本号派生的缓存键，为融合结果计算由参与实例缓存键与 IoU 阈值派生的依赖指纹；当单实例元数据被替换、像素保留策略变更或格式版本切换时，仅使受影响实例及其融合结果失效，未失效实例不得重新解码，失效与复用清单须能区分这三类触发来源。
-5. 实现交互延迟预算与预算内响应语义：每条交互命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新预览摘要，含已完成实例数、受影响实例清单、当前全景类别分布与进度；预算内无法得到最新参数下结果时返回带 E_INTERACT_BUDGET_PENDING 业务码的中间状态并标注其对应的命令序号与所用参数快照版本，不得阻塞等待或把陈旧结果标记为最新。
-6. 实现版本化快照整体替换与强制终止恢复：以 manifest 记录全局版本号、格式版本号、配置哈希、各实例结果版本与融合结果版本，先写临时目录再整体替换并比对版本变化；收到可处理的退出信号时完成当前实例结果与 manifest 提交后以整数退出码 0 退出，进程被强制终止后重启仅依据已完整替换的 manifest 恢复，且恢复须校验各实例结果版本与 manifest 一致后才允许复用。
-7. 实现融合阈值与像素保留策略的边界诊断：对每个 IoU 恰好落在匹配阈值附近或像素覆盖率恰好等于策略下限的实例，输出其双精度参考值与实际判定差异，两者判定不一致时记 E_BOUNDARY_SENSITIVE 并标注偏差来源；边界诊断结果须进入结果验证报告而非仅打印。
-8. 实现并发调度、串行一致性校验与结果验证报告：使用线程池并发执行解码、转换与融合，最大并发数取自配置，每个实例任务携带由实例ID与阶段名派生的稳定排序键，最终掩码顺序、融合裁决顺序与失败清单顺序须与单线程按实例ID顺序执行一致；每次完整运行输出 JSON 报告含全景类别分布、降级损失清单、失效复用清单、边界敏感清单、并发比对摘要与失败业务码，并以临时文件加原子替换写盘。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
 
-验收：
-用本地样本验证双格式解析、交互增量与全量重建逐像素一致，并输出验证报告。
+python -m panorama_pipeline generate --out samples
+python -m panorama_pipeline run \
+  --sample samples \
+  --out artifacts/verification_report.json \
+  --work artifacts/verification
+
+python -m unittest discover -s tests -v
+```
+
+当前环境系统 Python 缺少 `ensurepip`，首次建环境使用了官方 `get-pip.py` 引导；这不影响项目本身。安装完成后，运行与验证均不需要网络。
+
+交互式调参：
+
+```bash
+python -m panorama_pipeline interactive --sample samples
+```
+
+支持的命令包括 `threshold 0.4`、`retention confidence 0.3`、`formats v1,v2`、`metadata v1:2 0.97 false`、`fuse`、`status` 和 `quit`。也可通过 `--commands commands.json` 回放 JSON 命令序列。
+
+双向转换：
+
+```bash
+python -m panorama_pipeline convert --sample samples --direction v1-to-v2 --out /tmp/v2.json
+python -m panorama_pipeline convert --sample samples --direction v2-to-v1 \
+  --out /tmp/v1.bin --sidecar /tmp/v1_sidecar.json
+```
+
+## 输入格式
+
+- `samples/images/panorama_000.png` 等：64x48 RGBA PNG，`packed=(instance_id<<16)|class_id`，四个字节按大端填入 RGBA。`0/0` 表示背景。
+- `samples/instances.json`：实例 ID、类别、可选置信度/crowd；v1 缺失的置信度使用 `confidence_default`，缺失 crowd 使用 `default_crowd`。
+- `samples/masks_v1.bin`：单文件二进制。28 字节头为 `<8sHHIII>`，依次为 magic、版本、flags、宽、高、实例数；每个实例为 `<III>` 的 ID/类别/行程数，随后是 `<II>` 的起始像素与长度。解析校验非负、非零长度、有序、不重叠、不越界。
+- `samples/masks_v2.json`：`format_version=v2`，每个实例包含 ID、类别、置信度、crowd、RGBA 调色板和 base64 像素掩码；严格校验 base64、像素数等于 `width*height`、字节只能是 0/1。
+- `samples/config.json`：IoU 阈值、像素保留模式与覆盖率下限、默认置信度/crowd、调色板、交互预算、并发数、快照间隔和边界 epsilon。
+
+任一实例解析失败返回 `E_MASK_FORMAT_INVALID` 并进入稳定排序的失败清单；其他有效实例仍可继续融合。
+
+## 处理语义
+
+**转换**：v1 升 v2 时补齐默认置信度、crowd 与类别调色板；v2 降 v1 时把置信度、crowd 和调色板写入 sidecar，并逐实例生成降级损失清单。转换后重新解析，实例数、类别集合、实例 ID 与逐像素掩码都必须一致。
+
+**融合**：仅比较 v1/v2 同类别实例。匹配对先按候选优先级排序，再一对一裁决，顺序为 IoU 降序、面积加权置信度降序、pair key 字典序。匹配对的掩码取加权支持的并集，置信度按掩码面积加权。像素冲突最终按 crowd 策略、IoU 降序、置信度降序、实例 ID 字典序裁决。支持 `prefer_non_crowd`、`confidence`、`drop_crowd` 三种保留策略。
+
+**边界诊断**：每次候选匹配同时保存 float64 参考 IoU/覆盖率和 6 位小数的快速判定值。若值靠近阈值或覆盖率下限，诊断进入报告；若两者判定不同，记录 `E_BOUNDARY_SENSITIVE` 并标注偏差来源。
+
+**增量失效**：实例缓存键由规范化行程指纹、类别、元数据指纹和格式版本共同派生；融合依赖指纹由参与实例缓存键、IoU 阈值和保留策略派生。元数据替换只重解码目标实例，保留策略变化只重算融合，格式切换只重解码新增格式。事件报告包含 `decoded_instances`、`invalidated_instances`、`reused_instances` 与解码计数。
+
+**预算内交互**：命令在单消费者队列中执行；提交线程最多等待配置预算。预算内完成则返回 `status=complete,is_latest=true`。否则立即返回最近一次完整预览，并带 `E_INTERACT_BUDGET_PENDING`、当前命令序号、请求参数快照版本、预览来源命令序号和当前进度；陈旧预览被强制标记为 `is_latest=false`。
+
+**快照与恢复**：每次提交先写不可变临时代际目录，再原子改名到 `generations/gen-N`，最后原子切换 `current` 符号链接。manifest 记录全局版本、格式版本、配置哈希、实例结果版本、融合结果版本、文件哈希和版本变化。恢复时校验 manifest、文件哈希、实例内嵌版本和融合版本。未发布的半写代际不会被恢复。
+
+**并发确定性**：解码、转换和匹配使用 `max_workers` 线程池。每个任务携带 `stage:source:zero-padded-instance-id` 稳定排序键；结果按同一键回收，失败清单按数值实例 ID、阶段和业务码排序，因此并发输出与单线程按实例 ID 执行一致。
+
+## 模块
+
+- `codec.py`：双格式解析、统一中间表示与失败清单。
+- `conversion.py`：v1/v2 双向转换和逐像素复核。
+- `fusion.py`：匹配、crowd 策略、稳定裁决与边界诊断。
+- `pipeline.py`：缓存键、融合依赖和三类增量失效。
+- `interactive.py`：预算受控预览与 PENDING 语义。
+- `snapshot.py`：代际快照、原子发布、恢复校验和优雅退出。
+- `verification.py`：PNG、转换、交互、并发、快照和全量重建验收。
+- `tools/generate_samples.py`：固定种子样本生成器。
+
+## 实际验证结果
+
+本工作区已用固定种子 `20261120` 的本地样本完成验证，结果写入 `artifacts/verification_report.json`。最终类别栅格为 `artifacts/verification/artifacts/final_category_grid.npz`，实例清单为 `artifacts/verification/artifacts/panorama_instances.json`，可视化结果为 `artifacts/verification/artifacts/final_panorama.png`。
+
+- 3 张 64x48 PNG 可读写；`panorama_000.png` 与 v1 掩码逐像素一致。
+- v1 解析 8 个实例，v2 解析 8 个实例，无格式失败。
+- v1→v2 与 v2→v1 均逐像素一致；降级损失清单记录 8 个 v2 实例。
+- 最终识别 6 个跨格式匹配对，类别分布为背景 1273、类别 1 574、类别 2 213、类别 3 781、类别 4 143、类别 5 88。
+- 边界样本 `v1:2|v2:2` 的 float64 IoU 为 0.3333333333333333，快速值为 0.333333；参考判定为匹配、实际判定为不匹配，因此产生 `E_BOUNDARY_SENSITIVE`。
+- 8 条主交互命令均即时完成；独立预算探针注入 80ms 工作、预算 5ms，确定返回 `E_INTERACT_BUDGET_PENDING`，预览与原响应均为 `is_latest=false`，后台完成后才转为 `is_latest=true`。
+- 多次增量交互后的类别栅格与从更新后源元数据全量重建的结果逐像素一致，SHA-256 均为 `6db6b2744269b0e7e72ee724d3924a73de56d25f8fa1a55acb9eba1fa2c0addc`，16 个实例缓存键一致。
+- 4 个交互代际快照均通过 manifest 与实例版本校验；强制 SIGKILL 发生在 `current` 指针发布前，重启恢复到此前已发布代际且像素一致，随后成功提交下一代。
+- SIGTERM 优雅退出测试完成提交并以整数退出码 0 退出。
+- 13 个单元/集成测试全部通过，覆盖固定种子复现、损坏/越界行程、base64 长度、缺失字段、并发失败排序、预算 PENDING、三类失效、转换降级、快照损坏和临时代际忽略。
+
+最近一次完整验收为 `overall_pass=true`。唯一业务诊断码是预期中的 `E_BOUNDARY_SENSITIVE`。
