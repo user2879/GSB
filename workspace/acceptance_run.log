@@ -1,0 +1,54 @@
+
+========================================================================
+1. Deterministic sample, baseline render, serial equivalence
+========================================================================
+generated 444 deterministic points -> workspace/acceptance/baseline
+status=completed tiles=36 rendered=36 reused=0
+points: total=444 rendered=444 behind_near=0 culled_frustum=0
+parallel == serial pixel-for-pixel: True
+
+========================================================================
+2. Re-run: version match, all tiles reused, outputs not replaced
+========================================================================
+reused=36 rendered=[] output_replaced=False
+
+========================================================================
+3. Local point edit: only footprint-covered tiles are invalidated
+========================================================================
+invalidated=[14, 20] rerendered=[14, 20] reused=34/36
+
+========================================================================
+4. Camera parameter change: new version archives old tiles
+========================================================================
+rendered=36 archived_tiles=36
+
+========================================================================
+5. SIGTERM interrupt at tile boundary, then resume to completion
+========================================================================
+interrupt exit code=130 (expected 130)
+persisted tiles at interrupt: 2
+resume status=completed reused=2 rendered=34
+
+========================================================================
+6. Hard kill (SIGKILL): recover only from valid persisted tiles
+========================================================================
+hard-killed process; no interrupted marker guaranteed: True
+recovery status=completed rc=0
+
+========================================================================
+7. Memory budget caps in-flight tiles without reducing supersampling
+========================================================================
+max_inflight_tiles=2 grid=[180, 120] supersample unchanged
+
+========================================================================
+8. Data-driven fault injection returns structured E_xxx codes
+========================================================================
+injection=zero_radius          -> E_RADIUS (expected E_RADIUS)
+injection=non_finite_normal    -> E_FINITE (expected E_FINITE)
+injection=out_of_bounds_tile   -> E_TILE (expected E_TILE)
+injection=unknown_thing        -> E_INJECT (expected E_INJECT)
+
+========================================================================
+ALL ACCEPTANCE SCENARIOS PASSED
+========================================================================
+artifacts under: workspace/acceptance
