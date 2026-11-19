@@ -1,0 +1,47 @@
+{
+  "workspace_id": "local-mesh-demo",
+  "global_concurrency": 4,
+  "revision_file": "revision-r1.json",
+  "requests_file": "requests-cold.json",
+  "ledger_path": "../var/ledger.sqlite3",
+  "snapshot_dir": "../var/snapshots",
+  "defaults": {
+    "timeout_ms": 500,
+    "retries": 0,
+    "cooldown_ms": 1000
+  },
+  "services": [
+    {
+      "id": "catalog",
+      "max_concurrency": 2,
+      "instances": [
+        {"id": "catalog-a", "host": "127.0.0.1", "port": 18181},
+        {"id": "catalog-b", "host": "127.0.0.1", "port": 18182}
+      ]
+    },
+    {
+      "id": "checkout",
+      "max_concurrency": 2,
+      "instances": [
+        {"id": "checkout-a", "host": "127.0.0.1", "port": 18183},
+        {"id": "checkout-b", "host": "127.0.0.1", "port": 18184}
+      ]
+    },
+    {
+      "id": "orders",
+      "max_concurrency": 1,
+      "instances": [
+        {"id": "orders-a", "host": "127.0.0.1", "port": 18185},
+        {"id": "orders-b", "host": "127.0.0.1", "port": 18186}
+      ]
+    },
+    {
+      "id": "inventory",
+      "max_concurrency": 1,
+      "instances": [
+        {"id": "inventory-a", "host": "127.0.0.1", "port": 18187},
+        {"id": "inventory-b", "host": "127.0.0.1", "port": 18188}
+      ]
+    }
+  ]
+}

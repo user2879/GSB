@@ -1,0 +1,52 @@
+{
+  "revision": 1,
+  "rules": [
+    {
+      "id": "catalog-route",
+      "format_version": 1,
+      "prefix": "/catalog",
+      "target_service": "catalog"
+    },
+    {
+      "id": "checkout-route",
+      "format_version": 2,
+      "prefix": "/checkout",
+      "target_service": "checkout",
+      "instance_weights": {
+        "checkout-a": 3,
+        "checkout-b": 1
+      },
+      "timeout_ms": 180
+    },
+    {
+      "id": "orders-route",
+      "format_version": 3,
+      "prefix": "/orders",
+      "target_service": "orders",
+      "instance_weights": {
+        "orders-a": 1,
+        "orders-b": 1
+      },
+      "timeout_ms": 120,
+      "retries": 1,
+      "circuit_threshold": 2,
+      "cooldown_ms": 5000,
+      "depends_on": ["rule:checkout-route", "service:catalog"]
+    },
+    {
+      "id": "inventory-route",
+      "format_version": 3,
+      "prefix": "/inventory",
+      "target_service": "inventory",
+      "instance_weights": {
+        "inventory-a": 1,
+        "inventory-b": 1
+      },
+      "timeout_ms": 160,
+      "retries": 1,
+      "circuit_threshold": 2,
+      "cooldown_ms": 5000,
+      "depends_on": ["rule:orders-route"]
+    }
+  ]
+}
