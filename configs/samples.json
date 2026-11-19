@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "seed_list": [20261119, 20261120, 20261121, 20261122],
+  "samples": [
+    {
+      "name": "single_channel_sine",
+      "scenario": "single_channel",
+      "seed": 20261119,
+      "duration_us": 4000000,
+      "frame_period_us": 2000,
+      "batch_size": 16
+    },
+    {
+      "name": "multi_channel_overlap",
+      "scenario": "multi_channel_overlap",
+      "seed": 20261120,
+      "duration_us": 5000000,
+      "frame_period_us": 2000,
+      "batch_size": 16
+    },
+    {
+      "name": "cross_slice_boundary",
+      "scenario": "cross_slice_boundary",
+      "seed": 20261121,
+      "duration_us": 6000000,
+      "frame_period_us": 2500,
+      "batch_size": 20
+    },
+    {
+      "name": "long_duration",
+      "scenario": "long_duration",
+      "seed": 20261122,
+      "duration_us": 120000000,
+      "frame_period_us": 20000,
+      "batch_size": 64
+    }
+  ]
+}
+

@@ -1,0 +1,47 @@
+{
+  "environment": {
+    "python": "3.11.0rc1",
+    "numpy": "2.4.6",
+    "platform": "WSL2 Ubuntu 22.04",
+    "containerized": false
+  },
+  "automated_tests": {
+    "passed": 37,
+    "failed": 0,
+    "command": "PYTHONPATH=src python3 -m pytest -q"
+  },
+  "cli_verification": {
+    "status": "ok",
+    "sample": "cross_slice_boundary",
+    "initial_protocol": 2,
+    "final_protocol": 1,
+    "initial_commit": "gen-000001-814f718b535d",
+    "final_commit": "gen-000002-78daf15fd084",
+    "no_op_invalidated_frames": 0,
+    "incremental_recompiled_frames": 875,
+    "migration_recompiled_frames": 2400,
+    "initial_check_status": "confirmed",
+    "incremental_check_status": "confirmed",
+    "migrated_check_status": "confirmed",
+    "protocol_roundtrip": {
+      "frame_count_checked": 2400,
+      "timestamp_mismatches": 0,
+      "amplitude_mismatches": 0,
+      "v1_migration_idempotent": true
+    },
+    "recovered_generation": "gen-000002-78daf15fd084",
+    "orphan_count": 0,
+    "full_report": "reports/verification.json"
+  },
+  "forced_termination": {
+    "exit_nonzero": true,
+    "restored_last_committed_generation": true,
+    "orphan_recovered_and_logged": true,
+    "resume_matches_full_recompile": true,
+    "test": "tests/test_persistence.py::test_real_subprocess_forced_termination_then_resume_matches_full"
+  },
+  "samples_sha256": {
+    "effect_graphs.json": "385eac9cce38e2ace2dc8fc959f33614af6ee5443821f849b60ad839822f6cd1",
+    "truth_manifest.json": "7ebaa1c14f14bfb3b4226be59cb5ec208e16f5db626e6f29454e5699ea78438c"
+  }
+}
