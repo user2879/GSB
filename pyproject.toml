@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hls-budget-workbench"
+version = "1.0.0"
+description = "Deterministic parallel HLS transcode and adaptive-buffer budget workbench"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy==2.2.6",
+  "av==17.1.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5"]
+
+[project.scripts]
+hls-workbench = "hls_workbench.demo:main"
+
+[tool.setuptools.packages.find]
+include = ["hls_workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
