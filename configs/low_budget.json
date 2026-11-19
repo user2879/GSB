@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "seed": 20261119,
+  "shapes": [
+    {"kind": "icosphere", "translate": [-2.4, 0.0, 0.0], "radius": 0.72, "subdivisions": 2},
+    {"kind": "torus", "translate": [0.0, 0.0, 0.0], "major_radius": 1.0, "minor_radius": 0.32, "tube_segments": 32, "ring_segments": 12},
+    {"kind": "grooved_cube", "translate": [2.4, 0.0, 0.0], "half_height": 0.55}
+  ],
+  "defects": {
+    "non_manifold_edge": 1,
+    "duplicate_vertex": 3,
+    "zero_area_face": 1,
+    "isolated_component": 1,
+    "self_intersection": 1
+  },
+  "weld_tolerance": 1e-09,
+  "boundary_tolerance": 1e-09,
+  "self_intersection_epsilon": 1e-10,
+  "max_faces_per_block": 96,
+  "isolated_component_face_threshold": 12,
+  "threads": 8,
+  "memory_budget_bytes": 100000,
+  "block_time_budget_ms": 0.18,
+  "volume_relative_tolerance": 1e-09,
+  "area_relative_tolerance": 1e-09
+}

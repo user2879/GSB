@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mesh-repair-pipeline"
+version = "1.0.0"
+description = "Deterministic 3D mesh defect generation, repair and independent verification"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "trimesh>=4.4,<5"
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+mesh-repair = "mesh_repair.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mesh_repair*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
