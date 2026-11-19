@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "volumetric-editor"
+version = "1.0.0"
+description = "Deterministic tiled renderer and incremental editor for transparent media and volumetric light"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "PyOpenGL>=3.1"]
+
+[project.scripts]
+volumetric-editor = "volumetric_editor.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["volumetric_editor*"]
