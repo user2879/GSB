@@ -1,0 +1,20 @@
+{
+  "injections": [
+    {"id": "INJ-001", "kind": "nonfinite_value", "target": "A",
+     "expected_code": "E_NONFINITE"},
+    {"id": "INJ-002", "kind": "nonfinite_value", "target": "B",
+     "expected_code": "E_NONFINITE"},
+    {"id": "INJ-003", "kind": "shape_mismatch",
+     "expected_code": "E_SHAPE_MISMATCH"},
+    {"id": "INJ-004", "kind": "block_param_out_of_range",
+     "param": "row_block_size", "value": 0,
+     "expected_code": "E_BLOCK_INVALID"},
+    {"id": "INJ-005", "kind": "block_param_out_of_range",
+     "param": "row_block_size", "value": 100000,
+     "expected_code": "E_BLOCK_INVALID"},
+    {"id": "INJ-006", "kind": "budget_zero",
+     "expected_code": "E_BUDGET_ZERO"},
+    {"id": "INJ-007", "kind": "csr_structure",
+     "expected_code": "E_CSR_INVALID"}
+  ]
+}

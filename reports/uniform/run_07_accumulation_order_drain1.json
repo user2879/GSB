@@ -1,0 +1,100 @@
+{
+  "mode": "incremental",
+  "invalidated_blocks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "reused_blocks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "recomputed_blocks": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "pending_blocks": [
+    8,
+    9,
+    10
+  ],
+  "previous_pending_blocks": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "recomputed_count": 4,
+  "budget": {
+    "limit": 4,
+    "consumed": 4,
+    "deduction_sequence": [
+      {
+        "block": 4,
+        "remaining": 3
+      },
+      {
+        "block": 5,
+        "remaining": 2
+      },
+      {
+        "block": 6,
+        "remaining": 1
+      },
+      {
+        "block": 7,
+        "remaining": 0
+      }
+    ]
+  },
+  "codes": [
+    "E_RECOMPUTE_PENDING"
+  ],
+  "precision": "fp64",
+  "accumulation_order": "abs_desc",
+  "snapshot_version": 33,
+  "failures": [],
+  "block_timings": [
+    {
+      "block": 4,
+      "elapsed_ms": 0.5699760004063137
+    },
+    {
+      "block": 5,
+      "elapsed_ms": 0.5855410054209642
+    },
+    {
+      "block": 6,
+      "elapsed_ms": 0.5709940014639869
+    },
+    {
+      "block": 7,
+      "elapsed_ms": 0.3384060037205927
+    }
+  ],
+  "timing_summary": {
+    "count": 4,
+    "min_ms": 0.3384060037205927,
+    "max_ms": 0.5855410054209642,
+    "mean_ms": 0.5162292527529644,
+    "total_ms": 2.0649170110118575
+  },
+  "elapsed_ms": 7.208814000478014,
+  "distribution": "uniform",
+  "step": "accumulation_order_drain1"
+}
