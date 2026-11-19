@@ -1,21 +1,172 @@
-当前是空白 Windows 工作区，需从零开发一个面向曲库查重的音频指纹相似片段检索工作台。素材由本地确定性合成：固定种子程序化生成若干音乐样本，含不同音色段、节拍、静音段与仿现场噪声，并嵌入若干已知重复片段与移调/变速变体作为检索真值标签。工作台需支持用户以增量方式修改曲库与检索配置（指纹窗长、帧移、峰值密度、相似度阈值），每次修改推进带版本号的曲库状态；指纹提取、倒排索引与检索结果都必须从同一状态派生。核心难点是状态演进与恢复一致性：倒排索引分片须原子提交，版本戳与内容哈希必须能识别曲库变化，撤销或回退配置后索引与检索结果须精确复原，且应用被强制终止后只能恢复到最近一次已提交稳定状态。
+# 音频指纹相似片段检索工作台
 
-任务环境与准备：
-安装 Python 3.11 或 3.12，并安装 NumPy 与 SciPy（用于 STFT、重采样与互相关），版本以 pip 安装说明为准。
-确认工作区为空目录，具备写入权限；所有 WAV 素材由程序生成，不依赖外部音频资产、网络或 GPU。
-准备本地运行入口与固定随机种子配置，确保两次运行可在同一机器上复现输出。
+这是一个完全本地、确定性、可回退且可崩溃恢复的音频查重工作台。素材由固定种子程序化生成，指纹、倒排索引、检索结果和演示报告均从同一版本化曲库状态派生。实现不依赖网络、GPU、Docker 或外部音频资产。
 
-业务要求：
-1. 实现确定性音乐素材生成器与真值标签：按固定种子程序化生成含不同音色段、节拍、静音段与仿现场噪声的多段 44.1kHz 单声道 16bit WAV，并嵌入已知重复片段与移调/变速变体，输出素材文件与真值清单（重复片段在曲目内的起止采样点、变体类型）；同一配置两次生成必须逐字节一致，且真值区间须落在实际音频长度内。
-2. 实现可配置指纹提取：以窗长、帧移、峰值密度与频带边界为配置做 STFT 与邻域极大值峰值挑选，配对生成带时间差的哈希指纹；提取结果须记录所用配置摘要与内容哈希，同一素材与配置两次提取得到逐字节相同指纹，任一配置项变化须使指纹内容哈希改变。
-3. 实现曲库状态与操作日志：曲库成员、指纹配置与相似度阈值构成带版本号的状态，每次导入、删除或配置修改以带父版本的操作记录；任一历史版本能重建对应倒排索引分片与检索阈值，重建结果的哈希须与当时直接产出一致，不允许整库重建冒充状态回退。
-4. 实现倒排索引分片与原子提交：索引按指纹哈希空间分片，每次变更只重写受影响的倒排项所在分片，分片以临时文件加原子改名的形式落盘并记录内容哈希与版本戳；写入中途被强制终止后重启，只允许出现完整分片或保持旧分片，不得出现半写索引。
-5. 实现检索与时间对齐：给定查询片段返回按得分排序的候选曲目及其对齐起点与时长，得分由指纹时间差投票直方图推导；同一查询在状态回退到历史版本后返回的候选排序必须与该版本当时的结果一致，不一致时须定位首个分歧候选与其得分构成。
-6. 实现强制终止后的恢复一致性：正常退出写完整清单与关闭标记；强制终止后重启只依据最近一次已提交稳定状态恢复索引与版本戳，未提交分片作为孤儿回收并记录；不得伪造退出报告或复用旧版本缓存，恢复后继续导入与检索的结果须与未中断时一致。
-7. 实现资源预算与降级路径：检索与索引维护受查询线程数、索引分片内存与单查询耗时预算约束，预算不足时按固定优先级降级（串行检索、分片缓存淘汰、跳过低分候选）并记录降级原因与候选集变化；降级不得遗漏真值中的重复片段命中，降级决策序列须可复现。
-8. 定义业务错误码（E_AUDIO_FORMAT、E_INDEX_VERSION、E_PARTITION_HASH、E_CONFIG_RANGE、E_SNAPSHOT_STALE、E_BUDGET_DENIED、E_QUERY_DRIFT）并覆盖异常链路，同时提供可重复演示入口：一条命令生成素材、建库、执行检索、撤销配置、模拟强制终止并重启恢复，输出逐版本索引哈希、检索报告与内容哈希，两次运行须逐字节一致。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+要求 Python 3.11/3.12、NumPy、SciPy。
 
-验收：
-用本地合成素材验证指纹提取、状态回退后的检索一致性与强制终止恢复，输出索引哈希与检索报告。
+```bash
+python3 -m pip install --user -r requirements.txt
+python3 -m pytest -q
+python3 -m fingerprint_workbench demo --root artifacts/demo
+```
+
+演示命令会依次完成：
+
+1. 生成 7 首 44.1 kHz/单声道/16 bit WAV、5 个查询片段及真值清单；
+2. 逐首导入前 6 首并输出每个版本的索引哈希；
+3. 执行精确重复、移调、轻微变速与同曲重复检索；
+4. 修改指纹窗长、帧移、峰值密度与阈值，再回退到旧版本并逐字段比较候选；
+5. 在子进程写入分片期间发送 `SIGKILL`，重启后只恢复 `CURRENT.json` 指向的已提交版本；
+6. 恢复后继续导入，并与未中断对照库比较状态摘要、索引哈希、版本链和候选结果。
+
+也可以使用模块入口执行单项操作：
+
+```bash
+python3 -m fingerprint_workbench generate --out artifacts/materials
+python3 -m fingerprint_workbench import --root artifacts/workbench \
+  --track-id track_01 --audio artifacts/materials/tracks/track_01.wav
+python3 -m fingerprint_workbench search --root artifacts/workbench \
+  --query artifacts/materials/queries/q_01_exact_cross.wav
+python3 -m fingerprint_workbench config --root artifacts/workbench \
+  --fingerprint-config-json '{"window_samples":1024,"hop_samples":256,"peak_density":18,"band_edges_hz":[90,300,900,2200,5200,10000]}' \
+  --threshold 0.15
+python3 -m fingerprint_workbench undo --root artifacts/workbench
+python3 -m fingerprint_workbench revert --root artifacts/workbench --version 6
+python3 -m fingerprint_workbench verify-version --root artifacts/workbench --version 6
+python3 -m fingerprint_workbench versions --root artifacts/workbench
+```
+
+安装为脚本入口（可选）：
+
+```bash
+python3 -m pip install --user -e .
+fpw demo --root artifacts/demo
+```
+
+## 架构
+
+```text
+CURRENT.json                原子提交点：version + state_digest + manifest_hash
+  └─ ops/vNNNNNN.json       带 parent_version 的不可变操作与完整状态
+       └─ indexes/manifests/<hash>.json
+            └─ indexes/partitions/<hash>.json    内容寻址分片
+audio/<audio_sha>.wav       内容寻址音频
+fingerprints/<hash>.json    音频哈希 + 指纹配置 + 指纹记录的内容寻址缓存
+```
+
+- `LibraryState` 由成员、成员音频哈希、指纹配置、相似度阈值、逐曲指纹哈希和索引清单哈希组成。
+- `state_digest` 对除版本号和清单哈希外的全部业务状态做规范 JSON SHA-256。成员、配置、阈值或指纹任一变化都会改变摘要。
+- 索引清单的 `content_hash` 同时是文件名。清单包含每个分片的版本戳、内容哈希、大小和倒排项计数。
+- 回退不会扫描或重建整库：回退产生新版本和当前父链，但直接复用目标版本的不可变清单；`shards_rewritten = 0`，索引哈希与目标版本完全相同。
+- `verify-version` 是只读审计路径：从历史状态中的指纹重新计算分片与清单哈希，确认历史版本可重建，但不用于冒充状态回退。
+
+### 原子提交协议
+
+一次状态变更按以下顺序执行：
+
+1. 只写受影响的哈希分片：同目录临时文件、`fsync`、原子 `os.replace`；已有内容寻址文件不复写；
+2. 写不可变索引清单；
+3. 写不可变操作记录 `ops/vNNNNNN.json`；
+4. 原子替换 `CURRENT.json`，这是唯一提交点；
+5. 正常退出时写 `STOP.json` 关闭标记。
+
+强制终止若发生在第 4 步之前，`CURRENT.json` 仍指向上一个稳定版本。重启时校验 `CURRENT -> op -> manifest -> shards` 全链，删除 `.tmp` 半写文件和未被任一已提交版本引用的分片、清单、指纹及音频，并生成无时间戳的确定性恢复报告。默认会把失败提交留下的完整但未引用的分片也计入孤儿回收。
+
+### 指纹与检索
+
+`FingerprintConfig` 包括窗长、帧移、峰值密度、频带边界、邻域半径、扇出与目标时间区。指纹文档固定记录配置字典、配置摘要、音频内容哈希与规范排序后的记录；任一配置字段变化都会改变配置摘要和指纹内容哈希。
+
+STFT 使用 SciPy。峰值在频带内做时频邻域极大值筛选，再按每秒峰值密度确定性地限制数量。每个锚点与后续目标峰配对，产生四类记录：
+
+- `exact`：绝对频点 + 精确帧差，用于字节/频谱级重复；
+- `robust`：半音音程 + 对数时间桶，容忍移调与轻微变速；
+- `context`：相邻双目标的相对音程和双时间桶，降低随机碰撞；
+- `sequence`：连续三目标音程序列，提供高权重低碰撞证据。
+
+检索按指纹哈希空间分片扫描。对每条命中计算 `track_anchor_frame - query_anchor_frame`，在平滑时间差直方图上取得票峰。得分定义为：
+
+```text
+score = histogram_peak_weight / query_weight
+weight = exact*1.25 + robust*0.25 + context*3.0 + sequence*5.0
+```
+
+候选按得分、票数、对齐帧和曲目 ID 稳定排序。报告给出对齐起点、查询时长、票数分解与完整得分构成。
+
+## 状态演进与恢复
+
+- 每次导入、删除、配置/阈值修改、undo、revert 都创建 `version + 1` 且带 `parent_version` 的新操作。
+- 导入只合并新曲目覆盖到的分片；删除只过滤被删曲目出现的分片；仅阈值变化不重写任何分片，只产生新清单。
+- 回退/撤销可指向任意历史版本。新操作的状态内容与目标版本相同，因此 `state_digest`、`manifest_hash` 和检索候选精确复原。
+- 检索结果不使用进程内旧缓存。指纹缓存按 `audio_sha256 + config` 内容寻址，可安全复用；恢复时只保留已提交版本引用的内容。
+
+## 资源预算与降级
+
+`BudgetConfig` 包括查询线程数、分片缓存 MB、单查询工作预算、索引维护分片 MB 和候选上限。为保证降级决策可复现，`query_time_budget_ms` 映射为固定的候选命中检查数量预算（`1 ms = 1200` 次检查），不使用不可复现的实际墙钟时间作分支条件。
+
+预算不足时严格按以下优先级降级并记录原因：
+
+1. `serial_query` 或 `reduce_query_threads`；
+2. `evict_partition_cache` / `bypass_partition_cache`；
+3. `skip_low_score_candidates`，记录截断前后数量及被跳过的候选和得分构成。
+
+以本次演示的压低预算运行 `q_03_time_fast`，三种动作全部触发，真值 `track_05` 仍在第 2 名命中；恢复后 `q_05_pitch_down_cross` 也在降级预算下命中 `track_07`。
+
+## 业务错误码
+
+| 错误码 | 触发场景 |
+|---|---|
+| `E_AUDIO_FORMAT` | WAV 容器损坏、非 44.1 kHz、非单声道、非 16 bit PCM、长度不足 |
+| `E_INDEX_VERSION` | 状态、操作、清单或分片 schema 版本不受支持 |
+| `E_PARTITION_HASH` | 分片/清单/指纹内容哈希不符、分片归属错误、JSON 损坏 |
+| `E_CONFIG_RANGE` | 指纹参数、频带边界或相似度阈值越界 |
+| `E_SNAPSHOT_STALE` | `CURRENT` 缺失、操作链断裂、引用文件缺失或状态摘要不符 |
+| `E_BUDGET_DENIED` | 线程、内存、时间或候选预算低于硬下限/分片超过维护预算 |
+| `E_QUERY_DRIFT` | 查询配置与状态不一致，或回退后候选出现分歧；异常详情包含首个分歧位置与双方得分构成 |
+
+另提供 `E_STATE_CONFLICT`、`E_NOT_FOUND`、`E_LOCKED` 覆盖重复导入、缺失曲目和并发打开。
+
+## 验证结果
+
+本机 Python 3.11.0rc1、NumPy 2.4.6、SciPy 1.17.1 下：
+
+```text
+python3 -m pytest -q
+..........                                                               [100%]
+10 passed in about 24 s
+```
+
+两次完整演示的 stdout 逐字节一致，报告与素材清单哈希一致：
+
+```text
+material_manifest_sha256 = 2b71ce8196bb277cc0a549e21afa3499154e6e3debb668226709a8dec4b2fcd3
+report_sha256            = dd44e603f0065d7daab017b9fe0863804906790b3f18867db33086bd3992bd6d
+```
+
+关键版本索引哈希：
+
+```text
+v6  baseline index = 59dd6eab2ba6953518edf74ec43f04763dc6ef022e394ea3a9559f7c9f534595
+v7  config index   = 0f0600318315021a472b6c134abc6e1adb87bd4c465b4d511085fd2c5a20b6a0
+v8  reverted index = 59dd6eab2ba6953518edf74ec43f04763dc6ef022e394ea3a9559f7c9f534595
+v9  resumed index  = 017a98ee5bf38c8468ec3f3a0b02715895b80268fc2a6311d1296fed84d010fc
+v9  control index  = 017a98ee5bf38c8468ec3f3a0b02715895b80268fc2a6311d1296fed84d010fc
+```
+
+- 配置回退 v8 与 v6 索引哈希、状态摘要逐字节一致，所有候选逐字段一致。
+- `SIGKILL` 发生在分片临时文件写入后、提交点前；恢复停在 v8，未出现 v9。
+- 恢复回收 1 个半写临时文件、2 个未引用完整分片、1 个孤立指纹和 1 个孤立音频。
+- 恢复后导入得到 v9，与未中断对照库的状态摘要、索引哈希、版本链和检索候选完全一致。
+- 6 个演示真值命中 6 个；对齐误差 240–3428 个采样点（约 5.4–77.7 ms）。
+
+完整报告见 `artifacts/demo/report.json`，逐版本哈希见 `artifacts/demo/version_hashes.json`，崩溃现场见 `artifacts/demo/crash_recovery.json`，素材与真值见 `artifacts/demo/materials/`，简明实测说明见 `artifacts/validation_report.md`。
+
+## 测试覆盖
+
+- 生成器两次运行的所有 WAV 与真值清单逐字节相等，真值区间均落在音频长度内；
+- 指纹两次提取逐字节相等，窗长、帧移、峰值密度、频带变化均改变内容哈希；
+- 增量导入、阈值更新不重写分片、删除/undo/revert 精确恢复历史清单；
+- 历史索引只读重建哈希与当时直接产出一致；
+- 分片篡改、schema 篡改、快照缺失、非法音频、非法预算和候选漂移的业务错误链路；
+- 子进程强制终止后的稳定版本恢复、孤儿回收和恢复后续操作等价性。
