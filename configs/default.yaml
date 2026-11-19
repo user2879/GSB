@@ -1,0 +1,40 @@
+# codecq 默认评估配置：固定种子、固定编码参数组合、固定注入配置。
+# 同一配置两次运行必须产生逐字节一致的账本。
+seed: 20261119
+retries: 1
+
+video:
+  width: 640
+  height: 360
+  fps: 30
+  duration: 10
+
+audio:
+  rate: 48000
+  channels: 2
+
+# 镜头真值清单（硬切边界起始帧）；与合成器输出逐帧核对，不靠条数推断。
+shots: [0, 75, 150, 225]
+
+metrics:
+  weights: {Y: 0.8, U: 0.1, V: 0.1}
+  ssim: {window: 11, sigma: 1.5}
+
+tolerances:
+  audio_offset_samples: 80
+  audio_max_lag_samples: 4800
+  audio_gain_dev: 0.05
+  min_similarity: 0.9
+
+encodes:
+  - {id: c18_g60_b2_420, crf: 18, gop: 60, bframes: 2, pix_fmt: yuv420p}
+  - {id: c28_g30_b0_420, crf: 28, gop: 30, bframes: 0, pix_fmt: yuv420p}
+  - {id: c23_g60_b2_444, crf: 23, gop: 60, bframes: 2, pix_fmt: yuv444p}
+  - {id: c35_g150_b3_420, crf: 35, gop: 150, bframes: 3, pix_fmt: yuv420p}
+
+injections:
+  - {id: inj_drop, type: frame_drop, target: c28_g30_b0_420, frames: [12, 13, 200]}
+  - {id: inj_ts, type: timestamp_jump, target: c18_g60_b2_420, frame: 100, delta_ms: 500}
+  - {id: inj_chroma, type: chroma_mislabel, target: c23_g60_b2_444, declared: yuv420p}
+  - {id: inj_rate, type: audio_rate_misreport, target: c35_g150_b3_420, declared_rate: 44100}
+  - {id: inj_shift, type: audio_shift, target: c28_g30_b0_420, offset_samples: 480}

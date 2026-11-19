@@ -1,0 +1,23 @@
+# 镜头真值清单模板：generate_source 输出的 truth.yaml 结构示例。
+# 实际真值由合成器按固定种子生成并随账本记录哈希，本模板仅供人工核对格式。
+seed: 20261119
+video:
+  width: 640
+  height: 360
+  fps: 30
+  frames: 300
+  duration: 10
+  content_sha256: "<sha256 of concatenated per-frame RGB hashes>"
+audio:
+  rate: 48000
+  channels: 2
+  samples: 480000
+  sha256: "<sha256 of int16 stereo PCM>"
+shots:
+  - {index: 0, start: 0, end: 75}
+  - {index: 1, start: 75, end: 150}
+  - {index: 2, start: 150, end: 225}
+  - {index: 3, start: 225, end: 300}
+blocks:
+  - {frame: 0, x: 40, y: 30, w: 96, h: 64}
+  # ... 每帧一条，共 frames 条
