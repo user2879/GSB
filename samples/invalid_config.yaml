@@ -1,0 +1,48 @@
+# 故意包含多类非法项，验证“收集而非中断”的校验语义
+experiment:
+  name: invalid_demo
+
+data:
+  n_samples: -5
+  base_seed: not_an_int
+  split_ratio: 1.5
+  missing_rate: 0.06
+  target:
+    name: ""
+    noise_std: -1.0
+  numeric:
+    - name: age
+      mean: 0
+      std: -2.0
+  categorical:
+    - name: region
+      cardinality: 0
+  redundant:
+    - name: broken_dup
+      source: ghost_column
+      coefficient: x
+      noise: -0.2
+
+optimizer:
+  learning_rate: -0.1
+  max_epochs: 0
+  tol: 0.000001
+  batch_size: 0
+
+scheduler:
+  max_workers: 0
+  global_epoch_budget: -10
+  per_scheme_epoch_quota: 0
+  snapshot_interval: 0
+
+schemes:
+  - name: ridge
+    penalties: [-0.5, 0.1]
+    l1_ratios: [0.0]
+  - name: unknown_net
+    penalties: [0.1]
+  - name: elasticnet
+    penalties: [0.2]
+    l1_ratios: [1.5]
+
+seeds: [7, bad_seed]

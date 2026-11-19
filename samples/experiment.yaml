@@ -1,0 +1,61 @@
+# RegBench 本地确定性实验配置（受控 YAML 子集，无第三方依赖也可解析）
+experiment:
+  name: synthetic_tabular_regularization_demo
+
+data:
+  n_samples: 240
+  base_seed: 20261120
+  split_ratio: 0.75
+  missing_rate: 0.06
+  target:
+    name: y
+    noise_std: 0.25
+  numeric:
+    - name: age
+      mean: 35.0
+      std: 8.0
+    - name: income
+      mean: 60.0
+      std: 15.0
+    - name: score
+      mean: 0.0
+      std: 2.0
+  categorical:
+    - name: region
+      cardinality: 3
+    - name: channel
+      cardinality: 2
+  redundant:
+    - name: income_dup
+      source: income
+      coefficient: 0.9
+      noise: 0.4
+    - name: score_dup
+      source: score
+      coefficient: -0.5
+      noise: 0.1
+
+optimizer:
+  learning_rate: 0.05
+  max_epochs: 40
+  tol: 0.000001
+  batch_size: 24
+
+scheduler:
+  max_workers: 4
+  global_epoch_budget: 430
+  per_scheme_epoch_quota: 30
+  snapshot_interval: 5
+
+schemes:
+  - name: ridge
+    penalties: [0.01, 0.1, 1.0]
+    l1_ratios: [0.0]
+  - name: lasso
+    penalties: [0.01, 0.1, 1.0]
+    l1_ratios: [0.0]
+  - name: elasticnet
+    penalties: [0.05, 0.5]
+    l1_ratios: [0.2, 0.8]
+
+seeds: [11, 22, 33]

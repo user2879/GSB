@@ -1,0 +1,52 @@
+# 小全局预算配置：用于演示 E_BUDGET_EXHAUSTED（任务保留在就绪队列、未启动）
+experiment:
+  name: tight_budget_demo
+
+data:
+  n_samples: 200
+  base_seed: 31415
+  split_ratio: 0.75
+  missing_rate: 0.04
+  target:
+    name: y
+    noise_std: 0.2
+  numeric:
+    - name: a
+      mean: 0.0
+      std: 1.0
+    - name: b
+      mean: 3.0
+      std: 1.5
+  categorical:
+    - name: g
+      cardinality: 3
+  redundant:
+    - name: a_dup
+      source: a
+      coefficient: 1.0
+      noise: 0.02
+
+optimizer:
+  learning_rate: 0.05
+  max_epochs: 50
+  tol: 0.0
+  batch_size: 20
+
+scheduler:
+  max_workers: 3
+  global_epoch_budget: 120
+  per_scheme_epoch_quota: 50
+  snapshot_interval: 5
+
+schemes:
+  - name: ridge
+    penalties: [0.01, 0.1, 1.0]
+    l1_ratios: [0.0]
+  - name: lasso
+    penalties: [0.01, 0.1, 1.0]
+    l1_ratios: [0.0]
+  - name: elasticnet
+    penalties: [0.1, 1.0]
+    l1_ratios: [0.3, 0.7]
+
+seeds: [5]

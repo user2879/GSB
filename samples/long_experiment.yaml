@@ -1,0 +1,52 @@
+# 长任务配置：用于中断/恢复与强制终止恢复演示
+experiment:
+  name: long_running_demo
+
+data:
+  n_samples: 512
+  base_seed: 777
+  split_ratio: 0.8
+  missing_rate: 0.05
+  target:
+    name: y
+    noise_std: 0.2
+  numeric:
+    - name: x1
+      mean: 0.0
+      std: 1.0
+    - name: x2
+      mean: 5.0
+      std: 2.0
+  categorical:
+    - name: g
+      cardinality: 4
+  redundant:
+    - name: x1_dup
+      source: x1
+      coefficient: 1.1
+      noise: 0.05
+
+optimizer:
+  learning_rate: 0.02
+  max_epochs: 60
+  tol: 0.0
+  batch_size: 32
+
+scheduler:
+  max_workers: 2
+  global_epoch_budget: 100000
+  per_scheme_epoch_quota: 60
+  snapshot_interval: 2
+
+schemes:
+  - name: ridge
+    penalties: [0.1]
+    l1_ratios: [0.0]
+  - name: lasso
+    penalties: [0.1]
+    l1_ratios: [0.0]
+  - name: elasticnet
+    penalties: [0.1]
+    l1_ratios: [0.5]
+
+seeds: [99]

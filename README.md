@@ -1,22 +1,207 @@
-当前为空白工作区，需要从零构建一个面向表格数据的线性模型正则化训练调度与资源预算交互工作台，用于在反复调整正则化方案时对并行训练任务做资源约束下的调度并验证结果一致性。输入为一份本地 YAML 实验配置与按固定种子确定性生成的合成表格数据描述（数值列、类别列、缺失值、冗余列与目标列），配置包含正则化方案集合（L2 岭回归、L1 套索、弹性网络，各含惩罚系数与混合比例候选）、优化器参数（学习率、最大迭代数、收敛容差、批量大小）、训练/验证划分比例、线程池最大并发数、全局训练轮次预算、单方案轮次配额、快照提交间隔与随机种子列表。工作台需按方案与系数网格展开训练任务，在全局轮次预算与单方案配额约束下并发执行确定性梯度下降，支持用户通过交互命令切换方案、调整系数与并发数，并在任意中断后从阶段快照恢复后与一次性全量训练得到逐字段一致的结果。
+# RegBench：表格线性模型正则化训练调度与资源预算工作台
 
-任务环境与准备：
-确认 Windows 上已安装 Python 3.10 及以上与 NumPy，可用 python --version 与 python -c "import numpy" 检查。
-在工作区创建项目目录，自行生成 YAML 实验配置、列描述与交互命令流等本地合成样本，采用固定随机种子使数据与配置可重复生成。
-准备运行与演示入口说明所需参数（配置路径、样本目录、快照目录、命令流文件），无需外部账号、网络、容器或 GPU。
-如使用 YAML 解析库，请在本地预先安装并在项目说明中记录名称与版本；若不安装第三方库，可自行实现受控子集的配置读取。
+面向合成表格数据的**确定性**正则化训练工作台：按方案 × 系数网格展开训练任务，在
+全局轮次预算与单方案配额约束下并发执行确定性小批量梯度下降，支持交互命令精确失效、
+阶段化快照整体替换、任意中断恢复，并保证不同并发度/恢复点下结果**逐字段一致**。
 
-业务要求：
-1. 实现配置与数据加载层：读取 YAML 实验配置与列描述，按列类型与固定种子确定性生成表格数据，完成缺失值填充（数值列取训练折中位数、类别列取众数）与类别编码，并按划分比例切出训练与验证折；对未知列、类型不符、目标列缺失、学习率为负、惩罚系数为负、批量大小非正与并发数非正分别输出 E_CONFIG_INVALID 等业务码并进入失败清单，不得中断其余配置项校验。
-2. 实现三种正则化的确定性梯度下降训练：L2、L1 与弹性网络的损失须分别显式包含对应正则项及其梯度贡献，弹性网络按混合比例线性组合两种惩罚；按固定批量划分与固定批量顺序执行，L1 次梯度在系数为零处采用固定取值规则，逐轮记录损失值、参数摘要与收敛状态，同一方案配置与数据下多次运行必须得到逐轮一致的损失轨迹。
-3. 实现任务网格展开与按全局轮次预算、单方案配额的调度器：依据方案与系数候选枚举全部训练任务，调度器维护就绪队列并按任务稳定键排序取出，最大并发数取自配置；累计各任务真实执行的训练轮次并与全局预算比较，超出全局预算时不再启动新任务并以 E_BUDGET_EXHAUSTED 标记保留其在就绪队列中的位置；单任务超出单方案配额即中止并以 E_TASK_QUOTA_EXCEEDED 记录已消耗轮次。
-4. 实现交互命令驱动的精确失效判定：支持切换正则化方案、修改惩罚系数与混合比例、调整学习率与并发数四类命令，为每种方案的数据划分、逐轮训练与收敛摘要计算由方案参数指纹、数据指纹与正则化配置派生的缓存键；命令后仅使受影响方案及其派生结果失效并纳入重算集合，未失效方案必须直接复用已持久化的收敛结果且不得重新训练。
-5. 实现阶段化快照整体替换与恢复一致性：将数据加载、方案训练、收敛汇总划分为阶段，各阶段以临时目录整体替换方式提交快照，清单文件记录全局版本号、配置哈希、数据指纹、已完成任务键列表、已消耗轮次预算与各阶段产物版本；启动时以版本号与配置哈希判定是否续跑，不一致输出 E_CONFIG_MISMATCH，恢复后继续训练得到的逐轮损失、系数与全量训练结果逐字段一致。
-6. 保证不同并发度与不同恢复点下的结果逐字段一致：同一配置分别以并发数 1 与并发数大于 1 运行，并额外在任意轮次中断后从快照恢复重跑，得到的各方案逐轮损失轨迹、最终系数、验证指标、任务完成顺序清单、调度决策记录顺序与预算消耗汇总必须完全一致；预算耗尽与配额中止的任务集合也须一致，不得因调度顺序不同而变化。
-7. 实现异常隔离与可处理退出语义：单个训练任务在数据折划分、目标计算、梯度更新或快照写入阶段抛异常时记录任务键、轮次、阶段名、业务码与异常类型到失败清单并继续调度其余任务，失败任务不得进入收敛汇总；收到可处理的退出信号时完成当前轮次快照原子替换与进度记录后以整数退出码 0 退出；进程被强制终止后重启仅依据已完整替换的快照恢复并输出恢复点信息，不得承诺强制终止后一定生成退出报告。
-8. 实现可重复演示与诊断报告输出：每次完整运行生成 JSON 报告，包含各方案的惩罚系数、逐轮损失轨迹摘要、收敛轮次、验证指标、超参数网格完成度、每个任务的开始与结束单调时钟读数、是否触及单方案配额、全局剩余轮次预算、被 E_BUDGET_EXHAUSTED 标记的任务清单、快照版本号、配置哈希、失败清单与并发一致性比对结论，并以命令行交互会话支持方案切换、系数调整、中断恢复与整段命令序列回放。
+- 纯本地运行，无网络、容器、GPU、外部账号依赖。
+- 运行期仅依赖 **NumPy**；YAML 使用内置受控子集解析器 `regbench/yaml_lite.py`，
+  因此 PyYAML 不是必需依赖（环境里存在 PyYAML 5.4.1，但本项目不 import 它）。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 1. 环境与依赖记录
 
-验收：
-用本地合成表格数据验证正则化训练、预算调度、中断恢复与多并发下结果逐字段一致，附运行报告。
+任务要求 Windows + Python 3.10/NumPy；本实现是跨平台纯 Python，实际验证环境为 Linux：
+
+| 组件 | 要求 | 实际验证版本 |
+| --- | --- | --- |
+| Python | >= 3.10 | 3.11.0rc1（另有 3.10.12 解释器可用） |
+| NumPy | 必需 | 2.4.6（通过 `get-pip.py` 引导 pip 后 `pip install --user numpy`） |
+| PyYAML | 可选，本项目未使用 | 系统自带 5.4.1 |
+
+Windows 等价检查命令：`python --version`、`python -c "import numpy"`。
+若 Windows 缺少 pip，可从 https://bootstrap.pypa.io/get-pip.py 引导，再
+`python -m pip install numpy`。
+
+## 2. 目录结构
+
+```
+regbench/                 工作台包
+  errors.py               业务码、失败清单、受控异常
+  yaml_lite.py            零依赖受控 YAML 子集解析器
+  config.py               配置 dataclass 与“收集而非中断”的全量校验
+  data.py                 确定性数据生成/缺失填充/编码/划分/数据指纹
+  models.py               L2/L1/弹性网络显式损失与梯度、确定性 SGD、检查点
+  grid.py                 网格展开、稳定键、预算/配额纯函数规划器
+  snapshot.py             临时目录整体替换 + 原子清单的三阶段快照
+  runner.py               线程池执行、异常隔离、优雅退出、收敛汇总
+  session.py              交互命令、精确失效、缓存复用、命令流回放
+  report.py               JSON 诊断报告与并发一致性比对
+  cli.py                  命令行入口
+samples/                  确定性样本（YAML 配置、命令流、非法配置、长任务/小预算配置）
+scripts/                  demo.sh、可中断驱动、恢复比对脚本
+tests/                    20 个 unittest 用例
+artifacts/                运行产物（报告 JSON、快照目录）
+```
+
+## 3. 快速开始
+
+```bash
+# 全部测试
+python3 -m unittest discover -s tests -v
+
+# 一键演示（校验/训练/预算/回放/异常/信号/强杀/三路一致性）
+bash scripts/demo.sh
+```
+
+### 3.1 命令行参数（演示入口所需的四个核心参数）
+
+| 参数 | 含义 |
+| --- | --- |
+| `--config` | YAML 实验配置路径 |
+| `--snapshot-dir` | 快照目录（data/train/summary 三阶段 + manifest.json） |
+| `--report` | JSON 诊断报告输出路径 |
+| `--commands` | 交互命令流文件（replay 子命令） |
+
+```bash
+# 一次性训练
+python3 -m regbench.cli run \
+  --config samples/experiment.yaml \
+  --snapshot-dir artifacts/run/snap \
+  --report artifacts/run/report.json --reset
+
+# 仅校验配置（非法项全部进入失败清单，退出码 4）
+python3 -m regbench.cli check-config \
+  --config samples/invalid_config.yaml --report artifacts/invalid.json
+
+# 交互命令流回放
+python3 -m regbench.cli replay \
+  --config samples/experiment.yaml \
+  --commands samples/commands.txt \
+  --snapshot-dir artifacts/replay/snap \
+  --report artifacts/replay/report.json --reset
+
+# 串行(workers=1) / 并发(workers>1) / 中断恢复 三路逐字段比对
+python3 -m regbench.cli consistency-check \
+  --config samples/experiment.yaml \
+  --snapshot-dir artifacts/cc/snap \
+  --report artifacts/cc/report.json --interrupt-epoch 3
+
+# 真实交互会话（stdin）
+python3 -m regbench.cli interactive \
+  --config samples/experiment.yaml --snapshot-dir artifacts/ix/snap
+```
+
+`run` 额外开关：`--workers N` 临时覆盖并发数（不改配置文件、不改配置哈希）、
+`--force-full` 忽略快照全量重算、`--failpoint stage:epoch:任务键子串` 故障注入。
+
+## 4. 关键设计与业务码映射
+
+### 4.1 配置与数据（业务要求 1）
+
+- 校验对每个非法条目产出一条 `E_CONFIG_INVALID` 并继续，互不中断；样本
+  `samples/invalid_config.yaml` 一次收集 **18 条**。
+- 覆盖：未知列（冗余列引用不存在源列）、类型不符、目标列缺失、学习率为负、
+  惩罚系数为负、批量大小非正、并发数非正，以及 split_ratio/基数/种子等边界。
+- 数据由 `base_seed` 的 `np.random.RandomState` 确定性生成：数值列、类别列、
+  固定线性目标、冗余列，再用独立随机流注入缺失；固定种子洗牌切分训练/验证折。
+- 数值列以**训练折中位数**填充并标准化，类别列以**训练折众数**填充并独热编码，
+  首列恒为 1 的截距项；对预处理后的矩阵与填充参数计算数据指纹。
+
+### 4.2 三种正则化的确定性训练（业务要求 2）
+
+截距 `w[0]` 不正则，损失显式包含：
+
+- ridge：`0.5*MSE + λ Σ_{j≥1} w_j²`，梯度项 `2λw`
+- lasso：`0.5*MSE + λ Σ|w_j|`，次梯度 `λ·sign(w)`
+- elasticnet：`0.5*MSE + λ(ρ||w||_1 + 0.5(1-ρ)||w||_2²)`，按混合比例线性组合
+
+L1 次梯度在 `w_j=0` 处采用**固定取值规则 0**（`models.L1_ZERO_SUBGRADIENT`）。
+每轮的批量划分与顺序由任务键派生的独立 `RandomState` 决定，与线程调度无关；
+逐轮记录损失、参数摘要（L1/L2 范数、零系数个数等）与收敛状态。测试证明同任务
+多次运行的逐轮损失轨迹、最终系数、验证指标完全相同，且“分段训练 + 检查点恢复”
+与“一次性连续训练”逐轮一致。
+
+### 4.3 网格、预算与配额（业务要求 3）
+
+- 网格按 `(scheme, penalty, l1_ratio, lr, seed)` 稳定键排序，就绪队列位置即稳定顺序。
+- 预算/配额裁决集中在纯函数 `grid.build_schedule_plan`，**与线程池执行顺序解耦**，
+  这是并发一致性的根本保证：
+  - 单任务轮次上限 = `min(max_epochs, 单方案配额)`，触及配额记 `E_TASK_QUOTA_EXCEEDED`；
+  - 按稳定顺序预占全局预算，剩余预算 ≤ 0 的任务**不启动**，保留就绪位置并记
+    `E_BUDGET_EXHAUSTED`；部分剩余预算下启动的任务标 `budget_truncated`。
+- 执行层（`ThreadPoolExecutor`，并发数取配置）只按计划的 `epoch_limit` 跑确定性训练，
+  真实消耗轮次回写清单。
+
+### 4.4 交互命令与精确失效（业务要求 4）
+
+| 命令 | 作用 | 失效范围 |
+| --- | --- | --- |
+| `switch <scheme>` | 切换当前方案视图 | 不失效任何结果 |
+| `set-penalty <scheme> <v>` | 改惩罚系数 | 仅该方案的缓存键 |
+| `set-ratio <scheme> <v>` | 改弹性网络混合比例 | 仅该方案的缓存键 |
+| `set-lr <v>` | 改学习率 | 全部方案训练缓存 |
+| `set-workers <n>` | 改并发数 | 不失效数值结果（并发不进配置哈希/缓存键） |
+
+缓存键 = 任务参数指纹 + 数据指纹。未失效任务直接按 `cache_key` 复用已持久化结果，
+**绝不重新训练**；二次回放演示中 6 个任务全部 `reused`、`recomputed=[]`。
+
+### 4.5 阶段快照与恢复（业务要求 5、6）
+
+- 三阶段 `data → train → summary`，每阶段先写同文件系统临时目录，再 `os.replace`
+  整体替换；`manifest.json` 永远最后原子替换。强杀后只会看到上一版或新版完整快照，
+  不会出现半成品（演示中 SIGKILL 后无临时目录残留）。
+- 清单记录全局版本号、配置哈希、数据指纹、已完成任务键、已消耗轮次、各阶段产物版本、
+  失败清单与交互覆盖层。
+- 启动按配置哈希判定续跑，不一致返回 `E_CONFIG_MISMATCH`（CLI 退出码 3）。
+- 训练按 `snapshot_interval` 逐轮提交检查点（含权重与 RNG 状态），恢复后从检查点
+  继续，逐轮损失/系数/验证指标与一次性全量逐字段一致。
+
+### 4.6 异常隔离与退出语义（业务要求 7）
+
+- 数据折划分、目标计算、梯度更新、快照写入阶段的异常都被捕获，记录任务键、轮次、
+  阶段名、业务码（`E_TASK_FAILED` / `E_STAGE_WRITE_FAILED`）、异常类型到失败清单，
+  其余任务继续；失败任务不进收敛汇总。
+- SIGTERM/SIGINT 触发优雅停止：完成当前轮次检查点原子替换与进度记录后退出，**退出码 0**，
+  并记 `E_GRACEFUL_STOP`。
+- SIGKILL（退出码 137）后重启只依据已完整替换的快照恢复并打印恢复点；按要求不承诺
+  强杀一定生成退出报告。
+
+### 4.7 报告字段（业务要求 8）
+
+每次运行的 JSON 报告包含：各方案惩罚系数/混合比例、逐轮损失轨迹摘要（首尾各 5 点 +
+长度）、收敛轮次、验证指标（MSE/RMSE/MAE/R²）、网格完成度、每任务开始/结束单调时钟
+读数、是否触及配额、全局剩余预算、`E_BUDGET_EXHAUSTED` 清单、快照版本号、配置哈希、
+失败清单、规范完成顺序、调度决策记录顺序与并发一致性比对结论。单调时钟与版本号不参与
+逐字段一致性比较（天然随运行变化），比较载荷见 `report.comparable_payload`。
+
+## 5. 实际验证结果（`bash scripts/demo.sh`）
+
+| 验证项 | 结果 |
+| --- | --- |
+| 单元测试 | 20/20 通过 |
+| 非法配置校验 | 收集 18 条 `E_CONFIG_INVALID`，未中断 |
+| 全量训练（experiment.yaml） | 10/10 任务完成，10 个 `E_TASK_QUOTA_EXCEEDED`，剩余预算 130 |
+| 小预算（tight_budget_experiment.yaml） | 3 任务启动、7 个 `E_BUDGET_EXHAUSTED`，剩余预算 0 |
+| 串行 vs 并发 vs 中断恢复 | `status=identical`，mismatches=[] |
+| 命令回放 | 首次 6 任务重算、13 个缓存键失效；二次回放全部复用、零重训 |
+| 异常隔离 | failpoint 任务 `E_TASK_FAILED`，网格完成度 9/10，失败任务不进汇总 |
+| SIGTERM | 退出码 0，恢复后与长任务全量结果逐字段一致 |
+| SIGKILL | 退出码 137，无临时目录残留，恢复后与全量结果 `identical` |
+| 配置哈希不一致 | `E_CONFIG_MISMATCH`，CLI 退出码 3 |
+
+报告产物位于 `artifacts/demo/`，其中 `consistency_report.json` 含三路报告与比对结论，
+`full_report.json` / `tight_budget_report.json` 分别覆盖配额与预算两类受控中止。
+
+## 6. Windows 运行说明
+
+`scripts/demo.sh` 面向 bash；Windows PowerShell 可按相同顺序直接调用模块，例如：
+
+```powershell
+python -m regbench.cli run --config samples/experiment.yaml `
+  --snapshot-dir artifacts/run/snap --report artifacts/run/report.json --reset
+python -m regbench.cli consistency-check --config samples/experiment.yaml `
+  --snapshot-dir artifacts/cc/snap --report artifacts/cc/report.json
+python -m unittest discover -s tests -v
+```
+
+原子替换使用 `os.replace`（Windows 上也是原子语义），路径均为相对/标准库拼接，无符号链接。
