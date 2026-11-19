@@ -1,21 +1,96 @@
-当前是空白工作区，需在 Windows 上开发一个面向非真实感绘制（NPR）的线稿与风格化渲染编辑应用。输入为本地确定性程序化生成的矢量场景描述：若干以多段曲线与闭合轮廓定义的图形元素，附带图层、描边宽度与风格标签；应用需把场景以两种交换格式互操作——自有 NPR 项目格式（JSON，含 schema 版本号、轮廓控制点、风格参数、图层顺序与描边采样配置）与二进制描边骨架格式（含字节序标记、索引宽度、顶点数、线宽编码与版本标记）。用户可在应用内编辑轮廓控制点、调整描边与风格参数、切换风格化渲染模式（纯轮廓线稿、带深浅的素描、带色块的卡通渲染），并对同一项目的不同版本做迁移与对比。核心难点在于格式互操作与版本兼容：旧版本项目文件缺少风格参数、描边采样配置或图层顺序字段，二进制骨架格式存在大小端与索引宽度组合差异，而增量重算、快照恢复与风格化结果必须与全量重建保持一致。
+# NPR 线稿与风格化渲染编辑应用
 
-任务环境与准备：
-在 Windows 上准备 Python 3.11 或 3.12，创建虚拟环境并安装 NumPy 与 pytest，版本以本地可安装为准。
-准备本地程序化生成样本脚本：生成含多图元、多图层、变体 schema 版本与大小端/索引宽度组合的 NPR 项目文件及对应的二进制骨架样本，样本随工作区存放，不依赖网络与外部素材。
-确认工作区可读写、可本地原子替换目录与文件（用于快照提交与强制终止恢复验证），并提供线稿渲染输出的位图与哈希对照方式。
+这是一个可在 Windows 10/11 上运行的确定性 NPR 编辑应用核心与命令行程序。它覆盖项目 JSON、二进制描边骨架、schema 迁移、三种风格化渲染、精确增量编辑与撤销、崩溃安全快照、版本对比以及业务错误码。
 
-业务要求：
-1. 实现自有 NPR 项目 JSON 格式与二进制描边骨架格式的双向转换：JSON 侧含 schema 版本号、轮廓控制点、曲线段类型、风格参数、图层顺序与描边采样配置；二进制侧含字节序标记、索引宽度、顶点数、线宽编码与格式版本标记。转换须保留控制点坐标的 float32 数值精度，往返转换后轮廓几何须在声明容差内逐点一致，并输出两格式各自的内容哈希。
-2. 实现 schema 版本迁移规则：旧版本项目缺少风格参数、描边采样配置、图层顺序字段时，按固定迁移表补默认值，默认值须保证迁移前后同一场景的线稿渲染结果在声明容差内不变。迁移须幂等，对已是最新版本再次迁移内容哈希不变；字段无法补齐或版本号越界时返回 E_SCHEMA_VERSION，不得静默降级。
-3. 实现二进制骨架格式的版本兼容解析：识别大端与小端字节序标记以及 16 位与 32 位索引宽度的组合，按声明规则重排而不丢失精度；线宽编码与格式版本须能区分旧编码与新编码。顶点数与索引数量不符、索引越界、字节序标记未知时返回 E_FORMAT_INDEX 或 E_FORMAT_ENDIAN，解析失败不得留下半加载的几何状态。
-4. 实现风格化渲染模式切换：纯轮廓线稿、素描与卡通渲染三种模式共享同一份轮廓几何与描边骨架数据，切换模式不得触发轮廓扁平化或骨架重建；线宽与风格参数变化只使依赖该参数的光栅化结果失效，未受影响的图元渲染哈希须保持不变。
-5. 实现轮廓编辑与几何一致性：编辑控制点后只精确重算受影响图元的扁平化折线与描边骨架，未受影响图元的顶点须逐点不变；同一参数位置上线稿折线与卡通色块边界须由同一求值管线产生，坐标差不得超过声明容差。编辑须可撤销到编辑前的项目快照，撤销后几何哈希与渲染哈希均复原。
-6. 实现增量渲染的持久化与快照版本识别：把项目状态、各图元渲染哈希与版本戳以原子方式写入工作区目录，写入未完成即视为未提交；快照整体替换时须以版本戳与内容哈希判定新旧，禁止盲目复用旧缓存。强制终止后重启只依据最近一次已提交状态恢复，未提交产物作为孤儿回收，不得伪造退出报告。
-7. 实现版本对比视图：同一项目的两个版本可并排显示线稿结果，按图元列出控制点差异、格式版本差异与迁移动作，并标注每个差异来源（编辑、迁移、格式转换）；无法归因的差异须显式报告为可疑项，对比结果须随版本戳持久化并可复算。
-8. 定义并校验业务错误码（E_SCHEMA_VERSION、E_FORMAT_ENDIAN、E_FORMAT_INDEX、E_STROKE_SAMPLE、E_UNDO_EMPTY、E_SNAPSHOT_STALE、E_RENDER_MISMATCH），覆盖非法 schema、字节序未知、索引越界、描边采样配置非法、空撤销栈、快照版本冲突与渲染哈希不一致等异常链路，并以输入与参数注入方式验证。
+当前交付采用 headless 应用形态：所有编辑和渲染能力由稳定 Python API 提供，CLI 可直接执行验收操作；没有引入 GUI、Docker、网络素材或 Pillow 等额外图像依赖。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-使用本地样本完成格式往返、版本迁移、编辑撤销与增量渲染，输出一致哈希与错误码报告。
+### Windows PowerShell
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\setup_windows.ps1
+```
+
+也可以手工执行：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe scripts\generate_samples.py --out samples
+.\.venv\Scripts\python.exe scripts\run_acceptance.py --workspace .
+```
+
+Python 3.11 也可使用。若 `py -3.12` 不存在，安装脚本会自动尝试 3.11。运行期只依赖 NumPy；pytest 仅用于开发测试。
+
+### 当前验证环境
+
+本次实测在 Linux/WSL 上执行，代码路径和原子操作均使用跨平台标准库，并提供了 Windows PowerShell 入口。实际结果见 `artifacts/acceptance/acceptance_report.json`。
+
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python scripts/run_acceptance.py --workspace .
+```
+
+当前结果：**50 项 pytest 全过；7 组验收检查全过；7 个业务错误码全部通过注入验证。**
+
+## 功能入口
+
+| 能力 | API | CLI |
+| --- | --- | --- |
+| 生成确定性样本 | `npr_editor.samples.write_samples` | `python -m npr_editor samples --out samples` |
+| JSON/骨架往返 | `encode_binary` / `decode_binary` | `python -m npr_editor roundtrip ...` |
+| v1/v2 → v3 迁移 | `migrate_document` | `python -m npr_editor migrate ...` |
+| 三模式渲染 | `RenderEngine.render` | `python -m npr_editor render ...` |
+| 编辑与撤销 | `Editor` | Python API |
+| 原子快照 | `SnapshotStore` | `python -m npr_editor snapshot/restore ...` |
+| 版本对比 | `compare_versions` / `ComparisonStore` | `python -m npr_editor compare ...` |
+| 完整验收 | `run_acceptance` | `python -m npr_editor acceptance` |
+
+示例：
+
+```bash
+# JSON -> v2 / big-endian / 16-bit 索引 -> JSON
+.venv/bin/python -m npr_editor roundtrip \
+  --project samples/current_v3.json \
+  --out artifacts/roundtrip_be16 \
+  --endian big --index-width 2 --format-version 2
+
+# 三种模式
+.venv/bin/python -m npr_editor render \
+  --project samples/current_v3.json --mode toon --out artifacts/toon.png
+
+# 快照与恢复
+.venv/bin/python -m npr_editor snapshot \
+  --project samples/current_v3.json --workspace artifacts/demo_ws --mode lineart
+.venv/bin/python -m npr_editor restore \
+  --workspace artifacts/demo_ws --out artifacts/restored.png --mode lineart
+```
+
+## 交付内容
+
+- `npr_editor/model.py`：schema v3 项目模型、float32 控制点规范化、JSON 内容哈希。
+- `npr_editor/migration.py`：固定迁移表与幂等性。
+- `npr_editor/geometry.py`：共享曲线扁平化、描边骨架、签名缓存。
+- `npr_editor/binary_format.py`：大小端、16/32 位索引、v1/v2 线宽编码和严格解析。
+- `npr_editor/render.py`：纯轮廓、素描、卡通三种共享几何的确定性光栅器。
+- `npr_editor/editing.py`：控制点/线宽/风格/采样编辑与撤销。
+- `npr_editor/snapshots.py`：staging、COMMITTED、目录原子发布、孤儿回收和缓存校验。
+- `npr_editor/compare.py`：逐图元差异、来源归因、可疑项、并排图和可复算持久化。
+- `npr_editor/errors.py`：稳定业务错误码。
+- `samples/`：多图元、多图层、v1/v2/v3、四种 endian/index 组合及损坏样本。
+- `docs/FORMAT.md`：格式、协议、错误码与兼容规则。
+- `docs/ACCEPTANCE.md`：本次实测哈希、错误码和强制终止结果。
+
+## 设计要点
+
+- 所有控制点进入内存时量化为 `float32`；格式往返逐点误差实测为 `0.0`。
+- JSON 哈希使用排序键、紧凑分隔符的 canonical JSON；二进制哈希覆盖完整字节。
+- 几何缓存键包含图元控制点与采样配置；模式切换只读取同一 `StrokeSkeleton`，不会触发扁平化或骨架重建。
+- 渲染缓存键包含几何哈希、当前模式相关风格指纹、有效线宽和图元标签；因此局部线宽变化只改变该图元的渲染哈希。
+- 快照只有在 staging 中写完全部文件、manifest 和 `COMMITTED` 后才原子改名为正式目录；无 `COMMITTED` 的目录一律视为孤儿。
+- 快照恢复会校验项目内容哈希、几何哈希、缓存键和原始 RGBA 哈希，不盲目复用旧缓存。
+- 对比来源仅来自可审计 trace：编辑、迁移、格式转换；其余几何差异进入 `suspicious_items`。
+
+详细规范见 `docs/FORMAT.md`，实测记录见 `docs/ACCEPTANCE.md`。
