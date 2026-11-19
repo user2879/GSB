@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spatial-acoustic-diagnostics"
+version = "1.0.0"
+description = "Deterministic spherical-harmonic room acoustic diagnostic workbench"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24,<2",
+  "scipy>=1.10,<2",
+  "PyYAML>=6,<7",
+  "PyQt5>=5.15,<6",
+  "matplotlib>=3.7,<4",
+]
+
+[project.scripts]
+spatial-diag = "spatial_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["spatial_diag*"]
+
+[tool.setuptools.package-data]
+spatial_diag = ["assets/*.yaml"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+

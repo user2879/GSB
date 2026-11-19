@@ -1,0 +1,76 @@
+schema: spatial-diagnostic-config/1
+seed: 20261119
+
+audio:
+  sample_rate: 48000
+  bit_depth: 16
+  channels: 4
+  rir_samples: 4096
+  peak_dbfs: -0.92
+  noise_floor_dbfs: -72.0
+
+room:
+  dimensions_m: [7.2, 5.4, 3.2]
+  listener_m: [3.6, 2.7, 1.6]
+  speed_of_sound_m_s: 343.0
+  reflection_order: 2
+  # x=0, x=Lx, y=0, y=Ly, z=0, z=Lz
+  wall_absorption: [0.28, 0.34, 0.22, 0.30, 0.18, 0.40]
+  source_radius_m: [0.7, 2.1]
+  source_margin_m: 0.18
+  catalog_size: 96
+
+sphere:
+  # Equal-area Fibonacci ordering is fixed by the index and point count.
+  layout: fibonacci
+  weight_rule: equal_area_4pi_over_n
+  normalize: orthonormal_real_sh
+
+projection:
+  min_effective_samples: 2
+  oversampling_factor: 1.25
+  ridge: 10.0
+  confidence_rule: "count >= min_effective_samples"
+
+validation:
+  longitude_step_deg: 5.0
+  latitude_step_deg: 5.0
+  relative_tolerance: 1.0
+  significant_relative_floor: 0.05
+  reference_kernel_deg: 12.0
+  reference_kernel_support_deg: 28.0
+
+consistency:
+  relative_tolerance: 1.0
+  coefficient_relative_tolerance: 0.50
+
+tiers:
+  - name: small
+    source_positions: 8
+    sphere_points: 32
+    requested_order: 4
+    direction_resolution_budget_deg: 24.0
+    memory_budget_bytes: 131072
+  - name: medium
+    source_positions: 24
+    sphere_points: 98
+    requested_order: 6
+    direction_resolution_budget_deg: 14.0
+    memory_budget_bytes: 131072
+  - name: large
+    source_positions: 96
+    sphere_points: 200
+    requested_order: 8
+    direction_resolution_budget_deg: 10.0
+    memory_budget_bytes: 196608
+
+snapshot:
+  schema: spatial-diagnostic-snapshot/1
+  hash_algorithm: sha256
+  version_prefix: sd1
+
+render:
+  dpi: 120
+  figure_size_inches: [13.5, 8.6]
+  colormap_energy: viridis
+  colormap_difference: coolwarm
