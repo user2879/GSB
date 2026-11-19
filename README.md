@@ -20,3 +20,70 @@ Windows 10 及以上，安装 Python 3.11 并准备可创建虚拟环境的本�
 
 验收：
 验证三档探针密度与阶数下重建确定性、策略取舍可复现及误差报告可独立复算，并核对异常码与恢复行为。
+
+---
+
+# 实现说明（probegi 组件）
+
+本仓库在空白工作区上实现了面向实时光照探针与全局照明的可集成组件 `probegi` 及完整示例。全部样本由固定种子在本地程序化生成，不依赖任何远程服务、外部数据集或真实采集资产。
+
+## 环境准备（Windows 10+ / Linux）
+
+```bat
+py -3.11 -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+```
+
+```bash
+python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
+```
+
+PyOpenGL 离屏渲染优先使用 EGL surfaceless 平台（Mesa 软件渲染，无显示环境可用）；上下文创建失败时报告 `E_GL_CONTEXT`，并写出明确标记为 `software-fallback` 的预览图，不伪造渲染路径。
+
+## 一条命令跑通固定序列
+
+```bash
+python -m probegi run-all --workspace out --seed 1234
+python -m probegi verify   --workspace out --seed 1234   # 独立复算快照内全部误差报告
+python -m pytest tests -q                                # 35 项单元/端到端测试
+```
+
+`run-all` 按固定顺序执行：三档探针网格（8³/16³/32³）生成 → 三档阶数（1/2/3）球谐投影 → 分档预算下的策略选择 → 批量/逐条求解一致性校验 → 误差诊断 → 预算降级演示 → 离屏预览 → 原子快照提交。每一步输出一行 JSON，含内容哈希（SHA-256）。
+
+## 模块结构
+
+- `probegi/environment.py` — 确定性合成光照环境：3 个方向光（平滑高斯瓣）、天穹渐变、固定种子噪声（8 个余弦瓣 + 6 个空间发光球发射体，使辐射场随位置变化）。
+- `probegi/probes.py` — 探针网格生成器与二进制格式（`PGIPROB1`，固定字节布局，无时间戳），清单含探针总数、包围盒、采样方向数与辐射能量统计。
+- `probegi/sampling.py` / `probegi/sh.py` — Fibonacci 球面方向、均匀求积权重（Σw=4π）、1–3 阶实球谐投影/重建、Lambert 辐照度卷积（A=[π, 2π/3, π/4, 0]）。
+- `probegi/strategies.py` — 三种插值策略与确定性选择器：`full`（三线性）、`nearest_gradient`（最近邻+梯度修正）、`cluster`（分块聚类代表）。
+- `probegi/queries.py` — 固定相机 + 24 个动态物体查询；批量求解、按查询键归并、顺序无关结果哈希。
+- `probegi/diagnostics.py` — 相对全量球谐参考的逐查询偏差/相对误差/误差区间，按密度×阶数汇总；`verify_report` 仅凭探针文件与报告参数独立复算。
+- `probegi/budget.py` — 内存/耗时预算下的驻留集合决策与固定优先级降级（降阶 → 聚类代表 → 减采样方向），记录每步原因与前后误差上界，绝不丢弃查询。
+- `probegi/snapshot.py` — 原子提交（tmp+fsync+rename）、版本戳+内容哈希判新、`CURRENT.json` 乐观并发、`.partial` 孤儿回收与恢复日志（序号制，无墙钟时间）。
+- `probegi/preview.py` / `probegi/png.py` — EGL 离屏渲染（着色器色调映射）与无依赖 PNG 写出。
+- `probegi/errors.py` — 业务错误码：`E_PROBE_GRID`、`E_SH_ORDER`、`E_SAMPLE_DIR`、`E_BUDGET_DENIED`、`E_SNAPSHOT_STALE`、`E_STRATEGY_DIVERGE`、`E_GL_CONTEXT`，以 JSON 输出到 stderr（退出码 2）。
+
+## 确定性契约
+
+- 投影归一化口径：`c_lm = Σ_i w_i Y_lm(d_i) L(d_i)`，`w_i = 4π/N`；低阶系数与展开阶数无关，阶数切换不改变低阶语义（测试断言逐位相等）。
+- 所有提交内容不含墙钟时间；同一配置两次运行逐字节一致（端到端测试比较两次 `run-all` 的全部 stdout 哈希行）。
+- 策略选择是纯函数：声明模型常量（`C_TRILINEAR=0.5`、`C_NN_GRADIENT=1.5`、`CLUSTER_BLOCK=2`、`OPS_PER_MS=2e5`、阶数误差因子 {1:4, 2:1.5, 3:1}），预估误差排序与实测排序矛盾时抛 `E_STRATEGY_DIVERGE`。
+
+## 声明的 run-all 预算（固定序列的一部分）
+
+| 档位 | 内存预算 | 单批耗时预算 | 计划查询量 | 精度预算（软） |
+|---|---|---|---|---|
+| 8³ 稀疏 | 4 MiB | 250 ms | 100000 | 0.05 |
+| 16³ 中等 | 4 MiB | 150 ms | 100000 | 0.05 |
+| 32³ 稠密 | 4 MiB | 200 ms | 100000 | 0.05 |
+
+在该预算下固定序列的策略结论：8³ 全阶 `full`；16³ 阶 1/2 `full`、阶 3 `nearest_gradient`（全量插值 192 ms 超 150 ms 预算）；32³ 阶 1/2 `full`、阶 3 `cluster`（系数 6.29 MB 超 4 MiB 内存预算）。三种策略均在固定序列中出现，选择依据、预估误差上界与资源占用写入 `strategy/select_*.json`。
+
+## 实测验证结果（本机，seed=1234，directions=256）
+
+- 三档×三阶共 9 份误差报告，`verify` 独立复算全部 `verified: true`。
+- 预估误差排序（full < nearest_gradient < cluster）与实测一致，例如 32³ 阶 3 实测平均相对误差：full 0（参考）、nearest_gradient 4.3e-4、cluster 2.0e-3。
+- 批量与逐条求解最大相对偏差 < 1e-6；查询打乱后结果集哈希不变。
+- 降级演示（32³ 阶 3，内存 1 MiB / 100 ms）产生确定序列：reduce_order ×2 → cluster_representatives → reduce_directions ×4，终态 order=1、clustered、directions=16，无查询丢失。
+- 离屏预览经 EGL surfaceless + Mesa 软件渲染成功（`renderer: opengl-egl-surfaceless`）。
+- 快照恢复：构造未提交 `.partial` 后重启，孤儿被回收并记入 `recovery.log`，仅依据最近已提交版本恢复。
