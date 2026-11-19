@@ -1,0 +1,124 @@
+{
+  "band_labels": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "entity_types": {
+    "LOC": [
+      "Beijing",
+      "Shanghai",
+      "Shenzhen"
+    ],
+    "ORG": [
+      "Acme",
+      "Globex",
+      "Initech"
+    ],
+    "PER": [
+      "Alice",
+      "Bob",
+      "Carol"
+    ]
+  },
+  "event_band_thresholds": [
+    0.5429,
+    0.7
+  ],
+  "event_triggers": [
+    {
+      "args": [
+        {
+          "entity_type": "ORG",
+          "priority": 10,
+          "required": true,
+          "role": "investor"
+        },
+        {
+          "entity_type": "ORG",
+          "priority": 9,
+          "required": true,
+          "role": "target"
+        },
+        {
+          "entity_type": "LOC",
+          "priority": 5,
+          "required": false,
+          "role": "place"
+        }
+      ],
+      "entry_id": "evt-invest",
+      "event_type": "investment",
+      "max_args": 3,
+      "trigger": "invested"
+    },
+    {
+      "args": [
+        {
+          "entity_type": "PER",
+          "priority": 8,
+          "required": true,
+          "role": "participant_a"
+        },
+        {
+          "entity_type": "PER",
+          "priority": 7,
+          "required": true,
+          "role": "participant_b"
+        },
+        {
+          "entity_type": "LOC",
+          "priority": 4,
+          "required": false,
+          "role": "place"
+        }
+      ],
+      "entry_id": "evt-meet",
+      "event_type": "meeting",
+      "max_args": 2,
+      "trigger": "met"
+    }
+  ],
+  "event_window": 4,
+  "fixed_point_scale": 4,
+  "interaction_budget_ms": 25,
+  "max_event_args": 3,
+  "relation_band_thresholds": [
+    0.5495,
+    0.72
+  ],
+  "relation_triggers": [
+    {
+      "compatibility": 1.0,
+      "entry_id": "rel-acquire",
+      "head_type": "ORG",
+      "relation": "acquire",
+      "tail_type": "ORG",
+      "trigger": "acquired"
+    },
+    {
+      "compatibility": 0.8,
+      "entry_id": "rel-partner",
+      "head_type": "ORG",
+      "relation": "partner_with",
+      "tail_type": "PER",
+      "trigger": "partnered"
+    },
+    {
+      "compatibility": 0.9,
+      "entry_id": "rel-locate",
+      "head_type": "ORG",
+      "relation": "located_in",
+      "tail_type": "LOC",
+      "trigger": "located"
+    }
+  ],
+  "relation_window": 4,
+  "scoring_weights": {
+    "compatibility": 0.3,
+    "distance": 0.2,
+    "trigger_decay": 0.5
+  },
+  "snapshot_commit_interval": 2,
+  "thread_pool_workers": 3
+}

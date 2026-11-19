@@ -1,0 +1,152 @@
+[
+  {
+    "command_id": "cmd-001",
+    "compatibility": 0.95,
+    "entry_id": "rel-partner",
+    "head_type": "ORG",
+    "relation": "partner_with",
+    "tail_type": "PER",
+    "trigger": "partnered",
+    "type": "update_relation_trigger"
+  },
+  {
+    "command_id": "cmd-002",
+    "document": {
+      "doc_id": "doc-001",
+      "positions": [
+        [
+          0,
+          6
+        ],
+        [
+          7,
+          16
+        ],
+        [
+          17,
+          21
+        ],
+        [
+          22,
+          27
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          31,
+          39
+        ],
+        [
+          40,
+          44
+        ],
+        [
+          45,
+          49
+        ]
+      ],
+      "text": "Globex partnered with Alice in Shanghai last week",
+      "words": [
+        "Globex",
+        "partnered",
+        "with",
+        "Alice",
+        "in",
+        "Shanghai",
+        "last",
+        "week"
+      ]
+    },
+    "type": "replace_document"
+  },
+  {
+    "command_id": "cmd-003",
+    "thresholds": [
+      0.45,
+      0.72
+    ],
+    "type": "update_event_band_thresholds"
+  },
+  {
+    "command_id": "cmd-004",
+    "type": "update_relation_window",
+    "window": 6
+  },
+  {
+    "command_id": "cmd-005",
+    "doc_id": "doc-005",
+    "type": "delete_document"
+  },
+  {
+    "command_id": "cmd-006",
+    "document": {
+      "doc_id": "doc-001",
+      "positions": [
+        [
+          0,
+          4
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          17,
+          23
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          27,
+          34
+        ]
+      ],
+      "text": "Acme invested in Globex at Beijing",
+      "words": [
+        "Acme",
+        "invested",
+        "in",
+        "Globex",
+        "at",
+        "Beijing"
+      ]
+    },
+    "type": "replace_document"
+  },
+  {
+    "args": [
+      {
+        "entity_type": "PER",
+        "priority": 8,
+        "required": true,
+        "role": "participant_a"
+      },
+      {
+        "entity_type": "PER",
+        "priority": 7,
+        "required": true,
+        "role": "participant_b"
+      },
+      {
+        "entity_type": "LOC",
+        "priority": 4,
+        "required": false,
+        "role": "place"
+      }
+    ],
+    "command_id": "cmd-007",
+    "entry_id": "evt-meet",
+    "event_type": "meeting",
+    "max_args": 2,
+    "trigger": "met",
+    "type": "update_event_trigger"
+  }
+]
