@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "narrative-causality-workbench"
+version = "1.0.0"
+description = "Deterministic desktop workbench for narrative branches and event causality"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.24,<3",
+  "PyYAML>=5.4,<7",
+]
+
+[project.scripts]
+narrative-workbench = "story_workbench.cli:main"
+
+[tool.setuptools]
+packages = ["story_workbench"]

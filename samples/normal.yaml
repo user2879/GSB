@@ -1,0 +1,112 @@
+schema: narrative-workbench/spec/v1
+id: normal
+title: 夜港领事馆
+seed: 20260101
+components:
+- trust
+- reputation
+- fear
+initial_state:
+  trust: 0.0
+  reputation: 0.0
+  fear: 0.0
+boundary_tolerance: 1.0e-09
+merge_tolerance: 1.0e-12
+start: s_start
+nodes:
+- id: s_start
+  kind: scene
+  title: 夜港
+- id: s_choice
+  kind: choice
+  title: 领事馆门前
+- id: s_ally
+  kind: scene
+  title: 结盟
+  ending: alliance
+- id: s_wait
+  kind: scene
+  title: 等待
+  ending: wait
+- id: s_fail
+  kind: scene
+  title: 失约
+  ending: failure
+edges:
+- id: e_intro
+  from: s_start
+  to: s_choice
+  label: 穿过雨幕
+  effects:
+  - id: f_intro_trust_shadow
+    target: trust
+    expr: '0.1'
+  - id: f_intro_trust
+    target: trust
+    expr: '0.2'
+  - id: f_intro_rep_shadow
+    target: reputation
+    expr: '0.05'
+  - id: f_intro_rep
+    target: reputation
+    expr: 0.1 + 0.2
+  - id: f_intro_fear
+    target: fear
+    expr: 0.05 * (trust + 1.0)
+  conditions: []
+- id: e_ally
+  from: s_choice
+  to: s_ally
+  label: 接受盟约
+  effects:
+  - id: f_ally_trust
+    target: trust
+    expr: '0.1'
+  - id: f_ally_rep
+    target: reputation
+    expr: '0.2'
+  - id: f_ally_fear
+    target: fear
+    expr: '0.05'
+  conditions:
+  - id: c_trust_ally
+    component: trust
+    op: '>='
+    threshold: 0.1
+- id: e_wait
+  from: s_choice
+  to: s_wait
+  label: 继续等待
+  effects:
+  - id: f_wait_fear
+    target: fear
+    expr: '0.4'
+  - id: f_wait_trust
+    target: trust
+    expr: '0.05'
+  conditions:
+  - id: c_trust_wait
+    component: trust
+    op: '>='
+    threshold: 1.0
+- id: e_fail
+  from: s_choice
+  to: s_fail
+  label: 独自离开
+  effects:
+  - id: f_fail_rep
+    target: reputation
+    expr: '0.0'
+  - id: f_fail_fear_shadow
+    target: fear
+    expr: '0.1'
+  - id: f_fail_fear
+    target: fear
+    expr: '0.2'
+  conditions: []
+samples:
+- id: normal_path
+  description: 结盟路线
+  edges:
+  - e_intro
+  - e_ally

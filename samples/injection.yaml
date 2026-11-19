@@ -1,0 +1,72 @@
+schema: narrative-workbench/spec/v1
+id: injection
+title: 阈值注入翻转
+seed: 20260104
+components:
+- trust
+- reputation
+- fear
+initial_state:
+  trust: 0.0
+  reputation: 0.0
+  fear: 0.0
+boundary_tolerance: 1.0e-06
+merge_tolerance: 1.0e-12
+start: i_start
+nodes:
+- id: i_start
+  kind: scene
+  title: 提案
+- id: i_gate
+  kind: choice
+  title: 表决
+- id: i_good
+  kind: scene
+  title: 通过
+  ending: good
+- id: i_alt
+  kind: scene
+  title: 搁置
+  ending: quiet
+edges:
+- id: e_open
+  from: i_start
+  to: i_gate
+  label: 争取支持
+  effects:
+  - id: f_open_trust
+    target: trust
+    expr: '0.6'
+  conditions: []
+- id: e_good
+  from: i_gate
+  to: i_good
+  label: 提交表决
+  effects:
+  - id: f_good_rep
+    target: reputation
+    expr: '0.2'
+  conditions:
+  - id: c_trust_good
+    component: trust
+    op: '>='
+    threshold: 0.5
+- id: e_alt
+  from: i_gate
+  to: i_alt
+  label: 撤回提案
+  effects:
+  - id: f_alt_fear
+    target: fear
+    expr: '0.1'
+  conditions:
+  - id: c_trust_alt
+    component: trust
+    op: <
+    threshold: 0.5
+samples:
+- id: injection_path
+  description: 阈值翻转路线
+  edges:
+  - e_open
+  - e_good

@@ -1,0 +1,29 @@
+{
+  "id": "all-kinds",
+  "operations": [
+    {
+      "coefficient_index": 0,
+      "edge_id": "e_intro",
+      "effect_id": "f_intro_rep",
+      "kind": "coefficient_perturb",
+      "mode": "add",
+      "value": 0.05
+    },
+    {
+      "condition_id": "c_trust_wait",
+      "delta": -0.5,
+      "edge_id": "e_wait",
+      "kind": "threshold_shift"
+    },
+    {
+      "component": "fear",
+      "delta": 0.01,
+      "kind": "initial_offset"
+    },
+    {
+      "edge_id": "e_fail",
+      "kind": "remove_effects"
+    }
+  ],
+  "schema": "narrative-workbench/injections/v1"
+}
