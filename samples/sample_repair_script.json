@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "coordinate_tolerance": 1e-07,
+  "area_tolerance": 1e-10,
+  "fixed_scale": 1000000,
+  "trace_radius": 5,
+  "concurrency": 4,
+  "memory_budget_nodes": 8192,
+  "operators": [
+    {
+      "type": "hole_triangulation"
+    },
+    {
+      "type": "remove_degenerate_faces"
+    },
+    {
+      "type": "reorient_normals"
+    },
+    {
+      "type": "laplacian_smooth",
+      "iterations": 16,
+      "lambda": 0.42
+    }
+  ]
+}
