@@ -1,0 +1,69 @@
+{
+  "width": 12,
+  "height": 10,
+  "seed": 99,
+  "blocked": [
+    [
+      5,
+      4
+    ],
+    [
+      5,
+      5
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      6,
+      5
+    ],
+    [
+      6,
+      6
+    ]
+  ],
+  "concurrency": 3,
+  "memory_budget": 6,
+  "max_rollback": 8,
+  "alternative_limit": 24,
+  "constraints": [
+    {
+      "id": "rooms",
+      "type": "min_rooms",
+      "params": {
+        "count": 3,
+        "min_room_w": 2,
+        "min_room_h": 2,
+        "max_room_w": 3,
+        "max_room_h": 3
+      }
+    },
+    {
+      "id": "spacing",
+      "type": "room_spacing",
+      "params": {
+        "min_distance": 1
+      }
+    },
+    {
+      "id": "path",
+      "type": "reachability",
+      "params": {
+        "start": [
+          1,
+          1
+        ],
+        "end": [
+          10,
+          8
+        ]
+      }
+    }
+  ]
+}

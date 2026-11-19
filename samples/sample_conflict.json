@@ -1,0 +1,35 @@
+{
+  "width": 10,
+  "height": 10,
+  "seed": 7,
+  "blocked": [],
+  "concurrency": 2,
+  "memory_budget": 4,
+  "max_rollback": 2,
+  "alternative_limit": 16,
+  "constraints": [
+    {
+      "id": "many_rooms",
+      "type": "min_rooms",
+      "params": {
+        "count": 4,
+        "min_room_w": 3,
+        "min_room_h": 3,
+        "max_room_w": 4,
+        "max_room_h": 4
+      }
+    },
+    {
+      "id": "tiny_regions",
+      "type": "max_region_area",
+      "params": {
+        "max_area": 8
+      }
+    },
+    {
+      "id": "joined",
+      "type": "connectivity",
+      "params": {}
+    }
+  ]
+}
