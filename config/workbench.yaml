@@ -1,0 +1,43 @@
+version: "1.0"
+seed: 20261120
+width: 48
+height: 48
+active_tier: small
+workers: 4
+latency_budget_ms: 4000.0
+quality_weight: 0.6
+mask_threshold: 90
+edge_threshold: 60
+quant_levels:
+  - 16
+  - 32
+  - 64
+paths:
+  mask:
+    - threshold
+    - edge
+  inpaint:
+    - neighbor_mean
+    - directional
+  style:
+    - lut
+    - linear
+tiers:
+  - name: small
+    sample_count: 24
+    primitives: 4
+    regions: 2
+    instruction_length: 3
+  - name: medium
+    sample_count: 64
+    primitives: 7
+    regions: 3
+    instruction_length: 5
+  - name: large
+    sample_count: 160
+    primitives: 10
+    regions: 4
+    instruction_length: 8
+samples_dir: samples
+outputs_dir: outputs
+snapshots_dir: snapshots
