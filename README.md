@@ -20,3 +20,40 @@ Windows 10 及以上，安装 Python 3.11 与 pip。
 
 验收：
 使用本地合成帧序列验证管线状态重建、增量重算一致性及强制终止后的恢复结果，输出哈希清单与恢复报告。
+
+---
+
+# 交付实现（hdr_sdr_workbench）
+
+本仓库已实现上述工作台，纯 Python 3.11 + numpy 1.26.4 + PyOpenGL 3.1.7，
+无容器、无外部素材、无网络账号依赖。
+
+## 目录
+
+- `hdr_sdr_workbench/` 工作台包（合成 / 管线 / 状态 / 持久化 / 引擎 / 显示 / CLI）
+- `tests/` 25 个 pytest 用例，覆盖全部 7 个业务错误码
+- `docs/TECHNICAL_DESIGN.md` 数值口径、矩阵常数、提交/恢复协议
+- `docs/VALIDATION_RESULTS.md` 实际验证数据与复现命令
+- `requirements.txt` 固定依赖版本
+
+## 快速开始（Windows PowerShell / CMD 同理）
+
+```
+python -m pip install -r requirements.txt
+python -m pytest
+python -m hdr_sdr_workbench --workspace ws --quick demo --clean
+python -m hdr_sdr_workbench --workspace ws shell
+```
+
+全规格（1920x1080x60 half 线性光）演示：
+
+```
+python -m hdr_sdr_workbench --workspace ws demo --clean
+python -m hdr_sdr_workbench --workspace ws verify
+python -m hdr_sdr_workbench --workspace ws hashes
+```
+
+`demo` 一条命令完成：生成素材 → 固定 5 步操作序列 → 在 v3 后模拟
+强制终止（exit 137）→ 重启回收孤儿并按版本戳恢复 → 续算至 v5 →
+输出 `hash_listing.json` 与 `recovery_report.json`。两次运行所有产物
+逐字节一致（见 `docs/VALIDATION_RESULTS.md`）。
