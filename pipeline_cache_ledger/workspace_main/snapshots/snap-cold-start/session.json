@@ -1,0 +1,265 @@
+{
+  "artifacts": [
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3",
+      "key": "api-image",
+      "refs_json": "[{\"digest\": \"sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f\", \"key\": \"core-bundle\", \"version\": 1}]",
+      "source_format": 3,
+      "stage_id": "stage-package",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:afab7d79e16da7bdb84619d9753105bca44a7367c1baed600a6dcda543bd2da9",
+      "key": "base-lib",
+      "refs_json": "[]",
+      "source_format": 3,
+      "stage_id": "stage-foundation",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d",
+      "key": "codegen",
+      "refs_json": "[{\"digest\": \"sha256:afab7d79e16da7bdb84619d9753105bca44a7367c1baed600a6dcda543bd2da9\", \"key\": \"base-lib\", \"version\": 1}]",
+      "source_format": 3,
+      "stage_id": "stage-build",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af",
+      "key": "config",
+      "refs_json": "[]",
+      "source_format": 3,
+      "stage_id": "stage-foundation",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+      "key": "core-bundle",
+      "refs_json": "[{\"digest\": \"sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d\", \"key\": \"codegen\", \"version\": 1}, {\"digest\": \"sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af\", \"key\": \"config\", \"version\": 1}]",
+      "source_format": 3,
+      "stage_id": "stage-build",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:831251457c59aac5a01593f1dc9f561551d6be23b604f1ab910c2ad42d2c6699",
+      "key": "release-notes",
+      "refs_json": "[{\"digest\": \"sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3\", \"key\": \"api-image\", \"version\": 1}]",
+      "source_format": 3,
+      "stage_id": "stage-release",
+      "status": "HIT",
+      "version": 1
+    },
+    {
+      "backfilled_json": "[]",
+      "digest": "sha256:544f967fbf810ef0dd6be59be8b90f889601786d2cd00416e33ed2bcb52c0122",
+      "key": "web-image",
+      "refs_json": "[{\"digest\": \"sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f\", \"key\": \"core-bundle\", \"version\": 1}]",
+      "source_format": 3,
+      "stage_id": "stage-package",
+      "status": "HIT",
+      "version": 1
+    }
+  ],
+  "entry_digest_set": [
+    "sha256:544f967fbf810ef0dd6be59be8b90f889601786d2cd00416e33ed2bcb52c0122",
+    "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+    "sha256:831251457c59aac5a01593f1dc9f561551d6be23b604f1ab910c2ad42d2c6699",
+    "sha256:afab7d79e16da7bdb84619d9753105bca44a7367c1baed600a6dcda543bd2da9",
+    "sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3",
+    "sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d",
+    "sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af"
+  ],
+  "graph_version": 6,
+  "hits": [
+    {
+      "digest": "sha256:afab7d79e16da7bdb84619d9753105bca44a7367c1baed600a6dcda543bd2da9",
+      "key": "base-lib",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 1
+    },
+    {
+      "digest": "sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af",
+      "key": "config",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 1
+    },
+    {
+      "digest": "sha256:afab7d79e16da7bdb84619d9753105bca44a7367c1baed600a6dcda543bd2da9",
+      "key": "base-lib",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 2
+    },
+    {
+      "digest": "sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af",
+      "key": "config",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 2
+    },
+    {
+      "digest": "sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d",
+      "key": "codegen",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 3
+    },
+    {
+      "digest": "sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d",
+      "key": "codegen",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 3
+    },
+    {
+      "digest": "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+      "key": "core-bundle",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 4
+    },
+    {
+      "digest": "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+      "key": "core-bundle",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 4
+    },
+    {
+      "digest": "sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3",
+      "key": "api-image",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 5
+    },
+    {
+      "digest": "sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3",
+      "key": "api-image",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 5
+    },
+    {
+      "digest": "sha256:544f967fbf810ef0dd6be59be8b90f889601786d2cd00416e33ed2bcb52c0122",
+      "key": "web-image",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 6
+    },
+    {
+      "digest": "sha256:544f967fbf810ef0dd6be59be8b90f889601786d2cd00416e33ed2bcb52c0122",
+      "key": "web-image",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 6
+    },
+    {
+      "digest": "sha256:831251457c59aac5a01593f1dc9f561551d6be23b604f1ab910c2ad42d2c6699",
+      "key": "release-notes",
+      "outcome": "MISS",
+      "reason": "no_existing_entry",
+      "seq": 7
+    },
+    {
+      "digest": "sha256:831251457c59aac5a01593f1dc9f561551d6be23b604f1ab910c2ad42d2c6699",
+      "key": "release-notes",
+      "outcome": "HIT",
+      "reason": "digest_refs_version_match",
+      "seq": 7
+    }
+  ],
+  "invalidations": {},
+  "pipeline_version": 1,
+  "schedule": [
+    {
+      "end_tick": 11,
+      "key": "base-lib",
+      "outcome": "HIT",
+      "queued_tick": 1,
+      "reason": "digest_refs_version_match",
+      "slot": 0,
+      "stage_id": "stage-foundation",
+      "start_tick": 8,
+      "wait_ticks": 7
+    },
+    {
+      "end_tick": 17,
+      "key": "config",
+      "outcome": "HIT",
+      "queued_tick": 2,
+      "reason": "digest_refs_version_match",
+      "slot": 1,
+      "stage_id": "stage-foundation",
+      "start_tick": 9,
+      "wait_ticks": 7
+    },
+    {
+      "end_tick": 13,
+      "key": "codegen",
+      "outcome": "HIT",
+      "queued_tick": 3,
+      "reason": "digest_refs_version_match",
+      "slot": 2,
+      "stage_id": "stage-build",
+      "start_tick": 10,
+      "wait_ticks": 7
+    },
+    {
+      "end_tick": 19,
+      "key": "core-bundle",
+      "outcome": "HIT",
+      "queued_tick": 4,
+      "reason": "digest_refs_version_match",
+      "slot": 0,
+      "stage_id": "stage-build",
+      "start_tick": 12,
+      "wait_ticks": 8
+    },
+    {
+      "end_tick": 15,
+      "key": "api-image",
+      "outcome": "HIT",
+      "queued_tick": 5,
+      "reason": "digest_refs_version_match",
+      "slot": 2,
+      "stage_id": "stage-package",
+      "start_tick": 14,
+      "wait_ticks": 9
+    },
+    {
+      "end_tick": 21,
+      "key": "web-image",
+      "outcome": "HIT",
+      "queued_tick": 6,
+      "reason": "digest_refs_version_match",
+      "slot": 2,
+      "stage_id": "stage-package",
+      "start_tick": 16,
+      "wait_ticks": 10
+    },
+    {
+      "end_tick": 20,
+      "key": "release-notes",
+      "outcome": "HIT",
+      "queued_tick": 7,
+      "reason": "digest_refs_version_match",
+      "slot": 1,
+      "stage_id": "stage-release",
+      "start_tick": 18,
+      "wait_ticks": 11
+    }
+  ]
+}

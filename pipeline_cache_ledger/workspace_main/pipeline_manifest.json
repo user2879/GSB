@@ -1,0 +1,103 @@
+{
+  "format_version": 3,
+  "pipeline_version": 2,
+  "stages": [
+    {
+      "id": "stage-foundation",
+      "artifacts": [
+        {
+          "key": "base-lib",
+          "version": 2,
+          "file": "artifacts/base-lib.txt",
+          "refs": []
+        },
+        {
+          "key": "config",
+          "version": 1,
+          "file": "artifacts/config.txt",
+          "refs": []
+        }
+      ]
+    },
+    {
+      "id": "stage-build",
+      "artifacts": [
+        {
+          "key": "codegen",
+          "version": 1,
+          "file": "artifacts/codegen.txt",
+          "refs": [
+            {
+              "key": "base-lib",
+              "digest": "sha256:1751112d9d2487b65f3b4ae4852584a1ba864a7d42535f1767fb1c88f5d110f3",
+              "version": 2
+            }
+          ]
+        },
+        {
+          "key": "core-bundle",
+          "version": 1,
+          "file": "artifacts/core-bundle.txt",
+          "refs": [
+            {
+              "key": "codegen",
+              "digest": "sha256:c6ee47dcb1609bbfc9686c2218f6fecc128344ad79bae93d6c6590b637ec567d",
+              "version": 1
+            },
+            {
+              "key": "config",
+              "digest": "sha256:dcd61866f223a43ca719b271ed96f59be9b511e64c9600345ff1f7c59dd674af",
+              "version": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-package",
+      "artifacts": [
+        {
+          "key": "api-image",
+          "version": 1,
+          "file": "artifacts/api-image.txt",
+          "refs": [
+            {
+              "key": "core-bundle",
+              "digest": "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+              "version": 1
+            }
+          ]
+        },
+        {
+          "key": "web-image",
+          "version": 1,
+          "file": "artifacts/web-image.txt",
+          "refs": [
+            {
+              "key": "core-bundle",
+              "digest": "sha256:58dca2deca1a1fa32b0b405cd1ece54d57271bb925c629b762b9b0428492289f",
+              "version": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-release",
+      "artifacts": [
+        {
+          "key": "release-notes",
+          "version": 1,
+          "file": "artifacts/release-notes.txt",
+          "refs": [
+            {
+              "key": "api-image",
+              "digest": "sha256:b3d27033bce407e8679b9861da0bab9a92a903585aa60c33f90dfbda9fd7e5d3",
+              "version": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
