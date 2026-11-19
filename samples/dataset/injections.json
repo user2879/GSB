@@ -1,0 +1,27 @@
+{
+  "injections": [
+    {
+      "fault": "corrupt_wav",
+      "file": "sample_003.wav",
+      "id": "INJ-001",
+      "stage": "io"
+    },
+    {
+      "fault": "non_finite",
+      "file": "sample_002.wav",
+      "frame_index": 200,
+      "id": "INJ-002",
+      "stage": "feature"
+    },
+    {
+      "fault": "zero_threshold",
+      "id": "INJ-003",
+      "stage": "clustering"
+    },
+    {
+      "fault": "replace_out_of_range",
+      "id": "INJ-004",
+      "stage": "command"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "end_ms": 600,
+      "file": "sample_001.wav",
+      "start_ms": 300,
+      "type": "trim"
+    },
+    {
+      "end_ms": 900,
+      "file": "sample_002.wav",
+      "frequency_hz": 170.0,
+      "replace_seed": 4242,
+      "start_ms": 400,
+      "type": "replace"
+    },
+    {
+      "cluster_ids": [
+        "SPK-000",
+        "SPK-001"
+      ],
+      "type": "merge_clusters"
+    },
+    {
+      "member_count": 1,
+      "source_cluster_id": "SPK-000",
+      "type": "split_cluster"
+    },
+    {
+      "cluster_distance_threshold": 22.0,
+      "type": "set_threshold"
+    },
+    {
+      "end_ms": 99000,
+      "file": "sample_001.wav",
+      "injection_id": "INJ-004",
+      "start_ms": 90000,
+      "type": "replace"
+    }
+  ]
+}
