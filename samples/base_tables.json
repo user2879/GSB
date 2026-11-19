@@ -1,0 +1,77 @@
+{
+  "format_version": 1,
+  "workspace_id": "joinlab-local-demo-v1",
+  "attribution_k": 5,
+  "tables": [
+    {
+      "name": "accounts",
+      "row_count": 720,
+      "skew": false,
+      "columns": [
+        {
+          "name": "account_id",
+          "type": "integer"
+        },
+        {
+          "name": "segment",
+          "type": "integer"
+        },
+        {
+          "name": "balance",
+          "type": "float"
+        },
+        {
+          "name": "created_day",
+          "type": "integer"
+        }
+      ],
+      "data_file": "rows/accounts.json"
+    },
+    {
+      "name": "events",
+      "row_count": 1080,
+      "skew": false,
+      "columns": [
+        {
+          "name": "account_id",
+          "type": "integer"
+        },
+        {
+          "name": "amount",
+          "type": "float"
+        },
+        {
+          "name": "channel",
+          "type": "integer"
+        },
+        {
+          "name": "event_day",
+          "type": "integer"
+        }
+      ],
+      "data_file": "rows/events.json"
+    }
+  ],
+  "join": {
+    "left_table": "accounts",
+    "left_key": "account_id",
+    "right_table": "events",
+    "right_key": "account_id"
+  },
+  "filters": {
+    "accounts": [
+      {
+        "column": "segment",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "events": [
+      {
+        "column": "amount",
+        "op": "ge",
+        "value": 100.0
+      }
+    ]
+  }
+}
