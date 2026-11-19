@@ -1,0 +1,6536 @@
+{
+  "algorithms": {
+    "attribution": "两条路径均投影到同一显式桶对，按定点贡献差进行稳定排序与分类。",
+    "histogram": "对每个重叠桶对按 (左桶行数/左桶值域宽度) * (右桶行数/右桶值域宽度) * 重叠宽度 估算，逐对定点后求和并封顶。",
+    "sampling": "样本键频次 fL*fR 乘以 N_L/n_L * N_R/n_R；逐共同样本键定点贡献求和。"
+  },
+  "analysis_digest": "87666ca9040cb1f4d4c5ab16d77e48c7f814bfc5ca441e997b2cada4f2d24efe",
+  "attribution": {
+    "classification_rule": "稳定优先级：样本命中对低于稀疏阈值→sample_sparsity；点桶或样本键命中显式边界→boundary_membership；首样本键命中占比达阈值→skew_key_enrichment；否则归入残差抽样波动。",
+    "digest": "c43d3ab70262813f9575c19946e00ea39c1b9d513b43a2122be4fbcc8e882f5f",
+    "pair_count": 26,
+    "sort_rule": "absolute_difference 降序，left_lower 升序，left_bucket/right_lower/right_bucket 稳定升序",
+    "sparse_threshold": 8,
+    "top_k": [
+      {
+        "absolute_difference": 63.064,
+        "basis": "样本中有 1 个键恰好落在显式桶边界",
+        "boundary_hits": 1,
+        "difference_fixed": -63064000,
+        "estimate_difference": -63.064,
+        "histogram_estimate": 41.0,
+        "histogram_fixed": 41000000,
+        "left_bucket": 1,
+        "left_interval": "[2, 4)",
+        "left_lower": 2,
+        "left_rows": 41,
+        "left_upper": 4,
+        "overlap_width": 2.0,
+        "pair_id": "L1:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 40,
+        "sample_left_bucket_rows": 40,
+        "sample_right_bucket_rows": 2,
+        "sampling_estimate": 104.064,
+        "sampling_fixed": 104064000,
+        "source": "boundary_membership",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 0.55,
+        "truth_rows": 41
+      },
+      {
+        "absolute_difference": 41.0,
+        "basis": "样本命中对 0 小于稀疏阈值 8，左/右样本桶行数为 0/0",
+        "boundary_hits": 0,
+        "difference_fixed": 41000000,
+        "estimate_difference": 41.0,
+        "histogram_estimate": 41.0,
+        "histogram_fixed": 41000000,
+        "left_bucket": 7,
+        "left_interval": "[13, 15)",
+        "left_lower": 13,
+        "left_rows": 41,
+        "left_upper": 15,
+        "overlap_width": 2.0,
+        "pair_id": "L7:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 0,
+        "sample_left_bucket_rows": 0,
+        "sample_right_bucket_rows": 0,
+        "sampling_estimate": 0.0,
+        "sampling_fixed": 0,
+        "source": "sample_sparsity",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 0.0,
+        "truth_rows": 41
+      },
+      {
+        "absolute_difference": 34.0,
+        "basis": "样本命中对 0 小于稀疏阈值 8，左/右样本桶行数为 0/0",
+        "boundary_hits": 0,
+        "difference_fixed": 34000000,
+        "estimate_difference": 34.0,
+        "histogram_estimate": 34.0,
+        "histogram_fixed": 34000000,
+        "left_bucket": 9,
+        "left_interval": "[17, 19)",
+        "left_lower": 17,
+        "left_rows": 34,
+        "left_upper": 19,
+        "overlap_width": 2.0,
+        "pair_id": "L9:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 0,
+        "sample_left_bucket_rows": 0,
+        "sample_right_bucket_rows": 0,
+        "sampling_estimate": 0.0,
+        "sampling_fixed": 0,
+        "source": "sample_sparsity",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 0.0,
+        "truth_rows": 34
+      },
+      {
+        "absolute_difference": 30.0,
+        "basis": "样本命中对 0 小于稀疏阈值 8，左/右样本桶行数为 0/0",
+        "boundary_hits": 0,
+        "difference_fixed": 30000000,
+        "estimate_difference": 30.0,
+        "histogram_estimate": 30.0,
+        "histogram_fixed": 30000000,
+        "left_bucket": 2,
+        "left_interval": "[4, 6)",
+        "left_lower": 4,
+        "left_rows": 30,
+        "left_upper": 6,
+        "overlap_width": 2.0,
+        "pair_id": "L2:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 0,
+        "sample_left_bucket_rows": 0,
+        "sample_right_bucket_rows": 0,
+        "sampling_estimate": 0.0,
+        "sampling_fixed": 0,
+        "source": "sample_sparsity",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 0.0,
+        "truth_rows": 30
+      },
+      {
+        "absolute_difference": 29.4304,
+        "basis": "样本中有 1 个键恰好落在显式桶边界",
+        "boundary_hits": 1,
+        "difference_fixed": -29430400,
+        "estimate_difference": -29.4304,
+        "histogram_estimate": 20.0,
+        "histogram_fixed": 20000000,
+        "left_bucket": 11,
+        "left_interval": "[21, 22)",
+        "left_lower": 21,
+        "left_rows": 20,
+        "left_upper": 22,
+        "overlap_width": 1.0,
+        "pair_id": "L11:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 19,
+        "sample_left_bucket_rows": 19,
+        "sample_right_bucket_rows": 1,
+        "sampling_estimate": 49.4304,
+        "sampling_fixed": 49430400,
+        "source": "boundary_membership",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 1.0,
+        "truth_rows": 20
+      },
+      {
+        "absolute_difference": 23.6256,
+        "basis": "样本中有 1 个键恰好落在显式桶边界",
+        "boundary_hits": 1,
+        "difference_fixed": -23625600,
+        "estimate_difference": -23.6256,
+        "histogram_estimate": 18.0,
+        "histogram_fixed": 18000000,
+        "left_bucket": 6,
+        "left_interval": "[12, 13)",
+        "left_lower": 12,
+        "left_rows": 18,
+        "left_upper": 13,
+        "overlap_width": 1.0,
+        "pair_id": "L6:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 16,
+        "sample_left_bucket_rows": 16,
+        "sample_right_bucket_rows": 1,
+        "sampling_estimate": 41.6256,
+        "sampling_fixed": 41625600,
+        "source": "boundary_membership",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 1.0,
+        "truth_rows": 18
+      },
+      {
+        "absolute_difference": 21.0,
+        "basis": "样本命中对 0 小于稀疏阈值 8，左/右样本桶行数为 0/0",
+        "boundary_hits": 0,
+        "difference_fixed": 21000000,
+        "estimate_difference": 21.0,
+        "histogram_estimate": 21.0,
+        "histogram_fixed": 21000000,
+        "left_bucket": 0,
+        "left_interval": "[1, 2)",
+        "left_lower": 1,
+        "left_rows": 21,
+        "left_upper": 2,
+        "overlap_width": 1.0,
+        "pair_id": "L0:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 0,
+        "sample_left_bucket_rows": 0,
+        "sample_right_bucket_rows": 0,
+        "sampling_estimate": 0.0,
+        "sampling_fixed": 0,
+        "source": "sample_sparsity",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 0.0,
+        "truth_rows": 21
+      },
+      {
+        "absolute_difference": 16.8368,
+        "basis": "样本命中对的首键占比 1.000000，左表倾斜=True，右表倾斜=False",
+        "boundary_hits": 0,
+        "difference_fixed": -16836800,
+        "estimate_difference": -16.8368,
+        "histogram_estimate": 43.0,
+        "histogram_fixed": 43000000,
+        "left_bucket": 10,
+        "left_interval": "[19, 21)",
+        "left_lower": 19,
+        "left_rows": 43,
+        "left_upper": 21,
+        "overlap_width": 2.0,
+        "pair_id": "L10:R0",
+        "right_bucket": 0,
+        "right_interval": "[1, 76)",
+        "right_lower": 1,
+        "right_rows": 75,
+        "right_upper": 76,
+        "sample_hit_pairs": 23,
+        "sample_left_bucket_rows": 23,
+        "sample_right_bucket_rows": 1,
+        "sampling_estimate": 59.8368,
+        "sampling_fixed": 59836800,
+        "source": "skew_key_enrichment",
+        "sparse_threshold": 8,
+        "top_key_hit_share": 1.0,
+        "truth_rows": 43
+      }
+    ]
+  },
+  "data": {
+    "filtered": {
+      "left": {
+        "content_digest": "7848cccd7a95ca36d9a55d6154cf8d1ac88ee8e24532444eb6dd2675b83d7b79",
+        "predicate_digest": "34f67bf50a1436bb5c974548a40c0f6a578bfc4115dc983e6f5b0ea19c2c12b6",
+        "predicates": [
+          {
+            "column": "amount",
+            "op": "ge",
+            "value": 12000
+          }
+        ],
+        "rows": 542
+      },
+      "right": {
+        "content_digest": "02cf221a758facafe64cc5412fc8923c3ef7cee4606f50b4d39b8bea1aacf141",
+        "predicate_digest": "f1222fb238d53c3567e3e6c190729544df112c7e141e41721ef7c81273c40307",
+        "predicates": [
+          {
+            "column": "active",
+            "op": "ge",
+            "value": 0
+          }
+        ],
+        "rows": 1200
+      }
+    },
+    "scenario_data_digest": "907b857559fc66f16482a83e5d1721230a55bba4837347dbfbb68d295b4c7b01",
+    "tables": {
+      "customers": {
+        "columns": {
+          "active": {
+            "dtype": "int64",
+            "shape": [
+              1200
+            ]
+          },
+          "id": {
+            "dtype": "int64",
+            "shape": [
+              1200
+            ]
+          },
+          "segment": {
+            "dtype": "int64",
+            "shape": [
+              1200
+            ]
+          }
+        },
+        "content_digest": "02cf221a758facafe64cc5412fc8923c3ef7cee4606f50b4d39b8bea1aacf141",
+        "file_digest": "1cd4b0fb3a545d84ed3b24f81dbe111d727974d69b042233540792f93088ce8d",
+        "manifest_path": "var/final-run/samples/c6cf9c3df767d3f4_customers.manifest.json",
+        "path": "var/final-run/samples/c6cf9c3df767d3f4_customers.npz",
+        "rows": 1200,
+        "table": "customers"
+      },
+      "orders": {
+        "columns": {
+          "amount": {
+            "dtype": "int64",
+            "shape": [
+              6000
+            ]
+          },
+          "channel": {
+            "dtype": "int64",
+            "shape": [
+              6000
+            ]
+          },
+          "customer_id": {
+            "dtype": "int64",
+            "shape": [
+              6000
+            ]
+          }
+        },
+        "content_digest": "b3bba155786991dd55babb177d8c7596173c13417509919d5e7bb058bd3e6a78",
+        "file_digest": "25e34734ab6a97f63cd4f0e95659e397bceace4d2380247d2b3850c3275cc2e0",
+        "manifest_path": "var/final-run/samples/010b9d77008f0c63_orders.manifest.json",
+        "path": "var/final-run/samples/010b9d77008f0c63_orders.npz",
+        "rows": 6000,
+        "table": "orders"
+      }
+    }
+  },
+  "decision": {
+    "digest": "20e2ac87a225401f42d66c59429ddae12cc5c31acb26b672404e77d9935764bf",
+    "dominant_deviation_bucket": {
+      "absolute_difference_rows": 14.816667,
+      "difference_rows": -14.816667,
+      "estimated_rows": 10.183333,
+      "left_bucket": 13,
+      "left_lower": 24,
+      "pair_id": "L13:R0",
+      "right_bucket": 0,
+      "right_lower": 1,
+      "truth_rows": 25.0
+    },
+    "dominant_deviations": {
+      "histogram": [
+        {
+          "absolute_difference_rows": 14.816667,
+          "difference_rows": -14.816667,
+          "estimated_rows": 10.183333,
+          "left_bucket": 13,
+          "left_lower": 24,
+          "pair_id": "L13:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 25.0
+        },
+        {
+          "absolute_difference_rows": 6.582677,
+          "difference_rows": -6.582677,
+          "estimated_rows": 4.417323,
+          "left_bucket": 15,
+          "left_lower": 530,
+          "pair_id": "L15:R10",
+          "right_bucket": 10,
+          "right_lower": 751,
+          "truth_rows": 11.0
+        },
+        {
+          "absolute_difference_rows": 6.03937,
+          "difference_rows": 6.03937,
+          "estimated_rows": 10.03937,
+          "left_bucket": 15,
+          "left_lower": 530,
+          "pair_id": "L15:R8",
+          "right_bucket": 8,
+          "right_lower": 601,
+          "truth_rows": 4.0
+        },
+        {
+          "absolute_difference_rows": 5.6875,
+          "difference_rows": 5.6875,
+          "estimated_rows": 14.6875,
+          "left_bucket": 13,
+          "left_lower": 24,
+          "pair_id": "L13:R1",
+          "right_bucket": 1,
+          "right_lower": 76,
+          "truth_rows": 9.0
+        },
+        {
+          "absolute_difference_rows": 5.441667,
+          "difference_rows": 5.441667,
+          "estimated_rows": 7.441667,
+          "left_bucket": 13,
+          "left_lower": 24,
+          "pair_id": "L13:R3",
+          "right_bucket": 3,
+          "right_lower": 226,
+          "truth_rows": 2.0
+        },
+        {
+          "absolute_difference_rows": 3.6875,
+          "difference_rows": 3.6875,
+          "estimated_rows": 14.6875,
+          "left_bucket": 13,
+          "left_lower": 24,
+          "pair_id": "L13:R2",
+          "right_bucket": 2,
+          "right_lower": 151,
+          "truth_rows": 11.0
+        },
+        {
+          "absolute_difference_rows": 2.413534,
+          "difference_rows": -2.413534,
+          "estimated_rows": 9.586466,
+          "left_bucket": 14,
+          "left_lower": 264,
+          "pair_id": "L14:R5",
+          "right_bucket": 5,
+          "right_lower": 376,
+          "truth_rows": 12.0
+        },
+        {
+          "absolute_difference_rows": 2.03937,
+          "difference_rows": 2.03937,
+          "estimated_rows": 10.03937,
+          "left_bucket": 15,
+          "left_lower": 530,
+          "pair_id": "L15:R9",
+          "right_bucket": 9,
+          "right_lower": 676,
+          "truth_rows": 8.0
+        }
+      ],
+      "sampling": [
+        {
+          "absolute_difference_rows": 63.064,
+          "difference_rows": 63.064,
+          "estimated_rows": 104.064,
+          "left_bucket": 1,
+          "left_lower": 2,
+          "pair_id": "L1:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 41.0
+        },
+        {
+          "absolute_difference_rows": 41.0,
+          "difference_rows": -41.0,
+          "estimated_rows": 0.0,
+          "left_bucket": 7,
+          "left_lower": 13,
+          "pair_id": "L7:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 41.0
+        },
+        {
+          "absolute_difference_rows": 34.0,
+          "difference_rows": -34.0,
+          "estimated_rows": 0.0,
+          "left_bucket": 9,
+          "left_lower": 17,
+          "pair_id": "L9:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 34.0
+        },
+        {
+          "absolute_difference_rows": 30.0,
+          "difference_rows": -30.0,
+          "estimated_rows": 0.0,
+          "left_bucket": 2,
+          "left_lower": 4,
+          "pair_id": "L2:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 30.0
+        },
+        {
+          "absolute_difference_rows": 29.4304,
+          "difference_rows": 29.4304,
+          "estimated_rows": 49.4304,
+          "left_bucket": 11,
+          "left_lower": 21,
+          "pair_id": "L11:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 20.0
+        },
+        {
+          "absolute_difference_rows": 23.6256,
+          "difference_rows": 23.6256,
+          "estimated_rows": 41.6256,
+          "left_bucket": 6,
+          "left_lower": 12,
+          "pair_id": "L6:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 18.0
+        },
+        {
+          "absolute_difference_rows": 21.0,
+          "difference_rows": -21.0,
+          "estimated_rows": 0.0,
+          "left_bucket": 0,
+          "left_lower": 1,
+          "pair_id": "L0:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 21.0
+        },
+        {
+          "absolute_difference_rows": 16.8368,
+          "difference_rows": 16.8368,
+          "estimated_rows": 59.8368,
+          "left_bucket": 10,
+          "left_lower": 19,
+          "pair_id": "L10:R0",
+          "right_bucket": 0,
+          "right_lower": 1,
+          "truth_rows": 43.0
+        }
+      ]
+    },
+    "estimates": {
+      "histogram": 541.999999,
+      "sampling": 548.9376,
+      "truth": 542
+    },
+    "histogram": {
+      "absolute_error": 9.999999974752427e-07,
+      "estimate": 541.999999,
+      "out_of_bounds_ratio": 0.0,
+      "relative_error": 1.845018445526278e-09,
+      "within_interval": true
+    },
+    "interval": {
+      "base_term": 0.02,
+      "bucket_term": 0.03125,
+      "effective_sample": 500,
+      "formula": "relative_tolerance = min(0.80, 0.02 + 1.96/sqrt(min(sample_size, n_left, n_right)) + 1/(2*buckets)); interval = [floor(truth*(1-tol)), ceil(truth*(1+tol))]",
+      "lower": 466.0,
+      "lower_inclusive": true,
+      "relative_tolerance": 0.13890386471799177,
+      "sampling_term": 0.08765386471799175,
+      "truth_center": 542,
+      "upper": 618.0,
+      "upper_inclusive": true,
+      "zero_truth_absolute_floor": 0.0
+    },
+    "outcome": "OK",
+    "path_selection": {
+      "effective_sample": 500,
+      "histogram_bucket_term": 0.03125,
+      "histogram_score": 0.03125,
+      "hit_pair_top_share": 0.10900473933649289,
+      "observed_common_keys": 45,
+      "reason": "桶模型误差项低于抽样统计误差项",
+      "rule": "先检查命中稀疏、样本规模与富集键主导；否则比较 1/(2*buckets) 与 1.96/sqrt(n_eff)+1/sqrt(hit_pairs+1)。",
+      "sample_hit_pairs": 211,
+      "sampling_score": 0.15633414669233625,
+      "sampling_stat_term": 0.15633414669233625,
+      "selected_path": "histogram"
+    },
+    "sampling": {
+      "absolute_error": 6.937599999999975,
+      "estimate": 548.9376,
+      "out_of_bounds_ratio": 0.0,
+      "relative_error": 0.012799999999999954,
+      "within_interval": true
+    },
+    "selected_path": "histogram",
+    "within_interval": true
+  },
+  "estimates": {
+    "compatibility": {
+      "histogram_within_bounds": true,
+      "sampling_within_bounds": true,
+      "truth_within_bounds": true
+    },
+    "fixed_point_scale": 1000000,
+    "histogram": {
+      "estimate": 541.999999,
+      "estimate_fixed": 541999999,
+      "fixed_scale": 1000000,
+      "max_possible": 650400.0,
+      "overlap_pair_count": 26,
+      "overlap_row_ratio": {
+        "left": 1.0,
+        "right": 0.6875
+      },
+      "overlap_row_ratio_combined": 0.84375,
+      "pair_count": 26,
+      "path_digest": "2d3841c733ef49ea152d2d6faf7456b74e7b8442c9269dd9313692256701a6ec",
+      "quantization_error_upper": 1.3e-05
+    },
+    "sampling": {
+      "estimate": 548.9376,
+      "estimate_fixed": 548937600,
+      "estimate_from_fixed": 548.9376,
+      "fixed_scale": 1000000,
+      "joint_coefficient": 2.6016,
+      "left_coefficient": 1.084,
+      "max_possible": 650400.0,
+      "observed_common_keys": 45,
+      "quantization_error_upper": 2.2499999999999998e-05,
+      "right_coefficient": 2.4,
+      "sample_hit_pairs": 211,
+      "sample_hit_rate": 0.000844,
+      "sample_pair_universe": 250000
+    },
+    "truth": {
+      "common_key_count": 113,
+      "digest": "f059f195e15468288de1002dbbd6ab4bab45ac7dd446c8d61793b10033b686a5",
+      "key_distribution": [
+        {
+          "join_rows": 21,
+          "key": 1,
+          "left_frequency": 21,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 2,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 3,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 4,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 13,
+          "key": 5,
+          "left_frequency": 13,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 6,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 15,
+          "key": 7,
+          "left_frequency": 15,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 8,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 9,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 16,
+          "key": 10,
+          "left_frequency": 16,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 26,
+          "key": 11,
+          "left_frequency": 26,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 18,
+          "key": 12,
+          "left_frequency": 18,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 13,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 21,
+          "key": 14,
+          "left_frequency": 21,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 15,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 13,
+          "key": 16,
+          "left_frequency": 13,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 17,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 12,
+          "key": 18,
+          "left_frequency": 12,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 19,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 23,
+          "key": 20,
+          "left_frequency": 23,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 21,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 22,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 23,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 24,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 40,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 45,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 58,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 67,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 71,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 84,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 99,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 104,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 118,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 120,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 121,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 136,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 150,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 159,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 163,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 168,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 172,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 177,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 193,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 197,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 199,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 206,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 216,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 233,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 252,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 264,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 279,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 291,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 298,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 303,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 316,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 322,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 341,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 342,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 344,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 356,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 372,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 374,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 388,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 390,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 392,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 397,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 403,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 416,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 420,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 440,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 443,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 446,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 449,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 455,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 489,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 490,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 496,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 502,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 510,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 512,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 517,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 530,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 544,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 545,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 547,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 549,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 578,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 585,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 588,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 589,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 590,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 597,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 622,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 637,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 643,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 649,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 687,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 694,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 701,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 717,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 733,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 737,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 741,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 750,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 751,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 755,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 2,
+          "key": 759,
+          "left_frequency": 2,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 761,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 768,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 774,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 775,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 778,
+          "left_frequency": 1,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 1,
+          "key": 783,
+          "left_frequency": 1,
+          "right_frequency": 1
+        }
+      ],
+      "key_distribution_complete": true,
+      "key_distribution_digest": "66873fdabc46b834ab4993198f6fea18b4c2d6f0675ce620acdd747e66100ae5",
+      "key_distribution_top": [
+        {
+          "join_rows": 26,
+          "key": 11,
+          "left_frequency": 26,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 23,
+          "key": 20,
+          "left_frequency": 23,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 3,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 17,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 22,
+          "key": 22,
+          "left_frequency": 22,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 21,
+          "key": 1,
+          "left_frequency": 21,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 21,
+          "key": 14,
+          "left_frequency": 21,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 13,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 19,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 20,
+          "key": 21,
+          "left_frequency": 20,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 2,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 23,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 19,
+          "key": 24,
+          "left_frequency": 19,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 18,
+          "key": 12,
+          "left_frequency": 18,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 4,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 6,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 8,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 9,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 17,
+          "key": 15,
+          "left_frequency": 17,
+          "right_frequency": 1
+        },
+        {
+          "join_rows": 16,
+          "key": 10,
+          "left_frequency": 16,
+          "right_frequency": 1
+        }
+      ],
+      "key_distribution_truncated_at": null,
+      "left_bucket_rows": [
+        21,
+        41,
+        30,
+        32,
+        34,
+        42,
+        18,
+        41,
+        30,
+        34,
+        43,
+        20,
+        41,
+        47,
+        34,
+        34
+      ],
+      "left_filtered_rows": 542,
+      "max_possible": 650400.0,
+      "pair_rows": {
+        "L0:R0": 21,
+        "L10:R0": 43,
+        "L11:R0": 20,
+        "L12:R0": 41,
+        "L13:R0": 25,
+        "L13:R1": 9,
+        "L13:R2": 11,
+        "L13:R3": 2,
+        "L14:R3": 5,
+        "L14:R4": 9,
+        "L14:R5": 12,
+        "L14:R6": 8,
+        "L15:R10": 11,
+        "L15:R7": 11,
+        "L15:R8": 4,
+        "L15:R9": 8,
+        "L1:R0": 41,
+        "L2:R0": 30,
+        "L3:R0": 32,
+        "L4:R0": 34,
+        "L5:R0": 42,
+        "L6:R0": 18,
+        "L7:R0": 41,
+        "L8:R0": 30,
+        "L9:R0": 34
+      },
+      "right_bucket_rows": [
+        452,
+        9,
+        11,
+        7,
+        9,
+        12,
+        8,
+        11,
+        4,
+        8,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "right_filtered_rows": 1200,
+      "row_count": 542
+    }
+  },
+  "format": "gsb-report-v1",
+  "histograms": {
+    "left": {
+      "boundary_rule": "left_closed_right_open",
+      "bucket_count": 16,
+      "buckets": [
+        {
+          "digest": "be2f2ffb7a9e3c37f54c58e0626053a33992db4e458a181aabd9688122524c5c",
+          "index": 0,
+          "interval": "[1, 2)",
+          "lower": 1,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 21,
+          "upper": 2,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "3d94cd98198cc970de5080db4c9de70fcb1d5fc17cf4536f7c120dad41c2d2aa",
+          "index": 1,
+          "interval": "[2, 4)",
+          "lower": 2,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 41,
+          "upper": 4,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "042b364b38fcef0e98369ead54e77b3e057491f4026aad01ac40ab7a6536f542",
+          "index": 2,
+          "interval": "[4, 6)",
+          "lower": 4,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 30,
+          "upper": 6,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "5c9d08698763f5e7f99240608cf15e5c501605cde58f3186d3784cb41acb7ba4",
+          "index": 3,
+          "interval": "[6, 8)",
+          "lower": 6,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 32,
+          "upper": 8,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "8133cbaa54508134899f8045c84f8028aad3382f3b9dc2998117c53a9f08ac68",
+          "index": 4,
+          "interval": "[8, 10)",
+          "lower": 8,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 34,
+          "upper": 10,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "e67636f2008f581f16dc429f8acc413c913d50ced03bf540836cde4a02fdeaee",
+          "index": 5,
+          "interval": "[10, 12)",
+          "lower": 10,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 42,
+          "upper": 12,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "9f70351c2a745aae09a9accc497677667145b6cbbd1d7426c16a90868123bf53",
+          "index": 6,
+          "interval": "[12, 13)",
+          "lower": 12,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 18,
+          "upper": 13,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "771197b0008df21fa0249a5928ba9a22803d106f107e85f338462d9e2ce99420",
+          "index": 7,
+          "interval": "[13, 15)",
+          "lower": 13,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 41,
+          "upper": 15,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "47b5ffc68b15d43b24138f0ebfc5c24fc0cf48f6f64a1a198196f9fe8dffc43a",
+          "index": 8,
+          "interval": "[15, 17)",
+          "lower": 15,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 30,
+          "upper": 17,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "7079493ee97083314841c0b8add2703fa3cfe3cd3a602c2d58788c6e4029b38f",
+          "index": 9,
+          "interval": "[17, 19)",
+          "lower": 17,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 34,
+          "upper": 19,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "39f5a2cb4764b6d14be6902f1dde3b5e53f6ae2121d891bc5567c71f46267602",
+          "index": 10,
+          "interval": "[19, 21)",
+          "lower": 19,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 43,
+          "upper": 21,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "e07fcc900f6619e65d0d79647dbff055a24f76d748ec6d6ddccb1465a9ff99c3",
+          "index": 11,
+          "interval": "[21, 22)",
+          "lower": 21,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 20,
+          "upper": 22,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "54657e742a7f0de99eee9989a91596f3d69657c5c03684e246d2f2764a610380",
+          "index": 12,
+          "interval": "[22, 24)",
+          "lower": 22,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 41,
+          "upper": 24,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "f910e459f0975e73a688c90d6ac5e8c43b84d5adfcf08e8d0d3340b6c5b43110",
+          "index": 13,
+          "interval": "[24, 264)",
+          "lower": 24,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 47,
+          "upper": 264,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "d981a6fab71c212fe12ad5e3fca5adf73fb7fd485ce6e3ed8c322f5fe0b7810e",
+          "index": 14,
+          "interval": "[264, 530)",
+          "lower": 264,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 34,
+          "upper": 530,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "6007fee7833ae039d6ea139ec49d29b4b0c7ced37a8ef450167415b7e24ad289",
+          "index": 15,
+          "interval": "[530, 783]",
+          "lower": 530,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 34,
+          "upper": 783,
+          "upper_inclusive": true
+        }
+      ],
+      "column": "customer_id",
+      "digest": "50e7e1c7c61cc943fe60b87458f788366d8eb352046449aa10a5499958ee8057",
+      "edges": [
+        1,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        13,
+        15,
+        17,
+        19,
+        21,
+        22,
+        24,
+        264,
+        530,
+        783
+      ],
+      "key_type": "int",
+      "null_bucket": {
+        "digest": "0e6875b821b7eef901be01c011b68518c07a00ff1c8463a318af242464a7e296",
+        "row_count": 0,
+        "semantics": "空值不参与等值联接与分位边界，单列为空值桶。"
+      },
+      "null_count": 0,
+      "quantile_basis": "分位边界由过滤后全量非空联接键排序统计确定；不使用随机分位抽样；等深位置为 floor(i*n/buckets)。",
+      "quantile_sample_size": 542,
+      "quantile_scope": "full_filtered",
+      "row_count": 542,
+      "source_digest": "7848cccd7a95ca36d9a55d6154cf8d1ac88ee8e24532444eb6dd2675b83d7b79",
+      "table": "orders"
+    },
+    "right": {
+      "boundary_rule": "left_closed_right_open",
+      "bucket_count": 16,
+      "buckets": [
+        {
+          "digest": "4036549383147cd4eec318ff977cd5410683b6d5c25dff51c4208a280527b6bb",
+          "index": 0,
+          "interval": "[1, 76)",
+          "lower": 1,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 76,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "7829693757e4560044af50db0b5ab91475ac746eee2af143655e965c56ca468e",
+          "index": 1,
+          "interval": "[76, 151)",
+          "lower": 76,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 151,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "ecd1a0546ba154a579103e453051145a9b9016c7ebac37a883e264b8ffe9a1a0",
+          "index": 2,
+          "interval": "[151, 226)",
+          "lower": 151,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 226,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "142e6732c25b60f27d46bbe8f19b36cd48c7e6a94ac82447fb22564fb52c0db4",
+          "index": 3,
+          "interval": "[226, 301)",
+          "lower": 226,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 301,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "fb46869627a7d53174db0f0bb0e4a174e0c38c830cfb8d476526452537157ffd",
+          "index": 4,
+          "interval": "[301, 376)",
+          "lower": 301,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 376,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "ead6823963d39a6acb411e7a1535f91fc151d372e1be4f9632d6144b0876e4dd",
+          "index": 5,
+          "interval": "[376, 451)",
+          "lower": 376,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 451,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "fa00c889cfdd92e8999b5c5e0213fb0ffec3b2a88589c1874b808c9594f4b5b8",
+          "index": 6,
+          "interval": "[451, 526)",
+          "lower": 451,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 526,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "e2594dd94069302f041c20d3776674eb8f3960e135f6a3a768fa8cd9187833f1",
+          "index": 7,
+          "interval": "[526, 601)",
+          "lower": 526,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 601,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "d4b93b63d16e31f77f893639731c269e0543f442f99241675c27dbdca5ed778f",
+          "index": 8,
+          "interval": "[601, 676)",
+          "lower": 601,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 676,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "d6503283236edccbcf5aa97409e23c0d6f586dbf6ac83b2fff9aa5ad93d13b28",
+          "index": 9,
+          "interval": "[676, 751)",
+          "lower": 676,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 751,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "ee03053d974a4be0009196907f582bd29a50a6a8a0ae4dec0472e3fab8d28081",
+          "index": 10,
+          "interval": "[751, 826)",
+          "lower": 751,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 826,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "406b98492789f629f6cb89d2f0a79333350474d100347226effb2e799b46674e",
+          "index": 11,
+          "interval": "[826, 901)",
+          "lower": 826,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 901,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "d40abe8ef620d0f69c235523c8142a624db0beefa5c60f97f132837c3a1f6bd1",
+          "index": 12,
+          "interval": "[901, 976)",
+          "lower": 901,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 976,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "1529ae0d0d2a66d11f8cdcbde6f8807973c03e06d49551b5ed52c76e618cfd6d",
+          "index": 13,
+          "interval": "[976, 1051)",
+          "lower": 976,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 1051,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "68bcceea7ec7ac4ed3c0d2cbf5f6efa9596ab82d9dee2588ec2154d8d332ff3e",
+          "index": 14,
+          "interval": "[1051, 1126)",
+          "lower": 1051,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 1126,
+          "upper_inclusive": false
+        },
+        {
+          "digest": "2a150f174ebca30fc904561946a5512fa791973de187f7590349a105ac76dc18",
+          "index": 15,
+          "interval": "[1126, 1200]",
+          "lower": 1126,
+          "lower_inclusive": true,
+          "null_count": 0,
+          "row_count": 75,
+          "upper": 1200,
+          "upper_inclusive": true
+        }
+      ],
+      "column": "id",
+      "digest": "5019763c9ddf37b42fcc4eb5749b5faa409ea7d7ab05c24e6db5368ac392cd1e",
+      "edges": [
+        1,
+        76,
+        151,
+        226,
+        301,
+        376,
+        451,
+        526,
+        601,
+        676,
+        751,
+        826,
+        901,
+        976,
+        1051,
+        1126,
+        1200
+      ],
+      "key_type": "int",
+      "null_bucket": {
+        "digest": "0e6875b821b7eef901be01c011b68518c07a00ff1c8463a318af242464a7e296",
+        "row_count": 0,
+        "semantics": "空值不参与等值联接与分位边界，单列为空值桶。"
+      },
+      "null_count": 0,
+      "quantile_basis": "分位边界由过滤后全量非空联接键排序统计确定；不使用随机分位抽样；等深位置为 floor(i*n/buckets)。",
+      "quantile_sample_size": 1200,
+      "quantile_scope": "full_filtered",
+      "row_count": 1200,
+      "source_digest": "02cf221a758facafe64cc5412fc8923c3ef7cee4606f50b4d39b8bea1aacf141",
+      "table": "customers"
+    },
+    "scope_declaration": {
+      "basis": "联接键先经过声明谓词过滤，再用过滤后全量非空键构建等深分位桶。",
+      "boundary_rules": {
+        "float": "left_open_right_closed",
+        "int": "left_closed_right_open"
+      },
+      "quantile_scope": "full_filtered"
+    }
+  },
+  "parameters": {
+    "boundary_rule_declarations": {
+      "float": "左开右闭；第一个桶包含左端点",
+      "int": "左闭右开；最后一个桶包含右端点"
+    },
+    "boundary_rules": {
+      "float": "left_open_right_closed",
+      "int": "left_closed_right_open"
+    },
+    "buckets": 16,
+    "left_key": "customer_id",
+    "left_table": "orders",
+    "parameter_version": 1,
+    "right_key": "id",
+    "right_table": "customers",
+    "sample_seed": 424242,
+    "sample_size": 500,
+    "top_k": 8
+  },
+  "sampling": {
+    "declaration": {
+      "method": "canonical-row-order + SHA256-derived PCG64 permutation",
+      "physical_order_independent": true,
+      "sample_seed": 424242,
+      "sample_size": 500
+    },
+    "left": {
+      "coefficients": {
+        "filtered_rows": 542.0,
+        "rows_per_sample_row": 1.084,
+        "sample_size": 500.0
+      },
+      "data_digest": "7848cccd7a95ca36d9a55d6154cf8d1ac88ee8e24532444eb6dd2675b83d7b79",
+      "derived_seed": 320586422538846527367919811788821619540,
+      "digest": "b5d1563bee442705cb632bc0ba7aec9477711e90588c261ba2daeb9b3797a243",
+      "entries": [
+        {
+          "estimated_row_frequency": 19.512,
+          "frequency": 18,
+          "key": 1,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 19.512,
+          "frequency": 18,
+          "key": 2,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 23.848000000000003,
+          "frequency": 22,
+          "key": 3,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 14.092,
+          "frequency": 13,
+          "key": 4,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 13.008000000000001,
+          "frequency": 12,
+          "key": 5,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 6,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 16.26,
+          "frequency": 15,
+          "key": 7,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 8,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 9,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 14.092,
+          "frequency": 13,
+          "key": 10,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 26.016000000000002,
+          "frequency": 24,
+          "key": 11,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 12,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 20.596,
+          "frequency": 19,
+          "key": 13,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 20.596,
+          "frequency": 19,
+          "key": 14,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 18.428,
+          "frequency": 17,
+          "key": 15,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 13.008000000000001,
+          "frequency": 12,
+          "key": 16,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 23.848000000000003,
+          "frequency": 22,
+          "key": 17,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 11.924000000000001,
+          "frequency": 11,
+          "key": 18,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 19,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 24.932000000000002,
+          "frequency": 23,
+          "key": 20,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 20.596,
+          "frequency": 19,
+          "key": 21,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 21.68,
+          "frequency": 20,
+          "key": 22,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 17.344,
+          "frequency": 16,
+          "key": 23,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 19.512,
+          "frequency": 18,
+          "key": 24,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 40,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 45,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 58,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 67,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 71,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 84,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 99,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 104,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 118,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 120,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 121,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 150,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 159,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 163,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 168,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 172,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 177,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 193,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 197,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 199,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 206,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 216,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 233,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 252,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 264,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 279,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 291,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 298,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 303,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 316,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 322,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 341,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 342,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 344,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 356,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 372,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 374,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 388,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 390,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 392,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 397,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 403,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 416,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 420,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 440,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 443,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 446,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 449,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 489,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 490,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 496,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 502,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 510,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 512,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 517,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 544,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 545,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 547,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 549,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 578,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 585,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 588,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 589,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 622,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 637,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 643,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 649,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 687,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 694,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 701,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 717,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 733,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 737,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 741,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 751,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 755,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 2.168,
+          "frequency": 2,
+          "key": 759,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 761,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 768,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 774,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 775,
+          "rescale_factor": 1.084
+        },
+        {
+          "estimated_row_frequency": 1.084,
+          "frequency": 1,
+          "key": 778,
+          "rescale_factor": 1.084
+        }
+      ],
+      "filtered_rows": 542,
+      "key_column": "customer_id",
+      "key_count": 106,
+      "predicate_digest": "34f67bf50a1436bb5c974548a40c0f6a578bfc4115dc983e6f5b0ea19c2c12b6",
+      "sample_seed": 424242,
+      "sample_size": 500,
+      "selected_rows_digest": "6c69b29e0d8c175752c7ea98e01fdeddd40bcbdc1d8058be542f6e8d6f0c6914",
+      "table": "orders",
+      "table_rows": 6000
+    },
+    "right": {
+      "coefficients": {
+        "filtered_rows": 1200.0,
+        "rows_per_sample_row": 2.4,
+        "sample_size": 500.0
+      },
+      "data_digest": "02cf221a758facafe64cc5412fc8923c3ef7cee4606f50b4d39b8bea1aacf141",
+      "derived_seed": 22858457276789474870872408346815739359,
+      "digest": "8bb430c33721ed98ee8281df2f9c14f69de621be4d11f8cb806969adeed7ec67",
+      "entries": [
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 2,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 3,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 7,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 9,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 10,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 12,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 16,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 20,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 21,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 22,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 25,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 26,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 30,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 31,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 35,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 38,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 43,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 44,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 45,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 46,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 48,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 49,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 50,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 53,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 57,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 58,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 65,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 66,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 71,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 73,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 75,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 76,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 77,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 78,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 79,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 80,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 85,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 87,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 88,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 89,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 92,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 94,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 97,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 98,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 103,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 105,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 107,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 116,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 117,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 119,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 122,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 127,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 129,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 137,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 138,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 140,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 141,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 143,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 147,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 148,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 149,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 153,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 156,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 157,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 158,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 159,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 166,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 167,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 168,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 169,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 172,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 181,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 182,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 183,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 186,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 187,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 188,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 190,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 191,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 193,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 200,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 201,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 204,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 208,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 210,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 211,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 212,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 218,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 220,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 226,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 227,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 231,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 233,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 236,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 244,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 245,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 246,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 250,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 251,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 252,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 253,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 255,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 256,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 257,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 259,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 260,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 266,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 268,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 269,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 273,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 275,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 280,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 283,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 285,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 287,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 293,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 295,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 297,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 299,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 300,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 301,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 303,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 304,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 307,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 309,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 311,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 314,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 316,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 319,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 327,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 333,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 335,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 337,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 339,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 341,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 344,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 345,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 346,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 347,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 348,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 352,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 354,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 358,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 359,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 362,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 364,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 366,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 374,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 378,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 379,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 383,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 391,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 392,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 394,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 397,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 401,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 405,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 408,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 412,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 413,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 417,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 422,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 426,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 429,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 432,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 440,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 445,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 446,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 449,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 450,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 451,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 452,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 453,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 454,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 455,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 456,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 458,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 461,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 463,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 467,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 471,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 473,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 478,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 481,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 482,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 484,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 492,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 495,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 496,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 498,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 499,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 500,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 504,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 505,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 506,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 508,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 509,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 510,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 511,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 513,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 515,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 516,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 519,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 521,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 527,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 528,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 530,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 533,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 534,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 538,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 540,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 541,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 543,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 544,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 545,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 546,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 550,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 551,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 557,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 560,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 561,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 562,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 564,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 565,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 568,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 569,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 572,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 573,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 576,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 577,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 579,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 584,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 585,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 586,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 587,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 589,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 590,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 591,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 592,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 596,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 598,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 599,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 602,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 604,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 605,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 610,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 611,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 612,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 616,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 618,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 621,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 624,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 626,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 628,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 629,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 632,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 634,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 635,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 637,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 642,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 644,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 646,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 647,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 648,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 649,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 652,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 653,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 654,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 655,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 656,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 658,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 663,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 666,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 667,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 669,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 670,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 672,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 674,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 679,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 681,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 682,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 684,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 686,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 687,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 689,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 691,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 699,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 701,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 705,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 708,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 709,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 713,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 717,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 719,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 720,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 721,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 722,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 727,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 728,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 733,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 738,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 739,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 745,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 746,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 753,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 755,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 756,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 760,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 761,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 762,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 766,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 768,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 769,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 770,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 777,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 778,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 779,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 782,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 785,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 788,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 791,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 795,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 799,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 802,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 810,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 811,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 812,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 813,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 815,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 818,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 819,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 821,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 825,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 827,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 830,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 831,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 833,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 838,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 839,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 842,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 843,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 844,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 845,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 849,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 851,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 852,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 855,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 857,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 858,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 864,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 867,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 869,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 870,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 873,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 875,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 880,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 883,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 884,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 885,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 886,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 889,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 891,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 897,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 899,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 900,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 901,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 905,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 907,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 909,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 913,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 914,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 915,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 917,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 919,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 920,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 923,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 927,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 930,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 936,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 937,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 939,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 943,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 944,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 946,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 947,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 948,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 951,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 953,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 954,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 960,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 961,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 966,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 971,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 973,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 974,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 976,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 978,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 979,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 982,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 986,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 987,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 991,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 993,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 994,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 995,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 997,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 999,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1000,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1001,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1003,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1004,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1005,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1006,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1007,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1009,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1018,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1020,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1022,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1023,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1025,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1026,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1028,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1032,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1033,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1034,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1035,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1038,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1040,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1042,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1044,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1045,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1046,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1049,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1053,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1057,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1060,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1067,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1068,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1069,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1071,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1072,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1073,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1076,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1080,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1084,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1085,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1087,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1089,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1090,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1091,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1096,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1097,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1099,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1102,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1103,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1104,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1106,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1107,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1108,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1109,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1112,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1114,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1116,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1118,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1120,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1121,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1122,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1126,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1128,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1129,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1130,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1131,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1132,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1134,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1137,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1138,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1139,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1140,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1143,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1144,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1146,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1148,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1151,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1152,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1153,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1156,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1157,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1160,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1163,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1167,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1168,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1173,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1174,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1175,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1176,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1180,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1182,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1183,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1189,
+          "rescale_factor": 2.4
+        },
+        {
+          "estimated_row_frequency": 2.4,
+          "frequency": 1,
+          "key": 1200,
+          "rescale_factor": 2.4
+        }
+      ],
+      "filtered_rows": 1200,
+      "key_column": "id",
+      "key_count": 500,
+      "predicate_digest": "f1222fb238d53c3567e3e6c190729544df112c7e141e41721ef7c81273c40307",
+      "sample_seed": 424242,
+      "sample_size": 500,
+      "selected_rows_digest": "5a50978515a629c47fc2f20badb9a98b4825306a5046cf22a7c5e4eb06f202ff",
+      "table": "customers",
+      "table_rows": 1200
+    }
+  },
+  "scenario": "skewed-orders-customers",
+  "snapshot": {
+    "analysis_digest": "87666ca9040cb1f4d4c5ab16d77e48c7f814bfc5ca441e997b2cada4f2d24efe",
+    "parameter_version": 1,
+    "path": "var/final-run/snapshot.json",
+    "snapshot_digest": "60781644dd2748f97f684e649b053f1be7131f20dd8aac6ddeccd05365a5dafd"
+  },
+  "spec_digest": "e0d5c5c3a4b1dbb18ce6d24d4bd2a4fae5f03223c8a4f0519a89f176335ef8c0",
+  "status": "OK",
+  "truth": {
+    "common_key_count": 113,
+    "digest": "f059f195e15468288de1002dbbd6ab4bab45ac7dd446c8d61793b10033b686a5",
+    "key_distribution": [
+      {
+        "join_rows": 21,
+        "key": 1,
+        "left_frequency": 21,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 2,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 3,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 4,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 13,
+        "key": 5,
+        "left_frequency": 13,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 6,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 15,
+        "key": 7,
+        "left_frequency": 15,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 8,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 9,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 16,
+        "key": 10,
+        "left_frequency": 16,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 26,
+        "key": 11,
+        "left_frequency": 26,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 18,
+        "key": 12,
+        "left_frequency": 18,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 13,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 21,
+        "key": 14,
+        "left_frequency": 21,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 15,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 13,
+        "key": 16,
+        "left_frequency": 13,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 17,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 12,
+        "key": 18,
+        "left_frequency": 12,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 19,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 23,
+        "key": 20,
+        "left_frequency": 23,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 21,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 22,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 23,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 24,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 40,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 45,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 58,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 67,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 71,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 84,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 99,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 104,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 118,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 120,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 121,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 136,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 150,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 159,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 163,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 168,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 172,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 177,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 193,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 197,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 199,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 206,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 216,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 233,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 252,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 264,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 279,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 291,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 298,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 303,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 316,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 322,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 341,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 342,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 344,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 356,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 372,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 374,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 388,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 390,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 392,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 397,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 403,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 416,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 420,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 440,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 443,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 446,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 449,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 455,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 489,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 490,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 496,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 502,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 510,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 512,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 517,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 530,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 544,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 545,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 547,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 549,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 578,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 585,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 588,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 589,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 590,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 597,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 622,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 637,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 643,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 649,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 687,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 694,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 701,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 717,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 733,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 737,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 741,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 750,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 751,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 755,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 2,
+        "key": 759,
+        "left_frequency": 2,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 761,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 768,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 774,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 775,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 778,
+        "left_frequency": 1,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 1,
+        "key": 783,
+        "left_frequency": 1,
+        "right_frequency": 1
+      }
+    ],
+    "key_distribution_complete": true,
+    "key_distribution_digest": "66873fdabc46b834ab4993198f6fea18b4c2d6f0675ce620acdd747e66100ae5",
+    "key_distribution_top": [
+      {
+        "join_rows": 26,
+        "key": 11,
+        "left_frequency": 26,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 23,
+        "key": 20,
+        "left_frequency": 23,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 3,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 17,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 22,
+        "key": 22,
+        "left_frequency": 22,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 21,
+        "key": 1,
+        "left_frequency": 21,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 21,
+        "key": 14,
+        "left_frequency": 21,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 13,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 19,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 20,
+        "key": 21,
+        "left_frequency": 20,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 2,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 23,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 19,
+        "key": 24,
+        "left_frequency": 19,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 18,
+        "key": 12,
+        "left_frequency": 18,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 4,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 6,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 8,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 9,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 17,
+        "key": 15,
+        "left_frequency": 17,
+        "right_frequency": 1
+      },
+      {
+        "join_rows": 16,
+        "key": 10,
+        "left_frequency": 16,
+        "right_frequency": 1
+      }
+    ],
+    "key_distribution_truncated_at": null,
+    "left_bucket_rows": [
+      21,
+      41,
+      30,
+      32,
+      34,
+      42,
+      18,
+      41,
+      30,
+      34,
+      43,
+      20,
+      41,
+      47,
+      34,
+      34
+    ],
+    "left_filtered_rows": 542,
+    "max_possible": 650400.0,
+    "pair_rows": {
+      "L0:R0": 21,
+      "L10:R0": 43,
+      "L11:R0": 20,
+      "L12:R0": 41,
+      "L13:R0": 25,
+      "L13:R1": 9,
+      "L13:R2": 11,
+      "L13:R3": 2,
+      "L14:R3": 5,
+      "L14:R4": 9,
+      "L14:R5": 12,
+      "L14:R6": 8,
+      "L15:R10": 11,
+      "L15:R7": 11,
+      "L15:R8": 4,
+      "L15:R9": 8,
+      "L1:R0": 41,
+      "L2:R0": 30,
+      "L3:R0": 32,
+      "L4:R0": 34,
+      "L5:R0": 42,
+      "L6:R0": 18,
+      "L7:R0": 41,
+      "L8:R0": 30,
+      "L9:R0": 34
+    },
+    "right_bucket_rows": [
+      452,
+      9,
+      11,
+      7,
+      9,
+      12,
+      8,
+      11,
+      4,
+      8,
+      11,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "right_filtered_rows": 1200,
+    "row_count": 542
+  }
+}

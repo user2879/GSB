@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "name": "anomaly-missing-parameter-version",
+  "tables": {
+    "customers": {
+      "declared_rows": 1200,
+      "seed": 7001,
+      "skewed": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "unique": true,
+          "domain": 1200
+        },
+        {
+          "name": "segment",
+          "type": "int",
+          "domain": 8
+        },
+        {
+          "name": "active",
+          "type": "int",
+          "domain": 2
+        }
+      ]
+    },
+    "orders": {
+      "declared_rows": 6000,
+      "seed": 7002,
+      "skewed": true,
+      "skew": {
+        "hot_fraction": 0.82,
+        "hot_domain_fraction": 0.03
+      },
+      "columns": [
+        {
+          "name": "customer_id",
+          "type": "int",
+          "domain": 800
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "domain": 24000
+        },
+        {
+          "name": "channel",
+          "type": "int",
+          "domain": 6
+        }
+      ]
+    }
+  },
+  "join": {
+    "left_table": "orders",
+    "right_table": "customers",
+    "left_key": "customer_id",
+    "right_key": "id",
+    "left_predicates": [
+      {
+        "column": "amount",
+        "op": "ge",
+        "value": 12000
+      }
+    ],
+    "right_predicates": [
+      {
+        "column": "active",
+        "op": "ge",
+        "value": 0
+      }
+    ],
+    "buckets": 16,
+    "sample_size": 500,
+    "sample_seed": 424242,
+    "boundary_rules": {
+      "int": "left_closed_right_open",
+      "float": "left_open_right_closed"
+    },
+    "top_k": 8
+  }
+}

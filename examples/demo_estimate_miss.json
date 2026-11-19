@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "name": "continuous-float-histogram-miss",
+  "tables": {
+    "events": {
+      "declared_rows": 9000,
+      "seed": 8101,
+      "skewed": true,
+      "skew": {
+        "hot_fraction": 0.55,
+        "hot_domain_fraction": 0.08
+      },
+      "columns": [
+        {
+          "name": "price",
+          "type": "float",
+          "domain": 60
+        },
+        {
+          "name": "qty",
+          "type": "int",
+          "domain": 40
+        },
+        {
+          "name": "user_id",
+          "type": "int",
+          "domain": 3000
+        }
+      ]
+    },
+    "products": {
+      "declared_rows": 1500,
+      "seed": 8102,
+      "skewed": false,
+      "columns": [
+        {
+          "name": "price",
+          "type": "float",
+          "domain": 60
+        },
+        {
+          "name": "category",
+          "type": "int",
+          "domain": 12
+        }
+      ]
+    }
+  },
+  "join": {
+    "left_table": "events",
+    "right_table": "products",
+    "left_key": "price",
+    "right_key": "price",
+    "left_predicates": [
+      {
+        "column": "qty",
+        "op": "ge",
+        "value": 5
+      }
+    ],
+    "right_predicates": [
+      {
+        "column": "category",
+        "op": "ge",
+        "value": 0
+      }
+    ],
+    "buckets": 12,
+    "sample_size": 700,
+    "sample_seed": 1717,
+    "parameter_version": 1,
+    "boundary_rules": {
+      "int": "left_closed_right_open",
+      "float": "left_open_right_closed"
+    },
+    "top_k": 6
+  }
+}
