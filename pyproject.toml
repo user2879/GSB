@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bucketpack"
+version = "1.0.0"
+description = "Deterministic bucket expansion, budgeted packing and recoverable SQLite ledger"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23,<3"]
+
+[project.scripts]
+bucketpack = "bucketpack.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bucketpack*"]
+
+[tool.setuptools]
+include-package-data = false
