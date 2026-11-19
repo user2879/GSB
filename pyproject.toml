@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "room-acoustic-workbench"
+version = "0.1.0"
+description = "Incremental room acoustics and spherical-harmonic sound-field diagnostics workbench"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "PyOpenGL>=3.1.7",
+  "glfw>=2.6",
+  "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+
+[project.scripts]
+acoustic-workbench = "acoustic_workbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["acoustic_workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
