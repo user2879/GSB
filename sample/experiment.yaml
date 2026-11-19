@@ -1,0 +1,68 @@
+version: 1
+engine:
+  schema_version: 1
+seed: 20261120
+data_spec: data_spec.yaml
+
+tolerances:
+  cross_encoding: 0.000001
+  standardization: 0.00001
+  projection: 0.0001
+  final_metric: 0.00001
+
+boundary:
+  neighborhood: 0.035
+  tie_tolerance: 0.0000002
+
+cache_dir: ../artifacts/cache
+snapshot_dir: ../artifacts/snapshot
+max_workers: 4
+
+scenarios:
+  - id: baseline
+    sample_sizes: [192, 384]
+    cross_orders: [1, 2, 3]
+    candidate_columns: [region, channel, user_id, item_id]
+    cardinality_budget: 48
+    overflow_policy: hash_bucket
+    precision_tiers: [float32, float64]
+    reductions:
+      pca:
+        components: 6
+        candidates: [1, 2, 3, 4, 5, 6]
+      random_projection:
+        components: 6
+        candidates: [1, 2, 3, 4, 5, 6]
+      variance_filter:
+        components: 6
+        candidates: [1, 2, 3, 4, 5, 6]
+        min_variance: 0.0
+    decision:
+      metric: first_coordinate
+      threshold_mode: reference_median
+      threshold: 0.0
+    max_workers: 4
+
+  - id: skip_overflow
+    sample_sizes: [256]
+    cross_orders: [1, 2, 3]
+    candidate_columns: [region, channel, user_id, item_id]
+    cardinality_budget: 32
+    overflow_policy: skip
+    precision_tiers: [float32, float64]
+    reductions:
+      pca:
+        components: 5
+        candidates: [1, 2, 3, 4, 5]
+      random_projection:
+        components: 5
+        candidates: [1, 2, 3, 4, 5]
+      variance_filter:
+        components: 5
+        candidates: [1, 2, 3, 4, 5]
+        min_variance: 0.0
+    decision:
+      metric: first_coordinate
+      threshold_mode: reference_median
+      threshold: 0.0
+    max_workers: 2

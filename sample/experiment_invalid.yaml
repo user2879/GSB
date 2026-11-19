@@ -1,0 +1,89 @@
+version: 1
+engine:
+  schema_version: 1
+seed: 20261120
+data_spec: data_spec.yaml
+tolerances:
+  cross_encoding: 0.000001
+  standardization: 0.00001
+  projection: 0.0001
+  final_metric: 0.00001
+boundary:
+  neighborhood: 0.035
+  tie_tolerance: 0.0000002
+cache_dir: ../artifacts/invalid-cache
+snapshot_dir: ../artifacts/invalid-snapshot
+max_workers: 2
+scenarios:
+  - id: unknown_column
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [region, does_not_exist]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: type_mismatch
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [amount]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: missing_target
+    target_column: target_absent
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [region]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: non_positive_order
+    sample_sizes: [64]
+    cross_orders: [0]
+    candidate_columns: [region]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: non_positive_budget
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [region]
+    cardinality_budget: 0
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: invalid_precision
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [region]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    precision_tiers: [float16, float64]
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}
+  - id: valid_after_invalid
+    sample_sizes: [64]
+    cross_orders: [1]
+    candidate_columns: [region, channel]
+    cardinality_budget: 16
+    overflow_policy: hash_bucket
+    reductions:
+      pca: {components: 2}
+      random_projection: {components: 2}
+      variance_filter: {components: 2}

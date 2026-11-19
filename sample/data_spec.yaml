@@ -1,0 +1,85 @@
+name: deterministic_retail_probe
+seed: 104729
+target: target
+columns:
+  - name: row_id
+    type: id
+    prefix: row
+
+  - name: amount
+    type: float
+    distribution: normal
+    mean: 1000000.0
+    std: 350000.0
+    missing_rate: 0.04
+    decimals: 6
+
+  - name: tenure_months
+    type: int
+    min: 1
+    max: 96
+    missing_rate: 0.02
+
+  - name: sessions
+    type: int
+    min: 0
+    max: 80
+    missing_rate: 0.0
+
+  - name: discount
+    type: float
+    distribution: normal
+    mean: 0.15
+    std: 0.04
+    missing_rate: 0.12
+    decimals: 6
+
+  - name: region
+    type: category_low
+    values: [north, south, east, west]
+    weights: [0.31, 0.27, 0.23, 0.19]
+    missing_rate: 0.02
+
+  - name: channel
+    type: category_low
+    values: [web, store, partner, app]
+    weights: [0.36, 0.24, 0.18, 0.22]
+    missing_rate: 0.02
+
+  - name: user_id
+    type: category_high
+    cardinality: 61
+    prefix: u
+    missing_rate: 0.03
+
+  - name: item_id
+    type: category_high
+    cardinality: 43
+    prefix: i
+    missing_rate: 0.01
+
+  - name: amount_copy
+    type: redundant
+    source: amount
+    noise_std: 0.0001
+    missing_rate: 0.01
+    decimals: 6
+
+  - name: target
+    type: target
+    noise_std: 0.35
+    formula:
+      - column: amount
+        weight: 0.0000018
+      - column: tenure_months
+        weight: 0.012
+      - column: sessions
+        weight: 0.008
+      - column: discount
+        weight: 0.7
+      - column: region
+        weight: 0.11
+      - column: channel
+        weight: 0.09
+      - column: user_id
+        weight: 0.003
