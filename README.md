@@ -1,22 +1,104 @@
-在关卡编辑器中，鼠标拾取（pick）需要把屏幕坐标投射为射线并与场景中的代理几何求交，返回命中对象、命中点、命中面法线与屏幕距离。工作室既有工程来自多个编辑器版本：旧版本拾取记录以“代理编号+命中面序号+以厘米为单位的命中点”表达，新版本改为“对象稳定标识+世界坐标米+面法线+屏幕距离”，并新增了图层可见性与拾取过滤字段；旧记录不含稳定标识，只含代理编号与几何快照摘要。切换版本后，历史拾取记录必须仍然可用于复现同一命中，且新旧记录混载时不得把不同代理错配成同一对象。当前是空白工作区，需从零开发本地桌面工作台：加载程序按确定性规则生成的场景几何与拾取脚本，在视口上进行交互拾取与空间操作，并把每次命中以带版本语义的记录写入并回放。输入为本地 JSON 场景描述（代理几何、图层、相机）、多版本拾取记录集合与拾取脚本；不依赖任何外部资源或线上服务。
+# Level Workbench
 
-任务环境与准备：
-Windows 10 或 11 桌面环境，安装 .NET 8 SDK 并确认 dotnet --info 可用。
-当前为空白工作区，新建解决方案与项目目录，不预置任何代码、样本或配置文件。
-几何样本、多版本记录集合与拾取脚本由程序按确定性规则生成，生成脚本随项目一同提供，运行前先执行生成步骤。
-无需外部服务、账号、数据集或图形库，界面使用系统自带桌面框架，运行前关闭占用相同端口的本地测试进程。
+本地桌面关卡编辑工作台，用于验证屏幕拾取、跨版本拾取记录归一、历史记录复现、空间操作、原子写出和分块中断恢复。项目只使用 .NET 8 BCL 与 Windows 自带 WinForms，不依赖图形库、外部服务、端口或数据集。
 
-业务要求：
-1. 实现场景描述、代理几何与多版本拾取记录解析：读取本地 JSON 场景、几何数据与记录集合，校验代理标识唯一、顶点与索引为有限数且索引不越界、图层可见性字段完整、记录版本号属于已知版本集合、坐标单位的声明与实际字段一致；任一非法输入返回带 E_xxx 业务码的 JSON 错误并且不写出任何记录文件。
-2. 实现跨版本记录归一：把旧版记录（代理编号、面序号、厘米命中点、几何快照摘要）与新版记录（稳定标识、米制世界坐标、面法线、屏幕距离）映射到统一内部模型；旧记录须用几何快照摘要匹配到当前代理编号，摘要不匹配或同摘要多个代理时返回 E_IDENT 并指出冲突候选，禁止按编号猜测绑定。
-3. 实现屏幕射线构造与代理几何求交：按相机参数把视口坐标构造为世界空间射线，与代理几何逐三角形求交，在同一代理多个三角形命中时取最近交点，命中点、面法线与屏幕距离均由求交结果导出；缩放或平移视口后同一屏幕点的拾取结果须与几何计算一致，命中面法线须归一化且朝向相机侧判定规则统一。
-4. 实现拾取过滤与空间操作语义：按图层可见性、拾取过滤字段与视口裁剪规则决定哪些代理可被命中，被过滤代理即使几何上更近也不得成为命中结果；支持选择、框选与拖动代理的空间操作，拖动时以拾取平面上的位移更新代理位置并即时重算命中，操作撤销须恢复到操作前的位置与选中集。
-5. 实现旧记录复现校验：对每条归一后的历史拾取记录在当前离线场景上重放，比对命中代理、命中面与命中点，命中点在按记录单位换算后与重放结果的偏差超过坐标容差、或对象不一致时判定该记录不可复现并返回 E_REPLAY，报告中定位到记录版本、记录序号与冲突字段，可复现记录同样产出结果。
-6. 实现记录版本迁移链与原子写出：新记录按当前版本格式写出，读取已有记录文件时按版本迁移链逐级升级并保留未知字段，写出前读取已有文件的版本号与内容摘要，版本变化时不得直接覆盖而须归档旧版本；先写同目录临时文件再整体替换，失败时保留旧文件并返回 E_WRITE。
-7. 实现分块级持久化与中断恢复：拾取与复现按记录分块执行，每块完成后把该块结果、块摘要与由场景几何和记录集合规范化摘要构成的版本标识原子写入状态目录；可处理终止信号只在块边界生效并写入中断标记与约定整数退出码，强制终止后仅依据已持久化且摘要有效的块状态恢复且不承诺生成退出报告。
-8. 实现并发预取与资源上限：按场景声明的并发上限使用有界线程池并行计算各代理的候选求交与复现预检，同时在途的三角形缓冲与记录数据总量不得超过内存预算，超出时按代理标识确定顺序等待而不降低求交精度；任一任务异常时取消其余任务并返回首个错误，最终命中结果与串行计算逐字段一致。
+## 交付内容
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- `src/LevelWorkbench.Core`：场景/记录解析、摘要绑定、相机射线、三角形求交、过滤、框选/拖动/撤销、重放、迁移、原子写入和有界并行调度。
+- `src/LevelWorkbench.SampleGen`：确定性场景、多版本记录、非法样本和拾取脚本生成器。
+- `src/LevelWorkbench.Cli`：无界面验收入口，所有错误输出 `E_xxx` JSON。
+- `src/LevelWorkbench.Desktop`：Windows WinForms 工作台，支持视口拾取、框选、拖动、缩放/平移、撤销、记录写入、历史重放和迁移。
+- `tests/LevelWorkbench.SelfTest`：无第三方测试框架的 39 项自动验证。
+- `sample-data/`：已由生成器生成，可直接用于验收；重新生成会得到逐字节相同的结果。
 
-验收：
-使用本地场景与多版本记录样本，验证交互拾取、跨版本记录复现校验、原子写出与中断恢复结果一致。
+## Windows 运行
+
+要求 Windows 10/11 与 .NET 8 SDK：
+
+```powershell
+dotnet --info
+.\scripts\generate-samples.ps1
+dotnet build .\LevelWorkbench.sln
+dotnet run --project .\src\LevelWorkbench.Desktop -- `
+  --scene .\sample-data\scene.json `
+  --records .\sample-data\records\mixed.json `
+  --script .\sample-data\pick-script.json `
+  --state .\workbench-state `
+  --out .\workbench-output\picked-records.json
+```
+
+桌面操作：
+
+- 左键拾取；`Ctrl` 加选/减选。
+- `Shift` + 左键拖动框选。
+- 在命中代理上左键拖动，按相机朝向拾取平面更新位置并持续重算命中。
+- 中键平移，滚轮围绕鼠标位置缩放。
+- `Ctrl+Z` 撤销位置和选中集，`Esc` 取消拖动或清空选择。
+- 右侧按钮可加载场景/记录、运行拾取脚本、重放历史、迁移记录。每次最终命中原子追加到 `--out` 指定文件，脚本结果原子写到 `workbench-output/script-picked-records.json`。
+
+Windows 图形界面需要在 Windows 会话中运行。本仓库当前验证环境为 WSL/Linux，因此桌面项目完成了 `net8.0-windows` 交叉编译验证，未执行 Windows 图形会话下的鼠标人工点击。
+
+## 生成与验证
+
+Linux/WSL：
+
+```bash
+./scripts/generate-samples.sh
+dotnet build LevelWorkbench.sln
+dotnet run --project tests/LevelWorkbench.SelfTest
+```
+
+Windows：
+
+```powershell
+.\scripts\generate-samples.ps1
+dotnet build .\LevelWorkbench.sln
+dotnet run --project .\tests\LevelWorkbench.SelfTest
+.\scripts\verify.ps1
+```
+
+脚本生成的操作没有任何时间戳或随机数：场景几何、剖分索引、快照摘要、记录命中点、脚本步骤和非法样本均可逐字节复现。
+
+## CLI 验收命令
+
+```bash
+# 校验并展示归一化结果
+dotnet run --project src/LevelWorkbench.Cli -- validate \
+  --scene sample-data/scene.json --records sample-data/records/mixed.json
+
+# 分块重放，成功记录也写入报告；失败返回 E_REPLAY
+dotnet run --project src/LevelWorkbench.Cli -- replay \
+  --scene sample-data/scene.json --records sample-data/records/mixed.json \
+  --state workbench-state --report workbench-output/replay-report.json
+
+# 执行拾取/选择/框选/拖动脚本，块状态可恢复，最终记录原子写出
+dotnet run --project src/LevelWorkbench.Cli -- pick \
+  --scene sample-data/scene.json --script sample-data/pick-script.json \
+  --state workbench-state --out workbench-output/picked-records.json
+
+# 读取 v1/v2/v3 并升级为当前 v3；已存在旧版本文件时先归档
+dotnet run --project src/LevelWorkbench.Cli -- migrate \
+  --scene sample-data/scene.json --records sample-data/records/legacy-v1.json \
+  --out workbench-output/records-v3.json
+```
+
+业务退出码：`0` 成功，`2` 业务错误（JSON 中含 `E_xxx`），`130` 在块边界处理终止信号并写出 `interrupt.json`。状态版本标识由场景几何规范化摘要与记录/脚本集合规范化摘要共同构成。
+
+## 实际验证结果（2026-11-19，WSL Ubuntu 22.04，.NET SDK 8.0.428）
+
+- `dotnet build LevelWorkbench.sln`：成功，0 warning / 0 error；同时交叉编译 `LevelWorkbench.Desktop` 的 `net8.0-windows` 目标。
+- `dotnet run --project tests/LevelWorkbench.SelfTest`：`PASS 39 checks`，包含确定性生成、非法输入、E_IDENT 冲突候选、串并行逐字段一致、过滤、缩放/平移、法线、框选、拖动撤销、当前位姿快照重放、拾取/重放块复用与中断恢复、块摘要篡改、`SIGTERM` 退出码 130、迁移归档、未知字段保留、原子写失败保留旧文件。
+- 混合版本重放：4/4 条成功（v1 + v2 + 2×v3），2 个块完成。
+- 拾取脚本：6 个步骤，产出 5 条当前版本记录；随后离线重放 5/5 成功。
+- 非法单位记录：CLI 返回 `E_UNIT` JSON，退出码 2，未写出记录文件。
+- 确定性样本树整体摘要：在 `sample-data/` 内执行 `find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum` 得到 `e7b5b82e2d81a09cf9864bd232e2a2c70d41a975e23c20336af850b93b2edfc6`；重新生成可复现。该值只是样本快照校验，不是代码 API。
+
+详细格式与设计见 [docs/SCHEMA.md](docs/SCHEMA.md) 和 [docs/TECHNICAL.md](docs/TECHNICAL.md)。
+
+## 关键语义
+
+- 旧版 v1：`proxyNumber + faceIndex + hitPointCm + snapshotDigest`，摘要只匹配当前几何；摘要无匹配、重复匹配或与代理编号冲突都返回 `E_IDENT`，不会按编号猜测。
+- v2：使用 `stableId` 绑定对象，记录米制命中点、相机侧法线、屏幕射线距离和图层/过滤字段；可选 `faceIndex`，缺失时由命中点和法线唯一反推。
+- v3：在 v2 基础上保存视口尺寸、缩放和平移，重放时使用记录中的视口参数。
+- `screenDistanceMeters` 定义为相机沿单位射线的世界距离，单位米，与求交参数 `t` 相同。
+- 面法线统一归一化，并翻转到与射线方向相反的一侧，即朝向相机。

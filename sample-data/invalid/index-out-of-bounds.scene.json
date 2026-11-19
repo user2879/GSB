@@ -1,0 +1,1054 @@
+{
+  "schema": "level-workbench.scene",
+  "schemaVersion": 1,
+  "name": "deterministic-multiversion-pick-scene",
+  "unit": "meter",
+  "coordinateToleranceMeters": 0.0005,
+  "concurrencyLimit": 4,
+  "memoryBudgetBytes": 1048576,
+  "chunkSize": 2,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "camera": {
+    "positionMeters": [
+      5,
+      4,
+      8
+    ],
+    "targetMeters": [
+      0,
+      0,
+      0
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "verticalFovDegrees": 48,
+    "nearMeters": 0.05,
+    "farMeters": 100
+  },
+  "layers": [
+    {
+      "id": "layer-main",
+      "name": "Main",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default"
+    },
+    {
+      "id": "layer-hidden",
+      "name": "Hidden but geometrically nearer",
+      "visible": false,
+      "pickable": true,
+      "pickFilter": "default"
+    },
+    {
+      "id": "layer-no-pick",
+      "name": "Visible but not pickable",
+      "visible": true,
+      "pickable": false,
+      "pickFilter": "default"
+    },
+    {
+      "id": "layer-gizmo",
+      "name": "Gizmo filter",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "gizmo"
+    },
+    {
+      "id": "layer-offscreen",
+      "name": "Viewport clipping",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default"
+    }
+  ],
+  "proxies": [
+    {
+      "id": "proxy-center-far",
+      "proxyNumber": 101,
+      "stableId": "stable-center-far",
+      "layerId": "layer-main",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          1.0963997082058672,
+          0.8771197665646935,
+          1.754239533129387
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.9,
+            -0.9,
+            -0.9
+          ],
+          [
+            0.9,
+            -0.9,
+            -0.9
+          ],
+          [
+            0.9,
+            0.9,
+            -0.9
+          ],
+          [
+            -0.9,
+            0.9,
+            -0.9
+          ],
+          [
+            -0.9,
+            -0.9,
+            0.9
+          ],
+          [
+            0.9,
+            -0.9,
+            0.9
+          ],
+          [
+            0.9,
+            0.9,
+            0.9
+          ],
+          [
+            -0.9,
+            0.9,
+            0.9
+          ]
+        ],
+        "indices": [
+          9999,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:65db50ebcdb86f8f9136b092df16fdd5b9265d42e8bd29904d6890aeae04a303"
+    },
+    {
+      "id": "proxy-hidden",
+      "proxyNumber": 201,
+      "stableId": "stable-hidden-center",
+      "layerId": "layer-hidden",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          2.5602498176286668,
+          2.0481998541029336,
+          4.096399708205867
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.6,
+            -0.6,
+            -0.6
+          ],
+          [
+            0.6,
+            -0.6,
+            -0.6
+          ],
+          [
+            0.6,
+            0.6,
+            -0.6
+          ],
+          [
+            -0.6,
+            0.6,
+            -0.6
+          ],
+          [
+            -0.6,
+            -0.6,
+            0.6
+          ],
+          [
+            0.6,
+            -0.6,
+            0.6
+          ],
+          [
+            0.6,
+            0.6,
+            0.6
+          ],
+          [
+            -0.6,
+            0.6,
+            0.6
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:39dbe34cbe7dc318a2f66bd5c96de6a5e2c9547aa659d87791b9dfd17753fdaf"
+    },
+    {
+      "id": "proxy-nopick",
+      "proxyNumber": 202,
+      "stableId": "stable-nopick-center",
+      "layerId": "layer-no-pick",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          3.292174872340067,
+          2.6337398978720534,
+          5.267479795744107
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          [
+            0.5,
+            -0.5,
+            -0.5
+          ],
+          [
+            0.5,
+            0.5,
+            -0.5
+          ],
+          [
+            -0.5,
+            0.5,
+            -0.5
+          ],
+          [
+            -0.5,
+            -0.5,
+            0.5
+          ],
+          [
+            0.5,
+            -0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5,
+            0.5
+          ],
+          [
+            -0.5,
+            0.5,
+            0.5
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:781e71f987c00cb393be5e75b11ff7612a489463fd7420c00974adf695efe489"
+    },
+    {
+      "id": "proxy-a",
+      "proxyNumber": 102,
+      "stableId": "stable-proxy-a",
+      "layerId": "layer-main",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          -2.4,
+          0.2,
+          -0.2
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.625,
+            -0.85,
+            -0.525
+          ],
+          [
+            0.625,
+            -0.85,
+            -0.525
+          ],
+          [
+            0.625,
+            0.85,
+            -0.525
+          ],
+          [
+            -0.625,
+            0.85,
+            -0.525
+          ],
+          [
+            -0.625,
+            -0.85,
+            0.525
+          ],
+          [
+            0.625,
+            -0.85,
+            0.525
+          ],
+          [
+            0.625,
+            0.85,
+            0.525
+          ],
+          [
+            -0.625,
+            0.85,
+            0.525
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:2a97c381baf2adce9c921b65f962b821d87718d5f94d33b7b80bff495a15cc34"
+    },
+    {
+      "id": "proxy-b",
+      "proxyNumber": 103,
+      "stableId": "stable-proxy-b",
+      "layerId": "layer-main",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          2.1,
+          -0.2,
+          0.4
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.675,
+            -0.55,
+            -0.75
+          ],
+          [
+            0.675,
+            -0.55,
+            -0.75
+          ],
+          [
+            0.675,
+            0.55,
+            -0.75
+          ],
+          [
+            -0.675,
+            0.55,
+            -0.75
+          ],
+          [
+            -0.675,
+            -0.55,
+            0.75
+          ],
+          [
+            0.675,
+            -0.55,
+            0.75
+          ],
+          [
+            0.675,
+            0.55,
+            0.75
+          ],
+          [
+            -0.675,
+            0.55,
+            0.75
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:c7bf67a1d115f33e06b90cb35fce3b506042b10c2133ab3d78ddf1a46f90089b"
+    },
+    {
+      "id": "proxy-gizmo",
+      "proxyNumber": 301,
+      "stableId": "stable-gizmo",
+      "layerId": "layer-gizmo",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "gizmo",
+      "transform": {
+        "positionMeters": [
+          0.9,
+          2.1,
+          -2
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.45,
+            -0.45,
+            -0.45
+          ],
+          [
+            0.45,
+            -0.45,
+            -0.45
+          ],
+          [
+            0.45,
+            0.45,
+            -0.45
+          ],
+          [
+            -0.45,
+            0.45,
+            -0.45
+          ],
+          [
+            -0.45,
+            -0.45,
+            0.45
+          ],
+          [
+            0.45,
+            -0.45,
+            0.45
+          ],
+          [
+            0.45,
+            0.45,
+            0.45
+          ],
+          [
+            -0.45,
+            0.45,
+            0.45
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:a9205e6eaeec42e1cd156ae72b2c53da202ca24c46089b84e7334ea1d721bbba"
+    },
+    {
+      "id": "proxy-offscreen",
+      "proxyNumber": 401,
+      "stableId": "stable-offscreen",
+      "layerId": "layer-offscreen",
+      "visible": true,
+      "pickable": true,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          12,
+          -2,
+          3
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.35,
+            -0.35,
+            -0.35
+          ],
+          [
+            0.35,
+            -0.35,
+            -0.35
+          ],
+          [
+            0.35,
+            0.35,
+            -0.35
+          ],
+          [
+            -0.35,
+            0.35,
+            -0.35
+          ],
+          [
+            -0.35,
+            -0.35,
+            0.35
+          ],
+          [
+            0.35,
+            -0.35,
+            0.35
+          ],
+          [
+            0.35,
+            0.35,
+            0.35
+          ],
+          [
+            -0.35,
+            0.35,
+            0.35
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:7695182f923c42388bdd32ba8cc5cda2158bfa5bdc02416c6ec1a8fb21f9fd73"
+    },
+    {
+      "id": "proxy-twin-left",
+      "proxyNumber": 501,
+      "stableId": "stable-twin-left",
+      "layerId": "layer-no-pick",
+      "visible": true,
+      "pickable": false,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          -5,
+          -2,
+          0
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.275,
+            -0.275,
+            -0.275
+          ],
+          [
+            0.275,
+            -0.275,
+            -0.275
+          ],
+          [
+            0.275,
+            0.275,
+            -0.275
+          ],
+          [
+            -0.275,
+            0.275,
+            -0.275
+          ],
+          [
+            -0.275,
+            -0.275,
+            0.275
+          ],
+          [
+            0.275,
+            -0.275,
+            0.275
+          ],
+          [
+            0.275,
+            0.275,
+            0.275
+          ],
+          [
+            -0.275,
+            0.275,
+            0.275
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:14aebd3f7d48507906149f34f64192cb50a322b39d8f8b5d6bb8235efc4b84df"
+    },
+    {
+      "id": "proxy-twin-right",
+      "proxyNumber": 502,
+      "stableId": "stable-twin-right",
+      "layerId": "layer-no-pick",
+      "visible": true,
+      "pickable": false,
+      "pickFilter": "default",
+      "transform": {
+        "positionMeters": [
+          5,
+          -2,
+          0
+        ],
+        "rotationEulerDegrees": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "geometry": {
+        "verticesMeters": [
+          [
+            -0.275,
+            -0.275,
+            -0.275
+          ],
+          [
+            0.275,
+            -0.275,
+            -0.275
+          ],
+          [
+            0.275,
+            0.275,
+            -0.275
+          ],
+          [
+            -0.275,
+            0.275,
+            -0.275
+          ],
+          [
+            -0.275,
+            -0.275,
+            0.275
+          ],
+          [
+            0.275,
+            -0.275,
+            0.275
+          ],
+          [
+            0.275,
+            0.275,
+            0.275
+          ],
+          [
+            -0.275,
+            0.275,
+            0.275
+          ]
+        ],
+        "indices": [
+          4,
+          5,
+          6,
+          4,
+          6,
+          7,
+          1,
+          0,
+          3,
+          1,
+          3,
+          2,
+          5,
+          1,
+          2,
+          5,
+          2,
+          6,
+          0,
+          4,
+          7,
+          0,
+          7,
+          3,
+          3,
+          7,
+          6,
+          3,
+          6,
+          2,
+          0,
+          1,
+          5,
+          0,
+          5,
+          4
+        ]
+      },
+      "snapshotDigest": "sha256:14aebd3f7d48507906149f34f64192cb50a322b39d8f8b5d6bb8235efc4b84df"
+    }
+  ]
+}
