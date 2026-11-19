@@ -1,0 +1,66 @@
+{
+  "stage_injections": [
+    {
+      "id": "inj-001",
+      "type": "stage_exception",
+      "stage": "denoise_002",
+      "code": "E_STAGE_FAILED",
+      "message": "注入：模拟单步去噪失败，验证失败隔离与下游跳过"
+    },
+    {
+      "id": "inj-002",
+      "type": "runtime_exception",
+      "stage": "decode_001",
+      "message": "注入：模拟单帧解码运行时异常"
+    },
+    {
+      "id": "inj-003",
+      "type": "hard_kill",
+      "stage": "denoise_003",
+      "message": "注入：阶段产物落盘后模拟 SIGKILL 强制终止"
+    }
+  ],
+  "config_injections": [
+    {
+      "id": "cfg-missing-field",
+      "remove": "noise_table",
+      "expect": "E_CONFIG_INVALID"
+    },
+    {
+      "id": "cfg-bad-type",
+      "set": {
+        "seed": "not-an-int"
+      },
+      "expect": "E_CONFIG_INVALID"
+    },
+    {
+      "id": "cfg-seed-range",
+      "set": {
+        "seed": 4294967296
+      },
+      "expect": "E_SEED_OUT_OF_RANGE"
+    },
+    {
+      "id": "cfg-guidance-nan",
+      "set": {
+        "guidance_nan": true
+      },
+      "expect": "E_GUIDANCE_INVALID"
+    },
+    {
+      "id": "cfg-step-zero",
+      "set": {
+        "steps": 0
+      },
+      "expect": "E_STEP_ZERO"
+    },
+    {
+      "id": "cfg-noise-mismatch",
+      "set": {
+        "steps": 4,
+        "noise_table": "samples/noise/noise_6.npy"
+      },
+      "expect": "E_NOISE_TABLE_MISMATCH"
+    }
+  ]
+}
