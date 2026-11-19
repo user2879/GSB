@@ -1,0 +1,72 @@
+schema_version: 1
+seed: 20261119
+
+mobility:
+  foot:
+    cost_multiplier: 1
+    max_terrain: 9
+  tracked:
+    cost_multiplier: 2
+    max_terrain: 8
+  wheeled:
+    cost_multiplier: 3
+    max_terrain: 6
+
+tiers:
+  small:
+    size: 64
+    region_size: 16
+    unit_count: 8
+    query_count: 12
+    query_mode: intra_region
+    target_groups: 2
+    interior_walls: false
+  medium:
+    size: 256
+    region_size: 32
+    unit_count: 16
+    query_count: 32
+    query_mode: cross_region
+    target_groups: 20
+    interior_walls: true
+  large:
+    size: 1024
+    region_size: 64
+    unit_count: 20
+    query_count: 40
+    query_mode: cross_region
+    target_groups: 14
+    interior_walls: true
+    mobility_classes: [foot, tracked]
+
+budgets:
+  small:
+    query_time_ms: 1.5
+    query_memory_mib: 4.0
+    total_memory_mib: 64.0
+    max_threads: 4
+    precompute_time_ms: 1000.0
+  medium:
+    query_time_ms: 8.0
+    query_memory_mib: 8.0
+    total_memory_mib: 128.0
+    max_threads: 6
+    precompute_time_ms: 4000.0
+  large:
+    query_time_ms: 6.0
+    query_memory_mib: 32.0
+    total_memory_mib: 256.0
+    max_threads: 8
+    precompute_time_ms: 30000.0
+
+solver:
+  heuristic: manhattan
+  cost_tolerance: 0.0
+  sequence_tolerance: 0
+  cjp_min_cells: 100000
+  ns_per_expansion: 4000
+  flow_ns_per_cell: 800
+  jump_ns_per_cell: 500
+
+demo:
+  tight_total_memory_mib: 0.000001
