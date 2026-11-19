@@ -1,0 +1,44 @@
+{
+  "queries": [
+    {
+      "id": "agg_by_grp",
+      "kind": "aggregate",
+      "table": "events",
+      "group_by": [
+        "grp"
+      ],
+      "value_column": "val",
+      "aggregates": [
+        "count",
+        "sum",
+        "min",
+        "max",
+        "mean"
+      ]
+    },
+    {
+      "id": "win_by_part",
+      "kind": "window",
+      "table": "events",
+      "partition_by": [
+        "part"
+      ],
+      "value_column": "val",
+      "interval": {
+        "preceding": 12,
+        "following": 0
+      },
+      "max_rows": 5,
+      "out_of_order": {
+        "policy": "recompute",
+        "max_lateness": 6
+      }
+    }
+  ],
+  "session": {
+    "scale": 100,
+    "truncation": "toward_zero",
+    "batch_size": 7,
+    "max_out_of_order_ratio": 0.5
+  }
+}
