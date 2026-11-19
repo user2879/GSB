@@ -1,0 +1,201 @@
+[
+  {
+    "actual": {
+      "code": "E_SCHEMA_VERSION",
+      "details": {
+        "missing_fields": [],
+        "supported_versions": [
+          1,
+          2,
+          3
+        ],
+        "unsupported_version": 99
+      },
+      "field": "schema_version",
+      "frame": null,
+      "joint": null,
+      "message": "unsupported JSON schema version 99"
+    },
+    "expected_code": "E_SCHEMA_VERSION",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "json_unsupported_schema",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_FIELD_MISSING",
+      "details": {},
+      "field": "joint_map",
+      "frame": null,
+      "joint": null,
+      "message": "joint_map is required"
+    },
+    "expected_code": "E_FIELD_MISSING",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "json_missing_joint_map",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_QUAT_INVALID",
+      "details": {},
+      "field": null,
+      "frame": 2,
+      "joint": "neck",
+      "message": "quaternion norm is degenerate (0)"
+    },
+    "expected_code": "E_QUAT_INVALID",
+    "expected_frame": 2,
+    "expected_joint": "neck",
+    "name": "json_zero_quaternion",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_QUAT_INVALID",
+      "details": {},
+      "field": null,
+      "frame": 1,
+      "joint": "spine_02",
+      "message": "quaternion contains NaN or infinity"
+    },
+    "expected_code": "E_QUAT_INVALID",
+    "expected_frame": 1,
+    "expected_joint": "spine_02",
+    "name": "json_nan_quaternion",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_TIME_NONMONOTONIC",
+      "details": {
+        "current": 0.08333333333333333,
+        "previous": 0.08333333333333333
+      },
+      "field": "times",
+      "frame": 2,
+      "joint": null,
+      "message": "timeline timestamps must be strictly increasing"
+    },
+    "expected_code": "E_TIME_NONMONOTONIC",
+    "expected_frame": 2,
+    "expected_joint": null,
+    "name": "json_nonmonotonic_time",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_FORMAT_ENDIAN",
+      "details": {
+        "declared_endian": "big",
+        "detected_endian": "little"
+      },
+      "field": "declared_endian",
+      "frame": null,
+      "joint": null,
+      "message": "binary endian declaration conflicts with marker"
+    },
+    "expected_code": "E_FORMAT_ENDIAN",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "binary_endian_conflict",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_INDEX_OVERFLOW",
+      "details": {
+        "channel_row": 0,
+        "joint_count": 20,
+        "joint_index": 4294967295
+      },
+      "field": "index_table",
+      "frame": null,
+      "joint": null,
+      "message": "binary channel index exceeds joint count"
+    },
+    "expected_code": "E_INDEX_OVERFLOW",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "binary_index_overflow",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_QUAT_INVALID",
+      "details": {
+        "actual_float64_components": 559,
+        "expected_float64_components": 560,
+        "frame_count": 7,
+        "joint_count": 20
+      },
+      "field": "rotations",
+      "frame": 6,
+      "joint": null,
+      "message": "binary quaternion component count does not match frame and joint counts"
+    },
+    "expected_code": "E_QUAT_INVALID",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "binary_truncated_rotations",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_SCHEMA_VERSION",
+      "details": {
+        "supported_versions": [
+          1,
+          2
+        ]
+      },
+      "field": "format_version",
+      "frame": null,
+      "joint": null,
+      "message": "unsupported binary format version 99"
+    },
+    "expected_code": "E_SCHEMA_VERSION",
+    "expected_frame": null,
+    "expected_joint": null,
+    "name": "binary_unsupported_version",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_FIELD_MISSING",
+      "details": {},
+      "field": "target.joints",
+      "frame": null,
+      "joint": "foot_R",
+      "message": "target skeleton is missing a joint required for retargeting"
+    },
+    "expected_code": "E_FIELD_MISSING",
+    "expected_frame": null,
+    "expected_joint": "foot_R",
+    "name": "target_skeleton_missing_joint",
+    "passed": true
+  },
+  {
+    "actual": {
+      "code": "E_RETARGET_DIVERGE",
+      "details": {
+        "kind": "rotation",
+        "max_rotation_error_rad": 0.19999999999999998,
+        "max_translation_error": 0.0,
+        "rotation_tolerance_rad": 1e-06,
+        "translation_tolerance": 1e-06
+      },
+      "field": "rotation",
+      "frame": 1,
+      "joint": "spine_01",
+      "message": "animations diverge beyond declared tolerance"
+    },
+    "expected_code": "E_RETARGET_DIVERGE",
+    "expected_frame": 1,
+    "expected_joint": "spine_01",
+    "name": "retarget_consistency_divergence",
+    "passed": true
+  }
+]

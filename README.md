@@ -1,22 +1,126 @@
-当前是空白 Windows 工作区，需开发一个面向骨骼动画与动作重定向的数据处理管线与结果验证工具。输入为本地确定性生成的两套骨架：源骨架与目标骨架，关节层级、骨长、静止姿态与绑定矩阵由固定种子程序化产生，并附带源动作时序（每关节关键帧的四元数旋转与根位移）。工作区同时提供两种交换描述：自有 JSON 动画格式（含 schema 版本号、关节名到索引映射、关键帧时间戳与插值方式）与本地二进制轨迹格式（含字节序标记、索引宽度、关节数、帧数、四元数分量顺序）。工具需把源动作按骨长比例与静止姿态差重定向到目标骨架，输出目标骨架上的逐帧关节变换，并在两种格式间互转、对不同 schema 版本做兼容解析。核心难点是格式互操作与版本兼容下的姿态一致性：不同版本缺少字段时的默认补齐、四元数分量顺序与符号规范、时间轴重采样都会影响重定向结果，任何改写在保留源姿态语义的同时必须让往返转换后的目标姿态与直接重定向结果在声明容差内一致，且失败可定位到具体关节与帧。
+# 骨骼动画双格式互操作与动作重定向工具
 
-任务环境与准备：
-安装 Python 3.10 及以上版本，确认可用标准库 json、struct、hashlib。
-安装 NumPy 1.24 及以上版本，用于四元数与矩阵运算。
-在工作区创建项目目录与本地样本输出目录，确保具备读写权限。
-运行前不依赖任何外部素材、远程服务或 GPU，样本全部由内置确定性生成器产出。
+本项目实现一个完全本地、确定性可复现的骨骼动画处理管线，覆盖：
 
-业务要求：
-1. 实现自有 JSON 动画格式与本地二进制轨迹格式的双向读写：JSON 侧含 schema 版本号、关节名到索引映射、关键帧时间戳、插值方式与四元数；二进制侧含字节序标记、索引宽度、关节数、帧数、四元数分量顺序。任一方向转换后关节数、帧数、时间戳序列与各关节旋转量须在声明容差内保持一致，并输出转换前后内容哈希。
-2. 实现 schema 版本迁移：旧版本缺少四元数分量顺序、插值方式、关节名映射、根位移通道等字段时按固定迁移表补齐，补齐结果不得改变已有字段的语义；迁移须幂等，对已是最新版本再次迁移内容哈希不变。无法迁移的版本返回业务码并指出缺失字段，不得静默猜测。
-3. 实现二进制轨迹格式的版本兼容解析：识别大端/小端与 16 位/32 位索引宽度的组合，按声明规则重排而不丢精度；四元数分量顺序（wxyz 与 xyzw）须按格式声明解释，分量数量与帧数不符、索引越界、时间戳非单调时返回对应业务码而非崩溃，解析结果记录实际采用的字节序与顺序。
-4. 实现四元数规范与符号对齐：读写与重定向过程中把四元数归一化，并按与上一关键帧点积非负的规则统一符号；关键帧之间按声明的插值方式采样，采样结果须与四元数符号选择无关的姿态等价。对归一化后零范数、NaN 等输入返回业务码并指出关节与帧号。
-5. 实现动作重定向：按源与目标骨架的骨长比例与静止姿态差把逐帧关节旋转映射到目标骨架，根位移按骨长比例缩放并保持朝向语义；重定向须给出每帧每关节的重定向残差与全局姿态偏差报告，偏离超过容差的关节须单独标记而非整体判定。
-6. 实现时间轴重采样与目标帧率对齐：当源动作关键帧时间戳与目标帧率不一致时按固定重采样规则生成目标帧序列，边界处不得外插；重采样后往返两种格式再重定向，与直接重定向同一源动作的结果须在声明容差内逐帧逐关节一致，不一致时定位首个分歧关节与帧。
-7. 定义业务错误码（E_SCHEMA_VERSION、E_FIELD_MISSING、E_INDEX_OVERFLOW、E_QUAT_INVALID、E_TIME_NONMONOTONIC、E_RETARGET_DIVERGE、E_FORMAT_ENDIAN）并覆盖异常链路：字段缺失、索引越界、退化四元数、时间戳倒序、字节序声明冲突、目标骨架关节缺失等输入均返回对应业务码并附关节名或帧号，不得以空姿态继续。
-8. 提供可重复验证入口：程序化生成含多套源/目标骨架、多版本 schema、大小端与索引宽度组合、异常变体的样本集，执行读写往返、版本迁移、重定向、重采样与一致性核对的固定序列，输出各步内容哈希与逐关节残差报告；相同输入两次运行须产生逐字节相同的输出与哈希。
+- 自有版本化 JSON 动画格式（schema v1/v2/v3）与本地二进制轨迹格式（BTRJ）双向读写；
+- JSON schema 固定迁移表、幂等迁移与缺失字段诊断；
+- 二进制大端/小端、16/32 位索引宽度、`wxyz`/`xyzw` 四元数顺序兼容；
+- 四元数归一化、符号对齐、关键帧插值与时轴重采样；
+- 基于骨长比例和静止姿态差的动作重定向；
+- 逐帧逐关节残差、全局姿态偏差、超差关节独立标记；
+- 7 个业务错误码与首个分歧关节/帧定位；
+- 固定种子样本集、完整验证入口、内容哈希与运行清单。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+详细格式见 `docs/FORMAT.md`，重定向数学与容差定义见 `docs/RETARGETING.md`。
 
-验收：
-用本地样本验证双格式往返、版本迁移与重定向逐帧一致性，失败能定位关节与帧，附运行报告。
+## 快速运行
+
+环境要求：Python 3.10+、NumPy 1.24+。运行期不需要网络、GPU、Docker 或外部素材。
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 run_verification.py --out samples/generated
+python3 -m unittest discover -s tests -v
+```
+
+等价 CLI 验证入口：
+
+```bash
+python3 -m bone_retarget verify --out samples/generated
+```
+
+也可安装为命令：
+
+```bash
+python3 -m pip install -e .
+bone-retarget verify --out samples/generated
+```
+
+## 实际验证结果
+
+本次工作区实际运行结果：
+
+- Python 3.11.0rc1；NumPy 2.4.6；
+- 18 个固定案例：3 套源/目标骨架 × 3 个 schema × 大小端、16/32 位索引宽度、两种四元数顺序、索引表重排；
+- 11 个异常变体；
+- 业务错误码覆盖 7/7：`E_SCHEMA_VERSION`、`E_FIELD_MISSING`、`E_INDEX_OVERFLOW`、`E_QUAT_INVALID`、`E_TIME_NONMONOTONIC`、`E_RETARGET_DIVERGE`、`E_FORMAT_ENDIAN`；
+- 全部 JSON/二进制往返、迁移幂等、重采样后重定向一致性检查通过；
+- 最大重定向残差约 `6.26e-16 rad`，最大全局姿态偏差约 `6.77e-16 rad`，无超差关节；
+- 两次完整运行输出的 `report.json`、`hashes.sha256` 与清单哈希逐字节一致；
+- 最终清单哈希：`c308d1537af1d64af7c4a27a841af69b949041d02b9c6356939e31673e5265c9`；
+- 标准库测试：12 项全部通过。
+
+实际报告入口：
+
+- `samples/generated/report.json`：机器可读总报告；
+- `samples/generated/report.txt`：可读摘要及逐关节残差；
+- `samples/generated/hashes.sha256`：全部产物文件哈希；
+- `samples/generated/manifest.sha256`：排除最终报告文件后的产物清单；
+- `samples/generated/cases/<case>/retarget_report.json`：每帧每关节残差、全局旋转与局部/全局矩阵；
+- `samples/generated/cases/<case>/target_transforms.json`：目标骨架逐帧关节变换；
+- `samples/generated/anomalies/anomaly_report.json`：异常输入与业务码核验结果。
+
+## CLI
+
+```bash
+# JSON -> 二进制
+python3 -m bone_retarget convert \
+  --input source.json --output source.bin \
+  --endian big --index-width 2 --quat-order xyzw
+
+# 二进制 -> JSON v3
+python3 -m bone_retarget convert \
+  --input source.bin --output source_v3.json \
+  --schema-version 3 --quat-order wxyz
+
+# 旧 schema 迁移到 v3，并报告幂等哈希
+python3 -m bone_retarget migrate \
+  --input source_v1.json --output migrated_v3.json
+
+# 重采样到 30 FPS 后重定向，输出目标 JSON、二进制、残差报告和逐帧变换
+python3 -m bone_retarget retarget \
+  --source-animation source.json \
+  --source-skeleton source_skeleton.json \
+  --target-skeleton target_skeleton.json \
+  --target-fps 30 --output-dir output
+```
+
+所有命令只读取本地文件。业务异常以结构化 JSON 输出到 stderr，并返回非零退出码；不会用空姿态继续。
+
+## 项目结构
+
+```text
+bone_retarget/
+  errors.py          业务错误码与携带 joint/frame 的异常
+  math3d.py          四元数、矩阵、符号对齐与插值
+  models.py          Skeleton/Joint/Animation 数据模型
+  deterministic.py   固定种子骨架与动作生成器
+  json_format.py     JSON schema、迁移、严格解析与写出
+  binary_format.py   BTRJ 端序/索引/四元数顺序兼容读写
+  resample.py        无外插时轴重采样
+  retarget.py        静止姿态重差重定向与残差报告
+  consistency.py     容差比较与首个分歧定位
+  verify.py          固定样本集与端到端验证
+  cli.py             命令行入口
+docs/
+  FORMAT.md          JSON/BTRJ 格式与迁移表
+  RETARGETING.md     重定向数学、残差和一致性规则
+tests/
+  test_pipeline.py   12 项标准库 unittest
+samples/generated/   本地确定性样本和本次运行报告
+run_verification.py  可直接执行的验收入口
+```
+
+## 关键实现约定
+
+- 内部四元数一律为 `wxyz`；外部 `xyzw` 仅在格式边界重排。
+- 归一化后首关键帧采用确定性半球，后续关键帧与上一帧点积非负。
+- 零范数、NaN、Inf 返回 `E_QUAT_INVALID`，并携带关节名与帧号。
+- 二进制解析先由标记独立探测实际端序，再校验声明，避免“按声明错误读取”。
+- 索引表允许任意关节排列，解析后按规范关节下标重排，不丢精度。
+- 重定向旋转采用 `D = A_world * inverse(S_rest_world)`，再求
+  `D * T_rest_world` 并换回目标局部空间。
+- 根位移按 `target_root.length / source_root.length` 标量缩放。
+- 重采样时间序列从源起点开始，以 `1/fps` 为步长，仅保留不超过源终点的时刻。
+- 超差只标记具体关节和帧，不整体丢弃动作。
+- 验证报告不包含时间戳或绝对路径，固定输入下产物逐字节稳定。

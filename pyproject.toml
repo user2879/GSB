@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bone-retarget-pipeline"
+version = "1.0.0"
+description = "Deterministic skeletal animation format interoperability and retargeting pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+license = {text = "Proprietary"}
+authors = [{name = "Workspace"}]
+
+[project.scripts]
+bone-retarget = "bone_retarget.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["bone_retarget*"]

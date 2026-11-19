@@ -1,0 +1,3371 @@
+{
+  "all_errors_covered": true,
+  "anomalies": [
+    {
+      "actual": {
+        "code": "E_SCHEMA_VERSION",
+        "details": {
+          "missing_fields": [],
+          "supported_versions": [
+            1,
+            2,
+            3
+          ],
+          "unsupported_version": 99
+        },
+        "field": "schema_version",
+        "frame": null,
+        "joint": null,
+        "message": "unsupported JSON schema version 99"
+      },
+      "expected_code": "E_SCHEMA_VERSION",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "json_unsupported_schema",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_FIELD_MISSING",
+        "details": {},
+        "field": "joint_map",
+        "frame": null,
+        "joint": null,
+        "message": "joint_map is required"
+      },
+      "expected_code": "E_FIELD_MISSING",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "json_missing_joint_map",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_QUAT_INVALID",
+        "details": {},
+        "field": null,
+        "frame": 2,
+        "joint": "neck",
+        "message": "quaternion norm is degenerate (0)"
+      },
+      "expected_code": "E_QUAT_INVALID",
+      "expected_frame": 2,
+      "expected_joint": "neck",
+      "name": "json_zero_quaternion",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_QUAT_INVALID",
+        "details": {},
+        "field": null,
+        "frame": 1,
+        "joint": "spine_02",
+        "message": "quaternion contains NaN or infinity"
+      },
+      "expected_code": "E_QUAT_INVALID",
+      "expected_frame": 1,
+      "expected_joint": "spine_02",
+      "name": "json_nan_quaternion",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_TIME_NONMONOTONIC",
+        "details": {
+          "current": 0.08333333333333333,
+          "previous": 0.08333333333333333
+        },
+        "field": "times",
+        "frame": 2,
+        "joint": null,
+        "message": "timeline timestamps must be strictly increasing"
+      },
+      "expected_code": "E_TIME_NONMONOTONIC",
+      "expected_frame": 2,
+      "expected_joint": null,
+      "name": "json_nonmonotonic_time",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_FORMAT_ENDIAN",
+        "details": {
+          "declared_endian": "big",
+          "detected_endian": "little"
+        },
+        "field": "declared_endian",
+        "frame": null,
+        "joint": null,
+        "message": "binary endian declaration conflicts with marker"
+      },
+      "expected_code": "E_FORMAT_ENDIAN",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "binary_endian_conflict",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_INDEX_OVERFLOW",
+        "details": {
+          "channel_row": 0,
+          "joint_count": 20,
+          "joint_index": 4294967295
+        },
+        "field": "index_table",
+        "frame": null,
+        "joint": null,
+        "message": "binary channel index exceeds joint count"
+      },
+      "expected_code": "E_INDEX_OVERFLOW",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "binary_index_overflow",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_QUAT_INVALID",
+        "details": {
+          "actual_float64_components": 559,
+          "expected_float64_components": 560,
+          "frame_count": 7,
+          "joint_count": 20
+        },
+        "field": "rotations",
+        "frame": 6,
+        "joint": null,
+        "message": "binary quaternion component count does not match frame and joint counts"
+      },
+      "expected_code": "E_QUAT_INVALID",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "binary_truncated_rotations",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_SCHEMA_VERSION",
+        "details": {
+          "supported_versions": [
+            1,
+            2
+          ]
+        },
+        "field": "format_version",
+        "frame": null,
+        "joint": null,
+        "message": "unsupported binary format version 99"
+      },
+      "expected_code": "E_SCHEMA_VERSION",
+      "expected_frame": null,
+      "expected_joint": null,
+      "name": "binary_unsupported_version",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_FIELD_MISSING",
+        "details": {},
+        "field": "target.joints",
+        "frame": null,
+        "joint": "foot_R",
+        "message": "target skeleton is missing a joint required for retargeting"
+      },
+      "expected_code": "E_FIELD_MISSING",
+      "expected_frame": null,
+      "expected_joint": "foot_R",
+      "name": "target_skeleton_missing_joint",
+      "passed": true
+    },
+    {
+      "actual": {
+        "code": "E_RETARGET_DIVERGE",
+        "details": {
+          "kind": "rotation",
+          "max_rotation_error_rad": 0.19999999999999998,
+          "max_translation_error": 0.0,
+          "rotation_tolerance_rad": 1e-06,
+          "translation_tolerance": 1e-06
+        },
+        "field": "rotation",
+        "frame": 1,
+        "joint": "spine_01",
+        "message": "animations diverge beyond declared tolerance"
+      },
+      "expected_code": "E_RETARGET_DIVERGE",
+      "expected_frame": 1,
+      "expected_joint": "spine_01",
+      "name": "retarget_consistency_divergence",
+      "passed": true
+    }
+  ],
+  "anomalies_ok": true,
+  "anomaly_count": 11,
+  "artifact_count": 214,
+  "case_count": 18,
+  "cases": [
+    {
+      "all_checks_ok": true,
+      "case_id": "case_00_p11_31_s1_little_iw2_wxyz",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "d92c8424ac7ed10590b5c694b47b6548b7abe736843711ae34c68414f4bd0f5f",
+        "binary_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "resampled_binary_file": "8b036ca389fee6818174f8fd2239d6f65878c5d2d9adfa53c0e30321dd3958dc",
+        "resampled_json_file": "28a2575329ca3f4449d62e8ec2532597267648c59ce45668b0ad7ecff4338be5",
+        "retarget_report_file": "17101e96e66a2359471177a6292778de40a6ae5b39b6aaa82884fe6fab81b59d",
+        "source_binary_file": "ff947e144a35b9cf8520112ac8ffdc374c0dd88e7a2bee591cac2675f68e428e",
+        "source_json_file": "ec91ade7de7844a11c7ace682f2a1c60e34303a939722deb5cf2205029c55e89",
+        "source_migrated_json_file": "2d8b6353798d682cc8fc89fd337b9e67da5e547922aa5cc767e2186da1390cda",
+        "source_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "target_binary_file": "4ae702b33c9df0891c8f8403863d60d21f14a70f1cb338e6908b1cd43ed327b0",
+        "target_json_file": "63d9ecf2f5e2ae723807b8a1e3ac67ce29383039dadd5a5bd8b58592ed827b37",
+        "target_semantic": "ba7d4ac10d8451cfafca35825ae2e4fc84138f953e4ce8243e521ea0963300f3",
+        "target_transforms_file": "be4813f687ccfe8b421a24a747a706bf98ee03d6fe57daa486b4747ab4cd68c8"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_00_p11_31_s1_little_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_00_p11_31_s1_little_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_01_p11_31_s2_big_iw4_xyzw",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "d92c8424ac7ed10590b5c694b47b6548b7abe736843711ae34c68414f4bd0f5f",
+        "binary_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "resampled_binary_file": "716b185aa03388a7f68738e15379f32d5d9422c78c8bf89917ce037dc6cb75c3",
+        "resampled_json_file": "2f004bb7e071dddd911ad5ac8c31a1d9634e215a85ae74a728f952e8edc6285e",
+        "retarget_report_file": "17101e96e66a2359471177a6292778de40a6ae5b39b6aaa82884fe6fab81b59d",
+        "source_binary_file": "4688f9b2cea51ebb66e85f102b033303facc878552e451a3ae046a79c843ca16",
+        "source_json_file": "342621d0b6d937a7740727b9e1f599bd7f69400c72a16164b8450a52c8c70ac2",
+        "source_migrated_json_file": "73266c573f2b1a44fb8b61cbd8acccc214227722edc8297110b17f12ce240a89",
+        "source_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "target_binary_file": "56435b4d4276f3c44b8754725248f8411c0d3330b5a9440073a650c25f3f4575",
+        "target_json_file": "63d9ecf2f5e2ae723807b8a1e3ac67ce29383039dadd5a5bd8b58592ed827b37",
+        "target_semantic": "ba7d4ac10d8451cfafca35825ae2e4fc84138f953e4ce8243e521ea0963300f3",
+        "target_transforms_file": "be4813f687ccfe8b421a24a747a706bf98ee03d6fe57daa486b4747ab4cd68c8"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_01_p11_31_s2_big_iw4_xyzw/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_01_p11_31_s2_big_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_02_p11_31_s3_little_iw4_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "5513d626d9327fd3a8c2ea23aa770595e368152ee2acb0d45a0e7a1f1270f335",
+        "binary_semantic": "2f5cccda821d85fa26ef157733b1e4b94181ba65d56754b8ec016a190de2f536",
+        "resampled_binary_file": "c3a95ac5ff313aed16af2a83cab6da21bc0d769b7a35cf4e75dfa80a66b0d8d7",
+        "resampled_json_file": "82658b24bd3043b2e53d0bb7cabe0d28375d783d6f48732dee4250f4cafd4dd0",
+        "retarget_report_file": "2e34c833f01e9e54f7e2e1a541983ad8df7e553e4510b1f374550552642ffa9f",
+        "source_binary_file": "e7b03f34706f6adbfade71fe4f4ce27b376304a14a72d981f4246e52908b1ac7",
+        "source_json_file": "1a03af5224e6ba912fb802e87a2a0587e5b52a71262cc5ce6c32f3af581591db",
+        "source_migrated_json_file": "1a03af5224e6ba912fb802e87a2a0587e5b52a71262cc5ce6c32f3af581591db",
+        "source_semantic": "2f5cccda821d85fa26ef157733b1e4b94181ba65d56754b8ec016a190de2f536",
+        "target_binary_file": "8ba4a5c4b703c034e48c1848f42989ebc7e996ce1a3f884c33c95067780fd2ba",
+        "target_json_file": "40dcdd112668aea7d58fb7dc0281ac6cb38057d72b25a0594145abf6863cef2f",
+        "target_semantic": "f5cd9f144a17dd0c84250b6be5292f66dab8c4727937b3c0cea9855c67ef9b11",
+        "target_transforms_file": "69d339416d6a6d37002247c26a3fcc58d73a03b182321dbf33cbb1c25df5bac9"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_02_p11_31_s3_little_iw4_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_02_p11_31_s3_little_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_03_p11_31_s1_big_iw2_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "d92c8424ac7ed10590b5c694b47b6548b7abe736843711ae34c68414f4bd0f5f",
+        "binary_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "resampled_binary_file": "06926e86433ced1658280dd3dd1862c37649aee5a3dd41733ba4367a702b0988",
+        "resampled_json_file": "28a2575329ca3f4449d62e8ec2532597267648c59ce45668b0ad7ecff4338be5",
+        "retarget_report_file": "17101e96e66a2359471177a6292778de40a6ae5b39b6aaa82884fe6fab81b59d",
+        "source_binary_file": "417ba0aeea2de2e1ce86f37639c940d5df07ce016b7a86de0c4912d924d0c02b",
+        "source_json_file": "ec91ade7de7844a11c7ace682f2a1c60e34303a939722deb5cf2205029c55e89",
+        "source_migrated_json_file": "2d8b6353798d682cc8fc89fd337b9e67da5e547922aa5cc767e2186da1390cda",
+        "source_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "target_binary_file": "ee921ad6fcb7b43fcd2dc02a546f93eed5cefdbe5e9ca67aac39c03a43bd1aae",
+        "target_json_file": "63d9ecf2f5e2ae723807b8a1e3ac67ce29383039dadd5a5bd8b58592ed827b37",
+        "target_semantic": "ba7d4ac10d8451cfafca35825ae2e4fc84138f953e4ce8243e521ea0963300f3",
+        "target_transforms_file": "be4813f687ccfe8b421a24a747a706bf98ee03d6fe57daa486b4747ab4cd68c8"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_03_p11_31_s1_big_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_03_p11_31_s1_big_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_04_p11_31_s2_big_iw4_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "d92c8424ac7ed10590b5c694b47b6548b7abe736843711ae34c68414f4bd0f5f",
+        "binary_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "resampled_binary_file": "79fa31072c1b38600c8ce951ad35264666aefd7eb31b953887244cb03ac17eab",
+        "resampled_json_file": "52f16c7194edf8fd94202c227ec3d74285b668e3b3d8e08917dc540bb1cdd9d8",
+        "retarget_report_file": "17101e96e66a2359471177a6292778de40a6ae5b39b6aaa82884fe6fab81b59d",
+        "source_binary_file": "d019597bef4908699a79259681698477e858ede75130e9440bc124fae29c7a90",
+        "source_json_file": "cd7f8fc1bd7c675f62386842402a2c2ebe4025bf9f7f5a66a3b061463f3c54f2",
+        "source_migrated_json_file": "977186398ae65da51982653cbc52b8d0c025733d4d59b0b52c12c8bdaf64c6be",
+        "source_semantic": "707a5da087e62eeb42c9f69780c215c29b9a5acda99370a5e9fbd9a7a248604f",
+        "target_binary_file": "36b9c081807860a42a39bd43e1172d4785ee9cc7bf18babe77c2e17c86578cc6",
+        "target_json_file": "63d9ecf2f5e2ae723807b8a1e3ac67ce29383039dadd5a5bd8b58592ed827b37",
+        "target_semantic": "ba7d4ac10d8451cfafca35825ae2e4fc84138f953e4ce8243e521ea0963300f3",
+        "target_transforms_file": "be4813f687ccfe8b421a24a747a706bf98ee03d6fe57daa486b4747ab4cd68c8"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_04_p11_31_s2_big_iw4_wxyz/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_04_p11_31_s2_big_iw4_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_05_p11_31_s3_little_iw2_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "5513d626d9327fd3a8c2ea23aa770595e368152ee2acb0d45a0e7a1f1270f335",
+        "binary_semantic": "2f5cccda821d85fa26ef157733b1e4b94181ba65d56754b8ec016a190de2f536",
+        "resampled_binary_file": "45a48500ee092bdaf1bf57c530ac85e961e4c9be963e651f827bafbd9d709e99",
+        "resampled_json_file": "82658b24bd3043b2e53d0bb7cabe0d28375d783d6f48732dee4250f4cafd4dd0",
+        "retarget_report_file": "2e34c833f01e9e54f7e2e1a541983ad8df7e553e4510b1f374550552642ffa9f",
+        "source_binary_file": "346ea2a1cdfe4456332eff9b1c5a4b7c1bf7afa8456b7724ced08ffa1554f00e",
+        "source_json_file": "1a03af5224e6ba912fb802e87a2a0587e5b52a71262cc5ce6c32f3af581591db",
+        "source_migrated_json_file": "1a03af5224e6ba912fb802e87a2a0587e5b52a71262cc5ce6c32f3af581591db",
+        "source_semantic": "2f5cccda821d85fa26ef157733b1e4b94181ba65d56754b8ec016a190de2f536",
+        "target_binary_file": "a6ea271d0c9e9249c28cd5752449b02f0f8d56a5a2ca06ac394fab4fc9df523f",
+        "target_json_file": "40dcdd112668aea7d58fb7dc0281ac6cb38057d72b25a0594145abf6863cef2f",
+        "target_semantic": "f5cd9f144a17dd0c84250b6be5292f66dab8c4727937b3c0cea9855c67ef9b11",
+        "target_transforms_file": "69d339416d6a6d37002247c26a3fcc58d73a03b182321dbf33cbb1c25df5bac9"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 9.557991238387114e-17,
+          "max_residual_rad": 2.5257955065251654e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 2.632496459200304e-16,
+          "max_residual_rad": 2.1722173840913647e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 3.762430865517663e-16,
+          "max_residual_rad": 3.219115842435399e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 5.101384946613268e-16,
+          "max_residual_rad": 3.665319231433488e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 4.876146928639007e-16,
+          "max_residual_rad": 5.065392549852274e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.459285444530123e-16,
+          "max_residual_rad": 4.042612927840228e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 4.2974743495822015e-16,
+          "max_residual_rad": 5.291788109079039e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 5.075481919226436e-16,
+          "max_residual_rad": 4.907029562749889e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.923804106703423e-16,
+          "max_residual_rad": 4.872102984454085e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 6.77034037804662e-16,
+          "max_residual_rad": 6.261943282059024e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 4.150740543416202e-16,
+          "max_residual_rad": 4.0286034964670587e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.3346872331539016e-16,
+          "max_residual_rad": 2.8785957662940604e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.611342783979425e-16,
+          "max_residual_rad": 3.656318114310033e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.270944156246667e-16,
+          "max_residual_rad": 4.286417113330687e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 3.350307516800789e-16,
+          "max_residual_rad": 2.7476618026966073e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.5032825422177524e-16,
+          "max_residual_rad": 3.2487068343022376e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 5.689046731696575e-16,
+          "max_residual_rad": 4.0125770192081394e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 3.5700760860365673e-16,
+          "max_residual_rad": 3.7495717880881826e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 2.59629636315952e-16,
+          "max_residual_rad": 3.273069708340165e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 3.1792801097010987e-16,
+          "max_residual_rad": 3.506984956607857e-16
+        }
+      ],
+      "max_global_deviation_rad": 6.77034037804662e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 6.261943282059024e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_05_p11_31_s3_little_iw2_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_05_p11_31_s3_little_iw2_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_06_p17_47_s1_little_iw2_wxyz",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "59bf452f708aefd5eb63aa31dcc05eab85497fb7ef1ecf57c61b8c8452c70d20",
+        "binary_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "resampled_binary_file": "427657a29021758630450c3d70dd457b7a1f15729c6ee775cadfceaaa6e69204",
+        "resampled_json_file": "cafc4d7dfd197366ae6212526f0f325f15011c82cd0796e1fe7b0c0eb9379260",
+        "retarget_report_file": "603add4d5efa0909feb7771844297e47b1bc6a2903db552dad71c9401a2f8424",
+        "source_binary_file": "64c410ca40e56f93bf3ebdcb5197fc2004d0f2154eb481dd018180c4db09c233",
+        "source_json_file": "19bbb9cd53eb186ee9a8dc9ad393375802e7a6334b6a3ed7eb334c0f6bbdbfd2",
+        "source_migrated_json_file": "fffe7a0553a4414c8deb4526ee3ba80abe4f7562c09a3c39d75ef8885593255f",
+        "source_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "target_binary_file": "518d181f14397f3b006e74d083d44dd8dbaba4db54bb6bde3c864fd48761a115",
+        "target_json_file": "7859eb22631fa820bb0a9d33c34e782f55c94710a04d6ae7f9c023729bfdf8d5",
+        "target_semantic": "5a2ecf7bc94a027db7a6437a8e30be435bd95f344277988f71b4b31c210c931e",
+        "target_transforms_file": "be79b6325472c9d8aed2a2c0832dd466c01b2f822fd7cf43d4f0592dc2255182"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_06_p17_47_s1_little_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_06_p17_47_s1_little_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_07_p17_47_s2_big_iw4_xyzw",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "59bf452f708aefd5eb63aa31dcc05eab85497fb7ef1ecf57c61b8c8452c70d20",
+        "binary_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "resampled_binary_file": "f66d3058277e6dfbcf0113060b3d44b4cdb9b1b0ee671f3b5bceb182c5985560",
+        "resampled_json_file": "f184c6743ce7e6982a85fb6a086cb844bffff2dcb4ab97e4813ba3ec7fc03dd5",
+        "retarget_report_file": "603add4d5efa0909feb7771844297e47b1bc6a2903db552dad71c9401a2f8424",
+        "source_binary_file": "0add611d15be6901a42e821971a9bd8289dfc29932a401baf20724213525afd0",
+        "source_json_file": "a4bd514a472572744902b26df7f632b20d1ec83066e522dbc7ab02f0f9f46fce",
+        "source_migrated_json_file": "f6487b9159f0af852089122ab255eb30efa9623e70dacb0f70b75052ead396aa",
+        "source_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "target_binary_file": "4eb665d7079497c3ee34061343520ce81cccbaf5b1619e5464e0102efc98ec81",
+        "target_json_file": "7859eb22631fa820bb0a9d33c34e782f55c94710a04d6ae7f9c023729bfdf8d5",
+        "target_semantic": "5a2ecf7bc94a027db7a6437a8e30be435bd95f344277988f71b4b31c210c931e",
+        "target_transforms_file": "be79b6325472c9d8aed2a2c0832dd466c01b2f822fd7cf43d4f0592dc2255182"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_07_p17_47_s2_big_iw4_xyzw/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_07_p17_47_s2_big_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_08_p17_47_s3_little_iw4_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "1bacc4352e92baa9b4e56ac5d2736ccee371706029281613347329f3baf24c12",
+        "binary_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+        "resampled_binary_file": "74179f64eb127ec33d4b938fb5fa1f4fb508911307cdd3436441ae410ac426df",
+        "resampled_json_file": "d0d14201ae1abfb3f8ecf276695ed6e6653683078289125861e0e7e22eb1d76c",
+        "retarget_report_file": "6f620218909e84405a8688cb7dfca862220a8304463e965f7c6764816bfd6e42",
+        "source_binary_file": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce",
+        "source_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+        "source_migrated_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+        "source_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+        "target_binary_file": "e7def9b07faf5ce4b009ebecd027e6fb4676e70f6df915a1ff1dd03cb75ba415",
+        "target_json_file": "d313b37fbe2af46b54f014e3ddf94cec306c9bd2e9e02df9f4ab75f6c348316b",
+        "target_semantic": "a142719a4ced7c1d3c73eee825b9b358b75f91d90312ff0647be8059113b6f22",
+        "target_transforms_file": "2708babbf66463fbfbc9bcbc9a13053057b02cc7d2de470c9cbe478eeb64bf2e"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_08_p17_47_s3_little_iw4_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_08_p17_47_s3_little_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_09_p17_47_s1_big_iw2_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "59bf452f708aefd5eb63aa31dcc05eab85497fb7ef1ecf57c61b8c8452c70d20",
+        "binary_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "resampled_binary_file": "aee00c50363e2d873b9f819f12470fdf91541386665dd2734c01246f2294e80c",
+        "resampled_json_file": "cafc4d7dfd197366ae6212526f0f325f15011c82cd0796e1fe7b0c0eb9379260",
+        "retarget_report_file": "603add4d5efa0909feb7771844297e47b1bc6a2903db552dad71c9401a2f8424",
+        "source_binary_file": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72",
+        "source_json_file": "19bbb9cd53eb186ee9a8dc9ad393375802e7a6334b6a3ed7eb334c0f6bbdbfd2",
+        "source_migrated_json_file": "fffe7a0553a4414c8deb4526ee3ba80abe4f7562c09a3c39d75ef8885593255f",
+        "source_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "target_binary_file": "596c46ed3df6f1dc58ad3b4e5f5db513531547364d93f95b2385a9e2538b39b8",
+        "target_json_file": "7859eb22631fa820bb0a9d33c34e782f55c94710a04d6ae7f9c023729bfdf8d5",
+        "target_semantic": "5a2ecf7bc94a027db7a6437a8e30be435bd95f344277988f71b4b31c210c931e",
+        "target_transforms_file": "be79b6325472c9d8aed2a2c0832dd466c01b2f822fd7cf43d4f0592dc2255182"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_09_p17_47_s1_big_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_09_p17_47_s1_big_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_10_p17_47_s2_big_iw4_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "59bf452f708aefd5eb63aa31dcc05eab85497fb7ef1ecf57c61b8c8452c70d20",
+        "binary_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "resampled_binary_file": "782a44eb23446d40c962b44b51b98ae03c798cb067af244193e614f3ce94604f",
+        "resampled_json_file": "65ff0ce384b57c81a013928ba0197a5efdede3dd7372d86931ad493577061b6c",
+        "retarget_report_file": "603add4d5efa0909feb7771844297e47b1bc6a2903db552dad71c9401a2f8424",
+        "source_binary_file": "929ba1fe96e40f9b3829b3413fc3a35317a13b9574b247cea626648388b5cd07",
+        "source_json_file": "d6494e35fa349a0cd437c805d85980e3154956780593074ac1b777e7603f516f",
+        "source_migrated_json_file": "92cd19158bf6de2db608510a2de7852ff803a4bbc47292ecfb28b33293f9178f",
+        "source_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+        "target_binary_file": "28e17ee4ac07a94ddaaa30fbd9784f798fb8747cbc422c5dd08754c45a5633a6",
+        "target_json_file": "7859eb22631fa820bb0a9d33c34e782f55c94710a04d6ae7f9c023729bfdf8d5",
+        "target_semantic": "5a2ecf7bc94a027db7a6437a8e30be435bd95f344277988f71b4b31c210c931e",
+        "target_transforms_file": "be79b6325472c9d8aed2a2c0832dd466c01b2f822fd7cf43d4f0592dc2255182"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_10_p17_47_s2_big_iw4_wxyz/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_10_p17_47_s2_big_iw4_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_11_p17_47_s3_little_iw2_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "1bacc4352e92baa9b4e56ac5d2736ccee371706029281613347329f3baf24c12",
+        "binary_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+        "resampled_binary_file": "7657a0eb5f9ad8227eae793a2fe408114b6f89a32b3d9560112ec3ee9920fdd2",
+        "resampled_json_file": "d0d14201ae1abfb3f8ecf276695ed6e6653683078289125861e0e7e22eb1d76c",
+        "retarget_report_file": "6f620218909e84405a8688cb7dfca862220a8304463e965f7c6764816bfd6e42",
+        "source_binary_file": "78b75a255ab689ccb59076cb77fd7f7aebd261a7777571f9140ef4d09c43212b",
+        "source_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+        "source_migrated_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+        "source_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+        "target_binary_file": "3db708cfcd68842b95ac9e29e9769f7379f296ab82006bd1ed039d9a3dc51813",
+        "target_json_file": "d313b37fbe2af46b54f014e3ddf94cec306c9bd2e9e02df9f4ab75f6c348316b",
+        "target_semantic": "a142719a4ced7c1d3c73eee825b9b358b75f91d90312ff0647be8059113b6f22",
+        "target_transforms_file": "2708babbf66463fbfbc9bcbc9a13053057b02cc7d2de470c9cbe478eeb64bf2e"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 5.727871989595296e-17,
+          "max_residual_rad": 7.059813062317232e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 6.982127306007959e-17,
+          "max_residual_rad": 3.559354985867844e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.2171910569566214e-16,
+          "max_residual_rad": 1.7826341206874e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.8735068166618107e-16,
+          "max_residual_rad": 3.342213888644166e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 3.788953872412608e-16,
+          "max_residual_rad": 3.5108334685767037e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 4.3314125111732996e-16,
+          "max_residual_rad": 3.3335590258932544e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.070227777087343e-16,
+          "max_residual_rad": 3.2451849989102953e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 3.6929753113621767e-16,
+          "max_residual_rad": 3.2915892276214307e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.35462760538999e-16,
+          "max_residual_rad": 4.2236152890487987e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.55198919231262e-16,
+          "max_residual_rad": 4.2661502522132654e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 5.135811360506095e-16,
+          "max_residual_rad": 2.950458159105173e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 4.2819309901237706e-16,
+          "max_residual_rad": 3.682193206295147e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 4.531888304300056e-16,
+          "max_residual_rad": 3.7238012298709097e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.809659659946967e-16,
+          "max_residual_rad": 4.825400815232002e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 1.4803215417014985e-16,
+          "max_residual_rad": 7.826588070103694e-17
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 3.3798183357462886e-16,
+          "max_residual_rad": 2.716822870903455e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 3.308186347378347e-16,
+          "max_residual_rad": 3.6743392481036022e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.4517252514749662e-16,
+          "max_residual_rad": 1.1775693440128327e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 1.69186683277542e-16,
+          "max_residual_rad": 1.546922091089639e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 1.6087689809158016e-16,
+          "max_residual_rad": 1.7177266546549276e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.55198919231262e-16,
+      "max_residual_frame": 7,
+      "max_residual_joint": "hand_R",
+      "max_residual_rad": 4.825400815232002e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_11_p17_47_s3_little_iw2_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_11_p17_47_s3_little_iw2_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_12_p23_59_s1_little_iw2_wxyz",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "a1dc9494b6f18ce3e4915e5a46b1f15d1595bcf85c75f29b11b9db9430575e48",
+        "binary_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "resampled_binary_file": "1eb9c505e6527404b5ae1cc120a7554c34bcd1dec00f76039b56a413e657feb0",
+        "resampled_json_file": "37015b2881119789f22244d7e84edee590508ea073900c755b88a05fa4509642",
+        "retarget_report_file": "39421990cef7ce3bc7390eed765da29d6c7ace5ea57d2c1946411647490e0e1a",
+        "source_binary_file": "de4dd6dd5e963c0823cf8209746e6bbb7a3bd3ffe1e4adbd86af2eb5e5383a95",
+        "source_json_file": "ed90c69b96f30d7b492ac945bbf8bad489cd8d24587801e41af3f1af5a73a15d",
+        "source_migrated_json_file": "455d80ad1009c7372239250d71fe0111cd2b8adb4a60e8731aade04c020261c9",
+        "source_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "target_binary_file": "dfcb4d8d5ee42b0b3bcb1c4853e5612840fbfb0366af6d88a2ee1e3a5fa82e85",
+        "target_json_file": "a512f5c18379b248512ef168e83707738155c28f2dd90ddea731a30ca78e3255",
+        "target_semantic": "385d954cba2d57ecf162328f4e809ca662d1799efa4bc4673f4a094aee24a7c7",
+        "target_transforms_file": "06b3582c93e4c7c0f081c397ca48c82b4e6f58528c41ce35f948efe6bfba841a"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_12_p23_59_s1_little_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_12_p23_59_s1_little_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_13_p23_59_s2_big_iw4_xyzw",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "a1dc9494b6f18ce3e4915e5a46b1f15d1595bcf85c75f29b11b9db9430575e48",
+        "binary_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "resampled_binary_file": "e42b56eefbfd1b63d19b6d23778f5d77bb48e9586e86b5693d145984d09162e5",
+        "resampled_json_file": "9ceabf52453ebaae80adbca4759be081147050cf1071d2cdc326f25faf662dec",
+        "retarget_report_file": "39421990cef7ce3bc7390eed765da29d6c7ace5ea57d2c1946411647490e0e1a",
+        "source_binary_file": "0406f720650a35ca4ed59ed8c2882c76b99e3749845970cb054aa37e9b3922fa",
+        "source_json_file": "aec198fc9afaa3c3eb87f28734432f3254fe6cf570679951e54c57a3b7738919",
+        "source_migrated_json_file": "32964cf21feb3f91cff4457aac7a5a1501045aa8ea008cc4892fbf903260c0aa",
+        "source_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "target_binary_file": "b3b261beaa958d9884f1405f6a1e48596f81ddb020a3ef42719edbdb28d5f204",
+        "target_json_file": "a512f5c18379b248512ef168e83707738155c28f2dd90ddea731a30ca78e3255",
+        "target_semantic": "385d954cba2d57ecf162328f4e809ca662d1799efa4bc4673f4a094aee24a7c7",
+        "target_transforms_file": "06b3582c93e4c7c0f081c397ca48c82b4e6f58528c41ce35f948efe6bfba841a"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_13_p23_59_s2_big_iw4_xyzw/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_13_p23_59_s2_big_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_14_p23_59_s3_little_iw4_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "ff3c8d309ef42687859d1f41cbe734cf72937c0b4f78cc998477ad84d98015b7",
+        "binary_semantic": "134261b2cd9e111de196e15dde0633c2a823b955dcf6f663a1aa47fdac5e12f0",
+        "resampled_binary_file": "4b9443b1380ff90cd45fc78ac377ad87815bb10f666e983b16aebe7bbbb8af56",
+        "resampled_json_file": "1d69f0900b51f58512f9af9db631478bc291a546e08ce3400c89d7d816206313",
+        "retarget_report_file": "2ec229f4935b5f4e9ddc220ebd41dce7f15c49423c47dd2155b45bd745a48e72",
+        "source_binary_file": "d7307a0c4012bba74e0d8d2b4aef49bff3f6617ddb5f00bf34726f632cb4fbb0",
+        "source_json_file": "413f8060bfd0c7b847fd93bab38582512de24200ae1dd8d710df020b38cc96b8",
+        "source_migrated_json_file": "413f8060bfd0c7b847fd93bab38582512de24200ae1dd8d710df020b38cc96b8",
+        "source_semantic": "134261b2cd9e111de196e15dde0633c2a823b955dcf6f663a1aa47fdac5e12f0",
+        "target_binary_file": "e37b8470346fb3368bb92ca0fc57eeb3f6a2d15c0f6f6bad8e9010a41d8d8bd1",
+        "target_json_file": "94dd424ddb0942b143d87df4124aaf7e1e0f7952c7fb07b39ccdba0df16e133a",
+        "target_semantic": "bf6c4bb31db4dbcb9a2a19f322ec566680e6e4abc24a22abc4ee52d61f1b753a",
+        "target_transforms_file": "4554c3f5cc04accaa26d965bf5b59cb320b70a65e0c59a99eb80c10f702b7f8f"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_14_p23_59_s3_little_iw4_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_14_p23_59_s3_little_iw4_xyzw/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_15_p23_59_s1_big_iw2_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "a1dc9494b6f18ce3e4915e5a46b1f15d1595bcf85c75f29b11b9db9430575e48",
+        "binary_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "resampled_binary_file": "5a6b672e56db631a0a9a472af23abfdf356a8ec289cd88cb55ef0f1dc7f105bd",
+        "resampled_json_file": "37015b2881119789f22244d7e84edee590508ea073900c755b88a05fa4509642",
+        "retarget_report_file": "39421990cef7ce3bc7390eed765da29d6c7ace5ea57d2c1946411647490e0e1a",
+        "source_binary_file": "49d094368f01147e052f4421ab6485b7d36b724d67295e45eaad7b149552bf30",
+        "source_json_file": "ed90c69b96f30d7b492ac945bbf8bad489cd8d24587801e41af3f1af5a73a15d",
+        "source_migrated_json_file": "455d80ad1009c7372239250d71fe0111cd2b8adb4a60e8731aade04c020261c9",
+        "source_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "target_binary_file": "51c5c8aceb9019c7cbb06131cc1ae4d32f58aac4103943bec20734dd84f245b3",
+        "target_json_file": "a512f5c18379b248512ef168e83707738155c28f2dd90ddea731a30ca78e3255",
+        "target_semantic": "385d954cba2d57ecf162328f4e809ca662d1799efa4bc4673f4a094aee24a7c7",
+        "target_transforms_file": "06b3582c93e4c7c0f081c397ca48c82b4e6f58528c41ce35f948efe6bfba841a"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_15_p23_59_s1_big_iw2_wxyz/retarget_report.json",
+      "schema_version": 1,
+      "target_transforms": "cases/case_15_p23_59_s1_big_iw2_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_16_p23_59_s2_big_iw4_wxyz",
+      "endian": "big",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "a1dc9494b6f18ce3e4915e5a46b1f15d1595bcf85c75f29b11b9db9430575e48",
+        "binary_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "resampled_binary_file": "b38a3024af1b5de9f20fe613206e2fa5878307e6986404a2d24466846fc04d52",
+        "resampled_json_file": "294ce9fc3848cafacc405ee77959608a80a5bf24e0f48ec410556df633ee34cd",
+        "retarget_report_file": "39421990cef7ce3bc7390eed765da29d6c7ace5ea57d2c1946411647490e0e1a",
+        "source_binary_file": "94c70207a8183ec70afe0b337872eff0382079b58afc475fede1e8f9af1d1e50",
+        "source_json_file": "10d711e5aeb7f96995ceb4028d876e5fa791501330e21a8b7f24ec2dfaca2a56",
+        "source_migrated_json_file": "2187ebd9cab0d6089b233f93e4e6f83885dc8c0118ff79db6e0b63bf41126f4c",
+        "source_semantic": "d9315bda43f8bb5b7f5a2204849cc41fdb2eee7ee24122422e58d661894529f2",
+        "target_binary_file": "32e1e8e62aee1814549567b6fe03be52822bec4cb7347dd35bb423a7fbe98d05",
+        "target_json_file": "a512f5c18379b248512ef168e83707738155c28f2dd90ddea731a30ca78e3255",
+        "target_semantic": "385d954cba2d57ecf162328f4e809ca662d1799efa4bc4673f4a094aee24a7c7",
+        "target_transforms_file": "06b3582c93e4c7c0f081c397ca48c82b4e6f58528c41ce35f948efe6bfba841a"
+      },
+      "index_width": 4,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "wxyz",
+      "retarget_report": "cases/case_16_p23_59_s2_big_iw4_wxyz/retarget_report.json",
+      "schema_version": 2,
+      "target_transforms": "cases/case_16_p23_59_s2_big_iw4_wxyz/target_transforms.json"
+    },
+    {
+      "all_checks_ok": true,
+      "case_id": "case_17_p23_59_s3_little_iw2_xyzw",
+      "endian": "little",
+      "flagged_joints": [],
+      "frame_count": 16,
+      "hashes": {
+        "binary_back_json_file": "ff3c8d309ef42687859d1f41cbe734cf72937c0b4f78cc998477ad84d98015b7",
+        "binary_semantic": "134261b2cd9e111de196e15dde0633c2a823b955dcf6f663a1aa47fdac5e12f0",
+        "resampled_binary_file": "56016a3347dd8598d17fae35fd93527c3637f1ee0e36aea685d291cde68df3db",
+        "resampled_json_file": "1d69f0900b51f58512f9af9db631478bc291a546e08ce3400c89d7d816206313",
+        "retarget_report_file": "2ec229f4935b5f4e9ddc220ebd41dce7f15c49423c47dd2155b45bd745a48e72",
+        "source_binary_file": "e9c9f08b342022baf2ce361c92cfd2f34c6a8eacbf0a2b4bb08c0bc7c696bb75",
+        "source_json_file": "413f8060bfd0c7b847fd93bab38582512de24200ae1dd8d710df020b38cc96b8",
+        "source_migrated_json_file": "413f8060bfd0c7b847fd93bab38582512de24200ae1dd8d710df020b38cc96b8",
+        "source_semantic": "134261b2cd9e111de196e15dde0633c2a823b955dcf6f663a1aa47fdac5e12f0",
+        "target_binary_file": "ba1083cb21e25744e4470a0cb494e9c858a3fd073ba943c372f36f52a68473a3",
+        "target_json_file": "94dd424ddb0942b143d87df4124aaf7e1e0f7952c7fb07b39ccdba0df16e133a",
+        "target_semantic": "bf6c4bb31db4dbcb9a2a19f322ec566680e6e4abc24a22abc4ee52d61f1b753a",
+        "target_transforms_file": "4554c3f5cc04accaa26d965bf5b59cb320b70a65e0c59a99eb80c10f702b7f8f"
+      },
+      "index_width": 2,
+      "joint_count": 20,
+      "joint_residuals": [
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "root",
+          "max_global_deviation_rad": 6.440692488488084e-17,
+          "max_residual_rad": 3.469446951953614e-18
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "pelvis",
+          "max_global_deviation_rad": 3.05417549755701e-16,
+          "max_residual_rad": 1.7402657376242637e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_01",
+          "max_global_deviation_rad": 2.5590011062453847e-16,
+          "max_residual_rad": 1.929212175352502e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "spine_02",
+          "max_global_deviation_rad": 2.6948146798848207e-16,
+          "max_residual_rad": 2.813943924532936e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "neck",
+          "max_global_deviation_rad": 2.62594392881699e-16,
+          "max_residual_rad": 2.931631350771788e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "head",
+          "max_global_deviation_rad": 3.894599083123282e-16,
+          "max_residual_rad": 3.815760786470699e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_L",
+          "max_global_deviation_rad": 3.985185040108328e-16,
+          "max_residual_rad": 3.682193206295143e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_L",
+          "max_global_deviation_rad": 4.673977332040395e-16,
+          "max_residual_rad": 5.07441458263486e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_L",
+          "max_global_deviation_rad": 4.2532221733369025e-16,
+          "max_residual_rad": 5.132905769563408e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_L",
+          "max_global_deviation_rad": 5.006232825943481e-16,
+          "max_residual_rad": 5.536282818870042e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shoulder_R",
+          "max_global_deviation_rad": 3.735419982690774e-16,
+          "max_residual_rad": 3.2752755289039303e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "upper_arm_R",
+          "max_global_deviation_rad": 3.817810702531705e-16,
+          "max_residual_rad": 3.4359788356585875e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "forearm_R",
+          "max_global_deviation_rad": 5.063491126155463e-16,
+          "max_residual_rad": 4.613190423717516e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "hand_R",
+          "max_global_deviation_rad": 4.883739554230096e-16,
+          "max_residual_rad": 4.2367047432750254e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_L",
+          "max_global_deviation_rad": 2.0206934153883185e-16,
+          "max_residual_rad": 2.285954856710742e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_L",
+          "max_global_deviation_rad": 2.4886440042239213e-16,
+          "max_residual_rad": 2.277183869445471e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_L",
+          "max_global_deviation_rad": 2.8216998409392887e-16,
+          "max_residual_rad": 2.1813414837782048e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "thigh_R",
+          "max_global_deviation_rad": 1.9993338402778917e-16,
+          "max_residual_rad": 2.0402000128190652e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "shin_R",
+          "max_global_deviation_rad": 3.4293162179820236e-16,
+          "max_residual_rad": 2.583879206634535e-16
+        },
+        {
+          "first_flagged_frame": null,
+          "flagged": false,
+          "joint": "foot_R",
+          "max_global_deviation_rad": 2.381485549419923e-16,
+          "max_residual_rad": 2.9604366152946345e-16
+        }
+      ],
+      "max_global_deviation_rad": 5.063491126155463e-16,
+      "max_residual_frame": 10,
+      "max_residual_joint": "hand_L",
+      "max_residual_rad": 5.536282818870042e-16,
+      "quat_order": "xyzw",
+      "retarget_report": "cases/case_17_p23_59_s3_little_iw2_xyzw/retarget_report.json",
+      "schema_version": 3,
+      "target_transforms": "cases/case_17_p23_59_s3_little_iw2_xyzw/target_transforms.json"
+    }
+  ],
+  "cases_ok": true,
+  "error_coverage": [
+    "E_FIELD_MISSING",
+    "E_FORMAT_ENDIAN",
+    "E_INDEX_OVERFLOW",
+    "E_QUAT_INVALID",
+    "E_RETARGET_DIVERGE",
+    "E_SCHEMA_VERSION",
+    "E_TIME_NONMONOTONIC"
+  ],
+  "expected_error_codes": [
+    "E_FIELD_MISSING",
+    "E_FORMAT_ENDIAN",
+    "E_INDEX_OVERFLOW",
+    "E_QUAT_INVALID",
+    "E_RETARGET_DIVERGE",
+    "E_SCHEMA_VERSION",
+    "E_TIME_NONMONOTONIC"
+  ],
+  "manifest_sha256": "c308d1537af1d64af7c4a27a841af69b949041d02b9c6356939e31673e5265c9",
+  "pipeline_version": "1.0.0",
+  "status": "PASS",
+  "target_fps": 30.0,
+  "tolerances": {
+    "retarget_residual_rad": 1e-06,
+    "rotation_rad": 1e-06,
+    "time": 1e-09,
+    "translation": 1e-06
+  }
+}

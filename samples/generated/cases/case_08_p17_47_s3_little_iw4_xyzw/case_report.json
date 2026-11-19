@@ -1,0 +1,417 @@
+{
+  "all_checks_ok": true,
+  "artifacts": {
+    "binary_back_json": "cases/case_08_p17_47_s3_little_iw4_xyzw/binary_back_to_json_v3.json",
+    "resampled_binary": "cases/case_08_p17_47_s3_little_iw4_xyzw/resampled_trajectory.bin",
+    "resampled_json": "cases/case_08_p17_47_s3_little_iw4_xyzw/resampled_schema_v3.json",
+    "retarget_report": "cases/case_08_p17_47_s3_little_iw4_xyzw/retarget_report.json",
+    "source_binary": "cases/case_08_p17_47_s3_little_iw4_xyzw/source_trajectory.bin",
+    "source_json": "cases/case_08_p17_47_s3_little_iw4_xyzw/source_schema_v3.json",
+    "source_migrated_json": "cases/case_08_p17_47_s3_little_iw4_xyzw/source_migrated_v3.json",
+    "target_binary": "cases/case_08_p17_47_s3_little_iw4_xyzw/target_trajectory.bin",
+    "target_json": "cases/case_08_p17_47_s3_little_iw4_xyzw/target_motion.json",
+    "target_transforms": "cases/case_08_p17_47_s3_little_iw4_xyzw/target_transforms.json"
+  },
+  "binary": {
+    "channel_joint_order": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "endian": "little",
+    "index_width": 4,
+    "parsed_metadata": {
+      "endian": "little",
+      "format_version": 2,
+      "frame_count": 7,
+      "has_root_translation": true,
+      "index_width": 4,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "xyzw",
+      "sha256": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce"
+    },
+    "quat_order": "xyzw",
+    "resampled_parsed_metadata": {
+      "endian": "little",
+      "format_version": 2,
+      "frame_count": 16,
+      "has_root_translation": true,
+      "index_width": 4,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "xyzw",
+      "sha256": "74179f64eb127ec33d4b938fb5fa1f4fb508911307cdd3436441ae410ac426df"
+    },
+    "target_parsed_metadata": {
+      "endian": "little",
+      "format_version": 2,
+      "frame_count": 16,
+      "has_root_translation": true,
+      "index_width": 4,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "xyzw",
+      "sha256": "e7def9b07faf5ce4b009ebecd027e6fb4676e70f6df915a1ff1dd03cb75ba415"
+    }
+  },
+  "case_id": "case_08_p17_47_s3_little_iw4_xyzw",
+  "comparisons": {
+    "binary_roundtrip_retarget": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "direct_retarget",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "binary_roundtrip_retarget"
+    },
+    "binary_to_json": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 7,
+      "joint_count": 20,
+      "left": "source_binary",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "binary_to_json"
+    },
+    "json_roundtrip_retarget": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "direct_retarget",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "json_roundtrip_retarget"
+    },
+    "json_to_binary": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 7,
+      "joint_count": 20,
+      "left": "source_json_semantics",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "source_binary_roundtrip"
+    },
+    "resampled_binary_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "resampled_direct",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "resampled_binary_roundtrip"
+    },
+    "resampled_json_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "resampled_direct",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "resampled_json_roundtrip"
+    },
+    "target_binary_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "target_direct",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "target_binary_roundtrip"
+    },
+    "target_json_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "target_direct",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "target_json_roundtrip"
+    }
+  },
+  "conversion": {
+    "binary_to_json": {
+      "destination_artifact_sha256": "e0d3cfca1762c97cc3ffd8676b79b82436dc9b2a2748ffd621d9f95b19c6be92",
+      "destination_semantic_sha256": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+      "direction": "binary_to_json",
+      "equal_within_tolerance": true,
+      "frame_count": 7,
+      "joint_count": 20,
+      "metadata": {
+        "endian": "little",
+        "format_version": 2,
+        "frame_count": 7,
+        "has_root_translation": true,
+        "index_width": 4,
+        "interpolation": "slerp",
+        "joint_count": 20,
+        "quat_order": "xyzw",
+        "sha256": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce"
+      },
+      "source_artifact_sha256": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce",
+      "source_semantic_sha256": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d"
+    },
+    "json_to_binary": {
+      "destination_artifact_sha256": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce",
+      "destination_semantic_sha256": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+      "equal_within_tolerance": true,
+      "metadata": {
+        "endian": "little",
+        "format_version": 2,
+        "frame_count": 7,
+        "has_root_translation": true,
+        "index_width": 4,
+        "interpolation": "slerp",
+        "joint_count": 20,
+        "quat_order": "xyzw",
+        "sha256": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce"
+      },
+      "source_artifact_sha256": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+      "source_semantic_sha256": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d"
+    }
+  },
+  "hashes": {
+    "binary_back_json_file": "1bacc4352e92baa9b4e56ac5d2736ccee371706029281613347329f3baf24c12",
+    "binary_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+    "resampled_binary_file": "74179f64eb127ec33d4b938fb5fa1f4fb508911307cdd3436441ae410ac426df",
+    "resampled_json_file": "d0d14201ae1abfb3f8ecf276695ed6e6653683078289125861e0e7e22eb1d76c",
+    "retarget_report_file": "6f620218909e84405a8688cb7dfca862220a8304463e965f7c6764816bfd6e42",
+    "source_binary_file": "ed99963d1439a350ef413623b4d5127d77b707d1e9d507fa3daa205416e484ce",
+    "source_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+    "source_migrated_json_file": "9ac20123b79273238fa2646c6085897d2c7f5bce52b0751a55ad37c1b8b09a14",
+    "source_semantic": "227f7ba8254a8f8a6a60b1a78b8335ceea832d73ec277addc177afb1419ca85d",
+    "target_binary_file": "e7def9b07faf5ce4b009ebecd027e6fb4676e70f6df915a1ff1dd03cb75ba415",
+    "target_json_file": "d313b37fbe2af46b54f014e3ddf94cec306c9bd2e9e02df9f4ab75f6c348316b",
+    "target_semantic": "a142719a4ced7c1d3c73eee825b9b358b75f91d90312ff0647be8059113b6f22",
+    "target_transforms_file": "2708babbf66463fbfbc9bcbc9a13053057b02cc7d2de470c9cbe478eeb64bf2e"
+  },
+  "json_quat_order": "xyzw",
+  "migration": {
+    "added_fields": [],
+    "after_sha256": "b2a5cbeb145af141c5f63ebeae4b23c28987492c51b8e9bb035dc9259899a11d",
+    "before_sha256": "b2a5cbeb145af141c5f63ebeae4b23c28987492c51b8e9bb035dc9259899a11d",
+    "changed": false,
+    "idempotent": true,
+    "input_schema_version": 3,
+    "output_schema_version": 3,
+    "second_after_sha256": "b2a5cbeb145af141c5f63ebeae4b23c28987492c51b8e9bb035dc9259899a11d",
+    "second_before_sha256": "b2a5cbeb145af141c5f63ebeae4b23c28987492c51b8e9bb035dc9259899a11d"
+  },
+  "resample": {
+    "extrapolated": false,
+    "source_end": 0.5,
+    "source_frame_count": 7,
+    "source_start": 0.0,
+    "target_end": 0.5,
+    "target_fps": 30.0,
+    "target_frame_count": 16,
+    "target_start": 0.0
+  },
+  "retarget": {
+    "flagged_joints": [],
+    "joints": [
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "root",
+        "max_global_deviation_rad": 5.727871989595296e-17,
+        "max_residual_rad": 7.059813062317232e-18
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "pelvis",
+        "max_global_deviation_rad": 6.982127306007959e-17,
+        "max_residual_rad": 3.559354985867844e-17
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "spine_01",
+        "max_global_deviation_rad": 2.2171910569566214e-16,
+        "max_residual_rad": 1.7826341206874e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "spine_02",
+        "max_global_deviation_rad": 2.8735068166618107e-16,
+        "max_residual_rad": 3.342213888644166e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "neck",
+        "max_global_deviation_rad": 3.788953872412608e-16,
+        "max_residual_rad": 3.5108334685767037e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "head",
+        "max_global_deviation_rad": 4.3314125111732996e-16,
+        "max_residual_rad": 3.3335590258932544e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shoulder_L",
+        "max_global_deviation_rad": 3.070227777087343e-16,
+        "max_residual_rad": 3.2451849989102953e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "upper_arm_L",
+        "max_global_deviation_rad": 3.6929753113621767e-16,
+        "max_residual_rad": 3.2915892276214307e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "forearm_L",
+        "max_global_deviation_rad": 4.35462760538999e-16,
+        "max_residual_rad": 4.2236152890487987e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "hand_L",
+        "max_global_deviation_rad": 5.55198919231262e-16,
+        "max_residual_rad": 4.2661502522132654e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shoulder_R",
+        "max_global_deviation_rad": 5.135811360506095e-16,
+        "max_residual_rad": 2.950458159105173e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "upper_arm_R",
+        "max_global_deviation_rad": 4.2819309901237706e-16,
+        "max_residual_rad": 3.682193206295147e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "forearm_R",
+        "max_global_deviation_rad": 4.531888304300056e-16,
+        "max_residual_rad": 3.7238012298709097e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "hand_R",
+        "max_global_deviation_rad": 4.809659659946967e-16,
+        "max_residual_rad": 4.825400815232002e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "thigh_L",
+        "max_global_deviation_rad": 1.4803215417014985e-16,
+        "max_residual_rad": 7.826588070103694e-17
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shin_L",
+        "max_global_deviation_rad": 3.3798183357462886e-16,
+        "max_residual_rad": 2.716822870903455e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "foot_L",
+        "max_global_deviation_rad": 3.308186347378347e-16,
+        "max_residual_rad": 3.6743392481036022e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "thigh_R",
+        "max_global_deviation_rad": 1.4517252514749662e-16,
+        "max_residual_rad": 1.1775693440128327e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shin_R",
+        "max_global_deviation_rad": 1.69186683277542e-16,
+        "max_residual_rad": 1.546922091089639e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "foot_R",
+        "max_global_deviation_rad": 1.6087689809158016e-16,
+        "max_residual_rad": 1.7177266546549276e-16
+      }
+    ],
+    "max_deviation_frame": 9,
+    "max_deviation_joint": "hand_L",
+    "max_global_deviation_rad": 5.55198919231262e-16,
+    "max_residual_frame": 7,
+    "max_residual_joint": "hand_R",
+    "max_residual_rad": 4.825400815232002e-16,
+    "report_path": "cases/case_08_p17_47_s3_little_iw4_xyzw/retarget_report.json",
+    "root_translation_scale": 0.9668070652257739,
+    "target_transforms_path": "cases/case_08_p17_47_s3_little_iw4_xyzw/target_transforms.json"
+  },
+  "schema_version": 3,
+  "source_seed": 17,
+  "target_seed": 47
+}

@@ -1,0 +1,399 @@
+Bone retarget verification report
+status: PASS
+cases: 18
+anomalies: 11
+error_coverage: E_FIELD_MISSING, E_FORMAT_ENDIAN, E_INDEX_OVERFLOW, E_QUAT_INVALID, E_RETARGET_DIVERGE, E_SCHEMA_VERSION, E_TIME_NONMONOTONIC
+manifest_sha256: c308d1537af1d64af7c4a27a841af69b949041d02b9c6356939e31673e5265c9
+
+Cases:
+- case_00_p11_31_s1_little_iw2_wxyz: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_01_p11_31_s2_big_iw4_xyzw: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_02_p11_31_s3_little_iw4_xyzw: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_03_p11_31_s1_big_iw2_wxyz: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_04_p11_31_s2_big_iw4_wxyz: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_05_p11_31_s3_little_iw2_xyzw: ok=True frames=16 joints=20 max_residual=6.261943e-16 max_deviation=6.770340e-16 flagged=none
+    root: residual=2.525796e-17 deviation=9.557991e-17 flagged=False
+    pelvis: residual=2.172217e-16 deviation=2.632496e-16 flagged=False
+    spine_01: residual=3.219116e-16 deviation=3.762431e-16 flagged=False
+    spine_02: residual=3.665319e-16 deviation=5.101385e-16 flagged=False
+    neck: residual=5.065393e-16 deviation=4.876147e-16 flagged=False
+    head: residual=4.042613e-16 deviation=4.459285e-16 flagged=False
+    shoulder_L: residual=5.291788e-16 deviation=4.297474e-16 flagged=False
+    upper_arm_L: residual=4.907030e-16 deviation=5.075482e-16 flagged=False
+    forearm_L: residual=4.872103e-16 deviation=4.923804e-16 flagged=False
+    hand_L: residual=6.261943e-16 deviation=6.770340e-16 flagged=False
+    shoulder_R: residual=4.028603e-16 deviation=4.150741e-16 flagged=False
+    upper_arm_R: residual=2.878596e-16 deviation=3.334687e-16 flagged=False
+    forearm_R: residual=3.656318e-16 deviation=5.611343e-16 flagged=False
+    hand_R: residual=4.286417e-16 deviation=4.270944e-16 flagged=False
+    thigh_L: residual=2.747662e-16 deviation=3.350308e-16 flagged=False
+    shin_L: residual=3.248707e-16 deviation=3.503283e-16 flagged=False
+    foot_L: residual=4.012577e-16 deviation=5.689047e-16 flagged=False
+    thigh_R: residual=3.749572e-16 deviation=3.570076e-16 flagged=False
+    shin_R: residual=3.273070e-16 deviation=2.596296e-16 flagged=False
+    foot_R: residual=3.506985e-16 deviation=3.179280e-16 flagged=False
+- case_06_p17_47_s1_little_iw2_wxyz: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_07_p17_47_s2_big_iw4_xyzw: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_08_p17_47_s3_little_iw4_xyzw: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_09_p17_47_s1_big_iw2_wxyz: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_10_p17_47_s2_big_iw4_wxyz: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_11_p17_47_s3_little_iw2_xyzw: ok=True frames=16 joints=20 max_residual=4.825401e-16 max_deviation=5.551989e-16 flagged=none
+    root: residual=7.059813e-18 deviation=5.727872e-17 flagged=False
+    pelvis: residual=3.559355e-17 deviation=6.982127e-17 flagged=False
+    spine_01: residual=1.782634e-16 deviation=2.217191e-16 flagged=False
+    spine_02: residual=3.342214e-16 deviation=2.873507e-16 flagged=False
+    neck: residual=3.510833e-16 deviation=3.788954e-16 flagged=False
+    head: residual=3.333559e-16 deviation=4.331413e-16 flagged=False
+    shoulder_L: residual=3.245185e-16 deviation=3.070228e-16 flagged=False
+    upper_arm_L: residual=3.291589e-16 deviation=3.692975e-16 flagged=False
+    forearm_L: residual=4.223615e-16 deviation=4.354628e-16 flagged=False
+    hand_L: residual=4.266150e-16 deviation=5.551989e-16 flagged=False
+    shoulder_R: residual=2.950458e-16 deviation=5.135811e-16 flagged=False
+    upper_arm_R: residual=3.682193e-16 deviation=4.281931e-16 flagged=False
+    forearm_R: residual=3.723801e-16 deviation=4.531888e-16 flagged=False
+    hand_R: residual=4.825401e-16 deviation=4.809660e-16 flagged=False
+    thigh_L: residual=7.826588e-17 deviation=1.480322e-16 flagged=False
+    shin_L: residual=2.716823e-16 deviation=3.379818e-16 flagged=False
+    foot_L: residual=3.674339e-16 deviation=3.308186e-16 flagged=False
+    thigh_R: residual=1.177569e-16 deviation=1.451725e-16 flagged=False
+    shin_R: residual=1.546922e-16 deviation=1.691867e-16 flagged=False
+    foot_R: residual=1.717727e-16 deviation=1.608769e-16 flagged=False
+- case_12_p23_59_s1_little_iw2_wxyz: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+- case_13_p23_59_s2_big_iw4_xyzw: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+- case_14_p23_59_s3_little_iw4_xyzw: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+- case_15_p23_59_s1_big_iw2_wxyz: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+- case_16_p23_59_s2_big_iw4_wxyz: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+- case_17_p23_59_s3_little_iw2_xyzw: ok=True frames=16 joints=20 max_residual=5.536283e-16 max_deviation=5.063491e-16 flagged=none
+    root: residual=3.469447e-18 deviation=6.440692e-17 flagged=False
+    pelvis: residual=1.740266e-16 deviation=3.054175e-16 flagged=False
+    spine_01: residual=1.929212e-16 deviation=2.559001e-16 flagged=False
+    spine_02: residual=2.813944e-16 deviation=2.694815e-16 flagged=False
+    neck: residual=2.931631e-16 deviation=2.625944e-16 flagged=False
+    head: residual=3.815761e-16 deviation=3.894599e-16 flagged=False
+    shoulder_L: residual=3.682193e-16 deviation=3.985185e-16 flagged=False
+    upper_arm_L: residual=5.074415e-16 deviation=4.673977e-16 flagged=False
+    forearm_L: residual=5.132906e-16 deviation=4.253222e-16 flagged=False
+    hand_L: residual=5.536283e-16 deviation=5.006233e-16 flagged=False
+    shoulder_R: residual=3.275276e-16 deviation=3.735420e-16 flagged=False
+    upper_arm_R: residual=3.435979e-16 deviation=3.817811e-16 flagged=False
+    forearm_R: residual=4.613190e-16 deviation=5.063491e-16 flagged=False
+    hand_R: residual=4.236705e-16 deviation=4.883740e-16 flagged=False
+    thigh_L: residual=2.285955e-16 deviation=2.020693e-16 flagged=False
+    shin_L: residual=2.277184e-16 deviation=2.488644e-16 flagged=False
+    foot_L: residual=2.181341e-16 deviation=2.821700e-16 flagged=False
+    thigh_R: residual=2.040200e-16 deviation=1.999334e-16 flagged=False
+    shin_R: residual=2.583879e-16 deviation=3.429316e-16 flagged=False
+    foot_R: residual=2.960437e-16 deviation=2.381486e-16 flagged=False
+
+Anomalies:
+- json_unsupported_schema: passed=True expected=E_SCHEMA_VERSION actual=E_SCHEMA_VERSION joint=None frame=None
+- json_missing_joint_map: passed=True expected=E_FIELD_MISSING actual=E_FIELD_MISSING joint=None frame=None
+- json_zero_quaternion: passed=True expected=E_QUAT_INVALID actual=E_QUAT_INVALID joint=neck frame=2
+- json_nan_quaternion: passed=True expected=E_QUAT_INVALID actual=E_QUAT_INVALID joint=spine_02 frame=1
+- json_nonmonotonic_time: passed=True expected=E_TIME_NONMONOTONIC actual=E_TIME_NONMONOTONIC joint=None frame=2
+- binary_endian_conflict: passed=True expected=E_FORMAT_ENDIAN actual=E_FORMAT_ENDIAN joint=None frame=None
+- binary_index_overflow: passed=True expected=E_INDEX_OVERFLOW actual=E_INDEX_OVERFLOW joint=None frame=None
+- binary_truncated_rotations: passed=True expected=E_QUAT_INVALID actual=E_QUAT_INVALID joint=None frame=6
+- binary_unsupported_version: passed=True expected=E_SCHEMA_VERSION actual=E_SCHEMA_VERSION joint=None frame=None
+- target_skeleton_missing_joint: passed=True expected=E_FIELD_MISSING actual=E_FIELD_MISSING joint=foot_R frame=None
+- retarget_consistency_divergence: passed=True expected=E_RETARGET_DIVERGE actual=E_RETARGET_DIVERGE joint=spine_01 frame=1

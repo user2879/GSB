@@ -1,0 +1,428 @@
+{
+  "all_checks_ok": true,
+  "artifacts": {
+    "binary_back_json": "cases/case_09_p17_47_s1_big_iw2_wxyz/binary_back_to_json_v3.json",
+    "resampled_binary": "cases/case_09_p17_47_s1_big_iw2_wxyz/resampled_trajectory.bin",
+    "resampled_json": "cases/case_09_p17_47_s1_big_iw2_wxyz/resampled_schema_v1.json",
+    "retarget_report": "cases/case_09_p17_47_s1_big_iw2_wxyz/retarget_report.json",
+    "source_binary": "cases/case_09_p17_47_s1_big_iw2_wxyz/source_trajectory.bin",
+    "source_json": "cases/case_09_p17_47_s1_big_iw2_wxyz/source_schema_v1.json",
+    "source_migrated_json": "cases/case_09_p17_47_s1_big_iw2_wxyz/source_migrated_v3.json",
+    "target_binary": "cases/case_09_p17_47_s1_big_iw2_wxyz/target_trajectory.bin",
+    "target_json": "cases/case_09_p17_47_s1_big_iw2_wxyz/target_motion.json",
+    "target_transforms": "cases/case_09_p17_47_s1_big_iw2_wxyz/target_transforms.json"
+  },
+  "binary": {
+    "channel_joint_order": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      0
+    ],
+    "endian": "big",
+    "index_width": 2,
+    "parsed_metadata": {
+      "endian": "big",
+      "format_version": 2,
+      "frame_count": 7,
+      "has_root_translation": true,
+      "index_width": 2,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "wxyz",
+      "sha256": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72"
+    },
+    "quat_order": "wxyz",
+    "resampled_parsed_metadata": {
+      "endian": "big",
+      "format_version": 2,
+      "frame_count": 16,
+      "has_root_translation": true,
+      "index_width": 2,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "wxyz",
+      "sha256": "aee00c50363e2d873b9f819f12470fdf91541386665dd2734c01246f2294e80c"
+    },
+    "target_parsed_metadata": {
+      "endian": "big",
+      "format_version": 2,
+      "frame_count": 16,
+      "has_root_translation": true,
+      "index_width": 2,
+      "interpolation": "slerp",
+      "joint_count": 20,
+      "quat_order": "wxyz",
+      "sha256": "596c46ed3df6f1dc58ad3b4e5f5db513531547364d93f95b2385a9e2538b39b8"
+    }
+  },
+  "case_id": "case_09_p17_47_s1_big_iw2_wxyz",
+  "comparisons": {
+    "binary_roundtrip_retarget": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "direct_retarget",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "binary_roundtrip_retarget"
+    },
+    "binary_to_json": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 7,
+      "joint_count": 20,
+      "left": "source_binary",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "binary_to_json"
+    },
+    "json_roundtrip_retarget": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "direct_retarget",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "json_roundtrip_retarget"
+    },
+    "json_to_binary": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 7,
+      "joint_count": 20,
+      "left": "source_json_semantics",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "source_binary_roundtrip"
+    },
+    "resampled_binary_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "resampled_direct",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "resampled_binary_roundtrip"
+    },
+    "resampled_json_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "resampled_direct",
+      "max_rotation_error_rad": 5.721958498152798e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "resampled_json_roundtrip"
+    },
+    "target_binary_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "target_direct",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "target_binary_roundtrip"
+    },
+    "target_json_roundtrip": {
+      "equal": true,
+      "first_divergence_kind": null,
+      "first_divergent_frame": null,
+      "first_divergent_joint": null,
+      "frame_count": 16,
+      "joint_count": 20,
+      "left": "target_direct",
+      "max_rotation_error_rad": 5.721958498152802e-17,
+      "max_time_error": 0.0,
+      "max_translation_error": 0.0,
+      "right": "target_json_roundtrip"
+    }
+  },
+  "conversion": {
+    "binary_to_json": {
+      "destination_artifact_sha256": "6333bccc12234902a1fbbd37a61b7b8b8a39b4e39c1834bfc80cca4cf5fdd8ee",
+      "destination_semantic_sha256": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+      "direction": "binary_to_json",
+      "equal_within_tolerance": true,
+      "frame_count": 7,
+      "joint_count": 20,
+      "metadata": {
+        "endian": "big",
+        "format_version": 2,
+        "frame_count": 7,
+        "has_root_translation": true,
+        "index_width": 2,
+        "interpolation": "slerp",
+        "joint_count": 20,
+        "quat_order": "wxyz",
+        "sha256": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72"
+      },
+      "source_artifact_sha256": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72",
+      "source_semantic_sha256": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74"
+    },
+    "json_to_binary": {
+      "destination_artifact_sha256": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72",
+      "destination_semantic_sha256": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+      "equal_within_tolerance": true,
+      "metadata": {
+        "endian": "big",
+        "format_version": 2,
+        "frame_count": 7,
+        "has_root_translation": true,
+        "index_width": 2,
+        "interpolation": "slerp",
+        "joint_count": 20,
+        "quat_order": "wxyz",
+        "sha256": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72"
+      },
+      "source_artifact_sha256": "19bbb9cd53eb186ee9a8dc9ad393375802e7a6334b6a3ed7eb334c0f6bbdbfd2",
+      "source_semantic_sha256": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74"
+    }
+  },
+  "hashes": {
+    "binary_back_json_file": "59bf452f708aefd5eb63aa31dcc05eab85497fb7ef1ecf57c61b8c8452c70d20",
+    "binary_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+    "resampled_binary_file": "aee00c50363e2d873b9f819f12470fdf91541386665dd2734c01246f2294e80c",
+    "resampled_json_file": "cafc4d7dfd197366ae6212526f0f325f15011c82cd0796e1fe7b0c0eb9379260",
+    "retarget_report_file": "603add4d5efa0909feb7771844297e47b1bc6a2903db552dad71c9401a2f8424",
+    "source_binary_file": "d9bf3a319b3c710767e60df4d1cc7b9c6729732e226ae83ef5de205fb57ffe72",
+    "source_json_file": "19bbb9cd53eb186ee9a8dc9ad393375802e7a6334b6a3ed7eb334c0f6bbdbfd2",
+    "source_migrated_json_file": "fffe7a0553a4414c8deb4526ee3ba80abe4f7562c09a3c39d75ef8885593255f",
+    "source_semantic": "14d66ce67972102978bd41c56eddb7e58b9e883c4deb7f48141fb4c9dcbc1b74",
+    "target_binary_file": "596c46ed3df6f1dc58ad3b4e5f5db513531547364d93f95b2385a9e2538b39b8",
+    "target_json_file": "7859eb22631fa820bb0a9d33c34e782f55c94710a04d6ae7f9c023729bfdf8d5",
+    "target_semantic": "5a2ecf7bc94a027db7a6437a8e30be435bd95f344277988f71b4b31c210c931e",
+    "target_transforms_file": "be79b6325472c9d8aed2a2c0832dd466c01b2f822fd7cf43d4f0592dc2255182"
+  },
+  "json_quat_order": "xyzw",
+  "migration": {
+    "added_fields": [
+      "joint_map",
+      "quat_order",
+      "interpolation",
+      "keyframes[0].root_translation",
+      "keyframes[1].root_translation",
+      "keyframes[2].root_translation",
+      "keyframes[3].root_translation",
+      "keyframes[4].root_translation",
+      "keyframes[5].root_translation",
+      "keyframes[6].root_translation"
+    ],
+    "after_sha256": "8404dd75758998fefbccfcd43f4212c2b0ba7c7e0a232efee9c536bf79db54af",
+    "before_sha256": "08d5218f0f3f188ca88006ad34ac8e409530408054fe9a85c0922622ad922fc4",
+    "changed": true,
+    "idempotent": true,
+    "input_schema_version": 1,
+    "output_schema_version": 3,
+    "second_after_sha256": "8404dd75758998fefbccfcd43f4212c2b0ba7c7e0a232efee9c536bf79db54af",
+    "second_before_sha256": "8404dd75758998fefbccfcd43f4212c2b0ba7c7e0a232efee9c536bf79db54af"
+  },
+  "resample": {
+    "extrapolated": false,
+    "source_end": 0.5,
+    "source_frame_count": 7,
+    "source_start": 0.0,
+    "target_end": 0.5,
+    "target_fps": 30.0,
+    "target_frame_count": 16,
+    "target_start": 0.0
+  },
+  "retarget": {
+    "flagged_joints": [],
+    "joints": [
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "root",
+        "max_global_deviation_rad": 5.727871989595296e-17,
+        "max_residual_rad": 7.059813062317232e-18
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "pelvis",
+        "max_global_deviation_rad": 6.982127306007959e-17,
+        "max_residual_rad": 3.559354985867844e-17
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "spine_01",
+        "max_global_deviation_rad": 2.2171910569566214e-16,
+        "max_residual_rad": 1.7826341206874e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "spine_02",
+        "max_global_deviation_rad": 2.8735068166618107e-16,
+        "max_residual_rad": 3.342213888644166e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "neck",
+        "max_global_deviation_rad": 3.788953872412608e-16,
+        "max_residual_rad": 3.5108334685767037e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "head",
+        "max_global_deviation_rad": 4.3314125111732996e-16,
+        "max_residual_rad": 3.3335590258932544e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shoulder_L",
+        "max_global_deviation_rad": 3.070227777087343e-16,
+        "max_residual_rad": 3.2451849989102953e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "upper_arm_L",
+        "max_global_deviation_rad": 3.6929753113621767e-16,
+        "max_residual_rad": 3.2915892276214307e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "forearm_L",
+        "max_global_deviation_rad": 4.35462760538999e-16,
+        "max_residual_rad": 4.2236152890487987e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "hand_L",
+        "max_global_deviation_rad": 5.55198919231262e-16,
+        "max_residual_rad": 4.2661502522132654e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shoulder_R",
+        "max_global_deviation_rad": 5.135811360506095e-16,
+        "max_residual_rad": 2.950458159105173e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "upper_arm_R",
+        "max_global_deviation_rad": 4.2819309901237706e-16,
+        "max_residual_rad": 3.682193206295147e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "forearm_R",
+        "max_global_deviation_rad": 4.531888304300056e-16,
+        "max_residual_rad": 3.7238012298709097e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "hand_R",
+        "max_global_deviation_rad": 4.809659659946967e-16,
+        "max_residual_rad": 4.825400815232002e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "thigh_L",
+        "max_global_deviation_rad": 1.4803215417014985e-16,
+        "max_residual_rad": 7.826588070103694e-17
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shin_L",
+        "max_global_deviation_rad": 3.3798183357462886e-16,
+        "max_residual_rad": 2.716822870903455e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "foot_L",
+        "max_global_deviation_rad": 3.308186347378347e-16,
+        "max_residual_rad": 3.6743392481036022e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "thigh_R",
+        "max_global_deviation_rad": 1.4517252514749662e-16,
+        "max_residual_rad": 1.1775693440128327e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "shin_R",
+        "max_global_deviation_rad": 1.69186683277542e-16,
+        "max_residual_rad": 1.546922091089639e-16
+      },
+      {
+        "first_flagged_frame": null,
+        "flagged": false,
+        "joint": "foot_R",
+        "max_global_deviation_rad": 1.6087689809158016e-16,
+        "max_residual_rad": 1.7177266546549276e-16
+      }
+    ],
+    "max_deviation_frame": 9,
+    "max_deviation_joint": "hand_L",
+    "max_global_deviation_rad": 5.55198919231262e-16,
+    "max_residual_frame": 7,
+    "max_residual_joint": "hand_R",
+    "max_residual_rad": 4.825400815232002e-16,
+    "report_path": "cases/case_09_p17_47_s1_big_iw2_wxyz/retarget_report.json",
+    "root_translation_scale": 0.9668070652257739,
+    "target_transforms_path": "cases/case_09_p17_47_s1_big_iw2_wxyz/target_transforms.json"
+  },
+  "schema_version": 1,
+  "source_seed": 17,
+  "target_seed": 47
+}
