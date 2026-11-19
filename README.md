@@ -20,3 +20,27 @@ Windows 10/11，安装 Python 3.11 并创建独立虚拟环境。
 
 验收：
 用本地合成多通道素材验证增量失效闭包、音视频对齐精度与强制终止后恢复的一致性。
+
+---
+
+## 交付实现入口（SyncBench）
+
+代码包 `syncbench/`、测试 `tests/`、技术文档 `docs/TECHNICAL.md`。
+
+```bash
+# 环境（Windows 用 setup.ps1；本机已建 .venv）
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+
+# 固定序列演示（含强制终止恢复），产物在 workspace/
+.venv/bin/python -m syncbench.cli demo --workspace workspace --crash
+
+# 测试（无显示器用 offscreen）
+QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest tests/
+
+# 可选 GUI 诊断视图
+QT_QPA_PLATFORM=offscreen .venv/bin/python -m syncbench.cli gui --workspace workspace
+```
+
+- 依赖锁定：`requirements.txt`（numpy 2.4.6 / PySide6 6.12.0 / pytest 9.2.0）
+- 业务错误码、增量失效闭包、双域对齐、原子持久化与恢复均有对应测试覆盖。
