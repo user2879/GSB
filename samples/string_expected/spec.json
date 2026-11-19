@@ -1,0 +1,18 @@
+{
+  "name": "non-numeric-string-expected",
+  "parameter_version": 1,
+  "global_concurrency": 3,
+  "observation_timeout_ms": 300,
+  "ui_latency_budget_ms": 50,
+  "observation_window": "string-window-1",
+  "arbitration_rule": "majority_then_latest",
+  "keys": {
+    "deployment.color": {"expected": "blue", "quorum_bp": 6667},
+    "release.channel": {"expected": "stable-cn", "quorum_bp": 10000}
+  },
+  "nodes": [
+    {"id": "node-a", "host": "127.0.0.1", "port": 43891, "quota": 1},
+    {"id": "node-b", "host": "127.0.0.1", "port": 43892, "quota": 1},
+    {"id": "node-c", "host": "127.0.0.1", "port": 43893, "quota": 1}
+  ]
+}

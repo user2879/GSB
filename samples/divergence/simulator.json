@@ -1,0 +1,33 @@
+{
+  "node-a": {
+    "observations": {
+      "app.mode": [{"value": "stable", "observation_seq": 10, "timestamp_ms": 1000}],
+      "duplicate.observations": [{"value": 42, "observation_seq": 30, "timestamp_ms": 3000}],
+      "feature.enabled": [{"value": 1, "observation_seq": 20, "timestamp_ms": 2000}],
+      "feature.mismatch": [{"value": 7, "observation_seq": 40, "timestamp_ms": 4000}],
+      "string.expected": [{"value": "非数字期望值", "observation_seq": 50, "timestamp_ms": 5000}],
+      "tie.rule": [{"value": "alpha", "observation_seq": 5, "timestamp_ms": 1000}]
+    }
+  },
+  "node-b": {
+    "duplicate_counts": {"duplicate.observations": 2},
+    "observations": {
+      "app.mode": [{"value": "stable", "observation_seq": 9, "timestamp_ms": 900}],
+      "duplicate.observations": [{"value": 42, "observation_seq": 31, "timestamp_ms": 3100}],
+      "feature.enabled": [{"value": 1, "observation_seq": 21, "timestamp_ms": 1900}],
+      "feature.mismatch": [{"value": 7, "observation_seq": 41, "timestamp_ms": 4100}],
+      "string.expected": [{"value": "非数字期望值", "observation_seq": 51, "timestamp_ms": 5100}],
+      "tie.rule": [{"value": "beta", "observation_seq": 9, "timestamp_ms": 1100}]
+    }
+  },
+  "node-c": {
+    "observations": {
+      "app.mode": [{"value": "canary", "observation_seq": 11, "timestamp_ms": 1100}],
+      "duplicate.observations": [{"value": 42, "observation_seq": 32, "timestamp_ms": 3200}],
+      "feature.enabled": [{"value": 1, "observation_seq": 19, "timestamp_ms": 2100}],
+      "feature.mismatch": [{"value": 7, "observation_seq": 42, "timestamp_ms": 4200}],
+      "string.expected": [{"value": "非数字期望值", "observation_seq": 52, "timestamp_ms": 5200}]
+    },
+    "missing_keys": ["tie.rule"]
+  }
+}

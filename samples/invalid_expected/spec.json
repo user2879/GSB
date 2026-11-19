@@ -1,0 +1,19 @@
+{
+  "name": "invalid-expected-value-types",
+  "parameter_version": 1,
+  "global_concurrency": 2,
+  "observation_timeout_ms": 200,
+  "ui_latency_budget_ms": 50,
+  "observation_window": "invalid-window-1",
+  "arbitration_rule": "majority_then_latest",
+  "keys": {
+    "boolean.expected": {"expected": true, "quorum_bp": 6667},
+    "array.expected": {"expected": [1, 2], "quorum_bp": 6667},
+    "valid.string": {"expected": "this-is-valid", "quorum_bp": 6667}
+  },
+  "nodes": [
+    {"id": "node-a", "host": "127.0.0.1", "port": 43901, "quota": 1},
+    {"id": "node-b", "host": "127.0.0.1", "port": 43902, "quota": 1},
+    {"id": "node-c", "host": "127.0.0.1", "port": 43903, "quota": 1}
+  ]
+}

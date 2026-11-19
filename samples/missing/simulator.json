@@ -1,0 +1,27 @@
+{
+  "node-a": {
+    "observations": {
+      "cache.ttl": [{"value": 60, "observation_seq": 10, "timestamp_ms": 1000}],
+      "db.timeout": [{"value": 3000, "observation_seq": 20, "timestamp_ms": 2000}],
+      "healthy.key": [{"value": 1, "observation_seq": 30, "timestamp_ms": 3000}],
+      "partial.quorum": [{"value": "ok", "observation_seq": 40, "timestamp_ms": 4000}]
+    }
+  },
+  "node-b": {
+    "observations": {
+      "db.timeout": [{"value": 3000, "observation_seq": 21, "timestamp_ms": 2100}],
+      "healthy.key": [{"value": 1, "observation_seq": 31, "timestamp_ms": 3100}],
+      "partial.quorum": [{"value": "ok", "observation_seq": 41, "timestamp_ms": 4100}]
+    },
+    "missing_keys": ["cache.ttl"]
+  },
+  "node-c": {
+    "response_delays_ms": {"db.timeout": 400},
+    "observations": {
+      "cache.ttl": [{"value": 60, "observation_seq": 11, "timestamp_ms": 1100}],
+      "db.timeout": [{"value": 3000, "observation_seq": 22, "timestamp_ms": 2200}],
+      "healthy.key": [{"value": 1, "observation_seq": 32, "timestamp_ms": 3200}]
+    },
+    "missing_keys": ["partial.quorum"]
+  }
+}
