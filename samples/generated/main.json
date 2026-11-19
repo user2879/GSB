@@ -1,0 +1,136 @@
+{
+  "duration_ms": 1600,
+  "edits": [
+    {
+      "event_id": "e2",
+      "op": "set_text",
+      "text": "Kira: Bridge is sealed. Use the maintenance shaft."
+    },
+    {
+      "field": "font_size",
+      "op": "set_style",
+      "value": 14
+    },
+    {
+      "end_ms": 1300,
+      "event_id": "e3",
+      "op": "set_time",
+      "start_ms": 800
+    },
+    {
+      "field": "contrast_enhance",
+      "op": "set_style",
+      "value": false
+    }
+  ],
+  "events": [
+    {
+      "anchor": {
+        "horizontal": "center",
+        "vertical": "bottom",
+        "x": 160,
+        "y": 160
+      },
+      "critical_sound": true,
+      "end_ms": 420,
+      "id": "e1",
+      "language": "en",
+      "max_chars_per_sec": 16,
+      "speaker": "COMPUTER",
+      "start_ms": 0,
+      "text": "System alert: hull pressure rising."
+    },
+    {
+      "anchor": {
+        "horizontal": "center",
+        "vertical": "bottom",
+        "x": 160,
+        "y": 160
+      },
+      "critical_sound": false,
+      "end_ms": 860,
+      "id": "e2",
+      "language": "en",
+      "max_chars_per_sec": 22,
+      "speaker": "Kira",
+      "start_ms": 280,
+      "text": "Kira: We need to reach the bridge before the gate closes."
+    },
+    {
+      "anchor": {
+        "horizontal": "center",
+        "vertical": "bottom",
+        "x": 160,
+        "y": 160
+      },
+      "critical_sound": true,
+      "end_ms": 1260,
+      "id": "e3",
+      "language": "en",
+      "max_chars_per_sec": 30,
+      "speaker": "SFX",
+      "start_ms": 760,
+      "text": "Critical sound detected near the east airlock."
+    },
+    {
+      "anchor": {
+        "horizontal": "center",
+        "vertical": "bottom",
+        "x": 160,
+        "y": 160
+      },
+      "critical_sound": false,
+      "end_ms": 1600,
+      "id": "e4",
+      "language": "en",
+      "max_chars_per_sec": 20,
+      "speaker": "Tora",
+      "start_ms": 1180,
+      "text": "All crew report to stations."
+    },
+    {
+      "anchor": {
+        "horizontal": "left",
+        "vertical": "top",
+        "x": 20,
+        "y": 20
+      },
+      "critical_sound": false,
+      "end_ms": 1500,
+      "id": "e5",
+      "language": "en",
+      "max_chars_per_sec": 10,
+      "speaker": "Pilot",
+      "start_ms": 200,
+      "text": "Ready."
+    }
+  ],
+  "frame": {
+    "background": 18,
+    "frame_ms": 20,
+    "height": 180,
+    "width": 320
+  },
+  "runtime": {
+    "block_ms": 100,
+    "concurrency": 3,
+    "memory_budget_bytes": 4194304,
+    "output_dir": "output/main",
+    "state_dir": "state/main"
+  },
+  "safe_area": {
+    "height": 144,
+    "width": 288,
+    "x": 16,
+    "y": 16
+  },
+  "schema_version": "subtitle-engine/v1",
+  "style": {
+    "contrast_enhance": true,
+    "font_size": 12,
+    "line_height": 16,
+    "mask_opacity": 0.62,
+    "max_lines": 5,
+    "padding": 6
+  }
+}
