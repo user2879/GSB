@@ -1,0 +1,40 @@
+{
+  "environment": {
+    "python": "3.10.12",
+    "numpy": "2.2.6",
+    "containerized": false
+  },
+  "demo": {
+    "seed": 20261120,
+    "samples": 6,
+    "frames": 23401,
+    "segments": 28,
+    "segment_count_mismatches": 0,
+    "noise_tolerance_failures": 0,
+    "status": "complete",
+    "result_digest": "a4df77ed3d1febed7d68ac56eb854d46488b7cbf99171b6f19b6377d16d540a8",
+    "first_run_cache_recompute": 24,
+    "same_config_rerun_cache_reuse": 24,
+    "profiles": {
+      "small": ["noise_only.wav", "padded_single.wav", "short_two.wav"],
+      "medium": ["dense_six.wav", "medium_three.wav"],
+      "large": ["long_sixteen.wav"]
+    }
+  },
+  "tests": {
+    "framework": "unittest",
+    "count": 10,
+    "status": "pass",
+    "verified": [
+      "endpoint counts, ordering, frame timeline and padded tail",
+      "E_AUDIO_FORMAT isolation without aborting other samples",
+      "single-frame spike cannot directly enter SPEECH and equal thresholds prefer SILENCE",
+      "stage-level cache reuse and threshold invalidation",
+      "audio replacement invalidates only the replaced sample",
+      "scale-profile switch incremental result equals clean full result",
+      "serial and thread-pool deterministic fields are identical",
+      "snapshot prefix resume and rejection of an incomplete/corrupt snapshot",
+      "CLI SIGINT handling completes with exit code 0"
+    ]
+  }
+}

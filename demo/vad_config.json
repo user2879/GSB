@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "audio": {
+    "sample_rate": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "audio_format": "pcm"
+  },
+  "frame_ms": 20.0,
+  "hop_ms": 10.0,
+  "fft_window": "hann",
+  "energy_floor": 1e-9,
+  "flatness_epsilon": 1e-12,
+  "high_threshold": 5.0,
+  "low_margin": 0.35,
+  "hysteresis": 1.15,
+  "zcr_threshold": 0.25,
+  "flatness_threshold": 0.35,
+  "confirm_frames": 2,
+  "release_frames": 3,
+  "min_speech_ms": 100.0,
+  "min_silence_ms": 75.0,
+  "noise_window_frames": 96,
+  "equal_boundary_policy": "silence_first",
+  "scale_tie_break": "profile_order",
+  "scale_profile_override": null,
+  "scale_profiles": [
+    {
+      "id": "small",
+      "target_frames": 400,
+      "target_density": 0.18,
+      "target_samples": 12,
+      "feature_precision": 8,
+      "noise_window_multiplier": 1.0,
+      "threshold_estimation": "quantile",
+      "low_quantile": 0.2
+    },
+    {
+      "id": "medium",
+      "target_frames": 1800,
+      "target_density": 0.26,
+      "target_samples": 8,
+      "feature_precision": 7,
+      "noise_window_multiplier": 1.5,
+      "threshold_estimation": "quantile",
+      "low_quantile": 0.25
+    },
+    {
+      "id": "large",
+      "target_frames": 9000,
+      "target_density": 0.2,
+      "target_samples": 4,
+      "feature_precision": 6,
+      "noise_window_multiplier": 2.0,
+      "threshold_estimation": "fixed_ratio"
+    }
+  ],
+  "concurrency": 4,
+  "snapshot_interval": 2,
+  "noise_feature_tolerance": {
+    "rms_log_mean": {"min": 4.25, "max": 4.5},
+    "rms_log_std": {"max": 0.07},
+    "zcr_mean": {"min": 0.45, "max": 0.55},
+    "zcr_std": {"max": 0.04},
+    "flatness_mean": {"min": 0.4, "max": 0.9},
+    "flatness_std": {"max": 0.2}
+  }
+}

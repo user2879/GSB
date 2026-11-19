@@ -1,0 +1,68 @@
+{
+  "generator": {
+    "deterministic": true,
+    "name": "vad-demo-generator",
+    "sample_rate": 16000,
+    "seed": 20261120
+  },
+  "noise_reference_samples": [
+    "noise_only.wav"
+  ],
+  "samples": [
+    {
+      "expected_segments": [
+        6,
+        6
+      ],
+      "file": "dense_six.wav",
+      "scale_profile": "medium",
+      "shard_count": 1
+    },
+    {
+      "expected_segments": [
+        16,
+        16
+      ],
+      "file": "long_sixteen.wav",
+      "scale_profile": "large",
+      "shard_count": 1
+    },
+    {
+      "expected_segments": [
+        3,
+        3
+      ],
+      "file": "medium_three.wav",
+      "scale_profile": "medium",
+      "shard_count": 1
+    },
+    {
+      "expected_segments": [
+        0,
+        0
+      ],
+      "file": "noise_only.wav",
+      "scale_profile": "small",
+      "shard_count": 1
+    },
+    {
+      "expected_segments": [
+        1,
+        1
+      ],
+      "file": "padded_single.wav",
+      "scale_profile": "small",
+      "shard_count": 1
+    },
+    {
+      "expected_segments": [
+        2,
+        2
+      ],
+      "file": "short_two.wav",
+      "scale_profile": "small",
+      "shard_count": 1
+    }
+  ],
+  "schema_version": "1.0"
+}
