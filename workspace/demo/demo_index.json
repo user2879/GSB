@@ -1,0 +1,265 @@
+{
+  "fault_injection": {
+    "budget_denied_demonstrated_in_run": "S4_minimal_2w",
+    "covered_codes": [
+      "E_AUDIO_FORMAT",
+      "E_BLOCK_BOUNDS",
+      "E_MERGE_ORDER",
+      "E_PEAK_OVER",
+      "E_THREAD_RANGE",
+      "E_WINDOW_INVALID"
+    ],
+    "expected_codes": [
+      "E_AUDIO_FORMAT",
+      "E_BLOCK_BOUNDS",
+      "E_MERGE_ORDER",
+      "E_PEAK_OVER",
+      "E_THREAD_RANGE",
+      "E_WINDOW_INVALID"
+    ],
+    "faults": [
+      {
+        "case": "illegal_channel_count",
+        "error": {
+          "code": "E_AUDIO_FORMAT",
+          "evidence": {
+            "channels": 3
+          },
+          "location": {},
+          "message": "仅支持 6 声道 5.1 素材，收到 3 声道"
+        }
+      },
+      {
+        "case": "window_too_short",
+        "error": {
+          "code": "E_WINDOW_INVALID",
+          "evidence": {
+            "block_samples": 19200,
+            "window_samples": 9600
+          },
+          "location": {},
+          "message": "窗口至少需要一个完整 19200 样本（400ms）积分块"
+        }
+      },
+      {
+        "case": "overlap_covers_window",
+        "error": {
+          "code": "E_WINDOW_INVALID",
+          "evidence": {
+            "overlap_seconds": 2.0,
+            "window_seconds": 2.0
+          },
+          "location": {},
+          "message": "重叠时长必须小于窗口时长，否则窗口区间被重叠完全覆盖"
+        }
+      },
+      {
+        "case": "overlap_exceeds_warmup",
+        "error": {
+          "code": "E_BLOCK_BOUNDS",
+          "evidence": {
+            "overlap_samples": 48000
+          },
+          "location": {
+            "warmup_samples": 24000
+          },
+          "message": "声明的窗口重叠超出可用 warm-up 区间"
+        }
+      },
+      {
+        "case": "thread_out_of_range",
+        "error": {
+          "code": "E_THREAD_RANGE",
+          "evidence": {
+            "max": 64,
+            "min": 1
+          },
+          "location": {
+            "max_workers": 0
+          },
+          "message": "线程数越界"
+        }
+      },
+      {
+        "case": "thread_over_hard_limit",
+        "error": {
+          "code": "E_THREAD_RANGE",
+          "evidence": {
+            "max": 64,
+            "min": 1
+          },
+          "location": {
+            "max_workers": 10000
+          },
+          "message": "线程数越界"
+        }
+      },
+      {
+        "case": "merge_order_fault",
+        "error": {
+          "code": "E_MERGE_ORDER",
+          "evidence": {
+            "task_keys": [
+              "T0000",
+              "T0001",
+              "T0002",
+              "T0003",
+              "T0004"
+            ]
+          },
+          "location": {
+            "injected": true
+          },
+          "message": "注入的归并顺序故障"
+        }
+      },
+      {
+        "case": "peak_over_range",
+        "error": {
+          "code": "E_PEAK_OVER",
+          "evidence": {
+            "oversample_index": 2,
+            "true_peak_db": 1.0651963912608595
+          },
+          "location": {
+            "channel": 0,
+            "task_key": "T0000"
+          },
+          "message": "真峰值超出 0 dBTP 量程"
+        }
+      }
+    ],
+    "missing_codes": []
+  },
+  "reference": {
+    "abs_block_count": 147,
+    "abs_gated_lufs": -22.17393752902223,
+    "block_count": 147,
+    "block_ms_mean": 0.0071073261775057945,
+    "block_ms_sum": 1.0447769480933518,
+    "lra_lu": 7.738960794966417,
+    "rel_block_count": 147,
+    "rel_gated_lufs": -22.17393752902223,
+    "samples": 720000,
+    "true_peak_channel": 2,
+    "true_peak_db": -9.894008054083397,
+    "true_peak_sample": 2592263
+  },
+  "run_report_hashes": {
+    "S1_unrestricted_4w": "95472ddebf7d9443d5829e02edf805245735e6235a87d3035a420cc4c70b01c7",
+    "S2_serial_1w": "e549bb3c18bddb708dc24a174d8e52b0a0c8c21c077b3af98ffe6a00d18e3e0a",
+    "S3_tight_4w": "cf365be43cc6960c7120220b041f76f5f74485d89246ddc858959071287e49a6",
+    "S4_minimal_2w": "c550ae04315d652765cf7472e374909f45622c8161879c4b752f1cbb2a4e0e05",
+    "S5_timebudget_serial": "ffe1cb09cc469da409e53a917a3ac616e260f0b7c75a3fbf51fd01881bae3a23"
+  },
+  "runs": [
+    {
+      "cache_stats": {
+        "denied_buffers": 0,
+        "evictions": 0,
+        "final_resident_count": 3005,
+        "hits": 408,
+        "recomputes": 0,
+        "stores": 3005,
+        "uncached": 0
+      },
+      "comparison_pass": true,
+      "degradation": [],
+      "effective_workers": 4,
+      "report_sha256": "95472ddebf7d9443d5829e02edf805245735e6235a87d3035a420cc4c70b01c7",
+      "run_id": "S1_unrestricted_4w"
+    },
+    {
+      "cache_stats": {
+        "denied_buffers": 0,
+        "evictions": 0,
+        "final_resident_count": 3005,
+        "hits": 408,
+        "recomputes": 0,
+        "stores": 3005,
+        "uncached": 0
+      },
+      "comparison_pass": true,
+      "degradation": [],
+      "effective_workers": 1,
+      "report_sha256": "e549bb3c18bddb708dc24a174d8e52b0a0c8c21c077b3af98ffe6a00d18e3e0a",
+      "run_id": "S2_serial_1w"
+    },
+    {
+      "cache_stats": {
+        "denied_buffers": 0,
+        "evictions": 3411,
+        "final_resident_count": 2,
+        "hits": 0,
+        "recomputes": 408,
+        "stores": 3413,
+        "uncached": 0
+      },
+      "comparison_pass": true,
+      "degradation": [],
+      "effective_workers": 4,
+      "report_sha256": "cf365be43cc6960c7120220b041f76f5f74485d89246ddc858959071287e49a6",
+      "run_id": "S3_tight_4w"
+    },
+    {
+      "cache_stats": {
+        "denied_buffers": 3408,
+        "evictions": 0,
+        "final_resident_count": 5,
+        "hits": 0,
+        "recomputes": 0,
+        "stores": 5,
+        "uncached": 3408
+      },
+      "comparison_pass": true,
+      "degradation": [
+        {
+          "action": "lru_evict_then_uncached_recompute",
+          "axis": "memory",
+          "budget_bytes": 23039,
+          "denied_buffers": 3408,
+          "priority": 1,
+          "reason": "memory_budget_pressure"
+        }
+      ],
+      "effective_workers": 2,
+      "report_sha256": "c550ae04315d652765cf7472e374909f45622c8161879c4b752f1cbb2a4e0e05",
+      "run_id": "S4_minimal_2w"
+    },
+    {
+      "cache_stats": {
+        "denied_buffers": 0,
+        "evictions": 0,
+        "final_resident_count": 3005,
+        "hits": 408,
+        "recomputes": 0,
+        "stores": 3005,
+        "uncached": 0
+      },
+      "comparison_pass": true,
+      "degradation": [
+        {
+          "action": "clamp_parallelism",
+          "axis": "time",
+          "budget_seconds": 1e-09,
+          "priority": 2,
+          "reason": "task_time_budget_exceeded_estimate",
+          "worst_task_seconds": 0.022180487999999998
+        },
+        {
+          "action": "serial_fallback",
+          "axis": "time",
+          "priority": 2,
+          "reason": "parallelism_clamped_to_one"
+        }
+      ],
+      "effective_workers": 1,
+      "report_sha256": "ffe1cb09cc469da409e53a917a3ac616e260f0b7c75a3fbf51fd01881bae3a23",
+      "run_id": "S5_timebudget_serial"
+    }
+  ],
+  "schema": "loudbench.demo-index/v1",
+  "task_count": 5,
+  "warmup_samples": 24000,
+  "window_seconds": 3.0
+}

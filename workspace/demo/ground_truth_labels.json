@@ -1,0 +1,60 @@
+{
+  "channels": 6,
+  "duration_seconds": 15.0,
+  "ground_truth_source": "所有段落由 numpy.default_rng(seed) 程序化生成；目标响度按 BS.1770 K加权两级门控实测后归一，achieved_* 为量化前 float64 真值，真峰值为 4x 过采样估计。无外部素材、无时间随机量。",
+  "sample_rate": 48000,
+  "sample_width_bits": 24,
+  "schema": "loudbench.synth-labels/v1",
+  "seed": 20261119,
+  "segments": [
+    {
+      "achieved_lufs": -23.99999999911316,
+      "end": 240000,
+      "kind": "speech",
+      "lra_lu": 3.6059000475150924,
+      "peak_linear": 0.2802165533696416,
+      "sample_count": 240000,
+      "source": "deterministic:speech:seed=20261119:gain=0.216443027941",
+      "start": 0,
+      "target_lufs": -24.0,
+      "true_peak_db": -10.962558467982715
+    },
+    {
+      "achieved_lufs": -19.99999999966488,
+      "end": 480000,
+      "kind": "music",
+      "lra_lu": 4.769750859778714,
+      "peak_linear": 0.17584516904666142,
+      "sample_count": 240000,
+      "source": "deterministic:music:seed=20261119:gain=0.308665126562",
+      "start": 240000,
+      "target_lufs": -20.0,
+      "true_peak_db": -15.091353364128048
+    },
+    {
+      "achieved_lufs": -25.99999999938134,
+      "end": 576000,
+      "kind": "transient",
+      "lra_lu": 0.9413240299858927,
+      "peak_linear": 0.27895263807903264,
+      "sample_count": 96000,
+      "source": "deterministic:transient:seed=20261119:gain=0.761884677659",
+      "start": 480000,
+      "target_lufs": -26.0,
+      "true_peak_db": -10.896501343590248
+    },
+    {
+      "achieved_lufs": -22.999999999304666,
+      "end": 720000,
+      "kind": "speech",
+      "lra_lu": 3.6003217934299805,
+      "peak_linear": 0.318747832681981,
+      "sample_count": 144000,
+      "source": "deterministic:speech:seed=20261119:gain=0.243263398940",
+      "start": 576000,
+      "target_lufs": -23.0,
+      "true_peak_db": -9.894008322714225
+    }
+  ],
+  "total_samples": 720000
+}
