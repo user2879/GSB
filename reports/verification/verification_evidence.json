@@ -1,0 +1,189 @@
+{
+  "commands": {
+    "concurrent": "python run.py run --input data --run-dir runs/verification --version 1 --report-dir reports/verification",
+    "generate": "python run.py generate --output data --seed 20261120",
+    "serial": "python run.py run --input data --run-dir runs/verification-serial --version 1 --serial --report-dir reports/verification-serial",
+    "tests": "python -m unittest discover -s tests -v",
+    "validate": "python run.py validate --input data"
+  },
+  "concurrent": {
+    "boundary_sensitive_count": 1529,
+    "error_summary": {
+      "candidates_with_any_tolerance_exceedance": 1139,
+      "first_exceeding_stage_counts": {
+        "channel_weighted_sum": 311,
+        "feature_add": 308,
+        "normalization": 520
+      },
+      "rank_change_causes": {
+        "feature_rounding_accumulation": 376,
+        "normalization_residual": 142
+      },
+      "rank_changes": 518,
+      "stage_exceeding_candidate_counts": {
+        "channel_weighted_sum": 546,
+        "clipping": 744,
+        "feature_add": 820,
+        "normalization": 520
+      },
+      "stage_max_difference": {
+        "channel_weighted_sum": 0.05078125,
+        "clipping": 0.056640625,
+        "feature_add": 0.0703125,
+        "normalization": 0.015625
+      },
+      "users_with_rank_changes": 47
+    },
+    "evaluation": {
+      "primary": {
+        "bits": 5,
+        "mean_hit_rate": 0.9817708333333334,
+        "mean_position_deviation": 0.5168566596359051,
+        "mean_precision_at_k": 0.9817708333333334,
+        "mean_top_k_overlap": 7.854166666666667,
+        "missed_truth_candidate_count": 7,
+        "top_k": 8,
+        "users_evaluated": 48
+      },
+      "reference": {
+        "bits": 9,
+        "mean_hit_rate": 0.9973958333333334,
+        "mean_position_deviation": 0.04507770999179276,
+        "mean_precision_at_k": 0.9973958333333334,
+        "mean_top_k_overlap": 7.979166666666667,
+        "missed_truth_candidate_count": 1,
+        "top_k": 8,
+        "users_evaluated": 48
+      }
+    },
+    "result_digest": "3288c9d3f797172789f58cee27246d1828c22e824da97fc9e99839f770bf5d0d",
+    "stage_commits": {
+      "evaluation": {
+        "commit_count": 10,
+        "computed_this_run": 48,
+        "max_workers_used": 4,
+        "resumed_users": 0
+      },
+      "fusion": {
+        "commit_count": 10,
+        "computed_this_run": 48,
+        "max_workers_used": 4,
+        "resumed_users": 0
+      },
+      "recall": {
+        "commit_count": 10,
+        "computed_this_run": 48,
+        "max_workers_used": 4,
+        "resumed_users": 0
+      }
+    },
+    "status": "completed",
+    "validation_code_counts": {
+      "E_RECORD_INVALID": 11
+    }
+  },
+  "config_mismatch": {
+    "command_exit_code": 2,
+    "response": {
+      "code": "E_CONFIG_MISMATCH",
+      "details": {
+        "requested_hash": "734b744b0251a9a3be7dd3422614ccf40d247cf254545207ecb2900d14896836",
+        "snapshot_hash": "a8c2af126b9dc33e4ac7276f6b43b9890a3a6b5bb927c264034ab9f487fbad9f"
+      },
+      "message": "snapshot configuration hash differs from current configuration"
+    },
+    "version_only_exit_code": 2,
+    "version_response": {
+      "code": "E_CONFIG_MISMATCH",
+      "details": {
+        "requested_version": 2,
+        "snapshot_version": 1
+      },
+      "message": "snapshot run version differs from requested version"
+    }
+  },
+  "environment": {
+    "numpy": "2.4.6",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "portability_notes": "Only cross-platform Python standard library and NumPy APIs are used; os.replace with same-filesystem temporary files is Windows-compatible.",
+    "python": "3.11.0rc1"
+  },
+  "sample": {
+    "config_hash": "a8c2af126b9dc33e4ac7276f6b43b9890a3a6b5bb927c264034ab9f487fbad9f",
+    "counts": {
+      "catalog_valid": 72,
+      "cold_start_users": 3,
+      "input_failures": 11,
+      "interactions_valid": 507,
+      "truth_users": 48,
+      "users_total": 48
+    },
+    "deterministic_digest": "1505e11bca0dc2a0310b289eac9b134c5705eae5defa0dcade556838e480f898",
+    "failure_codes": [
+      "E_RECORD_INVALID"
+    ],
+    "files": {
+      "config.json": {
+        "sha256": "2766fffa108b31b5e5925e67cbb92d336697b82cd444d3c3a2e07018ed124bd4"
+      },
+      "interactions.jsonl": {
+        "sha256": "8fdd3443a4044eacf72ad5d2a7b8e855f9af8445ece0283379523329cce64c90"
+      },
+      "items.jsonl": {
+        "sha256": "c47d7d93bb377aee6193c0fc85ff9d1201530a81c9cd64c2227889d3d2d8251e"
+      },
+      "truth.json": {
+        "sha256": "a0b1b14c62a3cdb8fb3aa263b04eed94fae110bed9443aa01304aa3483362d9d"
+      }
+    },
+    "schema_version": 1,
+    "seed": 20261120
+  },
+  "schema_version": 1,
+  "serial_equivalence": {
+    "digest_equal_to_concurrent": true,
+    "evaluation_equal_to_concurrent": true,
+    "result_digest": "3288c9d3f797172789f58cee27246d1828c22e824da97fc9e99839f770bf5d0d",
+    "stage_payload_equality": {
+      "evaluation": {
+        "resume_equal": true,
+        "serial_equal": true
+      },
+      "fusion": {
+        "resume_equal": true,
+        "serial_equal": true
+      },
+      "recall": {
+        "resume_equal": true,
+        "serial_equal": true
+      }
+    },
+    "status": "completed"
+  },
+  "signal_and_resume": {
+    "payload_equality": {
+      "evaluation": true,
+      "fusion": true,
+      "recall": true
+    },
+    "resume_digest_matches_baseline": true,
+    "resume_result_digest": "3288c9d3f797172789f58cee27246d1828c22e824da97fc9e99839f770bf5d0d",
+    "resume_status": "completed",
+    "signal_exit_code": 0,
+    "signal_stage_stats": {
+      "recall": {
+        "commit_count": 1,
+        "computed_this_run": 0,
+        "max_workers_used": 4,
+        "resumed_users": 0
+      }
+    },
+    "signal_status": "interrupted"
+  },
+  "unit_tests": {
+    "count": 8,
+    "failed": 0,
+    "passed": 8,
+    "result": "OK"
+  }
+}

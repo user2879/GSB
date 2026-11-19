@@ -1,0 +1,74 @@
+{
+  "channels": {
+    "collaborative": {
+      "candidate_limit": 14,
+      "enabled": true,
+      "weight": 0.36
+    },
+    "lexical": {
+      "candidate_limit": 14,
+      "enabled": true,
+      "weight": 0.44
+    },
+    "popularity": {
+      "candidate_limit": 14,
+      "enabled": true,
+      "weight": 0.2
+    }
+  },
+  "event_types": [
+    "view",
+    "click",
+    "purchase"
+  ],
+  "event_weights": {
+    "click": 2.5,
+    "purchase": 5.0,
+    "view": 1.0
+  },
+  "execution": {
+    "max_workers": 4,
+    "snapshot_commit_interval": 5,
+    "top_k": 8
+  },
+  "fixed_point": {
+    "primary_bits": 5,
+    "reference_bits": 9,
+    "rounding": "half_even",
+    "tolerance": 0.01
+  },
+  "fusion": {
+    "normalization": "max",
+    "strategy": "weighted_sum",
+    "temperature": 1.0,
+    "zero_channel_policy": "redistribute"
+  },
+  "ranking_features": [
+    {
+      "name": "lexical_norm",
+      "weight": 0.17
+    },
+    {
+      "name": "collaborative_norm",
+      "weight": 0.13
+    },
+    {
+      "name": "freshness",
+      "weight": 0.11
+    },
+    {
+      "name": "popularity_prior",
+      "weight": 0.09
+    }
+  ],
+  "retrieval": {
+    "half_life_ms": 1036800000,
+    "popularity_floor": 0.0
+  },
+  "schema_version": 1,
+  "score_clip": {
+    "max": 1.0,
+    "min": 0.0
+  },
+  "seed": 20261120
+}
