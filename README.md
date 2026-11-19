@@ -1,22 +1,148 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向 Windows 本地环境的 TCP 连接状态与拥塞诊断工作台，交付领域可视化与诊断工作台。系统在本地回环 TCP 端口（127.0.0.1 高位端口）启动一个确定性模拟对端，按本地 JSON 脚本对客户端报文给出确认、重复确认、丢包、延迟与乱序应答；客户端侧实现教学用的连接状态机与拥塞控制状态推进，把拥塞窗口、慢启动阈值、重复确认计数、已发送未确认数量与平滑 RTT 估计绑定到 CLOSED、SYN_SENT、ESTABLISHED、FIN_WAIT、CLOSE_WAIT 等状态上。核心业务是围绕“增量观测更新与依赖失效”：一次会话的事件序列逐条到达后，只有受影响的状态量、会话统计与诊断结论需要被重新推导，未受影响的结论必须保持不变且可逐项校验；当会话配置或对端脚本版本演进时，旧版结论须整体失效并被整体替换，而不是与新结论增量合并。观测的真值来源为持久化账本中的逐事件记录，时钟基准为本地单调计数毫秒。
+# TCP 连接状态与拥塞诊断工作台
 
-任务环境与准备：
-安装 Python 3.11 及以上版本，并在项目中创建虚拟环境。
-在虚拟环境中安装 numpy 与 pytest，Tkinter 使用 Python 标准库自带版本，无需额外安装。
-准备本地确定性样本：会话配置 JSON、对端应答脚本 JSON、事件序列样本与多个历史版本的快照样本。
-确认 127.0.0.1 上若干高位端口可监听，无需任何真实网络账号或外部站点。
+面向 Windows 本地环境的确定性教学/诊断工作台。它在 `127.0.0.1` 的高位 TCP 端口运行脚本化对端，用本地 JSON 驱动确认、重复确认、丢包、延迟和乱序；客户端侧以整数定点推进连接状态、拥塞窗口、慢启动阈值、重复确认计数、在途字节数和 RTT/RTO。
 
-业务要求：
-1. 实现会话配置与对端脚本的加载及强校验：从本地 JSON 读取初始序号、窗口上限、MSS、对端应答脚本（确认、重复确认、丢包、延迟毫秒、乱序）与会话预算参数，校验序号空间自洽、延迟为非负整数、脚本覆盖的报文序号可达；非法配置须以 E_CONFIG 业务码整体拒绝并列出出错字段路径，不得部分加载。
-2. 实现本地回环模拟对端与客户端状态机推进：在 127.0.0.1 端口启动确定性对端，客户端按 CLOSED、SYN_SENT、ESTABLISHED、FIN_WAIT、CLOSE_WAIT 推进状态，每个迁移记录触发报文类型、序号、当前事件序号与单调时钟毫秒；对端脚本耗尽后按声明默认策略应答，连接失败须以 E_CONNECT 报告。
-3. 实现拥塞窗口、慢启动阈值与 RTT 估计的定点推进：慢启动每确认字节窗口增一、拥塞避免每往返窗口增一，三次重复确认进入快速重传并调整阈值，超时回到慢启动；平滑 RTT 与偏差以整数定点维护并推导 RTO 值，须声明缩放因子与截断方向，Karn 规则下的重传样本须被排除，样本不足须按显式回退规则处理。
-4. 实现事件级增量推导与依赖失效账本：把拥塞窗口、阈值、已发送未确认数量、会话统计与诊断结论建成对事件序列的有向依赖关系，每个新事件到达后仅重新推导受影响项，未受影响项的值与版本号必须逐字节不变且可逐项校验；每项记录推导依据的事件序号与该事件所用配置版本。
-5. 实现配置或对端脚本版本演进后的陈旧结论防护与整体替换：配置或脚本被修改后版本号单调递增，旧版本下已推导的状态量、统计与诊断结论须标记为陈旧且不得参与当前展示与汇总；新一轮推导须整体替换结论集而非增量合并，替换时须稳定列出受影响字段、旧值与新值，旧版本结论保留为只读。
-6. 实现会话快照的版本识别与恢复：快照持久化配置版本、脚本内容摘要、当前状态、窗口与阈值、RTT 估计量、逐项结论及其依赖事件序号，写入本地 SQLite 并附内容摘要；重新打开快照时须比较快照版本与内容摘要同当前会话是否一致，不一致须整体替换而非增量合并，版本缺失须以 E_VERSION 报告。
-7. 实现强制终止后的恢复与一致性重放校验：进程被强制终止后重启只能依据账本中已完整写入的事件记录与结论恢复，未完成事件须标记为未知并要求重跑，不得声称能生成退出报告；恢复后按快照记录的事件序列重新推导，将每项结论、版本号与依赖事件序号同快照逐项比较，差异须定位到首个不一致的事件序号与字段并以 E_REPLAY 报明依据。
-8. 提供 Tkinter 诊断界面与结构化日志：界面展示当前连接状态、拥塞窗口、慢启动阈值、平滑 RTT 与 RTO、已发送未确认数量、逐项结论的受影响标记与依赖事件序号、当前版本与快照列表，渲染顺序稳定；支持以命令行参数分别注入对端脚本损坏、端口占用、快照版本缺失三类异常，分别以 E_SCRIPT、E_PORT、E_VERSION 写入结构化日志，注入仅改变输入文件或参数。
+工作台的核心不是“重新算一遍所有东西”，而是把每个结论做成带版本、带依赖事件、带配置版本的可校验记录：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 事件先以 `pending` 写入 SQLite，推导成功后才与受影响结论一起提交。
+- 新事件只更新实际变化的状态项、统计和预算；未受影响项的 `value_json`、版本号、依据事件和依赖列表逐字节不变。
+- 配置或脚本换代时，旧结论整体归档为只读历史，新结论集整体替换，绝不与旧值增量合并。
+- 快照保存逐事件重放点，恢复校验能定位到第一个不一致的事件序号和字段，并以 `E_REPLAY` 报明依据。
 
-验收：
-使用本地回环对端与确定性事件序列，验证增量推导结论与全量重算逐项一致，并验证版本替换、强制终止恢复与快照重放校验。
+## 环境准备（Windows）
+
+要求 Python 3.11 或更高版本；Windows 官方 Python 已自带 Tkinter。
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e .
+```
+
+也可直接运行 `scripts/setup_windows.ps1`。不依赖 Docker、WSL、外部站点或网络账号。
+
+当前交付验证容器是 Linux，系统 Python 缺少 `tkinter` 软件包；因此 Tkinter 窗口无法在该容器内实际弹出，界面逻辑通过无界面渲染模型验证。Windows 官方 Python 的标准库包含 Tkinter，不额外安装依赖。
+
+## 快速开始
+
+```powershell
+# 1. 强校验配置与脚本
+python -m tcp_workbench.cli validate --config samples/session.json
+
+# 2. 新建账本，逐条灌入确定性事件，并做增量/全量逐项比对
+python -m tcp_workbench.cli run `
+  --db var\tcpdiag.sqlite3 `
+  --config samples\session.json `
+  --events samples\events.json `
+  --snapshot-name baseline `
+  --reset
+
+# 3. 真实 127.0.0.1 TCP 回环对端会话
+python -m tcp_workbench.cli loopback `
+  --db var\loopback.sqlite3 `
+  --config samples\session.json `
+  --segments 7 `
+  --snapshot-name loopback `
+  --reset
+
+# 4. 无界面查看工作台模型；在 Windows 上去掉 --headless 打开 Tkinter
+python -m tcp_workbench.cli ui --db var\tcpdiag.sqlite3 --headless
+python -m tcp_workbench.cli ui --db var\tcpdiag.sqlite3
+
+# 5. 恢复检查
+python -m tcp_workbench.cli recover --db var\tcpdiag.sqlite3
+
+# 6. 全量重算复核
+python -m tcp_workbench.cli compare --db var\tcpdiag.sqlite3
+```
+
+一键无界面验收：
+
+```powershell
+python scripts\verify_acceptance.py
+python -m pytest -q
+```
+
+## 样本
+
+- `samples/session.json`：ISN、窗口上限、MSS、预算和拥塞参数。
+- `samples/peer_script.json`：ACK、重复 ACK、丢包、延迟 10 ms、乱序应答。
+- `samples/events.json`：20 条确定性事件，覆盖握手、慢启动、三次重复确认、快速重传、超时、Karn 排除和五个连接状态。
+- `samples/snapshots/*.json`：两个历史版本的快照种子；`seed-snapshots` 会重放事件后写入 SQLite。
+- `samples/versions/*`：配置版本 2 与脚本版本 2。
+- `samples/invalid/*`：强校验和 `E_SCRIPT` 注入样本。
+
+快照样本本身不是 SQLite 文件，而是可审计的种子描述。灌库命令：
+
+```powershell
+python -m tcp_workbench.cli seed-snapshots --db var\tcpdiag.sqlite3 --directory samples\snapshots
+```
+
+## 命令与业务码
+
+| 命令 | 作用 |
+| --- | --- |
+| `validate` | 加载并强校验配置/脚本，任何字段错误整体拒绝 |
+| `run` | 灌入事件脚本，增量推导，最后与全量重放逐项比较 |
+| `loopback` | 启动真实 `127.0.0.1` TCP 对端并把应答转成事件 |
+| `recover` | 重开账本，pending 事件标为 unknown，仅用完整事件恢复 |
+| `retry` | 按账本中保留并校验过的 unknown 事件载荷重新推导 |
+| `evolve` | 对单调递增的新配置/脚本版本整体替换结论集 |
+| `compare` | 检查当前逐项结论与全量重算是否完全一致 |
+| `snapshot save/list/verify/restore` | 快照保存、列表、逐事件重放校验、整集恢复 |
+| `seed-snapshots` | 导入历史版本快照样本 |
+| `ui` | Tkinter 工作台；`--headless` 输出稳定文本视图 |
+| `inject script/port/version` | 分别注入 `E_SCRIPT`、`E_PORT`、`E_VERSION` 并写结构化日志 |
+
+稳定业务码：`E_CONFIG`、`E_CONNECT`、`E_SCRIPT`、`E_PORT`、`E_VERSION`、`E_REPLAY`、`E_STATE`、`E_BUDGET`。命令行失败时 stderr 输出 JSON，同时追加 JSON-lines 到 `logs/tcpdiag.jsonl`（可用全局 `--log` 改变路径）。
+
+异常注入示例：
+
+```powershell
+python -m tcp_workbench.cli --log logs\inject.jsonl inject script `
+  --config samples\session.json --script samples\invalid\peer_script_corrupt.json
+
+python -m tcp_workbench.cli --log logs\inject.jsonl inject port `
+  --config samples\session.json --port 43177
+
+python -m tcp_workbench.cli --log logs\inject.jsonl inject version `
+  --db var\tcpdiag.sqlite3 --snapshot-id 1
+```
+
+## 界面内容
+
+Tkinter 工作台按固定顺序显示：
+
+1. 连接状态、拥塞窗口、慢启动阈值、重复确认计数、在途字节/段数、SRTT 与 RTO、当前 `C{config}/S{script}` 版本、恢复状态。
+2. 十项逐项结论：值、项目版本号、依据事件序号、本次是否受影响、配置/脚本版本、依赖事件序号。
+3. 快照列表：ID、名称、版本、事件数、内容摘要。
+4. 结构化日志末尾。
+
+按钮支持刷新、保存快照、校验所选快照、整集恢复快照和增量/全量比对。
+
+## 设计要点
+
+- **真值来源**：SQLite `events` 表；每条事件含载荷摘要，状态为 `pending/complete/unknown`。
+- **时钟**：生产使用 `time.monotonic_ns() // 1_000_000`；确定性样本使用受控的单调毫秒计数器，不使用墙钟。
+- **两阶段提交**：`begin_event` 先提交 pending，结论事务成功后再把事件改为 complete；强制终止后不会把半成品当完整事件。
+- **增量投影**：状态机先推进候选状态，再只物化实际变化项；未变化结论在数据库中不执行 UPDATE。
+- **RTT 定点**：缩放因子 8，除法向下截断；首次样本 `RTTVAR=SRTT/2`；RTO=`SRTT+4*RTTVAR` 并夹在配置上下界。重传段确认按 Karn 规则排除。
+- **版本防护**：内容摘要与版本号同时登记；相同内容禁止换版本，变更内容必须提高对应版本。
+- **整体替换**：旧结论复制进 `conclusion_history` 并固定 `stale=1`；当前表被新一轮完整结论集替换。
+- **快照重放**：快照保存当前结论、逐事件重放点、事件序列、配置/脚本原文与内容摘要；校验会逐个事件比较值、项目版本、依赖事件和配置/脚本版本。
+
+更细的依赖图、定点约定、事务时序和重放算法见 `docs/TECHNICAL.md`。实际运行结果见 `docs/VALIDATION.md`。
+
+## 测试
+
+```powershell
+python -m pytest -q
+```
+
+测试覆盖：配置聚合错误、脚本可达性、回环 ACK/重复 ACK/丢包/延迟/乱序、慢启动与拥塞避免、三次重复确认、超时回退、Karn、事件级增量/全量一致性、未受影响数据库行逐字节不变、版本替换与只读归档、真实子进程强制终止恢复、快照缺失版本、`E_REPLAY` 首差异定位、三类异常结构化日志、稳定 UI 渲染顺序。
+
+## 教学边界
+
+回环对端是运行在真实 TCP Socket 上的确定性应用层协议封装；连接与拥塞状态机、窗口推进与 RTT 估计由本工具显式模拟，不依赖操作系统内核的拥塞控制实现。脚本中的延迟使用本地睡眠模拟，乱序通过把 `reorder=true` 的应答推迟到同批末尾实现，因此行为可重复、可审计。

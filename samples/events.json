@@ -1,0 +1,26 @@
+{
+  "description": "Deterministic teaching trace: handshake, slow start, triple duplicate ACK, timeout, Karn exclusion, close.",
+  "events": [
+    {"event_type": "SYN", "recorded_mono_ms": 0, "seq": 1000},
+    {"event_type": "SYN_ACK", "recorded_mono_ms": 5, "seq": 1000, "ack_seq": 1001},
+    {"event_type": "SEND", "recorded_mono_ms": 10, "seq": 1001, "payload_bytes": 1000},
+    {"event_type": "SEND", "recorded_mono_ms": 11, "seq": 2001, "payload_bytes": 1000},
+    {"event_type": "ACK", "recorded_mono_ms": 20, "ack_seq": 2001, "rtt_sample_ms": 10},
+    {"event_type": "SEND", "recorded_mono_ms": 21, "seq": 3001, "payload_bytes": 1000},
+    {"event_type": "DUP_ACK", "recorded_mono_ms": 30, "ack_seq": 2001},
+    {"event_type": "DUP_ACK", "recorded_mono_ms": 31, "ack_seq": 2001},
+    {"event_type": "DUP_ACK", "recorded_mono_ms": 32, "ack_seq": 2001},
+    {"event_type": "ACK", "recorded_mono_ms": 40, "ack_seq": 3001, "rtt_sample_ms": 12},
+    {"event_type": "SEND", "recorded_mono_ms": 41, "seq": 4001, "payload_bytes": 1000},
+    {"event_type": "TIMEOUT", "recorded_mono_ms": 60, "seq": 3001},
+    {"event_type": "SEND", "recorded_mono_ms": 61, "seq": 3001, "payload_bytes": 1000, "retransmitted": true},
+    {"event_type": "ACK", "recorded_mono_ms": 70, "ack_seq": 4001, "rtt_sample_ms": 100},
+    {"event_type": "SEND", "recorded_mono_ms": 71, "seq": 5001, "payload_bytes": 1000},
+    {"event_type": "ACK", "recorded_mono_ms": 80, "ack_seq": 5001, "rtt_sample_ms": 9},
+    {"event_type": "SEND", "recorded_mono_ms": 81, "seq": 6001, "payload_bytes": 1000},
+    {"event_type": "FIN", "recorded_mono_ms": 90, "seq": 7001},
+    {"event_type": "PEER_FIN", "recorded_mono_ms": 91, "seq": 7001},
+    {"event_type": "CLOSE", "recorded_mono_ms": 92, "seq": 7001}
+  ]
+}
+

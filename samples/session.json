@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "config_version": 1,
+  "session_id": "loopback-teaching-v1",
+  "initial_seq": 1000,
+  "window_limit": 16000,
+  "mss": 1000,
+  "peer_script": "peer_script.json",
+  "budget": {
+    "max_events": 64,
+    "max_sent_bytes": 12000,
+    "max_elapsed_ms": 60000
+  },
+  "congestion": {
+    "initial_cwnd_mss": 4,
+    "initial_ssthresh_bytes": 8000,
+    "rtt_scale": 8,
+    "initial_rto_ms": 1000,
+    "min_rto_ms": 200,
+    "max_rto_ms": 8000
+  }
+}
+

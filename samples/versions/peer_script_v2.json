@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "script_version": 2,
+  "default_policy": "ack",
+  "default_delay_ms": 2,
+  "responses": [
+    {"for_seq": 1001, "action": "ack", "ack_seq": 2001, "delay_ms": 0, "reorder": false},
+    {"for_seq": 2001, "action": "ack", "ack_seq": 3001, "delay_ms": 0, "reorder": false},
+    {"for_seq": 3001, "action": "dupack", "ack_seq": 2001, "delay_ms": 0, "reorder": false},
+    {"for_seq": 4001, "action": "dupack", "ack_seq": 2001, "delay_ms": 0, "reorder": false},
+    {"for_seq": 5001, "action": "dupack", "ack_seq": 2001, "delay_ms": 0, "reorder": false},
+    {"for_seq": 6001, "action": "ack", "ack_seq": 7001, "delay_ms": 4, "reorder": true},
+    {"for_seq": 7001, "action": "ack", "ack_seq": 8001, "delay_ms": 10, "reorder": false},
+    {"for_seq": 8001, "action": "ack", "ack_seq": 9001, "delay_ms": 0, "reorder": false}
+  ]
+}
+
