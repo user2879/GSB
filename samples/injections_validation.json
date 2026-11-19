@@ -1,0 +1,21 @@
+{
+  "injections": [
+    {
+      "enabled": true,
+      "injection_id": "INJ-AUDIO-001",
+      "kind": "corrupt_format",
+      "message": "truncate RIFF payload before parsing",
+      "stage": "extract",
+      "turn_id": "t0004"
+    },
+    {
+      "enabled": true,
+      "injection_id": "INJ-CAL-001",
+      "kind": "force_exception",
+      "message": "deterministic calibration fault",
+      "stage": "calibration",
+      "turn_id": "t0006"
+    }
+  ],
+  "schema_version": 1
+}

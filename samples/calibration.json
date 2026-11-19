@@ -1,0 +1,140 @@
+{
+  "attribution": {
+    "max_gap_turns": 1,
+    "min_segment_ms": 180.0,
+    "min_silence_ms": 220.0,
+    "score_weights": {
+      "emotion_affinity": 0.28,
+      "pitch_match": 0.3,
+      "script_prior": 0.42
+    },
+    "speaker_profiles": {
+      "spk_a": {
+        "emotion_affinity": {
+          "angry": 0.72,
+          "happy": 0.1,
+          "neutral": 0.46,
+          "sad": 0.3
+        },
+        "pitch_center_hz": 123.0,
+        "pitch_tolerance_hz": 42.0
+      },
+      "spk_b": {
+        "emotion_affinity": {
+          "angry": 0.22,
+          "happy": 0.84,
+          "neutral": 0.31,
+          "sad": 0.4
+        },
+        "pitch_center_hz": 211.0,
+        "pitch_tolerance_hz": 48.0
+      },
+      "spk_c": {
+        "emotion_affinity": {
+          "angry": 0.18,
+          "happy": 0.24,
+          "neutral": 0.66,
+          "sad": 0.62
+        },
+        "pitch_center_hz": 165.0,
+        "pitch_tolerance_hz": 37.0
+      }
+    }
+  },
+  "batch_budget": 3,
+  "calibration": {
+    "decay": 0.81,
+    "different_speaker_factor": 0.73,
+    "gain": 0.37,
+    "same_speaker_factor": 1.0,
+    "speaker_switch_penalty": 0.04
+  },
+  "concurrency": 4,
+  "evidence": {
+    "emotions": [
+      "angry",
+      "happy",
+      "neutral",
+      "sad"
+    ],
+    "feature_ranges": {
+      "energy_dynamic": [
+        2.0,
+        32.0
+      ],
+      "energy_mean": [
+        -40.0,
+        -12.0
+      ],
+      "f0_mean": [
+        80.0,
+        300.0
+      ],
+      "f0_std": [
+        0.0,
+        55.0
+      ],
+      "rhythm_variability": [
+        0.0,
+        1.5
+      ],
+      "speech_rate": [
+        1.5,
+        7.0
+      ]
+    },
+    "initial_weights": {
+      "angry": {
+        "energy_dynamic": 0.2,
+        "energy_mean": 0.28,
+        "f0_mean": 0.03,
+        "f0_std": 0.36,
+        "rhythm_variability": 0.05,
+        "speech_rate": 0.08
+      },
+      "happy": {
+        "energy_dynamic": 0.1,
+        "energy_mean": 0.24,
+        "f0_mean": 0.31,
+        "f0_std": 0.1,
+        "rhythm_variability": 0.06,
+        "speech_rate": 0.19
+      },
+      "neutral": {
+        "energy_dynamic": 0.04,
+        "energy_mean": 0.09,
+        "f0_mean": 0.05,
+        "f0_std": 0.08,
+        "rhythm_variability": 0.65,
+        "speech_rate": 0.09
+      },
+      "sad": {
+        "energy_dynamic": 0.27,
+        "energy_mean": 0.05,
+        "f0_mean": 0.02,
+        "f0_std": 0.04,
+        "rhythm_variability": 0.58,
+        "speech_rate": 0.04
+      }
+    },
+    "normalization": "stable_softmax"
+  },
+  "fixed_point": {
+    "bit_width": 32,
+    "decimal_places": 6,
+    "quantization_levels": 10001
+  },
+  "frame": {
+    "length_ms": 32,
+    "min_onset_gap_ms": 70,
+    "onset_margin_db": 7.0,
+    "pitch_max_hz": 360,
+    "pitch_min_hz": 70,
+    "sample_rate": 16000,
+    "shift_ms": 16,
+    "silence_floor_dbfs": -52.0,
+    "voiced_correlation": 0.52
+  },
+  "schema_version": 1,
+  "snapshot_commit_interval": 2
+}

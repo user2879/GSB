@@ -1,0 +1,30 @@
+{
+  "codes": {
+    "E_AUDIO_FORMAT": "RIFF/WAVE container is syntactically invalid or not 16 kHz mono 16-bit PCM.",
+    "E_AUDIO_MISSING": "A referenced audio file is absent.",
+    "E_CALIB_BUDGET_PENDING": "The per-batch turn budget was exhausted; unresolved turns remain queued.",
+    "E_CONFIG_INVALID": "Calibration or injection configuration is invalid.",
+    "E_CONFIG_MISMATCH": "Snapshot version or base configuration hash does not match the runtime.",
+    "E_DIALOGUE_INVALID": "Dialogue schema or turn linkage is invalid.",
+    "E_EDIT_INVALID": "An edit command is malformed or cannot be applied.",
+    "E_INJECTED_FAULT": "An enabled deterministic injection fault was raised.",
+    "E_INTERNAL": "An unexpected stage exception was isolated and reported.",
+    "E_SEGMENT_TOO_SHORT": "A segment violates attribution.min_segment_ms.",
+    "E_SNAPSHOT_INVALID": "Snapshot files are missing or unreadable."
+  },
+  "injection_expectations": [
+    {
+      "expected_code": "E_AUDIO_FORMAT",
+      "injection_id": "INJ-AUDIO-001",
+      "stage": "extract",
+      "turn_id": "t0004"
+    },
+    {
+      "expected_code": "E_INJECTED_FAULT",
+      "injection_id": "INJ-CAL-001",
+      "stage": "calibration",
+      "turn_id": "t0006"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,128 @@
+{
+  "final_failure_count": 0,
+  "final_ledger_digest": "00de3df1c637b6cfe16a71d7b850f561490145165efcd605d0eca8e87d87a088",
+  "final_trajectory_count": 9,
+  "final_turn_count": 9,
+  "first_pending_code_observed": "E_CALIB_BUDGET_PENDING",
+  "full_report_business_codes": [],
+  "incremental_iterations": 4,
+  "incremental_vs_full": {
+    "attribution.json": {
+      "equal": true,
+      "full_sha256": "c8e028e31c5be21bc3d57ef323e0c0b5dbe097d54d602fd92c8ed4b613ad5b46",
+      "incremental_sha256": "c8e028e31c5be21bc3d57ef323e0c0b5dbe097d54d602fd92c8ed4b613ad5b46"
+    },
+    "calibration.json": {
+      "equal": true,
+      "full_sha256": "7f5edd2c8177469403fd47f3acfa80bcff16a738022d5d8971479a93f74d10b5",
+      "incremental_sha256": "7f5edd2c8177469403fd47f3acfa80bcff16a738022d5d8971479a93f74d10b5"
+    },
+    "calibration_ledger.json": {
+      "equal": true,
+      "full_sha256": "58fde2263d4b15aab82899a9e9d76806e2f6beae6d3f25d23e9cf08b31885034",
+      "incremental_sha256": "58fde2263d4b15aab82899a9e9d76806e2f6beae6d3f25d23e9cf08b31885034"
+    },
+    "failures.json": {
+      "equal": true,
+      "full_sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+      "incremental_sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    "initial_evidence.json": {
+      "equal": true,
+      "full_sha256": "d3f16eb894dfa832abfc0fd92e3360a3d07c4b80dee3c87fd0c6c2942a08d96a",
+      "incremental_sha256": "d3f16eb894dfa832abfc0fd92e3360a3d07c4b80dee3c87fd0c6c2942a08d96a"
+    }
+  },
+  "incremental_vs_full_equal": true,
+  "injected_turns_excluded_from_trajectories": true,
+  "injection_expectations_met": true,
+  "injection_failures": [
+    {
+      "code": "E_AUDIO_FORMAT",
+      "details": {
+        "file": "/home/zsl/feedback/uidfc5909d3-default-319/samples/audio/t0004.wav",
+        "file_size": 35563,
+        "riff_size": 35556
+      },
+      "exception_type": "VoicecalError",
+      "file": "audio/t0004.wav",
+      "injection_id": "INJ-AUDIO-001",
+      "message": "RIFF chunk size does not match file length",
+      "stage": "extract",
+      "turn_id": "t0004",
+      "turn_index": 4
+    },
+    {
+      "code": "E_INJECTED_FAULT",
+      "details": {
+        "injection_id": "INJ-CAL-001",
+        "stage": "calibration"
+      },
+      "exception_type": "VoicecalError",
+      "file": "audio/t0006.wav",
+      "injection_id": "INJ-CAL-001",
+      "message": "deterministic calibration fault",
+      "stage": "calibration",
+      "turn_id": "t0006",
+      "turn_index": 6
+    }
+  ],
+  "injection_hits": [
+    {
+      "batch_id": "no-pending-batch",
+      "business_code": "E_AUDIO_FORMAT",
+      "injection_id": "INJ-AUDIO-001",
+      "kind": "corrupt_format",
+      "outcome": "failed",
+      "stage": "extract",
+      "turn_id": "t0004",
+      "turn_index": 4
+    },
+    {
+      "batch_id": "no-pending-batch",
+      "business_code": "E_INJECTED_FAULT",
+      "injection_id": "INJ-CAL-001",
+      "kind": "force_exception",
+      "outcome": "failed",
+      "stage": "calibration",
+      "turn_id": "t0006",
+      "turn_index": 6
+    }
+  ],
+  "max_reuse_counts_observed": {
+    "attribution": 11,
+    "calibration": 11,
+    "extract": 14,
+    "initial": 14
+  },
+  "schema_version": 1,
+  "serial_report_business_codes": [],
+  "serial_vs_parallel": {
+    "attribution.json": {
+      "equal": true,
+      "parallel_sha256": "c8e028e31c5be21bc3d57ef323e0c0b5dbe097d54d602fd92c8ed4b613ad5b46",
+      "serial_sha256": "c8e028e31c5be21bc3d57ef323e0c0b5dbe097d54d602fd92c8ed4b613ad5b46"
+    },
+    "calibration.json": {
+      "equal": true,
+      "parallel_sha256": "7f5edd2c8177469403fd47f3acfa80bcff16a738022d5d8971479a93f74d10b5",
+      "serial_sha256": "7f5edd2c8177469403fd47f3acfa80bcff16a738022d5d8971479a93f74d10b5"
+    },
+    "calibration_ledger.json": {
+      "equal": true,
+      "parallel_sha256": "58fde2263d4b15aab82899a9e9d76806e2f6beae6d3f25d23e9cf08b31885034",
+      "serial_sha256": "58fde2263d4b15aab82899a9e9d76806e2f6beae6d3f25d23e9cf08b31885034"
+    },
+    "failures.json": {
+      "equal": true,
+      "parallel_sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267",
+      "serial_sha256": "ec8775bba264d292a59f32a33ce6f81966028721251847035c52d6a59ee6f267"
+    },
+    "initial_evidence.json": {
+      "equal": true,
+      "parallel_sha256": "d3f16eb894dfa832abfc0fd92e3360a3d07c4b80dee3c87fd0c6c2942a08d96a",
+      "serial_sha256": "d3f16eb894dfa832abfc0fd92e3360a3d07c4b80dee3c87fd0c6c2942a08d96a"
+    }
+  },
+  "serial_vs_parallel_equal": true
+}

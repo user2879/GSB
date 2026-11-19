@@ -1,0 +1,55 @@
+{
+  "batches": [
+    {
+      "batch_id": "round-1-audio-and-gain",
+      "commands": [
+        {
+          "audio": "replacements/t0003_v2.wav",
+          "op": "replace_audio",
+          "turn_id": "t0003"
+        },
+        {
+          "gain": 0.52,
+          "op": "adjust_gain",
+          "turn_id": "t0005"
+        }
+      ]
+    },
+    {
+      "batch_id": "round-2-speaker-and-structure",
+      "commands": [
+        {
+          "op": "modify_speaker",
+          "speaker_candidates": [
+            "spk_b",
+            "spk_c"
+          ],
+          "speaker_id": "spk_b",
+          "turn_id": "t0006"
+        },
+        {
+          "op": "delete_turn",
+          "turn_id": "t0007"
+        },
+        {
+          "op": "append_turn",
+          "turn": {
+            "audio": "audio/t0010.wav",
+            "conversation_id": "conv-b",
+            "gap_ms": 210.0,
+            "link_type": "continuation",
+            "previous_turn_id": "t0009",
+            "speaker_candidates": [
+              "spk_c",
+              "spk_a"
+            ],
+            "speaker_id": "spk_c",
+            "turn_id": "t0010",
+            "turn_index": 10
+          }
+        }
+      ]
+    }
+  ],
+  "schema_version": 1
+}
