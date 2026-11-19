@@ -1,0 +1,38 @@
+{
+  "script_version": 1,
+  "declaration_version": 7,
+  "expect_complete": true,
+  "description": "Structurally valid script prefix whose logical sequence is truncated before stream completion.",
+  "events": [
+    {
+      "event": "recv",
+      "frame": {
+        "type": "SETTINGS",
+        "stream_id": 0,
+        "settings": [
+          {"id": 3, "value": 3},
+          {"id": 4, "value": 18000},
+          {"id": 5, "value": 16384}
+        ]
+      }
+    },
+    {
+      "event": "recv",
+      "frame": {"type": "SETTINGS", "stream_id": 0, "flags": ["ACK"]}
+    },
+    {
+      "event": "schedule",
+      "label": "send until the initial windows are exhausted",
+      "max_frames": 12
+    },
+    {
+      "event": "recv",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 0, "increment": 30000}
+    },
+    {
+      "event": "schedule",
+      "label": "script ends before stream lifetime completion",
+      "max_frames": 20
+    }
+  ]
+}

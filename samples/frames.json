@@ -1,0 +1,177 @@
+{
+  "script_version": 1,
+  "declaration_version": 7,
+  "expect_complete": true,
+  "description": "Deterministic receive order mixed with scheduling rounds. The session is fully offline.",
+  "events": [
+    {
+      "event": "recv",
+      "label": "peer settings: initial window 18000, concurrency 3, frame 16384",
+      "frame": {
+        "type": "SETTINGS",
+        "stream_id": 0,
+        "settings": [
+          {"id": 3, "value": 3},
+          {"id": 4, "value": 18000},
+          {"id": 5, "value": 16384}
+        ]
+      }
+    },
+    {
+      "event": "recv",
+      "label": "peer acknowledges client settings",
+      "frame": {
+        "type": "SETTINGS",
+        "stream_id": 0,
+        "flags": ["ACK"]
+      }
+    },
+    {
+      "event": "schedule",
+      "label": "open three streams and exhaust connection window",
+      "max_frames": 12
+    },
+    {
+      "event": "recv",
+      "label": "connection window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 0, "increment": 30000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 1 window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 1, "increment": 14000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 3 window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 3, "increment": 14000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 5 window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 5, "increment": 14000}
+    },
+    {
+      "event": "schedule",
+      "label": "continue weighted scheduling while stream 7 and 9 wait",
+      "max_frames": 20
+    },
+    {
+      "event": "recv",
+      "label": "stream 5 priority changes to parent 1, weight 40",
+      "frame": {
+        "type": "HEADERS",
+        "stream_id": 5,
+        "flags": ["END_HEADERS", "PRIORITY"],
+        "headers": [],
+        "priority": {"depends_on": 1, "weight": 40, "exclusive": false}
+      }
+    },
+    {
+      "event": "recv",
+      "label": "connection window update after reprioritization",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 0, "increment": 30000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 3 window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 3, "increment": 14000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 5 window update",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 5, "increment": 14000}
+    },
+    {
+      "event": "schedule",
+      "label": "finish active streams; queued stream 9 waits for a slot",
+      "max_frames": 30
+    },
+    {
+      "event": "recv",
+      "label": "reset parent stream 3; child 7 reattaches to root",
+      "frame": {"type": "RST_STREAM", "stream_id": 3, "error_code": 8}
+    },
+    {
+      "event": "recv",
+      "label": "stream 5 response body with END_STREAM",
+      "frame": {
+        "type": "DATA",
+        "stream_id": 5,
+        "flags": ["END_STREAM"],
+        "data": {"repeat": {"byte": 122, "length": 300}}
+      }
+    },
+    {
+      "event": "schedule",
+      "label": "open stream 7 in isolation after stream 3 released a slot",
+      "max_frames": 1
+    },
+    {
+      "event": "recv",
+      "label": "stream 7 response completes before local DATA",
+      "frame": {
+        "type": "HEADERS",
+        "stream_id": 7,
+        "flags": ["END_STREAM", "END_HEADERS"],
+        "headers": [{"index": 8}]
+      }
+    },
+    {
+      "event": "recv",
+      "label": "stream 7 window update while only the remote side is closed",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 7, "increment": 14000}
+    },
+    {
+      "event": "schedule",
+      "label": "open stream 9 and finish stream 7 with a local END_STREAM",
+      "max_frames": 20
+    },
+    {
+      "event": "recv",
+      "label": "stream 9 window update after it opens",
+      "frame": {"type": "WINDOW_UPDATE", "stream_id": 9, "increment": 14000}
+    },
+    {
+      "event": "recv",
+      "label": "stream 9 response complete",
+      "frame": {
+        "type": "HEADERS",
+        "stream_id": 9,
+        "flags": ["END_STREAM", "END_HEADERS"],
+        "headers": [{"index": 8}]
+      }
+    },
+    {
+      "event": "recv",
+      "label": "stream 1 response completes after holding a concurrency slot",
+      "frame": {
+        "type": "HEADERS",
+        "stream_id": 1,
+        "flags": ["END_STREAM", "END_HEADERS"],
+        "headers": [{"index": 8}]
+      }
+    },
+    {
+      "event": "recv",
+      "label": "closed stream receives DATA; audit E_STREAM without state mutation",
+      "frame": {
+        "type": "DATA",
+        "stream_id": 1,
+        "flags": [],
+        "data": {"repeat": {"byte": 65, "length": 16}}
+      }
+    },
+    {
+      "event": "recv",
+      "label": "graceful GOAWAY",
+      "frame": {
+        "type": "GOAWAY",
+        "stream_id": 0,
+        "last_stream_id": 9,
+        "error_code": 0,
+        "debug": "offline-demo-complete"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "h2mux-state-lab"
+version = "1.0.0"
+description = "Deterministic offline HTTP/2 multiplexing state and replay verifier"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+h2mux-demo = "h2mux.demo:main"
+h2mux-gui = "h2mux.gui:main"
+h2mux-cli = "h2mux.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["h2mux*"]

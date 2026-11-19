@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "declaration_version": 7,
+  "client": {
+    "connection_window": 32768,
+    "stream_window": 12000
+  },
+  "server": {
+    "connection_window": 50000,
+    "stream_window": 18000
+  },
+  "max_concurrent_streams": 3,
+  "max_frame_size": 16384,
+  "requests": [
+    {
+      "stream_id": 1,
+      "weight": 32,
+      "parent_id": 0,
+      "body_bytes": 30000
+    },
+    {
+      "stream_id": 3,
+      "weight": 16,
+      "parent_id": 0,
+      "body_bytes": 24000
+    },
+    {
+      "stream_id": 5,
+      "weight": 24,
+      "parent_id": 0,
+      "body_bytes": 18000
+    },
+    {
+      "stream_id": 7,
+      "weight": 8,
+      "parent_id": 3,
+      "body_bytes": 12000
+    },
+    {
+      "stream_id": 9,
+      "weight": 12,
+      "parent_id": 0,
+      "body_bytes": 7000
+    }
+  ]
+}
