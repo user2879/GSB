@@ -1,0 +1,50 @@
+{
+  "batches": [
+    {
+      "change_count": 8,
+      "command": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id incremental",
+      "description": "mixed key migrations, deletes and inserts in one atomic batch",
+      "id": "incremental"
+    },
+    {
+      "change_count": 4,
+      "command": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id stale",
+      "description": "additional migrations and a delete for ledger/recovery checks",
+      "id": "stale"
+    },
+    {
+      "change_count": 4,
+      "command": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id isolation",
+      "description": "apply with --retain-stale to exercise query-time stale isolation",
+      "id": "isolation"
+    }
+  ],
+  "collection": "orders",
+  "collection_version": 7,
+  "command_templates": {
+    "bound_fault": "python -m docdb_index inject --session sessions/demo --collection orders --index metrics.amount --type bound",
+    "diagnose": "python -m docdb_index diagnose --session sessions/demo --collection orders --index metrics.amount",
+    "gui": "python -m docdb_index gui --session sessions/demo --collection orders --index metrics.amount",
+    "init": "python -m docdb_index init --session sessions/demo --input samples/collections.json --reset",
+    "ledger_fault": "python -m docdb_index inject --session sessions/demo --collection orders --index metrics.amount --type ledger",
+    "normal_incremental": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id incremental --batch-size 2",
+    "query_equality": "python -m docdb_index query --session sessions/demo --collection orders --index metrics.amount --eq 42",
+    "query_range": "python -m docdb_index query --session sessions/demo --collection orders --index metrics.amount --range 0 100 --offset 0 --limit 10",
+    "reclaim": "python -m docdb_index reclaim --session sessions/demo --collection orders",
+    "replay": "python -m docdb_index replay --session sessions/demo",
+    "segment_fault": "python -m docdb_index inject --session sessions/demo --collection orders --index metrics.amount --type segment",
+    "snapshot_create": "python -m docdb_index snapshot create --session sessions/demo --label snap-000001",
+    "snapshot_list": "python -m docdb_index snapshot list --session sessions/demo",
+    "snapshot_restore": "python -m docdb_index snapshot restore --session sessions/demo --snapshot snap-000001",
+    "stale_history": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id stale --batch-size 1",
+    "stale_window": "python -m docdb_index apply --session sessions/demo --input samples/changes.json --batch-id isolation --retain-stale",
+    "verify": "python -m docdb_index verify --session sessions/demo"
+  },
+  "document_count": 48,
+  "expected_initial_segments": 10,
+  "index_path": "metrics.amount",
+  "primary_key": "id",
+  "scale": 48,
+  "seed": 20261120,
+  "segment_capacity": 5
+}

@@ -1,0 +1,161 @@
+{
+  "batches": [
+    {
+      "changes": [
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000001",
+          "value": 971
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000007",
+          "value": 972
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000013",
+          "value": -7
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000021",
+          "value": 973
+        },
+        {
+          "op": "delete",
+          "pk": "doc-000002"
+        },
+        {
+          "op": "delete",
+          "pk": "doc-000030"
+        },
+        {
+          "document": {
+            "attributes": {
+              "active": true,
+              "priority": 1
+            },
+            "customer": {
+              "region": "north",
+              "segment": 1
+            },
+            "id": "ins-000001",
+            "metrics": {
+              "amount": 974,
+              "latency_ms": 23
+            },
+            "tags": [
+              "t1",
+              "bucket-1"
+            ]
+          },
+          "op": "insert"
+        },
+        {
+          "document": {
+            "attributes": {
+              "active": true,
+              "priority": 2
+            },
+            "customer": {
+              "region": "south",
+              "segment": 2
+            },
+            "id": "ins-000002",
+            "metrics": {
+              "amount": 975,
+              "latency_ms": 36
+            },
+            "tags": [
+              "t2",
+              "bucket-2"
+            ]
+          },
+          "op": "insert"
+        }
+      ],
+      "description": "mixed key migrations, deletes and inserts in one atomic batch",
+      "id": "incremental"
+    },
+    {
+      "changes": [
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000003",
+          "value": 1441
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000009",
+          "value": 3
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000033",
+          "value": 1442
+        },
+        {
+          "op": "delete",
+          "pk": "doc-000040"
+        }
+      ],
+      "description": "additional migrations and a delete for ledger/recovery checks",
+      "id": "stale"
+    },
+    {
+      "changes": [
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000004",
+          "value": 1921
+        },
+        {
+          "op": "set_path",
+          "path": "metrics.amount",
+          "pk": "doc-000010",
+          "value": 1922
+        },
+        {
+          "op": "delete",
+          "pk": "doc-000044"
+        },
+        {
+          "document": {
+            "attributes": {
+              "active": true,
+              "priority": 3
+            },
+            "customer": {
+              "region": "west",
+              "segment": 3
+            },
+            "id": "ins-000003",
+            "metrics": {
+              "amount": 1923,
+              "latency_ms": 49
+            },
+            "tags": [
+              "t0",
+              "bucket-3"
+            ]
+          },
+          "op": "insert"
+        }
+      ],
+      "description": "apply with --retain-stale to exercise query-time stale isolation",
+      "id": "isolation"
+    }
+  ],
+  "collection": "orders",
+  "index_path": "metrics.amount",
+  "primary_key": "id"
+}
