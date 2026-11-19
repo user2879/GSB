@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "incremental-diffrender"
+version = "0.1.0"
+description = "Deterministic incremental differentiable soft rasterizer with dependency-aware caching"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+diffrender-demo = "diffrender.demo:main"
+
+[tool.setuptools.packages.find]
+include = ["diffrender*"]
+
