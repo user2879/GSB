@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dns-local-workbench"
+version = "1.0.0"
+description = "Deterministic loopback DNS authority, TTL cache, upstream validator and snapshot workbench"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["dnslib==0.9.26", "pytest>=9.2,<10"]
+
+[project.scripts]
+dns-local = "dns_local.cli:main"
+dns-local-gui = "dns_local.gui:main"
+dns-local-upstream = "dns_local.upstream:main"
+
+[tool.setuptools.packages.find]
+include = ["dns_local*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

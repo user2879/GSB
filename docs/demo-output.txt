@@ -1,0 +1,34 @@
+START zone_version=1 listeners=loopback clock=dns_local.clock.FakeClock
+SCENARIO 1 cold-start-local
+QUERY scenario=cold-start-local id=0x4101 transport=udp name=www.lab.test. type=A rcode=NOERROR code=OK cache=MISS source=ZONE serial=1 ttl=120 basis=exact truncated=false answers=www.lab.test.|A|120|192.0.2.10 authority=-
+QUERY scenario=cold-start-local id=0x4102 transport=udp name=www.lab.test. type=A rcode=NOERROR code=OK cache=HIT source=ZONE serial=1 ttl=120 basis=exact truncated=false answers=www.lab.test.|A|120|192.0.2.10 authority=-
+QUERY scenario=cold-start-local id=0x4103 transport=tcp name=alias.lab.test. type=A rcode=NOERROR code=OK cache=MISS source=ZONE serial=1 ttl=120 basis=cname_hops=1 truncated=false answers=alias.lab.test.|CNAME|180|www.lab.test.;www.lab.test.|A|120|192.0.2.10 authority=-
+QUERY scenario=cold-start-local id=0x4104 transport=udp name=anything.wild.lab.test. type=A rcode=NOERROR code=OK cache=MISS source=ZONE serial=1 ttl=90 basis=wildcard truncated=false answers=anything.wild.lab.test.|A|90|192.0.2.99 authority=-
+QUERY scenario=cold-start-local id=0x4105 transport=udp name=missing.lab.test. type=A rcode=NXDOMAIN code=OK cache=MISS source=NEGATIVE serial=1 ttl=20 basis=negative-nxdomain truncated=false answers=- authority=lab.test.|SOA|20|ns1.lab.test. hostmaster.lab.test. 1 60 300 600 60
+QUERY scenario=cold-start-local id=0x4106 transport=udp name=nodata.lab.test. type=A rcode=NOERROR code=OK cache=MISS source=NEGATIVE serial=1 ttl=20 basis=negative-nodata truncated=false answers=- authority=lab.test.|SOA|20|ns1.lab.test. hostmaster.lab.test. 1 60 300 600 60
+SUMMARY scenario=cold-start-local queries=6 codes=OK:6 cache=HIT:1,MISS:5,ERROR:0
+SCENARIO 2 upstream-version-change
+QUERY scenario=upstream-version-change id=0x4107 transport=udp name=api.upstream.test. type=A rcode=NOERROR code=OK cache=MISS source=UPSTREAM serial=1 ttl=45 basis=exact truncated=false answers=api.upstream.test.|CNAME|45|node1.upstream.test.;node1.upstream.test.|A|45|198.51.100.11 authority=upstream.test.|SOA|60|ns1.upstream.test. hostmaster.upstream.test. 1 30 60 300 30
+QUERY scenario=upstream-version-change id=0x4108 transport=udp name=api.upstream.test. type=A rcode=NOERROR code=OK cache=HIT source=UPSTREAM serial=1 ttl=45 basis=exact truncated=false answers=api.upstream.test.|CNAME|45|node1.upstream.test.;node1.upstream.test.|A|45|198.51.100.11 authority=upstream.test.|SOA|60|ns1.upstream.test. hostmaster.upstream.test. 1 30 60 300 30
+UPSTREAM_SWITCH previous=1 current=2 invalidated=1
+QUERY scenario=upstream-version-change id=0x4109 transport=udp name=api.upstream.test. type=A rcode=NOERROR code=OK cache=MISS source=UPSTREAM serial=2 ttl=90 basis=exact truncated=false answers=api.upstream.test.|CNAME|90|node2.upstream.test.;node2.upstream.test.|A|90|198.51.100.22 authority=upstream.test.|SOA|60|ns1.upstream.test. hostmaster.upstream.test. 2 30 60 300 30
+QUERY scenario=upstream-version-change id=0x410a transport=udp name=conflict.upstream.test. type=A rcode=NOERROR code=OK cache=MISS source=UPSTREAM serial=2 ttl=90 basis=local-authority-wins truncated=false answers=conflict.upstream.test.|CNAME|90|www.lab.test.;www.lab.test.|A|120|192.0.2.10 authority=-
+QUERY scenario=upstream-version-change id=0x410b transport=tcp name=multi.upstream.test. type=A rcode=NOERROR code=OK cache=MISS source=UPSTREAM serial=2 ttl=90 basis=exact truncated=false answers=multi.upstream.test.|CNAME|90|mid.upstream.test.;mid.upstream.test.|CNAME|90|node2.upstream.test.;node2.upstream.test.|A|90|198.51.100.22 authority=upstream.test.|SOA|60|ns1.upstream.test. hostmaster.upstream.test. 2 30 60 300 30
+SUMMARY scenario=upstream-version-change queries=5 codes=OK:5 cache=HIT:1,MISS:4,ERROR:0
+SCENARIO 3 snapshot-save-restore
+QUERY scenario=snapshot-save-restore id=0x410c transport=udp name=www.lab.test. type=A rcode=NOERROR code=OK cache=HIT source=ZONE serial=1 ttl=117 basis=exact truncated=false answers=www.lab.test.|A|117|192.0.2.10 authority=-
+SNAPSHOT_SAVE id=0001-demo revision=1 zone_version=1 entries=8 readonly=true
+ZONE_RELOAD version=2 changed=true cache=cleared
+QUERY scenario=snapshot-save-restore id=0x410d transport=udp name=www.lab.test. type=A rcode=NOERROR code=OK cache=MISS source=ZONE serial=2 ttl=240 basis=exact truncated=false answers=www.lab.test.|A|240|192.0.2.20 authority=-
+QUERY scenario=snapshot-save-restore id=0x410e transport=udp name=v6.lab.test. type=AAAA rcode=NOERROR code=OK cache=MISS source=ZONE serial=2 ttl=240 basis=exact truncated=false answers=v6.lab.test.|AAAA|240|2001:db8::20 authority=-
+SNAPSHOT_SAVE id=0002-demo revision=2 zone_version=2 entries=2 readonly=true
+SNAPSHOT_LIST count=2 items=0001-demo:rev1:zone1,0002-demo:rev2:zone2
+QUERY scenario=snapshot-save-restore id=0x410f transport=udp name=v6.lab.test. type=AAAA rcode=NOERROR code=OK cache=MISS source=ZONE serial=2 ttl=240 basis=exact truncated=false answers=v6.lab.test.|AAAA|240|2001:db8::20 authority=-
+SNAPSHOT_COMPARE id=0001-demo status=MISMATCH snapshot_zone=1 current_zone=2 snapshot_upstream=2 current_upstream=0 differences=12
+SNAPSHOT_RESTORE id=0001-demo status=MISMATCH mode=whole entries=8 zone_version=1
+CACHE_AFTER_RESTORE entries=8 contains_v2_v6=false keys=alias.lab.test.|A|CLASS1,anything.wild.lab.test.|A|CLASS1,api.upstream.test.|A|CLASS1,conflict.upstream.test.|A|CLASS1,missing.lab.test.|A|CLASS1,multi.upstream.test.|A|CLASS1,nodata.lab.test.|A|CLASS1,www.lab.test.|A|CLASS1
+QUERY scenario=snapshot-save-restore id=0x4110 transport=udp name=www.lab.test. type=A rcode=NOERROR code=OK cache=HIT source=ZONE serial=1 ttl=117 basis=exact truncated=false answers=www.lab.test.|A|117|192.0.2.10 authority=-
+QUERY scenario=snapshot-save-restore id=0x4111 transport=udp name=v6.lab.test. type=AAAA rcode=NOERROR code=OK cache=MISS source=ZONE serial=1 ttl=240 basis=exact truncated=false answers=v6.lab.test.|AAAA|240|2001:db8::20 authority=-
+QUERY scenario=snapshot-save-restore id=0x4112 transport=udp name=api.upstream.test. type=A rcode=NOERROR code=OK cache=HIT source=UPSTREAM serial=2 ttl=87 basis=exact truncated=false answers=api.upstream.test.|CNAME|87|node2.upstream.test.;node2.upstream.test.|A|87|198.51.100.22 authority=upstream.test.|SOA|57|ns1.upstream.test. hostmaster.upstream.test. 2 30 60 300 30
+SUMMARY scenario=snapshot-save-restore queries=7 codes=OK:7 cache=HIT:3,MISS:4,ERROR:0
+FINAL scenarios=3 queries=18 codes=OK:18 cache=HIT:5,MISS:13,ERROR:0 snapshots_saved=2 snapshots_restored=1

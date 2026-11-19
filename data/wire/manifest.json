@@ -1,0 +1,78 @@
+{
+  "format": "deterministic-dns-wire-samples/1",
+  "samples": [
+    {
+      "bytes": 30,
+      "description": "A/IN query for www.lab.test.",
+      "expect": "OK",
+      "file": "query-a.dns",
+      "kind": "query",
+      "sha256": "b60ce4f8aec0e41fbfd1b57a2a299a1380891c88c32240d355663a2275188baa"
+    },
+    {
+      "bytes": 32,
+      "description": "The same query with a two-byte TCP length prefix.",
+      "expect": "OK",
+      "file": "query-a.tcp.dns",
+      "kind": "tcp-query",
+      "sha256": "b652e3fb6857664656a46b854c68d4c810e0e2a2c472290136352fc8dcd7f64b"
+    },
+    {
+      "assertions": [
+        "compression pointers point backwards",
+        "all answer names decode"
+      ],
+      "bytes": 74,
+      "description": "Two answers whose owner names are compression pointers to the question.",
+      "expect": "OK",
+      "file": "response-compressed.dns",
+      "kind": "response",
+      "sha256": "b23ab7b7d239b92ae4fc4e9a934a303291200b1a385d7eb75649b0e436cd3b38"
+    },
+    {
+      "bytes": 20,
+      "description": "A backwards pointer at offset 14 targets offset 12, creating a two-step loop.",
+      "expect": "E_WIRE",
+      "file": "pointer-loop.dns",
+      "kind": "query",
+      "offset": 14,
+      "sha256": "af89d16a1a95791e4a6699e5ed24e812a0e45d07060114bc3bbc43afecde0eb2"
+    },
+    {
+      "bytes": 18,
+      "description": "The very first pointer targets its own next byte, i.e. a forward reference.",
+      "expect": "E_WIRE",
+      "file": "pointer-forward.dns",
+      "kind": "query",
+      "offset": 12,
+      "sha256": "81161b0f0127bab2b4bf9987b1cff73ff20a088306d7d32bc806f8895f5b1108"
+    },
+    {
+      "bytes": 20,
+      "description": "A pointer to offset 255 is rejected by the strictly-backwards rule.",
+      "expect": "E_WIRE",
+      "file": "pointer-out-of-bounds.dns",
+      "kind": "query",
+      "offset": 14,
+      "sha256": "7050d32aa2cfd8eb42bd9951df3ee32d88bbe162dff9a3ab6dec01127558014e"
+    },
+    {
+      "bytes": 18,
+      "description": "Reserved label-length bits 0b01 are set.",
+      "expect": "E_WIRE",
+      "file": "bad-label-length.dns",
+      "kind": "query",
+      "offset": 12,
+      "sha256": "1189a2f802da0621d09d86604fbcc87f1b1f0a2f36e4aebc128cf73d5def7a58"
+    },
+    {
+      "bytes": 6,
+      "description": "Packet ends inside the fixed 12-byte DNS header.",
+      "expect": "E_WIRE",
+      "file": "truncated-header.dns",
+      "kind": "query",
+      "offset": 0,
+      "sha256": "c9ad56915a2e1e40f5c6c68be86a59397ef16f6c4d7d5708a4782b72a60cfa7a"
+    }
+  ]
+}

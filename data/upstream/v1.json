@@ -1,0 +1,15 @@
+{
+  "origin": "upstream.test.",
+  "records": [
+    {"name": "upstream.test.", "type": "SOA", "ttl": 60, "rdata": "ns1.upstream.test. hostmaster.upstream.test. 1 30 60 300 30"},
+    {"name": "upstream.test.", "type": "NS", "ttl": 60, "rdata": "ns1.upstream.test."},
+    {"name": "ns1.upstream.test.", "type": "A", "ttl": 60, "rdata": "198.51.100.53"},
+    {"name": "api.upstream.test.", "type": "CNAME", "ttl": 45, "rdata": "node1.upstream.test."},
+    {"name": "node1.upstream.test.", "type": "A", "ttl": 45, "rdata": "198.51.100.11"},
+    {"name": "multi.upstream.test.", "type": "CNAME", "ttl": 45, "rdata": "mid.upstream.test."},
+    {"name": "mid.upstream.test.", "type": "CNAME", "ttl": 45, "rdata": "node1.upstream.test."},
+    {"name": "direct.upstream.test.", "type": "A", "ttl": 45, "rdata": "198.51.100.13"},
+    {"name": "broken.upstream.test.", "type": "CNAME", "ttl": 45, "rdata": "node1.upstream.test."},
+    {"name": "conflict.upstream.test.", "type": "CNAME", "ttl": 45, "rdata": "www.lab.test."}
+  ]
+}

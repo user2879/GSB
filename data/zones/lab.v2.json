@@ -1,0 +1,30 @@
+{
+  "origin": "lab.test.",
+  "records": [
+    {"name": "lab.test.", "type": "SOA", "ttl": 300, "rdata": "ns1.lab.test. hostmaster.lab.test. 2 60 300 600 60"},
+    {"name": "lab.test.", "type": "NS", "ttl": 300, "rdata": "ns1.lab.test."},
+    {"name": "ns1.lab.test.", "type": "A", "ttl": 300, "rdata": "192.0.2.53"},
+    {"name": "www.lab.test.", "type": "A", "ttl": 240, "rdata": "192.0.2.20"},
+    {"name": "www.lab.test.", "type": "AAAA", "ttl": 240, "rdata": "2001:db8::20"},
+    {"name": "v6.lab.test.", "type": "AAAA", "ttl": 240, "rdata": "2001:db8::20"},
+    {"name": "alias.lab.test.", "type": "CNAME", "ttl": 180, "rdata": "www.lab.test."},
+    {"name": "external.lab.test.", "type": "CNAME", "ttl": 180, "rdata": "api.upstream.test."},
+    {"name": "loop1.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "loop2.lab.test."},
+    {"name": "loop2.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "loop1.lab.test."},
+    {"name": "c1.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c2.lab.test."},
+    {"name": "c2.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c3.lab.test."},
+    {"name": "c3.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c4.lab.test."},
+    {"name": "c4.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c5.lab.test."},
+    {"name": "c5.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c6.lab.test."},
+    {"name": "c6.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c7.lab.test."},
+    {"name": "c7.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c8.lab.test."},
+    {"name": "c8.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c9.lab.test."},
+    {"name": "c9.lab.test.", "type": "CNAME", "ttl": 60, "rdata": "c10.lab.test."},
+    {"name": "wild.lab.test.", "type": "A", "ttl": 30, "rdata": "192.0.2.1"},
+    {"name": "*.wild.lab.test.", "type": "A", "ttl": 90, "rdata": "192.0.2.99"},
+    {"name": "keep.wild.lab.test.", "type": "A", "ttl": 90, "rdata": "192.0.2.88"},
+    {"name": "nodata.lab.test.", "type": "AAAA", "ttl": 90, "rdata": "2001:db8::99"},
+    {"name": "*.cw.lab.test.", "type": "CNAME", "ttl": 75, "rdata": "www.lab.test."},
+    {"name": "bulk.lab.test.", "type": "A", "ttl": 60, "rdata": "192.0.2.200"}
+  ]
+}
