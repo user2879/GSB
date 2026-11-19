@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "npr-sketch-editor"
+version = "1.0.0"
+description = "Deterministic NPR line-art, stylized rendering, incremental closure and recovery editor"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "NPR editor"}]
+dependencies = []
+
+[project.optional-dependencies]
+gl = ["numpy>=1.24", "PyOpenGL>=3.1.7", "PyOpenGL-accelerate>=3.1.7"]
+
+[project.scripts]
+npr-edit = "npr_edit.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["npr_edit*"]
