@@ -1,0 +1,108 @@
+{
+  "background_gray": 0.0,
+  "blocks": {
+    "height": 8,
+    "width": 8
+  },
+  "camera": {
+    "fov_y_deg": 41.0,
+    "position": [
+      44.0,
+      55.0,
+      58.0
+    ],
+    "target": [
+      19.0,
+      17.0,
+      14.0
+    ],
+    "up": [
+      0.0,
+      1.0,
+      0.0
+    ]
+  },
+  "concurrency": 4,
+  "edits": [
+    {
+      "center": [
+        24,
+        18,
+        18
+      ],
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "value": 0.95
+    },
+    {
+      "center": [
+        15,
+        21,
+        14
+      ],
+      "size": [
+        5,
+        5,
+        5
+      ],
+      "value": 0.08
+    }
+  ],
+  "memory_budget_bytes": 16777216,
+  "output": {
+    "height": 48,
+    "width": 48
+  },
+  "outputs": {
+    "depth": "../out/depth.npy",
+    "gray": "../out/gray.npy",
+    "report": "../out/report.json"
+  },
+  "sampling_step_mm": 0.45,
+  "schema_version": 1,
+  "state_dir": "../state",
+  "transfer_function": {
+    "points": [
+      {
+        "gray": 0.0,
+        "opacity": 0.0,
+        "scalar": 0.0
+      },
+      {
+        "gray": 0.08,
+        "opacity": 0.02,
+        "scalar": 0.15
+      },
+      {
+        "gray": 0.55,
+        "opacity": 0.08,
+        "scalar": 0.5
+      },
+      {
+        "gray": 0.96,
+        "opacity": 0.21,
+        "scalar": 1.0
+      }
+    ]
+  },
+  "volume": {
+    "dims": [
+      40,
+      36,
+      32
+    ],
+    "path": "../volume.npy",
+    "scalar_domain": {
+      "max": 1.0,
+      "min": 0.0
+    },
+    "spacing_mm": [
+      0.9,
+      0.9,
+      1.1
+    ]
+  }
+}
