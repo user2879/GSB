@@ -1,22 +1,127 @@
-当前为空白工作区，需在 Windows 上开发一个面向叙事分支与事件因果的离线分析工具。输入为本地确定性生成的叙事规格：YAML 描述分支图（节点为场景或选择，边带前置条件与效果），每个选择的效果以双精度浮点系数累积到角色状态向量（信任、声望、恐惧等），并带有条件阈值判定后续分支是否可达。工具需在给定的选择序列下重放，按边顺序累积效果，判定可达分支与结局，并计算条件判定的裕度（当前值与阈值的距离）。核心难点在于数值精度与误差传播：效果系数的累积顺序、条件判定的比较方向、裕度接近零时的二元判定翻转、以及不同累积路径（分支合并）产生的数值路径差异，都会让同一叙事规格在不同重放路径或不同实现下得出不同结局。工具须能估计结果对数值扰动的敏感度，定位关键判定，并输出可复现的差分报告。
+# 叙事分支与事件因果离线分析器
 
-任务环境与准备：
-安装 Python 3.11 或以上版本，并确认 python 与 pip 可在 PowerShell 中直接调用。
-安装依赖：pip install numpy pyyaml；版本以本地可用的稳定版本为准，无需联网以外的额外资源。
-在空白工作区建立项目目录，题目所需叙事规格、选择序列与注入配置样本均由程序化生成脚本在本地产出，不需要外部数据或账号。
-确认无容器环境，所有运行与验证均在 Windows 本地命令行完成，测试数据与输出写入工作区内目录。
+一个不依赖容器、不访问外部服务的确定性分析工具。它读取 YAML 叙事图，在固定选择序列下按声明顺序累积 IEEE-754 双精度状态，输出分支可达性、条件裕度、误差区间、扰动敏感度、分支合流差异、注入首翻定位和内容哈希。
 
-业务要求：
-1. 实现 YAML 叙事规格解析器：读取分支图节点、边的前置条件与效果表达式、角色状态初值、条件阈值与随机种子；效果表达式只允许加法与乘法于状态分量，须提供白名单校验与无环校验，对含未知分量、未知变量、图含环或阈值缺失的输入分别返回 E_SPEC_INVALID 与 E_GRAPH_CYCLE 业务码。
-2. 实现确定性状态累积引擎：按选择序列沿边累积效果，所有状态分量以双精度计算并显式规定乘法与加法的执行顺序；对同一规格与同一选择序列两次重放，须输出逐位相同的状态向量与边序哈希，禁止依赖字典遍历顺序或集合哈希影响累积顺序。
-3. 实现条件判定与裕度计算：后续分支可达性按条件阈值判定，输出每个判定的当前值、阈值、裕度与比较方向；比较使用统一的方向约定（如严格大于），裕度按绝对值与有符号值分别记录，并标注该判定是否为边界判定（裕度绝对值低于声明阈值的判定）。
-4. 实现数值误差传播估计：对每条效果边给出系数表示误差与累积运算舍入误差的上界，按累积链合成每个状态分量的误差区间，并由此推出每个判定裕度的误差区间；判定结果落在误差区间内即视为不确定判定，须单独标记而不是直接取布尔值，误差估计须与所用的运算顺序和分量数量一致。
-5. 实现扰动敏感度分析：对效果系数按声明相对扰动量做确定性扰动扫描（固定扰动方向与顺序），统计每个判定翻转所需的临界扰动量，按临界扰动量升序给出关键判定排名；扰动不得改变规格文件本身，只作用于输入参数副本，且同一扫描配置两次运行须输出相同排名与相同临界值。
-6. 实现分支合并的路径一致性核对：对可经多条分支路径到达的汇合节点，分别沿每条路径累积状态并比较结果；路径间状态分量差异与判定差异须逐项报告，差异超出声明容差时输出首个分歧分量与两路径的边序列，不得仅凭最终结局相同即判定路径一致。
-7. 实现异常注入与首个翻转定位：支持在参数层注入系数扰动、阈值微移、初值偏移，注入配置可序列化并随运行记录，保证注入后运行可精确复现；注入导致结局变化时须按边序定位首个发生翻转的判定及其翻转前后的裕度与注入偏移量，注入不得修改源码。
-8. 定义业务错误码（E_SPEC_INVALID、E_GRAPH_CYCLE、E_SELECTION_UNKNOWN、E_PRECISION_BOUND、E_PATH_DIVERGE、E_INJECT_CONFIG、E_SNAPSHOT_STALE）并覆盖异常链路；提供可重复演示入口，生成含正常路径、边界判定、分支合并分歧与注入翻转的样本集，输出逐判定裕度报告与各步内容哈希，两次运行须逐字节一致。
+## 环境
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Windows 10/11 + PowerShell
+- Python 3.11 或更高版本
+- `numpy`、`PyYAML`（只使用本地已安装版本，不下载样例数据）
 
-验收：
-使用本地叙事规格样本验证累积确定性、裕度与误差区间、扰动排名、路径分歧定位及注入复现，两次运行逐字节一致。
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python --version
+python -m pip install -r requirements.txt
+```
+
+不需要 Docker、WSL、数据库或网络账号。项目内的样本、配置和输出全部由 `narrative_analyzer.samplegen` 程序化生成。
+
+## 快速运行
+
+```powershell
+python -m narrative_analyzer demo --out-dir artifacts/demo
+python -m narrative_analyzer --help
+.\verify.ps1
+```
+
+`demo` 会在同一目录生成可复现样本、重放报告、敏感度排名、路径核对、注入报告、错误链路、双跑一致性清单和 `snapshot.json`。所有 JSON/YAML 都使用固定键序、`\n` 换行和稳定浮点表示；同一版本连续运行两次逐字节相同。
+
+## CLI
+
+```text
+python -m narrative_analyzer validate   --spec SPEC [--output OUT]
+python -m narrative_analyzer replay     --spec SPEC --sequence SEQ [--inject INJECT] [--output OUT]
+python -m narrative_analyzer sensitivity --spec SPEC --sequence SEQ [--config SCAN] [--output OUT]
+python -m narrative_analyzer paths      --spec SPEC [--strict] [--max-paths 1024] [--output OUT]
+python -m narrative_analyzer snapshot-check --snapshot SNAPSHOT
+python -m narrative_analyzer demo       --out-dir artifacts/demo
+python -m narrative_analyzer error-codes
+```
+
+业务异常输出为 JSON，包含 `business_code`、`message` 和 `details`。退出码见文末。
+
+## 输入格式
+
+完整样本由 `artifacts/demo/spec.yaml` 生成。核心结构如下：
+
+```yaml
+spec_version: 1
+seed: 20261119
+start: start
+comparison: strict_greater
+boundary_epsilon: 1.0e-9
+path_tolerance: 1.0e-18
+numeric:
+  coefficient_relative_error: 1.0e-12
+  initial_relative_error: 1.0e-12
+  unit_roundoff: 1.1102230246251565e-16
+  max_abs_error: 1.0e-3
+state:
+  components: [trust, reputation, fear]
+  initial: {trust: 0.0, reputation: 0.1, fear: 0.0}
+conditions:
+  - {id: c_trust_high, component: trust, threshold: 0.3, direction: ">"}
+nodes:
+  - {id: start, type: scene}
+  - {id: merge, type: choice}
+  - {id: ending_good, type: ending, outcome: good}
+  - {id: ending_bad, type: ending, outcome: bad}
+edges:
+  - id: e_good
+    source: merge
+    target: ending_good
+    choice: continue
+    when: [c_trust_high]
+    effects: []
+  - id: e_bad
+    source: merge
+    target: ending_bad
+    choice: continue
+    effects: []
+```
+
+效果字符串只允许单条赋值语句：`x = expr`、`x += expr`、`x *= expr`。`expr` 的 AST 白名单只包括状态分量、有限数值常量、`+`、`*` 和一元正负号；二元减法、除法、幂、函数调用和属性访问均拒绝。状态分量顺序必须由 `state.components` 显式给出，不能依赖 YAML 映射顺序。
+
+选择序列是列表，或包含 `version: 1` 与 `selections` 的映射：
+
+```yaml
+version: 1
+selections: [path_a, join, continue]
+```
+
+同一节点可以给多条边相同的 `choice`，用于条件路由。引擎按边声明顺序选择首个满足前置条件的候选；因此固定选择序列在参数注入后仍能走向不同结局。一个 `choice` 最多只能有一条无条件候选边，避免不可判定的无条件重复。
+
+## 输出要点
+
+- `replay_*.json`：选择序列、每个判定、每步前后状态、状态位模式、逐步内容哈希、边序哈希、最终结局。
+- `paths.json`：所有合流节点的路径状态、逐分量差异、逐判定比较，以及首个分歧分量和两条边序列。
+- `sensitivity.json`：每个效果系数的扫描结果、每个判定首次翻转的临界相对扰动和升序排名。
+- `replay_injected.json`：注入配置、标准化偏移、基线/注入运行、结局变化和首个布尔翻转判定。
+- `error_cases.json`：七个业务错误码的真实触发结果。
+- `reproducibility.json`：两次内存构建的逐文件哈希和清单哈希。
+- `snapshot.json`：输入与输出文件的 SHA-256；任何依赖文件变化都会触发 `E_SNAPSHOT_STALE`。
+
+## 业务错误码
+
+| 代码 | 退出码 | 触发场景 |
+|---|---:|---|
+| `E_SPEC_INVALID` | 2 | YAML/字段/表达式白名单/未知分量/未知变量/缺阈值等 |
+| `E_GRAPH_CYCLE` | 3 | 节点图含环 |
+| `E_SELECTION_UNKNOWN` | 4 | 选择不存在、不可达、提前结束或结束后仍有选择 |
+| `E_PRECISION_BOUND` | 5 | 非有限数值或误差上界超过 `numeric.max_abs_error` |
+| `E_PATH_DIVERGE` | 6 | 合流路径状态差超过 `path_tolerance` |
+| `E_INJECT_CONFIG` | 7 | 注入配置格式错误、未知目标或重复目标 |
+| `E_SNAPSHOT_STALE` | 8 | 快照内容哈希、引擎版本或依赖文件已变化 |
+
+## 验证
+
+```powershell
+python -m unittest discover -s tests -v
+python -m narrative_analyzer demo --out-dir artifacts/demo
+python -m narrative_analyzer snapshot-check --snapshot artifacts/demo/snapshot.json
+python scripts/compare_dirs.py artifacts/verify-a artifacts/verify-b
+```
+
+设计细节、误差公式和确定性约定见 `TECHNICAL.md`；实际执行结果见 `VERIFICATION.md`。
+
