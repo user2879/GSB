@@ -1,22 +1,160 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向本地 Windows 环境的分片副本修复中间件组件，用于教学与排障演示“分片副本失效如何在节点之间增量传播，并驱动受预算约束的并行重打包”。用户以本地 JSON 文件声明一个分片组：若干本地节点目录（每个目录存若干分片文件，分片带字节数与内容摘要），若干数据块（块标识、块内分片序号区间与校验摘要），以及一份镜像关系图（某分片是另一分片的派生镜像，或某分片由其他分片拼接得出）。组件为每个数据块维护副本清单，当某分片被标记为损坏、被删除或被替换为内容不同的新版本时，须沿镜像关系图推导全部直接与间接受影响分片，标记引用这些分片的块副本为待修复，并把需重新打包的分片组成打包任务，在全局打包槽位预算与每节点打包配额约束下并行重打包。组件须提供 Python 包 API、Tkinter 诊断界面与可重复演示脚本，全部数据与依赖来自本地。
+# ShardRep：本地分片副本修复中间件
 
-任务环境与准备：
-Windows 本地安装 Python 3.10 或以上并安装 NumPy，用于确定性样本与分片字节的生成和摘要计算；无需网络服务或外部账号。
-在空白工作区创建项目目录，准备本地 JSON 样本（节点目录、数据块、镜像关系）与演示脚本，所有路径使用工作区相对路径，并以固定整数随机种子生成确定性分片内容。
-确保 Tkinter 可用（Windows 官方 Python 安装包默认包含）；SQLite 使用 Python 标准库 sqlite3；所有回环通信仅使用 127.0.0.1 本地地址。
-演示脚本按固定顺序执行一次完整修复、一次损坏注入后增量重打包与一次快照保存恢复重放，便于重复运行逐项比对。
+ShardRep 是面向 Windows 本地教学与排障演示的确定性中间件。它以本地 JSON 声明分片组，在镜像/拼接关系图上增量传播失效，在全局槽位与节点配额约束下并行重打包，并把修复决策、调度轨迹、SQLite 提交点与版本化快照全部保存在工作区内。
 
-业务要求：
-1. 实现分片组声明与本地分片文件的加载和强校验：从本地 JSON 读取节点目录、数据块定义与镜像关系，校验节点标识与分片标识唯一、分片字节数为正整数、块内分片序号区间首尾相接且不越界、镜像引用目标存在、镜像关系图无环；任一不合法须以 E_SPEC 整体拒绝加载并输出出错分片标识与字段路径，不得部分生效。
-2. 实现分片内容摘要的确定性计算与损坏注入：按声明规则对每个分片文件计算确定性内容摘要并与副本清单登记，相同内容多次计算必须得到逐字节一致的摘要；支持以命令行参数按分片标识注入截断、字节翻转、整体替换三类损坏，注入仅改变分片文件内容，不得修改源码；摘要不一致须以 E_INTEGRITY 登记到副本清单并指明分片标识与所在节点。
-3. 实现镜像关系图上的增量失效传播：当某分片被标记损坏、被删除或被替换为不同内容摘要时，沿镜像关系图推导全部直接与间接受影响分片，按稳定拓扑顺序输出受影响分片序列，并标记引用这些分片的块副本为待修复；传播结果须与节点目录遍历顺序和字典遍历顺序无关，同一输入多次推导必须得到逐字节一致的受影响集合与传递轨迹。
-4. 实现仅对受影响分片的增量重打包与未受影响分片一致性：失效推导后仅对受影响分片生成打包任务并重新打包，未受影响分片的打包产物摘要与产物版本号必须逐字节保持不变且可逐项校验；提供校验命令比较增量重打包结果与对全部分片全量重打包的结果，二者在分片产物摘要与块副本摘要上必须一致，不一致须以 E_INCR 报告首个差异分片标识与字段。
-5. 实现受双重预算约束的并行重打包调度：在全局打包槽位上限与每节点打包配额同时生效下把打包任务分配到本地工作线程池执行，任一时刻运行任务数不得超出全局上限且每个节点运行任务数不得超出其配额，预算或配额不足时任务排队并记录等待开始与结束的单调时钟毫秒；调度须输出每个任务的开始与结束时刻、完成字节数、排队时长与被跳过原因；单任务须有真实超时判定，超时任务按显式规则重试且不得绕过预算。
-6. 实现含损坏或缺失数据的块的修复判定与部分修复报告：某块内任一关键分片在全部副本中均无内容摘要匹配的可用副本时，该块须判定为不可修复并以 E_UNRECOVERABLE 报告，列出块标识、缺失分片序号与已尝试副本；可修复的块须依据多数一致的摘要选出修复来源并生成修复任务，修复任务须记录源分片、目标分片、字节数与预期摘要；修复报告须区分完全修复、部分修复与不可修复三类，且每类计数须与副本清单逐项自洽。
-7. 实现修复会话快照的版本识别与整体替换恢复及恢复后重放校验：快照持久化分片组版本、镜像关系图版本、副本清单摘要、打包产物版本、调度轨迹与修复报告，并携带整数格式版本与内容摘要；重新打开快照时须比较快照版本与内容摘要同当前磁盘状态，不一致须整体替换副本清单与镜像关系图而非增量合并，旧快照保留为只读备份；恢复后按快照记录的注入序列与预算参数重新推导受影响集合并重打包，与快照逐项比较，不可复现须以 E_REPLAY 报明具体依据。
-8. 实现强制终止后的恢复与结构化日志链路：每完成一个打包任务须在同一 SQLite 事务中写入任务标识、结局、完成字节数、预算消耗与进度游标，进程被强制终止后重启只能依据已完整提交的任务记录恢复，处于运行中且未提交的任务须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告；支持以启动参数注入镜像关系成环、分片文件损坏、快照摘要不符三类异常，分别以 E_CYCLE、E_INTEGRITY、E_SNAPSHOT 上报并写入结构化日志，日志须包含业务码、分片标识、版本号与时刻。
+组件不访问网络、不使用容器、不依赖外部服务。NumPy 仅在安装时作为字节缓冲的快速物化层；核心输出与纯标准库路径逐字节一致。Tkinter 诊断界面使用 Python 官方 Windows 安装包自带的 Tk。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-本地样本验证镜像失效传播、预算内增量重打包与快照整体替换恢复，结果与日志可复现。
+在 Windows PowerShell 中于项目根目录执行：
+
+```powershell
+py -3.10 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m shardrep init-sample
+python -m shardrep validate --spec samples/spec.json
+python -m shardrep demo --root .
+python -m shardrep gui --spec samples/spec.json
+```
+
+也可直接运行 `run_demo.bat`、`run_gui.bat` 或 `run_tests.bat`。所有路径默认相对工作区，不访问回环端口。
+
+`demo` 会按固定顺序完成三个阶段：
+
+1. 注入截断损坏，推导失效链并执行完整修复与全量重打包。
+2. 再注入字节翻转，仅对受影响分片 `s4 → s5 → s7` 增量重打包，同时校验 5 个未受影响分片的产物文件、摘要和版本全部不变，并与独立全量重打包结果逐项比较。
+3. 保存快照；制造磁盘状态漂移后整体替换恢复；在干净工作区按快照记录的注入序列与预算参数重放并逐项比较。
+
+结果写入 `demo-run/demo_report.json`，稳定事实写入 `demo-run/stable_facts.json`，结构化日志写入 `demo-run/logs/events.jsonl`，SQLite 账本为 `demo-run/ledger.sqlite3`。同样输入重复运行时 `stable_digest` 不变。
+
+## 声明模型
+
+```json
+{
+  "format": "shardrep-spec",
+  "format_version": 1,
+  "group_id": "classroom-repair",
+  "group_version": 1,
+  "mirror_graph_version": 1,
+  "content": {"engine": "shake256-v1", "seed": 20261120},
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "directory": "nodes/node-a",
+      "pack_quota": 2,
+      "repair_enabled": true,
+      "shards": [
+        {
+          "shard_id": "node-a:s0",
+          "logical_id": "s0",
+          "seq": 0,
+          "bytes": 1024,
+          "digest": "sha256:...",
+          "file": "s00.bin"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {"block_id": "block-alpha", "seq_start": 0, "seq_end": 2, "checksum": "sha256:..."}
+  ],
+  "relations": [
+    {"kind": "mirror", "source": "s1", "target": "s2"},
+    {"kind": "join", "sources": ["s3", "s4"], "target": "s5"}
+  ]
+}
+```
+
+- `shard_id` 是跨规格唯一的物理副本标识；`logical_id` 表示跨节点复制、关系和失效传播的逻辑分片。
+- 同一逻辑分片在不同节点必须声明相同的 `seq`、`bytes` 与 `digest`。
+- 块区间必须从 0 开始、首尾相接、不重叠、不越界，并覆盖全部逻辑序号。
+- `mirror`/`join` 的所有来源和目标必须存在，关系图必须是 DAG。
+- 任一非法声明整体抛出 `E_SPEC`，携带 `shard_id` 与 JSON 字段路径，不返回部分装载对象。成环原因同时给出 `E_CYCLE`。
+
+完整模式说明见 `docs/SPEC_SCHEMA.md`。
+
+## 命令行
+
+```text
+python -m shardrep init-sample [--root .] [--keep]
+python -m shardrep validate --spec samples/spec.json
+python -m shardrep inject --spec samples/spec.json --shard-id node-b:s4 --kind flip
+python -m shardrep run --spec samples/spec.json --inject node-b:s4=flip --repair
+python -m shardrep verify --spec samples/spec.json --incremental-pack demo-run/packs
+python -m shardrep snapshot-restore --spec samples/spec.json \
+  --snapshot demo-run/snapshots/session.json --state demo-run/state/current_state.json
+python -m shardrep recover --db demo-run/ledger.sqlite3 --run-id crash-run
+python -m shardrep anomaly --kind cycle --spec samples/spec.json
+python -m shardrep anomaly --kind integrity --spec samples/spec.json --shard-id node-a:s2
+python -m shardrep anomaly --kind snapshot --snapshot demo-run/snapshots/session.json
+```
+
+注入类型为 `truncate`、`flip`、`replace`、`delete`。`replace` 默认使用固定种子生成内容；脚本可用 `--replacement-hex` 指定确定性替换内容。注入只写物理分片文件，不修改 JSON 源码。
+
+## Python API
+
+```python
+from shardrep import (
+    PackScheduler,
+    PackStore,
+    ReplicaRegistry,
+    apply_and_report,
+    build_pack_tasks,
+    load_spec,
+    propagate_invalidation,
+)
+
+spec = load_spec("samples/spec.json")
+registry = ReplicaRegistry.load(spec)
+injection = registry.inject(shard_id="node-b:s4", kind="flip")
+propagation = propagate_invalidation(spec, [injection.logical_id])
+registry.mark_affected(propagation.affected)
+
+quotas = {node.node_id: node.pack_quota for node in spec.nodes}
+tasks = build_pack_tasks(spec, propagation.affected, quotas=quotas)
+result = PackScheduler(
+    store=PackStore("run/packs", spec),
+    global_slots=2,
+    node_quotas=quotas,
+    ledger=None,
+    run_id="api-example",
+).run(tasks)
+
+report = apply_and_report(spec, registry)
+```
+
+## 关键保证
+
+- **确定性摘要**：SHAKE-256 生成样本字节，SHA-256 计算内容摘要；NumPy 有无不影响结果。
+- **稳定传播**：拓扑排序使用稳定堆序，轨迹为每个种子到目标的最短且字典序最小路径；与节点顺序、关系声明顺序和字典遍历顺序无关。
+- **增量正确性**：仅生成受影响逻辑分片的打包任务；未受影响产物文件不被重写。与全量重建比较摘要或块副本摘要失败时抛出 `E_INCR`，报告首个分片与字段。
+- **双重预算**：`ThreadPoolExecutor(max_workers=global_slots)` 限制全局并发；提交前另行检查节点运行数，节点配额不足时任务留队。调度记录排队、开始、结束、时长、完成字节、版本和被跳过原因。
+- **真实超时**：工作线程按 `time.monotonic()` 截止时间分块检查；超时任务提交 `timeout` 账本行后按 `max_retries` 重试，重试仍占用同一槽位与节点配额。
+- **修复三分法**：完全修复、部分修复、不可修复计数与逐块副本状态、修复任务结果和副本总数自洽；不可修复块记录缺失序号与全部已尝试副本。
+- **快照整体替换**：快照含整数格式版本、快照版本、内容摘要、组版本、图版本、副本摘要、打包清单、调度轨迹、修复报告、注入序列与预算。恢复时发现规格/组/图/磁盘摘要差异即整体替换状态，不做增量合并；旧快照复制为只读备份。
+- **崩溃一致性**：任务先写 `running` claim；成果、字节数、预算消耗、进度游标与 committed 状态在一个 SQLite 事务中提交。强制终止后未提交 claim 标记为 `unknown_requires_rerun`，恢复只依据完整提交行，绝不生成伪造退出报告。
+
+## 日志与账本
+
+每个 JSONL 事件都含 `code`、`shard_id`、`version`、`timestamp`。关键业务码包括 `E_SPEC`、`E_CYCLE`、`E_INTEGRITY`、`E_INCR`、`E_UNRECOVERABLE`、`E_SNAPSHOT`、`E_REPLAY`。
+
+SQLite 表：
+
+- `event_log`：结构化事件。
+- `task_claims`：任务运行声明。
+- `task_commits`：原子提交的任务结局、完成字节、预算消耗与进度游标。
+- `run_progress`：每次提交同步更新的累计字节和游标。
+
+## 测试与文档
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+- `docs/DESIGN.md`：组件结构、传播/调度/恢复算法和事务边界。
+- `docs/SPEC_SCHEMA.md`：JSON 字段与全部强校验规则。
+- `docs/VALIDATION.md`：实际运行命令、测试项、确定性摘要与环境说明。
+
+当前验收环境为无 Tkinter、无 NumPy 的 headless Linux Python 3.11；因此 GUI 只做编译验证，核心链路使用纯标准库回退完整运行。目标 Windows 官方 Python 3.10+ 可直接使用 Tkinter，并按 `requirements.txt` 安装 NumPy。
+

@@ -1,0 +1,782 @@
+{
+  "block_replica_digest": "sha256:e96b806c3a3cbd2d4c0650f8df9326ca43edb56f6431c61f4af00d97696e62da",
+  "budget": {
+    "global_slots": 2,
+    "max_retries": 1,
+    "node_quotas": {
+      "node-a": 2,
+      "node-b": 1,
+      "node-c": 1
+    },
+    "simulate_ms": 1,
+    "timeout_ms": 1500
+  },
+  "content_digest": "sha256:153bae78f7fc572750b294a47328b583e93e34717a17a5e33f2a2a903aa83d84",
+  "disk_digest": "sha256:48af456c84aa775fb59a95f552e7a05300d14014394fa88b8e6041dbe7621c7f",
+  "format": "shardrep-snapshot",
+  "format_version": 1,
+  "group_id": "classroom-repair",
+  "group_version": 1,
+  "injections": [
+    {
+      "after_bytes": 1536,
+      "after_digest": "sha256:b3fb392c74fa41d1375ebeae4f95267fe945c9567145fb693c1cd704d00718ba",
+      "before_bytes": 1536,
+      "before_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+      "keep_bytes": null,
+      "kind": "flip",
+      "logical_id": "s4",
+      "node_id": "node-b",
+      "offset": 17,
+      "replacement_hex": null,
+      "sequence": 0,
+      "shard_id": "node-b:s4"
+    }
+  ],
+  "mirror_graph": {
+    "mirror_graph_version": 1,
+    "nodes": [
+      "s0",
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "s7"
+    ],
+    "relations": [
+      {
+        "kind": "mirror",
+        "sources": [
+          "s1"
+        ],
+        "target": "s2"
+      },
+      {
+        "kind": "mirror",
+        "sources": [
+          "s2"
+        ],
+        "target": "s4"
+      },
+      {
+        "kind": "join",
+        "sources": [
+          "s3",
+          "s4"
+        ],
+        "target": "s5"
+      },
+      {
+        "kind": "join",
+        "sources": [
+          "s5",
+          "s6"
+        ],
+        "target": "s7"
+      }
+    ]
+  },
+  "mirror_graph_version": 1,
+  "pack_manifest": {
+    "artifacts": {
+      "s0": {
+        "artifact": "s0.json",
+        "bytes": 1024,
+        "content_digest": "sha256:a4f602b449ffe023675587371bf7ff44079453246c92c74ff599cbcbfb4362d4",
+        "expected_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "logical_id": "s0",
+        "seq": 0,
+        "version": 1
+      },
+      "s1": {
+        "artifact": "s1.json",
+        "bytes": 1152,
+        "content_digest": "sha256:f10a3ecee0733796fac453b545551765038e11216baa8d24a6803e84c1d5c4f7",
+        "expected_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "logical_id": "s1",
+        "seq": 1,
+        "version": 1
+      },
+      "s2": {
+        "artifact": "s2.json",
+        "bytes": 1280,
+        "content_digest": "sha256:bfe30519cefb82b8ac8fa32460fdf5d549b0648788b82f39a4a0fdafad2a66d2",
+        "expected_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "logical_id": "s2",
+        "seq": 2,
+        "version": 1
+      },
+      "s3": {
+        "artifact": "s3.json",
+        "bytes": 1408,
+        "content_digest": "sha256:4f27e0b0cc4f9a557f55713f8997cc6147c4e60d2565d9e621d9649b33574512",
+        "expected_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "logical_id": "s3",
+        "seq": 3,
+        "version": 1
+      },
+      "s4": {
+        "artifact": "s4.json",
+        "bytes": 1536,
+        "content_digest": "sha256:10d38ebf9041a2244131390afa1d4055d9629cd8b739ad8c4fd8a2e88288cdce",
+        "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "logical_id": "s4",
+        "seq": 4,
+        "version": 2
+      },
+      "s5": {
+        "artifact": "s5.json",
+        "bytes": 1664,
+        "content_digest": "sha256:80d6e57c3a9876480021141f524a3f2bb4c7907ecc5c854525b6e7c7c5510e1c",
+        "expected_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "logical_id": "s5",
+        "seq": 5,
+        "version": 2
+      },
+      "s6": {
+        "artifact": "s6.json",
+        "bytes": 1792,
+        "content_digest": "sha256:764b99932bc92518f94e06e44ceddb85c590be227af024a09c2b4e3197420923",
+        "expected_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "logical_id": "s6",
+        "seq": 6,
+        "version": 1
+      },
+      "s7": {
+        "artifact": "s7.json",
+        "bytes": 1920,
+        "content_digest": "sha256:f5dd1fec57e45cd4b074ce9ddea46f2e0c06edc4951793a30dff49a89d44362f",
+        "expected_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "logical_id": "s7",
+        "seq": 7,
+        "version": 2
+      }
+    },
+    "format": "shardrep-pack-manifest-v1",
+    "format_version": 1,
+    "group_id": "classroom-repair",
+    "group_version": 1
+  },
+  "registry": {
+    "records": [
+      {
+        "actual_bytes": 1024,
+        "actual_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "expected_bytes": 1024,
+        "expected_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "injected_kind": null,
+        "logical_id": "s0",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s00.bin",
+        "pending_repair": false,
+        "seq": 0,
+        "shard_id": "node-a:s0",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1152,
+        "actual_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "expected_bytes": 1152,
+        "expected_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "injected_kind": null,
+        "logical_id": "s1",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s01.bin",
+        "pending_repair": false,
+        "seq": 1,
+        "shard_id": "node-a:s1",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1280,
+        "actual_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "expected_bytes": 1280,
+        "expected_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "injected_kind": null,
+        "logical_id": "s2",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s02.bin",
+        "pending_repair": false,
+        "seq": 2,
+        "shard_id": "node-a:s2",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1408,
+        "actual_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "expected_bytes": 1408,
+        "expected_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "injected_kind": null,
+        "logical_id": "s3",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s03.bin",
+        "pending_repair": false,
+        "seq": 3,
+        "shard_id": "node-a:s3",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1536,
+        "actual_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "expected_bytes": 1536,
+        "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "injected_kind": null,
+        "logical_id": "s4",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s04.bin",
+        "pending_repair": false,
+        "seq": 4,
+        "shard_id": "node-a:s4",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1664,
+        "actual_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "expected_bytes": 1664,
+        "expected_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "injected_kind": null,
+        "logical_id": "s5",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s05.bin",
+        "pending_repair": false,
+        "seq": 5,
+        "shard_id": "node-a:s5",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1792,
+        "actual_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "expected_bytes": 1792,
+        "expected_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "injected_kind": null,
+        "logical_id": "s6",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s06.bin",
+        "pending_repair": false,
+        "seq": 6,
+        "shard_id": "node-a:s6",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1920,
+        "actual_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "expected_bytes": 1920,
+        "expected_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "injected_kind": null,
+        "logical_id": "s7",
+        "node_id": "node-a",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-a/s07.bin",
+        "pending_repair": false,
+        "seq": 7,
+        "shard_id": "node-a:s7",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1024,
+        "actual_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "expected_bytes": 1024,
+        "expected_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "injected_kind": null,
+        "logical_id": "s0",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s00.bin",
+        "pending_repair": false,
+        "seq": 0,
+        "shard_id": "node-b:s0",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1152,
+        "actual_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "expected_bytes": 1152,
+        "expected_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "injected_kind": null,
+        "logical_id": "s1",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s01.bin",
+        "pending_repair": false,
+        "seq": 1,
+        "shard_id": "node-b:s1",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1280,
+        "actual_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "expected_bytes": 1280,
+        "expected_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "injected_kind": null,
+        "logical_id": "s2",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s02.bin",
+        "pending_repair": false,
+        "seq": 2,
+        "shard_id": "node-b:s2",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1408,
+        "actual_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "expected_bytes": 1408,
+        "expected_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "injected_kind": null,
+        "logical_id": "s3",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s03.bin",
+        "pending_repair": false,
+        "seq": 3,
+        "shard_id": "node-b:s3",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1536,
+        "actual_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "expected_bytes": 1536,
+        "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "injected_kind": null,
+        "logical_id": "s4",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s04.bin",
+        "pending_repair": false,
+        "seq": 4,
+        "shard_id": "node-b:s4",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1664,
+        "actual_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "expected_bytes": 1664,
+        "expected_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "injected_kind": null,
+        "logical_id": "s5",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s05.bin",
+        "pending_repair": false,
+        "seq": 5,
+        "shard_id": "node-b:s5",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1792,
+        "actual_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "expected_bytes": 1792,
+        "expected_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "injected_kind": null,
+        "logical_id": "s6",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s06.bin",
+        "pending_repair": false,
+        "seq": 6,
+        "shard_id": "node-b:s6",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1920,
+        "actual_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "expected_bytes": 1920,
+        "expected_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "injected_kind": null,
+        "logical_id": "s7",
+        "node_id": "node-b",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-b/s07.bin",
+        "pending_repair": false,
+        "seq": 7,
+        "shard_id": "node-b:s7",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1024,
+        "actual_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "expected_bytes": 1024,
+        "expected_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+        "injected_kind": null,
+        "logical_id": "s0",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s00.bin",
+        "pending_repair": false,
+        "seq": 0,
+        "shard_id": "node-c:s0",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1152,
+        "actual_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "expected_bytes": 1152,
+        "expected_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+        "injected_kind": null,
+        "logical_id": "s1",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s01.bin",
+        "pending_repair": false,
+        "seq": 1,
+        "shard_id": "node-c:s1",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1280,
+        "actual_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "expected_bytes": 1280,
+        "expected_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+        "injected_kind": null,
+        "logical_id": "s2",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s02.bin",
+        "pending_repair": false,
+        "seq": 2,
+        "shard_id": "node-c:s2",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1408,
+        "actual_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "expected_bytes": 1408,
+        "expected_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+        "injected_kind": null,
+        "logical_id": "s3",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s03.bin",
+        "pending_repair": false,
+        "seq": 3,
+        "shard_id": "node-c:s3",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1536,
+        "actual_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "expected_bytes": 1536,
+        "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "injected_kind": null,
+        "logical_id": "s4",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s04.bin",
+        "pending_repair": false,
+        "seq": 4,
+        "shard_id": "node-c:s4",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1664,
+        "actual_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "expected_bytes": 1664,
+        "expected_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+        "injected_kind": null,
+        "logical_id": "s5",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s05.bin",
+        "pending_repair": false,
+        "seq": 5,
+        "shard_id": "node-c:s5",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1792,
+        "actual_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "expected_bytes": 1792,
+        "expected_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+        "injected_kind": null,
+        "logical_id": "s6",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s06.bin",
+        "pending_repair": false,
+        "seq": 6,
+        "shard_id": "node-c:s6",
+        "status": "ok"
+      },
+      {
+        "actual_bytes": 1920,
+        "actual_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "expected_bytes": 1920,
+        "expected_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+        "injected_kind": null,
+        "logical_id": "s7",
+        "node_id": "node-c",
+        "path": "/home/zsl/feedback/uidfc5909d3-default-329/samples/nodes/node-c/s07.bin",
+        "pending_repair": false,
+        "seq": 7,
+        "shard_id": "node-c:s7",
+        "status": "ok"
+      }
+    ]
+  },
+  "registry_digest": "sha256:64ddb8625659d1fd71dc0fa3cd22d52be360567bae6dfaa1eac4602417dfb716",
+  "repair_report": {
+    "block_count": 3,
+    "categories": {
+      "full": [
+        "block-alpha",
+        "block-beta",
+        "block-gamma"
+      ],
+      "partial": [],
+      "unrecoverable": []
+    },
+    "code": "E_REPORT",
+    "counts": {
+      "full": 3,
+      "partial": 0,
+      "unrecoverable": 0
+    },
+    "decisions": [
+      {
+        "attempted_replicas": [],
+        "block_id": "block-alpha",
+        "category": "full",
+        "consensus": [
+          {
+            "digest_votes": {
+              "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7": 3
+            },
+            "expected_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7",
+            "logical_id": "s0",
+            "seq": 0,
+            "usable_count": 3,
+            "usable_digest": "sha256:e230e7eab2cacf298c00821fe453de552e35b304707c62d503211eda291191a7"
+          },
+          {
+            "digest_votes": {
+              "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8": 3
+            },
+            "expected_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8",
+            "logical_id": "s1",
+            "seq": 1,
+            "usable_count": 3,
+            "usable_digest": "sha256:932f0ce29307c06d1aedadb85073b93205eaaf7e036febd9e9993f523fdf81f8"
+          },
+          {
+            "digest_votes": {
+              "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b": 3
+            },
+            "expected_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b",
+            "logical_id": "s2",
+            "seq": 2,
+            "usable_count": 3,
+            "usable_digest": "sha256:3a61028b07d820764fed9319716e591e3c64170a43843b8f64e82e4bdc84e31b"
+          }
+        ],
+        "disabled_targets": [],
+        "missing_seqs": [],
+        "repair_results": [],
+        "repair_task_ids": [],
+        "replica_count": 9,
+        "replica_status_counts": {
+          "ok": 9
+        }
+      },
+      {
+        "attempted_replicas": [],
+        "block_id": "block-beta",
+        "category": "full",
+        "consensus": [
+          {
+            "digest_votes": {
+              "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495": 3
+            },
+            "expected_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495",
+            "logical_id": "s3",
+            "seq": 3,
+            "usable_count": 3,
+            "usable_digest": "sha256:5f1aba94b6efdd7caf7f7f4cb8d09143ecc7a2891dd14ef63103a5c13a369495"
+          },
+          {
+            "digest_votes": {
+              "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6": 2,
+              "sha256:b3fb392c74fa41d1375ebeae4f95267fe945c9567145fb693c1cd704d00718ba": 1
+            },
+            "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+            "logical_id": "s4",
+            "seq": 4,
+            "usable_count": 2,
+            "usable_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6"
+          },
+          {
+            "digest_votes": {
+              "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594": 3
+            },
+            "expected_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594",
+            "logical_id": "s5",
+            "seq": 5,
+            "usable_count": 3,
+            "usable_digest": "sha256:54df813ef34e48b4df96323999669d262992803fc6612d72d986cdac59412594"
+          }
+        ],
+        "disabled_targets": [],
+        "missing_seqs": [],
+        "repair_results": [
+          {
+            "bytes": 1536,
+            "digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+            "ok": true,
+            "status": "ok",
+            "target_shard_id": "node-b:s4",
+            "task_id": "repair:block-beta:4:node-b:s4"
+          }
+        ],
+        "repair_task_ids": [
+          "repair:block-beta:4:node-b:s4"
+        ],
+        "replica_count": 9,
+        "replica_status_counts": {
+          "ok": 9
+        }
+      },
+      {
+        "attempted_replicas": [],
+        "block_id": "block-gamma",
+        "category": "full",
+        "consensus": [
+          {
+            "digest_votes": {
+              "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92": 3
+            },
+            "expected_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92",
+            "logical_id": "s6",
+            "seq": 6,
+            "usable_count": 3,
+            "usable_digest": "sha256:2dc99e10263e2a58919f880320043e3f86fbf8c80e3ff968af079f448f0a3e92"
+          },
+          {
+            "digest_votes": {
+              "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e": 3
+            },
+            "expected_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e",
+            "logical_id": "s7",
+            "seq": 7,
+            "usable_count": 3,
+            "usable_digest": "sha256:07f0fa4ff94c645460db7eb8d4cd31589828d6c70dc29f89e446ddbbd6849f0e"
+          }
+        ],
+        "disabled_targets": [],
+        "missing_seqs": [],
+        "repair_results": [],
+        "repair_task_ids": [],
+        "replica_count": 6,
+        "replica_status_counts": {
+          "ok": 6
+        }
+      }
+    ],
+    "repair_results": [
+      {
+        "bytes": 1536,
+        "digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "ok": true,
+        "status": "ok",
+        "target_shard_id": "node-b:s4",
+        "task_id": "repair:block-beta:4:node-b:s4"
+      }
+    ],
+    "repair_success_count": 1,
+    "repair_task_count": 1,
+    "repair_tasks": [
+      {
+        "block_id": "block-beta",
+        "bytes": 1536,
+        "expected_digest": "sha256:8c841107c4e36c1612051f26c9d9169567df390f8f51adb5cea02b5c915625f6",
+        "logical_id": "s4",
+        "reason": "digest_mismatch",
+        "seq": 4,
+        "source_node_id": "node-a",
+        "source_shard_id": "node-a:s4",
+        "target_node_id": "node-b",
+        "target_shard_id": "node-b:s4",
+        "task_id": "repair:block-beta:4:node-b:s4"
+      }
+    ],
+    "replica_total": 24,
+    "self_consistent": true
+  },
+  "replay": {
+    "affected": [
+      "s4",
+      "s5",
+      "s7"
+    ]
+  },
+  "saved_at": "2026-11-19T22:12:20.897135Z",
+  "schedule": {
+    "elapsed_ms": 83.955,
+    "ended_at": "2026-11-19T22:12:20.784800Z",
+    "entries": [
+      {
+        "attempt": 0,
+        "budget_consumed": 1,
+        "bytes": 1536,
+        "completed_bytes": 1536,
+        "content_digest": "sha256:10d38ebf9041a2244131390afa1d4055d9629cd8b739ad8c4fd8a2e88288cdce",
+        "duration_ms": 15.73,
+        "ended_at_monotonic_ms": 54382158.1,
+        "ledger_task_id": "demo-incremental:pack:s4:a0",
+        "logical_id": "s4",
+        "node_id": "node-a",
+        "outcome": "success",
+        "queue_ms": 0.457,
+        "queued_at_monotonic_ms": 54382141.912,
+        "retry_of": null,
+        "seq": 4,
+        "skip_reason": "",
+        "started_at_monotonic_ms": 54382142.37,
+        "task_id": "pack:s4",
+        "version": 2
+      },
+      {
+        "attempt": 0,
+        "budget_consumed": 1,
+        "bytes": 1664,
+        "completed_bytes": 1664,
+        "content_digest": "sha256:80d6e57c3a9876480021141f524a3f2bb4c7907ecc5c854525b6e7c7c5510e1c",
+        "duration_ms": 36.768,
+        "ended_at_monotonic_ms": 54382179.497,
+        "ledger_task_id": "demo-incremental:pack:s5:a0",
+        "logical_id": "s5",
+        "node_id": "node-b",
+        "outcome": "success",
+        "queue_ms": 0.809,
+        "queued_at_monotonic_ms": 54382141.92,
+        "retry_of": null,
+        "seq": 5,
+        "skip_reason": "",
+        "started_at_monotonic_ms": 54382142.728,
+        "task_id": "pack:s5",
+        "version": 2
+      },
+      {
+        "attempt": 0,
+        "budget_consumed": 1,
+        "bytes": 1920,
+        "completed_bytes": 1920,
+        "content_digest": "sha256:f5dd1fec57e45cd4b074ce9ddea46f2e0c06edc4951793a30dff49a89d44362f",
+        "duration_ms": 26.468,
+        "ended_at_monotonic_ms": 54382213.524,
+        "ledger_task_id": "demo-incremental:pack:s7:a0",
+        "logical_id": "s7",
+        "node_id": "node-c",
+        "outcome": "success",
+        "queue_ms": 45.132,
+        "queued_at_monotonic_ms": 54382141.924,
+        "retry_of": null,
+        "seq": 7,
+        "skip_reason": "",
+        "started_at_monotonic_ms": 54382187.056,
+        "task_id": "pack:s7",
+        "version": 2
+      }
+    ],
+    "global_slots": 2,
+    "max_global_observed": 2,
+    "max_per_node_observed": {
+      "node-a": 1,
+      "node-b": 1,
+      "node-c": 1
+    },
+    "node_quotas": {
+      "node-a": 2,
+      "node-b": 1,
+      "node-c": 1
+    },
+    "run_id": "demo-incremental",
+    "started_at": "2026-11-19T22:12:20.700810Z"
+  },
+  "snapshot_version": 1,
+  "spec_digest": "sha256:ddec00a1a4e626b45b17ac64635011960959b1d448554a656df4c5fbc7d2792c"
+}

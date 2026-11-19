@@ -1,0 +1,130 @@
+{
+  "pack_artifacts": {
+    "s0": {
+      "bytes": 1024,
+      "content_digest": "sha256:a4f602b449ffe023675587371bf7ff44079453246c92c74ff599cbcbfb4362d4",
+      "version": 1
+    },
+    "s1": {
+      "bytes": 1152,
+      "content_digest": "sha256:f10a3ecee0733796fac453b545551765038e11216baa8d24a6803e84c1d5c4f7",
+      "version": 1
+    },
+    "s2": {
+      "bytes": 1280,
+      "content_digest": "sha256:bfe30519cefb82b8ac8fa32460fdf5d549b0648788b82f39a4a0fdafad2a66d2",
+      "version": 1
+    },
+    "s3": {
+      "bytes": 1408,
+      "content_digest": "sha256:4f27e0b0cc4f9a557f55713f8997cc6147c4e60d2565d9e621d9649b33574512",
+      "version": 1
+    },
+    "s4": {
+      "bytes": 1536,
+      "content_digest": "sha256:10d38ebf9041a2244131390afa1d4055d9629cd8b739ad8c4fd8a2e88288cdce",
+      "version": 2
+    },
+    "s5": {
+      "bytes": 1664,
+      "content_digest": "sha256:80d6e57c3a9876480021141f524a3f2bb4c7907ecc5c854525b6e7c7c5510e1c",
+      "version": 2
+    },
+    "s6": {
+      "bytes": 1792,
+      "content_digest": "sha256:764b99932bc92518f94e06e44ceddb85c590be227af024a09c2b4e3197420923",
+      "version": 1
+    },
+    "s7": {
+      "bytes": 1920,
+      "content_digest": "sha256:f5dd1fec57e45cd4b074ce9ddea46f2e0c06edc4951793a30dff49a89d44362f",
+      "version": 2
+    }
+  },
+  "repair_counts": {
+    "full": 3,
+    "partial": 0,
+    "unrecoverable": 0
+  },
+  "replay_checked_fields": [
+    "affected",
+    "pack_manifest.artifacts",
+    "schedule.entries",
+    "repair_report.counts",
+    "repair_report.categories",
+    "registry_digest",
+    "block_replica_digest"
+  ],
+  "spec_digest": "sha256:ddec00a1a4e626b45b17ac64635011960959b1d448554a656df4c5fbc7d2792c",
+  "stage1_affected": [
+    "s2",
+    "s4",
+    "s5",
+    "s7"
+  ],
+  "stage2_affected": [
+    "s4",
+    "s5",
+    "s7"
+  ],
+  "stage2_schedule": [
+    {
+      "content_digest": "sha256:10d38ebf9041a2244131390afa1d4055d9629cd8b739ad8c4fd8a2e88288cdce",
+      "logical_id": "s4",
+      "node_id": "node-a",
+      "outcome": "success",
+      "version": 2
+    },
+    {
+      "content_digest": "sha256:80d6e57c3a9876480021141f524a3f2bb4c7907ecc5c854525b6e7c7c5510e1c",
+      "logical_id": "s5",
+      "node_id": "node-b",
+      "outcome": "success",
+      "version": 2
+    },
+    {
+      "content_digest": "sha256:f5dd1fec57e45cd4b074ce9ddea46f2e0c06edc4951793a30dff49a89d44362f",
+      "logical_id": "s7",
+      "node_id": "node-c",
+      "outcome": "success",
+      "version": 2
+    }
+  ],
+  "stage2_task_ids": [
+    "pack:s4",
+    "pack:s5",
+    "pack:s7"
+  ],
+  "unaffected_checks": [
+    {
+      "artifact_bytes_unchanged": true,
+      "digest_unchanged": true,
+      "logical_id": "s0",
+      "version_unchanged": true
+    },
+    {
+      "artifact_bytes_unchanged": true,
+      "digest_unchanged": true,
+      "logical_id": "s1",
+      "version_unchanged": true
+    },
+    {
+      "artifact_bytes_unchanged": true,
+      "digest_unchanged": true,
+      "logical_id": "s2",
+      "version_unchanged": true
+    },
+    {
+      "artifact_bytes_unchanged": true,
+      "digest_unchanged": true,
+      "logical_id": "s3",
+      "version_unchanged": true
+    },
+    {
+      "artifact_bytes_unchanged": true,
+      "digest_unchanged": true,
+      "logical_id": "s6",
+      "version_unchanged": true
+    }
+  ]
+}
