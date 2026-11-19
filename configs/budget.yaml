@@ -1,0 +1,15 @@
+# Budget + LOD parameters for the diagnostic workbench demo.
+triangle_budget: 120000        # max triangles per frame
+memory_budget_bytes: 4194304   # 4 MiB texture residency budget
+tau_pixels: 4.0                # screen-space error threshold
+seed: 20261119
+shading:
+  bands:
+    - [0.25, [64, 96, 160]]
+    - [0.45, [96, 144, 80]]
+    - [0.65, [128, 112, 88]]
+    - [0.85, [150, 150, 150]]
+    - [1.01, [240, 240, 245]]
+  slope_threshold: 0.55
+  slope_color: [110, 100, 95]
+  slope_blend: 0.7
