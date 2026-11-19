@@ -1,22 +1,125 @@
-当前是空白工作区，需在 Windows 上开发一个面向视频取证与内容完整性的增量指纹与依赖失效诊断工作台。输入为本地确定性合成的视频取证素材：固定种子程序化生成 60 秒 640x360、30fps 视频源，画面含平移色块、硬切镜头、局部遮挡区域与叠加水印，附带逐帧真值清单（镜头边界、色块轨迹、水印位置）。取证分析管线对视频按 GOP 分块计算帧级内容哈希、关键帧签名与篡改可疑度指标，构建从源帧到 GOP 摘要到整片完整性结论的派生链。用户会以增量方式修改采样区域、分析窗口或水印掩膜参数，每次只应重算受影响的 GOP 摘要与完整性结论，并对跨 GOP 依赖做失效闭包判定。核心业务目标是让取证结论在增量与全量重算之间保持一致、可复算、可审计。素材规模与真值来源明确：全部素材与逐帧真值由固定种子的生成器产出，观测与估计所依赖的同步标记为帧号与 GOP 边界，真值来自生成器输出的清单而非从缺失信息推断。
+# 视频取证增量指纹与依赖失效诊断工作台
 
-任务环境与准备：
-确认 Windows 上可运行 Python 3.10 及以上，安装说明与版本来源由使用者自行准备，不依赖容器环境。
-安装 NumPy 与标准库以外的必要依赖需在项目内声明版本，禁止使用需要真实素材或网络下载的资源。
-工作区为空目录，首次运行由程序的演示入口生成合成视频素材、帧真值清单与工作区目录结构。
-准备本地可写目录用于持久化依赖图与快照，并预留强制终止与重启恢复演示所需的单独运行目录。
+本项目在 Windows 本地运行，使用固定种子生成 60 秒、640x360、30fps 的确定性取证视频，并对帧特征、GOP 摘要、相邻 GOP 可疑度和整片结论建立可持久化的依赖 DAG。修改采样区域、分析窗口或水印掩膜后，程序只重算失效闭包内节点，并默认执行逐节点全量对照。
 
-业务要求：
-1. 实现取证素材生成器：按固定种子生成 60 秒 640x360、30fps 视频源，画面含平移色块、硬切镜头、局部遮挡与水印，输出逐帧真值清单（镜头边界、色块位置、水印区域）；同一配置两次生成必须逐字节一致，并给出帧数与内容哈希。
-2. 实现帧级取证特征：对每帧按声明的采样区域计算内容哈希与关键帧签名，并在 GOP 边界与镜头边界处标注；特征只依赖帧像素与采样参数，同一帧两次计算须得到相同哈希，采样区域改变须使依赖该区域的帧特征失效。
-3. 实现从帧特征到 GOP 摘要到整片完整性结论的依赖图：节点涵盖帧特征、GOP 摘要、跨 GOP 可疑度与最终结论，边标明触发失效的参数键；修改采样区域、分析窗口或掩膜后精确算出失效闭包，闭包外节点复用并记录复用来源与版本戳，禁止整片重算。
-4. 实现跨 GOP 依赖的失效判定：当某 GOP 的摘要失效但相邻 GOP 未变时，跨 GOP 可疑度须只对涉及该 GOP 的比对项重算，其判定不得直接沿用旧值；重算后的可疑度与全量重算对应值必须一致，不一致时须定位到具体比对项与失效边。
-5. 实现篡改可疑度指标：按帧内容哈希与关键帧签名的偏移度量给出逐 GOP 与逐帧可疑度，指标须声明归一化口径与阈值；水印掩膜内像素须从度量中排除且记录排除像素数，掩膜变化后排除口径须随之传播到受影响 GOP。
-6. 实现持久化与稳定状态提交：依赖图结构、各节点内容哈希与参数版本戳以原子方式写入工作区目录，写入未完成即视为未提交；重启后据此重建依赖图与版本戳，快照整体替换须以版本戳与哈希判定新旧，不得复用旧版本缓存。
-7. 区分受控退出与强制终止：正常退出写完整清单与关闭标记；强制终止后重启只依据最近一次已提交稳定状态恢复，未提交摘要作为孤儿回收并记录；恢复后的完整性结论须与提交状态逐节点一致，不得伪造退出报告。
-8. 定义业务错误码（E_FRAME_FORMAT、E_REGION_BOUNDS、E_DEPENDENCY_STALE、E_CLOSURE_MISMATCH、E_SNAPSHOT_VERSION、E_MASK_INVALID）并覆盖异常链路：非法采样区域、掩膜越界、缺失节点、版本冲突与孤儿回收须给出对应业务码与可追溯上下文，不得以通用异常吞掉。
+项目只依赖 Python 3.10+ 与锁定版本的 NumPy；不下载真实素材，不使用 Docker，不访问未授权目标。详细设计见 `docs/design.md`。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## Windows 安装
 
-验收：
-用本地合成视频验证增量失效闭包、增量与全量结论一致、重启恢复及错误码。
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+也可运行 `powershell -ExecutionPolicy Bypass -File scripts\setup_windows.ps1`。
+
+`requirements.txt` 固定 `numpy==2.2.6`，该版本提供 Windows CPython 3.10+ 的本地 wheel。Python 本体及来源由使用者自行准备。
+
+## 快速演示
+
+完整演示会生成 60 秒素材，然后执行基线、掩膜变更、采样变更、分析窗口变更、全量对照、重启重载和强制终止恢复。演示工作区必须是新的本地目录：
+
+```powershell
+.\.venv\Scripts\python.exe -m forensic_workbench demo --workspace workspace-demo
+```
+
+报告写入 `workspace-demo\reports\demo_report.json`。快速小样：
+
+```powershell
+.\.venv\Scripts\python.exe -m forensic_workbench demo --workspace workspace-small --width 160 --height 90 --duration 3 --gop-size 10
+```
+
+## 常用命令
+
+```powershell
+python -m forensic_workbench generate --workspace workspace
+python -m forensic_workbench config --workspace workspace
+python -m forensic_workbench run --workspace workspace --config workspace\configs\default.json --run-dir workspace\runs\manual-001
+python -m forensic_workbench status --workspace workspace
+python -m forensic_workbench recover --workspace workspace
+```
+
+`run` 默认校验 AVI 与真值文件哈希，并同时执行全量对照；加 `--skip-source-hash-verify` 或 `--no-full-verify` 可分别跳过对应检查。发生业务错误时，命令行输出结构化 JSON 并返回对应业务退出码。
+
+## 输出结构
+
+```text
+workspace/
+  source/
+    source.avi
+    ground_truth.jsonl
+    source_manifest.json
+  state/
+    CURRENT.json
+    snapshots/
+    pending/
+    recovery/
+    orphans/
+  runs/
+  recovery-runs/
+  reports/
+```
+
+`source_manifest.json` 给出帧数、逐帧清单哈希、AVI 字节哈希和像素内容哈希。相同配置在两个不同目录生成时，AVI、逐帧真值和清单均逐字节一致。
+
+## 依赖与失效语义
+
+- 帧特征只依赖源帧像素、实际生效的采样矩形、实际生效的掩膜矩形和特征算法版本。
+- GOP 摘要依赖窗口内成员帧、阈值和特征版本。
+- 每个相邻 GOP 边界是独立 `xgop` 节点。GOP 2 变化只重算 `xgop:001-002` 与 `xgop:002-003`。
+- 结论依赖当前分析窗口内的 GOP 摘要和跨 GOP 节点。
+- 闭包外节点复用会记录来源快照版本、来源快照哈希、首次产生版本和内容哈希。
+- 每个新增或复用节点都有内容哈希与参数版本戳；快照和当前指针均以原子替换提交。
+
+## 可疑度口径
+
+```text
+signature_offset = Hamming(signature, GOP keyframe signature) / 64
+tile_mismatch    = differing 4x4 tile hashes / 16
+frame_score      = 0.65 * signature_offset + 0.35 * tile_mismatch
+overall_score    = 0.70 * max(GOP score) + 0.30 * max(cross-GOP score)
+threshold        = 0.35
+```
+
+掩膜内像素从内容哈希、签名和色块哈希中排除，并记录掩膜像素数及实际从采样区排除的像素数。所有节点 payload 同时写入归一化公式和阈值。
+
+## 业务错误码
+
+| 错误码 | 含义 |
+|---|---|
+| `E_FRAME_FORMAT` | AVI/帧/配置结构非法或损坏 |
+| `E_REGION_BOUNDS` | 采样区域、分析窗口或有效采样范围非法 |
+| `E_DEPENDENCY_STALE` | 缺失依赖节点、节点哈希不匹配或复用节点缺失 |
+| `E_CLOSURE_MISMATCH` | 增量与全量不一致，或闭包外复用输入已过期 |
+| `E_SNAPSHOT_VERSION` | 版本冲突、快照哈希冲突、孤儿回收 |
+| `E_MASK_INVALID` | 水印掩膜越界、尺寸非法或帧范围非法 |
+
+`E_CLOSURE_MISMATCH` 的上下文包含具体 `node_id`、`comparison_item`、上游/下游边及失效边列表，可直接定位跨 GOP 比对项。
+
+## 测试
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+测试覆盖确定性生成、增量闭包、相邻跨 GOP 比较项、增量/全量一致、快照版本冲突、旧缓存禁用、受控退出、强制终止恢复、孤儿回收和六个业务错误码。
+
+## 实际验证记录
+
+工作区中的 `reports/demo_report.json` 是可复核的最近一次完整运行证据，包含素材哈希、每步闭包、全量对照标志、重启节点哈希一致性和崩溃恢复报告路径。最终交付说明记录实际执行结果。
+
+当前环境实际执行结果（Python 3.11.0rc1、NumPy 2.2.6、WSL2；WSL 的 Windows interop 被禁用，因此未执行 Windows 二进制，但项目代码仅使用跨平台标准库 API，并提供 PowerShell 脚本）：
+
+- `python -m unittest discover -s tests -v`：18 项通过，0 失败。
+- 完整 `demo`：1800 帧、60 GOP，AVI 1,244,203,432 字节，生成耗时约 6.14 秒，全部场景总耗时约 127.29 秒。
+- 视频 SHA-256：`ae558d0ab266aea87bf24f48ffeea770a7da1b7b2f14a4ee06af4392093d6b0d`。
+- 像素内容 SHA-256：`a5b3844235e4162652ec16359f81f78aca5a4bed0ac0ee9ec7b7c8be8dc26957`。
+- 真值清单 SHA-256：`61c9accace67ae1c98f31615a8c6c03ec04987e59930df52e74c658f52edc7f1`。
+- 基线图：1921 个节点；基线全量对照通过。
+- 掩膜变更：重算 34 节点，复用 1887 节点，全量对照通过。
+- 采样变更：重算 34 节点，复用 1887 节点，全量对照通过。
+- 分析窗口变更：重算 4 节点，复用 56 节点，撤销 1861 个窗外节点，全量对照通过。
+- 重启重载：版本 4 快照逐节点哈希一致。
+- 强制终止：子进程退出码 17，无关闭标记；回收 1 个未引用快照和 1 个待提交摘要，均记录 `E_SNAPSHOT_VERSION`；恢复后提交状态逐节点一致，随后运行重算 0 节点且结论哈希一致。
+
+完整报告：`workspace-final/reports/demo_report.json`（本地生成目录，默认不纳入版本控制）。归档说明见 `docs/verification.md`。
