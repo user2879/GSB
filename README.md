@@ -1,3 +1,65 @@
+# 本地确定性搜索精排与重排组件
+
+面向本地确定性样本的精排（定点融合打分）与窗口重排（多样性惩罚）领域组件，
+解决“交互低延迟”与“增量/全量计算结果逐字段一致”之间的冲突。仅依赖
+Python 3.11+ 标准库与 NumPy（仅样本生成使用），不访问任何外部服务、GPU 或网络。
+
+## 快速开始
+
+```bash
+# 1. 生成确定性样本、配置、分组表、命令流与故障注入样例
+python -m scripts.generate_samples --out samples/sample_input
+
+# 2. 空白工作区全量重建
+python -m rerank_cli.main full \
+    --input samples/sample_input --snapshot snapshots/full \
+    --report reports/full_report.json
+
+# 3. 交互命令驱动的增量运行
+python -m rerank_cli.main interactive \
+    --input samples/sample_input --snapshot snapshots/inc \
+    --commands samples/sample_input/commands.json \
+    --report reports/interactive_report.json
+
+# 4. 物化最终输入并做空白全量重建，逐字段比对增量结果
+python -m scripts.materialize_final \
+    --input samples/sample_input --commands samples/sample_input/commands.json \
+    --out samples/final_input
+python -m rerank_cli.main full \
+    --input samples/final_input --snapshot snapshots/final_full \
+    --report reports/final_full_report.json
+python scripts/compare_reports.py \
+    --incremental reports/interactive_report.json \
+    --full reports/final_full_report.json
+
+# 5. 故障注入与业务码验证
+python scripts/run_fault_injection.py
+
+# 6. 测试套件
+python -m pytest tests/ -q
+```
+
+## 模块导航
+
+- `rerank_core/`：领域组件（定点运算、归一化、融合、重排、缓存键、快照、引擎）
+- `rerank_cli/`：`full` / `interactive` 命令行入口
+- `scripts/`：样本生成、最终输入物化、报告比对、故障注入
+- `tests/`：17 个 pytest 用例，覆盖定点语义、并发一致性、预算、窗口、恢复
+- `docs/TECHNICAL_NOTES.md`：架构、定点语义、缓存键与验证结果的技术说明
+
+## 业务码
+
+| 业务码 | 触发场景 |
+| --- | --- |
+| `E_CONFIG_INVALID` | 权重长度/位宽/档位/窗口/并发/预算等配置非法 |
+| `E_RECORD_INVALID` | 非有限特征、负稀疏计数、空请求 ID、请求内重复物品、坏 JSON |
+| `E_CONFIG_MISMATCH` | 恢复时配置/分组表/候选集哈希与快照不一致，拒绝续跑 |
+| `E_INTERACT_BUDGET_PENDING` | 延迟预算内无法完成，返回中间状态并在后续补交 |
+
+---
+
+## 附：原始任务说明
+
 在空白工作区从零构建一个面向本地确定性样本的搜索精排与重排领域组件与完整示例，核心解决交互延迟与计算结果一致性之间的冲突。输入为一个本地样本目录：候选集 JSONL（每行含请求 ID、候选物品 ID、多路召回分数、稠密特征向量与稀疏特征计数）、一份精排配置 JSON（特征权重、归一化方式、融合温度、打分截断区间、定点小数位宽与量化档位、重排窗口大小与多样性惩罚系数、交互延迟预算毫秒、并发数、快照提交间隔命令数）以及一份特征分组表（声明哪些特征同组并存在量纲冲突）。组件需按请求完成特征归一化、定点加权融合打分与窗口重排，并支持用户反复修改权重、位宽与重排参数后即时查看排序结果；每次交互后增量给出的排序结果必须与从空白工作区按相同最终配置全量重算的结果逐字段一致，且在交互延迟预算内返回响应。
 
 任务环境与准备：

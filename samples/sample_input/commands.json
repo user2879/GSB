@@ -1,0 +1,83 @@
+{
+  "commands": [
+    {
+      "type": "set_weight",
+      "payload": {
+        "feature_index": 3,
+        "weight": 0.22
+      }
+    },
+    {
+      "type": "set_rerank_window",
+      "payload": {
+        "window": 4
+      }
+    },
+    {
+      "type": "set_quant",
+      "payload": {
+        "frac_bits": 6,
+        "quant_levels": 128
+      }
+    },
+    {
+      "type": "set_penalty",
+      "payload": {
+        "penalty": 0.4
+      }
+    },
+    {
+      "type": "set_normalization",
+      "payload": {
+        "normalization": "zscore"
+      }
+    },
+    {
+      "type": "add_candidate",
+      "payload": {
+        "request_id": "req-001",
+        "line_no": 9001,
+        "record": {
+          "request_id": "req-001",
+          "item_id": "item-001-extra",
+          "recall_scores": {
+            "ann": 1.25,
+            "inverted": -0.4,
+            "hot": 0.8
+          },
+          "dense": [
+            0.9,
+            -1.1,
+            4.2,
+            -2.0
+          ],
+          "sparse": [
+            2,
+            0,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "type": "delete_candidate",
+      "payload": {
+        "request_id": "req-002",
+        "item_id": "item-002-003"
+      }
+    },
+    {
+      "type": "set_quant",
+      "payload": {
+        "frac_bits": 3,
+        "quant_levels": 64
+      }
+    },
+    {
+      "type": "set_rerank_window",
+      "payload": {
+        "window": 8
+      }
+    }
+  ]
+}

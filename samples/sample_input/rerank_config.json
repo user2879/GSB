@@ -1,0 +1,35 @@
+{
+  "recall_channels": [
+    "ann",
+    "inverted",
+    "hot"
+  ],
+  "dense_dim": 4,
+  "sparse_dim": 3,
+  "weights": [
+    0.3,
+    0.2,
+    0.15,
+    0.12,
+    0.08,
+    0.06,
+    0.04,
+    0.03,
+    0.01,
+    0.01
+  ],
+  "normalization": "minmax",
+  "fusion_temperature": 1.2,
+  "score_clip": [
+    -50,
+    50
+  ],
+  "frac_bits": 4,
+  "quant_levels": 256,
+  "rerank_window": 6,
+  "diversity_penalty": 0.25,
+  "similarity_threshold": 0.9,
+  "latency_budget_ms": 200,
+  "concurrency": 3,
+  "snapshot_every_commands": 2
+}
