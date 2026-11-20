@@ -1,0 +1,150 @@
+{
+  "format_version": 1,
+  "scale_power": 3,
+  "overflow_policy": "saturate_int64",
+  "error_dominance_threshold": 0.50,
+  "source_type_bias": {
+    "baseline": 2,
+    "file_override": 1,
+    "runtime_injection": 0
+  },
+  "sources": [
+    {"id": "base", "type": "baseline"},
+    {"id": "file_dev", "type": "file_override"},
+    {"id": "rt_dev", "type": "runtime_injection"},
+    {"id": "file_stage", "type": "file_override"},
+    {"id": "rt_stage", "type": "runtime_injection"},
+    {"id": "file_prod_primary", "type": "file_override"},
+    {"id": "file_prod_fallback", "type": "file_override"},
+    {"id": "rt_prod", "type": "runtime_injection"}
+  ],
+  "environments": [
+    {
+      "id": "dev",
+      "depth": 0,
+      "available_sources": ["base", "file_dev", "rt_dev"],
+      "source_priority": ["rt_dev", "file_dev", "base"],
+      "bindings": {
+        "headroom": {"allowed_source_ids": ["file_dev", "base"]}
+      },
+      "entries": {
+        "base": {
+          "cpu_cores": 4,
+          "memory_gb": 8.0005,
+          "mem_floor": 8.0002,
+          "headroom": 1.0,
+          "latency_ms": 20.5,
+          "retry_budget": 2.0
+        },
+        "file_dev": {
+          "cpu_cores": 6.2505,
+          "memory_gb": 10.0005,
+          "mem_floor": 10.0002,
+          "headroom": 0.75,
+          "latency_ms": 18.7505,
+          "retry_budget": 1.5005
+        },
+        "rt_dev": {
+          "cpu_cores": 7.0,
+          "memory_gb": 9.0005,
+          "headroom": 0.5,
+          "latency_ms": 21.0,
+          "retry_budget": 2.2505
+        }
+      }
+    },
+    {
+      "id": "staging",
+      "depth": 1,
+      "available_sources": ["base", "file_stage", "rt_stage"],
+      "source_priority": ["rt_stage", "file_stage", "base"],
+      "bindings": {
+        "headroom": {"allowed_source_ids": ["base", "file_stage"]}
+      },
+      "entries": {
+        "base": {
+          "cpu_cores": 6,
+          "memory_gb": 16.0005,
+          "mem_floor": 16.0002,
+          "headroom": 1.5,
+          "latency_ms": 18.75,
+          "retry_budget": 1.5
+        },
+        "file_stage": {
+          "cpu_cores": 8.0015,
+          "memory_gb": 20.0005,
+          "mem_floor": 20.0002,
+          "headroom": 1.25,
+          "latency_ms": 16.5005,
+          "retry_budget": 1.2505
+        },
+        "rt_stage": {
+          "cpu_cores": 10.0,
+          "memory_gb": 18.0005,
+          "mem_floor": 18.0002,
+          "headroom": 0.25,
+          "latency_ms": 15.75,
+          "retry_budget": 2.0
+        }
+      }
+    },
+    {
+      "id": "prod",
+      "depth": 2,
+      "available_sources": ["base", "file_prod_primary", "file_prod_fallback", "rt_prod"],
+      "source_priority": ["rt_prod", "file_prod_primary", "file_prod_fallback", "base"],
+      "bindings": {
+        "headroom": {"allowed_source_ids": ["file_prod_primary", "base"]},
+        "mem_floor": {"allowed_source_ids": ["file_prod_fallback", "base"]},
+        "latency_ms": {"allowed_source_types": ["runtime_injection", "file_override"]}
+      },
+      "entries": {
+        "base": {
+          "cpu_cores": 8,
+          "memory_gb": 32.0005,
+          "mem_floor": 32.0002,
+          "headroom": 2.0,
+          "latency_ms": 15.25,
+          "retry_budget": 1.0
+        },
+        "file_prod_primary": {
+          "cpu_cores": 12.0005,
+          "memory_gb": 40.0005,
+          "mem_floor": 40.0002,
+          "headroom": 1.75,
+          "latency_ms": 13.5005,
+          "retry_budget": 0.7505
+        },
+        "file_prod_fallback": {
+          "cpu_cores": 11.0005,
+          "memory_gb": 36.0005,
+          "mem_floor": 36.0025,
+          "headroom": 1.5,
+          "latency_ms": 14.0005,
+          "retry_budget": 1.2505
+        },
+        "rt_prod": {
+          "cpu_cores": 16.0,
+          "memory_gb": 30.0005,
+          "headroom": 0.5,
+          "latency_ms": 12.75,
+          "retry_budget": 2.5
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "capacity",
+      "formula": "1.5*cpu_cores + 0.3333*memory_gb - 2*headroom + 0.25*mem_floor"
+    },
+    {
+      "id": "latency_budget",
+      "formula": "0.75*latency_ms + 0.125*retry_budget"
+    },
+    {
+      "id": "floor_margin",
+      "formula": "1.0*memory_gb - 1.0*mem_floor - 0.5*headroom"
+    }
+  ]
+}

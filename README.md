@@ -1,22 +1,171 @@
-当前是空白工作区，需要从零构建一个面向 Windows 本地环境的多环境部署一致性验证工作台，交付领域数据编辑与操作应用。用户在本地 JSON 文件中声明若干部署环境（环境标识、层级深度、可用配置源集合与每个源的来源类型）、一组配置源（基线源、文件覆盖源、运行时注入源，按环境给出各自的键值条目），以及一批数值型配置消费任务：每个任务引用若干数值键，按声明公式做整数定点聚合，产出结果摘要。核心业务是：同一逻辑键在不同环境中可能来自不同源、取不同数值，系统须把每个环境的生效来源链与逐键定点数值确定下来，把定点量化误差沿来源链与聚合公式传播并给出误差界，同时保证环境集合或来源优先级变更后，旧结论被识别为陈旧并以整体替换方式重建结论视图，且中断后能从持久化账本恢复并逐项重放校验。
+# 多环境部署一致性验证工作台
 
-任务环境与准备：
-安装 Python 3.11 及以上版本，确认 tkinter 与 sqlite3 标准库可用（Windows 官方安装包默认包含）。
-无需外部依赖与网络访问，所有样本、账本与快照均写入工作区内的本地目录。
-准备本地确定性样本：多环境 JSON 声明、各环境来源键值条目、任务公式与缩放因子参数，全部由工作区文件提供。
-运行前确认工作区可写，SQLite 文件与快照目录不存在时由程序创建。
+这是一个只依赖 Python 标准库的本地工作台，面向 Windows 上的多环境部署配置校验。它从本地 JSON 读取环境、配置源和数值消费任务，构建逐环境逐键的来源链，执行整数定点聚合，拆分误差界与归因，并把结论、版本、快照和恢复状态持久化到工作区。
 
-业务要求：
-1. 实现环境、配置源与消费任务的加载及强校验：从本地 JSON 读取环境层级、可用源集合、逐源键值条目与任务公式，校验环境标识与任务标识唯一、层级为非负整数、数值键类型受支持、公式引用的键在至少一个可用源中出现、任务引用的键集合非空；任一不合法须以 E_SPEC 整体拒绝加载并输出出错环境与字段路径
-2. 实现逐环境逐键的生效来源链构建与稳定裁决：按显式优先级规则与来源类型偏置对每个键排序可用来源，链上每步记录来源标识、该源取值与参与排序的依据，最终生效值取链上首个满足逐键绑定约束的来源；顺序与裁决不得依赖字典或哈希遍历顺序，同一环境与同一来源集合多次构建必须得到逐字节一致的来源链与生效值
-3. 实现整数定点量化与误差界推导：以会话参数指定的缩放因子（10 的整数幂）把配置数值与公式系数统一量化为定点整数，所有乘加以整数完成并显式声明截断方向与溢出饱和规则；须分别给出单键量化误差、逐键比较判定的误差界以及按公式系数绝对值加权合成的任务结果误差上界，中间项须在报告中逐项列出
-4. 实现沿来源链与公式的误差传播归因：把任务结果误差界拆分为来源量化、公式截断与聚合合成三段贡献并输出占比，判定主导段须有显式阈值规则；当两个键的定点值之差落在合成误差界内时须按稳定决胜规则排序并标注该判定受误差界影响；归因结果须与来源遍历顺序、任务执行顺序无关
-5. 实现环境集合或来源优先级变更后的陈旧结论防护与整体替换：任一环境、来源条目或优先级偏置被修改后版本号单调递增，旧版本下的来源链、生效值、误差界与归因须标记为陈旧且不得参与当前展示与统计；当前结论视图须整体替换而非逐键增量合并，替换时须稳定列出受影响环境数与键数，旧版本结论保留为只读
-6. 实现账本持久化与强制终止后的恢复：每完成一个环境的裁决与任务计算须在同一 SQLite 事务中写入环境标识、来源链摘要、生效值、误差界、归因与版本号，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的环境记录恢复，处于计算中且未提交的环境须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告
-7. 实现版本识别的快照整体替换恢复与重放校验：快照持久化环境集合版本、来源优先级版本、缩放因子口径版本、逐环境结论摘要与已完成环境集合；重新打开快照时须比较快照版本与当前声明版本，不一致须整体替换当前环境与结论状态而非增量合并；恢复后按快照记录的版本重新裁决并计算，与快照逐环境逐键比较，差异须定位到首个不一致的环境标识、键与字段并以 E_REPLAY 报明依据
-8. 提供 Tkinter 操作界面与异常注入链路：界面须支持编辑环境与来源条目、触发裁决与任务计算、查看逐环境来源链、生效值、误差界热力、归因链与版本列表，渲染顺序稳定且刷新不改变账本内容；支持以命令行参数分别注入环境声明损坏、绑定约束引用缺失来源、缩放因子非法三类异常，分别以 E_ENV、E_BIND、E_GRID 业务码报告并写入结构化日志，注入仅改变输入文件或参数而不改动程序逻辑
+## 运行环境
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Python 3.11 或更高版本。
+- `tkinter` 与 `sqlite3` 标准库。Windows 官方 Python 安装包默认包含二者。
+- 不需要网络访问，不依赖第三方包或容器。
 
-验收：
-用本地多环境样本验证来源链裁决、定点误差界、版本变更整体替换与恢复后逐项重放一致。
+当前交付验证环境是 Linux/Python 3.11.0rc1，其中的 Python 未编译 `tkinter`。因此核心、CLI、SQLite、快照和全部自动化测试已实测；Tk 界面已做语法与静态实现检查，但需在带 Tk 的 Windows 官方 Python 上运行。
+
+## 快速开始
+
+Windows 命令提示符：
+
+```bat
+run_workbench.cmd gui --spec data\sample_spec.json --state-root .workbench
+run_workbench.cmd run --spec data\sample_spec.json --state-root .workbench
+run_workbench.cmd replay --spec data\sample_spec.json --state-root .workbench
+run_workbench.cmd recover --spec data\sample_spec.json --state-root .workbench
+```
+
+等价的 `py` 命令：
+
+```bat
+py -3 -m deploy_workbench gui --spec data/sample_spec.json --state-root .workbench
+py -3 -m deploy_workbench run --spec data/sample_spec.json --state-root .workbench
+```
+
+不指定命令时默认打开 Tk 界面。所有 SQLite、日志、注入输入和快照都在 `--state-root` 下创建：
+
+```text
+.workbench/
+  ledger.sqlite3
+  logs/workbench.jsonl
+  snapshots/latest.json
+  snapshots/snapshot-run-<id>.json
+  injected/
+```
+
+## 声明文件
+
+完整可运行样本位于 `data/sample_spec.json`。主要结构如下：
+
+```json
+{
+  "format_version": 1,
+  "scale_power": 3,
+  "overflow_policy": "saturate_int64",
+  "error_dominance_threshold": 0.5,
+  "source_type_bias": {
+    "baseline": 2,
+    "file_override": 1,
+    "runtime_injection": 0
+  },
+  "sources": [
+    {"id": "base", "type": "baseline"},
+    {"id": "file_dev", "type": "file_override"},
+    {"id": "rt_dev", "type": "runtime_injection"}
+  ],
+  "environments": [
+    {
+      "id": "dev",
+      "depth": 0,
+      "available_sources": ["base", "file_dev", "rt_dev"],
+      "source_priority": ["rt_dev", "file_dev", "base"],
+      "bindings": {
+        "headroom": {"allowed_source_ids": ["file_dev", "base"]}
+      },
+      "entries": {
+        "base": {"cpu_cores": 4, "headroom": 1.0},
+        "file_dev": {"cpu_cores": 6.2505, "headroom": 0.75},
+        "rt_dev": {"cpu_cores": 7.0, "headroom": 0.5}
+      }
+    }
+  ],
+  "tasks": [
+    {"id": "capacity", "formula": "1.5*cpu_cores - 2*headroom"}
+  ]
+}
+```
+
+约束与校验：
+
+- 环境 ID、源 ID、任务 ID 分别唯一；环境 `depth` 是非负整数。
+- 源类型只支持 `baseline`、`file_override`、`runtime_injection`，类型偏置必须完整声明且为非负整数。
+- 数值仅接受有限整数、浮点数或 JSON 十进制数；布尔值和数字字符串会被拒绝。
+- `available_sources` 必须引用已声明源；`source_priority` 必须与可用源集合完全一致。
+- 公式只支持加、减、数值常量乘法和括号，必须至少引用一个数值键，且引用键至少存在于一个可用源中。拒绝除法和键与键相乘。
+- 绑定只支持 `allowed_source_ids`、`excluded_source_ids`、`allowed_source_types`；引用的源必须存在。
+- 任一加载失败都会整体拒绝，不产生部分环境结论。报告包含业务码、环境和 JSON 风格字段路径；`E_ENV`、`E_BIND`、`E_GRID` 同时带 `parent_code: E_SPEC`。
+
+## 裁决与定点语义
+
+对每个环境中的每个键，只把实际提供该键的源放进链，按以下元组升序稳定排序：
+
+```text
+(来源类型偏置, 环境显式优先级序号, 来源 ID 字典序)
+```
+
+链记录每一步的源 ID、类型、原值、定点值、类型偏置、显式优先级、排序依据、绑定是否满足和是否选中。生效值为链上首个满足逐键绑定约束的源。排序不依赖字典或哈希遍历，所有列表和摘要都使用规范 JSON。
+
+设缩放因子为 `S = 10^scale_power`：
+
+- 所有配置值和公式系数使用 `trunc_toward_zero(value * S)` 量化。
+- 系数定点值乘键定点值，整数乘加后对 `S` 做向零截断，最终结果饱和到有符号 64 位整数范围。
+- 单键误差报告包含带符号残差、绝对残差与理论上界 `1/S`。
+- 任意两个键的比较误差界为两者 `1/S` 之和；差值落入该界时使用键 ID 字典序稳定决胜，并标为受误差界影响。
+
+任务结果误差界拆成三段：
+
+- `source_quantization`：按公式系数绝对值加权的键量化残差。
+- `formula_truncation`：系数量化残差、常量量化残差和最终整数除法余项。
+- `aggregation_synthesis`：来源与系数量化交叉项，以及最终饱和间隙。
+
+三段贡献之和即紧误差界；报告另给基于统一 `1/S` 的理论上界。主导段在贡献占比 `>= error_dominance_threshold` 时成立，占比相同则按上述三段固定顺序决胜。所有中间项逐键列在 `intermediates` 中。
+
+## 版本、账本与快照
+
+- `environment_version` 覆盖源定义、环境层级、可用源、绑定、源条目和任务公式。
+- `priority_version` 覆盖来源类型偏置、源类型、环境可用源集合与显式优先级。
+- `scale_version` 覆盖缩放因子和溢出策略。
+- 打开已修改声明时，版本立即单调递增，旧当前结论退为非当前；界面当前视图整体清空，不逐键合并。重新计算会创建新的 run，旧 run 及其结论保留为只读历史。
+- 每个环境计算完成后，在同一个 SQLite 事务中写入结论载荷、链摘要、格式版本字段和三个版本号。环境记录有禁止 UPDATE/DELETE 的触发器。
+- 如果进程被强制终止，`environment_progress` 中未提交的环境会在下次打开后标成 `unknown`；只恢复已经完整提交的环境，明确要求重跑，不伪造强制退出报告。
+- 快照记录三个版本、缩放口径、完成环境集合、逐环境结论和内容摘要。版本一致时重新裁决并逐环境逐键逐字段比较；首个差异以 `E_REPLAY` 返回环境、键、字段和两边依据。版本不一致时整体重建当前结论视图，而非合并旧快照。
+
+## 异常注入与日志
+
+三类注入只生成坏输入文件或非法会话参数，不改变程序分支：
+
+```bat
+py -3 -m deploy_workbench run --spec data/sample_spec.json --state-root .workbench --inject-env
+py -3 -m deploy_workbench run --spec data/sample_spec.json --state-root .workbench --inject-bind
+py -3 -m deploy_workbench run --spec data/sample_spec.json --state-root .workbench --inject-grid
+```
+
+| 业务码 | 含义 | CLI 退出码 |
+| --- | --- | ---: |
+| `E_SPEC` | 声明整体校验失败 | 5 |
+| `E_ENV` | 环境声明文件损坏 | 2 |
+| `E_BIND` | 绑定引用缺失来源 | 3 |
+| `E_GRID` | 缩放因子非法 | 4 |
+| `E_REPLAY` | 快照重放首个差异 | 6 |
+| `E_LEDGER` | 账本格式或摘要损坏 | 7 |
+
+每次失败都会向 `--state-root/logs/workbench.jsonl` 追加一行结构化 JSON，包含业务码、路径、环境、消息和事件类型。
+
+## Tk 界面
+
+界面左侧可增删改环境、源类型和逐源键值条目；右侧标签页稳定展示：
+
+- 环境摘要与提交状态。
+- 逐环境逐键来源链和选中依据。
+- 生效原值、定点值、量化误差和误差热力。
+- 任务结果、误差界及三段归因。
+- run/版本列表，并可只读打开历史结论。
+
+“Refresh view (read-only)”只读取账本，不触发生成、恢复或重算。
+
+## 测试与验收
+
+```bat
+run_tests.cmd
+py -3 scripts/verify_acceptance.py
+```
+
+共 29 项 `unittest` 测试覆盖：加载强校验、三类注入、稳定来源链、绑定跳过、定点误差界、归因、比较决胜、版本递增、陈旧隔离、只读历史、强制中断恢复、快照重放和首个差异定位。
+
+实际执行结果与样本数值见 `docs/VERIFICATION.md`，机器可读摘要见 `artifacts/acceptance_report.json`。架构与不变量说明见 `docs/ARCHITECTURE.md`。
