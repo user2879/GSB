@@ -1,0 +1,26 @@
+behaviors:
+- view
+- cart
+- buy
+business_codes:
+  E_BACKFILL_ORDER: '4004'
+  E_DEF_CYCLE: '4002'
+  E_DEF_PARAM: '4003'
+  E_EVENT_INVALID: '4001'
+  E_FEAT_BUDGET_EXHAUSTED: '5001'
+  E_GLOBAL_BUDGET_EXHAUSTED: '5002'
+  E_INCREMENT_MISMATCH: '5003'
+  E_INJECTION_HIT: '6001'
+  E_SAMPLE_PENDING: '4005'
+  E_SNAPSHOT_STALE: '5004'
+cache_block_limit: 3
+context_fields:
+- price
+- duration
+default_empty_value: '0'
+feature_point_quota: 140
+fixed_point_scale: 4
+global_event_budget: 900
+quant_step: '0.25'
+snapshot_commit_every: 25
+thread_concurrency: 4
