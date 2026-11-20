@@ -1,0 +1,11 @@
+== 异常注入 1：通道声明损坏（期望 E_CHANNEL）==
+[E_CHANNEL] 声明整体拒绝；出错字段：channels[0].window_ms: 必须是正整数
+
+== 异常注入 2：偏差样本不足（期望 E_ESTIMATE）==
+通道 tun-alpha 被标记 PENDING 的组数=7，估计未定拒绝开窗
+
+== 异常注入 3：快照摘要损坏（期望 E_SNAPSHOT）==
+[E_SNAPSHOT] @ snapshots.snap-0001.content_digest 快照内容摘要不符（记录 sha256:0000000000000000000000000000000000000000000000000000000000000000），判定快照损坏，整体替换
+触发整体替换：replace_all 清空通道/参数/窗口状态/快照
+
+结构化日志已写入 /home/zsl/feedback/uidfc5909d3-default-43/logs/events.jsonl

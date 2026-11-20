@@ -1,0 +1,25 @@
+当前 Python 环境未安装 tkinter，已降级为文本视图（Windows 安装时勾选 Tcl/Tk 即可开窗）：
+
+[tun-alpha] 127.0.0.1:39101 slots=2 inflight=10ms
+  估计版本: [{'version': 0, 'skew_ms': None, 'samples': 1, 'qerror_ms': 1}, {'version': 0, 'skew_ms': None, 'samples': 2, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 3, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 4, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 5, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 6, 'qerror_ms': 1}, {'version': 2, 'skew_ms': 4026, 'samples': 7, 'qerror_ms': 1}]
+  窗口: [{'seq': 1, 'action': 'OPEN', 'base_ms': 5050, 'close_ms': None}, {'seq': 1, 'action': 'CLOSE', 'base_ms': 5050, 'close_ms': 5170}, {'seq': 2, 'action': 'OPEN', 'base_ms': 5170, 'close_ms': None}, {'seq': 2, 'action': 'CLOSE', 'base_ms': 5170, 'close_ms': 5290}, {'seq': 3, 'action': 'OPEN', 'base_ms': 5290, 'close_ms': None}, {'seq': 3, 'action': 'CLOSE', 'base_ms': 5290, 'close_ms': 5410}, {'seq': 4, 'action': 'OPEN', 'base_ms': 5410, 'close_ms': None}, {'seq': 4, 'action': 'CLOSE', 'base_ms': 5410, 'close_ms': 5530}]
+  翻转: []
+  丢弃: [{'group': 4, 'status': 'OFFSET_DROPPED', 'window': 2, 'reason': '在途偏移 40ms 超过上限 10ms'}, {'group': 5, 'status': 'OFFSET_DROPPED', 'window': 3, 'reason': '在途偏移 80ms 超过上限 10ms'}]
+  结局: [{'group': 0, 'status': 'PENDING', 'window': None}, {'group': 1, 'status': 'PENDING', 'window': None}, {'group': 2, 'status': 'PENDING', 'window': None}, {'group': 3, 'status': 'COMPLETE', 'window': 2}, {'group': 4, 'status': 'OFFSET_DROPPED', 'window': 2}, {'group': 5, 'status': 'OFFSET_DROPPED', 'window': 3}, {'group': 6, 'status': 'INCOMPLETE', 'window': 4}]
+
+[tun-beta] 127.0.0.1:39102 slots=1 inflight=500ms
+  估计版本: [{'version': 0, 'skew_ms': None, 'samples': 1, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 3992, 'samples': 2, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 3992, 'samples': 3, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 3992, 'samples': 4, 'qerror_ms': 1}]
+  窗口: [{'seq': 1, 'action': 'OPEN', 'base_ms': 5022, 'close_ms': None}, {'seq': 1, 'action': 'CLOSE', 'base_ms': 5022, 'close_ms': 5112}]
+  翻转: []
+  丢弃: [{'group': 2, 'status': 'SLOT_DROPPED', 'window': 1, 'reason': '槽位预算 1 耗尽，丢弃折算时刻最早的组 2'}]
+  结局: [{'group': 0, 'status': 'PENDING', 'window': None}, {'group': 1, 'status': 'PENDING', 'window': None}, {'group': 2, 'status': 'SLOT_DROPPED', 'window': 1}, {'group': 3, 'status': 'COMPLETE', 'window': 1}]
+
+[tun-gamma] 127.0.0.1:39103 slots=4 inflight=1000ms
+  估计版本: [{'version': 0, 'skew_ms': None, 'samples': 1, 'qerror_ms': 1}, {'version': 0, 'skew_ms': None, 'samples': 2, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 3, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 4, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 5, 'qerror_ms': 1}, {'version': 1, 'skew_ms': 4010, 'samples': 6, 'qerror_ms': 1}, {'version': 2, 'skew_ms': 4030, 'samples': 7, 'qerror_ms': 1}, {'version': 2, 'skew_ms': 4030, 'samples': 8, 'qerror_ms': 1}]
+  窗口: [{'seq': 1, 'action': 'OPEN', 'base_ms': 6010, 'close_ms': None}, {'seq': 1, 'action': 'CLOSE', 'base_ms': 6010, 'close_ms': 6110}, {'seq': 2, 'action': 'OPEN', 'base_ms': 6110, 'close_ms': None}, {'seq': 2, 'action': 'CLOSE', 'base_ms': 6110, 'close_ms': 6210}, {'seq': 3, 'action': 'OPEN', 'base_ms': 6210, 'close_ms': None}, {'seq': 3, 'action': 'CLOSE', 'base_ms': 6210, 'close_ms': 6310}, {'seq': 4, 'action': 'OPEN', 'base_ms': 6310, 'close_ms': None}, {'seq': 4, 'action': 'CLOSE', 'base_ms': 6310, 'close_ms': 6410}]
+  翻转: [{'group': 2, 'from_version': 1, 'to_version': 2, 'kind': 'WINDOW_CHANGE', 'from_window': 1, 'to_window': 2}, {'group': 7, 'from_version': 1, 'to_version': 2, 'kind': 'WINDOW_CHANGE', 'from_window': 3, 'to_window': 4}]
+  丢弃: []
+  结局: [{'group': 0, 'status': 'PENDING', 'window': None}, {'group': 1, 'status': 'PENDING', 'window': None}, {'group': 2, 'status': 'PENDING', 'window': None}, {'group': 3, 'status': 'COMPLETE', 'window': 2}, {'group': 4, 'status': 'COMPLETE', 'window': 2}, {'group': 5, 'status': 'COMPLETE', 'window': 3}, {'group': 6, 'status': 'COMPLETE', 'window': 3}, {'group': 7, 'status': 'COMPLETE', 'window': 4}]
+
+业务码: [('E_CHANNEL', '通道声明/脚本强校验失败，整体拒绝'), ('E_ESTIMATE', '偏差样本不足，估计未定，拒绝开窗'), ('E_DIGEST', '重组摘要与登记值不一致'), ('E_SNAPSHOT', '快照版本或内容摘要不符，整体替换'), ('E_REPLAY', '恢复重放与账本逐项比对不一致'), ('E_PROTOCOL', '数据报片头/长度/CRC 自洽校验失败')]
+快照: [{'snapshot_id': 'snap-0001', 'created_ms': 122725770, 'config_version': 'sha256:d545db52e304cfd300dd34fd659cd95e093e1b9fff67e63bf4230a7bfee3403f', 'trace_version': 'sha256:2210872b727b8d5290925f7637617d1a0b24393e6b988bb2007cc337d37c4922', 'content_digest': 'sha256:03bebe1da0dfeb979ec733aa2547f65a0df4d32861b65d24234544c4658bade9'}]

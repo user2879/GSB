@@ -1,0 +1,6 @@
+{"code": "OK", "content_digest": "sha256:03bebe1da0dfeb979ec733aa2547f65a0df4d32861b65d24234544c4658bade9", "level": "INFO", "message": "确定性裁决完成并写入快照", "seq": 1, "snapshot": "snap-0001", "ts_ms": 122725813}
+{"code": "OK", "level": "INFO", "message": "恢复后重放逐项一致", "seq": 2, "snapshot": "snap-0001", "ts_ms": 122726099, "unknown_inflight": 8}
+{"channel": "tun-alpha", "code": "OK", "level": "INFO", "message": "真实回环 UDP 收片完成", "received": 22, "sent": 22, "seq": 3, "ts_ms": 122726618}
+{"code": "E_CHANNEL", "level": "ERROR", "message": "声明整体拒绝；出错字段：channels[0].window_ms: 必须是正整数", "path": null, "seq": 4, "ts_ms": 122726999}
+{"channel_id": "tun-alpha", "code": "E_ESTIMATE", "groups": 7, "level": "ERROR", "message": "注入：样本下限抬高到 8，估计始终未定，拒绝开启窗口", "seq": 5, "ts_ms": 122727379}
+{"code": "E_SNAPSHOT", "level": "ERROR", "message": "快照内容摘要不符（记录 sha256:0000000000000000000000000000000000000000000000000000000000000000），判定快照损坏，整体替换", "path": "snapshots.snap-0001.content_digest", "seq": 6, "ts_ms": 122727434}

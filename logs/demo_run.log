@@ -1,0 +1,370 @@
+{
+  "tun-alpha": {
+    "estimate_versions": [
+      {
+        "version": 0,
+        "skew_ms": null,
+        "samples": 1
+      },
+      {
+        "version": 0,
+        "skew_ms": null,
+        "samples": 2
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 3
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 4
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 5
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 6
+      },
+      {
+        "version": 2,
+        "skew_ms": 4026,
+        "samples": 7
+      }
+    ],
+    "window_events": [
+      {
+        "seq": 1,
+        "action": "OPEN",
+        "base_ms": 5050,
+        "close_ms": null
+      },
+      {
+        "seq": 1,
+        "action": "CLOSE",
+        "base_ms": 5050,
+        "close_ms": 5170
+      },
+      {
+        "seq": 2,
+        "action": "OPEN",
+        "base_ms": 5170,
+        "close_ms": null
+      },
+      {
+        "seq": 2,
+        "action": "CLOSE",
+        "base_ms": 5170,
+        "close_ms": 5290
+      },
+      {
+        "seq": 3,
+        "action": "OPEN",
+        "base_ms": 5290,
+        "close_ms": null
+      },
+      {
+        "seq": 3,
+        "action": "CLOSE",
+        "base_ms": 5290,
+        "close_ms": 5410
+      },
+      {
+        "seq": 4,
+        "action": "OPEN",
+        "base_ms": 5410,
+        "close_ms": null
+      },
+      {
+        "seq": 4,
+        "action": "CLOSE",
+        "base_ms": 5410,
+        "close_ms": 5530
+      }
+    ],
+    "flips": [],
+    "outcomes": [
+      {
+        "group": 0,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 0 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 1,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 1 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 2,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 2 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 3,
+        "status": "COMPLETE",
+        "window": 2,
+        "reason": null
+      },
+      {
+        "group": 4,
+        "status": "OFFSET_DROPPED",
+        "window": 2,
+        "reason": "在途偏移 40ms 超过上限 10ms"
+      },
+      {
+        "group": 5,
+        "status": "OFFSET_DROPPED",
+        "window": 3,
+        "reason": "在途偏移 80ms 超过上限 10ms"
+      },
+      {
+        "group": 6,
+        "status": "INCOMPLETE",
+        "window": 4,
+        "reason": "窗口关闭时仅到 1/2 片"
+      }
+    ]
+  },
+  "tun-beta": {
+    "estimate_versions": [
+      {
+        "version": 0,
+        "skew_ms": null,
+        "samples": 1
+      },
+      {
+        "version": 1,
+        "skew_ms": 3992,
+        "samples": 2
+      },
+      {
+        "version": 1,
+        "skew_ms": 3992,
+        "samples": 3
+      },
+      {
+        "version": 1,
+        "skew_ms": 3992,
+        "samples": 4
+      }
+    ],
+    "window_events": [
+      {
+        "seq": 1,
+        "action": "OPEN",
+        "base_ms": 5022,
+        "close_ms": null
+      },
+      {
+        "seq": 1,
+        "action": "CLOSE",
+        "base_ms": 5022,
+        "close_ms": 5112
+      }
+    ],
+    "flips": [],
+    "outcomes": [
+      {
+        "group": 0,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 0 低于下限 2，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 1,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 1 低于下限 2，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 2,
+        "status": "SLOT_DROPPED",
+        "window": 1,
+        "reason": "槽位预算 1 耗尽，丢弃折算时刻最早的组 2"
+      },
+      {
+        "group": 3,
+        "status": "COMPLETE",
+        "window": 1,
+        "reason": null
+      }
+    ]
+  },
+  "tun-gamma": {
+    "estimate_versions": [
+      {
+        "version": 0,
+        "skew_ms": null,
+        "samples": 1
+      },
+      {
+        "version": 0,
+        "skew_ms": null,
+        "samples": 2
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 3
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 4
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 5
+      },
+      {
+        "version": 1,
+        "skew_ms": 4010,
+        "samples": 6
+      },
+      {
+        "version": 2,
+        "skew_ms": 4030,
+        "samples": 7
+      },
+      {
+        "version": 2,
+        "skew_ms": 4030,
+        "samples": 8
+      }
+    ],
+    "window_events": [
+      {
+        "seq": 1,
+        "action": "OPEN",
+        "base_ms": 6010,
+        "close_ms": null
+      },
+      {
+        "seq": 1,
+        "action": "CLOSE",
+        "base_ms": 6010,
+        "close_ms": 6110
+      },
+      {
+        "seq": 2,
+        "action": "OPEN",
+        "base_ms": 6110,
+        "close_ms": null
+      },
+      {
+        "seq": 2,
+        "action": "CLOSE",
+        "base_ms": 6110,
+        "close_ms": 6210
+      },
+      {
+        "seq": 3,
+        "action": "OPEN",
+        "base_ms": 6210,
+        "close_ms": null
+      },
+      {
+        "seq": 3,
+        "action": "CLOSE",
+        "base_ms": 6210,
+        "close_ms": 6310
+      },
+      {
+        "seq": 4,
+        "action": "OPEN",
+        "base_ms": 6310,
+        "close_ms": null
+      },
+      {
+        "seq": 4,
+        "action": "CLOSE",
+        "base_ms": 6310,
+        "close_ms": 6410
+      }
+    ],
+    "flips": [
+      {
+        "group": 2,
+        "from_version": 1,
+        "to_version": 2,
+        "kind": "WINDOW_CHANGE",
+        "from_window": 1,
+        "to_window": 2,
+        "from_adjusted_ms": 6090,
+        "to_adjusted_ms": 6110
+      },
+      {
+        "group": 7,
+        "from_version": 1,
+        "to_version": 2,
+        "kind": "WINDOW_CHANGE",
+        "from_window": 3,
+        "to_window": 4,
+        "from_adjusted_ms": 6290,
+        "to_adjusted_ms": 6310
+      }
+    ],
+    "outcomes": [
+      {
+        "group": 0,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 0 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 1,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 1 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 2,
+        "status": "PENDING",
+        "window": null,
+        "reason": "样本数 2 低于下限 3，估计未定，拒绝据此开启窗口"
+      },
+      {
+        "group": 3,
+        "status": "COMPLETE",
+        "window": 2,
+        "reason": null
+      },
+      {
+        "group": 4,
+        "status": "COMPLETE",
+        "window": 2,
+        "reason": null
+      },
+      {
+        "group": 5,
+        "status": "COMPLETE",
+        "window": 3,
+        "reason": null
+      },
+      {
+        "group": 6,
+        "status": "COMPLETE",
+        "window": 3,
+        "reason": null
+      },
+      {
+        "group": 7,
+        "status": "COMPLETE",
+        "window": 4,
+        "reason": null
+      }
+    ]
+  }
+}
+
+快照 content_digest=sha256:03bebe1da0dfeb979ec733aa2547f65a0df4d32861b65d24234544c4658bade9
+账本=/home/zsl/feedback/uidfc5909d3-default-43/logs/session.db 日志=/home/zsl/feedback/uidfc5909d3-default-43/logs/events.jsonl
