@@ -1,0 +1,23 @@
+"""数据库租户资源配额仲裁工作台。
+
+纯标准库 + NumPy 实现，面向 Windows / Linux 本地环境。
+三条执行路径（实时 / 分批 / 归并）共享同一确定性状态机，
+对相同输入产出逐字节一致的结局序列与配额终态。
+"""
+
+__version__ = "1.0.0"
+LEDGER_FORMAT_VERSION = 1
+SNAPSHOT_FORMAT_VERSION = 1
+
+PATH_REALTIME = "realtime"
+PATH_BATCH = "batch"
+PATH_MERGED = "merged"
+ALL_PATHS = (PATH_REALTIME, PATH_BATCH, PATH_MERGED)
+
+VERDICT_GRANT = "GRANT"
+VERDICT_QUEUE = "QUEUE"
+VERDICT_REJECT = "REJECT"
+
+REASON_TENANT_QUOTA = "TENANT_QUOTA_EXHAUSTED"
+REASON_POOL_CAPACITY = "POOL_CAPACITY_EXHAUSTED"
+REASON_BURST = "BURST_INSUFFICIENT"

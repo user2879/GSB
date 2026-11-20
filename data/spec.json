@@ -1,0 +1,96 @@
+{
+  "tenants": [
+    {
+      "tid": "T0000",
+      "quota": 174,
+      "concurrency_cap": 4,
+      "burst": 17
+    },
+    {
+      "tid": "T0001",
+      "quota": 129,
+      "concurrency_cap": 11,
+      "burst": 5
+    },
+    {
+      "tid": "T0002",
+      "quota": 126,
+      "concurrency_cap": 3,
+      "burst": 0
+    },
+    {
+      "tid": "T0003",
+      "quota": 86,
+      "concurrency_cap": 4,
+      "burst": 23
+    },
+    {
+      "tid": "T0004",
+      "quota": 129,
+      "concurrency_cap": 4,
+      "burst": 10
+    },
+    {
+      "tid": "T0005",
+      "quota": 192,
+      "concurrency_cap": 7,
+      "burst": 25
+    },
+    {
+      "tid": "T0006",
+      "quota": 129,
+      "concurrency_cap": 7,
+      "burst": 38
+    },
+    {
+      "tid": "T0007",
+      "quota": 69,
+      "concurrency_cap": 5,
+      "burst": 26
+    }
+  ],
+  "pools": [
+    {
+      "pid": "P000",
+      "capacity": 167,
+      "priority_order": [
+        "T0006",
+        "T0004",
+        "T0005",
+        "T0007",
+        "T0002",
+        "T0000",
+        "T0003",
+        "T0001"
+      ]
+    },
+    {
+      "pid": "P001",
+      "capacity": 160,
+      "priority_order": [
+        "T0001",
+        "T0007",
+        "T0006",
+        "T0003",
+        "T0004",
+        "T0002",
+        "T0000",
+        "T0005"
+      ]
+    },
+    {
+      "pid": "P002",
+      "capacity": 282,
+      "priority_order": [
+        "T0000",
+        "T0003",
+        "T0006",
+        "T0005",
+        "T0004",
+        "T0007",
+        "T0001",
+        "T0002"
+      ]
+    }
+  ]
+}

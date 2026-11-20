@@ -1,0 +1,150 @@
+{
+  "tenants": [
+    {
+      "tid": "T0000",
+      "quota": 174,
+      "concurrency_cap": 4,
+      "burst": 17
+    },
+    {
+      "tid": "T0001",
+      "quota": 129,
+      "concurrency_cap": 11,
+      "burst": 5
+    },
+    {
+      "tid": "T0002",
+      "quota": 126,
+      "concurrency_cap": 3,
+      "burst": 0
+    },
+    {
+      "tid": "T0003",
+      "quota": 86,
+      "concurrency_cap": 4,
+      "burst": 23
+    },
+    {
+      "tid": "T0004",
+      "quota": 129,
+      "concurrency_cap": 4,
+      "burst": 10
+    },
+    {
+      "tid": "T0005",
+      "quota": 192,
+      "concurrency_cap": 7,
+      "burst": 25
+    },
+    {
+      "tid": "T0006",
+      "quota": 129,
+      "concurrency_cap": 7,
+      "burst": 38
+    },
+    {
+      "tid": "T0007",
+      "quota": 69,
+      "concurrency_cap": 5,
+      "burst": 26
+    },
+    {
+      "tid": "T0008",
+      "quota": 59,
+      "concurrency_cap": 9,
+      "burst": 5
+    },
+    {
+      "tid": "T0009",
+      "quota": 123,
+      "concurrency_cap": 4,
+      "burst": 5
+    },
+    {
+      "tid": "T0010",
+      "quota": 99,
+      "concurrency_cap": 12,
+      "burst": 13
+    },
+    {
+      "tid": "T0011",
+      "quota": 134,
+      "concurrency_cap": 2,
+      "burst": 58
+    }
+  ],
+  "pools": [
+    {
+      "pid": "P000",
+      "capacity": 251,
+      "priority_order": [
+        "T_MISSING_9999",
+        "T0002",
+        "T0007",
+        "T0011",
+        "T0009",
+        "T0004",
+        "T0001",
+        "T0003",
+        "T0000",
+        "T0006",
+        "T0008",
+        "T0005"
+      ]
+    },
+    {
+      "pid": "P001",
+      "capacity": 299,
+      "priority_order": [
+        "T0003",
+        "T0005",
+        "T0008",
+        "T0001",
+        "T0000",
+        "T0004",
+        "T0002",
+        "T0010",
+        "T0007",
+        "T0009",
+        "T0011",
+        "T0006"
+      ]
+    },
+    {
+      "pid": "P002",
+      "capacity": 260,
+      "priority_order": [
+        "T0001",
+        "T0005",
+        "T0004",
+        "T0002",
+        "T0010",
+        "T0000",
+        "T0003",
+        "T0009",
+        "T0006",
+        "T0007",
+        "T0008",
+        "T0011"
+      ]
+    },
+    {
+      "pid": "P003",
+      "capacity": 251,
+      "priority_order": [
+        "T0003",
+        "T0008",
+        "T0000",
+        "T0009",
+        "T0006",
+        "T0002",
+        "T0010",
+        "T0011",
+        "T0004",
+        "T0005",
+        "T0007",
+        "T0001"
+      ]
+    }
+  ]
+}

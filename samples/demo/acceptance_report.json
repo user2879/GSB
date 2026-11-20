@@ -1,0 +1,53 @@
+{
+  "steps": [
+    {
+      "name": "default_path_selection",
+      "selection": {
+        "estimates": {
+          "batch": 1086.24,
+          "merged": 1041.6,
+          "realtime": 2232.0
+        },
+        "reasons": [
+          "租户数 T=10, 请求数 N=600, 资源池数 P=3",
+          "工作量估算 realtime=2232.0, batch=1086.24, merged=1041.6",
+          "按工作量升序选择 merged，次选 batch，相对差 0.0429",
+          "候选相对差低于阈值 0.10，触发稳定决胜，候选=['batch', 'merged']，最终选择 batch（本判定受阈值影响）"
+        ],
+        "scale": {
+          "pool_count": 3,
+          "request_count": 600,
+          "tenant_count": 10
+        },
+        "selected": "batch",
+        "threshold_influenced": true,
+        "threshold_ratio": 0.1
+      }
+    },
+    {
+      "identical": true,
+      "name": "three_path_consistency",
+      "outcome_bytes": "82bdcc01626c8effe50ef1b387b8f4d53ab68f5babc3b1860bb4b022cc5575c9",
+      "state_bytes": "83347a9f56765bc847e755614d005d84a3976a69a2157001389003acec4edd07",
+      "trace_bytes": "017bb0ab76be86c1616b383f52bf84adad2218db0c635d55b86453e940c5a458"
+    },
+    {
+      "name": "snapshot_replay",
+      "replay_verified": true
+    },
+    {
+      "last_committed_rid": "R000009",
+      "name": "forced_termination_recovery",
+      "rerun_ledger": "samples/demo/crash.sqlite3.rerun",
+      "unknown_count": 597
+    },
+    {
+      "faults": {
+        "ledger": "E_LEDGER",
+        "order": "E_ORDER",
+        "priority": "E_PRIORITY"
+      },
+      "name": "fault_injection_codes"
+    }
+  ]
+}
