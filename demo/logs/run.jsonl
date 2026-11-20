@@ -1,0 +1,21 @@
+{"event": "ports_resolved", "resolved_spec": "demo/ledger.sqlite.resolved.json", "ts": 1795203078.8342588}
+{"event": "ledger_initialized", "ledger": "demo/ledger.sqlite", "ts": 1795203078.9330409}
+{"event": "service_started", "port": 47893, "service": "svc-a", "ts": 1795203079.0434186}
+{"event": "service_started", "port": 46761, "service": "svc-b", "ts": 1795203079.1528122}
+{"event": "service_started", "port": 44683, "service": "svc-c", "ts": 1795203079.263351}
+{"event": "injection_active", "seq": 0, "target": "svc-b", "ts": 1795203079.6903052, "type": "kill"}
+{"event": "injection_active", "seq": 1, "target": "svc-a", "ts": 1795203079.883073, "type": "latency"}
+{"event": "service_respawned", "pid": 783193, "service": "svc-b", "ts": 1795203080.2020807}
+{"event": "injection_reverted", "seq": 0, "ts": 1795203080.6303735}
+{"event": "injection_reverted", "seq": 1, "ts": 1795203081.5818105}
+{"event": "injection_active", "seq": 3, "target": "svc-c", "ts": 1795203082.110946, "type": "latency"}
+{"event": "injection_active", "seq": 2, "target": "svc-a", "ts": 1795203082.2050598, "type": "error_rate"}
+{"event": "injection_reverted", "seq": 2, "ts": 1795203083.4373767}
+{"event": "injection_reverted", "seq": 3, "ts": 1795203083.5817184}
+{"event": "injection_active", "seq": 5, "target": "svc-b", "ts": 1795203081.4708152, "type": "suspend"}
+{"event": "injection_active", "seq": 4, "target": "svc-c", "ts": 1795203081.5596976, "type": "error_rate"}
+{"event": "injection_reverted", "seq": 4, "ts": 1795203082.5923736}
+{"event": "injection_reverted", "seq": 5, "ts": 1795203086.9596155}
+{"event": "run_summary", "isolation_violations": [], "recovery": {"diffs": [], "recovered": [], "recovered_count": 0, "redo_plan": [], "replaced": false, "unknown": [], "unknown_count": 0}, "run": {"committed": 6, "errors": []}, "ts": 1795203086.964188}
+{"event": "ports_resolved", "resolved_spec": "demo/ledger.sqlite.resolved.json", "ts": 1795203087.2156334}
+{"event": "verify_summary", "isolation_violations": [], "ok": true, "replayed_injections": 6, "ts": 1795203087.2217307}

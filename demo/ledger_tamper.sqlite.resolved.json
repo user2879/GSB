@@ -1,0 +1,98 @@
+{
+  "_source_digest": "2e9046fa3294d1a255a3c3716b7bd0939cac4da0e73230a7e364c91d483e5c89",
+  "budget": {
+    "max_observe_ms": 900,
+    "max_parallel": 2,
+    "max_total_injections": 6
+  },
+  "injections": [
+    {
+      "duration_ms": 600,
+      "observe_ms": 600,
+      "params": {
+        "delay_ms": 120
+      },
+      "target": "svc-a",
+      "type": "latency"
+    },
+    {
+      "duration_ms": 600,
+      "observe_ms": 600,
+      "params": {
+        "error_rate_ppm": 5000
+      },
+      "target": "svc-a",
+      "type": "error_rate"
+    },
+    {
+      "duration_ms": 400,
+      "observe_ms": 400,
+      "params": {},
+      "target": "svc-b",
+      "type": "suspend"
+    },
+    {
+      "duration_ms": 400,
+      "observe_ms": 400,
+      "params": {
+        "restart": true
+      },
+      "target": "svc-b",
+      "type": "kill"
+    },
+    {
+      "duration_ms": 500,
+      "observe_ms": 500,
+      "params": {
+        "delay_ms": 80
+      },
+      "target": "svc-c",
+      "type": "latency"
+    },
+    {
+      "duration_ms": 500,
+      "observe_ms": 500,
+      "params": {
+        "error_rate_ppm": 9000
+      },
+      "target": "svc-c",
+      "type": "error_rate"
+    }
+  ],
+  "name": "local-loopback-chaos",
+  "sampling": {
+    "interval_ms": 50,
+    "min_samples": 3,
+    "scale": 10000
+  },
+  "seed": 42,
+  "services": [
+    {
+      "control_port": 46265,
+      "error_rate_ppm": 0,
+      "fixed_latency_ms": 5,
+      "host": "127.0.0.1",
+      "id": "svc-a",
+      "port": 46245,
+      "rebuildable": true
+    },
+    {
+      "control_port": 45099,
+      "error_rate_ppm": 500,
+      "fixed_latency_ms": 8,
+      "host": "127.0.0.1",
+      "id": "svc-b",
+      "port": 46825,
+      "rebuildable": true
+    },
+    {
+      "control_port": 45027,
+      "error_rate_ppm": 0,
+      "fixed_latency_ms": 4,
+      "host": "127.0.0.1",
+      "id": "svc-c",
+      "port": 47417,
+      "rebuildable": true
+    }
+  ]
+}

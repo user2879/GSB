@@ -1,0 +1,26 @@
+{"event": "ports_resolved", "resolved_spec": "demo/ledger_kill.sqlite.resolved.json", "ts": 1795203087.5734336}
+{"event": "ledger_initialized", "ledger": "demo/ledger_kill.sqlite", "ts": 1795203087.6686852}
+{"event": "service_started", "port": 46259, "service": "svc-a", "ts": 1795203087.7798562}
+{"event": "service_started", "port": 44773, "service": "svc-b", "ts": 1795203087.8882515}
+{"event": "service_started", "port": 47711, "service": "svc-c", "ts": 1795203087.996437}
+{"event": "injection_active", "seq": 0, "target": "svc-b", "ts": 1795203088.422022, "type": "kill"}
+{"event": "injection_active", "seq": 1, "target": "svc-a", "ts": 1795203088.6224802, "type": "latency"}
+{"event": "service_respawned", "pid": 783446, "service": "svc-b", "ts": 1795203088.9365938}
+{"event": "injection_reverted", "seq": 0, "ts": 1795203089.3593564}
+{"event": "injection_reverted", "seq": 1, "ts": 1795203090.315581}
+{"event": "forced_termination", "kill_after": 2, "ts": 1795203090.3340788}
+{"event": "ports_resolved", "resolved_spec": "demo/ledger_kill.sqlite.resolved.json", "ts": 1795203090.545186}
+{"event": "recovery_unknown", "ts": 1795203090.5668004, "unknown": [2]}
+{"diffs": [], "event": "recovery_report", "recovered": [0, 1], "recovered_count": 2, "redo_plan": [2], "replaced": false, "ts": 1795203090.5669992, "unknown": [2], "unknown_count": 1}
+{"event": "service_adopted", "pid": 783402, "service": "svc-a", "ts": 1795203090.5726013}
+{"event": "service_adopted", "pid": 783446, "service": "svc-b", "ts": 1795203090.574924}
+{"event": "service_adopted", "pid": 783408, "service": "svc-c", "ts": 1795203090.5767002}
+{"event": "injection_active", "seq": 3, "target": "svc-c", "ts": 1795203091.1005266, "type": "latency"}
+{"event": "injection_active", "seq": 2, "target": "svc-a", "ts": 1795203091.2000654, "type": "error_rate"}
+{"event": "injection_reverted", "seq": 2, "ts": 1795203092.4297972}
+{"event": "injection_reverted", "seq": 3, "ts": 1795203092.587975}
+{"event": "injection_active", "seq": 5, "target": "svc-b", "ts": 1795203093.0119412, "type": "suspend"}
+{"event": "injection_active", "seq": 4, "target": "svc-c", "ts": 1795203093.1091025, "type": "error_rate"}
+{"event": "injection_reverted", "seq": 4, "ts": 1795203094.1427658}
+{"event": "injection_reverted", "seq": 5, "ts": 1795203098.4574962}
+{"event": "resume_summary", "isolation_violations": [], "recovery": {"diffs": [], "recovered": [0, 1], "recovered_count": 2, "redo_plan": [2], "replaced": false, "unknown": [2], "unknown_count": 1}, "replayed_injections": 6, "run": {"committed": 4, "errors": []}, "ts": 1795203098.4802835}

@@ -1,0 +1,8 @@
+{"backup": "demo/spec_fault.json.bak", "event": "fault_injected", "expected_code": "E_SPEC", "fault": "corrupt-spec", "ts": 1795203114.3188927}
+{"code": "E_SPEC", "event": "error", "evidence": {}, "field": "$", "message": "declaration is not valid JSON: Expecting value: line 23 column 5 (char 704)", "ts": 1795203114.5490463}
+{"backup": "demo/spec_fault.json.bak", "event": "fault_injected", "expected_code": "E_SEED", "fault": "seed-mismatch", "new_seed": 43, "ts": 1795203114.7532532}
+{"event": "ports_resolved", "resolved_spec": "demo/ledger.sqlite.resolved.json", "ts": 1795203115.1011384}
+{"code": "E_SEED", "event": "error", "evidence": {"ledger": "074ef0e54b88c49398634dc434865f3c1c4f943c6724a7b6c96b75a8466970af", "session": "84ccb28a622b167de5b9611fe61add788d99ca8d1ad0af157d09e6e8067c4f75"}, "field": "meta.timeline_digest", "message": "seed/timeline digest does not match ledger", "ts": 1795203115.1028385}
+{"event": "fault_injected", "expected_code": "E_SNAPSHOT", "fault": "ledger-digest", "ledger": "demo/ledger_tamper.sqlite", "ts": 1795203115.6089213}
+{"event": "ports_resolved", "resolved_spec": "demo/ledger_tamper.sqlite.resolved.json", "ts": 1795203115.949365}
+{"code": "E_SNAPSHOT", "event": "error", "evidence": {}, "field": "meta.content_digest", "message": "ledger content digest mismatch", "ts": 1795203115.9541733}
