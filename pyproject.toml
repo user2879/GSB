@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meshgov-workbench"
+version = "1.0.0"
+description = "Deterministic local service-mesh traffic governance workbench"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+meshgov = "meshgov.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["meshgov*"]
+

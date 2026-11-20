@@ -1,0 +1,35 @@
+{
+  "instances": [
+    {
+      "name": "users-a",
+      "port": 28101,
+      "mode": "ok",
+      "delay_ms": 18
+    },
+    {
+      "name": "users-b",
+      "port": 28102,
+      "mode": "ok",
+      "delay_ms": 28
+    },
+    {
+      "name": "search-a",
+      "port": 28111,
+      "mode": "ok",
+      "delay_ms": 22
+    },
+    {
+      "name": "search-b",
+      "port": 28112,
+      "mode": "fail",
+      "delay_ms": 10
+    },
+    {
+      "name": "legacy-a",
+      "port": 28121,
+      "mode": "flaky",
+      "failure_rate_percent": 35,
+      "delay_ms": 12
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "global_concurrency": 6,
+    "default_service_quota": 2
+  },
+  "services": [
+    {
+      "name": "users",
+      "concurrency_quota": 3,
+      "instances": [
+        {
+          "name": "users-a",
+          "host": "127.0.0.1",
+          "port": 28101,
+          "weight": 3,
+          "failure_threshold": 2,
+          "cooldown_ms": 300
+        },
+        {
+          "name": "users-b",
+          "host": "127.0.0.1",
+          "port": 28102,
+          "weight": 2,
+          "failure_threshold": 2,
+          "cooldown_ms": 300
+        }
+      ]
+    },
+    {
+      "name": "search",
+      "concurrency_quota": 2,
+      "instances": [
+        {
+          "name": "search-a",
+          "host": "127.0.0.1",
+          "port": 28111,
+          "weight": 2,
+          "failure_threshold": 2,
+          "cooldown_ms": 250
+        },
+        {
+          "name": "search-b",
+          "host": "127.0.0.1",
+          "port": 28112,
+          "weight": 1,
+          "failure_threshold": 2,
+          "cooldown_ms": 250
+        }
+      ]
+    },
+    {
+      "name": "legacy",
+      "concurrency_quota": 1,
+      "instances": [
+        {
+          "name": "legacy-a",
+          "host": "127.0.0.1",
+          "port": 28121,
+          "weight": 1,
+          "failure_threshold": 1,
+          "cooldown_ms": 400
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "prefix": "/api/users",
+      "service": "users",
+      "timeout_ms": 300,
+      "max_retries": 1
+    },
+    {
+      "prefix": "/api/search",
+      "service": "search",
+      "timeout_ms": 300,
+      "max_retries": 2
+    },
+    {
+      "prefix": "/api/legacy",
+      "service": "legacy",
+      "timeout_ms": 250,
+      "max_retries": 1
+    }
+  ]
+}

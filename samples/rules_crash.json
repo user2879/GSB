@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "global_concurrency": 2,
+    "default_service_quota": 1
+  },
+  "services": [
+    {
+      "name": "slow",
+      "concurrency_quota": 1,
+      "instances": [
+        {
+          "name": "slow-a",
+          "host": "127.0.0.1",
+          "port": 38201,
+          "weight": 1,
+          "failure_threshold": 3,
+          "cooldown_ms": 1000
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "prefix": "/api/slow",
+      "service": "slow",
+      "timeout_ms": 5000,
+      "max_retries": 1
+    }
+  ]
+}

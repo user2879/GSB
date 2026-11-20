@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "global_concurrency": 4
+  },
+  "services": [
+    {
+      "name": "broken",
+      "instances": [
+        {
+          "name": "broken-a",
+          "host": "127.0.0.1",
+          "port": 18301,
+          "weight": 1,
+          "failure_threshold": 1,
+          "cooldown_ms": 200
+        },
+        {
+          "name": "broken-b",
+          "host": "127.0.0.1",
+          "port": 18301,
+          "weight": 0,
+          "failure_threshold": 1,
+          "cooldown_ms": 200
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "prefix": "api/broken",
+      "service": "broken",
+      "timeout_ms": 300,
+      "max_retries": 1
+    }
+  ]
+}
+
