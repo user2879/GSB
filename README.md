@@ -1,22 +1,187 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的日志与追踪采样诊断组件，作为领域数据编辑与操作应用交付：可交互编辑采样策略、操作样本数据并查看诊断结论。用户在本地 JSON 文件中声明一组确定性日志与追踪样本：每个服务产生按固定整数随机种子生成的有序记录，每条记录含整数毫秒时间戳、整数量级、客户端键、整数耗时微秒与追踪标识，部分记录带采样标记。采样策略以万分比给出分区头部采样比例与尾部按耗时阈值的采样比例，并声明定点缩放因子（10 的整数幂）与分位数分桶数。核心业务是：对每服务按样本统计耗时分位数与采样后的估计分布，推导定点量化误差与误差传播上界，当两条候选策略或两个服务的统计量之差落在误差界内时输出判定翻转诊断；并把策略版本、样本摘要、统计结论与翻转记录写入本地 SQLite 账本，支持整体替换恢复与重放校验。
+# Trace Diag
 
-任务环境与准备：
-确认 Windows 本地已安装 Python 3.11 及以上，并可在命令行执行 python -V 与 pip -V。
-在项目虚拟环境中安装 NumPy 与 pytest：pip install numpy pytest，无需外部服务、账号或数据集。
-准备本地确定性样本描述文件与采样策略 JSON、以及含注入参数的命令行样例，全部由任务内脚本生成，不依赖网络下载。
-确认 Tkinter 随 Python 一并可用（python -c "import tkinter" 不报错），并预留本地 SQLite 数据库文件目录与结构化日志目录。
+面向 Windows 本地环境的确定性日志与追踪采样诊断组件。应用从本地 JSON 读取服务样本声明和候选采样策略，生成逐字节可复现的记录流，完成头部/尾部采样、定点分位数、逐桶误差传播、参数翻转诊断，并把完整批次写入 SQLite 账本。Tkinter 工作台可编辑策略参数和服务描述、查看样本、逐桶统计、误差热力、归因链、翻转与账本批次。
 
-业务要求：
-1. 实现采样策略与样本声明的加载及强校验：从本地 JSON 读取服务定义（服务标识、整数随机种子、记录数、记录字段声明）与采样策略（分区头部采样比例万分比、尾部耗时阈值微秒、尾部采样比例万分比、定点缩放因子、分位数分桶数），校验服务标识唯一、种子与记录数为正整数、两类比例均在 0 至 10000 内、耗时阈值为正整数、缩放因子为 0 至 6 的整数、分桶数为受支持区间内的正整数；任一不合法须以 E_SPEC 整体拒绝并指出字段路径，不得部分加载。
-2. 实现确定性样本流生成与记录级摘要：按声明种子为每服务生成有序记录，时间戳在服务内单调不减，量级、客户端键、耗时微秒与追踪标识逐条确定；相同种子、记录数与字段声明多次生成必须得到逐字节一致的记录序列与流摘要；须输出每服务的记录数、耗时微秒最小值与最大值、空值或非法字段计数，越界的耗时或时间戳倒退须以 E_RECORD 定位到首个违规记录序号。
-3. 实现分区头部采样与尾部采样的确定性判定：按客户端键与策略版本稳定哈希到 0 至 10000 整数分桶后与量化后的头部比例比较决定头部采样，未命中头部且耗时微秒不低于阈值者按尾部比例分桶判定；同一客户端键在同一策略版本与同一缩放因子下必须始终得到同一采样结论，采样集合摘要须可逐条复核，且头部与尾部命中不得重复计入。
-4. 实现耗时分位数的分桶统计与定点口径：按会话分桶数把耗时微秒切分为等深分位桶，记录每桶上下界、记录数、采样命中数与桶摘要，整数与浮点边界归属规则须显式声明；分位数取值与采样后估计分位数以缩放因子定点表示并显式声明截断方向，须给出单记录量化误差、桶级误差与分位数取值误差上界，桶边界值归属不得依赖记录遍历顺序。
-5. 实现采样估计与全量统计的逐项误差传播归因：依据采样命中比例把采样后的耗时分布重标定为全量估计，逐桶计算估计值与全量真实值之差，并把总误差界拆分为采样稀疏、定点截断与桶边界归属三段贡献，输出各段数值与占比及主导段（主导判定须有显式阈值规则）；归因结果必须与记录注入顺序、分桶遍历顺序无关，同一样本集多次归因得到逐字节一致结论。
-6. 实现统计量比较的误差界判定与翻转诊断：当两个服务的采样估计分位数之差、或同一服务两条候选策略的估计均值之差落在合成的定点误差界内时，须按显式稳定决胜规则（服务标识序、策略版本序）排序并标注该判定受误差界影响；用户调整缩放因子或分桶数导致服务排序或候选策略最优性翻转时，须输出翻转前后的排序、所选策略、误差界数值与触发变更的参数，翻转集合按稳定顺序列出。
-7. 实现账本持久化、策略版本整体替换与强制终止后恢复：每完成一个服务或一批统计须在同一 SQLite 事务中写入该批次样本摘要、逐桶统计、定点误差界、归因、翻转记录与进度游标，账本携带整数格式版本与内容摘要；策略或样本声明被修改后版本号单调递增，旧版本下的统计与翻转结论须标记为陈旧且不得参与当前展示，当前视图须整体替换而非增量合并；进程被强制终止后重启只能依据已完整提交的批次恢复，未提交批次须标记为未知并要求重跑。
-8. 提供 Tkinter 操作界面、异常注入与重放校验工具：界面须展示服务列表、策略参数与版本、逐桶记录数与采样命中数、定点分位统计与误差界热力、归因贡献链、翻转诊断结论与账本批次列表，界面描述项可编辑、样本数据可操作查看，渲染顺序稳定且刷新不改变账本内容；支持以命令行参数注入样本声明损坏、策略比例越界、账本内容摘要不符三类异常，分别以 E_SPEC、E_BUCKET、E_SNAPSHOT 报告并写入结构化日志；校验工具独立读取账本，按记录的策略版本与缩放因子重算分位统计与归因，与账本逐项比较，不可复现须定位到首个不一致的服务标识与字段。
+运行时不访问网络、不依赖容器或外部服务。样本、策略、局部 SQLite 账本和结构化 JSONL 日志都保存在项目目录。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始（Windows）
 
-验收：
-用本地样本验证分位定点误差界、翻转诊断与账本整体替换恢复及重放一致。
+要求 Python 3.11 或更高版本，并选择带 Tcl/Tk 的官方安装包。
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -V
+pip -V
+pip install -r requirements.txt
+python -c "import tkinter; print('tkinter', tkinter.TkVersion)"
+```
+
+生成完全本地的确定性样例：
+
+```powershell
+python -m trace_diag generate-samples --data-dir data --records 600
+```
+
+执行分析、提交 SQLite、深重放并写出诊断报告：
+
+```powershell
+python -m trace_diag demo
+```
+
+打开桌面工作台：
+
+```powershell
+python -m trace_diag gui
+```
+
+也可以安装为可编辑包后使用 `trace-diag` 命令：
+
+```powershell
+pip install -e .
+trace-diag demo
+trace-diag gui
+```
+
+默认文件位置：
+
+```text
+data/services.json                  服务与记录字段声明
+data/policies.json                  候选采样策略
+data/ledger/trace_diag.sqlite       SQLite 账本
+data/logs/trace_diag.jsonl          结构化日志
+data/diagnostic_report.json         最近一次 demo 的完整报告
+```
+
+## 常用命令
+
+```powershell
+python -m trace_diag analyze --services data/services.json --policies data/policies.json --db data/ledger/trace_diag.sqlite --log-dir data/logs --report-out data/report.json
+python -m trace_diag status --db data/ledger/trace_diag.sqlite --log-dir data/logs
+python -m trace_diag verify --db data/ledger/trace_diag.sqlite --log-dir data/logs
+python -m trace_diag recover --db data/ledger/trace_diag.sqlite --log-dir data/logs
+```
+
+`analyze` 的流程是“校验全部输入 → 生成并统计分析 → 创建新 run → 每服务一个事务提交 → 最后激活新 run”。内容相同的当前 run 会被复用；内容改变后由账本分配单调递增的样本版本或策略版本。
+
+### 异常注入
+
+```powershell
+python -m trace_diag analyze --inject sample
+python -m trace_diag analyze --inject policy-ratio
+python -m trace_diag analyze --inject snapshot
+```
+
+- `sample`：内存中破坏服务声明，整体拒绝并报告 `E_SPEC`，例如 `$.services[0].id`。
+- `policy-ratio`：内存中把首条策略头部比例改为 10001，以诊断用途报告 `E_BUCKET`；正常输入校验仍严格使用 `E_SPEC`。
+- `snapshot`：先确保存在有效账本，再临时篡改 run 快照摘要以触发 `E_SNAPSHOT`，检测后恢复原摘要。
+
+每次注入都会追加到 `data/logs/trace_diag.jsonl`，包含 `code`、`path`、`event` 和 `context`。CLI 退出码：`0` 成功，`2` 规格/记录/桶错误，`3` 重放不一致，`4` 快照摘要不符。
+
+## JSON 声明
+
+服务文件示例：
+
+```json
+{
+  "version": 1,
+  "services": [
+    {
+      "id": "api-checkout",
+      "seed": 1103,
+      "record_count": 600,
+      "description": "Checkout API",
+      "fields": {
+        "timestamp_ms": {"type": "int", "start": 1735689600000, "max_step_ms": 41},
+        "magnitude": {"type": "int", "min": 1, "max": 5},
+        "client_key": {"type": "string", "key_space": 173},
+        "duration_us": {"type": "int", "min_us": 900, "max_us": 180000},
+        "trace_id": {"type": "string"},
+        "sampled": {"type": "bool", "rate_bp": 2000}
+      }
+    }
+  ]
+}
+```
+
+字段必须完整声明 `timestamp_ms`、`magnitude`、`client_key`、`duration_us`、`trace_id`、`sampled`。未知字段、重复 JSON 键、重复服务标识、非正种子/记录数、越界参数都会在加载阶段整体拒绝，并给出字段路径。
+
+策略文件示例：
+
+```json
+{
+  "version": 1,
+  "policies": [
+    {
+      "id": "head-balanced",
+      "head_ratio_bp": 4200,
+      "tail_duration_threshold_us": 50000,
+      "tail_ratio_bp": 1800,
+      "scale_power": 1,
+      "bucket_count": 32
+    }
+  ]
+}
+```
+
+约束：两类比例均为 `0..10000` 整数，尾部阈值为正整数，`scale_power` 为 `0..6` 整数，`bucket_count` 为 `2..256` 整数。每条策略可带可选 `version` 和 `description`。
+
+## 统计口径
+
+- 定点粒度为 `quantum_us = 10^scale_power` 微秒；记录值按 `floor(duration_us / quantum_us)` 向下截断，输出值再乘回粒度，因此单记录最大量化误差是 `quantum_us - 1`。
+- 分位桶按排序后的耗时选择分位切点。桶区间为 `[lower_us, upper_us_exclusive)`，最后一个桶包含最大值；切点相等的记录归入右侧桶。归属使用排序值和 `bisect_right`，不依赖输入遍历顺序。
+- 分位数使用整数排序秩上的线性插值，最终向下取整到定点粒度。采样估计使用重标定权重 `n / sample_hits` 计算各桶估计占用，再把桶中点向下取整到定点粒度。
+- 归因把逐桶误差精确拆为 `sampling_sparse + fixed_truncation + bucket_boundary`，每段给出有符号贡献、上界、占比和主导段。主导规则是“占比至少 1/2 且严格高于其他段”，否则为 `balanced`。
+- 分位数的合成误差界由“采样 CDF 最大秩偏差形成的可能带 + 双侧定点截断 + 选中桶半宽”组成，确保 `estimated_value_in_error_bound` 是严格最坏情况判定，而不是只比较近似值。
+- 服务排序：估计 p95、服务标识、策略版本、候选策略版本、候选策略标识依次决胜。候选策略排序：估计均值、候选策略版本、候选策略标识依次决胜。
+- 差值不超过双方误差界之和时标记“受误差界影响”。参数敏感性扫描逐项改变 `scale_power ± 1` 或 `bucket_count ± 1`，保持版本不变，输出排序或候选策略选择的实际翻转。
+
+完整数学定义见 `docs/DESIGN.md`。
+
+## SQLite 账本与恢复
+
+账本格式版本为整数 `1`，存于 `meta` 表，并写入每个 run。主要表为 `runs`、`batches`、`sample_summaries`、`bucket_stats`、`error_bounds`、`attribution_chain`、`flips`。
+
+- 创建 run 时先写入 `pending` 批次并立即把旧 run 标记为 `stale`。
+- 每完成一个服务，在一个 SQLite 事务中写入样本摘要、全部逐桶统计、定点误差、归因、翻转、批次摘要、进度游标和 `committed` 状态。
+- 全部批次提交后，在同一收尾事务中计算并写入 run 快照摘要，设为唯一活动 run；旧版本不再参与当前展示。
+- 进程强制终止后，重启会把未提交批次标记为 `unknown`，并把 run 置为 `recovering`。`recover` 只复用 `committed` 批次，重新执行 `unknown` 批次，然后整体激活。
+- `verify` 独立读取账本中的服务/策略快照，按记录版本和缩放因子重算样本流、分位统计、逐桶归因和翻转，与账本逐项比较；首个不一致会报告服务标识和字段路径。
+
+## Tkinter 工作台
+
+工作台展示服务列表、策略参数与版本、逐桶记录数/采样命中、定点分位统计和误差界热力、逐桶归因链、误差界内判定与参数翻转、run 历史和当前批次。
+
+- “刷新当前视图”只读取活动账本，不写入账本。
+- “重算并整体替换”提交新 run。
+- 策略参数编辑会校验后递增策略版本并整体替换。
+- 服务描述可编辑，保存时递增样本版本。
+- 样本页支持客户端键/追踪标识过滤、按序号/耗时/客户端键排序和分页。
+- “重放校验”调用独立账本重算器。
+
+## 测试
+
+```powershell
+python -m pytest -q
+```
+
+测试覆盖：规格字段路径与整体拒绝、重复键、记录确定性、时间戳倒退/耗时越界定位、头部尾部去重、分位桶归属、定点截断、归因可加性与顺序无关、误差界内判定、参数翻转稳定性、SQLite 原子批次、强制终止恢复、版本替换、快照注入、深重放和 CLI 三类异常。
+
+本次实际验证结果见 `docs/VALIDATION.md`。
+
+## 目录
+
+```text
+trace_diag/spec.py              JSON 强校验
+trace_diag/generator.py         确定性记录流与摘要
+trace_diag/sampling.py          稳定分区与头尾采样
+trace_diag/stats.py             分桶、定点分位、估计与归因
+trace_diag/diagnostics.py       排序、误差界判定与参数翻转
+trace_diag/ledger.py            SQLite 账本、事务、版本和恢复
+trace_diag/replay.py            独立重算校验
+trace_diag/workflow.py          分析到账本的编排
+trace_diag/gui.py               Tkinter 工作台
+trace_diag/cli.py               命令入口和异常注入
+tests/                          自动化验收测试
+docs/                           设计与验证记录
+```

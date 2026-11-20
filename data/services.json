@@ -1,0 +1,108 @@
+{
+  "description": "Deterministic local latency and trace sample declaration",
+  "services": [
+    {
+      "description": "Checkout API near-tie benchmark A",
+      "fields": {
+        "client_key": {
+          "key_space": 173,
+          "type": "string"
+        },
+        "duration_us": {
+          "max_us": 180000,
+          "min_us": 900,
+          "type": "int"
+        },
+        "magnitude": {
+          "max": 5,
+          "min": 1,
+          "type": "int"
+        },
+        "sampled": {
+          "rate_bp": 2000,
+          "type": "bool"
+        },
+        "timestamp_ms": {
+          "max_step_ms": 41,
+          "start": 1735689600000,
+          "type": "int"
+        },
+        "trace_id": {
+          "type": "string"
+        }
+      },
+      "id": "api-checkout",
+      "record_count": 600,
+      "seed": 1103
+    },
+    {
+      "description": "Catalog API near-tie benchmark B",
+      "fields": {
+        "client_key": {
+          "key_space": 181,
+          "type": "string"
+        },
+        "duration_us": {
+          "max_us": 182000,
+          "min_us": 1000,
+          "type": "int"
+        },
+        "magnitude": {
+          "max": 5,
+          "min": 1,
+          "type": "int"
+        },
+        "sampled": {
+          "rate_bp": 2000,
+          "type": "bool"
+        },
+        "timestamp_ms": {
+          "max_step_ms": 39,
+          "start": 1735689600500,
+          "type": "int"
+        },
+        "trace_id": {
+          "type": "string"
+        }
+      },
+      "id": "api-catalog",
+      "record_count": 600,
+      "seed": 2207
+    },
+    {
+      "description": "Background ledger worker with a wider tail",
+      "fields": {
+        "client_key": {
+          "key_space": 211,
+          "type": "string"
+        },
+        "duration_us": {
+          "max_us": 300000,
+          "min_us": 1200,
+          "type": "int"
+        },
+        "magnitude": {
+          "max": 7,
+          "min": 2,
+          "type": "int"
+        },
+        "sampled": {
+          "rate_bp": 2000,
+          "type": "bool"
+        },
+        "timestamp_ms": {
+          "max_step_ms": 53,
+          "start": 1735689600900,
+          "type": "int"
+        },
+        "trace_id": {
+          "type": "string"
+        }
+      },
+      "id": "worker-ledger",
+      "record_count": 600,
+      "seed": 3301
+    }
+  ],
+  "version": 1
+}

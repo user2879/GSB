@@ -1,0 +1,24 @@
+{
+  "description": "Two deterministic head/tail candidate strategies",
+  "policies": [
+    {
+      "bucket_count": 32,
+      "description": "More head coverage, moderate tail catch-up",
+      "head_ratio_bp": 4200,
+      "id": "head-balanced",
+      "scale_power": 1,
+      "tail_duration_threshold_us": 50000,
+      "tail_ratio_bp": 1800
+    },
+    {
+      "bucket_count": 32,
+      "description": "Lean head sampling with stronger tail sampling",
+      "head_ratio_bp": 2600,
+      "id": "tail-first",
+      "scale_power": 1,
+      "tail_duration_threshold_us": 35000,
+      "tail_ratio_bp": 3200
+    }
+  ],
+  "version": 1
+}
