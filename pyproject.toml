@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-scorecard-lab"
+version = "1.0.0"
+description = "Deterministic local scorecard binning, WOE and monotonic solver"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "PyYAML>=6.0"]
+
+[project.scripts]
+scorecard-lab = "scorecard_app.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["scorecard_app*"]

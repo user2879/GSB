@@ -1,0 +1,56 @@
+# Experiment-level configuration. Column parameters may be overridden per column.
+schema_version: 1
+features:
+  - age
+  - income
+  - tenure_months
+  - bureau_score
+  - channel
+  - occupation
+  - merchant_cluster
+
+runtime:
+  max_workers: 4
+
+binning:
+  max_bins: 6
+  min_bin_ratio: 0.05
+  prebins: 48
+  smoothing: 0.5
+
+monotonic:
+  max_rounds: 20
+  conflict_priority:
+    - max_gap
+    - left
+    - right
+
+evaluation:
+  folds: 5
+  seed: 90210
+
+snapshot:
+  expected_global_version: null
+
+columns:
+  age:
+    type: numeric
+    monotonic_direction: ascending
+  income:
+    type: numeric
+    monotonic_direction: ascending
+    max_bins: 7
+  tenure_months:
+    type: numeric
+    monotonic_direction: descending
+  bureau_score:
+    type: numeric
+    monotonic_direction: ascending
+    # Deliberately contains tail outliers. The app uses this as an anomaly column.
+  channel:
+    type: categorical
+    min_bin_ratio: 0.06
+  occupation:
+    type: categorical
+  merchant_cluster:
+    type: categorical

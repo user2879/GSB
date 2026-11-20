@@ -1,22 +1,222 @@
-在空白工作区从零构建一个面向风控评分卡建模的本地专业应用，用于对表格特征做监督式分箱、证据权重编码与单调约束求解，并在反复调整约束方案时保证状态演进与恢复的一致性。输入为本地 YAML 实验配置与按固定种子确定性生成的合成表格数据描述：包含数值连续列、类别列、缺失值、异常值列、高基数类别列与二值目标列，样本量、列基数与缺失率均由配置给出。应用按固定阶段执行：数据加载与缺失归组、逐列监督分箱（分箱边界由卡方合并与最小箱占比约束共同决定）、证据权重与信息值计算、单调方向约束求解（对每个数值列指定单调上升、单调下降或无序，方向冲突时按配置的冲突裁决优先级合并相邻箱），最后在固定折划分下评估。用户通过交互命令反复修改分箱数上限、单调方向、最小箱占比与冲突裁决优先级，每次修改后必须只重算受影响的列与评估结果。核心业务约束是阶段化状态演进：每阶段完成时先写临时目录再整体替换提交快照，进程被强制终止后重启只能依据已完整替换的快照与进度记录恢复，恢复后的分箱边界、证据权重表、单调修正记录与评估指标必须与不中断运行逐字段一致，且快照必须识别配置与数据版本变化，禁止混用旧阶段产物。
+# Local Scorecard Lab
 
-任务环境与准备：
-确认 Windows 本地已安装 Python 3.10 或以上，且可执行 python 与 pip。
-安装依赖：pip install numpy pyyaml。
-在空白工作区创建项目目录与配置目录，准备本地 YAML 实验配置与合成数据描述文件（列类型、缺失率、基数、种子、单调方向与优先级等）。
-不依赖任何外部数据、真实账号、网络服务或容器环境，全部样本由本地固定种子生成。
+一个完全本地、确定性的风控评分卡建模实验应用，覆盖：
 
-业务要求：
-1. 实现配置与数据加载层：读取本地 YAML 配置与合成数据描述，按列类型与固定种子确定性生成表格数据，缺失值单独归为一个箱并保留缺失标记；对未知列、类型不符、目标列缺失、目标列取值不在二值枚举内、分箱数上限为零与并发数非正分别输出 E_CONFIG_INVALID 类业务码并进入失败清单，不得以默认值静默兜底。
-2. 实现监督式分箱器：对每个数值列以升序预分箱为起点，按卡方统计量合并相邻箱直到盒子数不超过配置上限且每箱样本占比不低于最小箱占比，合并同卡方值时按箱左边界升序决断；输出每个分箱的整数左右边界、样本数与缺失箱标记，类别列则按类别频次与目标率合并为满足最小箱占比的类别组并保留类别到组的映射。
-3. 实现证据权重与信息值计算，并处理零频与极端比率：每个箱的证据权重按 (坏样本占比/好样本占比) 的自然对数计算，分子或分母为零时按配置的平滑系数做加性平滑并在产物中标注平滑生效的箱；信息值为各箱加权和，输出逐列信息值与逐箱贡献，同一平滑系数下多次运行结果必须逐字段一致。
-4. 实现单调方向约束求解：对每个数值列按配置方向（上升、下降或无序）检查证据权重序列，违反单调时按配置的冲突裁决优先级合并相邻箱并重算证据权重，迭代直到满足约束或达到最大合并轮数；输出每列单调修正记录，包括每轮被合并的箱边界、合并前后证据权重与命中规则，达到最大轮数仍未满足时输出 E_MONOTONIC_UNRESOLVED 并保留当前状态。
-5. 实现基于内容指纹的精确失效判定：为每列分箱结果、证据权重表、单调修正记录与评估指标计算由列内容指纹、分箱参数指纹、单调方向与裁决优先级指纹派生的缓存键；当某列的单调方向或最小箱占比变更时，仅将该列及其下游评估标记失效并纳入重算集合，未失效列必须直接复用持久化产物且不得重新计算分箱。
-6. 实现阶段化快照整体替换与强制终止后的恢复判定：将加载、分箱、证据权重、单调求解、评估划分为阶段，各阶段先写临时目录再整体替换提交，清单记录全局版本号、配置指纹、数据指纹、已完成列列表与各阶段产物版本；启动时以版本号、配置指纹与数据指纹判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并拒绝恢复，恢复点版本号须写入报告；不得承诺强制终止后一定生成退出报告。
-7. 保证编辑序列下增量运行与全量重建逐字段一致：从任意初始状态施加包含单调方向切换、分箱数上限调整、最小箱占比调整、裁决优先级变化与单列数据替换的编辑序列，每次编辑后增量运行得到的分箱边界、证据权重序列、单调修正记录、评估指标与失败清单顺序，必须与从空白工作区按相同最终输入与配置一次性全量运行的对应结果逐字段一致。
-8. 实现并发分箱与串行结果一致性及异常隔离：使用线程池并发执行各列的分箱与证据权重计算，最大并发数取自配置；每个列任务携带由列名与阶段名派生的稳定排序键，无论线程调度顺序与并发度如何，最终列结果顺序、箱顺序、单调修正记录顺序与失败清单顺序必须与单线程按列名字典序执行逐字段一致；单列在分箱或单调求解阶段抛异常时记录列名、阶段名、业务码与异常类型并继续其余列，该列不得进入评估汇总；收到可处理的退出信号时完成当前列的原子快照提交后以整数退出码 0 退出，每次完整运行输出 JSON 报告，含逐列分箱数与信息值、单调修正次数、评估指标、缓存命中与失效计数、快照版本号、恢复点信息与失败清单。
+- 固定种子的合成表格数据生成：数值列、类别列、缺失、尾异常、高基数类别、二值目标。
+- 数值列卡方相邻合并 + 最小箱占比约束，类别列按频次/目标率聚合。
+- 带零频加性平滑的 WOE/IV 计算，逐箱记录平滑标记和 IV 贡献。
+- 数值列单调上升、单调下降或无序约束，按可配置冲突裁决优先级逐轮合并。
+- 内容指纹缓存、线程池并发、稳定排序和单列异常隔离。
+- 阶段化临时目录写入、原子阶段提交、原子清单与进度记录、强制终止后的精确恢复。
+- 交互式编辑后增量运行，并用 JSON 报告输出分箱、WOE、单调修正、评估、缓存和恢复信息。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+应用不读取外部数据、不访问网络服务、不使用 Docker 或其他容器环境。
 
-验收：
-本地运行验证分箱单调修正、增量与全量逐字段一致、强制终止后恢复与报告输出。
+## 环境与安装
+
+要求 Python 3.10 或以上。Windows 本地可直接使用 `python`：
+
+```powershell
+python --version
+python -m pip install -r requirements.txt
+```
+
+依赖只有 `numpy` 和 `PyYAML`。也可以安装为本地命令行工具：
+
+```powershell
+python -m pip install -e .
+scorecard-lab --version
+```
+
+不安装包时，以下命令均可直接运行：
+
+```powershell
+python -m scorecard_app --help
+```
+
+## 快速开始
+
+工作区已提供 `configs/experiment.yaml` 与 `configs/synthetic.yaml`。执行一次完整实验：
+
+```powershell
+python -m scorecard_app run `
+  --config configs/experiment.yaml `
+  --data configs/synthetic.yaml `
+  --state-dir .scorecard-state `
+  --report .scorecard-state/last_report.json
+```
+
+重复执行同一命令会从已提交阶段和内容缓存恢复，不会重算未失效列。发生强制终止后，用完全相同的输入和状态目录再次执行即可续跑：
+
+```powershell
+python -m scorecard_app run --config configs/experiment.yaml --data configs/synthetic.yaml
+```
+
+有意修改 YAML 配置或数据描述后再运行，需要显式声明这是新版本 revision：
+
+```powershell
+python -m scorecard_app run --config configs/experiment.yaml --data configs/synthetic.yaml --revision
+```
+
+未加 `--revision` 时，已提交清单中的配置/数据指纹不一致会返回 `E_SNAPSHOT_STALE` 并拒绝恢复旧状态。
+
+## 交互编辑
+
+```powershell
+python -m scorecard_app shell --config configs/experiment.yaml --data configs/synthetic.yaml
+scorecard> direction age descending
+scorecard> max-bins 5
+scorecard> min-ratio 0.08 income
+scorecard> priority max_gap,left
+scorecard> replace-column income 3
+scorecard> show age
+scorecard> save configs/edited-experiment.yaml configs/edited-data.yaml
+scorecard> quit
+```
+
+每次编辑会立即执行一次 revision 运行，只重算失效列及其下游评估。命令也可以从文本文件批量输入：
+
+```powershell
+python -m scorecard_app shell --config configs/experiment.yaml --data configs/synthetic.yaml --commands commands.txt
+```
+
+支持的编辑命令：
+
+- `max-bins <n> [column]`：全局或单列分箱上限。
+- `min-ratio <r> [column]`：全局或单列最小箱占比。
+- `direction <column> <ascending|descending|none>`：单列单调方向。
+- `priority <rule[,rule...]>`：冲突裁决优先级。
+- `max-rounds <n>`：单调求解最大合并轮数。
+- `replace-column <column> <seed_offset>`：只替换该列的确定性生成种子偏移，目标列和其他列不变。
+- `run`、`show [column]`、`report [path]`、`save <experiment.yaml> <data.yaml>`、`help`、`quit`。
+
+## 配置结构
+
+实验配置包含：
+
+- `features`：参与建模的列。可以省略，省略时使用数据描述中的全部列。
+- `runtime.max_workers`：线程池最大并发数，必须为正整数。
+- `binning.max_bins`、`binning.min_bin_ratio`：全局分箱数上限与最小箱占比。
+- `binning.prebins`：数值列升序预分箱的目标数量。
+- `binning.smoothing`：零频加性平滑系数，必须为正数。
+- `monotonic.max_rounds`：单调冲突最大合并轮数。
+- `monotonic.conflict_priority`：支持 `left`、`right`、`max_gap`、`min_count`、`max_count`，按列表顺序裁决。
+- `evaluation.folds`、`evaluation.seed`：固定折划分参数。
+- `columns.<name>`：可选的单列类型、`max_bins`、`min_bin_ratio`、`monotonic_direction` 覆盖。
+- `snapshot.expected_global_version`：可选；非空时必须与当前已提交全局版本一致，否则拒绝恢复。
+
+数据描述包含行数、固定种子、目标二值枚举及每列类型、缺失率、分布参数、基数与 `seed_offset`。
+
+## 算法与业务规则
+
+### 数值分箱
+
+1. 按非缺失值升序构造确定性预分箱。
+2. 对相邻箱计算 2x2 Pearson 卡方统计量。
+3. 持续合并最低卡方相邻对，直到非缺失箱数满足上限且非缺失箱占比满足最小占比。
+4. 卡方相同时按左边界升序裁决，必要时再用原始相邻位置稳定排序。
+5. 缺失值始终作为独立箱追加在末尾，并写入 `is_missing: true`。
+
+`max_bins >= 2` 时，为缺失箱保留一个总槽位；因此非缺失箱上限是 `max_bins - 1`。`max_bins = 1` 且存在缺失时，保留一个数值箱和一个独立缺失箱，这是“缺失单独成箱”约束下的唯一可行表达。
+
+### 类别分箱
+
+初始每个类别为一个组。每次选出频次最小的组，将其与目标率最接近的相邻组按目标率排序后合并，直到组数满足上限且组占比满足最小占比。最终输出组列表、组内排序后的类别和完整的 `category_to_group` 映射；缺失类别单独成组。
+
+### WOE 与 IV
+
+对每箱计算：
+
+```text
+bad_share = adjusted_bad / adjusted_total_bad
+good_share = adjusted_good / adjusted_total_good
+WOE = ln(bad_share / good_share)
+IV_contribution = (bad_share - good_share) * WOE
+```
+
+当某箱坏样本数或好样本数为零时，对该零频计数加 `smoothing`，重新计算调整后的全局总数，并在箱产物中写入 `smoothed: true`。浮点结果统一保留 12 位小数，保证缓存重载后逐字段一致。
+
+### 单调约束
+
+仅检查非缺失数值箱的 WOE 序列。上升约束要求 WOE 非递减，下降约束要求非递增。每轮找出全部冲突相邻对，按 `conflict_priority` 选择一对合并，然后重算全部箱 WOE。修正记录包括轮次、合并前后边界、合并前后 WOE、计数、冲突间隙和命中规则。
+
+达到 `max_rounds` 仍有冲突时，保留当前箱与 WOE 状态，写入 `E_MONOTONIC_UNRESOLVED` 失败项，并将该列排除出评估汇总。
+
+## 增量缓存与失效
+
+缓存键全部由规范 JSON 的 SHA-256 派生：
+
+- 列内容键：列名、类型、列值、目标值、目标列名、正类枚举。
+- 分箱参数键：`max_bins`、`min_bin_ratio`、`prebins`。
+- 方向/优先级键：单调方向、冲突优先级、最大轮数。
+- `binning` 键：列内容键 + 分箱参数键。
+- `woe` 键：`binning` 键 + 平滑系数。
+- `monotonic` 键：`woe` 键 + 方向/优先级键。
+- `evaluation` 键：全部最终列键 + 数据指纹 + 折数、折种子、目标枚举。
+
+因此：
+
+- 只改某列单调方向：该列的 `binning`/基础 `woe` 命中，只重算 `monotonic` 和评估。
+- 只改某列最小箱占比：只有该列的分箱、WOE、单调和评估失效。
+- 改裁决优先级：所有适用数值列的单调阶段和评估失效，类别列与分箱/WOE 复用。
+- 单列数据替换：只有该列内容键及下游失效；目标列和其他列保持逐字段相同。
+
+## 快照、恢复与并发
+
+状态目录结构：
+
+```text
+.scorecard-state/
+  manifest.json                 # 唯一原子提交点
+  progress.json                 # 中断时的已完成列进度（若存在）
+  cache/<stage>/<key>.json      # 内容寻址的不可变列产物
+  stages/<stage>/vNNNNNNNN/     # 原子发布的阶段目录
+  tmp/                          # 未完成临时写入，恢复时忽略
+```
+
+每个阶段先写 `tmp/`，完成并 `fsync` 后整体 `rename` 到 `stages/...`，最后原子替换 `manifest.json`。清单包含格式/算法版本、全局版本号、配置/数据指纹、已完成阶段、每阶段产物版本、已完成列、阶段键和失败清单。
+
+恢复规则：
+
+- 格式版本、算法版本、可选期望全局版本、配置指纹或数据指纹不一致：`E_SNAPSHOT_STALE`，拒绝恢复且不修改清单。
+- 身份一致：按清单恢复已完成阶段；未完成阶段从原子缓存和进度记录继续。
+- 未引用的临时目录、未提交阶段目录和校验失败缓存不会被当作有效状态。
+- `SIGKILL` 不保证退出报告；重启只依赖完整阶段、原子列缓存和进度文件。
+- 可处理的 `SIGINT`/`SIGTERM` 会让线程池停止接收新列、等待运行中的列完成原子缓存提交，写入进度和 JSON 报告，进程以整数退出码 `0` 退出。
+
+分箱、WOE 和单调阶段使用 `runtime.max_workers` 的线程池。每个任务携带稳定的 `stage:column` 键；最终结果按列名字典序、箱索引和轮次输出，因此线程调度和并发度不会改变产物顺序或数值。单列抛异常时只记录该列的列名、阶段、业务码和异常类型，其余列继续并照常形成评估。
+
+## 报告与业务码
+
+每次运行原子写出 JSON 报告，主要字段包括：
+
+- `input.config_fingerprint`、`input.data_fingerprint`。
+- `snapshot.version`、`snapshot.recovery_point_version`、各阶段产物版本。
+- `recovery.recovered`、`recovery.resume_version`、恢复阶段和中断阶段。
+- 逐列 `bin_count`、`iv`、`monotonic_correction_count`、完整箱表、类别映射和逐阶段缓存状态。
+- 固定折 `evaluation.overall` 与 `evaluation.per_fold`，含 AUC、KS、LogLoss、Brier、Accuracy。
+- `cache.hits`、`cache.misses`、`invalidated_artifacts`、`invalidated_columns`。
+- 稳定排序的 `failures` 清单。
+
+主要业务码：
+
+- `E_CONFIG_INVALID`：未知列、类型不符、目标缺失/非二值、分箱上限为零、并发非正及其他配置错误。
+- `E_SNAPSHOT_STALE`：快照身份或版本不一致，拒绝恢复。
+- `E_COLUMN_BINNING_FAILED`、`E_COLUMN_WOE_FAILED`、`E_MONOTONIC_FAILED`：单列异常隔离。
+- `E_MONOTONIC_UNRESOLVED`：达到最大轮数仍未满足单调约束。
+- `E_EVALUATION_FAILED`：评估阶段异常。
+
+## 验证
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+测试覆盖：配置错误、二值目标、卡方并列裁决、最小箱占比、类别映射、零频平滑、单调修正与未决状态、增量/全量逐字段一致、单列数据替换、并发度一致性、异常隔离、失败排序、SIGTERM 退出码 0、SIGKILL 后恢复、旧快照拒绝和显式 revision。实际执行结果见 `docs/VALIDATION.md`，设计与不变量见 `docs/DESIGN.md`。
+
+测试/演示专用环境变量：
+
+- `SCORECARD_FAILPOINT=after_column_cache:binning:age` 等：在指定原子提交点硬退出，用于验证恢复。
+- `SCORECARD_TEST_TASK_DELAY_MS=200`：给列任务增加固定延迟，用于发送进程信号。
+
+这两个变量不参与配置指纹或业务产物生成，仅用于本地验收。
