@@ -1,0 +1,39 @@
+# Synthetic tabular data description. All data is generated deterministically
+# from `seed`; no real datasets are used.
+seed: 20240501
+base_rows: 240
+train_fraction: 0.8
+scales:
+  small: 1
+  medium: 4
+  large: 16
+columns:
+  - name: age
+    type: numeric
+    distribution: normal
+    mean: 42.0
+    std: 12.0
+    missing_rate: 0.05
+  - name: income
+    type: numeric
+    distribution: normal
+    mean: 8000.0
+    std: 2500.0
+    missing_rate: 0.03
+  - name: score
+    type: numeric
+    distribution: uniform
+    low: 0.0
+    high: 100.0
+  - name: segment
+    type: categorical
+    categories: [basic, plus, premium]
+    weights: [0.5, 0.3, 0.2]
+    missing_rate: 0.04
+  - name: device_id
+    type: high_cardinality
+    cardinality: 180
+    missing_rate: 0.02
+  - name: age_copy
+    type: redundant
+    source: age

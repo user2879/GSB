@@ -1,0 +1,15 @@
+# Injection manifest. Deterministic, applied in listed order.
+injections:
+  - id: repl-001
+    type: replace_sample
+    row: 7
+    column: income
+    value: 12345.0
+  - id: fault-001
+    type: candidate_fault
+    method: dbscan
+    stage: iterate
+    code: E_INJECTED_FAULT
+    params:
+      eps: 0.15
+      min_samples: 8
