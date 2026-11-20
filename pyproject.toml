@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gray-arbiter"
+version = "1.0.0"
+description = "Loopback connection-pool gray routing and mirror sampling arbiter"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+verify = ["numpy>=1.23"]
+
+[project.scripts]
+gray-arbiter = "gray_arbiter.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gray_arbiter*", "tools*"]

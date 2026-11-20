@@ -1,0 +1,58 @@
+{
+  "borrow_ttl_ms": 1500,
+  "main_timeout_ms": 1200,
+  "mirror_timeout_ms": 450,
+  "pools": [
+    {
+      "host": "127.0.0.1",
+      "idle_timeout_ms": 1200,
+      "lendable_to": [
+        "gray"
+      ],
+      "max_connections": 3,
+      "max_requests_per_connection": 4,
+      "pool_id": "stable",
+      "port": 19081
+    },
+    {
+      "host": "127.0.0.1",
+      "idle_timeout_ms": 1200,
+      "lendable_to": [],
+      "max_connections": 2,
+      "max_requests_per_connection": 4,
+      "pool_id": "gray",
+      "port": 19082
+    },
+    {
+      "host": "127.0.0.1",
+      "idle_timeout_ms": 900,
+      "lendable_to": [],
+      "max_connections": 2,
+      "max_requests_per_connection": 3,
+      "pool_id": "mirror",
+      "port": 19083
+    }
+  ],
+  "queue_timeout_ms": 5000,
+  "rules": [
+    {
+      "gray_pool": "gray",
+      "gray_weight_bp": 6500,
+      "mirror_pool": "mirror",
+      "mirror_sample_bp": 3500,
+      "prefix": "/api/catalog",
+      "rule_id": "catalog",
+      "stable_pool": "stable"
+    },
+    {
+      "gray_pool": "gray",
+      "gray_weight_bp": 3000,
+      "mirror_pool": "mirror",
+      "mirror_sample_bp": 1500,
+      "prefix": "/api/checkout",
+      "rule_id": "checkout",
+      "stable_pool": "stable"
+    }
+  ],
+  "version": 1
+}
