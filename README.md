@@ -1,21 +1,276 @@
-当前是空白工作区，需要从零构建一个面向 Windows 本地环境的训练元数据清单互操作组件，聚焦检查点清单在三种历史格式之间的归一、升级与可续做。系统以本地确定性样本（固定整数随机种子的合成分类数据与一个 4 分片小型多层感知机参数集）为内容载体，清单只描述训练元数据：全局步数、各分片参数摘要、优化器动量摘要、随机数状态、数据游标与分片划分方式。清单存在三种历史格式版本：v1 仅含全局步数与各分片参数摘要，v2 增加动量摘要与随机数状态，v3 再增加数据游标、分片划分方式与父清单引用。用户以本地 JSON 声明元数据配置，并在命令行以 stdin/stdout 命令循环执行清单导入、升级、归一比对、快照与重放操作。核心业务不是重跑训练，而是保证任一历史版本清单经归一与升级后得到的元数据视图与以当前版本直接写入的同一视图逐字节一致，且升级过程可中断续做、快照可整体替换。全部数据与清单均在本地磁盘，不访问网络与外部账号。
+# ckptmeta — 训练检查点元数据互操作组件
 
-任务环境与准备：
-Windows 本机安装 Python 3.11，安装 numpy 与 pytest，无需 GPU、网络或外部账号。
-在空白工作区创建项目目录，准备本地 JSON 样本配置与用于升级的 v1、v2 样本清单，由演示脚本生成到工作区子目录。
-运行前确认工作区具备读写清单目录与 SQLite 文件的权限，演示脚本应可在同一目录重复执行。
+`ckptmeta` 面向 Windows 本地环境，处理训练检查点清单在 `v1`、`v2`、`v3` 三种格式之间的导入、升级、归一、逐字节一致性校验、可续做升级和 SQLite 会话快照。
 
-业务要求：
-1. 实现清单内容的确定性摘要构造：按本地 JSON 中的整数种子、分片数、分片划分方式与步数生成各分片参数摘要、动量摘要、随机数状态与数据游标，相同参数组合多次运行必须得到逐位一致的元数据摘要；分片划分方式为按样本取模或按连续区间两种，越界参数须以 E_CONFIG 拒绝并说明触发的字段。
-2. 实现 v1、v2、v3 三种清单格式的编解码与强校验：v1 仅含全局步数与各分片参数摘要，v2 增加动量摘要与随机数状态，v3 再增加数据游标、分片划分方式与父清单引用；解码须校验分片数一致、摘要为合法定长十六进制串、全局步数为非负整数、父引用存在，未知版本或字段缺失须以 E_FORMAT 整体拒绝并输出出错字段路径，不得部分加载。
-3. 实现清单目录打开时的版本升级与中断续做：检测全部清单的格式版本，低于当前版本者逐条在内存中完成记录级升级并以当前版本原子重写，每完成一条即原子更新检查点文件，旧清单保留为只读备份；进程被强制终止后重启只能依据检查点继续升级，已升级条目不得重复处理，未完成条目须标记为未知并要求重跑，不得声称能生成该次强制终止的退出报告。
-4. 实现跨版本归一与整体替换：从任一历史版本清单装载时须先校验各分片摘要与清单一致，再以整体替换方式重建元数据视图而非把新旧字段增量合并；归一报告须列出源格式版本、升级后目标版本、被补齐字段集合与校验通过的摘要数，归一后视图摘要须与以当前版本直接写入同一元数据的视图摘要逐字节一致，不一致须以 E_RESTORE 报明首个不一致分片与字段。
-5. 实现升级路径与直达路径的逐位一致性校验：自 v1 与 v2 清单分别升级后得到的视图，须与以当前版本直接写入的同一元数据视图逐字段比较参数摘要、动量摘要、随机数状态、数据游标与全局步数，差异须定位到首个不一致的分片序号、字段名与步数并输出 E_DIVERGE；比较须在相同分片数与相同划分方式下进行，真值来源为账本中逐分片记录的摘要。
-6. 实现互操作会话快照的版本识别与恢复后重放校验：快照持久化到本地 SQLite，含清单格式版本集合、内容摘要、归一视图摘要、升级轨迹与已处理条目游标；重新打开快照时须比较快照格式版本集合与内容摘要同当前磁盘状态，不一致须整体替换当前会话状态且旧快照保留只读；恢复后按快照记录的配置重新归一并与快照逐项比较，不可复现须以 E_REPLAY 报明具体依据。
-7. 实现异常注入与结构化日志链路：支持以命令行参数分别注入分片摘要损坏、清单父引用缺失、升级检查点内容不符三类异常，分别以 E_INTEGRITY、E_CHAIN、E_UPGRADE 业务码报告并写入结构化日志，注入仅改变输入文件而不修改实现代码；日志须含业务码、清单路径、分片序号与时刻，注入下进程须以非零整数退出码结束并保证已有完整清单不被破坏。
-8. 提供可集成的 Python 包 API 与完整可重复演示：以包形式暴露清单导入、版本升级、归一、一致性校验、快照保存与恢复、重放校验接口，附带本地确定性样本配置与演示脚本，顺序执行当前版本直达写入、v1 与 v2 样本清单升级后归一、强制终止升级后续做三种场景，每次输出稳定顺序的清单列表、升级轨迹与一致性结论总结。
+组件只处理训练元数据，不重跑训练。内容载体由固定整数种子生成：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 64 条、8 维、3 类的本地合成分类数据；
+- 一个 4 分片小型 MLP 的 `w1/b1/w2/b2` 参数与动量；
+- 各分片参数摘要、动量摘要、PCG64 随机数状态、数据游标和父清单引用。
 
-验收：
-用本地样本执行三版本清单升级与归一，验证归一视图逐字节一致及异常业务码正确上报。
+所有文件均在本地磁盘，不访问网络、外部账号或 GPU。
+
+## 环境
+
+- Windows 本机，Python 3.11
+- `numpy`
+- `pytest`（仅测试）
+
+```powershell
+py -3.11 -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python -m pytest -q
+.venv\Scripts\python demo.py --workspace .interop-demo
+```
+
+Linux/macOS 下将 `.venv\Scripts\python` 改为 `.venv/bin/python`。项目不使用 Docker 或其他容器环境。
+
+## 快速演示
+
+```bash
+python -m ckptmeta demo --workspace .interop-demo
+```
+
+演示脚本按固定顺序执行四个场景：
+
+1. 当前版本 `v3` 直达写入、链校验与归一；
+2. `v1`、`v2` 目录逐条升级后归一，并与 `v3` 直达视图逐字节比较；
+3. 子进程在升级检查点提交后强制终止，重启后只处理未完成条目；
+4. 保存 SQLite 快照、恢复快照并重放校验。
+
+演示目录可重复执行；脚本只清理自己管理的子目录。
+
+## 清单格式
+
+当前版本为 `v3`。严格字段与 JSON 示例见 [docs/format-spec.md](docs/format-spec.md)。
+
+| 版本 | 内容 |
+| --- | --- |
+| `v1` | `global_step`、`shard_count`、各分片 `parameter_digest` |
+| `v2` | `v1` + 各分片 `momentum_digest` + `rng_state` |
+| `v3` | `v2` + 各分片 `data_cursor` + `partition_mode` + `parent_manifest` + `manifest_id` |
+
+解码要求：
+
+- `format_version` 只能是整数 `1`、`2`、`3`；
+- 分片数必须与 `shards` 数量一致，分片索引必须是连续的 `0..N-1`；
+- 摘要必须是 64 位十六进制串；
+- `global_step` 必须是非负整数；
+- `v3` 必须存在 `parent_manifest` 字段；非创世步的父引用必须可解析且摘要匹配；
+- 未知字段、缺失字段、未知版本均整体拒绝，不返回部分对象。
+
+## 命令行
+
+生成可重复样本：
+
+```bash
+python -m ckptmeta generate --workspace .interop-demo
+```
+
+打开目录并升级全部低版本清单：
+
+```bash
+python -m ckptmeta open \
+  --catalog .interop-demo/historical_v1 \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json
+```
+
+只升级、不执行其他操作：
+
+```bash
+python -m ckptmeta upgrade \
+  --catalog .interop-demo/historical_v1 \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json
+```
+
+归一单个清单：
+
+```bash
+python -m ckptmeta normalize \
+  --manifest .interop-demo/historical_v1/step-00000020.v1.json \
+  --ledger .interop-demo/ledger/truth-ledger.json
+```
+
+可用 `--expected-manifest <v3 直达清单>` 增加一次显式逐字节比较；不一致返回 `E_RESTORE` 并定位首个分片和字段。
+
+比较两个清单：
+
+```bash
+python -m ckptmeta compare \
+  --left .interop-demo/historical_v1/step-00000020.v1.json \
+  --right .interop-demo/direct/step-00000020.v3.json \
+  --ledger .interop-demo/ledger/truth-ledger.json
+```
+
+快照保存、恢复和重放：
+
+```bash
+python -m ckptmeta snapshot-save \
+  --catalog .interop-demo/direct \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json \
+  --snapshot-db .interop-demo/snapshots/interop.sqlite3
+
+python -m ckptmeta snapshot-restore \
+  --catalog .interop-demo/direct \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json \
+  --snapshot-db .interop-demo/snapshots/interop.sqlite3
+
+python -m ckptmeta snapshot-replay \
+  --catalog .interop-demo/direct \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json \
+  --snapshot-db .interop-demo/snapshots/interop.sqlite3
+```
+
+强制终止注入：
+
+```bash
+# 模拟在第一条清单已提交检查点后进程被终止
+python -m ckptmeta upgrade ... --crash-after-completed 1
+
+# 模拟清单已重写但检查点尚未提交，重启后会变为 unknown
+python -m ckptmeta upgrade ... --crash-after-rewrite 1
+```
+
+异常注入会直接修改工作区内的输入文件，不修改实现代码，并以对应非零退出码结束：
+
+```bash
+python -m ckptmeta demo --workspace .interop-demo-integrity --inject-integrity  # 12 / E_INTEGRITY
+python -m ckptmeta demo --workspace .interop-demo-chain --inject-chain          # 13 / E_CHAIN
+python -m ckptmeta demo --workspace .interop-demo-upgrade --inject-upgrade      # 14 / E_UPGRADE
+```
+
+## JSONL 命令循环
+
+`session` 从 stdin 逐行读取 JSON，向 stdout 逐行写回 JSON：
+
+```bash
+python -m ckptmeta session \
+  --catalog .interop-demo/direct \
+  --config .interop-demo/config.json \
+  --ledger .interop-demo/ledger/truth-ledger.json \
+  --snapshot-db .interop-demo/snapshots/interop.sqlite3
+```
+
+请求示例：
+
+```json
+{"request_id":"1","command":"import","catalog":".interop-demo/historical_v1","upgrade":true}
+{"request_id":"2","command":"normalize","manifest":".interop-demo/historical_v1/step-00000020.v1.json"}
+{"request_id":"3","command":"compare","left":".interop-demo/historical_v1/step-00000020.v1.json","right":".interop-demo/direct/step-00000020.v3.json"}
+{"request_id":"4","command":"snapshot_save"}
+{"request_id":"5","command":"snapshot_restore","verify_replay":true}
+{"request_id":"6","command":"snapshot_replay"}
+{"request_id":"7","command":"quit"}
+```
+
+支持的命令：`scan`、`open` / `import` / `upgrade`、`normalize`、`compare`、`snapshot_save`、`snapshot_restore`、`snapshot_replay`、`snapshot_list`、`ping`、`quit`。业务错误作为带 `business_code` 的 JSON 行返回；会话最终以非零码结束。
+
+## Python API
+
+```python
+from ckptmeta import (
+    Catalog,
+    SnapshotStore,
+    build_ledger,
+    compare_upgrade_paths,
+    decode_manifest,
+    load_config,
+    normalize_manifest,
+    write_direct_manifest,
+)
+
+config = load_config("config.json")
+ledger = build_ledger(config)
+write_direct_manifest("direct/step-00000010.v3.json", ledger, 10)
+
+catalog = Catalog("historical_v1", config, ledger)
+opened = catalog.open()                    # 逐条升级 + 检查点续做 + 链校验 + 账本校验
+manifest = decode_manifest("historical_v1/step-00000010.v1.json")
+normalized = normalize_manifest(manifest, ledger)
+
+equivalence = compare_upgrade_paths(
+    decode_manifest("historical_v1/step-00000020.v1.json"),
+    decode_manifest("historical_v2/step-00000020.v2.json"),
+    decode_manifest("direct/step-00000020.v3.json"),
+    ledger,
+)
+
+with SnapshotStore("snapshots/interop.sqlite3") as snapshots:
+    snapshot = snapshots.save(catalog)
+    restored = snapshots.restore(catalog)
+    replay = snapshots.replay(catalog)
+```
+
+完整公开接口见 `ckptmeta/__init__.py`。
+
+## 升级与续做
+
+- 清单目录为平铺的 `*.json`；控制目录为 `.ckptmeta/`。
+- 低版本清单逐条在内存中构造完整 `v3` 视图，再以同目录临时文件 + `os.replace` 原子重写。
+- 原文件在 `.ckptmeta/backups/` 保留只读备份。
+- 每完成一条，检查点 `.ckptmeta/upgrade-checkpoint.json` 原子更新。
+- `pending` 条目继续处理；`done` 条目不再处理；`processing` 在重启时转为 `unknown` 并返回 `E_UPGRADE`，必须显式 `--retry-unknown`。
+- 强制终止时不会生成成功报告；恢复报告明确标注 `previous_run_report: "unavailable"`。
+
+## 快照与恢复
+
+SQLite 快照保存：
+
+- 清单格式版本集合；
+- 清单文件内容摘要；
+- 归一视图汇总摘要；
+- 升级轨迹与已处理条目游标；
+- 生成真值账本所需的配置；
+- 每个清单的完整归一化 JSON 与视图摘要。
+
+恢复时先比较版本集合和内容摘要。不一致时基于当前磁盘整体重建会话状态，旧快照标记为只读，并新建活动快照；随后按快照内嵌配置重新归一、逐项比较。不可复现时返回 `E_REPLAY`，并给出 `reason`、清单路径和首个不一致字段。
+
+## 业务码
+
+| 业务码 | 退出码 | 含义 |
+| --- | ---: | --- |
+| `E_CONFIG` | 10 | 配置越界、字段非法或配置与账本不一致 |
+| `E_FORMAT` | 11 | 未知版本、字段缺失/多余、路径或格式校验失败 |
+| `E_INTEGRITY` | 12 | 分片摘要或随机数状态与真值账本不一致 |
+| `E_CHAIN` | 13 | 父引用缺失、摘要不匹配或链循环 |
+| `E_UPGRADE` | 14 | 检查点不符、未知条目需要重跑或升级计划不完整 |
+| `E_RESTORE` | 15 | 归一视图与预期视图不一致 |
+| `E_DIVERGE` | 16 | 两条升级/直达路径逐字段比较不一致 |
+| `E_REPLAY` | 17 | 快照内容或归一结果不可复现 |
+| `E_IO` | 18 | 本地磁盘或 SQLite 读写失败 |
+| `E_INTERNAL` | 19 | 未预期内部错误 |
+
+结构化日志为 JSONL，每条至少包含 `timestamp`、`business_code`、`manifest_path`、`shard_index` 和 `details`。
+
+## 项目结构
+
+```text
+ckptmeta/
+  config.py      配置边界与步骤定义
+  generator.py   确定性数据、MLP 参数和摘要
+  ledger.py      真值账本与摘要校验
+  view.py        v3 视图、规范字节和首差异定位
+  formats.py     v1/v2/v3 严格编解码
+  normalize.py   整体替换式归一与一致性比较
+  catalog.py     目录扫描、链校验、可续做升级
+  snapshot.py    SQLite 快照、恢复与重放
+  logging.py     结构化 JSONL 日志
+  cli.py         命令行与 JSONL 会话
+  samples.py     固定样本与可重复演示夹具
+tests/           45 项 pytest 验证
+docs/            格式规范与实际验证记录
+```
+
+实际测试结果见 [docs/verification.md](docs/verification.md)。
+
+## 说明
+
+- 组件不会访问网络，也不会连接外部账号。
+- 所有路径使用 `pathlib`，原子替换使用同目录临时文件和 `os.replace`，适配 Windows 本地文件系统。
+- 清单目录、检查点目录和 SQLite 文件所在位置需要当前用户具备读写权限。
+- 父引用使用逻辑 `manifest_id` 加归一视图摘要，不依赖绝对磁盘路径，因此可跨目录比较。
