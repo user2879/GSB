@@ -1,0 +1,109 @@
+{
+  "batches": [
+    {
+      "batch_no": 1,
+      "operations": [
+        {
+          "op": "replace_template",
+          "seed": {
+            "answer_template": "label::{subject}:{topic}",
+            "seed_id": "seed-001",
+            "slots": [
+              "subject",
+              "topic"
+            ],
+            "task_type": "classification",
+            "template": "Classify the {subject} document about {topic} and output a single answer label.",
+            "template_id": "tpl-classification-000"
+          }
+        },
+        {
+          "op": "set_target_count",
+          "task_type": "translation",
+          "value": 12
+        }
+      ]
+    },
+    {
+      "batch_no": 2,
+      "operations": [
+        {
+          "op": "add_slot_source",
+          "source": {
+            "slot_name": "tone",
+            "source_id": "src-901",
+            "task_type": "summarization",
+            "values": [
+              "formal",
+              "brief",
+              "analytical"
+            ]
+          }
+        },
+        {
+          "op": "set_slot_weight",
+          "source_id": "src-901",
+          "task_type": "summarization",
+          "value": 2.5
+        }
+      ]
+    },
+    {
+      "batch_no": 3,
+      "operations": [
+        {
+          "op": "delete_template",
+          "seed_id": "seed-005"
+        },
+        {
+          "dimension": "clarity",
+          "op": "set_score_weight",
+          "value": 0.42
+        },
+        {
+          "dimension": "clarity",
+          "op": "set_score_baseline",
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "batch_no": 4,
+      "operations": [
+        {
+          "op": "delete_slot_source",
+          "source_id": "src-003"
+        },
+        {
+          "op": "set_dedup_threshold",
+          "value": 0.5
+        },
+        {
+          "op": "set_target_count",
+          "task_type": "classification",
+          "value": 16
+        }
+      ]
+    },
+    {
+      "batch_no": 5,
+      "operations": [
+        {
+          "op": "set_boundary_rule",
+          "value": "split"
+        },
+        {
+          "dimension": "length",
+          "op": "set_score_weight",
+          "value": 0.22
+        },
+        {
+          "op": "set_template_weight",
+          "task_type": "translation",
+          "template_id": "tpl-translation-001",
+          "value": 4.0
+        }
+      ]
+    }
+  ]
+}

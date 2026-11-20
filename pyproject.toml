@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sft-diag-workbench"
+version = "1.0.0"
+description = "确定性指令微调样本构造与增量失效诊断工作台"
+requires-python = ">=3.11"
+dependencies = ["numpy", "jsonschema"]
+
+[project.scripts]
+sft-diag = "sft_diag.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

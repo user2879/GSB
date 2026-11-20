@@ -1,0 +1,53 @@
+{
+  "boundary_rule": "merge",
+  "dedup_threshold": 0.55,
+  "max_workers": 4,
+  "slot_weights": {
+    "classification": {
+      "src-001": 1.0,
+      "src-002": 2.0,
+      "src-003": 3.0,
+      "src-004": 1.0
+    },
+    "summarization": {
+      "src-005": 1.0,
+      "src-006": 2.0,
+      "src-007": 3.0,
+      "src-008": 1.0
+    },
+    "translation": {
+      "src-009": 1.0,
+      "src-010": 2.0,
+      "src-011": 3.0,
+      "src-012": 1.0
+    }
+  },
+  "snapshot_interval_batches": 2,
+  "target_counts": {
+    "classification": 16,
+    "summarization": 14,
+    "translation": 12
+  },
+  "task_types": [
+    "classification",
+    "summarization",
+    "translation"
+  ],
+  "template_weights": {
+    "classification": {
+      "tpl-classification-00": 1.0,
+      "tpl-classification-01": 2.0,
+      "tpl-classification-02": 3.0
+    },
+    "summarization": {
+      "tpl-summarization-00": 1.0,
+      "tpl-summarization-01": 2.0,
+      "tpl-summarization-02": 3.0
+    },
+    "translation": {
+      "tpl-translation-00": 1.0,
+      "tpl-translation-01": 2.0,
+      "tpl-translation-02": 3.0
+    }
+  }
+}
