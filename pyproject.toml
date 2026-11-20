@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evalworkbench"
+version = "1.0.0"
+description = "Deterministic cross-format codec quality and version compatibility workbench"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "Pillow>=9.0"]
+
+[project.scripts]
+evalworkbench = "evalworkbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["evalworkbench*"]
