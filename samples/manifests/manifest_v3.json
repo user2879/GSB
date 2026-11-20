@@ -1,0 +1,67 @@
+{
+  "format_version": 3,
+  "entries": [
+    {
+      "key": "cache.size",
+      "value": 1024,
+      "node": "node-a",
+      "config_version": 3,
+      "strategy": {"mode": "targeted", "retries": 2, "timeout_ms": 1500}
+    },
+    {
+      "key": "cache.ttl",
+      "value": 300,
+      "node": "node-a",
+      "config_version": 3,
+      "strategy": {"mode": "targeted", "retries": 2, "timeout_ms": 1500}
+    },
+    {
+      "key": "pool.min",
+      "value": 2,
+      "node": "node-b",
+      "config_version": 3,
+      "strategy": {"mode": "targeted", "retries": 1, "timeout_ms": 1500}
+    },
+    {
+      "key": "pool.max",
+      "value": 8,
+      "node": "node-b",
+      "config_version": 3,
+      "strategy": {"mode": "targeted", "retries": 1, "timeout_ms": 1500}
+    },
+    {
+      "key": "feature.flag",
+      "value": true,
+      "node": "node-c",
+      "config_version": 3,
+      "strategy": {"mode": "broadcast", "retries": 2, "timeout_ms": 1500}
+    },
+    {
+      "key": "region.name",
+      "value": "cn-east",
+      "node": "node-c",
+      "config_version": 3,
+      "strategy": {"mode": "targeted", "retries": 2, "timeout_ms": 1500}
+    }
+  ],
+  "derivations": [
+    {
+      "name": "cache-total",
+      "inputs": ["cache.size", "cache.ttl"],
+      "op": "sum",
+      "target_node": "node-a"
+    },
+    {
+      "name": "pool-range",
+      "inputs": ["pool.max", "pool.min"],
+      "op": "mean",
+      "target_node": "node-b"
+    },
+    {
+      "name": "feature-count",
+      "inputs": ["feature.flag", "region.name"],
+      "op": "count",
+      "target_node": "node-c"
+    }
+  ]
+}
