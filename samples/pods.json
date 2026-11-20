@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pods": [
+    {
+      "id": "probe-west",
+      "labels": {"app": "probe", "tier": "ops"},
+      "resources": {"cpu": 1, "memory": 512},
+      "image": "registry.local/cache:2",
+      "nodeAffinity": {
+        "hard": {"matchExpressions": [{"key": "zone", "operator": "In", "values": ["west"]}]}
+      }
+    },
+    {
+      "id": "api-front-a",
+      "labels": {"app": "api", "tier": "web"},
+      "resources": {"cpu": 2, "memory": 1024},
+      "image": "registry.local/api:1",
+      "nodeAffinity": {
+        "hard": {"matchLabels": {"zone": "east"}},
+        "soft": [{"selector": {"matchLabels": {"rack": "r1"}}, "weight": 3}]
+      },
+      "antiAffinity": {
+        "soft": [
+          {
+            "selector": {"matchLabels": {"app": "api"}},
+            "topologyKey": "zone",
+            "weight": 2
+          }
+        ]
+      },
+      "tolerations": [
+        {"key": "dedicated", "operator": "Equal", "value": "batch", "effect": "NoSchedule"}
+      ]
+    },
+    {
+      "id": "api-front-b",
+      "labels": {"app": "api", "tier": "web"},
+      "resources": {"cpu": 2, "memory": 1024},
+      "image": "registry.local/api:1",
+      "nodeAffinity": {
+        "hard": {"matchLabels": {"zone": "east"}},
+        "soft": [{"selector": {"matchLabels": {"rack": "r1"}}, "weight": 3}]
+      },
+      "antiAffinity": {
+        "hard": [
+          {
+            "selector": {"matchLabels": {"app": "api"}},
+            "topologyKey": "rack"
+          }
+        ],
+        "soft": [
+          {
+            "selector": {"matchLabels": {"app": "api"}},
+            "topologyKey": "zone",
+            "weight": 2
+          }
+        ]
+      },
+      "tolerations": [
+        {"key": "dedicated", "operator": "Equal", "value": "batch", "effect": "NoSchedule"}
+      ]
+    },
+    {
+      "id": "cache-index",
+      "labels": {"app": "cache", "tier": "data"},
+      "resources": {"cpu": 2, "memory": 2048},
+      "image": "registry.local/cache:2",
+      "nodeAffinity": {
+        "hard": {"matchLabels": {"zone": "west"}},
+        "soft": [{"selector": {"matchLabels": {"disk": "ssd"}}, "weight": 2}]
+      },
+      "antiAffinity": {
+        "soft": [
+          {
+            "selector": {"matchLabels": {"app": "cache"}},
+            "topologyKey": "zone",
+            "weight": 2
+          }
+        ]
+      },
+      "tolerations": [
+        {"key": "dedicated", "operator": "Equal", "value": "batch", "effect": "NoSchedule"}
+      ]
+    },
+    {
+      "id": "batch-report",
+      "labels": {"app": "batch", "tier": "worker"},
+      "resources": {"cpu": 3, "memory": 4096},
+      "image": "registry.local/api:2",
+      "nodeAffinity": {
+        "hard": {
+          "matchExpressions": [{"key": "zone", "operator": "In", "values": ["east", "west"]}]
+        },
+        "soft": [{"selector": {"matchLabels": {"disk": "hdd"}}, "weight": 4}]
+      },
+      "antiAffinity": {
+        "soft": [
+          {
+            "selector": {"matchLabels": {"app": "api"}},
+            "topologyKey": "zone",
+            "weight": 3
+          }
+        ]
+      },
+      "tolerations": [
+        {"key": "dedicated", "operator": "Equal", "value": "batch", "effect": "NoSchedule"}
+      ]
+    }
+  ]
+}

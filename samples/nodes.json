@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "nodes": [
+    {
+      "name": "node-east-a",
+      "labels": {
+        "zone": "east",
+        "rack": "r1",
+        "disk": "ssd",
+        "kubernetes.io/hostname": "node-east-a"
+      },
+      "allocatable": {"cpu": 8, "memory": 16384},
+      "taints": [],
+      "images": ["registry.local/api:1", "registry.local/cache:2"]
+    },
+    {
+      "name": "node-east-b",
+      "labels": {
+        "zone": "east",
+        "rack": "r2",
+        "disk": "hdd",
+        "kubernetes.io/hostname": "node-east-b"
+      },
+      "allocatable": {"cpu": 8, "memory": 16384},
+      "taints": [
+        {"key": "dedicated", "value": "batch", "effect": "NoSchedule"}
+      ],
+      "images": ["registry.local/api:1"]
+    },
+    {
+      "name": "node-west-a",
+      "labels": {
+        "zone": "west",
+        "rack": "r1",
+        "disk": "ssd",
+        "kubernetes.io/hostname": "node-west-a"
+      },
+      "allocatable": {"cpu": 6, "memory": 12288},
+      "taints": [],
+      "images": ["registry.local/cache:2", "registry.local/api:2"]
+    },
+    {
+      "name": "node-west-b",
+      "labels": {
+        "zone": "west",
+        "rack": "r2",
+        "disk": "hdd",
+        "kubernetes.io/hostname": "node-west-b"
+      },
+      "allocatable": {"cpu": 6, "memory": 12288},
+      "taints": [],
+      "images": ["registry.local/api:2"]
+    }
+  ]
+}
