@@ -1,0 +1,116 @@
+{
+  "base_run": {
+    "boundary_sample_count": 74,
+    "calibration_fingerprint": "2362c7ba4efe5861a0bb1ff5095833ee4953df128b561918836e1eca61b7e054",
+    "consistency_signature": "c3ccc0da0389af914b2fa3cb186a5a1c92b6e324f492017a4a3550ef8bb81d00",
+    "decision_counts": {
+      "alarm": 162,
+      "music": 168,
+      "noise": 141,
+      "none": 94,
+      "speech": 185
+    },
+    "drift_alert_count": 84,
+    "drift_sources": {
+      "codebook_mapping": 24,
+      "confidence_shift": 24,
+      "frame_resampling": 24,
+      "logit_conversion": 12
+    },
+    "failure_count": 0,
+    "global_frame_count": 750,
+    "packet_count": 21,
+    "resume_second_run": {
+      "computed_stage_count": 0,
+      "reused_stage_count": 126,
+      "snapshot_status": "resumed"
+    },
+    "valid_packet_count": 21
+  },
+  "commands": [
+    "python3 -m aedwb generate --out samples/base",
+    "python3 -m aedwb generate --out samples/injected --injected",
+    "python3 -m aedwb run --sample-dir samples/base --state-dir state/base --summary",
+    "python3 -m aedwb run --sample-dir samples/injected --state-dir state/injected --summary",
+    "python3 -m pytest -q"
+  ],
+  "environment": {
+    "container_used": false,
+    "network_used": false,
+    "numpy": "1.26.4",
+    "pytest": "8.3.3",
+    "python": "3.11.0rc1",
+    "runtime": "WSL2 Ubuntu-22.04 (Linux x86_64)",
+    "windows_compatible_code": true
+  },
+  "injected_run": {
+    "consistency_signature": "52af212ddabc3c9eb579929bac4b68e9e0ca04631c2fab07c32dd86d6511c95c",
+    "failure_codes": {
+      "E_CALIB_RESIDUAL": 1,
+      "E_CLASS_UNMAPPED": 1,
+      "E_PACKET_INVALID": 4
+    },
+    "failure_count": 6,
+    "global_frame_count": 750,
+    "injection_hits": [
+      {
+        "business_code": "E_PACKET_INVALID",
+        "expected_code": "E_PACKET_INVALID",
+        "expected_code_observed": true,
+        "hit": true,
+        "injection_id": "INJ-001",
+        "kind": "truncated_packet",
+        "packet_id": "a0_probe_truncated",
+        "sequence": 1
+      },
+      {
+        "business_code": "E_PACKET_INVALID",
+        "expected_code": "E_PACKET_INVALID",
+        "expected_code_observed": true,
+        "hit": true,
+        "injection_id": "INJ-002",
+        "kind": "frame_count_mismatch",
+        "packet_id": "a0_probe_frame_count",
+        "sequence": 2
+      },
+      {
+        "business_code": "E_PACKET_INVALID",
+        "expected_code": "E_PACKET_INVALID",
+        "expected_code_observed": true,
+        "hit": true,
+        "injection_id": "INJ-003",
+        "kind": "missing_score_type",
+        "packet_id": "a0_probe_missing_type",
+        "sequence": 3
+      },
+      {
+        "business_code": "E_PACKET_INVALID",
+        "expected_code": "E_PACKET_INVALID",
+        "expected_code_observed": true,
+        "hit": true,
+        "injection_id": "INJ-004",
+        "kind": "nonfinite_logit",
+        "packet_id": "a0_probe_nonfinite",
+        "sequence": 4
+      },
+      {
+        "business_code": "E_CLASS_UNMAPPED",
+        "expected_code": "E_CLASS_UNMAPPED",
+        "expected_code_observed": true,
+        "hit": true,
+        "injection_id": "INJ-005",
+        "kind": "unmappable_codebook",
+        "packet_id": "a0_probe_unmapped",
+        "sequence": 5
+      }
+    ],
+    "packet_count": 26,
+    "valid_packet_count": 22
+  },
+  "pytest": {
+    "duration_seconds": 28.65,
+    "failed": 0,
+    "passed": 10
+  },
+  "verified_on": "2026-11-21"
+}

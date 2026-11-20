@@ -1,0 +1,11 @@
+[project]
+name = "aed-calibration-workbench"
+version = "1.0.0"
+description = "AED shard probability calibration and confidence-drift diagnostics workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"

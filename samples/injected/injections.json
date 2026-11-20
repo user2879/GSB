@@ -1,0 +1,40 @@
+{
+  "injections": [
+    {
+      "expected_code": "E_PACKET_INVALID",
+      "injection_id": "INJ-001",
+      "kind": "truncated_packet",
+      "packet_file": "packets/021_a0_probe_truncated.json",
+      "packet_id": "a0_probe_truncated"
+    },
+    {
+      "expected_code": "E_PACKET_INVALID",
+      "injection_id": "INJ-002",
+      "kind": "frame_count_mismatch",
+      "packet_file": "packets/022_a0_probe_frame_count.json",
+      "packet_id": "a0_probe_frame_count"
+    },
+    {
+      "expected_code": "E_PACKET_INVALID",
+      "injection_id": "INJ-003",
+      "kind": "missing_score_type",
+      "packet_file": "packets/023_a0_probe_missing_type.json",
+      "packet_id": "a0_probe_missing_type"
+    },
+    {
+      "expected_code": "E_PACKET_INVALID",
+      "injection_id": "INJ-004",
+      "kind": "nonfinite_logit",
+      "packet_file": "packets/024_a0_probe_nonfinite.json",
+      "packet_id": "a0_probe_nonfinite"
+    },
+    {
+      "expected_code": "E_CLASS_UNMAPPED",
+      "injection_id": "INJ-005",
+      "kind": "unmappable_codebook",
+      "packet_file": "packets/025_a0_probe_unmapped.json",
+      "packet_id": "a0_probe_unmapped"
+    }
+  ],
+  "schema_version": "aed-injections/1"
+}
