@@ -1,0 +1,24 @@
+{
+  "tables": [
+    {
+      "name": "t_cart_ring",
+      "columns": ["cart_id", "member_id", "region"],
+      "shard_key_columns": ["cart_id"],
+      "algorithm": "consistent_hash",
+      "params": {
+        "nodes": [
+          { "id": "node-a", "weight": 4 },
+          { "id": "node-a", "weight": 4 },
+          { "id": "node-b", "weight": 2 }
+        ]
+      },
+      "db_count": 3,
+      "tables_per_db": 1
+    }
+  ],
+  "budget": {
+    "global_concurrency": 2,
+    "per_db_quota": 1,
+    "wait_timeout_ms": 4000
+  }
+}

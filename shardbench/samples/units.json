@@ -1,0 +1,70 @@
+{
+  "routing_units": [
+    {
+      "id": "u_user_eq",
+      "table": "t_user",
+      "predicate": "user_id = 42",
+      "depends_on": []
+    },
+    {
+      "id": "u_user_in",
+      "table": "t_user",
+      "predicate": "  user_id   in (3, 1, 2)  ",
+      "depends_on": []
+    },
+    {
+      "id": "u_user_broadcast",
+      "table": "t_user",
+      "predicate": "city = 'hangzhou'",
+      "depends_on": []
+    },
+    {
+      "id": "u_order_composite",
+      "table": "t_order",
+      "predicate": "tenant_id = 7 AND user_id = 99",
+      "depends_on": []
+    },
+    {
+      "id": "u_order_partial",
+      "table": "t_order",
+      "predicate": "user_id = 99 AND amount > 100",
+      "depends_on": []
+    },
+    {
+      "id": "u_log_eq",
+      "table": "t_log_range",
+      "predicate": "event_time = 200",
+      "depends_on": []
+    },
+    {
+      "id": "u_log_range",
+      "table": "t_log_range",
+      "predicate": "event_time >= 100 AND event_time < 400",
+      "depends_on": []
+    },
+    {
+      "id": "u_ring_eq",
+      "table": "t_cart_ring",
+      "predicate": "cart_id = 'cart-777'",
+      "depends_on": []
+    },
+    {
+      "id": "u_ring_in",
+      "table": "t_cart_ring",
+      "predicate": "CART_ID IN ('x', 'y', 'z')",
+      "depends_on": []
+    },
+    {
+      "id": "u_derived_user",
+      "table": "t_user",
+      "predicate": "user_id = 42",
+      "depends_on": ["u_user_eq", "u_user_in"]
+    },
+    {
+      "id": "u_derived_chain",
+      "table": "t_user",
+      "predicate": null,
+      "depends_on": ["u_derived_user", "u_user_broadcast"]
+    }
+  ]
+}

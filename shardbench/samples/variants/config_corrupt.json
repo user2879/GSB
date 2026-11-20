@@ -1,0 +1,18 @@
+{
+  "tables": [
+    {
+      "name": "t_user",
+      "columns": ["user_id", "tenant_id", "user_name", "city"],
+      "shard_key_columns": ["user_id"],
+      "algorithm": "modulo",
+      "params": { "base": 0 },
+      "db_count": 2,
+      "tables_per_db": 4
+    }
+  ],
+  "budget": {
+    "global_concurrency": 3,
+    "per_db_quota": 2,
+    "wait_timeout_ms": 4000
+  }
+}
