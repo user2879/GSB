@@ -1,0 +1,84 @@
+{
+  "tables": {
+    "orders": {
+      "columns": [
+        {"name": "order_id", "dtype": "int"},
+        {"name": "cust_key", "dtype": "int"},
+        {"name": "score", "dtype": "float"},
+        {"name": "amount", "dtype": "float"},
+        {"name": "region", "dtype": "int"}
+      ],
+      "rows": [
+        {"order_id": 1001, "cust_key": 11, "score": 1.25, "amount": 19.99, "region": 1},
+        {"order_id": 1002, "cust_key": 12, "score": 2.50, "amount": 42.10, "region": 2},
+        {"order_id": 1003, "cust_key": 13, "score": 3.333, "amount": 7.05, "region": 1},
+        {"order_id": 1004, "cust_key": 11, "score": 4.75, "amount": 88.80, "region": 3},
+        {"order_id": 1005, "cust_key": 14, "score": 5.125, "amount": 3.60, "region": 2},
+        {"order_id": 1006, "cust_key": 15, "score": 6.0625, "amount": 51.00, "region": 1},
+        {"order_id": 1007, "cust_key": 12, "score": 7.5, "amount": 12.35, "region": 3},
+        {"order_id": 1008, "cust_key": 16, "score": 8.2, "amount": 64.44, "region": 2},
+        {"order_id": 1009, "cust_key": 17, "score": 9.875, "amount": 25.00, "region": 1},
+        {"order_id": 1010, "cust_key": 13, "score": 10.1, "amount": 73.17, "region": 2},
+        {"order_id": 1011, "cust_key": 18, "score": 0.0625, "amount": 9.50, "region": 3},
+        {"order_id": 1012, "cust_key": 19, "score": 11.625, "amount": 100.25, "region": 1},
+        {"order_id": 1013, "cust_key": null, "score": null, "amount": 5.55, "region": 2},
+        {"order_id": 1014, "cust_key": 20, "score": 12.75, "amount": 31.40, "region": 1},
+        {"order_id": 1015, "cust_key": 11, "score": 13.03125, "amount": 16.75, "region": 2},
+        {"order_id": 1016, "cust_key": 21, "score": 14.5, "amount": 8.88, "region": 3}
+      ],
+      "null_bitmap": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
+    },
+    "customers": {
+      "columns": [
+        {"name": "cust_key", "dtype": "int"},
+        {"name": "score", "dtype": "float"},
+        {"name": "tier", "dtype": "int"},
+        {"name": "discount", "dtype": "float"},
+        {"name": "active", "dtype": "int"}
+      ],
+      "rows": [
+        {"cust_key": 11, "score": 1.25, "tier": 1, "discount": 0.10, "active": 1},
+        {"cust_key": 12, "score": 2.50, "tier": 2, "discount": 0.15, "active": 1},
+        {"cust_key": 13, "score": 3.333, "tier": 2, "discount": 0.20, "active": 1},
+        {"cust_key": 14, "score": 5.125, "tier": 3, "discount": 0.25, "active": 1},
+        {"cust_key": 15, "score": 6.0625, "tier": 1, "discount": 0.05, "active": 0},
+        {"cust_key": 16, "score": 8.2, "tier": 3, "discount": 0.30, "active": 1},
+        {"cust_key": 17, "score": 9.875, "tier": 2, "discount": 0.12, "active": 1},
+        {"cust_key": 18, "score": 0.0625, "tier": 1, "discount": 0.08, "active": 1},
+        {"cust_key": 19, "score": 11.625, "tier": 3, "discount": 0.35, "active": 1},
+        {"cust_key": 20, "score": 12.75, "tier": 2, "discount": 0.18, "active": 1},
+        {"cust_key": 21, "score": 14.5, "tier": 1, "discount": 0.07, "active": 1},
+        {"cust_key": 22, "score": 15.9, "tier": 3, "discount": 0.40, "active": 0},
+        {"cust_key": 23, "score": 16.125, "tier": 2, "discount": 0.22, "active": 1},
+        {"cust_key": null, "score": 17.5, "tier": 1, "discount": 0.09, "active": 1},
+        {"cust_key": 24, "score": 18.333, "tier": 2, "discount": 0.28, "active": 1}
+      ],
+      "null_bitmap": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
+    }
+  },
+  "query": {
+    "query_id": "q_int_key",
+    "left_table": "orders",
+    "right_table": "customers",
+    "join_key": "cust_key",
+    "predicates": {
+      "left": [
+        {"ref": "orders.amount", "op": ">=", "value": 5},
+        {"ref": "orders.region", "op": "<=", "value": 3}
+      ],
+      "right": [
+        {"ref": "customers.active", "op": "=", "value": 1},
+        {"ref": "customers.tier", "op": "<=", "value": 3}
+      ]
+    },
+    "projections": [
+      "orders.order_id",
+      "orders.cust_key",
+      "orders.score",
+      "orders.amount",
+      "customers.cust_key",
+      "customers.score",
+      "customers.discount"
+    ]
+  }
+}

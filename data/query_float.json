@@ -1,0 +1,22 @@
+{
+  "query_id": "q_float_score",
+  "left_table": "orders",
+  "right_table": "customers",
+  "join_key": "score",
+  "predicates": {
+    "left": [
+      {"ref": "orders.amount", "op": ">", "value": 3}
+    ],
+    "right": [
+      {"ref": "customers.active", "op": "=", "value": 1}
+    ]
+  },
+  "projections": [
+    "orders.order_id",
+    "orders.score",
+    "orders.amount",
+    "customers.score",
+    "customers.discount",
+    "customers.tier"
+  ]
+}
