@@ -1,0 +1,224 @@
+{
+  "format": "quantcal.exchange",
+  "metadata": {},
+  "quantization_bits": 8,
+  "tensors": [
+    {
+      "name": "attn.k.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -2.09833022189,
+        2.2643730183520008
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.017829708805921267,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -2.09833022189,
+          2.2643730183520008
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "attn.q.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -1.74225656346,
+        1.7570682674500002
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.013835183208267718,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -1.74225656346,
+          1.7570682674500002
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "mlp.down.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -1.366033863725,
+        1.4649528568399999
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.01153506186488189,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -1.366033863725,
+          1.4649528568399999
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "mlp.up.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -24.826675655631,
+        37.933229353594996
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_away",
+      "saturation_max": 255,
+      "scale": 0.2461172745459843,
+      "scheme": "asymmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -24.826675655631,
+          37.933229353594996
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 101
+    },
+    {
+      "name": "norm.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        0.749,
+        0.751
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 255,
+      "scale": 0.0029411764705882353,
+      "scheme": "asymmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          0.75,
+          0.75
+        ],
+        "quantile_range_expanded_for_zero_span": true,
+        "scale_guard": "zero_span;scale_from_absolute_level;zero_point_clamped",
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "probe.bits",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -2.0187255581779997,
+        1.773381324626
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.01589547683604724,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -2.0187255581779997,
+          1.773381324626
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "probe.nonfinite",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -1.623195137612,
+        1.299405474453
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.01278106407568504,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -1.623195137612,
+          1.299405474453
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "probe.range",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -2.182545727172,
+        1.653019560854
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.017185399426551184,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          -2.182545727172,
+          1.653019560854
+        ],
+        "quantile_range_expanded_for_zero_span": false,
+        "scale_guard": null,
+        "seed": 20261121
+      },
+      "zero_point": 0
+    },
+    {
+      "name": "zero.weight",
+      "precision_tag": "seed_generated_q8",
+      "quantile_range": [
+        -0.001,
+        0.001
+      ],
+      "quantization_bits": 8,
+      "rounding": "nearest_even",
+      "saturation_max": 127,
+      "scale": 0.001,
+      "scheme": "symmetric",
+      "source": {
+        "generator": "scripts/generate_samples.py",
+        "measured_quantile_range": [
+          0.0,
+          0.0
+        ],
+        "quantile_range_expanded_for_zero_span": true,
+        "scale_guard": "zero_abs_range;scale=0.001",
+        "seed": 20261121
+      },
+      "zero_point": 0
+    }
+  ],
+  "version": "v2"
+}

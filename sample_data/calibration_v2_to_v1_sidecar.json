@@ -1,0 +1,252 @@
+{
+  "format": "quantcal.downgrade-sidecar.v1",
+  "losses": [
+    "asymmetric_scheme_approximated_as_symmetric",
+    "asymmetric_zero_point_offset",
+    "named_rounding_mode_discarded",
+    "precision_tag_discarded",
+    "quantile_range_discarded",
+    "scale_quantized_to_milli"
+  ],
+  "quantization_bits": 8,
+  "source_version": "v2",
+  "target_version": "v1",
+  "tensors": [
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -2.09833022189,
+        2.2643730183520008
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "attn.k.weight",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.018,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 17.829708805921268,
+      "scale_milli_rounded": 18,
+      "scale_original": 0.017829708805921267,
+      "scale_rounding_residual": -0.00017029119407873175,
+      "scale_truncation_residual_milli": -0.1702911940787324
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -1.74225656346,
+        1.7570682674500002
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "attn.q.weight",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.014,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 13.835183208267718,
+      "scale_milli_rounded": 14,
+      "scale_original": 0.013835183208267718,
+      "scale_rounding_residual": -0.00016481679173228209,
+      "scale_truncation_residual_milli": -0.1648167917322816
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -1.366033863725,
+        1.4649528568399999
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "mlp.down.weight",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.012,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 11.53506186488189,
+      "scale_milli_rounded": 12,
+      "scale_original": 0.01153506186488189,
+      "scale_rounding_residual": -0.00046493813511811095,
+      "scale_truncation_residual_milli": -0.46493813511811055
+    },
+    {
+      "asymmetric_zero_point_offset": 101,
+      "discarded_quantile_range": [
+        -24.826675655631,
+        37.933229353594996
+      ],
+      "loss_codes": [
+        "asymmetric_scheme_approximated_as_symmetric",
+        "asymmetric_zero_point_offset",
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "mlp.up.weight",
+      "named_rounding_mode": "nearest_away",
+      "original_scheme": "asymmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 255,
+      "saturation_max_v1": 127,
+      "scale_after": 0.246,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 246.11727454598432,
+      "scale_milli_rounded": 246,
+      "scale_original": 0.2461172745459843,
+      "scale_rounding_residual": 0.00011727454598431386,
+      "scale_truncation_residual_milli": 0.11727454598431564
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        0.749,
+        0.751
+      ],
+      "loss_codes": [
+        "asymmetric_scheme_approximated_as_symmetric",
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "norm.weight",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "asymmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 255,
+      "saturation_max_v1": 127,
+      "scale_after": 0.003,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 2.941176470588235,
+      "scale_milli_rounded": 3,
+      "scale_original": 0.0029411764705882353,
+      "scale_rounding_residual": -5.882352941176481e-05,
+      "scale_truncation_residual_milli": -0.05882352941176494
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -2.0187255581779997,
+        1.773381324626
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "probe.bits",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.016,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 15.89547683604724,
+      "scale_milli_rounded": 16,
+      "scale_original": 0.01589547683604724,
+      "scale_rounding_residual": -0.00010452316395275982,
+      "scale_truncation_residual_milli": -0.10452316395275929
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -1.623195137612,
+        1.299405474453
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "probe.nonfinite",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.013,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 12.78106407568504,
+      "scale_milli_rounded": 13,
+      "scale_original": 0.01278106407568504,
+      "scale_rounding_residual": -0.0002189359243149596,
+      "scale_truncation_residual_milli": -0.21893592431496067
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -2.182545727172,
+        1.653019560854
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded",
+        "scale_quantized_to_milli"
+      ],
+      "name": "probe.range",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.017,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 17.185399426551182,
+      "scale_milli_rounded": 17,
+      "scale_original": 0.017185399426551184,
+      "scale_rounding_residual": 0.00018539942655118255,
+      "scale_truncation_residual_milli": 0.18539942655118224
+    },
+    {
+      "asymmetric_zero_point_offset": 0,
+      "discarded_quantile_range": [
+        -0.001,
+        0.001
+      ],
+      "loss_codes": [
+        "named_rounding_mode_discarded",
+        "precision_tag_discarded",
+        "quantile_range_discarded"
+      ],
+      "name": "zero.weight",
+      "named_rounding_mode": "nearest_even",
+      "original_scheme": "symmetric",
+      "precision_tag_original": "seed_generated_q8",
+      "saturation_max_original": 127,
+      "saturation_max_v1": 127,
+      "scale_after": 0.001,
+      "scale_clamped_to_min_milli": false,
+      "scale_milli_exact": 1.0,
+      "scale_milli_rounded": 1,
+      "scale_original": 0.001,
+      "scale_rounding_residual": 0.0,
+      "scale_truncation_residual_milli": 0.0
+    }
+  ]
+}

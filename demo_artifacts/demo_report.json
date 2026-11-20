@@ -1,0 +1,770 @@
+{
+  "baseline": {
+    "diagnostics_sha256": "a551784db876dd39ae523f51d9544eb5a12a8c23578cb4ad490a3f9d4539d989",
+    "exit_code": 0,
+    "result_sha256": "0e057dcd0b915f6df233367ba50f2d125fc39da1b12f468124c83f405a50bcc9",
+    "summary": {
+      "clipped_element_count": 10,
+      "completed_tensor_count": 9,
+      "failed_tensor_count": 0,
+      "manifest_tensor_count": 9,
+      "max_abs_error": 0.8313031375093765,
+      "mean_of_tensor_max_abs_error": 0.17249191808628492,
+      "pending_tensor_count": 0
+    }
+  },
+  "budget_and_concurrency": {
+    "budget_deduction_sequence": [
+      {
+        "points": 48,
+        "remaining_budget": 52,
+        "tensor": "attn.k.weight"
+      },
+      {
+        "points": 48,
+        "remaining_budget": 4,
+        "tensor": "attn.q.weight"
+      }
+    ],
+    "budget_limit": 100,
+    "full_concurrency_result_exact": true,
+    "parallel_exit_code": 15,
+    "parallel_order": [
+      "attn.k.weight",
+      "attn.q.weight"
+    ],
+    "pending": [
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 36,
+        "stage": "calibrate",
+        "tensor": "mlp.down.weight"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 60,
+        "stage": "calibrate",
+        "tensor": "mlp.up.weight"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 30,
+        "stage": "calibrate",
+        "tensor": "norm.weight"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 24,
+        "stage": "calibrate",
+        "tensor": "probe.bits"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 24,
+        "stage": "calibrate",
+        "tensor": "probe.nonfinite"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 24,
+        "stage": "calibrate",
+        "tensor": "probe.range"
+      },
+      {
+        "code": "E_CALIB_BUDGET_PENDING",
+        "points_remaining": 4,
+        "points_required": 24,
+        "stage": "calibrate",
+        "tensor": "zero.weight"
+      }
+    ],
+    "result_exact": true,
+    "serial_exit_code": 15,
+    "serial_order": [
+      "attn.k.weight",
+      "attn.q.weight"
+    ]
+  },
+  "format": "quantcal.demo-report.v1",
+  "format_interoperability": {
+    "v1_tensor_order": [
+      "attn.k.weight",
+      "attn.q.weight",
+      "mlp.down.weight",
+      "mlp.up.weight",
+      "norm.weight",
+      "probe.bits",
+      "probe.nonfinite",
+      "probe.range",
+      "zero.weight"
+    ],
+    "v1_to_v2_to_v1_exact": true,
+    "v2_downgrade_loss_codes": [
+      "asymmetric_scheme_approximated_as_symmetric",
+      "asymmetric_zero_point_offset",
+      "named_rounding_mode_discarded",
+      "precision_tag_discarded",
+      "quantile_range_discarded",
+      "saturation_cap_changed",
+      "scale_quantized_to_milli"
+    ],
+    "v2_downgrade_loss_order_stable": true,
+    "v2_downgrade_loss_tensor_order": [
+      "attn.k.weight",
+      "attn.q.weight",
+      "mlp.down.weight",
+      "mlp.up.weight",
+      "norm.weight",
+      "probe.bits",
+      "probe.nonfinite",
+      "probe.range",
+      "zero.weight"
+    ],
+    "v2_tensor_order": [
+      "attn.k.weight",
+      "attn.q.weight",
+      "mlp.down.weight",
+      "mlp.up.weight",
+      "norm.weight",
+      "probe.bits",
+      "probe.nonfinite",
+      "probe.range",
+      "zero.weight"
+    ]
+  },
+  "incremental_steps": [
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 48,
+          "remaining_budget": 99952,
+          "tensor": "attn.k.weight"
+        },
+        {
+          "points": 48,
+          "remaining_budget": 99904,
+          "tensor": "attn.q.weight"
+        },
+        {
+          "points": 36,
+          "remaining_budget": 99868,
+          "tensor": "mlp.down.weight"
+        },
+        {
+          "points": 60,
+          "remaining_budget": 99808,
+          "tensor": "mlp.up.weight"
+        },
+        {
+          "points": 30,
+          "remaining_budget": 99778,
+          "tensor": "norm.weight"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99754,
+          "tensor": "probe.bits"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99730,
+          "tensor": "probe.nonfinite"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99706,
+          "tensor": "probe.range"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99682,
+          "tensor": "zero.weight"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "702009c31078669c9d4f34a130ec26ded18fe6673933741d1279a1aada1f556e",
+      "exchange_version": "v2",
+      "exit_code": 0,
+      "quantile_computed": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "quantile_reused": [],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "0e057dcd0b915f6df233367ba50f2d125fc39da1b12f468124c83f405a50bcc9",
+      "reused_tensors": [],
+      "sidecar_exact": true,
+      "sidecar_sha256": "90bd45c29f9ef222a671120f6a7475ebd933a80a69ca3c0b7cd2d80d99af562b",
+      "step": "01-initial-v2",
+      "summary": {
+        "clipped_element_count": 10,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 0.8313031375093765,
+        "mean_of_tensor_max_abs_error": 0.17249191808628492,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 48,
+          "remaining_budget": 99952,
+          "tensor": "attn.k.weight"
+        },
+        {
+          "points": 48,
+          "remaining_budget": 99904,
+          "tensor": "attn.q.weight"
+        },
+        {
+          "points": 36,
+          "remaining_budget": 99868,
+          "tensor": "mlp.down.weight"
+        },
+        {
+          "points": 60,
+          "remaining_budget": 99808,
+          "tensor": "mlp.up.weight"
+        },
+        {
+          "points": 30,
+          "remaining_budget": 99778,
+          "tensor": "norm.weight"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99754,
+          "tensor": "probe.bits"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99730,
+          "tensor": "probe.nonfinite"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99706,
+          "tensor": "probe.range"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99682,
+          "tensor": "zero.weight"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "a6eb510723c222a4ed5a477546ef3f2b6d4503373fe1af93a5c545d7991d0f41",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "quantile_reused": [],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "d44cb5a4a791bf8c47d1f2b41e4b72f4f324091c5cf54a202a100224ae2ff346",
+      "reused_tensors": [],
+      "sidecar_exact": true,
+      "sidecar_sha256": "a5f59e0beb36555ca9e4c69f1310f74791da8729b1bbd5d767c5c264549ae7eb",
+      "step": "02-switch-v1",
+      "summary": {
+        "clipped_element_count": 42,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.332895977365624,
+        "mean_of_tensor_max_abs_error": 0.928892299265104,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 48,
+          "remaining_budget": 99952,
+          "tensor": "attn.q.weight"
+        },
+        {
+          "points": 30,
+          "remaining_budget": 99922,
+          "tensor": "norm.weight"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "a6eb510723c222a4ed5a477546ef3f2b6d4503373fe1af93a5c545d7991d0f41",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [
+        "attn.q.weight",
+        "norm.weight"
+      ],
+      "quantile_reused": [
+        "attn.k.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "recomputed_tensors": [
+        "attn.q.weight",
+        "norm.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "fa85d056984689c09a3258505a81dd777deb3bffdeb472cc60a6a4622fd0da46",
+      "reused_tensors": [
+        "attn.k.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "sidecar_exact": true,
+      "sidecar_sha256": "a5f59e0beb36555ca9e4c69f1310f74791da8729b1bbd5d767c5c264549ae7eb",
+      "step": "03-replace-sample-cal-0000",
+      "summary": {
+        "clipped_element_count": 42,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.332895977365624,
+        "mean_of_tensor_max_abs_error": 0.928892299265104,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 40,
+          "remaining_budget": 99960,
+          "tensor": "attn.k.weight"
+        },
+        {
+          "points": 20,
+          "remaining_budget": 99940,
+          "tensor": "zero.weight"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "a6eb510723c222a4ed5a477546ef3f2b6d4503373fe1af93a5c545d7991d0f41",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [
+        "attn.k.weight",
+        "zero.weight"
+      ],
+      "quantile_reused": [
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range"
+      ],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "1bea1bf92a9058a3e11b773dfe2a518a0579d3df9cfc24ebeaa5fa638c29941e",
+      "reused_tensors": [
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range"
+      ],
+      "sidecar_exact": true,
+      "sidecar_sha256": "33b6a65141fa37f97446faad39d235db25c8b5a631d7927bc8cd327c084a772f",
+      "step": "04-delete-sample-cal-0001",
+      "summary": {
+        "clipped_element_count": 42,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.332895977365624,
+        "mean_of_tensor_max_abs_error": 0.928892299265104,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 24,
+          "remaining_budget": 99976,
+          "tensor": "probe.range"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "d040d3a417d3ef09796bf0eabbcd88e46496591334e9f6e1b8a6e71fe5c023e6",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [
+        "probe.range"
+      ],
+      "quantile_reused": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "zero.weight"
+      ],
+      "recomputed_tensors": [
+        "probe.range"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "b657f884e50ba692fe3432d4cbb26c506f2d9d902c52b6d1503ae67f6ad7ed57",
+      "reused_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "zero.weight"
+      ],
+      "sidecar_exact": true,
+      "sidecar_sha256": "48e23071badf26b931e95c83d3a9564d06921f95790cecf6a7503e19f0e42aff",
+      "step": "05-probe-range-quantiles",
+      "summary": {
+        "clipped_element_count": 43,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.332895977365624,
+        "mean_of_tensor_max_abs_error": 1.0000728548206594,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [],
+      "exchange_exact": true,
+      "exchange_sha256": "2f3bfa01505a6c87e3d390490519578f217eb877eb722171bdb4b9d366870d81",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [],
+      "quantile_reused": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "9e8df1da5b82b7e5557a282fc07c0b4c337a16c262480d8f84a60e49cc72dc0c",
+      "reused_tensors": [],
+      "sidecar_exact": true,
+      "sidecar_sha256": "ee8aa55b248f2de8597b335422204762977d6badf9f5b1b48ddf4f6c55145b30",
+      "step": "06-bits-12",
+      "summary": {
+        "clipped_element_count": 11,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.871424419748436,
+        "mean_of_tensor_max_abs_error": 0.9727130034376734,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [],
+      "exchange_exact": true,
+      "exchange_sha256": "2f3bfa01505a6c87e3d390490519578f217eb877eb722171bdb4b9d366870d81",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [],
+      "quantile_reused": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "510a3387472c99515af0cfa107ba79b39c4fa11edda3caf8189a52a1238caba3",
+      "reused_tensors": [
+        "mlp.up.weight"
+      ],
+      "sidecar_exact": true,
+      "sidecar_sha256": "9afe49015c291208200bdda98c48b31f3d4f74bd090e02dfb5dd31e8a6aa994e",
+      "step": "07-rounding-floor",
+      "summary": {
+        "clipped_element_count": 11,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.871424419748436,
+        "mean_of_tensor_max_abs_error": 0.9729257528696178,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [],
+      "exchange_exact": true,
+      "exchange_sha256": "2f3bfa01505a6c87e3d390490519578f217eb877eb722171bdb4b9d366870d81",
+      "exchange_version": "v1",
+      "exit_code": 0,
+      "quantile_computed": [],
+      "quantile_reused": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "b11c8e39b329f8cb9e0e50fe38ac32d8d5192fd57d59b900568effef0c017ff2",
+      "reused_tensors": [],
+      "sidecar_exact": true,
+      "sidecar_sha256": "9afe49015c291208200bdda98c48b31f3d4f74bd090e02dfb5dd31e8a6aa994e",
+      "step": "08-saturation-symmetric",
+      "summary": {
+        "clipped_element_count": 11,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 7.871424419748436,
+        "mean_of_tensor_max_abs_error": 0.9731495484425344,
+        "pending_tensor_count": 0
+      }
+    },
+    {
+      "budget_deduction_sequence": [
+        {
+          "points": 40,
+          "remaining_budget": 99960,
+          "tensor": "attn.k.weight"
+        },
+        {
+          "points": 48,
+          "remaining_budget": 99912,
+          "tensor": "attn.q.weight"
+        },
+        {
+          "points": 30,
+          "remaining_budget": 99882,
+          "tensor": "norm.weight"
+        },
+        {
+          "points": 24,
+          "remaining_budget": 99858,
+          "tensor": "probe.range"
+        },
+        {
+          "points": 20,
+          "remaining_budget": 99838,
+          "tensor": "zero.weight"
+        }
+      ],
+      "exchange_exact": true,
+      "exchange_sha256": "aa069804937604a33c15cd9231f6d77b479bb67a80712fea8c838b03a4d9bebb",
+      "exchange_version": "v2",
+      "exit_code": 0,
+      "quantile_computed": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "norm.weight",
+        "probe.range",
+        "zero.weight"
+      ],
+      "quantile_reused": [
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "probe.bits",
+        "probe.nonfinite"
+      ],
+      "recomputed_tensors": [
+        "attn.k.weight",
+        "attn.q.weight",
+        "mlp.down.weight",
+        "mlp.up.weight",
+        "norm.weight",
+        "probe.bits",
+        "probe.nonfinite",
+        "probe.range",
+        "zero.weight"
+      ],
+      "result_field_exact": true,
+      "result_sha256": "771c1b6a6c1b275717d40dd11d55f667fcfd9f43d561ef156fbd1a7db369e68e",
+      "reused_tensors": [],
+      "sidecar_exact": true,
+      "sidecar_sha256": "90bd45c29f9ef222a671120f6a7475ebd933a80a69ca3c0b7cd2d80d99af562b",
+      "step": "09-switch-v2",
+      "summary": {
+        "clipped_element_count": 47,
+        "completed_tensor_count": 9,
+        "failed_tensor_count": 0,
+        "manifest_tensor_count": 9,
+        "max_abs_error": 32.03361008869375,
+        "mean_of_tensor_max_abs_error": 3.760993553070312,
+        "pending_tensor_count": 0
+      }
+    }
+  ],
+  "injections": [
+    {
+      "actual_codes": [
+        "E_NON_FINITE_SAMPLE"
+      ],
+      "dry_path": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-inputs/INJ-001/samples.jsonl",
+      "exit_code": 2,
+      "expected_code": "E_NON_FINITE_SAMPLE",
+      "failed_tensor": "probe.nonfinite",
+      "failed_tensor_excluded_from_summary": true,
+      "hit_recorded": true,
+      "injection_id": "INJ-001",
+      "json_pointer": "/samples/cal-0002/features/probe.nonfinite/0",
+      "kind": "nonfinite_sample",
+      "report": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-runs/INJ-001/diagnostics_report.json"
+    },
+    {
+      "actual_codes": [
+        "E_QUANT_RANGE_INVALID"
+      ],
+      "dry_path": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-inputs/INJ-002/config.json",
+      "exit_code": 2,
+      "expected_code": "E_QUANT_RANGE_INVALID",
+      "failed_tensor": "probe.range",
+      "failed_tensor_excluded_from_summary": true,
+      "hit_recorded": true,
+      "injection_id": "INJ-002",
+      "json_pointer": "/tensor_overrides/probe.range/quantile_bounds",
+      "kind": "quantile_bounds_inverted",
+      "report": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-runs/INJ-002/diagnostics_report.json"
+    },
+    {
+      "actual_codes": [
+        "E_QUANT_RANGE_INVALID"
+      ],
+      "dry_path": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-inputs/INJ-003/config.json",
+      "exit_code": 2,
+      "expected_code": "E_QUANT_RANGE_INVALID",
+      "failed_tensor": "probe.bits",
+      "failed_tensor_excluded_from_summary": true,
+      "hit_recorded": true,
+      "injection_id": "INJ-003",
+      "json_pointer": "/tensor_overrides/probe.bits/quantization_bits",
+      "kind": "quantization_bits_out_of_range",
+      "report": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-runs/INJ-003/diagnostics_report.json"
+    },
+    {
+      "actual_codes": [
+        "E_SNAPSHOT_STALE"
+      ],
+      "exit_code": 16,
+      "expected_code": "E_SNAPSHOT_STALE",
+      "hit_recorded": true,
+      "injection_id": "INJ-004",
+      "json_pointer": "/global_version",
+      "kind": "snapshot_version_tamper",
+      "path": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-runs/INJ-004/state/snapshot.json",
+      "report": "/home/zsl/feedback/uidfc5909d3-default-18/demo_work/injection-runs/INJ-004/stale_report.json"
+    }
+  ],
+  "seed": 20261121,
+  "status": "pass",
+  "verification": {
+    "deterministic_repeat_ready": true,
+    "incremental_exact_all_steps": true,
+    "injection_ids_recorded": true,
+    "repeat_clean_run_exact": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "batch_point_budget": 100000,
+  "fixed_fractional_bits": 16,
+  "format": "quantcal.config.v1",
+  "max_concurrency": 3,
+  "quantile_lower_permille": 10,
+  "quantile_upper_permille": 990,
+  "quantization_bits": 8,
+  "quantization_bits_candidates": [
+    8,
+    12
+  ],
+  "quantization_scheme": "symmetric",
+  "rounding_mode": "nearest_even",
+  "rounding_mode_candidates": [
+    "nearest_even",
+    "nearest_away",
+    "floor",
+    "ceil",
+    "truncate"
+  ],
+  "saturation_strategy": "saturate",
+  "snapshot_commit_interval": 2,
+  "tensor_overrides": {
+    "mlp.up.weight": {
+      "quantization_scheme": "asymmetric",
+      "rounding_mode": "nearest_away"
+    },
+    "norm.weight": {
+      "quantization_scheme": "asymmetric"
+    }
+  }
+}

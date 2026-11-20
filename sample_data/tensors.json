@@ -1,0 +1,87 @@
+{
+  "format": "quantcal.tensor-manifest.v1",
+  "seed": 20261121,
+  "tensors": [
+    {
+      "distribution": "normal",
+      "name": "attn.q.weight",
+      "shape": [
+        8
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "normal",
+      "name": "attn.k.weight",
+      "shape": [
+        8
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "heavy_tail",
+      "name": "mlp.up.weight",
+      "shape": [
+        10
+      ],
+      "special_positions": [
+        {
+          "index": 0,
+          "kind": "tail_outlier"
+        },
+        {
+          "index": 9,
+          "kind": "tail_outlier"
+        }
+      ]
+    },
+    {
+      "distribution": "uniform",
+      "name": "mlp.down.weight",
+      "shape": [
+        6
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "constant",
+      "name": "norm.weight",
+      "shape": [
+        5
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "zero",
+      "name": "zero.weight",
+      "shape": [
+        4
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "normal",
+      "name": "probe.nonfinite",
+      "shape": [
+        4
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "normal",
+      "name": "probe.bits",
+      "shape": [
+        4
+      ],
+      "special_positions": []
+    },
+    {
+      "distribution": "normal",
+      "name": "probe.range",
+      "shape": [
+        4
+      ],
+      "special_positions": []
+    }
+  ]
+}

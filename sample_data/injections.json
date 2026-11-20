@@ -1,0 +1,44 @@
+{
+  "format": "quantcal.injections.v1",
+  "injections": [
+    {
+      "description": "inject one real NaN into an existing calibration vector",
+      "element_index": 0,
+      "expected_code": "E_NON_FINITE_SAMPLE",
+      "id": "INJ-001",
+      "input_file": "samples.jsonl",
+      "jsonl_sample_id": "cal-0002",
+      "kind": "nonfinite_sample",
+      "tensor": "probe.nonfinite",
+      "value": "NaN"
+    },
+    {
+      "description": "per-tensor lower quantile is greater than upper",
+      "expected_code": "E_QUANT_RANGE_INVALID",
+      "id": "INJ-002",
+      "input_file": "config.json",
+      "kind": "quantile_bounds_inverted",
+      "lower_permille": 900,
+      "tensor": "probe.range",
+      "upper_permille": 100
+    },
+    {
+      "description": "per-tensor bit width is below the supported minimum",
+      "expected_code": "E_QUANT_RANGE_INVALID",
+      "id": "INJ-003",
+      "input_file": "config.json",
+      "kind": "quantization_bits_out_of_range",
+      "quantization_bits": 1,
+      "tensor": "probe.bits"
+    },
+    {
+      "description": "modify a committed snapshot version while preserving its old hash",
+      "expected_code": "E_SNAPSHOT_STALE",
+      "field": "global_version",
+      "id": "INJ-004",
+      "kind": "snapshot_version_tamper",
+      "runtime_file": "state/snapshot.json"
+    }
+  ],
+  "seed": 20261121
+}
