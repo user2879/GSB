@@ -1,22 +1,132 @@
-当前是空白工作区，需在 Windows 上开发一个面向点云与三维重建显示的领域数据编辑与操作应用。输入为本地确定性合成的三维点云样本：由固定种子程序化生成 12 万个带法线与法线置信度的点，构成立方体房间与地面两类几何，并附带一份相机轨迹与若干交互编辑操作定义（点剔除、区域框选、法线重估半径、重建参数调整）。应用需在离屏渲染视口中显示点云与重建出的三角网格曲面，支持用户在视口框选区域施加编辑，编辑后只对受影响区域重算法线与重建局部曲面片，其余区域复用缓存结果，并且每个重建阶段的几何误差都必须能被独立复算。
+# PointCloud Studio
 
-任务环境与准备：
-安装 Python 3.11 并创建虚拟环境，工作区为空白目录。
-安装 numpy 与 PyOpenGL，不使用容器或远程服务。
-运行前确认本机图形驱动支持离屏渲染上下文；若不支持，任务中的渲染路径需返回 E_GL_CONTEXT 并保留纯 CPU 的网格与账本校验路径。
-准备或由脚本生成固定种子点云样本、相机轨迹与编辑操作序列，作为本地确定性输入。
+面向 Windows 的确定性点云编辑、局部重建、误差账本与离屏快照应用。项目只依赖 Python 3.11、NumPy 与 PyOpenGL，不依赖容器、数据库或远程服务。
 
-业务要求：
-1. 实现确定性点云样本生成器：由固定种子程序化生成带法线与法线置信度的点云（立方体房间与地面两类几何），输出二进制点云文件、法线文件与元数据清单；同一配置两次生成必须逐字节一致，元数据须给出点总数、包围盒、法线置信度分布与生成参数摘要。
-2. 实现空间索引与法线重估：以体素栅格组织点云，按用户给定邻域半径重估法线并输出逐点法线置信度，重估须记录所用邻域半径、参与拟合的邻居点数与拟合残差；邻域之外的点法线值必须与重估前逐点相同，重估结果须附带每个点的法线误差上界。
-3. 实现增量曲面重建：从点云构建三角网格曲面，以局部曲面片为单元维护重建缓存；某点的编辑落在某曲面片支撑半径内时只使该曲面片与共享其边界的曲面片失效，其余曲面片顶点须逐点不变，失效闭包清单与实际重算的曲面片集合必须完全一致，禁止整模重建。
-4. 实现浮点误差在重建链上的传播记账：把点坐标量化误差、法线拟合残差、曲面片三角化弦高误差按统一几何口径合成为每个曲面片与整网的位置误差上界，账本条目须与曲面片内容哈希一一对应，第三方仅凭点云文件、邻域半径与账本参数即可独立复算误差上界。
-5. 实现增量结果与全量重建的一致性核对：每次编辑后可在声明容差内比较增量网格与用编辑后完整点集做全量重建的网格，按顶点位置误差与账本误差上界双口径判定，并输出最大位置偏差与偏差分布；不一致时须定位首个分歧顶点与触发它的编辑操作序号。
-6. 实现离屏渲染视口与快照语义：用不可见 FBO 渲染点云与重建网格，视口线程只读取不可变的点集快照与重建结果快照，重建服务在工作线程中基于快照产出新版本；快照整体替换须以版本戳与内容哈希识别版本变化，视口不得呈现部分更新的混合状态。离屏上下文不可用时返回 E_GL_CONTEXT 并保留仅网格与账本的核对路径。
-7. 实现编辑历史的原子持久化与强制终止恢复：每次点剔除、框选或法线重估半径变更记录为带版本号的操作，各曲面片缓存与账本以临时文件加原子改名方式写入工作区；正常退出写完整清单与关闭标记，强制终止后重启只依据最近一次已提交稳定状态恢复，未提交缓存作为孤儿回收并记录，不得伪造退出报告。
-8. 定义业务错误码并覆盖异常链路：对非法点云格式、邻域半径越界、快照版本过期、网格一致性不符、缓存哈希不匹配等输入分别返回 E_POINT_CLOUD_FORMAT、E_NEIGHBOR_RADIUS、E_SNAPSHOT_STALE、E_MESH_MISMATCH、E_CACHE_HASH 并给出可定位的上下文；异常只通过输入与参数注入触发，不修改源码，注入配置须可序列化并随运行记录以保证可复现。
+## 快速开始（Windows PowerShell）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 
-验收：
-用本地合成点云样本验证编辑后的增量重建、误差账本与快照恢复，并核对异常码与复算结果一致。
+# 生成 120,000 点固定种子样本
+python -m pointcloud_studio generate --out artifacts\sample
+
+# 完整验收；同时写入 validation_report.json
+python -m pointcloud_studio validate `
+  --sample artifacts\sample `
+  --workspace artifacts\run_workspace `
+  --report artifacts\validation_report.json
+```
+
+也可直接运行 `scripts\setup_windows.ps1` 与 `scripts\run_validation.ps1`。
+
+当前交付环境是 WSL/Linux，已使用同样的 Python 3.11 代码完成 CPU 全链路验证。离屏接口在该环境返回 `E_GL_CONTEXT`，同时点集快照、网格、账本和恢复路径保持可用；Windows 下使用隐藏 Win32 窗口 + WGL + 不可见 FBO。
+
+## 命令
+
+```text
+python -m pointcloud_studio generate --out DIR
+python -m pointcloud_studio validate --sample DIR --workspace DIR --report FILE
+python -m pointcloud_studio verify --workspace DIR
+python -m pointcloud_studio verify-ledger --points FILE --normals FILE --ledger FILE
+python -m pointcloud_studio render --workspace DIR --width 960 --height 640
+python -m pointcloud_studio inject-faults --sample DIR --workspace DIR --out DIR
+```
+
+`verify-ledger` 是第三方口径：只读取当前提交目录的 `points.bin`、`normals.bin` 和 `ledger.json`，独立重算每个曲面片、内容哈希及全部误差上界。
+
+## 样本与格式
+
+固定配置 `SampleConfig(seed=20261120)` 生成恰好 120,000 点：
+
+- `cube_room`：72,000 点，六个房间面；
+- `ground`：48,000 点，独立地面；
+- 每点含单位法线和 `[0,1]` 法线置信度；
+- 输出 `points.bin`、`normals.bin`、`camera.json`、`edits.json`、`manifest.json`；
+- 两次生成的所有文件逐字节一致。
+
+二进制头为 `<8sIIQ`：magic、版本、flags、点数。点记录为 little-endian `float32 (N,3)`；法线记录为 little-endian `float32 (N,4)`，依次是 `nx,ny,nz,confidence`。
+
+## 编辑与增量重建
+
+内置操作序列覆盖球域点剔除、框选剔除、两次法线重估半径变更、一次重建参数调整。局部操作只做以下工作：
+
+1. 用体素栅格选择受影响点；
+2. 把点所在曲面片、支撑半径命中的曲面片及其共享边界片加入失效闭包；
+3. 只从完整点集重算闭包内曲面片；
+4. 复用其他曲面片的同一不可变缓存对象；
+5. 用编辑后完整点集另做一次显式全量重建，仅用于一致性对照，不参与生产结果。
+
+一次 120k 样本的局部删除实测只重算 34 个曲面片，复用 965 个；第二次框选删除重算 80 个，复用 921 个。闭包清单与实际重算清单完全相等，复用片顶点逐点不变，增量/全量最大顶点偏差为 `0.0`。
+
+### 实际完整验收结果
+
+2026-11-20 在 WSL2/Linux、Python 3.11.0、NumPy 2.4.6、PyOpenGL 3.1.10 上执行完整五操作验收：
+
+| 操作 | 选中点 | 生产重建模式 | 重算片 | 复用片 | 最大顶点偏差 |
+|---|---:|---|---:|---:|---:|
+| 球域点剔除 | 205 | 局部增量 | 34 | 965 | 0.0 |
+| 框选剔除 | 1,173 | 局部增量 | 80 | 921 | 0.0 |
+| 法线重估半径 0.34 | 586 | 局部增量 | 43 | 954 | 0.0 |
+| 法线重估半径 0.42 | 542 | 局部增量 | 73 | 923 | 0.0 |
+| 三角化参数调整 | 0 | 显式全局参数替换 | 1,026 | 0 | 0.0 |
+
+最终状态为版本 6，995 个曲面片、16,891 个顶点、18,884 个三角形。独立账本复算 `maximum_numeric_difference=0.0`，网络位置误差上界 `0.17053386145341778`；31/31 检查项通过。强杀子进程退出码为 23，重启报告 `clean_previous_exit=false`、恢复版本 6、回收 1 个未提交 staging，随后独立复算仍通过。六类业务错误码全部命中预期。完整记录见 `artifacts/validation_report.json`。
+
+本机是 WSL/Linux，因此真实离屏调用按设计返回 `E_GL_CONTEXT`；这同时验证了 CPU 网格/账本校验路径不依赖 GL。Windows 隐藏窗口 WGL/FBO 路径已完成实现，但需在目标 Windows 图形驱动上执行 `python -m pointcloud_studio render ...` 做现场驱动确认。
+
+## 误差账本
+
+每个曲面片的统一几何位置误差上界为：
+
+```text
+quantization_bound
++ 2 * neighbor_radius * sin(normal_angle_bound)
++ chord_height
+```
+
+其中：
+
+- 量化项由点文件中的 float32 半 ULP 计算；
+- 法线角界由局部平面拟合残差和量化项合成；
+- 弦高由源点到相邻三角面局部平面的最大垂直偏差计算；
+- 各项均以世界空间欧氏距离为单位，通过三角不等式相加；
+- 网络误差上界取所有曲面片上界的最大值。
+
+账本逐片记录输入内容哈希、源点哈希、各阶段误差、总误差和缓存文件；账本自身也有 SHA-256。实现见 `pointcloud_studio/ledger.py`。
+
+## 快照、持久化与异常
+
+- 点集与网格组成一个不可变 `SceneSnapshot`，通过单指针原子替换；版本过期的读取返回 `E_SNAPSHOT_STALE`。
+- 重建服务在工作线程中执行；视口只读取已发布快照中的点集与网格。
+- 每个提交状态先写入 staging，逐个文件临时写入并 `os.replace`，再原子目录改名，最后原子更新 `CURRENT`。
+- 正常退出写 `session_manifest.json` 与 `closed.json`；强杀后不产生伪造的正常退出报告。
+- 未提交 staging、无效状态和先于 `CURRENT` 改名的新状态会移入 `orphans/`，并记录在 `recovery/open-*.json`。
+
+业务错误码：`E_POINT_CLOUD_FORMAT`、`E_NEIGHBOR_RADIUS`、`E_SNAPSHOT_STALE`、`E_MESH_MISMATCH`、`E_CACHE_HASH`、`E_GL_CONTEXT`。故障矩阵通过损坏输入副本或可序列化测试参数触发，配置随 `fault_matrix_report.json` 和验收报告保存。
+
+## 代码结构
+
+```text
+pointcloud_studio/
+  sample.py       固定种子样本、相机轨迹、编辑序列、manifest
+  formats.py      二进制点/法线格式
+  spatial.py      体素栅格邻域查询
+  normals.py      区域法线重估与逐点残差/误差上界
+  mesh.py         局部曲面片、三角化、缓存与内容哈希
+  ledger.py       误差传播与独立复算
+  consistency.py  增量/全量双口径核对
+  engine.py       编辑事务、失效闭包、缓存复用
+  snapshots.py    不可变联合快照与原子版本替换
+  runtime.py      后台重建线程
+  render.py       Windows WGL/FBO 与 E_GL_CONTEXT 降级
+  viewport.py     视口屏幕框选到点集/编辑操作
+  camera.py       相机姿态与投影矩阵
+  persistence.py  原子提交、关闭清单、强杀恢复
+  injections.py   六类业务异常的可复现注入矩阵
+  validation.py   端到端验收与运行报告
+```
+
+详细设计、公式和恢复时序见 `docs/TECHNICAL.md`，实际验证结果见 `artifacts/validation_report.json`。
