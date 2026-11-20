@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "items": [
+    {
+      "business_code": "E_DATA_ROW_INVALID",
+      "column": "age",
+      "id": "INJ-001",
+      "kind": "non_finite_value",
+      "row_id": "r0007",
+      "stage": "load"
+    },
+    {
+      "business_code": "E_GROUP_MAP_INVALID",
+      "column": "region",
+      "id": "INJ-002",
+      "kind": "unmapped_group_value",
+      "row_id": "r0014",
+      "stage": "group_mapping",
+      "value": "unmapped"
+    },
+    {
+      "business_code": "E_CONFIG_INVALID",
+      "id": "INJ-003",
+      "kind": "decimal_width_out_of_range",
+      "stage": "config",
+      "target": "columns.income.decimal_places",
+      "value": 99
+    },
+    {
+      "business_code": "E_CONFIG_INVALID",
+      "id": "INJ-004",
+      "kind": "min_valid_samples_out_of_range",
+      "stage": "config",
+      "target": "columns.age.min_valid_samples",
+      "value": 0
+    }
+  ]
+}

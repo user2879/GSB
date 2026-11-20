@@ -1,0 +1,563 @@
+{
+  "business_codes": [
+    "E_CONFIG_INVALID",
+    "E_DATA_ROW_INVALID",
+    "E_GROUP_MAP_INVALID",
+    "E_INSUFFICIENT_SAMPLES"
+  ],
+  "completed_batches": [
+    "b1-append",
+    "b2-correct",
+    "b3-imputer-change",
+    "b4-group-add"
+  ],
+  "completed_batches_this_run": [],
+  "config_hash": "72c00e0cef99b80106c925ae3b5f0336062a732ec1f52bbc03891bbc6ff2056d",
+  "config_injection_diagnostics": [
+    {
+      "business_code": "E_CONFIG_INVALID",
+      "field": "columns.age.min_valid_samples",
+      "message": "min_valid_samples must be a positive integer"
+    },
+    {
+      "business_code": "E_CONFIG_INVALID",
+      "field": "columns.income.decimal_places",
+      "message": "column decimal_places must be an integer from 0 through 9"
+    }
+  ],
+  "data_failure_count": 1,
+  "data_fingerprint": "a8f3dc498947612e40473ea77ade4a068992e7f88e810d071c09bb99f8865c8f",
+  "executable_config_hash": "9cd43efb3ebba49bba3628c38b0480c4b17605a2ec5f09e1170ce008df1a05fb",
+  "failed_row_ids": [
+    "r0007",
+    "r0014"
+  ],
+  "failure_count": 2,
+  "failures": [
+    {
+      "business_code": "E_DATA_ROW_INVALID",
+      "column": "age",
+      "failed_row": true,
+      "line_no": 7,
+      "message": "numeric column value must be finite",
+      "row_id": "r0007",
+      "stage": "load",
+      "value": "NaN"
+    },
+    {
+      "business_code": "E_GROUP_MAP_INVALID",
+      "column": "region",
+      "failed_row": true,
+      "line_no": 14,
+      "message": "group key value 'unmapped' has no mapping",
+      "row_id": "r0014",
+      "stage": "group_map",
+      "value": "unmapped"
+    }
+  ],
+  "format": 1,
+  "group_failure_count": 1,
+  "group_map_hash": "f89284385262e5f0f9c6dd221c5684a2581b7709c1c91e1fa1baf22c64ec38c7",
+  "imputation": {
+    "budget_slices": 1,
+    "computed_cell_count": 0,
+    "computed_cells_by_column": {},
+    "failures": [],
+    "imputed_cell_count": 24,
+    "pending_count": 0,
+    "pending_events": [],
+    "pending_jobs": [],
+    "reused_cell_count": 24
+  },
+  "imputation_failure_count": 0,
+  "in_progress_batch": null,
+  "injection_hits": [
+    {
+      "applied": true,
+      "column": "age",
+      "expected_business_code": "E_DATA_ROW_INVALID",
+      "injection_id": "INJ-001",
+      "kind": "non_finite_value",
+      "matched": true,
+      "matched_business_code": "E_DATA_ROW_INVALID",
+      "row_id": "r0007",
+      "stage": "load"
+    },
+    {
+      "applied": true,
+      "column": "region",
+      "expected_business_code": "E_GROUP_MAP_INVALID",
+      "injection_id": "INJ-002",
+      "kind": "unmapped_group_value",
+      "matched": true,
+      "matched_business_code": "E_GROUP_MAP_INVALID",
+      "row_id": "r0014",
+      "stage": "group_mapping"
+    },
+    {
+      "applied": true,
+      "expected_business_code": "E_CONFIG_INVALID",
+      "field": "columns.income.decimal_places",
+      "injected_value": 99,
+      "injection_id": "INJ-003",
+      "kind": "decimal_width_out_of_range",
+      "matched": true,
+      "matched_diagnostic": {
+        "business_code": "E_CONFIG_INVALID",
+        "field": "columns.income.decimal_places",
+        "message": "column decimal_places must be an integer from 0 through 9"
+      },
+      "stage": "config"
+    },
+    {
+      "applied": true,
+      "expected_business_code": "E_CONFIG_INVALID",
+      "field": "columns.age.min_valid_samples",
+      "injected_value": 0,
+      "injection_id": "INJ-004",
+      "kind": "min_valid_samples_out_of_range",
+      "matched": true,
+      "matched_diagnostic": {
+        "business_code": "E_CONFIG_INVALID",
+        "field": "columns.age.min_valid_samples",
+        "message": "min_valid_samples must be a positive integer"
+      },
+      "stage": "config"
+    }
+  ],
+  "model": {
+    "accuracy": 0.6666666666666666,
+    "excluded_row_ids": [
+      "r0007",
+      "r0014"
+    ],
+    "feature_names": [
+      "age",
+      "city=delta",
+      "city=harbor",
+      "city=hill",
+      "city=metro",
+      "city=plain",
+      "city=river",
+      "income",
+      "plan=basic",
+      "plan=plus",
+      "plan=pro",
+      "region=central",
+      "region=east",
+      "region=north",
+      "region=south",
+      "region=unmapped",
+      "region=west",
+      "score"
+    ],
+    "imputation_fingerprint": "e3a0fc1c1c324ce386864f1816759f52355336a962d93a989ae03d7be132af66",
+    "input_fingerprint": "b1b36d74b21f9ddac91ce40c4e612239ba479ffaac99b269ef82ec993d5553d4",
+    "log_loss": 1.1062811849391563,
+    "loss_trajectory": [
+      0.5719566182862212,
+      0.4912792363713355,
+      0.4336592430619332,
+      0.3902325726571713,
+      0.35622984045892936,
+      0.32884460939136156,
+      0.3062963089188266,
+      0.2873906845426091,
+      0.2712937225874183,
+      0.25740505481383774,
+      0.24528204589490743,
+      0.2345918354755421,
+      0.22507982411434385,
+      0.21654832767227208,
+      0.2088417658185359,
+      0.20183617706028886,
+      0.19543166838397913,
+      0.18954689561345459,
+      0.18411497329849727,
+      0.17908040622136476,
+      0.17439676096394505,
+      0.170024880239773,
+      0.1659314998546033,
+      0.16208816752198235,
+      0.15847039023642365,
+      0.1550569563237926,
+      0.15182939216718053,
+      0.14877152363211615,
+      0.14586911952929077,
+      0.1431095998392683,
+      0.14048179542523886,
+      0.13797574895766235,
+      0.1355825490383223,
+      0.13329419123359118,
+      0.13110346104654186,
+      0.12900383487594297
+    ],
+    "model_fingerprint": "fb7fa5b7b88c536cb396f270fd750979c7ec14a036a57a19c26069d516922fa0",
+    "reused": true,
+    "status": "ok",
+    "training_row_count": 18,
+    "training_row_ids": [
+      "r0001",
+      "r0002",
+      "r0003",
+      "r0004",
+      "r0005",
+      "r0006",
+      "r0008",
+      "r0010",
+      "r0011",
+      "r0012",
+      "r0013",
+      "r0015",
+      "r0016",
+      "r0017",
+      "r0018",
+      "r0019",
+      "r0020",
+      "r0023"
+    ],
+    "validation_row_count": 6,
+    "validation_row_ids": [
+      "r0009",
+      "r0021",
+      "r0022",
+      "r0024",
+      "r0025",
+      "r0026"
+    ]
+  },
+  "next_batch_index": 4,
+  "plan_hash": "053ccffde3c7e595f1c77dda7ab929f4b1c31b4e630226fecddc2d5b7952626a",
+  "planned_batch_count": 4,
+  "result_fingerprint": "f5cd09ddef1818a70e05a18bbf40c2745ae6badf85e8c480c0aa17f5036e6918",
+  "reuse_recompute": {
+    "imputation": {
+      "computed_cells": 0,
+      "reused_cells": 24
+    },
+    "model": {
+      "recomputed": false,
+      "reused": true
+    },
+    "stats": {
+      "recomputed_columns": [],
+      "recomputed_groups": [],
+      "reused_columns": [
+        "age",
+        "churn",
+        "city",
+        "income",
+        "plan",
+        "region",
+        "score"
+      ],
+      "reused_groups": [
+        {
+          "column": "score",
+          "group": "coastal"
+        },
+        {
+          "column": "score",
+          "group": "highland"
+        },
+        {
+          "column": "score",
+          "group": "inland"
+        }
+      ]
+    }
+  },
+  "snapshot": null,
+  "snapshot_generation": "v00000010",
+  "snapshot_version": 10,
+  "snapshot_versions_committed_this_run": [],
+  "stale_diagnostics": [],
+  "stats": {
+    "columns": {
+      "age": {
+        "cache_key": "0be93f140e2b91cfc34f1c2b7370de7cf94901840e76dd5021543dabecb98385",
+        "column": "age",
+        "decimal_places": 2,
+        "evidence_fingerprint": "4fb0106be0a5f79ab3545a27377270a2b8a9a84895dd33481ad2c00b4e360604",
+        "fallback_used": false,
+        "fingerprint": "8d726a2f2eeb5a96df5ee07eaf87ef6dddd5bdf0c003ac4faf4bb09ba582c956",
+        "imputer": "median",
+        "input_fingerprint": "4fb0106be0a5f79ab3545a27377270a2b8a9a84895dd33481ad2c00b4e360604",
+        "params_fingerprint": "739af9a429b64c68bcadd7921565cc72119eb3c3740ef510563c52687032bf7d",
+        "quantization_level": 5,
+        "raw_value": 43.625,
+        "rounding": "half_even",
+        "rounding_direction": "quantized_down",
+        "sample_count": 18,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "numeric",
+        "value": 43.6,
+        "value_fixed": 4360,
+        "value_text": "43.60"
+      },
+      "churn": {
+        "cache_key": "dcbfccebc82ac5e14f3068bc8d981efd5fc3907e574ac4fe8b30d88d75fa8a26",
+        "column": "churn",
+        "decimal_places": 2,
+        "evidence_fingerprint": "7611d808508d39e271eedbc97fa7d8ef39973467e50de81ec11ba87330dc7c77",
+        "fallback_used": false,
+        "fingerprint": "93b1241fdcf1532a9877319161930ccf8435bcb9b110374b13162766a1f3f622",
+        "imputer": "constant",
+        "input_fingerprint": "7611d808508d39e271eedbc97fa7d8ef39973467e50de81ec11ba87330dc7c77",
+        "params_fingerprint": "81afb14a121e9c4453dc2d4769c38fc185afc4c5e2554151d6a359aa8d4f5592",
+        "quantization_level": 5,
+        "rounding": "half_even",
+        "rounding_direction": "exact",
+        "sample_count": 24,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "numeric",
+        "value": 0.0,
+        "value_fixed": 0,
+        "value_text": "0.00"
+      },
+      "city": {
+        "cache_key": "0c55d11d252eb5e1871c235c4d3e1aff44ffc299790c93a2052867ef2a9e30cd",
+        "column": "city",
+        "decimal_places": 2,
+        "evidence_fingerprint": "64e6648a97151236eb4c3694d258df6eddcdd5f5f1303886e7bd3d69df58443a",
+        "fallback_used": false,
+        "fingerprint": "6154ecc8ab1ce12e2fd6b37dc7c22da021196db5b2ceada7eee86d53314267ea",
+        "imputer": "mode",
+        "input_fingerprint": "64e6648a97151236eb4c3694d258df6eddcdd5f5f1303886e7bd3d69df58443a",
+        "params_fingerprint": "0628771cca8248bb98ba678183bade79f3d6b5cde6707eae9bbefd0045133edd",
+        "quantization_level": 5,
+        "rounding": "half_even",
+        "rounding_direction": "exact",
+        "sample_count": 23,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "category",
+        "value": "harbor",
+        "value_fixed": 1,
+        "value_text": "harbor"
+      },
+      "income": {
+        "cache_key": "94fb4e12e9a5880692e9b3747738df6f056756026678f0265466041a65dde7d0",
+        "column": "income",
+        "decimal_places": 2,
+        "evidence_fingerprint": "32063de9c4415993f04a304447be252bb8eb38ff13edbc7174d00103c1a9da29",
+        "fallback_used": false,
+        "fingerprint": "ac68f1737570a8574beec4287a5c860f95de287946af5b952c9132a86322cfcf",
+        "imputer": "median",
+        "input_fingerprint": "32063de9c4415993f04a304447be252bb8eb38ff13edbc7174d00103c1a9da29",
+        "params_fingerprint": "40b5c77348a9591e0ce38c95e7b721b351def819cae448488d7f591017938424",
+        "quantization_level": 5,
+        "raw_value": 98.375,
+        "rounding": "half_even",
+        "rounding_direction": "quantized_up",
+        "sample_count": 17,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "numeric",
+        "value": 98.4,
+        "value_fixed": 9840,
+        "value_text": "98.40"
+      },
+      "plan": {
+        "cache_key": "0a27e27a4b06826ec3e503b691d55c119b4d0358b93c986eac6fa688bc81e092",
+        "column": "plan",
+        "decimal_places": 2,
+        "evidence_fingerprint": "9c18e0e041872fc3e10bfde6e792de8ccc3c3c978ec68c322a42c0d14321cc0d",
+        "fallback_used": false,
+        "fingerprint": "6cd1b2bcd670fcc34f1f693d21791999a760395463d01164a8747564083aad9a",
+        "imputer": "constant",
+        "input_fingerprint": "9c18e0e041872fc3e10bfde6e792de8ccc3c3c978ec68c322a42c0d14321cc0d",
+        "params_fingerprint": "a9a9356d9fd6bcb58d84157e431882ab58f74d7c6f0db2535b9c93e9232b1770",
+        "quantization_level": 5,
+        "rounding": "half_even",
+        "rounding_direction": "exact",
+        "sample_count": 19,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "category",
+        "value": "basic",
+        "value_fixed": 0,
+        "value_text": "basic"
+      },
+      "region": {
+        "cache_key": "b2f255574c9346353df4e5ab259b74e43e952dcd6de3305a81f8ff89b0f8034b",
+        "column": "region",
+        "decimal_places": 2,
+        "evidence_fingerprint": "04ce40832e2425ae18dc661385d97e9583ce82bf281239a57963006367e0ae32",
+        "fallback_used": false,
+        "fingerprint": "38030500144fc7161503acb0bfa61f482293c9ed465702571187660b79c6fda1",
+        "imputer": "constant",
+        "input_fingerprint": "04ce40832e2425ae18dc661385d97e9583ce82bf281239a57963006367e0ae32",
+        "params_fingerprint": "3a38ec9525aa6540533a3aff7b989ea6ea41948feff6e84489b42cafd932987b",
+        "quantization_level": 5,
+        "rounding": "half_even",
+        "rounding_direction": "exact",
+        "sample_count": 24,
+        "status_codes": [],
+        "sufficient": true,
+        "type": "category",
+        "value": "north",
+        "value_fixed": 2,
+        "value_text": "north"
+      },
+      "score": {
+        "cache_key": "8abe1e1f65ea49b6d5ada4b12314e535eb01bb1cdf2a940339a226a3ac5156cc",
+        "column": "score",
+        "decimal_places": 2,
+        "fallback_used": true,
+        "fingerprint": "94a57c5c405de0e965dda515cd1e0cc89a8fbf0e4586fc2ba73d0e91e6e81ff1",
+        "group_key": "region",
+        "groups": {
+          "coastal": {
+            "cache_key": "b93b15fbd547cab8a1a18ed5163401e37225bf6ce601f209cc019ed545136a4f",
+            "evidence_fingerprint": "40dd37c7b053234c14db484e094c8d4f56fe5e0ccbb17f0e13da98b37dd7b062",
+            "fallback_used": false,
+            "fingerprint": "1be6b26b22f49eaa709680f5422947efe91fc411b25f3dd3da8482b5ce74f125",
+            "group": "coastal",
+            "group_key_values": [
+              "east",
+              "west"
+            ],
+            "params_fingerprint": "249eb8516659d8dfa48622c1b503743d25721559a9d82c6f131b217ea9f131c1",
+            "raw_value": 39.26,
+            "referenced_row_ids": [
+              "r0002",
+              "r0003",
+              "r0006",
+              "r0010",
+              "r0011",
+              "r0015",
+              "r0018",
+              "r0019",
+              "r0022",
+              "r0023"
+            ],
+            "rounding_direction": "quantized_down",
+            "sample_count": 8,
+            "status_codes": [],
+            "sufficient": true,
+            "value": 39.25,
+            "value_fixed": 3925,
+            "value_text": "39.25"
+          },
+          "highland": {
+            "cache_key": "86f5987debaa500ff623c0f8b606c5337edcbc339799e8f1d8f9455da63e1fcd",
+            "evidence_fingerprint": "9e36d2c2f363ef060530e15ee62ff568596ab2320c6727df3456846e5fbc2821",
+            "fallback_used": true,
+            "fingerprint": "b5cd9e233f13f8ba24a4c3afb045934fb2f17f779caedc3c1c7214556fa60182",
+            "group": "highland",
+            "group_key_values": [
+              "central"
+            ],
+            "params_fingerprint": "249eb8516659d8dfa48622c1b503743d25721559a9d82c6f131b217ea9f131c1",
+            "referenced_row_ids": [
+              "r0026"
+            ],
+            "rounding_direction": "exact",
+            "sample_count": 0,
+            "status_codes": [
+              "E_INSUFFICIENT_SAMPLES"
+            ],
+            "sufficient": false,
+            "value": 55.0,
+            "value_fixed": 5500,
+            "value_text": "55.00"
+          },
+          "inland": {
+            "cache_key": "5c734118b492c363335f6293ab484f2dfff029a926795746351518a46ab6a52c",
+            "evidence_fingerprint": "c97506c5f48fc01a67438df7bc707788eb18c52a23bf1a48fd18a9b638e31a21",
+            "fallback_used": false,
+            "fingerprint": "25ad64deba797f5f8438422a72ad800339b51e921604fb91e1c24e8e5ee01b98",
+            "group": "inland",
+            "group_key_values": [
+              "north",
+              "south"
+            ],
+            "params_fingerprint": "249eb8516659d8dfa48622c1b503743d25721559a9d82c6f131b217ea9f131c1",
+            "raw_value": 34.26,
+            "referenced_row_ids": [
+              "r0001",
+              "r0004",
+              "r0005",
+              "r0008",
+              "r0009",
+              "r0012",
+              "r0013",
+              "r0016",
+              "r0017",
+              "r0020",
+              "r0021",
+              "r0024",
+              "r0025"
+            ],
+            "rounding_direction": "quantized_down",
+            "sample_count": 11,
+            "status_codes": [],
+            "sufficient": true,
+            "value": 34.25,
+            "value_fixed": 3425,
+            "value_text": "34.25"
+          }
+        },
+        "imputer": "grouped_median",
+        "input_fingerprint": "64903ded81e47918fdcbc4be3c70bfa4937983d17fd39d3ea341b27e984ee044",
+        "insufficient_groups": [
+          "highland"
+        ],
+        "params_fingerprint": "249eb8516659d8dfa48622c1b503743d25721559a9d82c6f131b217ea9f131c1",
+        "quantization_level": 5,
+        "rounding": "half_even",
+        "sample_count": 19,
+        "status_codes": [
+          "E_INSUFFICIENT_SAMPLES"
+        ],
+        "sufficient": false,
+        "type": "numeric"
+      }
+    },
+    "recomputed_columns": [],
+    "recomputed_groups": [],
+    "reused_columns": [
+      "age",
+      "churn",
+      "city",
+      "income",
+      "plan",
+      "region",
+      "score"
+    ],
+    "reused_groups": [
+      {
+        "column": "score",
+        "group": "coastal"
+      },
+      {
+        "column": "score",
+        "group": "highland"
+      },
+      {
+        "column": "score",
+        "group": "inland"
+      }
+    ],
+    "sample_counts": {
+      "age": 18,
+      "churn": 24,
+      "city": 23,
+      "income": 17,
+      "plan": 19,
+      "region": 24,
+      "score": 19
+    }
+  },
+  "status": "complete",
+  "timings_seconds": {
+    "imputation": 0.0008023960108403116,
+    "model": 0.0003336240188218653,
+    "snapshot": 0.0,
+    "stats": 0.0037706389848608524,
+    "total": 0.007584960985695943
+  }
+}

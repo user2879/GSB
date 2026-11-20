@@ -1,0 +1,83 @@
+{
+  "batches": [
+    {
+      "batch_id": "b1-append",
+      "operations": [
+        {
+          "op": "append_row",
+          "row": {
+            "age": {
+              "missing": true
+            },
+            "churn": 1,
+            "city": "plain",
+            "income": 77.625,
+            "plan": "plus",
+            "region": "north",
+            "row_id": "r0025",
+            "score": {
+              "missing": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "batch_id": "b2-correct",
+      "operations": [
+        {
+          "changes": {
+            "age": 48.5,
+            "income": {
+              "missing": true
+            }
+          },
+          "op": "correct_row",
+          "row_id": "r0003"
+        }
+      ]
+    },
+    {
+      "batch_id": "b3-imputer-change",
+      "operations": [
+        {
+          "changes": {
+            "imputer": "median"
+          },
+          "column": "income",
+          "op": "change_imputer"
+        }
+      ]
+    },
+    {
+      "batch_id": "b4-group-add",
+      "operations": [
+        {
+          "changes": {
+            "central": "highland"
+          },
+          "key_column": "region",
+          "op": "change_group_mapping"
+        },
+        {
+          "op": "append_row",
+          "row": {
+            "age": 36.25,
+            "churn": 0,
+            "city": "delta",
+            "income": {
+              "missing": true
+            },
+            "plan": "basic",
+            "region": "central",
+            "row_id": "r0026",
+            "score": {
+              "missing": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "format": 1
+}
