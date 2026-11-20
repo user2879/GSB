@@ -20,3 +20,40 @@
 
 验收：
 用本地样本验证三种记录混存归一、升级与直达视图逐字段一致、快照恢复重放可复现及三类注入业务码正确。
+
+---
+
+## 交付说明（实现与验证结果）
+
+### 结构
+
+- `ledger_tool/pipeline.py` — 确定性请求集与后端参数构造、按到达序号分组、NumPy 前向推理；输入/参数/后端指纹摘要逐位可复现，序列化经 `canon.canonical_json`（键排序、紧凑分隔），不依赖字典或哈希遍历顺序。
+- `ledger_tool/records.py` — r1/r2/r3 编解码与强校验；批槽位受支持集合、到达序号非负、定长十六进制摘要逐项校验，非法记录整体以 `E_FORMAT` 拒绝并指出首个出错字段。
+- `ledger_tool/normalize.py` — 归一为内部 r3 视图：整体替换（以确定性管线重导出为基底，已携带字段逐一校验），缺失字段按 `FILL_RULES` 显式默认规则补齐，补齐集合在 `meta["filled"]` 可回溯。
+- `ledger_tool/ledger.py` — SQLite 混存账本；混合顺序读取与逐格式分读视图摘要一致（`run` 内置断言）。
+- `ledger_tool/upgrade.py` — 逐条原子重写为 r3，每条完成即更新检查点（tmp+rename），旧记录写入只读备份；重启仅依据检查点续做，不重复处理、不与备份重复计数；检查点损坏以 `E_UPGRADE` 报明并从可判定边界重做、列出重做记录标识。
+- `ledger_tool/consistency.py` — r1/r2 升级路径与 r3 直达路径逐字段比对（请求标识、名次、指纹、耗时、输出摘要），差异以 `E_DIVERGE` 定位首个不一致记录与字段。
+- `ledger_tool/snapshot.py` — 快照持久化格式版本集合、内容摘要、视图摘要、升级轨迹与游标；重开不一致以 `E_SNAPSHOT` 报明差异项并整体替换；重放不一致以 `E_REPLAY` 定位首个记录。
+- `ledger_tool/logging_util.py` — JSONL 结构化日志，含记录标识、字段与检出阶段。
+- `main.py` — CLI：`prepare` / `run`（`--max-upgrades` 模拟中断）/ `verify` / `inject {digest,chain,checkpoint}` / `acceptance` / `gui`。
+- `gui.py` — Tkinter 查看器：记录列表与格式版本、升级轨迹、补齐字段来源、一致性结论、快照列表，渲染顺序稳定；tkinter 缺失时给出提示并退出码 1。
+- `samples/config.json` — 整数种子、请求数、输入/隐藏层维度、后端参数向量、重复投递样本。
+- `tests/test_acceptance.py` — 17 个验收测试。
+
+### 使用
+
+```bash
+python main.py prepare        # 清理并重建样本与账本（从初始状态复现）
+python main.py run            # 归一 + 升级 + 一致性 + 快照
+python main.py verify         # 快照识别与重放校验
+python main.py inject digest  # 注入摘要损坏（仅改输入样本文件）
+python main.py acceptance     # 完整验收序列
+python -m unittest discover -s tests
+```
+
+### 实际验证结果（本机 Python 3.11 + NumPy 1.26.4）
+
+- `python -m unittest discover -s tests`：17 个测试全部通过（确定性逐位一致、E_FORMAT 首字段定位、混存归一视图摘要一致、r1/r2 升级与 r3 直达逐字段一致且摘要相同、中断续做不重复处理、快照重放可复现、E_SNAPSHOT/E_REPLAY、三类注入业务码 E_INTEGRITY/E_CHAIN/E_UPGRADE）。
+- `python main.py acceptance`：PASS（prepare→run→verify→三类注入→最终复跑全部符合预期退出码）。
+- 注入实测：`inject digest` → `E_INTEGRITY`（record_id=req-0006, field=output_digest, stage=normalize）；`inject chain` → `E_CHAIN`（record_id=req-0007, field=superseded_refs）；`inject checkpoint` → `E_UPGRADE` 事件含重做清单并从边界续做完成。
+- 本环境（Linux）无 tkinter，`python main.py gui` 按预期提示并返回退出码 1；Windows 官方 Python 安装包默认包含 tkinter，可直接启动界面。
