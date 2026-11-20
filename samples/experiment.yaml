@@ -1,0 +1,33 @@
+experiment:
+  name: churn-incremental-workbench
+  seed: 20261120
+
+data:
+  features:
+    - age
+    - income
+    - tenure_months
+    - region
+    - plan
+    - income_copy
+  target: churned
+
+model:
+  kind: gradient_boosting
+  tree_count_candidates: [8, 11, 13, 14]
+  tree_count: 8
+  max_depth: 4
+  learning_rate: 0.18
+  row_sample_ratio: 0.82
+  col_sample_ratio: 0.67
+  min_samples_leaf: 4
+  bin_count: 6
+  train_ratio: 0.75
+
+runtime:
+  thread_pool_size: 4
+  snapshot_interval: 3
+
+precision:
+  level: high
+

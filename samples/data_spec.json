@@ -1,0 +1,68 @@
+{
+  "schema": "synthetic-table/v1",
+  "seed": 20261120,
+  "row_count": 84,
+  "columns": [
+    {
+      "name": "age",
+      "type": "numeric",
+      "min": 18,
+      "max": 72,
+      "missing_rate": 0.03,
+      "coefficient": 0.012
+    },
+    {
+      "name": "income",
+      "type": "numeric",
+      "min": 22000,
+      "max": 155000,
+      "missing_rate": 0.06,
+      "coefficient": 0.000008
+    },
+    {
+      "name": "tenure_months",
+      "type": "numeric",
+      "min": 0,
+      "max": 84,
+      "missing_rate": 0.04,
+      "coefficient": 0.014
+    },
+    {
+      "name": "region",
+      "type": "categorical",
+      "categories": ["east", "north", "south", "west"],
+      "weights": [0.28, 0.22, 0.3, 0.2],
+      "missing_rate": 0.025,
+      "effects": {
+        "east": 0.55,
+        "north": -0.1,
+        "south": 0.15,
+        "west": -0.45
+      }
+    },
+    {
+      "name": "plan",
+      "type": "categorical",
+      "categories": ["basic", "plus", "pro"],
+      "weights": [0.48, 0.34, 0.18],
+      "missing_rate": 0.02,
+      "effects": {
+        "basic": -0.5,
+        "plus": 0.15,
+        "pro": 0.7
+      }
+    },
+    {
+      "name": "income_copy",
+      "type": "numeric",
+      "copy_of": "income"
+    }
+  ],
+  "target": {
+    "name": "churned",
+    "type": "binary",
+    "intercept": -1.25,
+    "noise": 0.5
+  }
+}
+
