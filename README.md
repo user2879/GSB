@@ -1,23 +1,356 @@
-在空白工作区构建一个面向长上下文 LLM 位置编码外推问题的可集成领域组件与完整示例。组件需支持标准旋转位置编码、线性内插与 NTK 感知缩放三种方案，对本地确定性合成的注意力打分样本计算训练长度内与外推区间的打分偏差，并支持使用者在有限交互延迟预算下反复调整方案、基频、训练上下文长度与维度剪枝口径，即时查看外推诊断结论。输入为本地样本目录：一份位置编码配置 JSON（方案选择、基频 base、训练上下文长度、外推目标长度、维度、缩放因子、精度档位、维度切分块大小、交互延迟预算毫秒、并发数、快照提交间隔、剪枝容差），一份合成注意力打分样本 JSONL（每行含样本 ID、查询位置、键位置列表与按固定种子生成的维度特征向量），以及一份交互命令流 JSON（每条命令可切换方案、修改基频与缩放因子、调整训练上下文长度、变更维度剪枝口径与替换单条样本）。核心冲突是：响应必须在延迟预算内返回，而最新参数下的完整外推诊断需要较长的确定性计算，因此必须区分“已完成的最新摘要”和“尚未完成的最新结果”，同时保证多次命令后增量结果与一次性全量计算逐字段一致。
+# RoPE Extrapolation Diagnostics
 
-任务环境与准备：
-确认 Windows 本地可用 Python 3.10 及以上版本，创建独立虚拟环境并安装 NumPy（仅用于数组与向量运算）。
-在工作区准备本地样本目录：按固定种子程序生成位置编码配置 JSON、注意力打分样本 JSONL 与交互命令流 JSON，样本覆盖训练长度内、外推区间与边界相对距离。
-预先准备交互延迟预算取较大与较小两种取值的配置副本，用于观察预算耗尽时 E_INTERACT_BUDGET_PENDING 的返回与待完成队列推进。
-预先准备故障注入清单：非有限特征元素、维度与特征长度不符、基频为零、缩放因子非正与键位置越界样本，供异常隔离验证使用。
-确认工作区可写临时目录与快照目录，用于阶段产物整体替换提交与恢复判定验证。
+面向长上下文 LLM 位置编码外推问题的可集成 Python 组件与完整本地示例。组件在同一个统一接口下实现：
 
-业务要求：
-1. 实现样本与配置加载层：逐行解析位置编码配置 JSON、合成注意力打分样本 JSONL 与交互命令流，校验样本 ID 唯一、查询位置与键位置为非负整数、维度为偶数且与特征向量长度一致、基频大于零、训练上下文长度小于外推目标长度、维度切分块能整除维度、交互延迟预算与并发数为正整数；对非法 JSON、空样本、维度与特征长度不符、基频为零、缩放因子非正等情形分别输出 E_CONFIG_INVALID、E_SAMPLE_INVALID、E_DIM_MISMATCH、E_BASE_INVALID、E_SCALE_INVALID 并进入失败清单，其余样本继续处理。
-2. 实现三种位置编码方案与统一接口：标准旋转位置编码按位置索引与维度生成成对旋转角，线性内插按缩放因子压缩位置索引，NTK 感知缩放按基频调整规则改变角度增长；三种方案共用同一查询与键特征输入接口和同一返回结构，同一配置与输入下每种方案的输出必须完全确定，且切换方案必须真实改变位置向量与注意力打分，不得仅改方案标记。
-3. 实现注意力打分与外推区间分层统计：按样本查询位置与键位置列表计算点积注意力打分，区分键相对距离落在训练上下文长度内与外推区间两类样本；外推区间内同一相对距离的打分与训练长度内同距离打分分别汇总，输出两类的均值、最大值与样本数，并为每个样本记录所属区间与主导维度贡献位置；打分使用 float64 并保留至少 6 位有效数字。
-4. 实现外推误差逐级追踪：以训练长度内位置编码结果为参考，计算外推位置上位置向量、点积打分与减去最大值归一化后的注意力权重三个环节的偏差，逐级标注误差首次超过配置容差所在环节；当某样本在外推区间内的偏差超过容差时，记录其相对距离、超差环节与超差幅度，并输出按超差幅度降序的样本清单；追踪过程不得使用任何随机源。
-5. 实现基于内容指纹的增量失效与精确复用：为每种方案的位置编码、打分与误差追踪结果计算由方案参数指纹、样本内容指纹、精度档位与剪枝口径派生的缓存键，并记录每条样本结果引用的方案与特征行；当切换方案、修改基频或缩放因子、变更训练上下文长度、调整剪枝口径或替换单条样本时，仅使受影响样本及受影响环节标记失效并纳入重算集合，未失效结果必须直接复用且不得重新计算，复用与重算清单须可审计。
-6. 实现交互延迟预算内的响应语义：每条交互命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，包含已完成样本数、当前方案名、外推区间超差样本数与进度；预算内无法得到最新参数下的完整结果时返回带 E_INTERACT_BUDGET_PENDING 业务码的摘要并保留待完成队列，下一次命令或轮询继续推进；摘要中的数值必须来自真实已完成计算而非估算或占位。
-7. 保证任意交互命令序列后增量运行与从空白全量重建逐字段一致：逐样本的位置向量摘要、训练长度内外打分统计、逐级误差环节标注、超差样本清单顺序、复用与重算清单以及失败清单顺序，都必须与按相同最终配置和样本一次性全量运行的结果完全一致；命令流至少覆盖方案切换、基频修改、训练上下文长度调整、剪枝口径变更与样本替换五类命令的交叉组合。
-8. 实现并发执行与串行结果一致、阶段快照整体替换恢复及异常隔离与诊断报告：使用线程池并发执行样本的打分与误差追踪，最大并发数取自配置且不得超过，每个任务携带由方案名、样本 ID 与阶段名派生的稳定排序键，最终输出顺序须与单线程按样本 ID 字典序执行一致；各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、已完成样本列表与各产物版本，启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE；单样本在任一阶段抛异常时记录样本 ID、阶段名与业务码并继续其余样本；最终输出 JSON 诊断报告，含各方案外推偏差统计、超差样本清单、敏感性排序、失败清单与业务码汇总。
+- 标准旋转位置编码（standard RoPE）
+- 线性内插（linear interpolation / PI）
+- NTK 感知缩放（NTK-aware scaling）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+它会对固定种子生成的查询/键特征计算点积注意力打分，分别统计训练长度内与外推区间，追踪位置向量、打分和 softmax 注意力权重三级误差，并在有限交互延迟预算内提供**真实已完成摘要**与**待完成队列**。
 
-验收：
-用本地样本验证三方案外推诊断、增量与全量一致、延迟预算响应及异常隔离，附报告。
+实现只使用 Python 3.10+ 标准库与 NumPy；不需要 Docker、容器、外部服务或网络访问。
+
+## 快速开始
+
+### Windows PowerShell
+
+可一键执行环境检查、虚拟环境、依赖安装、测试和验收：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/setup_windows.ps1
+```
+
+或手工执行：
+
+```powershell
+py -3.10 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+python -m rope_extrap generate --output samples
+python -m rope_extrap verify --output-dir artifacts
+```
+
+### Linux / WSL
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+
+python -m rope_extrap generate --output samples
+python -m rope_extrap verify --output-dir artifacts
+```
+
+运行测试：
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+本次实际验证环境为 Linux/WSL2、Python 3.11.0rc1、NumPy 1.26.4；代码只使用跨平台路径、原子文件替换和线程池 API，Windows 上的 Python 3.10+ 使用相同命令。完整实测见 [docs/verification_report.md](docs/verification_report.md)。
+
+## 工作区布局
+
+```text
+rope_extrap/                 # 可集成组件
+  loader.py                  # 配置、JSONL 样本、命令流加载与校验
+  encoding.py                # 三种位置编码、精度档位、维度剪枝
+  scoring.py                 # float64 点积打分、softmax、分层统计
+  tracing.py                 # 三级误差追踪与超差判定
+  cache.py                   # 内容指纹与分阶段缓存键
+  engine.py                  # 线程池执行、稳定排序、异常隔离、报告
+  session.py                 # 延迟预算交互、后台队列、命令语义
+  snapshot.py                # 阶段产物临时写入、版本快照、恢复判定
+  analysis.py                # 三方案统计、敏感性排序、一致性视图
+  cli.py                     # 命令行入口
+samples/                     # 固定种子生成的真实输入
+  config_large_budget.json   # 大预算：3000 ms
+  config_small_budget.json   # 小预算：20 ms
+  samples.jsonl              # 64 条注意力打分样本
+  commands.json              # 19 条交叉命令
+  fault_manifest.json        # 故障注入清单
+  fault_samples.jsonl        # 可隔离坏样本
+artifacts/                   # 实测 JSON 产物与验收报告
+runtime/tmp/                 # 可写临时目录
+runtime/snapshots/           # 快照目录及实测版本
+tests/                       # 12 个自动化测试
+scripts/                     # 样本生成与完整验收脚本
+```
+
+## 输入格式
+
+### 位置编码配置 JSON
+
+```json
+{
+  "scheme": "standard_rope",
+  "base": 10000.0,
+  "training_context_length": 32,
+  "extrapolation_target_length": 128,
+  "dimension": 32,
+  "scale_factor": 4.0,
+  "precision": "float64",
+  "dimension_chunk_size": 4,
+  "interaction_budget_ms": 3000,
+  "concurrency": 4,
+  "snapshot_commit_interval": 4,
+  "pruning_tolerance": 0.05,
+  "pruning_policy": "energy",
+  "error_tolerance": 0.02
+}
+```
+
+| 字段 | 语义与约束 |
+|---|---|
+| `scheme` | `standard_rope`、`linear_interpolation`、`ntk_aware` |
+| `base` | RoPE 基频，必须有限且大于 0 |
+| `training_context_length` | 训练上下文长度，正整数，必须小于目标长度 |
+| `extrapolation_target_length` | 外推目标位置上界 |
+| `dimension` | 偶数维度，和每条特征向量长度一致 |
+| `scale_factor` | 线性内插或 NTK 缩放因子，必须大于 0 |
+| `precision` | `float64` 或 `float32`；打分始终以 float64 汇总 |
+| `dimension_chunk_size` | 偶数、正整数，必须整除 `dimension` |
+| `interaction_budget_ms` | 单条交互命令延迟预算，正整数毫秒 |
+| `concurrency` | 线程池最大并发数，正整数 |
+| `snapshot_commit_interval` | 每 N 条命令尝试提交快照 |
+| `pruning_policy` | `none`、`energy`、`frequency` |
+| `pruning_tolerance` | `[0, 1]`；能量阈值或低频保留比例参数 |
+| `error_tolerance` | 三级误差超差阈值；缺省时沿用 `pruning_tolerance` |
+
+### 合成注意力打分样本 JSONL
+
+每行一个样本：
+
+```json
+{
+  "sample_id": "s001",
+  "query_position": 80,
+  "key_positions": [80, 79, 72, 48, 47, 40],
+  "query_features": [0.12, -0.08, 0.03],
+  "key_features": [[0.10, 0.01, 0.04], [0.09, -0.02, 0.05]]
+}
+```
+
+- `sample_id` 必须唯一且非空。
+- `query_position`、`key_positions` 必须是非负整数；键位置不得大于查询位置或目标长度。
+- `dimension` 必须为偶数，并与 `query_features`、每个 `key_features[i]` 长度一致。
+- 特征不得包含 `NaN`/`Infinity`。
+- `samples.jsonl` 覆盖相对距离 `0, 7, 31`、边界 `32` 和外部 `33, 40, 47, 63, 95, 119` 等区间。
+
+### 交互命令流 JSON
+
+顶层可为数组，或 `{"commands": [...]}`。支持：
+
+```json
+[
+  {"type": "set_scheme", "scheme": "linear_interpolation"},
+  {"type": "set_base", "base": 20000.0},
+  {"type": "set_scale", "scale_factor": 2.5},
+  {"type": "set_training_context_length", "training_context_length": 24},
+  {"type": "set_pruning", "pruning_policy": "frequency", "pruning_tolerance": 0.1},
+  {"type": "replace_sample", "sample": {"sample_id": "s007", "query_position": 120, "...": "..."}},
+  {"type": "update", "base": 12000.0, "scale_factor": 3.25},
+  {"type": "poll", "budget_ms": 120000}
+]
+```
+
+命令可覆盖 `budget_ms`。`commands.json` 交叉覆盖方案切换、基频修改、缩放因子修改、训练长度调整、剪枝口径变更与单条样本替换。
+
+## 数学与诊断语义
+
+### 三种位置编码
+
+对第 `i` 个二维旋转对，`theta_i = base^(-2i/d)`。
+
+- 标准 RoPE：`angle = position * theta_i`
+- 线性内插：`angle = (position / scale) * theta_i`
+- NTK-aware：`base_eff = base * scale^(d/(d-2))`，随后 `angle = position * base_eff^(-2i/d)`，`d=2` 时退化处理为 `base_eff=base*scale`
+
+每一对 `(x0, x1)` 使用二维旋转。三种方案共用同一个 `encode_sample(config, sample)` 输入接口，并返回同一个 `EncodedSample` 结构；测试验证三者的位置向量指纹和打分指纹都不同。
+
+### 精度与维度剪枝
+
+- `float32` 档位会在输入和旋转结果处量化到 float32，再提升为 float64 参与后续计算。
+- 打分、softmax 和误差追踪统一使用 float64。
+- `none`：保留全部维度块。
+- `energy`：按查询与键在各维度块上的平方能量，保留不低于最大块能量 `pruning_tolerance` 比例的块；至少保留一个块。
+- `frequency`：低频率对优先，保留 `ceil(chunk_count * (1 - pruning_tolerance))` 个块。
+- 被剪枝维度写入 0；每个样本记录 `kept_chunks`、`kept_dimensions`、`pruned_dimensions`。
+
+### 打分与区间
+
+`score_j = dot(q_rot, k_rot_j)`。相对距离 `d_j = query_position - key_position_j`：
+
+- `d_j <= training_context_length`：训练区间
+- `d_j > training_context_length`：外推区间
+
+注意力权重为减去样本内最大打分后的 softmax。报告分别输出训练区间/外推区间的均值、最大值、样本数、键数，以及按相对距离分组的统计。每个样本和每个键记录最大绝对贡献维度。
+
+### 三级误差追踪
+
+确定性参考使用同一特征行和同一剪枝掩码，将每个位置夹到训练边界：
+
+```text
+reference_position = min(position, training_context_length)
+```
+
+依次计算：
+
+1. `position_vector`：查询/键旋转向量的相对 L2 偏差
+2. `score`：实际点积与参考点积的相对偏差
+3. `attention_weight`：实际 softmax 与参考 softmax 的相对偏差
+
+按上述顺序标注首次超过 `error_tolerance` 的环节。外推键逐项记录 `relative_distance`、`first_exceeded_stage`、三级偏差和 `max_deviation`；样本超差清单按 `max_deviation` 降序、样本 ID、距离确定性排序。整个链路不含随机源。
+
+## 增量缓存与失效
+
+每个阶段都有独立内容键：
+
+```text
+position_encoding_key = H(scheme params, sample content, precision, pruning)
+attention_score_key   = H(encoding_key, training length, target length, ...)
+error_trace_key       = H(score_key, training length, target length, error tolerance, ...)
+```
+
+实际行为：
+
+| 变更 | 复用 | 重算 |
+|---|---|---|
+| 切换方案 | 无 | 全部样本三阶段 |
+| 修改 base / scale | 无 | 全部样本三阶段 |
+| 修改训练长度 | 位置编码 | 打分统计 + 误差追踪 |
+| 修改剪枝口径/容差 | 无 | 全部样本三阶段 |
+| 替换单条样本 | 其他样本三阶段 | 仅该样本三阶段 |
+| `poll` | 已存在结果全部 | 仅缺失阶段 |
+
+每次命令都输出 `reuse_and_recompute.reused/recomputed`，包含样本、阶段、稳定排序键、缓存键、特征行来源。测试已验证训练长度变更复用 64 个编码阶段、替换 `s007` 只重算该样本的 3 个阶段。
+
+## 延迟预算与待完成队列
+
+交互会话使用一个持久后台工作线程推进最新内容寻址任务：
+
+1. 命令线程应用参数并等待配置预算内的安全时间片。
+2. 若最新结果未完成，立即返回真实已完成摘要和 `E_INTERACT_BUDGET_PENDING`。
+3. 后台线程继续推进同一队列；下一次 `poll` 或命令继续检查/复用已完成阶段。
+4. 新的变更命令会取代旧目标，但旧目标已提交的精确缓存键结果仍可复用。
+
+摘要字段全部来自实际缓存结果：已完成样本数、当前方案、外推超差样本数、进度和待完成阶段数。不会用样本总数、历史平均值或占位值填充未完成结果。小预算样本配置为 20 ms；大预算为 3000 ms。
+
+> 说明：1-10 ms 级微预算下，Python 线程调度和响应序列化本身可能竞态；示例采用 20 ms 小预算，使所有命令响应在预算内，同时仍稳定触发 pending。实测小预算 p95 为 17.692 ms，19/19 条变更命令返回 pending，最终大预算 poll 排空队列。
+
+## 快照与恢复
+
+```text
+runtime/snapshots/<name>/
+  manifest.json
+  v00000007-<config-hash-prefix>/
+    position_encoding.json
+    attention_score.json
+    error_trace.json
+```
+
+- 三个阶段产物先写入临时目录并 `fsync`。
+- 临时目录重命名为不可变版本目录，再原子替换 `manifest.json` 指针。
+- manifest 记录 `global_version`、`config_hash`、`completed_samples`、`failed_samples`、各阶段 `artifact_versions`。
+- 读取时校验版本号、配置哈希和阶段内容哈希；不一致返回 `E_SNAPSHOT_STALE`。
+- 恢复后完全相同的内容键直接命中；实测 36 个阶段产物全部复用、0 个重算。
+
+## 故障码
+
+| 业务码 | 场景 |
+|---|---|
+| `E_CONFIG_INVALID` | 非法 JSON、字段缺失/类型错误、维度奇数、块不整除、预算/并发非正整数 |
+| `E_SAMPLE_INVALID` | 坏 JSON 行、空文件、重复 ID、位置非法/越界、非有限特征、空键列表 |
+| `E_DIM_MISMATCH` | 配置维度或特征行长度不一致 |
+| `E_BASE_INVALID` | 基频小于等于 0 或非有限 |
+| `E_SCALE_INVALID` | 缩放因子小于等于 0 或非有限 |
+| `E_COMMAND_INVALID` | 未知命令、非法命令参数、替换未知样本 |
+| `E_INTERACT_BUDGET_PENDING` | 预算内最新完整结果尚未完成，队列保留 |
+| `E_SNAPSHOT_STALE` | 快照版本/配置/内容哈希不一致 |
+| `E_COMPUTE_NONFINITE` | 计算阶段出现非有限值 |
+| `E_INTERNAL` | 未预期阶段异常（仍按样本/阶段隔离） |
+
+坏样本不会阻断其他样本。运行期任一阶段异常会记录样本 ID、阶段和业务码；依赖该样本的后续阶段标记 skipped，其余样本继续。
+
+## 集成 API
+
+```python
+from rope_extrap.loader import load_position_config, load_samples, load_commands
+from rope_extrap.session import InteractiveSession
+
+config, config_failures = load_position_config("samples/config_small_budget.json")
+samples, sample_failures = load_samples(
+    "samples/samples.jsonl",
+    dimension=config.dimension,
+    target_length=config.extrapolation_target_length,
+)
+commands, command_failures = load_commands("samples/commands.json", config=config)
+
+with InteractiveSession(config, samples, commands) as session:
+    responses = session.run_all()
+    final_poll = session.drain(budget_ms=120_000)
+    report = session.final_report()
+```
+
+一次性全量诊断：
+
+```python
+from rope_extrap.engine import run_full_diagnosis
+
+report = run_full_diagnosis(config, samples)
+```
+
+## CLI
+
+```bash
+# 生成固定种子输入
+python -m rope_extrap generate --output samples
+
+# 一次性全量 + 三方案统计 + 敏感性
+python -m rope_extrap diagnose \
+  --config samples/config_large_budget.json \
+  --samples samples/samples.jsonl \
+  --extended --out artifacts/one_shot.json
+
+# 交互命令流 + 增量/全量对比
+python -m rope_extrap diagnose \
+  --config samples/config_small_budget.json \
+  --samples samples/samples.jsonl \
+  --commands samples/commands.json \
+  --extended --full-comparison \
+  --out artifacts/command_sequence.json \
+  --responses-out artifacts/command_responses.json \
+  --full-out artifacts/full_rebuild.json
+
+# 故障加载
+python -m rope_extrap faults \
+  --config samples/config_large_budget.json \
+  --samples samples/fault_samples.jsonl \
+  --out artifacts/faults.json
+
+# 完整验收
+python -m rope_extrap verify --output-dir artifacts
+```
+
+## 实际验证结果
+
+本次运行 `python -m rope_extrap verify --output-dir artifacts`：
+
+- 11/11 验收检查通过。
+- 64 条样本、19 条交叉命令、固定种子 `20261121`。
+- 三方案位置向量与打分指纹均不同；标准 RoPE 平均最大偏差 5.835631，线性内插 3.322718，NTK 3.777277。
+- 大预算 19/19 响应完整且预算内，p95 426.563 ms。
+- 小预算 20/20 响应预算内，19 条返回 `E_INTERACT_BUDGET_PENDING`，p95 16.421 ms。
+- 队列探针剩余阶段任务 `[72, 36, 0]`，最终 24 个样本全部完成。
+- 增量最终报告与空白全量重建在全部实质诊断字段上逐字段一致；执行审计因缓存命中历史天然不同，明确分离。
+- 快照 version 7 恢复 36/36 阶段复用；version 8 返回 `E_SNAPSHOT_STALE`。
+- 注入 `error_trace` 阶段故障后，5 个样本完成、1 个样本隔离失败，其他样本不受影响。
+- 线程池观测并发不超过配置的 4。
+
+详细报告：`docs/verification_report.md`、`artifacts/acceptance_report.json`、`artifacts/diagnostic_report.json`。
+
+### 关于“逐字段一致”的边界
+
+增量运行和空白全量重建的**诊断结果**、缓存键、样本顺序、超差顺序和失败顺序完全相同。执行审计中的 `reused/recomputed` 布尔历史不可能与空白重建相同：空白运行没有任何历史缓存，必然全部为 recomputed。实现将“结果一致性”和“执行历史审计”分开：`diagnostic_consistency_view` 比较全部实质字段，测试和验收同时单独验证缓存命中与失效路径。这是该需求中两个目标在逻辑上的必要区分。

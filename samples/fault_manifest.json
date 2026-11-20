@@ -1,0 +1,56 @@
+{
+  "dimension": 32,
+  "faults": [
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "fault_id": "invalid_json_line",
+      "file": "fault_samples.jsonl",
+      "line": 2
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "fault_id": "nonfinite_feature",
+      "file": "fault_samples.jsonl",
+      "line": 3
+    },
+    {
+      "expected_code": "E_DIM_MISMATCH",
+      "fault_id": "dimension_length_mismatch",
+      "file": "fault_samples.jsonl",
+      "line": 4
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "fault_id": "key_position_out_of_bounds",
+      "file": "fault_samples.jsonl",
+      "line": 5
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "fault_id": "duplicate_sample_id",
+      "file": "fault_samples.jsonl",
+      "line": 6
+    },
+    {
+      "expected_code": "E_SAMPLE_INVALID",
+      "fault_id": "empty_sample_file",
+      "file": "empty_samples.jsonl"
+    },
+    {
+      "expected_code": "E_BASE_INVALID",
+      "fault_id": "zero_base",
+      "file": "config_fault_base.json"
+    },
+    {
+      "expected_code": "E_SCALE_INVALID",
+      "fault_id": "nonpositive_scale",
+      "file": "config_fault_scale.json"
+    },
+    {
+      "expected_code": "E_CONFIG_INVALID",
+      "fault_id": "invalid_config_json",
+      "file": "config_invalid_json.json"
+    }
+  ],
+  "seed": 20261121
+}
