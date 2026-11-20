@@ -1,0 +1,92 @@
+{
+  "content": [
+    {
+      "content_b64": "eyJyZWdpb24iOiJsb2NhbCIsInJlbGVhc2UiOiJjb25maWctdjEifQ==",
+      "content_sha256": "dec621fe38a8acf08e129723fa40126c0768c26f0e2a7c2cc4b427007131a879",
+      "derivation": null,
+      "derived_from": [],
+      "etag": "config-v1",
+      "path": "/api/config",
+      "ttl_ms": 45000
+    },
+    {
+      "content_b64": "Uk9PVDo4MzA6djM=",
+      "content_sha256": "f4e9c0ff4b529fec0f7f79dd3250fb10570fdfbaa8554c8d3a151d87cef3712c",
+      "derivation": {
+        "rule": "concat_v1",
+        "separator": "|"
+      },
+      "derived_from": [
+        "/data/root"
+      ],
+      "etag": "left-v3",
+      "path": "/data/left",
+      "ttl_ms": 40000
+    },
+    {
+      "content_b64": "Uk9PVDo4MzA6djM=",
+      "content_sha256": "f4e9c0ff4b529fec0f7f79dd3250fb10570fdfbaa8554c8d3a151d87cef3712c",
+      "derivation": {
+        "rule": "concat_v1",
+        "separator": "|"
+      },
+      "derived_from": [
+        "/data/root"
+      ],
+      "etag": "right-v3",
+      "path": "/data/right",
+      "ttl_ms": 35000
+    },
+    {
+      "content_b64": "Uk9PVDo4MzA6djM=",
+      "content_sha256": "f4e9c0ff4b529fec0f7f79dd3250fb10570fdfbaa8554c8d3a151d87cef3712c",
+      "derivation": null,
+      "derived_from": [],
+      "etag": "root-v3",
+      "path": "/data/root",
+      "ttl_ms": 30000
+    },
+    {
+      "content_b64": "Uk9PVDo4MzA6djMKUk9PVDo4MzA6djMKeyJyZWdpb24iOiJsb2NhbCIsInJlbGVhc2UiOiJjb25maWctdjEifQ==",
+      "content_sha256": "be170cb6b501de09184c1c8d7b9183541e1c876e475b138b69cb9dec43ce29c1",
+      "derivation": {
+        "rule": "concat_v1",
+        "separator": "\n"
+      },
+      "derived_from": [
+        "/data/left",
+        "/data/right",
+        "/api/config"
+      ],
+      "etag": "page-v3",
+      "path": "/page/home",
+      "ttl_ms": 50000
+    }
+  ],
+  "policy": {
+    "key_fields": [
+      "node_id",
+      "path",
+      "etag"
+    ],
+    "nodes": [
+      {
+        "capacity": 4,
+        "eviction_rule": "stable_fifo",
+        "node_id": "edge-a"
+      },
+      {
+        "capacity": 5,
+        "eviction_rule": "smallest_key",
+        "node_id": "edge-b"
+      },
+      {
+        "capacity": 3,
+        "eviction_rule": "nearest_expiry",
+        "node_id": "edge-c"
+      }
+    ],
+    "version": "policy-v1"
+  },
+  "schema": "edgecache.spec/v1"
+}
