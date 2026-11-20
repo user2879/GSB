@@ -1,0 +1,33 @@
+{
+  "diagnosis": [
+    "tier_s: samples=24 labels=3 imbalance=1.72727273 -> color+nearest_centroid macro_f1=0.8711157",
+    "tier_m: samples=48 labels=5 imbalance=3.625 -> color+knn macro_f1=0.88113119",
+    "tier_l: samples=70 labels=8 imbalance=1.54545455 -> concat+logistic_regression macro_f1=0.98988095",
+    "failures=5; active_injections=3"
+  ],
+  "exit_code": 0,
+  "failures": 5,
+  "report": "reports/injection_report.json",
+  "snapshot": {
+    "config_hash": "1dee17c43bf8a0a7be17cb3a905b9a6ddf51c93b414c00deedab8e659779ff16",
+    "global_version": "v000066-1dee17c43bf8",
+    "in_progress": false,
+    "plan_hash": "ba1020f56f07d0aced52173681fc9cc07233e248981ac8b04d94acb7f6cbbf7c",
+    "previous_snapshot": null,
+    "run_identity": "44a2879183f26d8e48f0d99273000c97981146a7b616e85d0cb9a7a61547d094",
+    "snapshot_name": "v000066",
+    "snapshot_version": 66,
+    "stage_versions": {
+      "decision": "e0c61098bbcf96e7f56ac232837de334f7ff7160f58d6e5b68d49196770f4796",
+      "feature": "34937b8d744d509ff65980dbcc200ae5b975713185a77743c15eef774a303488",
+      "load": "4c649bb5a50c760bbd01b242d5bec71b4321ac59a841eb11924f8276cf697f41",
+      "metric": "15006b36ae1209443b2d2035f74f54aeedae1847b32a8b13829dd939f8b32126",
+      "score": "eae8b76253f96488375431f945a71850ed9f9b3c5225347df48314e4227adc18"
+    }
+  },
+  "tiers": [
+    "tier_s",
+    "tier_m",
+    "tier_l"
+  ]
+}

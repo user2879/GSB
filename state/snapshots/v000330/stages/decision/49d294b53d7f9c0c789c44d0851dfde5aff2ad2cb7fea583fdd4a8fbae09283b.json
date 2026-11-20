@@ -1,0 +1,63 @@
+{
+  "artifact_version": "08f25f9ce7506bb383fa8c9025021c4f1327375f6f5bd2da8b988381013be3a3",
+  "cache_key": "49d294b53d7f9c0c789c44d0851dfde5aff2ad2cb7fea583fdd4a8fbae09283b",
+  "classifier": "knn",
+  "input_refs": [
+    "f34c490392b397dd3954dc5aa68dca22380ebe79b1701c4eca1e3a6b55bc8a06"
+  ],
+  "metadata": {
+    "boundary_policy": "equality_positive_labels_lexicographic",
+    "threshold": 0.49
+  },
+  "payload": {
+    "boundary": false,
+    "boundary_labels": [],
+    "boundary_policy": "equality_positive_labels_lexicographic",
+    "classifier": "knn",
+    "decisions": {
+      "bar": {
+        "comparison": "less_than_threshold",
+        "included": false,
+        "lexicographic_rank": 0,
+        "probability": 0.2
+      },
+      "circle": {
+        "comparison": "greater_than_threshold",
+        "included": true,
+        "lexicographic_rank": 1,
+        "probability": 0.8
+      },
+      "cross": {
+        "comparison": "greater_than_threshold",
+        "included": true,
+        "lexicographic_rank": 2,
+        "probability": 0.8
+      },
+      "diamond": {
+        "comparison": "greater_than_threshold",
+        "included": true,
+        "lexicographic_rank": 3,
+        "probability": 0.8
+      },
+      "ellipse": {
+        "comparison": "less_than_threshold",
+        "included": false,
+        "lexicographic_rank": 4,
+        "probability": 0.2
+      }
+    },
+    "predicted_labels": [
+      "circle",
+      "cross",
+      "diamond"
+    ],
+    "sample": "sample_000003.png",
+    "score_key": "f34c490392b397dd3954dc5aa68dca22380ebe79b1701c4eca1e3a6b55bc8a06",
+    "threshold": 0.49,
+    "tier": "tier_m"
+  },
+  "sample": "sample_000003.png",
+  "sidecar_sha256": null,
+  "stage": "decision",
+  "tier": "tier_m"
+}
