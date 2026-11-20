@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "shared_feature_dim": 6,
+  "target_layer_whitelist": [
+    "layer_1",
+    "layer_2",
+    "layer_3"
+  ],
+  "tasks": [
+    {
+      "classes": [
+        "alpha",
+        "beta"
+      ],
+      "name": "vision_alpha",
+      "target_layer": "layer_1",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0001",
+        "s0005",
+        "s0009",
+        "s0013",
+        "s0017",
+        "s0021",
+        "s0025",
+        "s0029",
+        "s0033",
+        "s0037",
+        "s0002",
+        "s0006",
+        "s0010",
+        "s0014",
+        "s0018",
+        "s0022",
+        "s0026",
+        "s0030"
+      ],
+      "validation_ids": [
+        "s0129",
+        "s0133",
+        "s0137",
+        "s0130",
+        "s0134",
+        "s0138"
+      ]
+    },
+    {
+      "_injection_id": "INJ-006",
+      "classes": [
+        "gamma",
+        "delta"
+      ],
+      "name": "vision_gamma",
+      "target_layer": "layer_2",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0003",
+        "s0007",
+        "s0011",
+        "s0015",
+        "s0019",
+        "s0023",
+        "s0027",
+        "s0031",
+        "s0035",
+        "s0039",
+        "s0004",
+        "s0008",
+        "s0012",
+        "s0016",
+        "s0020",
+        "s0024",
+        "s0028",
+        "s0032"
+      ],
+      "validation_ids": [
+        "s0131",
+        "s0135",
+        "s0139",
+        "s0132",
+        "s0136",
+        "s0140"
+      ]
+    },
+    {
+      "classes": [
+        "alpha",
+        "beta",
+        "gamma"
+      ],
+      "name": "signals_abg",
+      "target_layer": "layer_3",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0001",
+        "s0005",
+        "s0009",
+        "s0013",
+        "s0017",
+        "s0021",
+        "s0042",
+        "s0046",
+        "s0050",
+        "s0054",
+        "s0058",
+        "s0043",
+        "s0047",
+        "s0051",
+        "s0055",
+        "s0059",
+        "s0063",
+        "s0067"
+      ],
+      "validation_ids": [
+        "s0141",
+        "s0145",
+        "s0142",
+        "s0146",
+        "s0143",
+        "s0147"
+      ]
+    },
+    {
+      "classes": [
+        "alpha",
+        "delta"
+      ],
+      "name": "signals_mix",
+      "target_layer": "layer_2",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0041",
+        "s0045",
+        "s0049",
+        "s0053",
+        "s0057",
+        "s0061",
+        "s0065",
+        "s0004",
+        "s0008",
+        "s0012",
+        "s0016",
+        "s0020",
+        "s0024"
+      ],
+      "validation_ids": [
+        "s0149",
+        "s0153",
+        "s0157",
+        "s0144",
+        "s0148",
+        "s0152"
+      ]
+    },
+    {
+      "_injection_id": "INJ-001",
+      "classes": [
+        "alpha",
+        "beta"
+      ],
+      "name": "inj_missing_sample",
+      "target_layer": "layer_1",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0081",
+        "s0085",
+        "missing-sample-404"
+      ],
+      "validation_ids": [
+        "s0082",
+        "s0086"
+      ]
+    },
+    {
+      "_injection_id": "INJ-002",
+      "classes": [
+        "alpha",
+        "alpha"
+      ],
+      "name": "inj_duplicate_classes",
+      "target_layer": "layer_1",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0089",
+        "s0093"
+      ],
+      "validation_ids": [
+        "s0097",
+        "s0101"
+      ]
+    },
+    {
+      "_injection_id": "INJ-003",
+      "classes": [
+        "gamma",
+        "delta"
+      ],
+      "name": "inj_target_not_whitelisted",
+      "target_layer": "layer_2",
+      "target_layer_whitelist": [
+        "layer_1"
+      ],
+      "train_ids": [
+        "s0083",
+        "s0087"
+      ],
+      "validation_ids": [
+        "s0084",
+        "s0088"
+      ]
+    },
+    {
+      "_injection_id": "INJ-004",
+      "adapter_rank": 0,
+      "classes": [
+        "alpha",
+        "beta"
+      ],
+      "name": "inj_zero_rank",
+      "target_layer": "layer_1",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0105",
+        "s0109",
+        "s0113",
+        "s0106",
+        "s0110",
+        "s0114"
+      ],
+      "validation_ids": [
+        "s0117",
+        "s0121",
+        "s0118",
+        "s0122"
+      ]
+    },
+    {
+      "_injection_id": "INJ-005",
+      "classes": [
+        "gamma",
+        "delta"
+      ],
+      "name": "inj_empty_validation",
+      "target_layer": "layer_1",
+      "target_layer_whitelist": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "train_ids": [
+        "s0091",
+        "s0095",
+        "s0099",
+        "s0092",
+        "s0096",
+        "s0100"
+      ],
+      "validation_ids": []
+    }
+  ]
+}

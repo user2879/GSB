@@ -1,0 +1,50 @@
+{
+  "injections": [
+    {
+      "business_code": "E_TASK_INVALID",
+      "id": "INJ-001",
+      "kind": "missing_sample_id",
+      "path": "tasks.json#/tasks/4/train_ids/2",
+      "task": "inj_missing_sample"
+    },
+    {
+      "business_code": "E_TASK_INVALID",
+      "id": "INJ-002",
+      "kind": "invalid_classes",
+      "path": "tasks.json#/tasks/5/classes",
+      "task": "inj_duplicate_classes"
+    },
+    {
+      "business_code": "E_TASK_INVALID",
+      "id": "INJ-003",
+      "kind": "target_layer_not_whitelisted",
+      "path": "tasks.json#/tasks/6",
+      "task": "inj_target_not_whitelisted"
+    },
+    {
+      "business_code": "E_RANK_INVALID",
+      "id": "INJ-004",
+      "kind": "zero_rank",
+      "path": "tasks.json#/tasks/7/adapter_rank",
+      "task": "inj_zero_rank"
+    },
+    {
+      "business_code": "E_TASK_INVALID",
+      "id": "INJ-005",
+      "kind": "empty_validation",
+      "path": "tasks.json#/tasks/8/validation_ids",
+      "reason_code": "E_VALIDATION_EMPTY",
+      "task": "inj_empty_validation"
+    },
+    {
+      "business_code": "E_TRAINING_EXCEPTION",
+      "exception_type": "InjectedTrainingError",
+      "id": "INJ-006",
+      "kind": "runtime_exception",
+      "path": "tasks.json#/tasks/1/_injection_id",
+      "phase": "training",
+      "task": "vision_gamma"
+    }
+  ],
+  "schema_version": 1
+}
