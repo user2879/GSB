@@ -1,0 +1,23 @@
+# 独立异常注入配置：每项注入带稳定编号，命中后写入诊断报告
+injections:
+  - id: INJ-NONFINITE-001      # 非有限特征值（特征抽取阶段）
+    type: nonfinite_feature
+    sample_id: sample_007
+    stage: feature_extract
+  - id: INJ-INDIVISIBLE-002    # 分块尺寸不整除（加载校验阶段）
+    type: indivisible_block
+    sample_id: sample_011
+    block_size: 24
+  - id: INJ-ZEROQUOTA-003      # 单样本配额为零（调度阶段）
+    type: zero_quota
+    sample_id: sample_013
+    stage: schedule
+  - id: INJ-TRUNCBLOCK-004     # 分块截断（图像字节流截断，加载校验阶段）
+    type: truncated_block
+    sample_id: sample_017
+    truncate_bytes: 128
+    stage: load_validate
+  - id: INJ-CORRUPT-005        # 断言结构损坏（加载校验阶段）
+    type: corrupt_assertion
+    sample_id: sample_019
+    stage: load_validate

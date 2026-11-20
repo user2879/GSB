@@ -1,0 +1,23 @@
+# 多模态特征融合实验台 - 融合配置
+manifest_version: 1            # 全局版本号，用于快照续跑判定
+image_size: [64, 64]           # 期望图像尺寸 (宽, 高)
+block_size: 16                 # 图像分块尺寸（须整除图像边长）
+visual_dim: 12                 # 视觉特征维度
+text_dim: 16                   # 文本特征维度
+fusion_weights:                # 融合权重
+  visual: 0.6
+  text: 0.4
+fusion_temperature: 1.5         # 融合温度
+frac_bits: 16                  # 定点小数位宽
+quant_levels: 256              # 量化档位
+quant_range: 8.0               # 量化值域（定点数绝对值上限）
+max_workers: 4                 # 线程池并发数
+global_mac_budget: 5000000     # 全局乘加算术预算
+per_sample_quota: 200000       # 单样本配额
+cache_resident_budget: 12      # 缓存驻留预算（块数）
+snapshot_commit_interval: 8    # 快照提交间隔（每提交 N 个样本落一次快照）
+edge_threshold: 24             # 边缘判定梯度阈值
+score_clip: [0, 4.0]           # 打分裁剪区间（定点前浮点表示）
+decision_threshold: 0.5        # 判定阈值（定点前浮点表示）
+conflict_reduction: [1, 2]     # 冲突断言折减规则（分子/分母）
+default_fill_seed_tag: "default-text-v1"   # 默认补齐向量派生标签
