@@ -21,3 +21,14 @@
 
 验收：
 用本地样本验证三版本清单归一、优先级并发下发、回执收敛与界面权威重算逐字节一致，并含强制终止恢复。
+
+---
+
+# 交付说明（configdist）
+
+本仓库已实现上述平台，代码位于 `configdist/`，演示脚本位于 `scripts/`。
+
+- 快速验收：`python -m configdist.cli demo --workdir demo_ws`
+- 测试：`python -m unittest discover -s tests -v`
+- 界面：`python -m configdist.gui --workdir demo_ws`（需 Tkinter）
+- 技术设计见 `docs/TECHNICAL.md`，实际验证结果见 `docs/VERIFICATION.md`。
