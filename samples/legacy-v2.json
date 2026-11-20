@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "script_id": "legacy-v2",
+  "description": "Version 2 demonstrates an upgrade, a repeatable read and a blocked writer.",
+  "initial_rows": {
+    "acct:alpha": 5,
+    "acct:beta": 6
+  },
+  "sessions": [
+    {
+      "session_id": "V2R",
+      "isolation_level": "repeatable_read",
+      "lock_wait_budget_ms": 20,
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "acct:alpha"},
+        {"op_no": 2, "type": "read", "row_key": "acct:alpha"},
+        {"op_no": 3, "type": "write", "row_key": "acct:beta", "value": 220}
+      ]
+    },
+    {
+      "session_id": "V2W",
+      "isolation_level": "read_committed",
+      "lock_wait_budget_ms": 20,
+      "operations": [
+        {"op_no": 1, "type": "write", "row_key": "acct:alpha", "value": 111}
+      ]
+    }
+  ]
+}

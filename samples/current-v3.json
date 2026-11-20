@@ -1,0 +1,49 @@
+{
+  "format_version": 3,
+  "script_id": "normal-concurrent-v3",
+  "description": "Three independent editing sessions under a global session limit of two.",
+  "initial_rows": {
+    "acct:alpha": 10,
+    "acct:beta": 20,
+    "acct:gamma": 30
+  },
+  "sessions": [
+    {
+      "session_id": "N1",
+      "isolation_level": "read_committed",
+      "lock_wait_budget_ms": 100,
+      "concurrency": 1,
+      "operation_timeout_ms": 100,
+      "lock_order": ["acct:alpha"],
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "acct:alpha"},
+        {"op_no": 2, "type": "write", "row_key": "acct:alpha", "value": 11}
+      ]
+    },
+    {
+      "session_id": "N2",
+      "isolation_level": "read_committed",
+      "lock_wait_budget_ms": 100,
+      "concurrency": 1,
+      "operation_timeout_ms": 100,
+      "lock_order": ["acct:beta"],
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "acct:beta"},
+        {"op_no": 2, "type": "write", "row_key": "acct:beta", "value": 22}
+      ]
+    },
+    {
+      "session_id": "N3",
+      "isolation_level": "repeatable_read",
+      "lock_wait_budget_ms": 100,
+      "concurrency": 1,
+      "operation_timeout_ms": 100,
+      "lock_order": ["acct:gamma"],
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "acct:gamma"},
+        {"op_no": 2, "type": "read", "row_key": "acct:gamma"},
+        {"op_no": 3, "type": "write", "row_key": "acct:gamma", "value": 33}
+      ]
+    }
+  ]
+}

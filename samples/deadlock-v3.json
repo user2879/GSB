@@ -1,0 +1,35 @@
+{
+  "format_version": 3,
+  "script_id": "deadlock-v3",
+  "description": "A two-session opposite-order wait cycle; the earliest session is rolled back deterministically.",
+  "initial_rows": {
+    "cycle:left": 0,
+    "cycle:right": 0
+  },
+  "sessions": [
+    {
+      "session_id": "D1",
+      "isolation_level": "repeatable_read",
+      "lock_wait_budget_ms": 50,
+      "concurrency": 1,
+      "operation_timeout_ms": 50,
+      "lock_order": ["cycle:left", "cycle:right"],
+      "operations": [
+        {"op_no": 1, "type": "write", "row_key": "cycle:left", "value": 11},
+        {"op_no": 2, "type": "write", "row_key": "cycle:right", "value": 12}
+      ]
+    },
+    {
+      "session_id": "D2",
+      "isolation_level": "repeatable_read",
+      "lock_wait_budget_ms": 50,
+      "concurrency": 1,
+      "operation_timeout_ms": 50,
+      "lock_order": ["cycle:right", "cycle:left"],
+      "operations": [
+        {"op_no": 1, "type": "write", "row_key": "cycle:right", "value": 21},
+        {"op_no": 2, "type": "write", "row_key": "cycle:left", "value": 22}
+      ]
+    }
+  ]
+}

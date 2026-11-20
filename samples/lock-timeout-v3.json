@@ -1,0 +1,38 @@
+{
+  "format_version": 3,
+  "script_id": "lock-timeout-v3",
+  "description": "W exhausts a three millisecond lock-wait budget while H keeps an exclusive row lock.",
+  "initial_rows": {
+    "acct:locked": 0,
+    "acct:audit-b": 0,
+    "acct:audit-c": 0,
+    "acct:audit-d": 0
+  },
+  "sessions": [
+    {
+      "session_id": "H",
+      "isolation_level": "read_committed",
+      "lock_wait_budget_ms": 100,
+      "concurrency": 1,
+      "operation_timeout_ms": 100,
+      "lock_order": ["acct:locked", "acct:audit-b", "acct:audit-c", "acct:audit-d"],
+      "operations": [
+        {"op_no": 1, "type": "write", "row_key": "acct:locked", "value": 100},
+        {"op_no": 2, "type": "read", "row_key": "acct:audit-b"},
+        {"op_no": 3, "type": "read", "row_key": "acct:audit-c"},
+        {"op_no": 4, "type": "read", "row_key": "acct:audit-d"}
+      ]
+    },
+    {
+      "session_id": "W",
+      "isolation_level": "read_committed",
+      "lock_wait_budget_ms": 3,
+      "concurrency": 1,
+      "operation_timeout_ms": 3,
+      "lock_order": ["acct:locked"],
+      "operations": [
+        {"op_no": 1, "type": "write", "row_key": "acct:locked", "value": 999}
+      ]
+    }
+  ]
+}

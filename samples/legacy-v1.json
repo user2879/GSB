@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "script_id": "legacy-v1",
+  "description": "Version 1 uses only session ids and ordered read/write operations.",
+  "initial_rows": {
+    "row:x": 1,
+    "row:y": 2,
+    "row:z": 3
+  },
+  "sessions": [
+    {
+      "session_id": "L1",
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "row:x"},
+        {"op_no": 2, "type": "write", "row_key": "row:x", "value": 101}
+      ]
+    },
+    {
+      "session_id": "L2",
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "row:y"},
+        {"op_no": 2, "type": "write", "row_key": "row:y", "value": 202}
+      ]
+    },
+    {
+      "session_id": "L3",
+      "operations": [
+        {"op_no": 1, "type": "read", "row_key": "row:z"},
+        {"op_no": 2, "type": "write", "row_key": "row:z", "value": 303}
+      ]
+    }
+  ]
+}
