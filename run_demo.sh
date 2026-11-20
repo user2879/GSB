@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"
+python --version
+python -m pip install -r requirements.txt
+python demo.py "$@"

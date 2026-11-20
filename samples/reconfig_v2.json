@@ -1,0 +1,38 @@
+{
+  "after_event_seq": 22,
+  "version": 2,
+  "alert_threshold": 0,
+  "rate_window_ms": 1000,
+  "percentage_scale": 1000,
+  "pools": [
+    {
+      "id": "alpha",
+      "max_connections": 3,
+      "per_connection_request_limit": 2,
+      "idle_release_ms": 500,
+      "read_buffer_limit_bytes": 256
+    },
+    {
+      "id": "beta",
+      "max_connections": 2,
+      "per_connection_request_limit": 2,
+      "idle_release_ms": 500,
+      "read_buffer_limit_bytes": 256
+    },
+    {
+      "id": "delta",
+      "max_connections": 3,
+      "per_connection_request_limit": 1,
+      "idle_release_ms": 100,
+      "read_buffer_limit_bytes": 64
+    }
+  ],
+  "borrows": [
+    {
+      "lender_pool": "alpha",
+      "borrower_pool": "beta",
+      "max_borrowed": 1,
+      "return_deadline_ms": 300
+    }
+  ]
+}
