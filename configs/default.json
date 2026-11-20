@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "image_validation": {
+    "width": 720,
+    "height": 960,
+    "allowed_modes": ["L", "RGB", "RGBA"]
+  },
+  "binarization_threshold": 180,
+  "block_min_size": {"width": 12, "height": 8},
+  "projection_window": {"horizontal": 6, "vertical": 5},
+  "column_gap_threshold": 24,
+  "column_candidate_max_width_ratio": 0.55,
+  "column_span_ratio": 0.62,
+  "column_span_min_overlap_ratio": 0.15,
+  "column_min_overlap_ratio": 0.25,
+  "role_detection": {
+    "title_body_height_ratio": {"min": 1.5, "max": 3.0},
+    "image_min_ink_density": 0.46,
+    "image_max_projection_periodicity": 0.18,
+    "header_footer_margin_ratio": 0.075,
+    "role_priority": ["image", "header_footer", "title", "body"]
+  },
+  "reading_order_rule": "column_first",
+  "region_band_gap": 8,
+  "thread_pool_workers": 4,
+  "pages_per_batch": 3,
+  "snapshot_interval_pages": 2
+}
+
