@@ -1,0 +1,105 @@
+{
+  "seed": 20261120,
+  "samples": [
+    {
+      "name": "small_mn",
+      "category": "small",
+      "seed": 11031,
+      "M": 11,
+      "N": 13,
+      "K": 31,
+      "batch_size": 1,
+      "alpha": 1.0,
+      "beta": 0.0,
+      "special_fraction": 0.0,
+      "description": "Small GEMM with non-divisible block boundaries."
+    },
+    {
+      "name": "large_k",
+      "category": "large_k",
+      "seed": 71021,
+      "M": 7,
+      "N": 9,
+      "K": 1021,
+      "batch_size": 1,
+      "alpha": 1.0,
+      "beta": 0.0,
+      "special_fraction": 0.0,
+      "description": "Long reduction chain to expose BK chunk-merge rounding."
+    },
+    {
+      "name": "large_batch",
+      "category": "large_batch",
+      "seed": 6091173,
+      "M": 9,
+      "N": 11,
+      "K": 73,
+      "batch_size": 6,
+      "alpha": 1.0,
+      "beta": 0.25,
+      "special_fraction": 0.0,
+      "description": "Six independent BMM batches with a non-zero initial C term."
+    },
+    {
+      "name": "special_values",
+      "category": "special_values",
+      "seed": 31210129,
+      "M": 12,
+      "N": 10,
+      "K": 129,
+      "batch_size": 3,
+      "alpha": 0.75,
+      "beta": -0.25,
+      "special_fraction": 0.08,
+      "description": "BMM with seed-selected exact zeros and positive/negative float32 subnormals."
+    }
+  ],
+  "block_shapes": [
+    [4, 6, 8],
+    [7, 5, 4]
+  ],
+  "loop_orders": ["ijk", "ikj", "jik"],
+  "tolerance": {
+    "atol": 1e-06,
+    "rtol": 1e-06
+  },
+  "layer_exceed_limit": 0.1,
+  "layer_count": 4,
+  "top_k_contributors": 5,
+  "max_workers": 4,
+  "serial_workers": 1,
+  "report_path": "artifacts/precision_report.json",
+  "injections": [
+    {
+      "injection_id": "INJ-NONFINITE-001",
+      "kind": "nonfinite",
+      "sample": "small_mn",
+      "target": "A",
+      "index": [0, 0],
+      "value": "nan",
+      "expected_code": "E_NONFINITE_INPUT"
+    },
+    {
+      "injection_id": "INJ-SHAPE-002",
+      "kind": "shape_mismatch",
+      "sample": "large_batch",
+      "target": "B",
+      "expected_code": "E_SHAPE_MISMATCH"
+    },
+    {
+      "injection_id": "INJ-BLOCK-003",
+      "kind": "block_invalid",
+      "sample": "small_mn",
+      "block_shape": [0, 6, 8],
+      "expected_code": "E_BLOCK_INVALID"
+    },
+    {
+      "injection_id": "INJ-TOLERANCE-004",
+      "kind": "tolerance_invalid",
+      "sample": "small_mn",
+      "atol": 0.0,
+      "rtol": 0.0,
+      "expected_code": "E_TOLERANCE_INVALID"
+    }
+  ]
+}
