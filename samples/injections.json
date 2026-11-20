@@ -1,0 +1,67 @@
+{
+  "injections": [
+    {
+      "id": "INJ-01",
+      "kind": "nonfinite_scale",
+      "params": {
+        "value": NaN
+      },
+      "stage": "dequant",
+      "target_position": 100,
+      "target_tensor": "weight"
+    },
+    {
+      "id": "INJ-02",
+      "kind": "qbits_out_of_range",
+      "params": {
+        "qbits": 3
+      },
+      "stage": "truncate",
+      "target_position": 105,
+      "target_tensor": null
+    },
+    {
+      "id": "INJ-03",
+      "kind": "data_out_of_shape",
+      "params": {
+        "bad_index": 100,
+        "bad_value": 999999
+      },
+      "stage": "load",
+      "target_position": null,
+      "target_tensor": "activation"
+    },
+    {
+      "id": "INJ-04",
+      "kind": "illegal_strategy_combo",
+      "params": {
+        "acc_bits": 8,
+        "qbits": 8,
+        "saturation": "wrap"
+      },
+      "stage": "validate",
+      "target_position": null,
+      "target_tensor": null
+    },
+    {
+      "id": "INJ-05",
+      "kind": "nonfinite_scale",
+      "params": {
+        "value": Infinity
+      },
+      "stage": "dequant",
+      "target_position": 110,
+      "target_tensor": "weight"
+    },
+    {
+      "id": "INJ-06",
+      "kind": "qbits_out_of_range",
+      "params": {
+        "qbits": 12
+      },
+      "stage": "truncate",
+      "target_position": 3,
+      "target_tensor": null
+    }
+  ]
+}

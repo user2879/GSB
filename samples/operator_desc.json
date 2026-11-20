@@ -1,0 +1,49 @@
+{
+  "acc_bits": 16,
+  "act_scale": 0.015625,
+  "batch_n": 2,
+  "concurrency": 4,
+  "frac_bits": 6,
+  "in_channels": 2,
+  "in_h": 5,
+  "in_w": 5,
+  "k_h": 3,
+  "k_w": 3,
+  "mac_budget": 60,
+  "name": "fixed-point-conv2d-demo",
+  "out_channels": 4,
+  "out_high": 2.0,
+  "out_low": -2.0,
+  "pad_h": 1,
+  "pad_w": 1,
+  "qbits": 8,
+  "rounding": "round_nearest_even",
+  "saturation": "saturate",
+  "scale_sources": {
+    "act_scale": "samples/tensor_pack.jsonl#activation:dtype=int8",
+    "weight_scales": "per-channel calibration table weight_scale[oc]"
+  },
+  "snapshot_every": 16,
+  "stride_h": 1,
+  "stride_w": 1,
+  "tolerance": {
+    "accum": {
+      "abs": 0,
+      "rel": 0.0
+    },
+    "deq": {
+      "abs": 0.25,
+      "rel": 0.1
+    },
+    "trunc": {
+      "abs": 2,
+      "rel": 0.05
+    }
+  },
+  "weight_scales": [
+    0.03125,
+    0.0625,
+    0.046875,
+    0.09375
+  ]
+}
