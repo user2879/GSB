@@ -1,0 +1,29 @@
+{
+  "injections": [
+    {
+      "fault": "nonfinite_feature",
+      "injection_id": "INJ-001",
+      "sample_id": "S001",
+      "stage": "load_validate"
+    },
+    {
+      "fault": "key_pos_oob",
+      "injection_id": "INJ-002",
+      "oob_position": 1000000000,
+      "sample_id": "S002",
+      "stage": "load_validate"
+    },
+    {
+      "fault": "base_zero",
+      "injection_id": "INJ-003",
+      "sample_id": "S003",
+      "stage": "position_encoding"
+    },
+    {
+      "fault": "scale_nonpositive",
+      "injection_id": "INJ-004",
+      "sample_id": "S004",
+      "stage": "position_encoding"
+    }
+  ]
+}
