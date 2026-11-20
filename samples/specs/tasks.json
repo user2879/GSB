@@ -1,0 +1,141 @@
+{
+  "tasks": [
+    {
+      "task_id": "train-alpha",
+      "kind": "training",
+      "gpu_need": 4,
+      "memory_per_gpu_mib": 8192,
+      "priority": 5,
+      "estimated_ms": 100,
+      "shard_count": 3,
+      "memory_budget_mib": 65536,
+      "depends_on_tasks": [],
+      "fail_once_shards": [
+        1
+      ],
+      "shards": [
+        {
+          "shard_index": 0,
+          "depends_on": []
+        },
+        {
+          "shard_index": 1,
+          "depends_on": [
+            0
+          ]
+        },
+        {
+          "shard_index": 2,
+          "depends_on": [
+            1
+          ]
+        }
+      ],
+      "arrival_ms": 0
+    },
+    {
+      "task_id": "infer-beta",
+      "kind": "inference",
+      "gpu_need": 2,
+      "memory_per_gpu_mib": 4096,
+      "priority": 9,
+      "estimated_ms": 60,
+      "shard_count": 2,
+      "memory_budget_mib": 32768,
+      "depends_on_tasks": [],
+      "fail_once_shards": [],
+      "shards": [
+        {
+          "shard_index": 0,
+          "depends_on": []
+        },
+        {
+          "shard_index": 1,
+          "depends_on": [
+            0
+          ]
+        }
+      ],
+      "arrival_ms": 30
+    },
+    {
+      "task_id": "train-gamma",
+      "kind": "training",
+      "gpu_need": 2,
+      "memory_per_gpu_mib": 2048,
+      "priority": 3,
+      "estimated_ms": 80,
+      "shard_count": 2,
+      "memory_budget_mib": 16384,
+      "depends_on_tasks": [
+        "train-alpha"
+      ],
+      "fail_once_shards": [],
+      "shards": [
+        {
+          "shard_index": 0,
+          "depends_on": []
+        },
+        {
+          "shard_index": 1,
+          "depends_on": [
+            0
+          ]
+        }
+      ],
+      "arrival_ms": 0
+    },
+    {
+      "task_id": "infer-delta",
+      "kind": "inference",
+      "gpu_need": 1,
+      "memory_per_gpu_mib": 2048,
+      "priority": 7,
+      "estimated_ms": 40,
+      "shard_count": 2,
+      "memory_budget_mib": 8192,
+      "depends_on_tasks": [
+        "infer-beta"
+      ],
+      "fail_once_shards": [],
+      "shards": [
+        {
+          "shard_index": 0,
+          "depends_on": []
+        },
+        {
+          "shard_index": 1,
+          "depends_on": [
+            0
+          ]
+        }
+      ],
+      "arrival_ms": 30
+    },
+    {
+      "task_id": "train-omega",
+      "kind": "training",
+      "gpu_need": 4,
+      "memory_per_gpu_mib": 4096,
+      "priority": 1,
+      "estimated_ms": 200,
+      "shard_count": 2,
+      "memory_budget_mib": 65536,
+      "depends_on_tasks": [],
+      "fail_once_shards": [],
+      "shards": [
+        {
+          "shard_index": 0,
+          "depends_on": []
+        },
+        {
+          "shard_index": 1,
+          "depends_on": [
+            0
+          ]
+        }
+      ],
+      "arrival_ms": 0
+    }
+  ]
+}
