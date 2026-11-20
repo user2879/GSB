@@ -1,0 +1,19 @@
+{
+  "format_version": 1,
+  "description": "Deterministic master commit sequence on a virtual monotonic session timeline.",
+  "clock_basis": "virtual_monotonic_ns; commit timestamps are integer milliseconds from the same session origin",
+  "records": [
+    {"commit_seq": 1, "txn_id": "txn-0001", "commit_ts_ms": 100, "txn_bytes": 512},
+    {"commit_seq": 2, "txn_id": "txn-0002", "commit_ts_ms": 240, "txn_bytes": 768},
+    {"commit_seq": 3, "txn_id": "txn-0003", "commit_ts_ms": 330, "txn_bytes": 1024},
+    {"commit_seq": 4, "txn_id": "txn-0004", "commit_ts_ms": 690, "txn_bytes": 640},
+    {"commit_seq": 5, "txn_id": "txn-0005", "commit_ts_ms": 820, "txn_bytes": 2048},
+    {"commit_seq": 6, "txn_id": "txn-0006", "commit_ts_ms": 1180, "txn_bytes": 1536},
+    {"commit_seq": 7, "txn_id": "txn-0007", "commit_ts_ms": 1510, "txn_bytes": 896},
+    {"commit_seq": 8, "txn_id": "txn-0008", "commit_ts_ms": 1890, "txn_bytes": 4096},
+    {"commit_seq": 9, "txn_id": "txn-0009", "commit_ts_ms": 2240, "txn_bytes": 1280},
+    {"commit_seq": 10, "txn_id": "txn-0010", "commit_ts_ms": 2560, "txn_bytes": 3072},
+    {"commit_seq": 11, "txn_id": "txn-0011", "commit_ts_ms": 2910, "txn_bytes": 1792},
+    {"commit_seq": 12, "txn_id": "txn-0012", "commit_ts_ms": 3300, "txn_bytes": 2560}
+  ]
+}

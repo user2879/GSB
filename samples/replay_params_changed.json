@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "description": "Changed replay parameters. New samples are isolated by param_version.",
+  "replay": {
+    "model_version": "batch-barrier-v1",
+    "rate_rps": 5,
+    "concurrency": 3,
+    "clock_mode": "virtual_monotonic_ns",
+    "clock_base_ms": 1000
+  },
+  "aggregation": {
+    "version": "fixed-window-v1",
+    "window_size": 4,
+    "max_samples_per_window": 3,
+    "min_samples": 3,
+    "latency_ceiling_ms": 2000,
+    "scale_power": 3,
+    "p95_method": "nearest_rank_ceil",
+    "truncation_direction": "floor",
+    "dominant_threshold_pct": 60
+  }
+}
