@@ -1,0 +1,20 @@
+{
+  "rules": [
+    {
+      "rule_id": "r-chat",
+      "prefix": "chat:",
+      "stable_backend": "stable-a",
+      "canary_backend": "canary-b",
+      "canary_weight_bp": 2500,
+      "batch_size": 4
+    },
+    {
+      "rule_id": "r-code",
+      "prefix": "code:",
+      "stable_backend": "stable-c",
+      "canary_backend": "canary-d",
+      "canary_weight_bp": 1000,
+      "batch_size": 4
+    }
+  ]
+}
