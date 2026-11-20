@@ -1,0 +1,36 @@
+{
+  "version_label": "baseline-v1",
+  "global_replica_budget": 7,
+  "services": [
+    {
+      "name": "asr",
+      "requests": [120, 260, 420, 600, 980, 760, 300, 60],
+      "concurrency_limit": 2,
+      "request_ms": 500,
+      "concurrency_quota": 6,
+      "scale_threshold_pct": 80,
+      "min_replicas": 1,
+      "max_replicas": 4
+    },
+    {
+      "name": "embedding",
+      "requests": [300, 700, 1500, 2600, 4200, 3300, 1400, 200],
+      "concurrency_limit": 4,
+      "request_ms": 200,
+      "concurrency_quota": 24,
+      "scale_threshold_pct": 75,
+      "min_replicas": 1,
+      "max_replicas": 5
+    },
+    {
+      "name": "llm",
+      "requests": [10, 25, 60, 110, 210, 170, 80, 8],
+      "concurrency_limit": 1,
+      "request_ms": 1000,
+      "concurrency_quota": 3,
+      "scale_threshold_pct": 70,
+      "min_replicas": 1,
+      "max_replicas": 4
+    }
+  ]
+}
