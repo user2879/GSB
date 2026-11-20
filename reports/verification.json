@@ -1,0 +1,113 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "downgrade_losses": 3,
+        "restore_losses": 0
+      },
+      "name": "version_roundtrip",
+      "ok": true
+    },
+    {
+      "detail": {
+        "blocks": [
+          "act:n0000",
+          "w:n0001",
+          "w:n0002",
+          "w:n0003",
+          "w:n0004"
+        ],
+        "dtypes": {
+          "act:n0000": "int8",
+          "w:n0001": "int8",
+          "w:n0002": "int8",
+          "w:n0003": "int8",
+          "w:n0004": "int8"
+        }
+      },
+      "name": "quant_pack_le",
+      "ok": true
+    },
+    {
+      "detail": {
+        "recomputed": [
+          "n0002",
+          "n0003",
+          "n0004"
+        ],
+        "reused": [
+          "n0000",
+          "n0001"
+        ]
+      },
+      "name": "incremental_invalidation",
+      "ok": true
+    },
+    {
+      "detail": {
+        "sort_keys": [
+          "0000:n0000",
+          "0001:n0001",
+          "0002:n0002",
+          "0003:n0003",
+          "0004:n0004"
+        ]
+      },
+      "name": "serial_equals_parallel",
+      "ok": true
+    },
+    {
+      "detail": {
+        "budget_events": 3,
+        "pending": [
+          {
+            "code": "E_GLOBAL_BUDGET_PENDING",
+            "node_id": "n0002",
+            "sort_key": "0002:n0002"
+          },
+          {
+            "code": "E_GLOBAL_BUDGET_PENDING",
+            "node_id": "n0003",
+            "reason": "upstream_pending",
+            "sort_key": "0003:n0003"
+          },
+          {
+            "code": "E_GLOBAL_BUDGET_PENDING",
+            "node_id": "n0004",
+            "reason": "upstream_pending",
+            "sort_key": "0004:n0004"
+          }
+        ]
+      },
+      "name": "budget_pending_queue",
+      "ok": true
+    },
+    {
+      "detail": {
+        "eviction_events": [
+          {
+            "block_bytes": 1024,
+            "evicted": [
+              "n0000"
+            ],
+            "node_id": "n0001",
+            "round": 0
+          },
+          {
+            "block_bytes": 256,
+            "evicted": [
+              "n0001"
+            ],
+            "node_id": "n0003",
+            "round": 0
+          }
+        ]
+      },
+      "name": "lru_eviction",
+      "ok": true
+    }
+  ],
+  "cwd": "/home/zsl/feedback/uidfc5909d3-default-4/qcg",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "3.11.0rc1 (main, Jun 29 2026, 00:05:30) [GCC 11.4.0]"
+}

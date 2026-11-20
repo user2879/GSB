@@ -1,0 +1,83 @@
+{
+  "schema": "qcg-v2",
+  "nodes": [
+    {
+      "id": "n0000",
+      "kind": "input",
+      "bitwidth": "INT8",
+      "scale": 0.25,
+      "precision_tag": "permille-exact",
+      "rounding": "ROUND_HALF_UP",
+      "inplace": false,
+      "inputs": []
+    },
+    {
+      "id": "n0001",
+      "kind": "conv",
+      "bitwidth": "INT8",
+      "scale": 0.5,
+      "precision_tag": "permille-exact",
+      "rounding": "ROUND_HALF_EVEN",
+      "inplace": true,
+      "inputs": [
+        "n0000"
+      ],
+      "conv": {
+        "kernel": 3,
+        "stride": 1,
+        "padding": 1
+      }
+    },
+    {
+      "id": "n0002",
+      "kind": "conv",
+      "bitwidth": "INT16",
+      "scale": 0.125,
+      "precision_tag": "permille-exact",
+      "rounding": "ROUND_HALF_UP",
+      "inplace": false,
+      "inputs": [
+        "n0001"
+      ],
+      "conv": {
+        "kernel": 2,
+        "stride": 2,
+        "padding": 0
+      }
+    },
+    {
+      "id": "n0003",
+      "kind": "conv",
+      "bitwidth": "INT4",
+      "scale": 1.0,
+      "precision_tag": "permille-exact",
+      "rounding": "ROUND_HALF_DOWN",
+      "inplace": false,
+      "inputs": [
+        "n0002"
+      ],
+      "conv": {
+        "kernel": 3,
+        "stride": 1,
+        "padding": 1
+      }
+    },
+    {
+      "id": "n0004",
+      "kind": "conv",
+      "bitwidth": "INT16",
+      "scale": 0.333,
+      "precision_tag": "float-3digit",
+      "rounding": "ROUND_HALF_UP",
+      "inplace": false,
+      "inputs": [
+        "n0003"
+      ],
+      "conv": {
+        "kernel": 2,
+        "stride": 1,
+        "padding": 0
+      }
+    }
+  ]
+}
