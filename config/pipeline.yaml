@@ -1,0 +1,65 @@
+schema_version: 1
+known_devices:
+  - fan-c
+  - motor-b
+  - pump-a
+
+segment_length: 256
+score_range: [0.0, 1.0]
+threshold: 0.6025
+
+features:
+  mode: combined
+  band_edges_hz: [0.0, 60.0, 120.0, 240.0, 500.0]
+  band_count: 4
+
+algorithms:
+  robust_mahalanobis:
+    enabled: true
+    candidate_index: 0
+    candidates:
+      - robust_scale: 1.4826
+        scale_floor: 1.0e-9
+      - robust_scale: 2.25
+        scale_floor: 1.0e-9
+    normalization:
+      method: log1p_clip
+      reference: 8.0
+    weight: 1.0
+
+  spectral_residual:
+    enabled: true
+    candidate_index: 0
+    candidates:
+      - baseline_method: median
+        epsilon: 1.0e-12
+      - baseline_method: mean
+        epsilon: 1.0e-12
+    normalization:
+      method: log1p_clip
+      reference: 3.0
+    weight: 1.0
+
+  crest_factor:
+    enabled: true
+    candidate_index: 0
+    candidates:
+      - window_length: 1
+      - window_length: 3
+      - window_length: 5
+    normalization:
+      method: identity_clip
+      reference: 8.0
+    weight: 1.0
+
+quantization:
+  decimal_places: 3
+  quantum: 1
+  tie_policy: anomaly
+
+concurrency: 4
+snapshot_commit_interval_segments: 6
+
+snapshot:
+  schema_version: 1
+  dir: artifacts/snapshot

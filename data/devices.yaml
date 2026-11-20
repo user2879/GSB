@@ -1,0 +1,68 @@
+description: Deterministic synthetic vibration fixtures for incremental cache verification.
+
+devices:
+  - id: pump-a
+    seed: 20260121
+    sample_count: 1536
+    sample_rate_hz: 1000.0
+    declared_segment_count: 6
+    base_rpm: 1780.0
+    rpm_drift_amplitude: 34.0
+    rpm_drift_frequency_hz: 0.63
+    rpm_drift_phase_rad: 0.21
+    rpm_linear_drift_per_s: 0.07
+    harmonic_orders: [1, 2, 3, 5]
+    harmonic_amplitudes: [1.0, 0.43, 0.24, 0.11]
+    harmonic_phases_deg: [0.0, 17.0, 71.0, 113.0]
+    noise_std: 0.042
+    impulse_spacing_s: 0.19
+    impulse_amplitude: 0.48
+    impulse_decay_per_s: 46.0
+    anomaly_ratio: 0.34
+    anomaly_amplitude_scale: 2.6
+    missing_stride: 191
+    resampled_stride: 263
+
+  - id: motor-b
+    seed: 20260222
+    sample_count: 2048
+    sample_rate_hz: 1000.0
+    declared_segment_count: 8
+    base_rpm: 1495.0
+    rpm_drift_amplitude: 22.0
+    rpm_drift_frequency_hz: 0.47
+    rpm_drift_phase_rad: 1.13
+    rpm_linear_drift_per_s: -0.03
+    harmonic_orders: [1, 2, 4]
+    harmonic_amplitudes: [1.0, 0.35, 0.18]
+    harmonic_phases_deg: [12.0, 93.0, 201.0]
+    noise_std: 0.038
+    impulse_spacing_s: 0.23
+    impulse_amplitude: 0.41
+    impulse_decay_per_s: 38.0
+    anomaly_ratio: 0.375
+    anomaly_amplitude_scale: 2.25
+    missing_stride: 223
+    resampled_stride: 307
+
+  - id: fan-c
+    seed: 20260323
+    sample_count: 1024
+    sample_rate_hz: 1000.0
+    declared_segment_count: 4
+    base_rpm: 930.0
+    rpm_drift_amplitude: 17.5
+    rpm_drift_frequency_hz: 0.82
+    rpm_drift_phase_rad: 2.07
+    rpm_linear_drift_per_s: 0.02
+    harmonic_orders: [1, 2, 3]
+    harmonic_amplitudes: [1.0, 0.51, 0.29]
+    harmonic_phases_deg: [33.0, 141.0, 267.0]
+    noise_std: 0.052
+    impulse_spacing_s: 0.31
+    impulse_amplitude: 0.36
+    impulse_decay_per_s: 51.0
+    anomaly_ratio: 0.5
+    anomaly_amplitude_scale: 2.8
+    missing_stride: 173
+    resampled_stride: 239

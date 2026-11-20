@@ -1,0 +1,27 @@
+description: Four real input faults used to prove injection hit accounting.
+
+injections:
+  - id: inj-01-nonfinite
+    kind: non_finite_sample
+    stage: feature_extraction
+    device_id: motor-b
+    segment_index: 0
+
+  - id: inj-02-band-oob
+    kind: band_edge_out_of_range
+    stage: feature_extraction
+    device_id: fan-c
+    segment_index: 2
+
+  - id: inj-03-crest-window-zero
+    kind: peak_factor_window_zero
+    stage: scoring
+    device_id: pump-a
+    segment_index: 1
+    algorithm: crest_factor
+
+  - id: inj-04-threshold-boundary
+    kind: threshold_equal_boundary
+    stage: threshold
+    device_id: motor-b
+    segment_index: 3

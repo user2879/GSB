@@ -1,0 +1,18 @@
+description: Example incremental edit overlay; apply with --edits.
+
+segment_edits:
+  pump-a:
+    append:
+      - count: 1
+        seed_delta: 9001
+        source: demo-append
+    replace:
+      - segment_index: 2
+        seed_delta: 707
+        source: demo-replace
+    delete: [4]
+  fan-c:
+    append:
+      - count: 1
+        seed_delta: 811
+        source: demo-append
