@@ -21,3 +21,11 @@
 
 验收：
 使用本地多波段瓦片验证重叠区融合、版本切换与补丁增量重建的逐像素一致性。
+
+## 实现入口
+
+- 环境与固定版本：`ENVIRONMENT.md`
+- 完整运行、注入、恢复与验收命令：`RUNBOOK.md`
+- 调度、指纹、融合与快照协议：`TECHNICAL_DESIGN.md`
+- 本次实际验证结果：`VERIFICATION.md`
+- 核心包：`remote_seg/`；测试：`tests/`；固定种子样本：`sample_data/`

@@ -1,0 +1,38 @@
+{
+  "band_order_versions": [
+    "bov-1",
+    "bov-2"
+  ],
+  "effective_order": [
+    "f1",
+    "f2",
+    "f3"
+  ],
+  "schema_version": 1,
+  "strategies": {
+    "f1": {
+      "description": "linear boundary-distance weighting",
+      "order": 1,
+      "scale": 1.0,
+      "tie_break": "row_col_lex",
+      "version": "f1",
+      "weight_power": 1.0
+    },
+    "f2": {
+      "description": "quadratic boundary-distance weighting",
+      "order": 2,
+      "scale": 1.0,
+      "tie_break": "row_col_lex",
+      "version": "f2",
+      "weight_power": 2.0
+    },
+    "f3": {
+      "description": "square-root boundary-distance weighting",
+      "order": 3,
+      "scale": 2.0,
+      "tie_break": "row_col_lex",
+      "version": "f3",
+      "weight_power": 0.5
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "index": "index.json",
+  "config": "segmentation.json",
+  "patch_plan": "patch_plan.json",
+  "operations": [
+    {
+      "id": "EDIT-001",
+      "type": "band_patch",
+      "batch": 1
+    },
+    {
+      "id": "EDIT-002",
+      "type": "config_patch",
+      "path": "classification_weights.2.edge",
+      "value": 1.35
+    },
+    {
+      "id": "EDIT-003",
+      "type": "set_fusion_version",
+      "version": "f1"
+    },
+    {
+      "id": "EDIT-004",
+      "type": "delete_tile",
+      "row": 1,
+      "col": 2
+    },
+    {
+      "id": "EDIT-005",
+      "type": "add_tile",
+      "tile_id": "r0c3",
+      "row": 0,
+      "col": 3,
+      "source_path": "pool/tile_r0c3.png",
+      "path": "tiles/tile_r0c3.png",
+      "bounds": [120, 0, 168, 48],
+      "band_order_version": "bov-1",
+      "neighbors": ["r0c2"]
+    },
+    {
+      "id": "EDIT-006",
+      "type": "set_adjacency",
+      "row": 0,
+      "col": 1,
+      "neighbors": ["r0c0", "r0c2"]
+    },
+    {
+      "id": "EDIT-007",
+      "type": "band_patch",
+      "batch": 2
+    },
+    {
+      "id": "EDIT-008",
+      "type": "set_fusion_version",
+      "version": "f3"
+    },
+    {
+      "id": "EDIT-009",
+      "type": "config_patch",
+      "path": "classification_weights.0.bias",
+      "value": 0.12
+    },
+    {
+      "id": "EDIT-010",
+      "type": "config_patch",
+      "path": "postprocess.min_connected_area",
+      "value": 8
+    }
+  ]
+}

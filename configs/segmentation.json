@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "window_size": 16,
+  "stride": 12,
+  "context_overlap": 2,
+  "feature_thresholds": {
+    "vegetation": 0.15,
+    "water": 0.02,
+    "edge": 0.04,
+    "slope": 0.025
+  },
+  "classification_weights": {
+    "0": {
+      "bias": 0.02,
+      "vegetation": 1.8,
+      "water": -0.7,
+      "edge": -0.25,
+      "slope": -0.25
+    },
+    "1": {
+      "bias": 0.0,
+      "vegetation": -0.8,
+      "water": 2.0,
+      "edge": -0.45,
+      "slope": -0.4
+    },
+    "2": {
+      "bias": 0.08,
+      "vegetation": -0.75,
+      "water": -0.7,
+      "edge": 1.5,
+      "slope": 1.35
+    },
+    "3": {
+      "bias": 0.18,
+      "vegetation": -0.35,
+      "water": -0.45,
+      "edge": 0.55,
+      "slope": -0.15
+    }
+  },
+  "classes": [
+    {"code": 0, "name": "farmland"},
+    {"code": 1, "name": "water"},
+    {"code": 2, "name": "building"},
+    {"code": 3, "name": "road"}
+  ],
+  "postprocess": {
+    "min_connected_area": 6
+  },
+  "overlap_fusion": {
+    "strategy_version": "f2",
+    "tie_break": "row_col_lex"
+  },
+  "recompute_budget": 5,
+  "max_workers": 4
+}
