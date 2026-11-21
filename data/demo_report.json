@@ -1,0 +1,1447 @@
+{
+  "environment": {
+    "loopback_probe_port": 49152,
+    "numpy": "1.26.4",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1",
+    "sqlite": "3.37.2",
+    "tkinter": "unavailable:ModuleNotFoundError"
+  },
+  "groups": [
+    {
+      "after": {
+        "mismatches": [],
+        "repair_stats": {
+          "completed_tasks": 2,
+          "per_node_repair_kb": {
+            "v1-b": 3,
+            "v1-c": 2
+          },
+          "planned_repair_kb": 5,
+          "task_count": 2,
+          "total_cost_units": 5,
+          "total_repair_kb": 5,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 2,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:78a10b1732382404be96b6f795a87a4ad21fb443b7d2e9365328e334acf61f49",
+                "node_ids": [
+                  "v1-a",
+                  "v1-b",
+                  "v1-c"
+                ],
+                "priority_weight": 3,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:78a10b1732382404be96b6f795a87a4ad21fb443b7d2e9365328e334acf61f49",
+            "truth_nodes": [
+              "v1-a",
+              "v1-b",
+              "v1-c"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:6ac2f78f4c79f8da6f799901dcc5b27fd7485e5e4e991d8919a63cc9486cb3c3",
+                "node_ids": [
+                  "v1-a",
+                  "v1-b",
+                  "v1-c"
+                ],
+                "priority_weight": 3,
+                "selected": true
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:6ac2f78f4c79f8da6f799901dcc5b27fd7485e5e4e991d8919a63cc9486cb3c3",
+            "truth_nodes": [
+              "v1-a",
+              "v1-b",
+              "v1-c"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:fff996c6639c2f8717e71ee2f1b24aa2131042a63e730239b07c96fc2dab7f03",
+                "node_ids": [
+                  "v1-a",
+                  "v1-b",
+                  "v1-c"
+                ],
+                "priority_weight": 3,
+                "selected": true
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:fff996c6639c2f8717e71ee2f1b24aa2131042a63e730239b07c96fc2dab7f03",
+            "truth_nodes": [
+              "v1-a",
+              "v1-b",
+              "v1-c"
+            ]
+          }
+        ]
+      },
+      "before": {
+        "mismatches": [
+          {
+            "block_id": "blk-0002",
+            "deviation_digest": "sha256:ae6cde3f528df34e27de1496409660b1403082797c01778acf644b516155d95f",
+            "node_id": "v1-c",
+            "status": "mismatch"
+          },
+          {
+            "block_id": "blk-0003",
+            "deviation_digest": "sha256:e9a97859890d4b1f3197194244a8843f035a0075da63e8a87443dc14dd2a765a",
+            "node_id": "v1-b",
+            "status": "mismatch"
+          }
+        ],
+        "repair_stats": {
+          "completed_tasks": 2,
+          "per_node_repair_kb": {
+            "v1-b": 3,
+            "v1-c": 2
+          },
+          "planned_repair_kb": 5,
+          "task_count": 2,
+          "total_cost_units": 5,
+          "total_repair_kb": 5,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 1,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:78a10b1732382404be96b6f795a87a4ad21fb443b7d2e9365328e334acf61f49",
+                "node_ids": [
+                  "v1-a",
+                  "v1-b",
+                  "v1-c"
+                ],
+                "priority_weight": 3,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:78a10b1732382404be96b6f795a87a4ad21fb443b7d2e9365328e334acf61f49",
+            "truth_nodes": [
+              "v1-a",
+              "v1-b",
+              "v1-c"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 2,
+                "digest": "sha256:6ac2f78f4c79f8da6f799901dcc5b27fd7485e5e4e991d8919a63cc9486cb3c3",
+                "node_ids": [
+                  "v1-a",
+                  "v1-b"
+                ],
+                "priority_weight": 2,
+                "selected": true
+              },
+              {
+                "count": 1,
+                "digest": "sha256:ae6cde3f528df34e27de1496409660b1403082797c01778acf644b516155d95f",
+                "node_ids": [
+                  "v1-c"
+                ],
+                "priority_weight": 1,
+                "selected": false
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:6ac2f78f4c79f8da6f799901dcc5b27fd7485e5e4e991d8919a63cc9486cb3c3",
+            "truth_nodes": [
+              "v1-a",
+              "v1-b"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 2,
+                "digest": "sha256:fff996c6639c2f8717e71ee2f1b24aa2131042a63e730239b07c96fc2dab7f03",
+                "node_ids": [
+                  "v1-a",
+                  "v1-c"
+                ],
+                "priority_weight": 2,
+                "selected": true
+              },
+              {
+                "count": 1,
+                "digest": "sha256:e9a97859890d4b1f3197194244a8843f035a0075da63e8a87443dc14dd2a765a",
+                "node_ids": [
+                  "v1-b"
+                ],
+                "priority_weight": 1,
+                "selected": false
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:fff996c6639c2f8717e71ee2f1b24aa2131042a63e730239b07c96fc2dab7f03",
+            "truth_nodes": [
+              "v1-a",
+              "v1-c"
+            ]
+          }
+        ]
+      },
+      "execution": {
+        "completed_tasks": 2,
+        "plan": {
+          "budget": {
+            "cost_per_kb": 1,
+            "max_parallel": 3,
+            "per_node_kb": 3,
+            "quota_scope": "per_wave"
+          },
+          "group_id": "interop-v1",
+          "manifest_version": 2,
+          "max_parallel_observed": 2,
+          "per_node_repair_kb": {
+            "v1-b": 3,
+            "v1-c": 2
+          },
+          "queue_events": [],
+          "tasks": [
+            {
+              "block_id": "blk-0002",
+              "cost_units": 2,
+              "error_code": null,
+              "repair_kb": 2,
+              "repair_weight": 1,
+              "size_bytes": 2048,
+              "source_node": "v1-a",
+              "source_priority": 1,
+              "status": "planned",
+              "target_node": "v1-c",
+              "target_priority": 1,
+              "task_id": "rep-0001",
+              "wave": 1
+            },
+            {
+              "block_id": "blk-0003",
+              "cost_units": 3,
+              "error_code": null,
+              "repair_kb": 3,
+              "repair_weight": 1,
+              "size_bytes": 3072,
+              "source_node": "v1-a",
+              "source_priority": 1,
+              "status": "planned",
+              "target_node": "v1-b",
+              "target_priority": 1,
+              "task_id": "rep-0002",
+              "wave": 1
+            }
+          ],
+          "total_cost_units": 5,
+          "total_repair_kb": 5,
+          "waves": [
+            [
+              "rep-0001",
+              "rep-0002"
+            ]
+          ]
+        },
+        "results": [
+          {
+            "block_id": "blk-0002",
+            "bytes_written": 2048,
+            "digest": "sha256:6ac2f78f4c79f8da6f799901dcc5b27fd7485e5e4e991d8919a63cc9486cb3c3",
+            "repair_kb": 2,
+            "source_node": "v1-a",
+            "status": "completed",
+            "target_node": "v1-c",
+            "task_id": "rep-0001"
+          },
+          {
+            "block_id": "blk-0003",
+            "bytes_written": 3072,
+            "digest": "sha256:fff996c6639c2f8717e71ee2f1b24aa2131042a63e730239b07c96fc2dab7f03",
+            "repair_kb": 3,
+            "source_node": "v1-a",
+            "status": "completed",
+            "target_node": "v1-b",
+            "task_id": "rep-0002"
+          }
+        ],
+        "total_cost_units": 5,
+        "total_repair_kb": 5
+      },
+      "group_id": "interop-v1",
+      "ledger": {
+        "content_digest": "sha256:1facba8afd6eb7fe90c20ad27b2972b46ac46a93ee15f6ea6f457d71b37c0535",
+        "generation": 0,
+        "progress": {
+          "completed_tasks": 2,
+          "current_snapshot_id": 2,
+          "cursor": 2,
+          "status": "completed",
+          "total_tasks": 2
+        },
+        "stale": {
+          "affected_blocks": [],
+          "affected_nodes": [],
+          "details": [],
+          "snapshot_count": 1
+        }
+      },
+      "manifest_version": 3,
+      "plan": {
+        "budget": {
+          "cost_per_kb": 1,
+          "max_parallel": 3,
+          "per_node_kb": 3,
+          "quota_scope": "per_wave"
+        },
+        "group_id": "interop-v1",
+        "manifest_version": 2,
+        "max_parallel_observed": 2,
+        "per_node_repair_kb": {
+          "v1-b": 3,
+          "v1-c": 2
+        },
+        "queue_events": [],
+        "tasks": [
+          {
+            "block_id": "blk-0002",
+            "cost_units": 2,
+            "error_code": null,
+            "repair_kb": 2,
+            "repair_weight": 1,
+            "size_bytes": 2048,
+            "source_node": "v1-a",
+            "source_priority": 1,
+            "status": "planned",
+            "target_node": "v1-c",
+            "target_priority": 1,
+            "task_id": "rep-0001",
+            "wave": 1
+          },
+          {
+            "block_id": "blk-0003",
+            "cost_units": 3,
+            "error_code": null,
+            "repair_kb": 3,
+            "repair_weight": 1,
+            "size_bytes": 3072,
+            "source_node": "v1-a",
+            "source_priority": 1,
+            "status": "planned",
+            "target_node": "v1-b",
+            "target_priority": 1,
+            "task_id": "rep-0002",
+            "wave": 1
+          }
+        ],
+        "total_cost_units": 5,
+        "total_repair_kb": 5,
+        "waves": [
+          [
+            "rep-0001",
+            "rep-0002"
+          ]
+        ]
+      },
+      "ports": {
+        "v1-a": 44691,
+        "v1-b": 45505,
+        "v1-c": 46577
+      },
+      "reconciliation": {
+        "manifest_changed": false,
+        "performed": false,
+        "reason": "no interrupted ledger run",
+        "reconciled_tasks": []
+      },
+      "recovery": {
+        "affected_blocks": [],
+        "affected_nodes": [],
+        "current_content_digest": "sha256:5bd04d1d3132b96d4b50f7e104e6c3d22346165eb4650b9d438ad908b01ec5ec",
+        "details": [],
+        "first_open": true,
+        "generation": 0,
+        "previous_content_digest": null,
+        "previous_snapshot_id": null,
+        "reason": null,
+        "replaced": false,
+        "unknown_tasks": 0
+      },
+      "replay": {
+        "active_snapshot_id": 2,
+        "baseline_snapshot_id": 1,
+        "distribution_checks": 9,
+        "group_id": "interop-v1",
+        "ok": true,
+        "plan_checks": 2,
+        "truth_checks": 3
+      },
+      "upgrade": {
+        "backup_path": "data/groups/interop-v1.json.v1.readonly.bak",
+        "checkpoint_path": "data/groups/interop-v1.json.upgrade.checkpoint.json",
+        "manifest_version": 2,
+        "processed_now": 3,
+        "resumed": false,
+        "skipped_committed": 0,
+        "source_version": 1,
+        "target_version": 3,
+        "upgraded": true
+      }
+    },
+    {
+      "after": {
+        "mismatches": [],
+        "repair_stats": {
+          "completed_tasks": 1,
+          "per_node_repair_kb": {
+            "v2-c": 2
+          },
+          "planned_repair_kb": 2,
+          "task_count": 1,
+          "total_cost_units": 2,
+          "total_repair_kb": 2,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 2,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:d29c7c5f71f047617364799daaa13275147c6445c8a6cbf142b9852f7e07dcdf",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b",
+                  "v2-c"
+                ],
+                "priority_weight": 9,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:d29c7c5f71f047617364799daaa13275147c6445c8a6cbf142b9852f7e07dcdf",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b",
+              "v2-c"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:df14e49157d2a4cdbbc40648643b9eeb3f292ee9f7e209f40000c17b80e45ed6",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b",
+                  "v2-c"
+                ],
+                "priority_weight": 9,
+                "selected": true
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:df14e49157d2a4cdbbc40648643b9eeb3f292ee9f7e209f40000c17b80e45ed6",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b",
+              "v2-c"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:92df04cac594eb1b8523f4a0497745c9bcfe28872cde37889aa57e8c920429f7",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b",
+                  "v2-c"
+                ],
+                "priority_weight": 9,
+                "selected": true
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:92df04cac594eb1b8523f4a0497745c9bcfe28872cde37889aa57e8c920429f7",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b",
+              "v2-c"
+            ]
+          }
+        ]
+      },
+      "before": {
+        "mismatches": [
+          {
+            "block_id": "blk-0002",
+            "deviation_digest": "sha256:cf6f2936af63dc7f8a4979870e58ff2e6c2268f2317550acde5bc1a26d5b54ba",
+            "node_id": "v2-c",
+            "status": "mismatch"
+          }
+        ],
+        "repair_stats": {
+          "completed_tasks": 1,
+          "per_node_repair_kb": {
+            "v2-c": 2
+          },
+          "planned_repair_kb": 2,
+          "task_count": 1,
+          "total_cost_units": 2,
+          "total_repair_kb": 2,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 1,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:d29c7c5f71f047617364799daaa13275147c6445c8a6cbf142b9852f7e07dcdf",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b",
+                  "v2-c"
+                ],
+                "priority_weight": 9,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:d29c7c5f71f047617364799daaa13275147c6445c8a6cbf142b9852f7e07dcdf",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b",
+              "v2-c"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 2,
+                "digest": "sha256:df14e49157d2a4cdbbc40648643b9eeb3f292ee9f7e209f40000c17b80e45ed6",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b"
+                ],
+                "priority_weight": 8,
+                "selected": true
+              },
+              {
+                "count": 1,
+                "digest": "sha256:cf6f2936af63dc7f8a4979870e58ff2e6c2268f2317550acde5bc1a26d5b54ba",
+                "node_ids": [
+                  "v2-c"
+                ],
+                "priority_weight": 1,
+                "selected": false
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:df14e49157d2a4cdbbc40648643b9eeb3f292ee9f7e209f40000c17b80e45ed6",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 3,
+                "digest": "sha256:92df04cac594eb1b8523f4a0497745c9bcfe28872cde37889aa57e8c920429f7",
+                "node_ids": [
+                  "v2-a",
+                  "v2-b",
+                  "v2-c"
+                ],
+                "priority_weight": 9,
+                "selected": true
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:92df04cac594eb1b8523f4a0497745c9bcfe28872cde37889aa57e8c920429f7",
+            "truth_nodes": [
+              "v2-a",
+              "v2-b",
+              "v2-c"
+            ]
+          }
+        ]
+      },
+      "execution": {
+        "completed_tasks": 1,
+        "plan": {
+          "budget": {
+            "cost_per_kb": 1,
+            "max_parallel": 3,
+            "per_node_kb": 3,
+            "quota_scope": "per_wave"
+          },
+          "group_id": "interop-v2",
+          "manifest_version": 2,
+          "max_parallel_observed": 1,
+          "per_node_repair_kb": {
+            "v2-c": 2
+          },
+          "queue_events": [],
+          "tasks": [
+            {
+              "block_id": "blk-0002",
+              "cost_units": 2,
+              "error_code": null,
+              "repair_kb": 2,
+              "repair_weight": 9,
+              "size_bytes": 2048,
+              "source_node": "v2-a",
+              "source_priority": 5,
+              "status": "planned",
+              "target_node": "v2-c",
+              "target_priority": 1,
+              "task_id": "rep-0001",
+              "wave": 1
+            }
+          ],
+          "total_cost_units": 2,
+          "total_repair_kb": 2,
+          "waves": [
+            [
+              "rep-0001"
+            ]
+          ]
+        },
+        "results": [
+          {
+            "block_id": "blk-0002",
+            "bytes_written": 2048,
+            "digest": "sha256:df14e49157d2a4cdbbc40648643b9eeb3f292ee9f7e209f40000c17b80e45ed6",
+            "repair_kb": 2,
+            "source_node": "v2-a",
+            "status": "completed",
+            "target_node": "v2-c",
+            "task_id": "rep-0001"
+          }
+        ],
+        "total_cost_units": 2,
+        "total_repair_kb": 2
+      },
+      "group_id": "interop-v2",
+      "ledger": {
+        "content_digest": "sha256:b2577d9c0a3c2a0052d356f7837f1baba85da4a7a418b1bb76c3eecd56181c31",
+        "generation": 0,
+        "progress": {
+          "completed_tasks": 1,
+          "current_snapshot_id": 2,
+          "cursor": 1,
+          "status": "completed",
+          "total_tasks": 1
+        },
+        "stale": {
+          "affected_blocks": [],
+          "affected_nodes": [],
+          "details": [],
+          "snapshot_count": 1
+        }
+      },
+      "manifest_version": 3,
+      "plan": {
+        "budget": {
+          "cost_per_kb": 1,
+          "max_parallel": 3,
+          "per_node_kb": 3,
+          "quota_scope": "per_wave"
+        },
+        "group_id": "interop-v2",
+        "manifest_version": 2,
+        "max_parallel_observed": 1,
+        "per_node_repair_kb": {
+          "v2-c": 2
+        },
+        "queue_events": [],
+        "tasks": [
+          {
+            "block_id": "blk-0002",
+            "cost_units": 2,
+            "error_code": null,
+            "repair_kb": 2,
+            "repair_weight": 9,
+            "size_bytes": 2048,
+            "source_node": "v2-a",
+            "source_priority": 5,
+            "status": "planned",
+            "target_node": "v2-c",
+            "target_priority": 1,
+            "task_id": "rep-0001",
+            "wave": 1
+          }
+        ],
+        "total_cost_units": 2,
+        "total_repair_kb": 2,
+        "waves": [
+          [
+            "rep-0001"
+          ]
+        ]
+      },
+      "ports": {
+        "v2-a": 44985,
+        "v2-b": 45285,
+        "v2-c": 45641
+      },
+      "reconciliation": {
+        "manifest_changed": false,
+        "performed": false,
+        "reason": "no interrupted ledger run",
+        "reconciled_tasks": []
+      },
+      "recovery": {
+        "affected_blocks": [],
+        "affected_nodes": [],
+        "current_content_digest": "sha256:31ca85d5b0f8f34e1909de6a99ebe5126296155010ad64634550545c413f9a71",
+        "details": [],
+        "first_open": true,
+        "generation": 0,
+        "previous_content_digest": null,
+        "previous_snapshot_id": null,
+        "reason": null,
+        "replaced": false,
+        "unknown_tasks": 0
+      },
+      "replay": {
+        "active_snapshot_id": 2,
+        "baseline_snapshot_id": 1,
+        "distribution_checks": 9,
+        "group_id": "interop-v2",
+        "ok": true,
+        "plan_checks": 1,
+        "truth_checks": 3
+      },
+      "upgrade": {
+        "backup_path": "data/groups/interop-v2.json.v2.readonly.bak",
+        "checkpoint_path": "data/groups/interop-v2.json.upgrade.checkpoint.json",
+        "manifest_version": 2,
+        "processed_now": 3,
+        "resumed": false,
+        "skipped_committed": 0,
+        "source_version": 2,
+        "target_version": 3,
+        "upgraded": true
+      }
+    },
+    {
+      "after": {
+        "mismatches": [],
+        "repair_stats": {
+          "completed_tasks": 4,
+          "per_node_repair_kb": {
+            "v3-b": 3,
+            "v3-c": 2,
+            "v3-d": 5
+          },
+          "planned_repair_kb": 10,
+          "task_count": 4,
+          "total_cost_units": 10,
+          "total_repair_kb": 10,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 2,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 4,
+                "digest": "sha256:199166344e2fe66b80f0c00eb675cae05016b889e4c9c94979e95a00ded2bf2b",
+                "node_ids": [
+                  "v3-a",
+                  "v3-b",
+                  "v3-c",
+                  "v3-d"
+                ],
+                "priority_weight": 11,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:199166344e2fe66b80f0c00eb675cae05016b889e4c9c94979e95a00ded2bf2b",
+            "truth_nodes": [
+              "v3-a",
+              "v3-b",
+              "v3-c",
+              "v3-d"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 4,
+                "digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+                "node_ids": [
+                  "v3-a",
+                  "v3-b",
+                  "v3-c",
+                  "v3-d"
+                ],
+                "priority_weight": 11,
+                "selected": true
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+            "truth_nodes": [
+              "v3-a",
+              "v3-b",
+              "v3-c",
+              "v3-d"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 4,
+                "digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+                "node_ids": [
+                  "v3-a",
+                  "v3-b",
+                  "v3-c",
+                  "v3-d"
+                ],
+                "priority_weight": 11,
+                "selected": true
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+            "truth_nodes": [
+              "v3-a",
+              "v3-b",
+              "v3-c",
+              "v3-d"
+            ]
+          }
+        ]
+      },
+      "before": {
+        "mismatches": [
+          {
+            "block_id": "blk-0002",
+            "deviation_digest": "sha256:dddd19dab1f82370a5d28b612f95b812424202940e3dcf01fbf7a00004e2b16c",
+            "node_id": "v3-c",
+            "status": "mismatch"
+          },
+          {
+            "block_id": "blk-0002",
+            "deviation_digest": "sha256:dddd19dab1f82370a5d28b612f95b812424202940e3dcf01fbf7a00004e2b16c",
+            "node_id": "v3-d",
+            "status": "mismatch"
+          },
+          {
+            "block_id": "blk-0003",
+            "deviation_digest": "sha256:3927b1cdfd67d620a3dd682f5120ff8a4c362b63e53fe9041378d5609b35470d",
+            "node_id": "v3-b",
+            "status": "mismatch"
+          },
+          {
+            "block_id": "blk-0003",
+            "deviation_digest": "sha256:3927b1cdfd67d620a3dd682f5120ff8a4c362b63e53fe9041378d5609b35470d",
+            "node_id": "v3-d",
+            "status": "mismatch"
+          }
+        ],
+        "repair_stats": {
+          "completed_tasks": 4,
+          "per_node_repair_kb": {
+            "v3-b": 3,
+            "v3-c": 2,
+            "v3-d": 5
+          },
+          "planned_repair_kb": 10,
+          "task_count": 4,
+          "total_cost_units": 10,
+          "total_repair_kb": 10,
+          "unknown_tasks": 0
+        },
+        "snapshot_id": 1,
+        "truth": [
+          {
+            "block_id": "blk-0001",
+            "ranking": [
+              {
+                "count": 4,
+                "digest": "sha256:199166344e2fe66b80f0c00eb675cae05016b889e4c9c94979e95a00ded2bf2b",
+                "node_ids": [
+                  "v3-a",
+                  "v3-b",
+                  "v3-c",
+                  "v3-d"
+                ],
+                "priority_weight": 11,
+                "selected": true
+              }
+            ],
+            "size_bytes": 4096,
+            "truth_digest": "sha256:199166344e2fe66b80f0c00eb675cae05016b889e4c9c94979e95a00ded2bf2b",
+            "truth_nodes": [
+              "v3-a",
+              "v3-b",
+              "v3-c",
+              "v3-d"
+            ]
+          },
+          {
+            "block_id": "blk-0002",
+            "ranking": [
+              {
+                "count": 2,
+                "digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+                "node_ids": [
+                  "v3-a",
+                  "v3-b"
+                ],
+                "priority_weight": 8,
+                "selected": true
+              },
+              {
+                "count": 2,
+                "digest": "sha256:dddd19dab1f82370a5d28b612f95b812424202940e3dcf01fbf7a00004e2b16c",
+                "node_ids": [
+                  "v3-c",
+                  "v3-d"
+                ],
+                "priority_weight": 3,
+                "selected": false
+              }
+            ],
+            "size_bytes": 2048,
+            "truth_digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+            "truth_nodes": [
+              "v3-a",
+              "v3-b"
+            ]
+          },
+          {
+            "block_id": "blk-0003",
+            "ranking": [
+              {
+                "count": 2,
+                "digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+                "node_ids": [
+                  "v3-a",
+                  "v3-c"
+                ],
+                "priority_weight": 7,
+                "selected": true
+              },
+              {
+                "count": 2,
+                "digest": "sha256:3927b1cdfd67d620a3dd682f5120ff8a4c362b63e53fe9041378d5609b35470d",
+                "node_ids": [
+                  "v3-b",
+                  "v3-d"
+                ],
+                "priority_weight": 4,
+                "selected": false
+              }
+            ],
+            "size_bytes": 3072,
+            "truth_digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+            "truth_nodes": [
+              "v3-a",
+              "v3-c"
+            ]
+          }
+        ]
+      },
+      "execution": {
+        "completed_tasks": 4,
+        "plan": {
+          "budget": {
+            "cost_per_kb": 1,
+            "max_parallel": 3,
+            "per_node_kb": 3,
+            "quota_scope": "per_wave"
+          },
+          "group_id": "interop-v3",
+          "manifest_version": 1,
+          "max_parallel_observed": 3,
+          "per_node_repair_kb": {
+            "v3-b": 3,
+            "v3-c": 2,
+            "v3-d": 5
+          },
+          "queue_events": [
+            {
+              "reason": "per_node_quota",
+              "repair_kb": 3,
+              "target_node": "v3-d",
+              "task_id": "rep-0004",
+              "wave": 1
+            }
+          ],
+          "tasks": [
+            {
+              "block_id": "blk-0002",
+              "cost_units": 2,
+              "error_code": null,
+              "repair_kb": 2,
+              "repair_weight": 9,
+              "size_bytes": 2048,
+              "source_node": "v3-a",
+              "source_priority": 5,
+              "status": "planned",
+              "target_node": "v3-c",
+              "target_priority": 2,
+              "task_id": "rep-0001",
+              "wave": 1
+            },
+            {
+              "block_id": "blk-0002",
+              "cost_units": 2,
+              "error_code": null,
+              "repair_kb": 2,
+              "repair_weight": 9,
+              "size_bytes": 2048,
+              "source_node": "v3-a",
+              "source_priority": 5,
+              "status": "planned",
+              "target_node": "v3-d",
+              "target_priority": 1,
+              "task_id": "rep-0002",
+              "wave": 1
+            },
+            {
+              "block_id": "blk-0003",
+              "cost_units": 3,
+              "error_code": null,
+              "repair_kb": 3,
+              "repair_weight": 5,
+              "size_bytes": 3072,
+              "source_node": "v3-a",
+              "source_priority": 5,
+              "status": "planned",
+              "target_node": "v3-b",
+              "target_priority": 3,
+              "task_id": "rep-0003",
+              "wave": 1
+            },
+            {
+              "block_id": "blk-0003",
+              "cost_units": 3,
+              "error_code": null,
+              "repair_kb": 3,
+              "repair_weight": 5,
+              "size_bytes": 3072,
+              "source_node": "v3-a",
+              "source_priority": 5,
+              "status": "planned",
+              "target_node": "v3-d",
+              "target_priority": 1,
+              "task_id": "rep-0004",
+              "wave": 2
+            }
+          ],
+          "total_cost_units": 10,
+          "total_repair_kb": 10,
+          "waves": [
+            [
+              "rep-0001",
+              "rep-0002",
+              "rep-0003"
+            ],
+            [
+              "rep-0004"
+            ]
+          ]
+        },
+        "results": [
+          {
+            "block_id": "blk-0002",
+            "bytes_written": 2048,
+            "digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+            "repair_kb": 2,
+            "source_node": "v3-a",
+            "status": "completed",
+            "target_node": "v3-c",
+            "task_id": "rep-0001"
+          },
+          {
+            "block_id": "blk-0002",
+            "bytes_written": 2048,
+            "digest": "sha256:613f9d18e1cc12e12a3eaf2069fe19803a4191f08171e5af3eec0f1bbb8c2bf1",
+            "repair_kb": 2,
+            "source_node": "v3-a",
+            "status": "completed",
+            "target_node": "v3-d",
+            "task_id": "rep-0002"
+          },
+          {
+            "block_id": "blk-0003",
+            "bytes_written": 3072,
+            "digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+            "repair_kb": 3,
+            "source_node": "v3-a",
+            "status": "completed",
+            "target_node": "v3-b",
+            "task_id": "rep-0003"
+          },
+          {
+            "block_id": "blk-0003",
+            "bytes_written": 3072,
+            "digest": "sha256:88763b632d2944e73dfbed8518ca260472ac2b7c96df50767ce969d093b62827",
+            "repair_kb": 3,
+            "source_node": "v3-a",
+            "status": "completed",
+            "target_node": "v3-d",
+            "task_id": "rep-0004"
+          }
+        ],
+        "total_cost_units": 10,
+        "total_repair_kb": 10
+      },
+      "group_id": "interop-v3",
+      "ledger": {
+        "content_digest": "sha256:b9c94a87399d9abe06cb2934e45124952881e2afba3def2d0c1e985a2d8e49b4",
+        "generation": 0,
+        "progress": {
+          "completed_tasks": 4,
+          "current_snapshot_id": 2,
+          "cursor": 4,
+          "status": "completed",
+          "total_tasks": 4
+        },
+        "stale": {
+          "affected_blocks": [],
+          "affected_nodes": [],
+          "details": [],
+          "snapshot_count": 1
+        }
+      },
+      "manifest_version": 2,
+      "plan": {
+        "budget": {
+          "cost_per_kb": 1,
+          "max_parallel": 3,
+          "per_node_kb": 3,
+          "quota_scope": "per_wave"
+        },
+        "group_id": "interop-v3",
+        "manifest_version": 1,
+        "max_parallel_observed": 3,
+        "per_node_repair_kb": {
+          "v3-b": 3,
+          "v3-c": 2,
+          "v3-d": 5
+        },
+        "queue_events": [
+          {
+            "reason": "per_node_quota",
+            "repair_kb": 3,
+            "target_node": "v3-d",
+            "task_id": "rep-0004",
+            "wave": 1
+          }
+        ],
+        "tasks": [
+          {
+            "block_id": "blk-0002",
+            "cost_units": 2,
+            "error_code": null,
+            "repair_kb": 2,
+            "repair_weight": 9,
+            "size_bytes": 2048,
+            "source_node": "v3-a",
+            "source_priority": 5,
+            "status": "planned",
+            "target_node": "v3-c",
+            "target_priority": 2,
+            "task_id": "rep-0001",
+            "wave": 1
+          },
+          {
+            "block_id": "blk-0002",
+            "cost_units": 2,
+            "error_code": null,
+            "repair_kb": 2,
+            "repair_weight": 9,
+            "size_bytes": 2048,
+            "source_node": "v3-a",
+            "source_priority": 5,
+            "status": "planned",
+            "target_node": "v3-d",
+            "target_priority": 1,
+            "task_id": "rep-0002",
+            "wave": 1
+          },
+          {
+            "block_id": "blk-0003",
+            "cost_units": 3,
+            "error_code": null,
+            "repair_kb": 3,
+            "repair_weight": 5,
+            "size_bytes": 3072,
+            "source_node": "v3-a",
+            "source_priority": 5,
+            "status": "planned",
+            "target_node": "v3-b",
+            "target_priority": 3,
+            "task_id": "rep-0003",
+            "wave": 1
+          },
+          {
+            "block_id": "blk-0003",
+            "cost_units": 3,
+            "error_code": null,
+            "repair_kb": 3,
+            "repair_weight": 5,
+            "size_bytes": 3072,
+            "source_node": "v3-a",
+            "source_priority": 5,
+            "status": "planned",
+            "target_node": "v3-d",
+            "target_priority": 1,
+            "task_id": "rep-0004",
+            "wave": 2
+          }
+        ],
+        "total_cost_units": 10,
+        "total_repair_kb": 10,
+        "waves": [
+          [
+            "rep-0001",
+            "rep-0002",
+            "rep-0003"
+          ],
+          [
+            "rep-0004"
+          ]
+        ]
+      },
+      "ports": {
+        "v3-a": 45891,
+        "v3-b": 46437,
+        "v3-c": 45505,
+        "v3-d": 44927
+      },
+      "reconciliation": {
+        "manifest_changed": false,
+        "performed": false,
+        "reason": "no interrupted ledger run",
+        "reconciled_tasks": []
+      },
+      "recovery": {
+        "affected_blocks": [],
+        "affected_nodes": [],
+        "current_content_digest": "sha256:6acd0057925f671b8039da226ae9d0473dc82cccbc4a90e96d2ef487a1c83c79",
+        "details": [],
+        "first_open": true,
+        "generation": 0,
+        "previous_content_digest": null,
+        "previous_snapshot_id": null,
+        "reason": null,
+        "replaced": false,
+        "unknown_tasks": 0
+      },
+      "replay": {
+        "active_snapshot_id": 2,
+        "baseline_snapshot_id": 1,
+        "distribution_checks": 12,
+        "group_id": "interop-v3",
+        "ok": true,
+        "plan_checks": 4,
+        "truth_checks": 3
+      },
+      "upgrade": {
+        "backup_path": null,
+        "checkpoint_path": null,
+        "manifest_version": 1,
+        "processed_now": 0,
+        "resumed": false,
+        "skipped_committed": 0,
+        "source_version": 3,
+        "target_version": 3,
+        "upgraded": false
+      }
+    }
+  ],
+  "ok": true,
+  "sample": {
+    "groups": [
+      "data/groups/interop-v1.json",
+      "data/groups/interop-v2.json",
+      "data/groups/interop-v3.json"
+    ],
+    "ledgers": [
+      "ledger/interop-v1.sqlite3",
+      "ledger/interop-v2.sqlite3",
+      "ledger/interop-v3.sqlite3"
+    ],
+    "marker": {
+      "block_sizes": {
+        "blk-0001": 4096,
+        "blk-0002": 2048,
+        "blk-0003": 3072
+      },
+      "deterministic": true,
+      "groups": [
+        "interop-v1",
+        "interop-v2",
+        "interop-v3"
+      ],
+      "sample_version": 1
+    },
+    "root": "."
+  },
+  "stale_protection": {
+    "evolution": {
+      "changes": {
+        "affected_blocks": [
+          "blk-0001",
+          "blk-0002",
+          "blk-0003"
+        ],
+        "affected_nodes": [
+          "v3-c"
+        ],
+        "details": [
+          {
+            "block_id": "blk-0001",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          },
+          {
+            "block_id": "blk-0002",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          },
+          {
+            "block_id": "blk-0003",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          }
+        ]
+      },
+      "manifest_version": 3,
+      "previous_manifest_version": 2,
+      "version_incremented": true
+    },
+    "run": {
+      "ledger": {
+        "content_digest": "sha256:3a7bd6bb2a7993c1801a703b3f0428f72b9c6099653739f696d7cf73812d9bd0",
+        "generation": 1,
+        "progress": {
+          "completed_tasks": 0,
+          "current_snapshot_id": 4,
+          "cursor": 0,
+          "status": "completed",
+          "total_tasks": 0
+        },
+        "stale": {
+          "affected_blocks": [
+            "blk-0001",
+            "blk-0002",
+            "blk-0003"
+          ],
+          "affected_nodes": [
+            "v3-c"
+          ],
+          "details": [
+            {
+              "block_id": "blk-0001",
+              "node_id": "v3-c",
+              "reason": "node_priority"
+            },
+            {
+              "block_id": "blk-0002",
+              "node_id": "v3-c",
+              "reason": "node_priority"
+            },
+            {
+              "block_id": "blk-0003",
+              "node_id": "v3-c",
+              "reason": "node_priority"
+            }
+          ],
+          "snapshot_count": 3
+        }
+      },
+      "manifest_version": 3,
+      "recovery": {
+        "affected_blocks": [
+          "blk-0001",
+          "blk-0002",
+          "blk-0003"
+        ],
+        "affected_nodes": [
+          "v3-c"
+        ],
+        "current_content_digest": "sha256:3a7bd6bb2a7993c1801a703b3f0428f72b9c6099653739f696d7cf73812d9bd0",
+        "details": [
+          {
+            "block_id": "blk-0001",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          },
+          {
+            "block_id": "blk-0002",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          },
+          {
+            "block_id": "blk-0003",
+            "node_id": "v3-c",
+            "reason": "node_priority"
+          }
+        ],
+        "first_open": false,
+        "generation": 1,
+        "previous_content_digest": "sha256:b9c94a87399d9abe06cb2934e45124952881e2afba3def2d0c1e985a2d8e49b4",
+        "previous_snapshot_id": 2,
+        "reason": "content_digest",
+        "replaced": true,
+        "unknown_tasks": 0
+      },
+      "replay": {
+        "active_snapshot_id": 4,
+        "baseline_snapshot_id": 3,
+        "distribution_checks": 12,
+        "group_id": "interop-v3",
+        "ok": true,
+        "plan_checks": 0,
+        "truth_checks": 3
+      }
+    }
+  }
+}
