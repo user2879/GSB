@@ -1,0 +1,115 @@
+{
+  "default_support_bonus": "0.05",
+  "evidence_type_weights": {
+    "admin_override": "0.40",
+    "billing_dispute": "0.30",
+    "credential_stuffing": "0.34",
+    "failed_login": "0.22",
+    "known_device": "0.25",
+    "low_signal": "0.001",
+    "mfa_push": "0.18",
+    "phishing_report": "0.28",
+    "sla_risk": "0.50",
+    "telemetry_anomaly": "0.16"
+  },
+  "priority_bands": [
+    {
+      "level": 0,
+      "min_score": "2.10",
+      "name": "P0"
+    },
+    {
+      "level": 1,
+      "min_score": "1.50",
+      "name": "P1"
+    },
+    {
+      "level": 2,
+      "min_score": "0.90",
+      "name": "P2"
+    },
+    {
+      "level": 3,
+      "min_score": "0.00",
+      "name": "P3"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-credential-vs-device",
+      "kind": "exclusive",
+      "left": {
+        "evidence_type": "credential_stuffing",
+        "source_roles": [
+          "external"
+        ]
+      },
+      "right": {
+        "evidence_type": "known_device",
+        "source_roles": [
+          "customer"
+        ]
+      }
+    },
+    {
+      "bonus": "0.06",
+      "id": "rel-login-supports-mfa",
+      "kind": "support",
+      "left": {
+        "evidence_type": "failed_login",
+        "source_roles": [
+          "external"
+        ]
+      },
+      "right": {
+        "evidence_type": "mfa_push",
+        "source_roles": [
+          "backend"
+        ]
+      }
+    },
+    {
+      "id": "rel-admin-vs-billing",
+      "kind": "exclusive",
+      "left": {
+        "evidence_type": "admin_override",
+        "source_roles": [
+          "admin"
+        ]
+      },
+      "right": {
+        "evidence_type": "billing_dispute",
+        "source_roles": [
+          "customer"
+        ]
+      }
+    },
+    {
+      "bonus": "0.08",
+      "id": "rel-telemetry-supports-sla",
+      "kind": "support",
+      "left": {
+        "evidence_type": "telemetry_anomaly",
+        "source_roles": [
+          "backend"
+        ]
+      },
+      "right": {
+        "evidence_type": "sla_risk",
+        "source_roles": [
+          "monitor"
+        ]
+      }
+    }
+  ],
+  "role_trust": {
+    "admin": "1.00",
+    "agent": "0.92",
+    "backend": "0.88",
+    "customer": "0.78",
+    "external": "0.55",
+    "monitor": "1.00"
+  },
+  "schema": "arbitration-rules/v1",
+  "version": "2026.11"
+}

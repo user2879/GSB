@@ -1,0 +1,607 @@
+{
+  "results": {
+    "concurrency_and_faults": {
+      "fault_failure": {
+        "code": "E_STAGE_EXCEPTION",
+        "evidence_seq": null,
+        "exception_type": "SyntheticRelationFailure",
+        "line_no": null,
+        "message": "acceptance relation failure",
+        "stage": "relations",
+        "ticket_id": "T0048"
+      },
+      "fault_isolated_tickets": 47,
+      "observed_max_workers": 4,
+      "passed": true,
+      "single_vs_parallel_equal": true,
+      "stable_task_keys_unique": true,
+      "worker_limit_respected": true
+    },
+    "graceful_signal_exit": {
+      "passed": true,
+      "return_code": 0,
+      "signals": [
+        15
+      ],
+      "status": "stopped",
+      "summary": {
+        "boundary_ticket_ids": [],
+        "completed_ticket_count": 4,
+        "current_upgrade_count": 1,
+        "failure_count": 0,
+        "interrupted": true,
+        "snapshot_version": 1
+      }
+    },
+    "incremental_equivalence": {
+      "all_sequence_steps_equal": true,
+      "fusion_scale_invariant": true,
+      "passed": true,
+      "persisted_inputs_full_rebuild_equal": true,
+      "step_count": 11,
+      "steps": [
+        {
+          "affected_count": 23,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1462125,
+          "op": "set_type_weight",
+          "snapshot_version": 14,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 23,
+              "invalidated": 23,
+              "reused": 25
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 23,
+              "invalidated": 23,
+              "reused": 25
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 23,
+              "invalidated": 23,
+              "reused": 25
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 23,
+              "invalidated": 23,
+              "reused": 25
+            }
+          },
+          "step": 1,
+          "ticket_count": 48,
+          "upgrade_count": 5
+        },
+        {
+          "affected_count": 36,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1462125,
+          "op": "set_role_trust",
+          "snapshot_version": 21,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 36,
+              "invalidated": 36,
+              "reused": 12
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 36,
+              "invalidated": 36,
+              "reused": 12
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 36,
+              "invalidated": 36,
+              "reused": 12
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 36,
+              "invalidated": 36,
+              "reused": 12
+            }
+          },
+          "step": 2,
+          "ticket_count": 48,
+          "upgrade_count": 5
+        },
+        {
+          "affected_count": 2,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1462125,
+          "op": "upsert_relation",
+          "snapshot_version": 28,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 2,
+              "invalidated": 2,
+              "reused": 46
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 2,
+              "invalidated": 2,
+              "reused": 46
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 2,
+              "invalidated": 2,
+              "reused": 46
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 3,
+          "ticket_count": 48,
+          "upgrade_count": 5
+        },
+        {
+          "affected_count": 6,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1462125,
+          "op": "delete_relation",
+          "snapshot_version": 35,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 6,
+              "invalidated": 6,
+              "reused": 42
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 6,
+              "invalidated": 6,
+              "reused": 42
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 6,
+              "invalidated": 6,
+              "reused": 42
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 4,
+          "ticket_count": 48,
+          "upgrade_count": 5
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1462125,
+          "op": "set_threshold",
+          "snapshot_version": 42,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 5,
+          "ticket_count": 48,
+          "upgrade_count": 2
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1739664,
+          "op": "set_half_life",
+          "snapshot_version": 49,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            }
+          },
+          "step": 6,
+          "ticket_count": 48,
+          "upgrade_count": 4
+        },
+        {
+          "affected_count": 1,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1739664,
+          "op": "replace_evidence",
+          "snapshot_version": 56,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 1,
+              "invalidated": 1,
+              "reused": 47
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 1,
+              "invalidated": 1,
+              "reused": 47
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 1,
+              "invalidated": 1,
+              "reused": 47
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 1,
+              "invalidated": 1,
+              "reused": 47
+            }
+          },
+          "step": 7,
+          "ticket_count": 48,
+          "upgrade_count": 4
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1739664,
+          "op": "set_target_version",
+          "snapshot_version": 63,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 8,
+          "ticket_count": 48,
+          "upgrade_count": 4
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 1739664,
+          "op": "set_target_version",
+          "snapshot_version": 70,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 9,
+          "ticket_count": 48,
+          "upgrade_count": 4
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 333333,
+          "op": "set_fusion",
+          "snapshot_version": 77,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 10,
+          "ticket_count": 48,
+          "upgrade_count": 0
+        },
+        {
+          "affected_count": 48,
+          "artifact_hashes_equal": true,
+          "incremental_equals_full": true,
+          "max_score_fixed": 333333,
+          "op": "set_threshold",
+          "snapshot_version": 84,
+          "stage_stats": {
+            "convert": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "decision": {
+              "cache_miss": 0,
+              "computed": 48,
+              "invalidated": 48,
+              "reused": 0
+            },
+            "relations": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            },
+            "score": {
+              "cache_miss": 0,
+              "computed": 0,
+              "invalidated": 0,
+              "reused": 48
+            }
+          },
+          "step": 11,
+          "ticket_count": 48,
+          "upgrade_count": 0
+        }
+      ]
+    },
+    "initial_full_run": {
+      "boundary_tickets": [
+        "T0047"
+      ],
+      "concurrency_conclusion": "PASS",
+      "diagnostic_exists": true,
+      "passed": true,
+      "summary": {
+        "boundary_ticket_ids": [
+          "T0047"
+        ],
+        "completed_ticket_count": 48,
+        "current_upgrade_count": 5,
+        "failure_count": 0,
+        "interrupted": false,
+        "snapshot_version": 7
+      },
+      "upgraded": [
+        "T0004",
+        "T0005",
+        "T0009",
+        "T0044",
+        "T0047"
+      ]
+    },
+    "interaction_budget": {
+      "background_finished": true,
+      "code": "E_INTERACT_BUDGET_PENDING",
+      "elapsed_ms": 5.05,
+      "final_equals_full": true,
+      "passed": true,
+      "summary_retained": true
+    },
+    "invalid_input_isolation": {
+      "codes": [
+        "E_DUPLICATE_EVIDENCE",
+        "E_EVIDENCE_TYPE_UNKNOWN",
+        "E_JSON_INVALID",
+        "E_ROLE_UNKNOWN",
+        "E_TIMESTAMP_INVALID"
+      ],
+      "failed_ticket_ids": [
+        "T9001",
+        "T9002",
+        "T9003",
+        "T9004",
+        "T9005"
+      ],
+      "passed": true,
+      "valid_survivor_ticket": "T9006"
+    },
+    "sample_generation": {
+      "boundary_ticket": "T0047",
+      "evidence_count": 211,
+      "passed": true,
+      "seed": 20261121,
+      "ticket_count": 48
+    },
+    "sample_reproducibility": {
+      "boundary_ticket": "T0047",
+      "file_count": 10,
+      "passed": true,
+      "seed": 20261121
+    },
+    "snapshot_resume": {
+      "passed": true,
+      "recovery": {
+        "available": true,
+        "completed_ticket_count": 48,
+        "config_hash": "5aba0d3ebb3447c7768d3ee30655824eb3828cefefd6ca474c5ed094016093b2",
+        "generation": "gen-00000091-331a79d620cd",
+        "global_version": 91,
+        "partial": false,
+        "published_at_sequence": 7,
+        "rules_fingerprint": "0d24b70bd8fffa525845d06324c03b9f66279e77ddadfd73f54267612ae2774c",
+        "stage_versions": {
+          "convert": "91de5e2bec6b1a839556354195c21006b6ef893a2209baf60012d4f2044a0e9d",
+          "decision": "49c52670eec664e6938a299e520a8b74e55f51cc3db21b8cfc68028af5eaabc3",
+          "relations": "f0b1dd21485426d536cc13d82b72074b00acfaddd59cc62be9d0d9f18a8c4766",
+          "score": "6c52bf016aac4cdebd3de24f1c4ab2cbd56ce3779a0bbd9bc91893964e32b785"
+        }
+      },
+      "snapshot_version": 91,
+      "stage_stats": {
+        "convert": {
+          "cache_miss": 0,
+          "computed": 0,
+          "invalidated": 0,
+          "reused": 48
+        },
+        "decision": {
+          "cache_miss": 0,
+          "computed": 0,
+          "invalidated": 0,
+          "reused": 48
+        },
+        "relations": {
+          "cache_miss": 0,
+          "computed": 0,
+          "invalidated": 0,
+          "reused": 48
+        },
+        "score": {
+          "cache_miss": 0,
+          "computed": 0,
+          "invalidated": 0,
+          "reused": 48
+        }
+      },
+      "startup": "OK"
+    },
+    "snapshot_stale": {
+      "cache_resume_disabled": true,
+      "code": "E_SNAPSHOT_STALE",
+      "passed": true,
+      "stale_reasons": [
+        "config_hash"
+      ]
+    },
+    "unit_and_integration_tests": {
+      "command": "python -m unittest discover -v",
+      "passed": true,
+      "return_code": 0,
+      "summary_lines": [
+        "----------------------------------------------------------------------",
+        "Ran 29 tests in 37.955s",
+        "",
+        "OK"
+      ]
+    },
+    "version_interop": {
+      "passed": true,
+      "record_count": 48,
+      "v1_roundtrip_exact": true,
+      "v1_sidecar_records": 48,
+      "v2_roundtrip_exact": true,
+      "v3_header_features": [
+        "ticket_id",
+        "upgrade_code",
+        "priority_level",
+        "priority_name",
+        "precision",
+        "reason_codes",
+        "missing",
+        "boundary",
+        "score_fixed"
+      ],
+      "v3_roundtrip_exact": true,
+      "v3_to_v1_codes": [
+        "E_VERSION_LOSSY"
+      ],
+      "v3_to_v1_degradation_count": 48
+    }
+  },
+  "schema": "acceptance-results/v1"
+}

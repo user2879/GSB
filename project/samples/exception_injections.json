@@ -1,0 +1,43 @@
+{
+  "injections": [
+    {
+      "active": false,
+      "exception_type": "SyntheticScoreFailure",
+      "message": "inactive sample injection for score stage",
+      "stage": "score",
+      "ticket_id": "T0047"
+    },
+    {
+      "active": false,
+      "exception_type": "SyntheticRelationFailure",
+      "message": "inactive sample injection for relation stage",
+      "stage": "relations",
+      "ticket_id": "T0048"
+    },
+    {
+      "active": false,
+      "exception_type": "SyntheticDecisionFailure",
+      "message": "inactive sample injection for decision stage",
+      "stage": "decision",
+      "ticket_id": "T0048"
+    },
+    {
+      "active": false,
+      "exception_type": "SyntheticConversionFailure",
+      "message": "inactive sample injection for conversion stage",
+      "stage": "convert",
+      "ticket_id": "T0048"
+    },
+    {
+      "action": "delay",
+      "active": false,
+      "delay_ms": 50,
+      "exception_type": "DelayOnly",
+      "message": "inactive latency injection",
+      "stage": "score",
+      "ticket_id": "T0048"
+    }
+  ],
+  "schema": "exception-injections/v1",
+  "seed": 20261121
+}

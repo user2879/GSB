@@ -1,0 +1,3179 @@
+[
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 62765
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 118120
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 293
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 58911
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 171600
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 80308
+      }
+    ],
+    "adjusted_scores": [
+      62765,
+      118120,
+      293,
+      58911,
+      171600,
+      80308
+    ],
+    "boundary": false,
+    "decision_fingerprint": "0f67c32419c751d3423e4ff4d7e2535750ea105f8a56c10f565ee1e6d9edb5be",
+    "evidence_scores": [
+      {
+        "decay_fixed": 335643,
+        "evidence_seq": 1,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "0.335643",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 5,
+        "score_fixed": 62765,
+        "source_role": "external",
+        "timestamp": 1760015710
+      },
+      {
+        "decay_fixed": 607799,
+        "evidence_seq": 2,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.607799",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 243120,
+        "source_role": "admin",
+        "timestamp": 1760012626
+      },
+      {
+        "decay_fixed": 332940,
+        "evidence_seq": 3,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.33294",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 6,
+        "score_fixed": 293,
+        "source_role": "backend",
+        "timestamp": 1760015752
+      },
+      {
+        "decay_fixed": 785945,
+        "evidence_seq": 4,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.785945",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 183911,
+        "source_role": "customer",
+        "timestamp": 1760011291
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 5,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 171600,
+        "source_role": "customer",
+        "timestamp": 1760010040
+      },
+      {
+        "decay_fixed": 663704,
+        "evidence_seq": 6,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.663704",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 4,
+        "score_fixed": 80308,
+        "source_role": "external",
+        "timestamp": 1760012169
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-admin-vs-billing"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 741997,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_EXCLUSIVE_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-admin-vs-billing"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": -250000,
+        "kind": "exclusive",
+        "left_delta_fixed": -125000,
+        "left_score_after": 118120,
+        "left_score_before": 243120,
+        "left_seq": 2,
+        "left_type": "admin_override",
+        "nominal_delta_fixed": -250000,
+        "relation_id": "rel-admin-vs-billing",
+        "right_delta_fixed": -125000,
+        "right_score_after": 58911,
+        "right_score_before": 183911,
+        "right_seq": 4,
+        "right_type": "billing_dispute"
+      }
+    ],
+    "relation_delta_fixed": -250000,
+    "relation_fingerprint": "5e04ef68f43dcf1d867f77ae19d77a03b5345d7a18612bcad7de801858e35b58",
+    "score": "0.491997",
+    "score_fixed": 491997,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0001",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 167214
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 110767
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 451
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 195000
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 61996
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 239586
+      }
+    ],
+    "adjusted_scores": [
+      167214,
+      110767,
+      451,
+      195000,
+      61996,
+      239586
+    ],
+    "boundary": false,
+    "decision_fingerprint": "64bb246ca4e62bc14f07bc16527edc2c3a0b0247108669275f3e15d7f442ce38",
+    "evidence_scores": [
+      {
+        "decay_fixed": 765632,
+        "evidence_seq": 1,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.765632",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 167214,
+        "source_role": "customer",
+        "timestamp": 1760024348
+      },
+      {
+        "decay_fixed": 507175,
+        "evidence_seq": 2,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.507175",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 4,
+        "score_fixed": 110767,
+        "source_role": "customer",
+        "timestamp": 1760026487
+      },
+      {
+        "decay_fixed": 512969,
+        "evidence_seq": 3,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.512969",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 6,
+        "score_fixed": 451,
+        "source_role": "backend",
+        "timestamp": 1760026428
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 4,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 195000,
+        "source_role": "customer",
+        "timestamp": 1760022961
+      },
+      {
+        "decay_fixed": 391387,
+        "evidence_seq": 5,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.391387",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 61996,
+        "source_role": "backend",
+        "timestamp": 1760027833
+      },
+      {
+        "decay_fixed": 479171,
+        "evidence_seq": 6,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.479171",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 239586,
+        "source_role": "monitor",
+        "timestamp": 1760026782
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 775014,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "fc3e6328638126c8ae9b47270d8616eb06afb582562f52c3a067139731c21444",
+    "score": "0.775014",
+    "score_fixed": 775014,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0002",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 154000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 65414
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 84951
+      }
+    ],
+    "adjusted_scores": [
+      154000,
+      65414,
+      84951
+    ],
+    "boundary": false,
+    "decision_fingerprint": "02b329d1644e0df41b0cccefbf58a817e4b8d7c8dc06ea4a4376edeb737b68d0",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 1,
+        "score_fixed": 154000,
+        "source_role": "external",
+        "timestamp": 1760035633
+      },
+      {
+        "decay_fixed": 381198,
+        "evidence_seq": 2,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.381198",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 65414,
+        "source_role": "customer",
+        "timestamp": 1760040642
+      },
+      {
+        "decay_fixed": 454284,
+        "evidence_seq": 3,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "0.454284",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 2,
+        "score_fixed": 84951,
+        "source_role": "external",
+        "timestamp": 1760039731
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 304365,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "d3a7a0f8ad2fc5237c226d05ee3feed5f0fc7d1be827f957a095a7ac1b07175d",
+    "score": "0.304365",
+    "score_fixed": 304365,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0003",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 195000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 321661
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 258520
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 238619
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 105011
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 335514
+      }
+    ],
+    "adjusted_scores": [
+      195000,
+      321661,
+      258520,
+      238619,
+      105011,
+      335514
+    ],
+    "boundary": false,
+    "decision_fingerprint": "a426ee2dea328f695285e482fafd1be92c9e1efa761f9f55dedb009e39c4b151",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 5,
+        "score_fixed": 195000,
+        "source_role": "customer",
+        "timestamp": 1760041022
+      },
+      {
+        "decay_fixed": 643321,
+        "evidence_seq": 2,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.643321",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 321661,
+        "source_role": "monitor",
+        "timestamp": 1760043313
+      },
+      {
+        "decay_fixed": 646301,
+        "evidence_seq": 3,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.646301",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 3,
+        "score_fixed": 258520,
+        "source_role": "admin",
+        "timestamp": 1760043289
+      },
+      {
+        "decay_fixed": 477237,
+        "evidence_seq": 4,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.477237",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 4,
+        "score_fixed": 238619,
+        "source_role": "monitor",
+        "timestamp": 1760044864
+      },
+      {
+        "decay_fixed": 210022,
+        "evidence_seq": 5,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.210022",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 6,
+        "score_fixed": 105011,
+        "source_role": "monitor",
+        "timestamp": 1760049127
+      },
+      {
+        "decay_fixed": 671028,
+        "evidence_seq": 6,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.671028",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 335514,
+        "source_role": "monitor",
+        "timestamp": 1760043094
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 2,
+    "priority_name": "P2",
+    "raw_total_fixed": 1454325,
+    "reason_codes": [
+      "R_UPGRADE",
+      "R_PRIORITY_P2"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "d5f1653f79dd1d1dbafbe89063d96707388a3cbddc06d482a6772ce50b7c843b",
+    "score": "1.454325",
+    "score_fixed": 1454325,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0004",
+    "upgrade_code": 1
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 187000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 150151
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 407536
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 389
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 136721
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 133792
+      }
+    ],
+    "adjusted_scores": [
+      187000,
+      150151,
+      407536,
+      389,
+      136721,
+      133792
+    ],
+    "boundary": false,
+    "decision_fingerprint": "005f1dc79d3dfa636d662b27a20ecf61ea6fa2b56ae6df6336526f16b2ae8efe",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 2,
+        "score_fixed": 187000,
+        "source_role": "external",
+        "timestamp": 1760054849
+      },
+      {
+        "decay_fixed": 782321,
+        "evidence_seq": 2,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.782321",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 110151,
+        "source_role": "backend",
+        "timestamp": 1760056124
+      },
+      {
+        "decay_fixed": 655071,
+        "evidence_seq": 3,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.655071",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 327536,
+        "source_role": "monitor",
+        "timestamp": 1760057046
+      },
+      {
+        "decay_fixed": 442202,
+        "evidence_seq": 4,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.442202",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 6,
+        "score_fixed": 389,
+        "source_role": "backend",
+        "timestamp": 1760059087
+      },
+      {
+        "decay_fixed": 584276,
+        "evidence_seq": 5,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.584276",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 136721,
+        "source_role": "customer",
+        "timestamp": 1760057640
+      },
+      {
+        "decay_fixed": 666136,
+        "evidence_seq": 6,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.666136",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 93792,
+        "source_role": "backend",
+        "timestamp": 1760056959
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-telemetry-supports-sla"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 2,
+    "priority_name": "P2",
+    "raw_total_fixed": 855589,
+    "reason_codes": [
+      "R_UPGRADE",
+      "R_SUPPORT_APPLIED",
+      "R_PRIORITY_P2",
+      "R_REL_rel-telemetry-supports-sla"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 150151,
+        "left_score_before": 110151,
+        "left_seq": 2,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 367536,
+        "right_score_before": 327536,
+        "right_seq": 3,
+        "right_type": "sla_risk"
+      },
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 133792,
+        "left_score_before": 93792,
+        "left_seq": 6,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 407536,
+        "right_score_before": 367536,
+        "right_seq": 3,
+        "right_type": "sla_risk"
+      }
+    ],
+    "relation_delta_fixed": 160000,
+    "relation_fingerprint": "ee4f34b0b576411963547fd071045a64bfed8b583d439c8adfa0fe0d72dec116",
+    "score": "1.015589",
+    "score_fixed": 1015589,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0005",
+    "upgrade_code": 1
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 234000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 80465
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 61857
+      }
+    ],
+    "adjusted_scores": [
+      234000,
+      80465,
+      61857
+    ],
+    "boundary": false,
+    "decision_fingerprint": "6c94dddfefdd5da26a6269a75a3eecdb05b3a73f141317a6ac094b700e812cf0",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 1,
+        "score_fixed": 234000,
+        "source_role": "customer",
+        "timestamp": 1760062371
+      },
+      {
+        "decay_fixed": 417062,
+        "evidence_seq": 2,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.417062",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 2,
+        "score_fixed": 50465,
+        "source_role": "external",
+        "timestamp": 1760066913
+      },
+      {
+        "decay_fixed": 201118,
+        "evidence_seq": 3,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.201118",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 3,
+        "score_fixed": 31857,
+        "source_role": "backend",
+        "timestamp": 1760070701
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-login-supports-mfa"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 316322,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_SUPPORT_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-login-supports-mfa"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": 60000,
+        "kind": "support",
+        "left_delta_fixed": 30000,
+        "left_score_after": 80465,
+        "left_score_before": 50465,
+        "left_seq": 2,
+        "left_type": "failed_login",
+        "nominal_delta_fixed": 60000,
+        "relation_id": "rel-login-supports-mfa",
+        "right_delta_fixed": 30000,
+        "right_score_after": 61857,
+        "right_score_before": 31857,
+        "right_seq": 3,
+        "right_type": "mfa_push"
+      }
+    ],
+    "relation_delta_fixed": 60000,
+    "relation_fingerprint": "7dc0a4db922ee6558c96c35601c3d5950fc0b183383413682f6211fb1d7bec78",
+    "score": "0.376322",
+    "score_fixed": 376322,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0006",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 131735
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 104570
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 148753
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 121000
+      }
+    ],
+    "adjusted_scores": [
+      131735,
+      104570,
+      148753,
+      121000
+    ],
+    "boundary": false,
+    "decision_fingerprint": "14672ff98fadb35cf34b3e00d34e2c14473c700ee3fcaffef8c22aeefda20969",
+    "evidence_scores": [
+      {
+        "decay_fixed": 675565,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.675565",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 131735,
+        "source_role": "customer",
+        "timestamp": 1760073966
+      },
+      {
+        "decay_fixed": 478802,
+        "evidence_seq": 2,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.478802",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 4,
+        "score_fixed": 104570,
+        "source_role": "customer",
+        "timestamp": 1760075754
+      },
+      {
+        "decay_fixed": 762836,
+        "evidence_seq": 3,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.762836",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 1,
+        "score_fixed": 148753,
+        "source_role": "customer",
+        "timestamp": 1760073335
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 4,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 3,
+        "score_fixed": 121000,
+        "source_role": "external",
+        "timestamp": 1760071929
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 506058,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "a8a2929e7fbd263d2890dc4d5cb3340099df7cb021b157f2b7bc88aeee146649",
+    "score": "0.506058",
+    "score_fixed": 506058,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0007",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 500000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 98148
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 429
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 216196
+      }
+    ],
+    "adjusted_scores": [
+      500000,
+      98148,
+      429,
+      216196
+    ],
+    "boundary": false,
+    "decision_fingerprint": "c87c7ce59c4a249a2fb30e4f7bebaa4eede84cdb96a39c4f7ecde9fe3c684a6b",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 500000,
+        "source_role": "monitor",
+        "timestamp": 1760084170
+      },
+      {
+        "decay_fixed": 524858,
+        "evidence_seq": 2,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "0.524858",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 3,
+        "score_fixed": 98148,
+        "source_role": "external",
+        "timestamp": 1760087518
+      },
+      {
+        "decay_fixed": 487359,
+        "evidence_seq": 3,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.487359",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 429,
+        "source_role": "backend",
+        "timestamp": 1760087903
+      },
+      {
+        "decay_fixed": 923916,
+        "evidence_seq": 4,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.923916",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 216196,
+        "source_role": "customer",
+        "timestamp": 1760084581
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 814773,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "ff462d26506ef5a92a1b80c29419bb5980b12f9989bbada5c088cde3674a8887",
+    "score": "0.814773",
+    "score_fixed": 814773,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0008",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 62116
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 104890
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 92674
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 540000
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 474355
+      }
+    ],
+    "adjusted_scores": [
+      62116,
+      104890,
+      92674,
+      540000,
+      474355
+    ],
+    "boundary": false,
+    "decision_fingerprint": "2f24d1a34ffb411a17a6d67ed55930b086b46995472aae4736719dd6e506ff5f",
+    "evidence_scores": [
+      {
+        "decay_fixed": 332171,
+        "evidence_seq": 1,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "0.332171",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 4,
+        "score_fixed": 62116,
+        "source_role": "external",
+        "timestamp": 1760097174
+      },
+      {
+        "decay_fixed": 176777,
+        "evidence_seq": 2,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.176777",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 24890,
+        "source_role": "backend",
+        "timestamp": 1760100450
+      },
+      {
+        "decay_fixed": 585064,
+        "evidence_seq": 3,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.585064",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 3,
+        "score_fixed": 92674,
+        "source_role": "backend",
+        "timestamp": 1760094234
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 4,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 500000,
+        "source_role": "monitor",
+        "timestamp": 1760091450
+      },
+      {
+        "decay_fixed": 868709,
+        "evidence_seq": 5,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.868709",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 434355,
+        "source_role": "monitor",
+        "timestamp": 1760092181
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-telemetry-supports-sla"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 2,
+    "priority_name": "P2",
+    "raw_total_fixed": 1114035,
+    "reason_codes": [
+      "R_UPGRADE",
+      "R_SUPPORT_APPLIED",
+      "R_PRIORITY_P2",
+      "R_REL_rel-telemetry-supports-sla"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 64890,
+        "left_score_before": 24890,
+        "left_seq": 2,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 540000,
+        "right_score_before": 500000,
+        "right_seq": 4,
+        "right_type": "sla_risk"
+      },
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 104890,
+        "left_score_before": 64890,
+        "left_seq": 2,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 474355,
+        "right_score_before": 434355,
+        "right_seq": 5,
+        "right_type": "sla_risk"
+      }
+    ],
+    "relation_delta_fixed": 160000,
+    "relation_fingerprint": "62cb49aca3fb3d956ca7138e583d2a422822a6fc779fb00e2299ef234f3731ff",
+    "score": "1.274035",
+    "score_fixed": 1274035,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0009",
+    "upgrade_code": 1
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 107023
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 154000
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 81442
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 477329
+      }
+    ],
+    "adjusted_scores": [
+      107023,
+      154000,
+      81442,
+      477329
+    ],
+    "boundary": false,
+    "decision_fingerprint": "618b6de812a0f1f90743c94fc90bce2ed2aaada7c2c0e5434cab85030db5c11a",
+    "evidence_scores": [
+      {
+        "decay_fixed": 548835,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.548835",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 107023,
+        "source_role": "customer",
+        "timestamp": 1760103370
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 2,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 2,
+        "score_fixed": 154000,
+        "source_role": "external",
+        "timestamp": 1760100254
+      },
+      {
+        "decay_fixed": 514156,
+        "evidence_seq": 3,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.514156",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 81442,
+        "source_role": "backend",
+        "timestamp": 1760103709
+      },
+      {
+        "decay_fixed": 954658,
+        "evidence_seq": 4,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.954658",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 477329,
+        "source_role": "monitor",
+        "timestamp": 1760100495
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 819794,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "14a41414cb48e9e8d298162b7d3d1fa7414d4bb0e5ebc10e1a08dc0256bd76ff",
+    "score": "0.819794",
+    "score_fixed": 819794,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0010",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 400000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 107445
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 52259
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 88933
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 106183
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 81554
+      }
+    ],
+    "adjusted_scores": [
+      400000,
+      107445,
+      52259,
+      88933,
+      106183,
+      81554
+    ],
+    "boundary": false,
+    "decision_fingerprint": "a3a62f086fbce944979f243e1ce456e5e019a808d0c490b328cf87cba4da02c5",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 400000,
+        "source_role": "admin",
+        "timestamp": 1760111451
+      },
+      {
+        "decay_fixed": 214889,
+        "evidence_seq": 2,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.214889",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 107445,
+        "source_role": "monitor",
+        "timestamp": 1760119437
+      },
+      {
+        "decay_fixed": 267995,
+        "evidence_seq": 3,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.267995",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 6,
+        "score_fixed": 52259,
+        "source_role": "customer",
+        "timestamp": 1760118290
+      },
+      {
+        "decay_fixed": 561447,
+        "evidence_seq": 4,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.561447",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 88933,
+        "source_role": "backend",
+        "timestamp": 1760114449
+      },
+      {
+        "decay_fixed": 618781,
+        "evidence_seq": 5,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.618781",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 106183,
+        "source_role": "customer",
+        "timestamp": 1760113944
+      },
+      {
+        "decay_fixed": 203886,
+        "evidence_seq": 6,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.203886",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 5,
+        "score_fixed": 81554,
+        "source_role": "admin",
+        "timestamp": 1760119710
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 836374,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "d0bceee1b80faf7698188927e64ba9a3e7fa01832e136b17eb644006538f25fe",
+    "score": "0.836374",
+    "score_fixed": 836374,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0011",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 62000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 46276
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 0
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 89537
+      }
+    ],
+    "adjusted_scores": [
+      62000,
+      46276,
+      0,
+      89537
+    ],
+    "boundary": false,
+    "decision_fingerprint": "739485f79ea808bd75c4a1761abebce3340246c131839b21c668564993bf2c26",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 1,
+        "score_fixed": 187000,
+        "source_role": "external",
+        "timestamp": 1760121363
+      },
+      {
+        "decay_fixed": 382447,
+        "evidence_seq": 2,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.382447",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 4,
+        "score_fixed": 46276,
+        "source_role": "external",
+        "timestamp": 1760126355
+      },
+      {
+        "decay_fixed": 368354,
+        "evidence_seq": 3,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.368354",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 71829,
+        "source_role": "customer",
+        "timestamp": 1760126550
+      },
+      {
+        "decay_fixed": 223842,
+        "evidence_seq": 4,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.223842",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 89537,
+        "source_role": "admin",
+        "timestamp": 1760129137
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-credential-vs-device"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 394642,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_EXCLUSIVE_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-credential-vs-device"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": -196829,
+        "kind": "exclusive",
+        "left_delta_fixed": -125000,
+        "left_score_after": 62000,
+        "left_score_before": 187000,
+        "left_seq": 1,
+        "left_type": "credential_stuffing",
+        "nominal_delta_fixed": -250000,
+        "relation_id": "rel-credential-vs-device",
+        "right_delta_fixed": -71829,
+        "right_score_after": 0,
+        "right_score_before": 71829,
+        "right_seq": 3,
+        "right_type": "known_device"
+      }
+    ],
+    "relation_delta_fixed": -196829,
+    "relation_fingerprint": "8158d930a2c17f4e1eb207aa3537feb0a254c9d74c15b8b26fe4f5cd1b90cf5e",
+    "score": "0.197813",
+    "score_fixed": 197813,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0012",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 171600
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 321046
+      }
+    ],
+    "adjusted_scores": [
+      171600,
+      321046
+    ],
+    "boundary": false,
+    "decision_fingerprint": "a907e26731960a2604a7f9b94bdfe0d18320c978d5c81b69615b9591f6770466",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 171600,
+        "source_role": "customer",
+        "timestamp": 1760133665
+      },
+      {
+        "decay_fixed": 802614,
+        "evidence_seq": 2,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.802614",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 321046,
+        "source_role": "admin",
+        "timestamp": 1760134807
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 492646,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "5e8b6446bd3e1322a68459e5911dcae4e0bf7fdc11a46e8ecdbcfba3c209f607",
+    "score": "0.492646",
+    "score_fixed": 492646,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0013",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 0
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 91130
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 417
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 62000
+      }
+    ],
+    "adjusted_scores": [
+      0,
+      91130,
+      417,
+      62000
+    ],
+    "boundary": false,
+    "decision_fingerprint": "fb249ea648034d5a4fb574049b19b0cc879a9b8c16670a90fb5f1412f4f0f777",
+    "evidence_scores": [
+      {
+        "decay_fixed": 297645,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.297645",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 58041,
+        "source_role": "customer",
+        "timestamp": 1760148700
+      },
+      {
+        "decay_fixed": 531059,
+        "evidence_seq": 2,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.531059",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 91130,
+        "source_role": "customer",
+        "timestamp": 1760145693
+      },
+      {
+        "decay_fixed": 474214,
+        "evidence_seq": 3,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.474214",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 417,
+        "source_role": "backend",
+        "timestamp": 1760146281
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 4,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 1,
+        "score_fixed": 187000,
+        "source_role": "external",
+        "timestamp": 1760142406
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-credential-vs-device"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 336588,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_EXCLUSIVE_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-credential-vs-device"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": -183041,
+        "kind": "exclusive",
+        "left_delta_fixed": -125000,
+        "left_score_after": 62000,
+        "left_score_before": 187000,
+        "left_seq": 4,
+        "left_type": "credential_stuffing",
+        "nominal_delta_fixed": -250000,
+        "relation_id": "rel-credential-vs-device",
+        "right_delta_fixed": -58041,
+        "right_score_after": 0,
+        "right_score_before": 58041,
+        "right_seq": 1,
+        "right_type": "known_device"
+      }
+    ],
+    "relation_delta_fixed": -183041,
+    "relation_fingerprint": "88b2b629c42230ef676b9cc084cdd487453d556706e9b4c06f3d4bd1b19e6e19",
+    "score": "0.153547",
+    "score_fixed": 153547,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0014",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 50752
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 25927
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 121000
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 214
+      }
+    ],
+    "adjusted_scores": [
+      50752,
+      25927,
+      121000,
+      214
+    ],
+    "boundary": false,
+    "decision_fingerprint": "776c3e111a2325100ae89d19fbccbb5aece4bc3f21ba49e7c0cb5e9ff2120473",
+    "evidence_scores": [
+      {
+        "decay_fixed": 260265,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.260265",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 50752,
+        "source_role": "customer",
+        "timestamp": 1760157486
+      },
+      {
+        "decay_fixed": 184142,
+        "evidence_seq": 2,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.184142",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 3,
+        "score_fixed": 25927,
+        "source_role": "backend",
+        "timestamp": 1760159283
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 3,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 1,
+        "score_fixed": 121000,
+        "source_role": "external",
+        "timestamp": 1760150495
+      },
+      {
+        "decay_fixed": 243351,
+        "evidence_seq": 4,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.243351",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 214,
+        "source_role": "backend",
+        "timestamp": 1760157835
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 197893,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "912315ee2fcfb2a3a8f93c3207a2a2870cc364eac9ec040e20b3be492facfcd8",
+    "score": "0.197893",
+    "score_fixed": 197893,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0015",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 400000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 268
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 270431
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 133074
+      }
+    ],
+    "adjusted_scores": [
+      400000,
+      268,
+      270431,
+      133074
+    ],
+    "boundary": false,
+    "decision_fingerprint": "c2fe7a8124cd30bd75673644d4e05a0bc3c139dfff4a3d03b17c828b365bc8de",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 400000,
+        "source_role": "admin",
+        "timestamp": 1760160522
+      },
+      {
+        "decay_fixed": 304720,
+        "evidence_seq": 2,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.30472",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 268,
+        "source_role": "backend",
+        "timestamp": 1760166694
+      },
+      {
+        "decay_fixed": 540862,
+        "evidence_seq": 3,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.540862",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 270431,
+        "source_role": "monitor",
+        "timestamp": 1760163714
+      },
+      {
+        "decay_fixed": 332684,
+        "evidence_seq": 4,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.332684",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 3,
+        "score_fixed": 133074,
+        "source_role": "admin",
+        "timestamp": 1760166238
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 803773,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "1558c57ace6d99c879e824b90ebcd9a388cde57c7c6c94cfd9391c1a05915aa6",
+    "score": "0.803773",
+    "score_fixed": 803773,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0016",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 254
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 113390
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 61518
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 33493
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 400000
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 187714
+      }
+    ],
+    "adjusted_scores": [
+      254,
+      113390,
+      61518,
+      33493,
+      400000,
+      187714
+    ],
+    "boundary": false,
+    "decision_fingerprint": "7506cbd0da27f0a0851dfacc4adea13d39583e80809696c00fbf8232ed979946",
+    "evidence_scores": [
+      {
+        "decay_fixed": 288783,
+        "evidence_seq": 1,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.288783",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 6,
+        "score_fixed": 254,
+        "source_role": "backend",
+        "timestamp": 1760176631
+      },
+      {
+        "decay_fixed": 521233,
+        "evidence_seq": 2,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.521233",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 3,
+        "score_fixed": 73390,
+        "source_role": "backend",
+        "timestamp": 1760173564
+      },
+      {
+        "decay_fixed": 152830,
+        "evidence_seq": 3,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.15283",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 21518,
+        "source_role": "backend",
+        "timestamp": 1760179936
+      },
+      {
+        "decay_fixed": 276805,
+        "evidence_seq": 4,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.276805",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 4,
+        "score_fixed": 33493,
+        "source_role": "external",
+        "timestamp": 1760176851
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 5,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 400000,
+        "source_role": "admin",
+        "timestamp": 1760170180
+      },
+      {
+        "decay_fixed": 215428,
+        "evidence_seq": 6,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.215428",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 107714,
+        "source_role": "monitor",
+        "timestamp": 1760178153
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-telemetry-supports-sla"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 636369,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_SUPPORT_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-telemetry-supports-sla"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 113390,
+        "left_score_before": 73390,
+        "left_seq": 2,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 147714,
+        "right_score_before": 107714,
+        "right_seq": 6,
+        "right_type": "sla_risk"
+      },
+      {
+        "applied_delta_fixed": 80000,
+        "kind": "support",
+        "left_delta_fixed": 40000,
+        "left_score_after": 61518,
+        "left_score_before": 21518,
+        "left_seq": 3,
+        "left_type": "telemetry_anomaly",
+        "nominal_delta_fixed": 80000,
+        "relation_id": "rel-telemetry-supports-sla",
+        "right_delta_fixed": 40000,
+        "right_score_after": 187714,
+        "right_score_before": 147714,
+        "right_seq": 6,
+        "right_type": "sla_risk"
+      }
+    ],
+    "relation_delta_fixed": 160000,
+    "relation_fingerprint": "56ac5cfb03320c7c2dba632cea2a5583ad5f72e4e738c02157b25894937f2837",
+    "score": "0.796369",
+    "score_fixed": 796369,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0017",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 400000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 0
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 81587
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 0
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 87916
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 87204
+      }
+    ],
+    "adjusted_scores": [
+      400000,
+      0,
+      81587,
+      0,
+      87916,
+      87204
+    ],
+    "boundary": false,
+    "decision_fingerprint": "27767b3bb4453f88e1384f98d3ca4f8ab74cc1abe4d6fc652c0e2c6cb9700bcf",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 400000,
+        "source_role": "admin",
+        "timestamp": 1760193794
+      },
+      {
+        "decay_fixed": 281970,
+        "evidence_seq": 2,
+        "evidence_type": "credential_stuffing",
+        "factors": {
+          "decay_coefficient": "0.28197",
+          "evidence_type_weight": "0.34",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 6,
+        "score_fixed": 52728,
+        "source_role": "external",
+        "timestamp": 1760200369
+      },
+      {
+        "decay_fixed": 373568,
+        "evidence_seq": 3,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.373568",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 5,
+        "score_fixed": 81587,
+        "source_role": "customer",
+        "timestamp": 1760198908
+      },
+      {
+        "decay_fixed": 536300,
+        "evidence_seq": 4,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.5363",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 104579,
+        "source_role": "customer",
+        "timestamp": 1760197030
+      },
+      {
+        "decay_fixed": 624406,
+        "evidence_seq": 5,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.624406",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 3,
+        "score_fixed": 87916,
+        "source_role": "backend",
+        "timestamp": 1760196240
+      },
+      {
+        "decay_fixed": 550528,
+        "evidence_seq": 6,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.550528",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 87204,
+        "source_role": "backend",
+        "timestamp": 1760196894
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-credential-vs-device"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 814014,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_EXCLUSIVE_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-credential-vs-device"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": -157307,
+        "kind": "exclusive",
+        "left_delta_fixed": -52728,
+        "left_score_after": 0,
+        "left_score_before": 52728,
+        "left_seq": 2,
+        "left_type": "credential_stuffing",
+        "nominal_delta_fixed": -250000,
+        "relation_id": "rel-credential-vs-device",
+        "right_delta_fixed": -104579,
+        "right_score_after": 0,
+        "right_score_before": 104579,
+        "right_seq": 4,
+        "right_type": "known_device"
+      }
+    ],
+    "relation_delta_fixed": -157307,
+    "relation_fingerprint": "c295fff691133a4cc50b87900e3072f2c0a97df8a20eacd7a8c7ffdfc37f97f5",
+    "score": "0.656707",
+    "score_fixed": 656707,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0019",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 117498
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 94353
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 100737
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 79006
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 278144
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 140800
+      }
+    ],
+    "adjusted_scores": [
+      117498,
+      94353,
+      100737,
+      79006,
+      278144,
+      140800
+    ],
+    "boundary": false,
+    "decision_fingerprint": "646fdfa46ccd7e36e4b356d248562ccb88a0ace73866f0573826b43b98c40605",
+    "evidence_scores": [
+      {
+        "decay_fixed": 602556,
+        "evidence_seq": 1,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.602556",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 117498,
+        "source_role": "customer",
+        "timestamp": 1760204773
+      },
+      {
+        "decay_fixed": 432019,
+        "evidence_seq": 2,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.432019",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 5,
+        "score_fixed": 94353,
+        "source_role": "customer",
+        "timestamp": 1760206501
+      },
+      {
+        "decay_fixed": 715461,
+        "evidence_seq": 3,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.715461",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 100737,
+        "source_role": "backend",
+        "timestamp": 1760203881
+      },
+      {
+        "decay_fixed": 561123,
+        "evidence_seq": 4,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.561123",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 6,
+        "score_fixed": 79006,
+        "source_role": "backend",
+        "timestamp": 1760205143
+      },
+      {
+        "decay_fixed": 695361,
+        "evidence_seq": 5,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "0.695361",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 278144,
+        "source_role": "admin",
+        "timestamp": 1760204029
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 6,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 2,
+        "score_fixed": 140800,
+        "source_role": "backend",
+        "timestamp": 1760202142
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 810538,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "7f208c2047531443d822928675837187a7b50af60e348e9e7659cc164568e88e",
+    "score": "0.810538",
+    "score_fixed": 810538,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0020",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 400000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 90179
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 99120
+      }
+    ],
+    "adjusted_scores": [
+      400000,
+      90179,
+      99120
+    ],
+    "boundary": false,
+    "decision_fingerprint": "61d4305734ea5d7422d42bba56b5b6c38b3c190ec0df935654c920b757b469a8",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "admin_override",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.4",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 400000,
+        "source_role": "admin",
+        "timestamp": 1760211933
+      },
+      {
+        "decay_fixed": 412907,
+        "evidence_seq": 2,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.412907",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 90179,
+        "source_role": "customer",
+        "timestamp": 1760216527
+      },
+      {
+        "decay_fixed": 453847,
+        "evidence_seq": 3,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.453847",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 99120,
+        "source_role": "customer",
+        "timestamp": 1760216036
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 589299,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "226e5ee64d5be27ebf5370a178817e0c5ae09a0d02b87c8e90c435cca3144201",
+    "score": "0.589299",
+    "score_fixed": 589299,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0021",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 154000
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 53935
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 95091
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 172
+      }
+    ],
+    "adjusted_scores": [
+      154000,
+      53935,
+      95091,
+      172
+    ],
+    "boundary": false,
+    "decision_fingerprint": "50df7ced0b7247ca26008e6092f85b4b6c90186d47ed156343c89359424cce08",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 1,
+        "score_fixed": 154000,
+        "source_role": "external",
+        "timestamp": 1760231550
+      },
+      {
+        "decay_fixed": 230490,
+        "evidence_seq": 2,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.23049",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 53935,
+        "source_role": "customer",
+        "timestamp": 1760239172
+      },
+      {
+        "decay_fixed": 617471,
+        "evidence_seq": 3,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.617471",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 2,
+        "score_fixed": 95091,
+        "source_role": "external",
+        "timestamp": 1760234054
+      },
+      {
+        "decay_fixed": 195129,
+        "evidence_seq": 4,
+        "evidence_type": "low_signal",
+        "factors": {
+          "decay_coefficient": "0.195129",
+          "evidence_type_weight": "0.001",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 172,
+        "source_role": "backend",
+        "timestamp": 1760240037
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 303198,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "2aafd7a78009a6347a6c2c87f4a520eb38a1cae5b1d04fa573a3f4117f3fd207",
+    "score": "0.303198",
+    "score_fixed": 303198,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0023",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 218498
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 36496
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 285136
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 65375
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 234000
+      }
+    ],
+    "adjusted_scores": [
+      218498,
+      36496,
+      285136,
+      65375,
+      234000
+    ],
+    "boundary": false,
+    "decision_fingerprint": "a7ed4b4c55e83741fc74fa16ba5bd4168f7339559909341af41114ff08672c5b",
+    "evidence_scores": [
+      {
+        "decay_fixed": 933752,
+        "evidence_seq": 1,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.933752",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 218498,
+        "source_role": "customer",
+        "timestamp": 1760241624
+      },
+      {
+        "decay_fixed": 230402,
+        "evidence_seq": 2,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.230402",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 36496,
+        "source_role": "backend",
+        "timestamp": 1760248892
+      },
+      {
+        "decay_fixed": 570272,
+        "evidence_seq": 3,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.570272",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 285136,
+        "source_role": "monitor",
+        "timestamp": 1760244185
+      },
+      {
+        "decay_fixed": 335256,
+        "evidence_seq": 4,
+        "evidence_type": "known_device",
+        "factors": {
+          "decay_coefficient": "0.335256",
+          "evidence_type_weight": "0.25",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 4,
+        "score_fixed": 65375,
+        "source_role": "customer",
+        "timestamp": 1760246944
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 5,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 234000,
+        "source_role": "customer",
+        "timestamp": 1760241268
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 839505,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "bef803a8a9cbc5b0b5aa23557646ca647a42e92c8cb7589caca7c91eabcd4ca7",
+    "score": "0.839505",
+    "score_fixed": 839505,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0024",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 34161
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 54703
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 142733
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 59090
+      },
+      {
+        "evidence_seq": 5,
+        "score_fixed": 52789
+      },
+      {
+        "evidence_seq": 6,
+        "score_fixed": 500000
+      }
+    ],
+    "adjusted_scores": [
+      34161,
+      54703,
+      142733,
+      59090,
+      52789,
+      500000
+    ],
+    "boundary": false,
+    "decision_fingerprint": "ce4398cfdb719b6c95857e21774d2c20ef583f3c2a16aea3f555d71101b8bb77",
+    "evidence_scores": [
+      {
+        "decay_fixed": 221826,
+        "evidence_seq": 1,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.221826",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 4,
+        "score_fixed": 34161,
+        "source_role": "external",
+        "timestamp": 1760268308
+      },
+      {
+        "decay_fixed": 155951,
+        "evidence_seq": 2,
+        "evidence_type": "mfa_push",
+        "factors": {
+          "decay_coefficient": "0.155951",
+          "evidence_type_weight": "0.18",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 5,
+        "score_fixed": 24703,
+        "source_role": "backend",
+        "timestamp": 1760270138
+      },
+      {
+        "decay_fixed": 285466,
+        "evidence_seq": 3,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "0.285466",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 2,
+        "score_fixed": 142733,
+        "source_role": "monitor",
+        "timestamp": 1760266998
+      },
+      {
+        "decay_fixed": 383701,
+        "evidence_seq": 4,
+        "evidence_type": "phishing_report",
+        "factors": {
+          "decay_coefficient": "0.383701",
+          "evidence_type_weight": "0.28",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 3,
+        "score_fixed": 59090,
+        "source_role": "external",
+        "timestamp": 1760265462
+      },
+      {
+        "decay_fixed": 188337,
+        "evidence_seq": 5,
+        "evidence_type": "failed_login",
+        "factors": {
+          "decay_coefficient": "0.188337",
+          "evidence_type_weight": "0.22",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.55"
+        },
+        "rank": 6,
+        "score_fixed": 22789,
+        "source_role": "external",
+        "timestamp": 1760269158
+      },
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 6,
+        "evidence_type": "sla_risk",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.5",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "1"
+        },
+        "rank": 1,
+        "score_fixed": 500000,
+        "source_role": "monitor",
+        "timestamp": 1760260487
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [
+      "rel-login-supports-mfa"
+    ],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 783476,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_SUPPORT_APPLIED",
+      "R_PRIORITY_P3",
+      "R_REL_rel-login-supports-mfa"
+    ],
+    "relation_contributions": [
+      {
+        "applied_delta_fixed": 60000,
+        "kind": "support",
+        "left_delta_fixed": 30000,
+        "left_score_after": 52789,
+        "left_score_before": 22789,
+        "left_seq": 5,
+        "left_type": "failed_login",
+        "nominal_delta_fixed": 60000,
+        "relation_id": "rel-login-supports-mfa",
+        "right_delta_fixed": 30000,
+        "right_score_after": 54703,
+        "right_score_before": 24703,
+        "right_seq": 2,
+        "right_type": "mfa_push"
+      }
+    ],
+    "relation_delta_fixed": 60000,
+    "relation_fingerprint": "bf9a86a757e8f8f3e5c80a439e1748b16d25433d3b133e4a3a6d3696773e1755",
+    "score": "0.843476",
+    "score_fixed": 843476,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0026",
+    "upgrade_code": 0
+  },
+  {
+    "adjusted_evidence_scores": [
+      {
+        "evidence_seq": 1,
+        "score_fixed": 140800
+      },
+      {
+        "evidence_seq": 2,
+        "score_fixed": 30367
+      },
+      {
+        "evidence_seq": 3,
+        "score_fixed": 31307
+      },
+      {
+        "evidence_seq": 4,
+        "score_fixed": 45415
+      }
+    ],
+    "adjusted_scores": [
+      140800,
+      30367,
+      31307,
+      45415
+    ],
+    "boundary": false,
+    "decision_fingerprint": "e0633d235ac68a13c3b0612f8602b8f7efae2f4bf598a5fa1d8001f2b9a2672c",
+    "evidence_scores": [
+      {
+        "decay_fixed": 1000000,
+        "evidence_seq": 1,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "1",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 1,
+        "score_fixed": 140800,
+        "source_role": "backend",
+        "timestamp": 1760270142
+      },
+      {
+        "decay_fixed": 215677,
+        "evidence_seq": 2,
+        "evidence_type": "telemetry_anomaly",
+        "factors": {
+          "decay_coefficient": "0.215677",
+          "evidence_type_weight": "0.16",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.88"
+        },
+        "rank": 4,
+        "score_fixed": 30367,
+        "source_role": "backend",
+        "timestamp": 1760278109
+      },
+      {
+        "decay_fixed": 133791,
+        "evidence_seq": 3,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.133791",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 3,
+        "score_fixed": 31307,
+        "source_role": "customer",
+        "timestamp": 1760280589
+      },
+      {
+        "decay_fixed": 194080,
+        "evidence_seq": 4,
+        "evidence_type": "billing_dispute",
+        "factors": {
+          "decay_coefficient": "0.19408",
+          "evidence_type_weight": "0.3",
+          "operation_order": "type_weight*role_trust*decay",
+          "source_role_trust": "0.78"
+        },
+        "rank": 2,
+        "score_fixed": 45415,
+        "source_role": "customer",
+        "timestamp": 1760278657
+      }
+    ],
+    "fusion": "sum",
+    "matched_relation_ids": [],
+    "missing": 0,
+    "precision": "fixed_6",
+    "priority_level": 3,
+    "priority_name": "P3",
+    "raw_total_fixed": 247889,
+    "reason_codes": [
+      "R_NO_UPGRADE",
+      "R_PRIORITY_P3"
+    ],
+    "relation_contributions": [],
+    "relation_delta_fixed": 0,
+    "relation_fingerprint": "1afaff256bbb4f1a9a313b92618c993c3d545fda4957654cf32324e60fe60da2",
+    "score": "0.247889",
+    "score_fixed": 247889,
+    "threshold": "1",
+    "threshold_fixed": 1000000,
+    "ticket_id": "T0027",
+    "upgrade_code": 0
+  }
+]
