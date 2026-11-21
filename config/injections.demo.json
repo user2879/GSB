@@ -1,0 +1,46 @@
+{
+  "injections": [
+    {
+      "bytes_removed": 32,
+      "enabled": true,
+      "id": "INJ-PNG-TRUNCATED",
+      "sample": "sample-03",
+      "stage": "load_image",
+      "type": "truncate_png"
+    },
+    {
+      "assertion_index": 1,
+      "enabled": true,
+      "field": "value",
+      "id": "INJ-ASSERTION-FIELD",
+      "sample": "sample-05",
+      "stage": "load_text",
+      "type": "missing_assertion_field"
+    },
+    {
+      "enabled": true,
+      "id": "INJ-FEATURE-NONFINITE",
+      "sample": "sample-04",
+      "stage": "visual_feature",
+      "type": "nonfinite_feature",
+      "value": "nan"
+    },
+    {
+      "enabled": true,
+      "id": "INJ-THRESHOLD-RANGE",
+      "sample": "*",
+      "stage": "retrieval",
+      "type": "threshold_out_of_range",
+      "value": 1.5
+    },
+    {
+      "chunk_size": 30,
+      "enabled": true,
+      "id": "INJ-CHUNK-INDIVISIBLE",
+      "sample": "sample-06",
+      "stage": "visual_feature",
+      "type": "chunk_not_divisible"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,23 +1,233 @@
-在空白工作区从零构建一个面向图文检索场景的跨模态对齐与检索诊断工作台，用于在本地确定性样本上反复调整对齐参数并验证检索结果的可复现性，同时支持通过独立注入配置对处理链路施加真实输入故障以验证异常处理。输入为一个本地样本目录：若干由固定种子程序生成的图文样本包，每个样本包含一张 PNG 图像（固定分辨率，画面为几何图元与可控噪声，附图像区域真值 JSON，记录图元类别与整数像素矩形）与一段结构化文本描述 JSON（实体、属性与断言列表，文本由固定种子从受控词表生成）；另提供一份跨模态对齐配置 JSON（图像分块尺寸与量化档位、视觉与文本特征维度、对齐权重、检索相似度阈值与返回条数、定点小数位宽、线程池并发数、单批特征点数预算、快照提交间隔）以及一份异常注入清单 JSON。工作台需完成图像分块特征抽取、文本断言特征编码、跨模态对齐打分、检索排序与可复现诊断报告，并保证并发执行、增量重算与全量重建结果一致。
+# 跨模态对齐与检索诊断工作台
 
-任务环境与准备：
-确认本地已安装 Python 3.10 或以上版本，并能使用 pip 安装第三方库。
-在项目虚拟环境中安装 NumPy、Pillow 与 pytest。
-在空白工作区创建项目目录结构，新建 samples 目录存放图文样本、config 目录存放对齐配置与注入清单、output 目录存放产物与报告。
-准备本地确定性样本生成脚本，按固定种子生成 PNG 图像、图像区域真值 JSON、文本描述 JSON 与异常注入清单，不依赖任何真实账号、线上站点或外部数据集。
-准备本地回归与并发一致性测试脚本，全部使用本地样本执行，不涉及容器或远程服务。
+这是一个完全本地、确定性的图文检索工作台。它从固定种子生成的 PNG 图像、区域真值 JSON 和结构化文本 JSON 开始，执行以下链路：
 
-业务要求：
-1. 实现图文样本加载与索引校验层：扫描输入目录下每个样本的 PNG 图像与文本描述 JSON，校验文件存在性、PNG 容器头与尺寸一致性、图像区域真值为整数且落在图内、文本实体与断言字段完整、样本名唯一；不合法样本输出 E_SAMPLE_INVALID 业务码并进入失败清单，不得中断其余样本加载。
-2. 实现确定性图像分块特征与文本断言特征抽取：按配置分块尺寸切块并计算每块颜色均值、梯度强度与边缘密度，经由维度与配置指纹派生的固定投影矩阵映射到视觉特征维度；文本断言按实体与属性映射到文本特征维度，缺失断言按配置指纹派生的默认向量补齐并标注补齐位置；两路特征均以定点整数表示并记录位宽与舍入残差，同一样本多次抽取结果必须逐元素一致。
-3. 实现跨模态对齐打分与检索排序：按对齐权重对视觉分块特征与文本特征计算余弦相似度并做减去最大值的稳定归一化，得到图文对齐得分；以样本对齐得分构建检索索引，对每条文本查询按得分降序返回前若干样本，得分相同按样本名字典序决断，得分恰等于相似度阈值时按固定规则决断并标注为边界样本；输出每条结果的得分、各模态贡献分解与边界标记。
-4. 实现定点量化档位与位宽的边界诊断：切换量化档位或定点小数位宽时必须真实改变内部量化整数、得分与保留位数而非仅改显示；对每条检索结果输出在相邻档位下得分变化量与判定是否发生翻转的标记，当某结果在阈值邻域内发生翻转时记录其两档位得分、差值及首次超过配置容差的环节，输出 E_BOUNDARY_SENSITIVE 诊断业务码。
-5. 实现基于内容指纹的精确失效判定与复用账本：为分块特征、文本特征、对齐打分与检索索引各阶段产物计算由上游内容指纹、参数指纹与量化档位派生的缓存键，并记录每个样本结果引用的分块与断言集合；当替换单一图像、修改某条断言、调整对齐权重或分块尺寸时，仅使受影响阶段及其下游失效并纳入重算集合，未失效阶段必须直接复用且不得重算，复用与重算清单须可审计。
-6. 保证任意编辑序列后增量运行与从空白全量重建逐字段一致：从任意初始状态执行包含样本替换、断言增删、对齐权重调整、分块尺寸变更与量化档位切换的编辑序列，每次运行得到的逐样本对齐得分、检索结果顺序、贡献分解、边界标记、缓存键与失败清单顺序，都必须与按相同最终输入和配置一次性全量运行的结果完全一致。
-7. 实现单批特征点数预算约束下的并发调度与串行一致性：使用线程池并发执行特征抽取与对齐打分，最大并发数取自配置且不得超过；调度器按样本名与分块序号稳定顺序消耗单批特征点数预算，超预算部分保留待算队列并以 E_POINT_BUDGET_PENDING 业务码标记；每个任务携带由样本名、分块行列号与阶段名派生的稳定排序键，无论线程调度顺序、并发度与预算耗尽时机如何，最终输出顺序与单线程执行一致。
-8. 实现异常注入隔离、阶段快照整体替换与诊断报告输出：按注入清单对指定样本指定阶段施加真实输入故障（截断 PNG 字节、断言字段缺失、特征含非有限值、相似度阈值越界、分块尺寸不能整除图像边长），注入项编号写入报告以证明命中并映射到对应业务码；各阶段产物先写临时目录再整体替换提交，清单记录全局版本号、配置哈希、已完成样本列表与各阶段产物版本，启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE；每次运行输出含检索质量、边界诊断与失败清单的 JSON 报告。
+1. 样本加载与索引校验；
+2. 图像分块 + 定点视觉特征；
+3. 文本断言 + 实体组合 + 定点文本特征；
+4. 稳定跨模态对齐打分；
+5. 阈值检索、并列决断和边界诊断；
+6. 内容指纹缓存、阶段级增量复用；
+7. 线程池并发和特征点预算调度；
+8. 异常注入、阶段快照原子提交和 JSON 诊断报告。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+项目不依赖容器、真实账号、线上服务或外部数据集。
 
-验收：
-使用本地样本验证对齐检索结果、增量与全量一致及注入异常处理，并附运行结果。
+## 快速开始
+
+```bash
+# 本工作区已使用 virtualenv 创建 .venv；新环境可执行：
+python3 -m virtualenv .venv
+.venv/bin/python -m pip install -r requirements.txt
+
+# 重新生成确定性样本与配置
+.venv/bin/python -m workbench generate \
+  --samples samples --config config --seed 20261122 --sample-count 8
+
+# 增量运行（无旧状态时会自发冷启动）
+.venv/bin/python -m workbench run \
+  --samples samples \
+  --config config/alignment.json \
+  --injections config/injections.json \
+  --output output \
+  --mode incremental
+
+# 从空白状态做全量重建
+.venv/bin/python -m workbench run \
+  --samples samples \
+  --config config/alignment.json \
+  --injections config/injections.json \
+  --output output_full \
+  --mode full
+
+# 异常注入演示
+.venv/bin/python -m workbench run \
+  --samples samples \
+  --config config/alignment.json \
+  --injections config/injections.demo.json \
+  --output output/injection_demo \
+  --mode full
+
+# 测试与端到端验收
+.venv/bin/python -m pytest -q
+.venv/bin/python scripts/run_acceptance.py
+```
+
+## 目录
+
+```text
+workbench/                 核心包（加载、特征、对齐、缓存、快照、调度、报告）
+samples/sample-NN/         每个样本目录
+  image.png                固定 256x192 PNG
+  regions.json             图像尺寸与图元整数矩形真值
+  text.json                实体、属性、断言与原始文本
+config/alignment.json      对齐与运行配置
+config/injections.json     空注入清单（正常回归）
+config/injections.demo.json 5 类故障注入演示
+output/                    默认产物、快照与报告
+  report.json              主报告
+  acceptance.json          端到端验收结果
+  artifacts/               展开后的四阶段产物
+  injection_demo/report.json
+  state/current/           当前原子快照
+tests/                     11 项本地回归/一致性测试
+scripts/run_acceptance.py  验收流程
+```
+
+## 输入格式
+
+样本目录名即样本名，必须唯一。加载器按排序后的目录扫描，不支持远程路径。
+
+`regions.json`：
+
+```json
+{
+  "schema_version": 1,
+  "sample_name": "sample-01",
+  "image_size": [256, 192],
+  "regions": [
+    {
+      "label": "circle",
+      "rect": [20, 16, 86, 72],
+      "color": "red",
+      "entity_id": "e1"
+    }
+  ]
+}
+```
+
+`rect` 必须是四个非布尔整数，宽高大于 0，且完全落在 `image_size` 内；`entity_id` 若出现必须能在文本实体中找到。
+
+`text.json`：
+
+```json
+{
+  "schema_version": 1,
+  "sample_name": "sample-01",
+  "text": "sample-01: a red circle at top-left.",
+  "entities": [{"id": "e1", "type": "circle", "attributes": {"shape": "circle"}}],
+  "attributes": [{"entity": "e1", "name": "color", "value": "red"}],
+  "assertions": [{"id": "a1-color", "entity": "e1", "attribute": "color", "value": "red"}]
+}
+```
+
+加载层校验 PNG 签名、IHDR/IEND、Pillow 解码、PNG 尺寸与真值尺寸、区域矩形、文本实体/属性/断言字段、引用关系和样本名一致性。单样本失败不会中断其他样本；失败项进入排序后的 `failures`，并带有 `E_SAMPLE_INVALID` 父业务码。
+
+## 对齐配置
+
+`config/alignment.json` 的主要字段：
+
+| 字段 | 作用 |
+| --- | --- |
+| `chunk_size` | 图像分块边长；必须整除宽高 |
+| `quantization_level` / `quantization_levels` | 量化档位及可用于相邻档位诊断的档位集合 |
+| `visual_dim` / `text_dim` | 两路特征维度；相等时共享同一语义投影 |
+| `visual_weight` / `text_weight` | 对齐贡献权重；内部按和归一化 |
+| `similarity_threshold` / `top_k` | 定点阈值与最大返回条数 |
+| `fixed_decimal_bits` | 定点小数位宽；有效位宽 = 配置位宽 - 量化档位 |
+| `thread_pool_size` | 线程池上限，代码不会创建超过该值的 worker |
+| `feature_point_budget` | 单批特征点预算；视觉块按 `visual_dim`，文本按断言数乘 `text_dim` 计费 |
+| `snapshot_commit_interval` | 每完成多少个样本提交一次整体快照 |
+| `required_attributes` | 缺失断言补齐的必需属性 |
+| `edge_threshold` / `temperature` | 边缘密度阈值与稳定 softmax 温度 |
+| `boundary_neighborhood` | 阈值邻域宽度 |
+| `diagnostic_tolerance` | 判断阶段差值“首次超过容差”的门限 |
+
+当前默认阈值 `0.7451171875` 恰好等于一个默认样本的定点得分，用于稳定演示“恰等阈值”和 `E_BOUNDARY_SENSITIVE`。换数据集或大幅改特征参数后，可重新把它校准到某条真实得分。
+
+## 特征与打分
+
+- 视觉块统计：RGB 均值、色度、梯度强度、边缘密度、块中心坐标和活动度，并按 `base_stats_schema` 记录。
+- 投影：由 `projection_salt + 特征维度` 派生固定矩阵，对视觉和文本共享语义通道；输出记录 `projection_fingerprint`。
+- 文本：每条断言按实体类型、属性和值映射到语义向量；同一实体的断言再组成实体组合向量。缺失必需断言使用配置指纹派生默认向量，并记录 `padding_positions`。
+- 定点：归一化向量乘 `2^有效位宽` 后按银行家舍入变为整数，同时保存每个元素的 `rounding_residual`、L2 残差和最大绝对残差。
+- 对齐：对文本实体组合与视觉块求余弦；每个组合执行 `shift = cosine - max(cosine)` 后做稳定 softmax，再构造融合视觉向量并计算融合余弦。多个实体通过全局唯一块分配避免重复证据，加权得到文本质量。
+- 分项：`visual_component_fixed + text_component_fixed = score_fixed`，报告同时输出浮点贡献与定点贡献。
+- 检索：按 `score_fixed` 降序、样本名字典序升序裁决并列；仅返回 `score_fixed >= threshold_fixed` 的前 `top_k`。等于阈值时包含并标为 `boundary: true`。
+
+## 缓存与增量
+
+每个产物使用 SHA-256 内容键：
+
+```text
+visual    = 图像内容 + 区域真值 + 分块/维度/定点参数 + 量化档位 + 阶段注入
+text      = 文本内容 + 文本维度/补齐参数 + 量化档位 + 阶段注入
+alignment = visual_key + text_key + 对齐权重/温度 + 量化档位
+retrieval = 所有 alignment_key + 冲突样本签名 + 阈值/top_k + 注入上下文
+```
+
+因此：
+
+- 替换单张图：该样本视觉、该样本对齐、全局检索失效；文本复用。
+- 修改一条断言：该样本文本、该样本对齐、全局检索失效；视觉复用。
+- 调整权重或温度：视觉/文本复用，对齐和检索失效。
+- 调整分块尺寸：视觉失效；文本复用。
+- 切换量化档位或位宽：两路特征及全部下游失效。
+
+`reuse_ledger` 逐阶段列出 `reused` / `recomputed` 的样本、缓存键和块/断言引用，可直接审计“未失效阶段没有重算”。
+
+## 并发与预算
+
+调度任务键形如 `sample|stage|r000000|c000000|tail`，阶段顺序为视觉、文本、对齐。任务先按稳定键排序，再按特征点预算顺序准入；第一个放不下的任务及其后的任务全部保留到 `pending_tasks`，并输出 `E_POINT_BUDGET_PENDING`。线程完成顺序不影响最终组装顺序。
+
+实际线程池上限等于 `thread_pool_size`。`output/artifacts/execution_trace.json` 记录 worker 上限、点数消耗、峰值并发等执行信息；核心语义摘要不包含会随线程调度波动的字段。
+
+## 快照与续跑
+
+- 阶段 JSON 先写入临时 staging 目录，再整体替换 `output/state/current`。
+- Manifest 记录 schema/engine 版本、全局版本号、配置哈希、已完成样本、各阶段产物版本与键列表、注入清单哈希。
+- 配置哈希或 manifest 完整性不一致时输出 `E_SNAPSHOT_STALE`；内容键仍安全的阶段可复用，必要时全量模式从空 staging 重建。
+- 快照按 `snapshot_commit_interval` 做中间提交，最终提交包含全部阶段。
+
+## 异常注入
+
+`config/injections.demo.json` 包含 5 项真实故障：
+
+| 注入 ID | 故障 | 映射业务码 |
+| --- | --- | --- |
+| `INJ-PNG-TRUNCATED` | 内存中截断 PNG 末尾字节，破坏 IEND | `E_PNG_TRUNCATED` + `E_SAMPLE_INVALID` |
+| `INJ-ASSERTION-FIELD` | 删除断言的 `value` 字段 | `E_TEXT_SCHEMA` + `E_SAMPLE_INVALID` |
+| `INJ-FEATURE-NONFINITE` | 首个视觉投影值改为 NaN | `E_FEATURE_NONFINITE` + `E_SAMPLE_INVALID` |
+| `INJ-THRESHOLD-RANGE` | 以 1.5 作为阈值执行校验 | `E_CONFIG_THRESHOLD`，隔离后使用安全阈值继续 |
+| `INJ-CHUNK-INDIVISIBLE` | 指定样本使用 30 像素分块 | `E_CHUNK_MISMATCH` + `E_SAMPLE_INVALID` |
+
+每项命中写入 `injection_results.hits`，包含注入编号、阶段、证明字段和业务码；未命中项进入 `missed` 并输出 `E_INJECTION_MISSED`。
+
+## 报告与业务码
+
+主报告包含：
+
+- `retrieval_quality`：自命中 top-k、top-1、MRR；
+- `retrieval_index.queries[].results`：得分、贡献分解、排名、阈值通过、边界标记、相邻量化档位比较；
+- `boundary_diagnostics`：两档得分、差值、翻转、阈值翻转、排名翻转、首次超过容差阶段；
+- `failures`、`pending_tasks`、`reuse_ledger`、`snapshot`、`injection_results`；
+- `reproducibility_sha256`：对样本缓存键/引用/自对齐、检索结果、质量、边界诊断和失败清单计算的稳定摘要。
+
+常用业务码：`E_SAMPLE_INVALID`、`E_PNG_TRUNCATED`、`E_TEXT_SCHEMA`、`E_REGION_INVALID`、`E_FEATURE_NONFINITE`、`E_CHUNK_MISMATCH`、`E_CONFIG_THRESHOLD`、`E_POINT_BUDGET_PENDING`、`E_BOUNDARY_SENSITIVE`、`E_SNAPSHOT_STALE`、`E_CACHE_CORRUPT`、`E_INJECTION_MISSED`。
+
+## 实际验证结果
+
+环境：Python 3.11.0rc1、NumPy 2.4.6、Pillow 13.0.0、pytest 9.2.0。
+
+```text
+.venv/bin/python -m pytest -q
+11 passed in 27.84s
+```
+
+```text
+.venv/bin/python scripts/run_acceptance.py
+status: passed
+```
+
+关键结果：
+
+- 基线 8 查询：`self_hit_at_k_rate = 1.0`、`top1_self_hit_rate = 0.875`、`MRR = 0.9375`。
+- 基线语义摘要：`5de0902e56f06ad790ff558e3caca63e134d8c738fedfa49d28d476abbc51eed`。
+- 无改动增量与全量摘要一致，四阶段全部复用：视觉 8、文本 8、对齐 8、检索 1。
+- 样本替换 + 断言修改 + 权重调整 + 分块 16 + 量化档位 2 的编辑序列，最终增量摘要与干净全量摘要一致。
+- 5 项注入全部命中、0 项漏命中；4 个目标样本被隔离，其余 4 个样本继续检索。
+- 预算降至 10 时 392 个任务稳定进入待算队列，输出 `E_POINT_BUDGET_PENDING` 且无越预算执行。
+- 线程数 1 与 8 的语义摘要一致。
+- 默认边界样本 `sample-01 -> sample-02` 得分恰等于阈值，相邻档位发生阈值翻转，首次超差阶段为视觉定点量化。
+
+机器可读结果见 `output/acceptance.json`、`output/report.json` 和 `output/injection_demo/report.json`。

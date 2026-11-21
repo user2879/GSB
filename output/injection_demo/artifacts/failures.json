@@ -1,0 +1,66 @@
+[
+  {
+    "code": "E_PNG_TRUNCATED",
+    "codes": [
+      "E_PNG_TRUNCATED",
+      "E_SAMPLE_INVALID"
+    ],
+    "details": {},
+    "injection_id": "INJ-PNG-TRUNCATED",
+    "message": "PNG IEND chunk is missing or truncated",
+    "parent_code": "E_SAMPLE_INVALID",
+    "sample": "sample-03",
+    "stage": "load_image"
+  },
+  {
+    "code": "E_FEATURE_NONFINITE",
+    "codes": [
+      "E_FEATURE_NONFINITE",
+      "E_SAMPLE_INVALID"
+    ],
+    "details": {
+      "col": 0,
+      "row": 0,
+      "sample": "sample-04",
+      "stage": "visual_projection"
+    },
+    "injection_id": "INJ-FEATURE-NONFINITE",
+    "message": "visual projection contains a non-finite value",
+    "parent_code": "E_SAMPLE_INVALID",
+    "sample": "sample-04",
+    "stage": "visual"
+  },
+  {
+    "code": "E_TEXT_SCHEMA",
+    "codes": [
+      "E_TEXT_SCHEMA",
+      "E_SAMPLE_INVALID"
+    ],
+    "details": {},
+    "injection_id": "INJ-ASSERTION-FIELD",
+    "message": "assertions[1] missing fields: value",
+    "parent_code": "E_SAMPLE_INVALID",
+    "sample": "sample-05",
+    "stage": "load_text"
+  },
+  {
+    "code": "E_CHUNK_MISMATCH",
+    "codes": [
+      "E_CHUNK_MISMATCH",
+      "E_SAMPLE_INVALID"
+    ],
+    "details": {
+      "chunk_size": 30,
+      "image_size": [
+        256,
+        192
+      ],
+      "sample": "sample-06"
+    },
+    "injection_id": "INJ-CHUNK-INDIVISIBLE",
+    "message": "chunk_size must evenly divide both image dimensions",
+    "parent_code": "E_SAMPLE_INVALID",
+    "sample": "sample-06",
+    "stage": "visual"
+  }
+]
