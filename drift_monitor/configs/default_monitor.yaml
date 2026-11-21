@@ -1,0 +1,60 @@
+data:
+  seed: 20240917
+  missing_rate: 0.06
+  target_column: label
+  columns:
+    - name: income
+      kind: numeric
+      metric: mean_shift
+      drift_scale: 1.2
+    - name: age
+      kind: numeric
+      metric: hist_density
+      drift_scale: 0.4
+    - name: spend_score
+      kind: numeric
+      metric: quantile
+      drift_scale: 0.8
+    - name: city_tier
+      kind: categorical
+      metric: freq_diff
+      drift_scale: 1.0
+    - name: channel
+      kind: categorical
+      metric: chi_square
+      drift_scale: 0.6
+    - name: device_sku
+      kind: high_cardinality
+      metric: chi_square
+      drift_scale: 0.5
+  size_tiers:
+    - name: small
+      samples: 480
+      feature_multiplier: 1
+    - name: medium
+      samples: 2400
+      feature_multiplier: 2
+    - name: large
+      samples: 12000
+      feature_multiplier: 4
+
+algorithm:
+  window_count: 4
+  significance_threshold: 0.75
+
+quantization:
+  tiers:
+    - name: coarse
+      decimals: 2
+      clamp: 10000
+    - name: standard
+      decimals: 4
+      clamp: 1000000
+    - name: fine
+      decimals: 6
+      clamp: 100000000
+
+runtime:
+  concurrency: 4
+  snapshot_commit_interval: 1
+  output_dir: output

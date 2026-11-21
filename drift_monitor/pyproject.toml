@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drift-monitor"
+version = "1.0.0"
+description = "Deterministic windowed feature drift monitoring with fixed-point decisions"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4", "PyYAML==6.0.2"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+drift-monitor = "drift_monitor.interactive:main"
