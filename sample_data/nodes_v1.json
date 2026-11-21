@@ -1,0 +1,30 @@
+{
+  "format_version": 1,
+  "ruleset_version": 1,
+  "nodes": [
+    {
+      "node_id": "api",
+      "host": "127.0.0.1",
+      "port": 39101,
+      "propagation_rule_version": 1,
+      "sample_ratio_bps": 10000,
+      "random_seed": 101
+    },
+    {
+      "node_id": "worker",
+      "host": "127.0.0.1",
+      "port": 39102,
+      "propagation_rule_version": 2,
+      "sample_ratio_bps": 0,
+      "random_seed": 202
+    },
+    {
+      "node_id": "static",
+      "host": "127.0.0.1",
+      "port": 39103,
+      "propagation_rule_version": 5,
+      "sample_ratio_bps": 5000,
+      "random_seed": 505
+    }
+  ]
+}
