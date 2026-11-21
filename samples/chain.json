@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "input": "x",
+  "outputs": [
+    "perm2"
+  ],
+  "nodes": [
+    {
+      "id": "relu1",
+      "op": "relu",
+      "params": {},
+      "inplace": false
+    },
+    {
+      "id": "perm1",
+      "op": "permute",
+      "params": {
+        "perm": [
+          1,
+          0
+        ]
+      },
+      "inplace": false
+    },
+    {
+      "id": "gelu1",
+      "op": "gelu",
+      "params": {
+        "approximation": "erf"
+      },
+      "inplace": false
+    },
+    {
+      "id": "sigmoid1",
+      "op": "sigmoid",
+      "params": {},
+      "inplace": false
+    },
+    {
+      "id": "tanh1",
+      "op": "tanh",
+      "params": {},
+      "inplace": false
+    },
+    {
+      "id": "perm2",
+      "op": "permute",
+      "params": {
+        "perm": [
+          1,
+          0
+        ]
+      },
+      "inplace": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "x",
+      "to": "relu1"
+    },
+    {
+      "from": "relu1",
+      "to": "perm1"
+    },
+    {
+      "from": "perm1",
+      "to": "gelu1"
+    },
+    {
+      "from": "gelu1",
+      "to": "sigmoid1"
+    },
+    {
+      "from": "sigmoid1",
+      "to": "tanh1"
+    },
+    {
+      "from": "tanh1",
+      "to": "perm2"
+    }
+  ]
+}

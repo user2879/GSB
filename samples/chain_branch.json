@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "input": "x",
+  "outputs": [
+    "sigmoid_b",
+    "tanh_a"
+  ],
+  "nodes": [
+    {
+      "id": "relu_a",
+      "op": "relu",
+      "params": {}
+    },
+    {
+      "id": "tanh_a",
+      "op": "tanh",
+      "params": {}
+    },
+    {
+      "id": "sigmoid_b",
+      "op": "sigmoid",
+      "params": {}
+    },
+    {
+      "id": "gelu_b",
+      "op": "gelu",
+      "params": {
+        "approximation": "tanh"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "x",
+      "to": "relu_a"
+    },
+    {
+      "from": "relu_a",
+      "to": "tanh_a"
+    },
+    {
+      "from": "x",
+      "to": "sigmoid_b"
+    },
+    {
+      "from": "sigmoid_b",
+      "to": "gelu_b"
+    }
+  ]
+}
