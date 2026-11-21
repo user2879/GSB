@@ -1,0 +1,100 @@
+{
+  "configs": [
+    {
+      "key": "feature.flags",
+      "ttl_seconds": 30,
+      "values": [
+        {
+          "version": 1,
+          "value": {
+            "dark_mode": false,
+            "rollout": 10
+          }
+        },
+        {
+          "version": 2,
+          "value": {
+            "dark_mode": true,
+            "rollout": 50
+          }
+        },
+        {
+          "version": 3,
+          "value": {
+            "dark_mode": true,
+            "rollout": 100
+          }
+        }
+      ]
+    },
+    {
+      "key": "service.endpoint",
+      "ttl_seconds": 60,
+      "values": [
+        {
+          "version": 1,
+          "value": {
+            "url": "https://v1.example.local",
+            "retries": 2
+          }
+        },
+        {
+          "version": 2,
+          "value": {
+            "url": "https://v2.example.local",
+            "retries": 3
+          }
+        }
+      ]
+    },
+    {
+      "key": "cache.policy",
+      "ttl_seconds": 45,
+      "values": [
+        {
+          "version": 1,
+          "value": {
+            "max_age": 60,
+            "stale": 5
+          }
+        },
+        {
+          "version": 2,
+          "value": {
+            "max_age": 30,
+            "stale": 2
+          }
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "id": "client-r1",
+      "subscribed_keys": [
+        "feature.flags",
+        "service.endpoint"
+      ],
+      "lease_duration_ms": 400,
+      "format_version": "r1"
+    },
+    {
+      "id": "client-r2",
+      "subscribed_keys": [
+        "feature.flags",
+        "cache.policy"
+      ],
+      "lease_duration_ms": 600,
+      "format_version": "r2"
+    },
+    {
+      "id": "client-r3",
+      "subscribed_keys": [
+        "service.endpoint",
+        "cache.policy"
+      ],
+      "lease_duration_ms": 800,
+      "format_version": "r3"
+    }
+  ]
+}

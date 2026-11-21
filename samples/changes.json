@@ -1,0 +1,77 @@
+{
+  "steps": [
+    {
+      "action": "sweep"
+    },
+    {
+      "action": "grant",
+      "client_id": "client-r1",
+      "config_key": "feature.flags",
+      "config_version": 1
+    },
+    {
+      "action": "grant",
+      "client_id": "client-r2",
+      "config_key": "feature.flags",
+      "config_version": 1
+    },
+    {
+      "action": "grant",
+      "client_id": "client-r3",
+      "config_key": "service.endpoint",
+      "config_version": 1
+    },
+    {
+      "action": "renew",
+      "client_id": "client-r1",
+      "config_key": "feature.flags",
+      "expected_version": 1
+    },
+    {
+      "action": "renew",
+      "client_id": "client-r1",
+      "config_key": "feature.flags",
+      "expected_version": 1
+    },
+    {
+      "action": "publish",
+      "config_key": "feature.flags",
+      "version": 2,
+      "value": {
+        "dark_mode": true,
+        "rollout": 50
+      }
+    },
+    {
+      "action": "publish",
+      "config_key": "service.endpoint",
+      "version": 2,
+      "value": {
+        "url": "https://v2.example.local",
+        "retries": 3
+      }
+    },
+    {
+      "action": "sleep_ms",
+      "duration_ms": 500
+    },
+    {
+      "action": "sweep"
+    },
+    {
+      "action": "grant",
+      "client_id": "client-r3",
+      "config_key": "cache.policy",
+      "config_version": 1
+    },
+    {
+      "action": "publish",
+      "config_key": "cache.policy",
+      "version": 2,
+      "value": {
+        "max_age": 30,
+        "stale": 2
+      }
+    }
+  ]
+}
