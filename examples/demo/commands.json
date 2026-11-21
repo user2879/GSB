@@ -1,0 +1,60 @@
+[
+  {
+    "id": "cmd-01-split",
+    "op": "split",
+    "target": {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 430.0
+    },
+    "at_ms": 550.0
+  },
+  {
+    "id": "cmd-02-merge",
+    "op": "merge",
+    "target": {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 300.0
+    },
+    "direction": "next"
+  },
+  {
+    "id": "cmd-03-annotation",
+    "op": "set_speaker",
+    "target": {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 2200.0
+    },
+    "speaker": "spk_noah"
+  },
+  {
+    "id": "cmd-04-replace",
+    "op": "replace",
+    "target": {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 3000.0
+    },
+    "interval": {
+      "start_ms": 100.0,
+      "end_ms": 350.0
+    },
+    "source": "assets/replacement_noah.wav"
+  },
+  {
+    "id": "cmd-05-quant-4bit",
+    "op": "set_quantization",
+    "dimension": "f0_mean",
+    "bit_width": 4
+  },
+  {
+    "id": "cmd-06-quant-10bit",
+    "op": "set_quantization",
+    "dimension": "f0_mean",
+    "bit_width": 10
+  },
+  {
+    "id": "cmd-07-rate-4bit",
+    "op": "set_quantization",
+    "dimension": "speech_rate",
+    "bit_width": 4
+  }
+]

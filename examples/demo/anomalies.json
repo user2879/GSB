@@ -1,0 +1,40 @@
+{
+  "description": "Deterministic anomaly fixtures for failure isolation and boundary diagnostics.",
+  "items": [
+    {
+      "id": "a01-corrupt-riff",
+      "kind": "corrupt_wav",
+      "path": "anomalies/bad_riff.wav",
+      "expected_code": "E_AUDIO_FORMAT",
+      "expectation": "file enters failures and valid files continue"
+    },
+    {
+      "id": "a02-truncated-data",
+      "kind": "corrupt_wav",
+      "path": "anomalies/truncated_data.wav",
+      "expected_code": "E_AUDIO_FORMAT",
+      "expectation": "RIFF data length exceeds file length"
+    },
+    {
+      "id": "a03-nonfinite-sample",
+      "kind": "non_finite_samples",
+      "path": "anomalies/nonfinite_samples.json",
+      "expected_code": "E_AUDIO_SAMPLE",
+      "expectation": "validate_samples rejects NaN/Inf without contaminating caches"
+    },
+    {
+      "id": "a04-quantization-out-of-range",
+      "kind": "command",
+      "path": "anomalies/quantization_out_of_range.json",
+      "expected_code": "E_QUANTIZATION_LEVEL",
+      "expectation": "invalid bit width is rejected and previous state is restored"
+    },
+    {
+      "id": "a05-similarity-equal-threshold",
+      "kind": "similarity_equal",
+      "path": "anomalies/similarity_equal.json",
+      "expected_code": null,
+      "expectation": "set similarity.threshold to an adjacent score from report.segment_assignments, then verify inclusive decision, dual references, and start-frame ordering"
+    }
+  ]
+}

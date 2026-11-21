@@ -1,0 +1,14 @@
+{
+  "description": "Set similarity.threshold to the measured adjacent score to exercise the inclusive boundary.",
+  "source": "OUTPUT/report.json -> segment_assignments[].similarity",
+  "config_patch": {
+    "similarity": {
+      "threshold": "<measured_similarity>"
+    }
+  },
+  "expected": {
+    "boundary": true,
+    "inclusive_same": true,
+    "exclusive_same": false
+  }
+}

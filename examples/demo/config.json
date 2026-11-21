@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "sample_rate": 16000,
+  "channels": 1,
+  "sample_width_bits": 16,
+  "frame_length_ms": 25.0,
+  "frame_shift_ms": 10.0,
+  "energy": {
+    "enter_db": -44.0,
+    "exit_db": -54.0
+  },
+  "min_segment_ms": 90.0,
+  "min_gap_ms": 60.0,
+  "quantile_interpolation": "linear",
+  "f0": {
+    "min_hz": 60.0,
+    "max_hz": 500.0,
+    "voiced_autocorr": 0.24
+  },
+  "formants": {
+    "lpc_order": 16,
+    "f1_range_hz": [
+      180.0,
+      1150.0
+    ],
+    "f2_range_hz": [
+      700.0,
+      3200.0
+    ]
+  },
+  "style": {
+    "speech_rate_bins_sps": [
+      3.7,
+      5.1
+    ],
+    "labels": [
+      "slow",
+      "neutral",
+      "fast"
+    ],
+    "high_variation_f0_std_hz": 45.0,
+    "high_variation_label": "expressive"
+  },
+  "timbre_dimensions": [
+    {
+      "name": "f0_mean",
+      "metric": "f0_mean_hz",
+      "dynamic_range": [
+        70.0,
+        360.0
+      ],
+      "target_step": 3.0,
+      "bit_widths": [
+        4,
+        6,
+        8,
+        10
+      ]
+    },
+    {
+      "name": "f0_stability",
+      "metric": "f0_std_hz",
+      "dynamic_range": [
+        0.0,
+        45.0
+      ],
+      "target_step": 0.8,
+      "bit_widths": [
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "name": "formant_f1",
+      "metric": "f1_mean_hz",
+      "dynamic_range": [
+        180.0,
+        1150.0
+      ],
+      "target_step": 10.0,
+      "bit_widths": [
+        4,
+        6,
+        8,
+        10
+      ]
+    },
+    {
+      "name": "formant_f2",
+      "metric": "f2_mean_hz",
+      "dynamic_range": [
+        700.0,
+        3200.0
+      ],
+      "target_step": 15.0,
+      "bit_widths": [
+        4,
+        6,
+        8,
+        10
+      ]
+    },
+    {
+      "name": "speech_rate",
+      "metric": "speech_rate_sps",
+      "dynamic_range": [
+        0.0,
+        8.0
+      ],
+      "target_step": 0.25,
+      "bit_widths": [
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "name": "voiced_ratio",
+      "metric": "voiced_ratio",
+      "dynamic_range": [
+        0.0,
+        1.0
+      ],
+      "target_step": 0.03,
+      "bit_widths": [
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "name": "level",
+      "metric": "rms_db",
+      "dynamic_range": [
+        -80.0,
+        0.0
+      ],
+      "target_step": 1.0,
+      "bit_widths": [
+        4,
+        6,
+        8,
+        10
+      ]
+    }
+  ],
+  "similarity": {
+    "threshold": 0.82,
+    "weights": {
+      "f0_mean": 2.4,
+      "f0_stability": 0.6,
+      "formant_f1": 1.6,
+      "formant_f2": 1.8,
+      "speech_rate": 0.5,
+      "voiced_ratio": 0.4,
+      "level": 0.2
+    }
+  },
+  "preview_budget_ms": 200.0,
+  "max_workers": 4,
+  "snapshot_commit_every": 1,
+  "verify_incremental_vs_full": true,
+  "initial_annotations": [
+    {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 550.0,
+      "speaker": "spk_amber",
+      "style_hint": "slow"
+    },
+    {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 1385.0,
+      "speaker": "spk_noah",
+      "style_hint": "fast"
+    },
+    {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 2240.0,
+      "speaker": "spk_amber",
+      "style_hint": "slow"
+    },
+    {
+      "file": "voice_dialogue.wav",
+      "contains_ms": 3070.0,
+      "speaker": "spk_noah",
+      "style_hint": "fast"
+    },
+    {
+      "file": "voice_solo.wav",
+      "contains_ms": 485.0,
+      "speaker": "spk_noah",
+      "style_hint": "slow"
+    },
+    {
+      "file": "voice_solo.wav",
+      "contains_ms": 1290.0,
+      "speaker": "spk_noah",
+      "style_hint": "neutral"
+    },
+    {
+      "file": "voice_solo.wav",
+      "contains_ms": 2110.0,
+      "speaker": "spk_amber",
+      "style_hint": "fast"
+    },
+    {
+      "file": "voice_solo.wav",
+      "contains_ms": 2850.0,
+      "speaker": "spk_amber",
+      "style_hint": "slow"
+    }
+  ]
+}
