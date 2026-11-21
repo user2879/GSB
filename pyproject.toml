@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "news-summary-diagnostics"
+version = "1.0.0"
+description = "Deterministic Chinese news summary and style-rewrite diagnostics"
+requires-python = ">=3.10"
+dependencies = ["numpy", "PyYAML"]
+
+[project.scripts]
+news-diagnose = "news_diag.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
