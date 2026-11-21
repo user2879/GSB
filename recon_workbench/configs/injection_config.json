@@ -1,0 +1,9 @@
+{
+  "injections": [
+    {"injection_id": "INJ01", "type": "truncate_png", "view": 1, "stage": "load", "keep_ratio": 0.3},
+    {"injection_id": "INJ02", "type": "camera_missing", "view": 3, "stage": "load"},
+    {"injection_id": "INJ03", "type": "nonfinite_descriptor", "view": 0, "stage": "feature"},
+    {"injection_id": "INJ04", "type": "disparity_out_of_range", "view": 4, "stage": "triangulation", "forced_disparity": 0.0},
+    {"injection_id": "INJ05", "type": "zero_voxel_size", "view": 2, "stage": "point_cloud"}
+  ]
+}
