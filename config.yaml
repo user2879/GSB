@@ -1,0 +1,17 @@
+version: 1
+image_size: [256, 256]
+categories: [square, circle, triangle]
+colors:
+  red: [220, 60, 60]
+  green: [60, 170, 80]
+  blue: [70, 90, 220]
+color_tolerance: 60
+min_area: 40
+aspect_ratio_range: [0.25, 4.0]
+merge_gap: 24
+shape_fill:
+  square_min: 0.9
+  circle_min: 0.6
+count_tolerance: 0
+arbitration_priority: [detection, description, label_majority, label_a]
+max_concurrency: 4

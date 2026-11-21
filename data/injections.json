@@ -1,0 +1,43 @@
+{
+ "injections": [
+  {
+   "id": "INJ-001",
+   "sample_id": "s07",
+   "source": "image",
+   "fault": "truncate_png",
+   "params": {
+    "keep_bytes": 100
+   }
+  },
+  {
+   "id": "INJ-002",
+   "sample_id": "s07",
+   "source": "description",
+   "fault": "desc_category_enum",
+   "params": {
+    "index": 0,
+    "value": "hexagon"
+   }
+  },
+  {
+   "id": "INJ-003",
+   "sample_id": "s01",
+   "source": "label_a",
+   "fault": "label_order_gap",
+   "params": {
+    "entry_index": 1,
+    "skip": 2
+   }
+  },
+  {
+   "id": "INJ-004",
+   "sample_id": "s02",
+   "source": "label_b",
+   "fault": "box_out_of_range",
+   "params": {
+    "entry_index": 0,
+    "dx": 500
+   }
+  }
+ ]
+}
