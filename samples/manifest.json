@@ -1,0 +1,78 @@
+{
+  "latency_budget_ms": 500,
+  "default_dispatch": {"timeout_ms": 2000, "retries": 1, "strategy": "retry_then_fail"},
+  "versions": [
+    {
+      "version": 1,
+      "items": {
+        "base-rate": {
+          "value_type": "fixed",
+          "value": {"raw": 125, "scale": 2},
+          "targets": ["node-alpha", "node-beta"],
+          "dispatch": {"timeout_ms": 2000, "retries": 1, "strategy": "retry_then_fail"}
+        },
+        "threshold": {
+          "value_type": "int",
+          "value": 80,
+          "targets": ["node-alpha", "node-gamma"]
+        },
+        "composite": {
+          "value_type": "fixed",
+          "value": {"raw": 7, "scale": 1},
+          "targets": ["node-beta"],
+          "derives_from": [
+            {"key": "base-rate", "coef": {"raw": 2, "scale": 0}}
+          ]
+        }
+      }
+    },
+    {
+      "version": 2,
+      "items": {
+        "base-rate": {
+          "value_type": "fixed",
+          "value": {"raw": 130, "scale": 2},
+          "targets": ["node-alpha", "node-beta"],
+          "dispatch": {"timeout_ms": 2000, "retries": 1, "strategy": "retry_then_fail"}
+        },
+        "threshold": {
+          "value_type": "int",
+          "value": 80,
+          "targets": ["node-alpha", "node-gamma"]
+        },
+        "composite": {
+          "value_type": "fixed",
+          "value": {"raw": 7, "scale": 1},
+          "targets": ["node-beta"],
+          "derives_from": [
+            {"key": "base-rate", "coef": {"raw": 2, "scale": 0}}
+          ]
+        }
+      }
+    },
+    {
+      "version": 3,
+      "items": {
+        "base-rate": {
+          "value_type": "fixed",
+          "value": {"raw": 130, "scale": 2},
+          "targets": ["node-alpha", "node-beta"],
+          "dispatch": {"timeout_ms": 2000, "retries": 1, "strategy": "retry_then_fail"}
+        },
+        "threshold": {
+          "value_type": "int",
+          "value": 95,
+          "targets": ["node-alpha", "node-gamma"]
+        },
+        "composite": {
+          "value_type": "fixed",
+          "value": {"raw": 7, "scale": 1},
+          "targets": ["node-beta", "node-gamma"],
+          "derives_from": [
+            {"key": "base-rate", "coef": {"raw": 3, "scale": 0}}
+          ]
+        }
+      }
+    }
+  ]
+}
