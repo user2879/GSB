@@ -1,0 +1,19 @@
+{
+  "description": "Producer transaction-status replies keyed by transaction id; the last script item repeats",
+  "default": "unknown",
+  "scripts": {
+    "txn-query-commit": [
+      {"result": "committed", "delay_ms": 10}
+    ],
+    "txn-query-unknown-commit": [
+      {"result": "unknown", "delay_ms": 0},
+      {"result": "committed", "delay_ms": 5}
+    ],
+    "txn-query-exhaust": [
+      {"result": "unknown", "delay_ms": 0}
+    ],
+    "txn-conflict": [
+      {"result": "committed", "delay_ms": 300}
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "half-query-pull-consistency-v1",
+  "producer_sequence": "producer_half_sequence.json",
+  "query_answers": "query_answers.json",
+  "consumer_pulls": "consumer_pulls.json",
+  "fault_injection": "fault_injection.json",
+  "query_budget_ms": 1000,
+  "pull_budget_ms": 1,
+  "query_retry_ms": 25,
+  "query_tick_ms": 5,
+  "settle_timeout_s": 8,
+  "idempotency": {"max_entries": 2, "ttl_ms": 60000}
+}

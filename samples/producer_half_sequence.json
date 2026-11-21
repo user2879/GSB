@@ -1,0 +1,84 @@
+{
+  "description": "Deterministic producer half-message and ending-command sequence",
+  "transactions": [
+    {
+      "txn_id": "txn-explicit-commit",
+      "version": 1,
+      "body": {"order_id": "A-1001", "amount": 1250, "currency": "CNY"},
+      "txn_timeout_ms": 500,
+      "query_max": 3,
+      "end": {"op": "commit", "delay_ms": 0},
+      "duplicate_register": true,
+      "expect": {"state": "committable", "disposition": "committable"}
+    },
+    {
+      "txn_id": "txn-explicit-rollback",
+      "version": 1,
+      "body": {"order_id": "A-1002", "amount": 899, "currency": "CNY"},
+      "txn_timeout_ms": 500,
+      "query_max": 3,
+      "end": {"op": "rollback", "delay_ms": 0},
+      "expect": {"state": "half", "disposition": "rolled_back"}
+    },
+    {
+      "txn_id": "txn-query-commit",
+      "version": 1,
+      "body": {"order_id": "A-1003", "amount": 320, "currency": "CNY"},
+      "txn_timeout_ms": 80,
+      "query_max": 3,
+      "expect": {"state": "committable", "disposition": "committable"}
+    },
+    {
+      "txn_id": "txn-query-unknown-commit",
+      "version": 1,
+      "body": {"order_id": "A-1004", "amount": 77, "currency": "CNY"},
+      "txn_timeout_ms": 70,
+      "query_max": 3,
+      "expect": {"state": "committable", "disposition": "committable"}
+    },
+    {
+      "txn_id": "txn-query-exhaust",
+      "version": 1,
+      "body": {"order_id": "A-1005", "amount": 15, "currency": "CNY"},
+      "txn_timeout_ms": 60,
+      "query_max": 2,
+      "expect": {"state": "half", "disposition": "manual_review"}
+    },
+    {
+      "txn_id": "txn-conflict",
+      "version": 1,
+      "body": {"order_id": "A-1006", "amount": 640, "currency": "CNY"},
+      "txn_timeout_ms": 60,
+      "query_max": 3,
+      "end": {"op": "rollback", "when": "query_inflight"},
+      "expect": {"state": "committable", "disposition": "committable", "conflict_reason": "commit_precedence"}
+    },
+    {
+      "txn_id": "txn-idem-a",
+      "version": 1,
+      "body": {"order_id": "A-2001", "amount": 10, "currency": "CNY"},
+      "txn_timeout_ms": 500,
+      "query_max": 3,
+      "end": {"op": "commit", "delay_ms": 0},
+      "expect": {"state": "committable", "disposition": "committable"}
+    },
+    {
+      "txn_id": "txn-idem-b",
+      "version": 1,
+      "body": {"order_id": "A-2002", "amount": 20, "currency": "CNY"},
+      "txn_timeout_ms": 500,
+      "query_max": 3,
+      "end": {"op": "commit", "delay_ms": 0},
+      "expect": {"state": "committable", "disposition": "committable"}
+    },
+    {
+      "txn_id": "txn-idem-c",
+      "version": 1,
+      "body": {"order_id": "A-2003", "amount": 30, "currency": "CNY"},
+      "txn_timeout_ms": 500,
+      "query_max": 3,
+      "end": {"op": "commit", "delay_ms": 0},
+      "expect": {"state": "committable", "disposition": "committable"}
+    }
+  ]
+}

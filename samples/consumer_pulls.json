@@ -1,0 +1,17 @@
+{
+  "description": "Concurrent and repeated pulls for the same transaction idempotency key",
+  "concurrent": [
+    {
+      "txn_id": "txn-idem-a",
+      "consumers": ["c00", "c01", "c02", "c03", "c04", "c05", "c06", "c07", "c08", "c09", "c10", "c11"]
+    }
+  ],
+  "sequential": [
+    {"txn_id": "txn-query-commit", "consumer_id": "reader-1", "request_id": "seq-query-1"},
+    {"txn_id": "txn-query-commit", "consumer_id": "reader-2", "request_id": "seq-query-2"},
+    {"txn_id": "txn-explicit-rollback", "consumer_id": "reader-3", "request_id": "seq-rollback-1", "expect_code": "E_STATE"},
+    {"txn_id": "txn-idem-b", "consumer_id": "reader-4", "request_id": "seq-idem-b"},
+    {"txn_id": "txn-idem-c", "consumer_id": "reader-5", "request_id": "seq-idem-c"},
+    {"txn_id": "txn-idem-a", "consumer_id": "reader-6", "request_id": "seq-idem-a-after-eviction"}
+  ]
+}

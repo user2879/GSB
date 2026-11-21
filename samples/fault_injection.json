@@ -1,0 +1,8 @@
+{
+  "description": "Anomaly switches exercised by the scenario and crash harness",
+  "duplicate_txn": {"enabled": true, "expected_code": "E_DUP", "txn_id": "txn-explicit-commit"},
+  "query_command_conflict": {"enabled": true, "expected_code": "E_CONFLICT", "txn_id": "txn-conflict", "fixed_winner": "commit_precedence"},
+  "log_tail_truncate": {"enabled": true, "expected_code": "E_LOG", "run_by": "tools/crash_harness.py"},
+  "latency_budget": {"pull_budget_ms": 1, "expected_code": "E_LATENCY"},
+  "idempotency_window": {"max_entries": 2, "ttl_ms": 60000}
+}
