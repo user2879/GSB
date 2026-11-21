@@ -1,0 +1,13 @@
+# 跨传感器回归对齐配置（固定种子生成）
+concurrency: 3
+feature_orders: [0, 1, 2]
+fixed_point_bits: 32
+fixed_point_frac_bits: 12
+initial_weights: 0.0
+near_singular_rcond: 1e-10
+pixel_budget: 800
+quantization_levels: 4096
+reference_sensor: S1
+regularization: 1e-06
+snapshot_commit_interval: 1
+source_whitelist: [S2, S3]

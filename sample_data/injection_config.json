@@ -1,0 +1,49 @@
+{
+  "injections": [
+    {
+      "injection_id": "INJ-001",
+      "kind": "count_overflow",
+      "target": {
+        "delta": 5,
+        "pack": "tiles_batch0.jsonl",
+        "tile_id": "tile-0001"
+      }
+    },
+    {
+      "injection_id": "INJ-002",
+      "kind": "unknown_band",
+      "target": {
+        "band": 99,
+        "pack": "tiles_batch0.jsonl",
+        "tile_id": "tile-0002"
+      }
+    },
+    {
+      "injection_id": "INJ-003",
+      "kind": "backfill_timestamp_regress",
+      "target": {
+        "batch_id": 1,
+        "tile_id": "tile-0004",
+        "timestamp_ms": 1
+      }
+    },
+    {
+      "injection_id": "INJ-004",
+      "kind": "regression_source_missing",
+      "target": {
+        "sensor_id": "S9"
+      }
+    },
+    {
+      "injection_id": "INJ-005",
+      "kind": "fixedpoint_overflow",
+      "target": {
+        "fixed_point_bits": 8,
+        "fixed_point_frac_bits": 4,
+        "pack": "tiles_batch0.jsonl",
+        "tile_id": "tile-0010"
+      }
+    }
+  ],
+  "schema_version": 1
+}
