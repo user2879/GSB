@@ -1,0 +1,41 @@
+schema_version: 1
+
+input:
+  image_dir: images
+  truth_dir: truth
+  text_jsonl: texts.jsonl
+  truth_required: true
+  strict_assertions: true
+  expected_width: 64
+  expected_height: 64
+
+features:
+  block_size: 8
+  visual_dim: 12
+  text_dim: 16
+  projection_seed: multimodal-demo-v1
+
+quantization:
+  tier: 1
+  base_step: 32
+  fractional_bits: 16
+  word_bits: 32
+  tolerance: 0.0005
+
+fusion:
+  weights:
+    text: 0.4
+    visual: 0.6
+  temperature: 0.75
+  threshold: 0.442474365234375
+  tie_break: positive
+
+budgets:
+  global_macs: 1000000
+  batch_points: 50000
+  cache_blocks: 12
+  threads: 4
+  snapshot_interval: 2
+
+report:
+  sample_detail: true
