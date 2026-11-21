@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vc-workbench-local"
+version = "1.0.0"
+description = "Deterministic local voice-conversion session workbench"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+vc-workbench = "vc_workbench.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vc_workbench*", "tools*"]

@@ -1,0 +1,33 @@
+{
+  "channels": 1,
+  "error_fixtures": [
+    "errors/truncated.wav",
+    "errors/overflow_config.json",
+    "errors/overflow_commands.json",
+    "errors/invalid_commands.json",
+    "errors/audio_format/"
+  ],
+  "fixed_seed": 20261121,
+  "references": [
+    "references/target_a/ref_01.wav",
+    "references/target_a/ref_02.wav",
+    "references/target_b/ref_01.wav",
+    "references/target_b/ref_02.wav"
+  ],
+  "sample_rate": 16000,
+  "sample_width_bits": 16,
+  "sources": {
+    "append": {
+      "path": "sources/append.wav",
+      "sample_count": 5920
+    },
+    "replacement": {
+      "path": "sources/replacement.wav",
+      "sample_count": 6880
+    },
+    "session": {
+      "path": "sources/session.wav",
+      "sample_count": 22880
+    }
+  }
+}
