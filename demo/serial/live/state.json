@@ -1,0 +1,317 @@
+{
+  "pending": [],
+  "budget_rounds": [
+    {
+      "round": 1,
+      "budget": 100,
+      "consumed": 21,
+      "remaining": 79,
+      "deductions": [
+        {
+          "request_id": "R001",
+          "item_id": "I001",
+          "points": 1,
+          "remaining_after": 99
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I002",
+          "points": 1,
+          "remaining_after": 98
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I003",
+          "points": 1,
+          "remaining_after": 97
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I004",
+          "points": 1,
+          "remaining_after": 96
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I005",
+          "points": 1,
+          "remaining_after": 95
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I006",
+          "points": 1,
+          "remaining_after": 94
+        },
+        {
+          "request_id": "R001",
+          "item_id": "I007",
+          "points": 1,
+          "remaining_after": 93
+        },
+        {
+          "request_id": "R002",
+          "item_id": "I006",
+          "points": 1,
+          "remaining_after": 92
+        },
+        {
+          "request_id": "R002",
+          "item_id": "I007",
+          "points": 1,
+          "remaining_after": 91
+        },
+        {
+          "request_id": "R002",
+          "item_id": "I008",
+          "points": 1,
+          "remaining_after": 90
+        },
+        {
+          "request_id": "R002",
+          "item_id": "I009",
+          "points": 1,
+          "remaining_after": 89
+        },
+        {
+          "request_id": "R002",
+          "item_id": "I010",
+          "points": 1,
+          "remaining_after": 88
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I010",
+          "points": 1,
+          "remaining_after": 87
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I011",
+          "points": 1,
+          "remaining_after": 86
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I012",
+          "points": 1,
+          "remaining_after": 85
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I013",
+          "points": 1,
+          "remaining_after": 84
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I014",
+          "points": 1,
+          "remaining_after": 83
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I015",
+          "points": 1,
+          "remaining_after": 82
+        },
+        {
+          "request_id": "R003",
+          "item_id": "I016",
+          "points": 1,
+          "remaining_after": 81
+        },
+        {
+          "request_id": "R004",
+          "item_id": "I017",
+          "points": 1,
+          "remaining_after": 80
+        },
+        {
+          "request_id": "R004",
+          "item_id": "I018",
+          "points": 1,
+          "remaining_after": 79
+        }
+      ],
+      "computed_count": 21,
+      "reused_count": 0,
+      "pending_count": 0,
+      "global_version": 1,
+      "input_pending_count": 0,
+      "deduction_sequence_hash": "df09c03143300819bf4a4f966679c9b8578979e2050c849535289074ac6cb617"
+    }
+  ],
+  "injection_history": [
+    {
+      "id": "INJ-001",
+      "type": "invalid_shard",
+      "first_evidence_count": 1,
+      "evidence": [
+        {
+          "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/injections/invalid_shard.jsonl",
+          "line_no": 1,
+          "code": "E_SHARD_INVALID"
+        }
+      ]
+    },
+    {
+      "id": "INJ-002",
+      "type": "fusion_clip_boundary",
+      "first_evidence_count": 5,
+      "evidence": [
+        {
+          "criterion": "fusion_score_exact_clip_boundary",
+          "request_id": "R001",
+          "item_id": "I002",
+          "raw_fixed": 0,
+          "fusion_fixed": 0,
+          "decision": "clip_to_configured_boundary"
+        },
+        {
+          "criterion": "fusion_score_exact_clip_boundary",
+          "request_id": "R002",
+          "item_id": "I007",
+          "raw_fixed": 0,
+          "fusion_fixed": 0,
+          "decision": "clip_to_configured_boundary"
+        },
+        {
+          "criterion": "fusion_score_exact_clip_boundary",
+          "request_id": "R003",
+          "item_id": "I014",
+          "raw_fixed": 0,
+          "fusion_fixed": 0,
+          "decision": "clip_to_configured_boundary"
+        },
+        {
+          "criterion": "fusion_score_exact_clip_boundary",
+          "request_id": "R004",
+          "item_id": "I017",
+          "raw_fixed": 10000,
+          "fusion_fixed": 10000,
+          "decision": "clip_to_configured_boundary"
+        },
+        {
+          "criterion": "fusion_score_exact_clip_boundary",
+          "request_id": "R004",
+          "item_id": "I018",
+          "raw_fixed": 0,
+          "fusion_fixed": 0,
+          "decision": "clip_to_configured_boundary"
+        }
+      ]
+    },
+    {
+      "id": "INJ-003",
+      "type": "fusion_tie",
+      "first_evidence_count": 2,
+      "evidence": [
+        {
+          "criterion": "fusion_score_tie_item_id_order",
+          "request_id": "R003",
+          "item_id": "I010",
+          "fusion_fixed": 2100,
+          "tied_items": [
+            "I010",
+            "I011"
+          ],
+          "decision": "item_id_lexicographic"
+        },
+        {
+          "criterion": "fusion_score_tie_item_id_order",
+          "request_id": "R003",
+          "item_id": "I011",
+          "fusion_fixed": 2100,
+          "tied_items": [
+            "I010",
+            "I011"
+          ],
+          "decision": "item_id_lexicographic"
+        }
+      ]
+    },
+    {
+      "id": "INJ-005",
+      "type": "similarity_threshold_equal",
+      "first_evidence_count": 1,
+      "evidence": [
+        {
+          "criterion": "similarity_equal_threshold_no_discount",
+          "request_id": "R001",
+          "window_index": 1,
+          "candidate_item_id": "I007",
+          "reference_item_id": "I004",
+          "similarity_fixed": 6000,
+          "decision": "do_not_discount_because_rule_is_strictly_greater_than"
+        }
+      ]
+    },
+    {
+      "id": "INJ-006",
+      "type": "discount",
+      "first_evidence_count": 3,
+      "evidence": [
+        {
+          "request_id": "R001",
+          "window_index": 0,
+          "candidate_item_id": "I001",
+          "reference_item_id": "I005",
+          "similarity_fixed": 10000,
+          "similarity": 1.0,
+          "similarity_fixed_string": "1.0000",
+          "matched_attributes": [
+            "category",
+            "price_band"
+          ],
+          "before_fixed": 7263,
+          "after_fixed": 5084,
+          "discount_fixed": 2179,
+          "discount": 0.2179,
+          "discount_fixed_string": "0.2179",
+          "criterion": "similarity_above_threshold_discount"
+        },
+        {
+          "request_id": "R002",
+          "window_index": 0,
+          "candidate_item_id": "I009",
+          "reference_item_id": "I008",
+          "similarity_fixed": 10000,
+          "similarity": 1.0,
+          "similarity_fixed_string": "1.0000",
+          "matched_attributes": [
+            "category",
+            "price_band"
+          ],
+          "before_fixed": 2000,
+          "after_fixed": 1400,
+          "discount_fixed": 600,
+          "discount": 0.06,
+          "discount_fixed_string": "0.0600",
+          "criterion": "similarity_above_threshold_discount"
+        },
+        {
+          "request_id": "R004",
+          "window_index": 0,
+          "candidate_item_id": "I018",
+          "reference_item_id": "I017",
+          "similarity_fixed": 10000,
+          "similarity": 1.0,
+          "similarity_fixed_string": "1.0000",
+          "matched_attributes": [
+            "category",
+            "price_band"
+          ],
+          "before_fixed": 0,
+          "after_fixed": 0,
+          "discount_fixed": 0,
+          "discount": 0.0,
+          "discount_fixed_string": "0.0000",
+          "criterion": "similarity_above_threshold_discount"
+        }
+      ]
+    }
+  ],
+  "last_canonical_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+  "last_mode": "full"
+}

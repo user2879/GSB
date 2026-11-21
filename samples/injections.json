@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "INJ-001",
+      "type": "invalid_shard",
+      "expected_code": "E_SHARD_INVALID",
+      "enabled": true,
+      "description": "Step 2 appends a shard with a non-finite score string."
+    },
+    {
+      "id": "INJ-002",
+      "type": "fusion_clip_boundary",
+      "enabled": true,
+      "description": "R004/I017 is max in all channels and reaches fusion score 1.0 exactly."
+    },
+    {
+      "id": "INJ-003",
+      "type": "fusion_tie",
+      "enabled": true,
+      "description": "R003/I010 and R003/I011 have identical channel scores."
+    },
+    {
+      "id": "INJ-004",
+      "type": "budget_pending",
+      "enabled": true,
+      "description": "Use --budget 0 or a low budget to retain pending candidates."
+    },
+    {
+      "id": "INJ-005",
+      "type": "similarity_threshold_equal",
+      "enabled": true,
+      "description": "Some candidates share only a category and have similarity exactly 0.6."
+    },
+    {
+      "id": "INJ-006",
+      "type": "discount",
+      "enabled": true,
+      "description": "Same category and price-band candidates trigger diversity discount."
+    },
+    {
+      "id": "INJ-007",
+      "type": "snapshot_stale",
+      "enabled": false,
+      "description": "Enable a dedicated stale-snapshot scenario when testing recovery guards."
+    }
+  ]
+}

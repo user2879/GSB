@@ -1,0 +1,26 @@
+{
+  "timeline_alignment_ms": 100,
+  "feature_dim": 4,
+  "normalization": "minmax",
+  "channel_weights": {
+    "lexical": 0.5,
+    "semantic": 0.3,
+    "trending": 0.2
+  },
+  "fusion_temperature": 1.0,
+  "fusion_bias": 0.0,
+  "fusion_score_min": 0.0,
+  "fusion_score_max": 1.0,
+  "dedup_similarity_threshold": 0.6,
+  "rerank_window_size": 4,
+  "diversity_discount_factor": 0.8,
+  "fixed_decimal_places": 4,
+  "quantization_levels": 10001,
+  "recompute_budget_per_run": 100,
+  "thread_pool_workers": 4,
+  "snapshot_commit_interval_shards": 2,
+  "similarity_weights": {
+    "category": 0.6,
+    "price_band": 0.4
+  }
+}

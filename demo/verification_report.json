@@ -1,0 +1,440 @@
+{
+  "ok": true,
+  "python": "3.11.0rc1",
+  "sample_seed": 20261121,
+  "incremental_steps": [
+    {
+      "step": 1,
+      "global_version": 2,
+      "canonical_hash": "5bf54f59521d3d8173b54eba1f863063685975d85bec0134eaa89c1c6a4f8fd7",
+      "shards": 9,
+      "candidates": 21,
+      "pending": 0,
+      "failures": 0,
+      "cache_invalidated": 28,
+      "cache_reused": 37
+    },
+    {
+      "step": 2,
+      "global_version": 3,
+      "canonical_hash": "168ff796665144650ce229203c737e8f310e37ddc09835bc1dbac3280ed2f41c",
+      "shards": 9,
+      "candidates": 21,
+      "pending": 0,
+      "failures": 1,
+      "cache_invalidated": 21,
+      "cache_reused": 56
+    },
+    {
+      "step": 3,
+      "global_version": 4,
+      "canonical_hash": "80ce7f598d2fb9662858ba5940377695377a9710f4281e3df89555bc26f38d92",
+      "shards": 8,
+      "candidates": 21,
+      "pending": 0,
+      "failures": 1,
+      "cache_invalidated": 27,
+      "cache_reused": 50
+    },
+    {
+      "step": 4,
+      "global_version": 5,
+      "canonical_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+      "shards": 8,
+      "candidates": 21,
+      "pending": 0,
+      "failures": 1,
+      "cache_invalidated": 25,
+      "cache_reused": 48
+    }
+  ],
+  "final_incremental": {
+    "global_version": 5,
+    "canonical_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+    "cache_invalidated": 25,
+    "cache_reused": 48,
+    "failures": [
+      {
+        "code": "E_SHARD_INVALID",
+        "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/injections/invalid_shard.jsonl",
+        "reason": "score must be a finite number",
+        "shard_id": "lexical#98",
+        "line_no": 1,
+        "injection_id": "INJ-001"
+      }
+    ],
+    "injection_hits": [
+      {
+        "id": "INJ-001",
+        "type": "invalid_shard",
+        "hit": true,
+        "evidence_count": 1,
+        "evidence": [
+          {
+            "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/injections/invalid_shard.jsonl",
+            "line_no": 1,
+            "code": "E_SHARD_INVALID"
+          }
+        ]
+      },
+      {
+        "id": "INJ-002",
+        "type": "fusion_clip_boundary",
+        "hit": true,
+        "evidence_count": 5,
+        "evidence": [
+          {
+            "criterion": "fusion_score_exact_clip_boundary",
+            "request_id": "R001",
+            "item_id": "I002",
+            "raw_fixed": 0,
+            "fusion_fixed": 0,
+            "decision": "clip_to_configured_boundary"
+          },
+          {
+            "criterion": "fusion_score_exact_clip_boundary",
+            "request_id": "R002",
+            "item_id": "I007",
+            "raw_fixed": 0,
+            "fusion_fixed": 0,
+            "decision": "clip_to_configured_boundary"
+          },
+          {
+            "criterion": "fusion_score_exact_clip_boundary",
+            "request_id": "R003",
+            "item_id": "I014",
+            "raw_fixed": 0,
+            "fusion_fixed": 0,
+            "decision": "clip_to_configured_boundary"
+          },
+          {
+            "criterion": "fusion_score_exact_clip_boundary",
+            "request_id": "R004",
+            "item_id": "I017",
+            "raw_fixed": 10000,
+            "fusion_fixed": 10000,
+            "decision": "clip_to_configured_boundary"
+          },
+          {
+            "criterion": "fusion_score_exact_clip_boundary",
+            "request_id": "R004",
+            "item_id": "I018",
+            "raw_fixed": 0,
+            "fusion_fixed": 0,
+            "decision": "clip_to_configured_boundary"
+          }
+        ]
+      },
+      {
+        "id": "INJ-003",
+        "type": "fusion_tie",
+        "hit": true,
+        "evidence_count": 2,
+        "evidence": [
+          {
+            "criterion": "fusion_score_tie_item_id_order",
+            "request_id": "R003",
+            "item_id": "I010",
+            "fusion_fixed": 2100,
+            "tied_items": [
+              "I010",
+              "I011"
+            ],
+            "decision": "item_id_lexicographic"
+          },
+          {
+            "criterion": "fusion_score_tie_item_id_order",
+            "request_id": "R003",
+            "item_id": "I011",
+            "fusion_fixed": 2100,
+            "tied_items": [
+              "I010",
+              "I011"
+            ],
+            "decision": "item_id_lexicographic"
+          }
+        ]
+      },
+      {
+        "id": "INJ-005",
+        "type": "similarity_threshold_equal",
+        "hit": true,
+        "evidence_count": 1,
+        "evidence": [
+          {
+            "criterion": "similarity_equal_threshold_no_discount",
+            "request_id": "R001",
+            "window_index": 1,
+            "candidate_item_id": "I007",
+            "reference_item_id": "I004",
+            "similarity_fixed": 6000,
+            "decision": "do_not_discount_because_rule_is_strictly_greater_than"
+          }
+        ]
+      },
+      {
+        "id": "INJ-006",
+        "type": "discount",
+        "hit": true,
+        "evidence_count": 3,
+        "evidence": [
+          {
+            "request_id": "R001",
+            "window_index": 0,
+            "candidate_item_id": "I001",
+            "reference_item_id": "I005",
+            "similarity_fixed": 10000,
+            "similarity": 1.0,
+            "similarity_fixed_string": "1.0000",
+            "matched_attributes": [
+              "category",
+              "price_band"
+            ],
+            "before_fixed": 7263,
+            "after_fixed": 5084,
+            "discount_fixed": 2179,
+            "discount": 0.2179,
+            "discount_fixed_string": "0.2179",
+            "criterion": "similarity_above_threshold_discount"
+          },
+          {
+            "request_id": "R002",
+            "window_index": 0,
+            "candidate_item_id": "I009",
+            "reference_item_id": "I008",
+            "similarity_fixed": 10000,
+            "similarity": 1.0,
+            "similarity_fixed_string": "1.0000",
+            "matched_attributes": [
+              "category",
+              "price_band"
+            ],
+            "before_fixed": 2000,
+            "after_fixed": 1400,
+            "discount_fixed": 600,
+            "discount": 0.06,
+            "discount_fixed_string": "0.0600",
+            "criterion": "similarity_above_threshold_discount"
+          },
+          {
+            "request_id": "R004",
+            "window_index": 0,
+            "candidate_item_id": "I018",
+            "reference_item_id": "I017",
+            "similarity_fixed": 10000,
+            "similarity": 1.0,
+            "similarity_fixed_string": "1.0000",
+            "matched_attributes": [
+              "category",
+              "price_band"
+            ],
+            "before_fixed": 0,
+            "after_fixed": 0,
+            "discount_fixed": 0,
+            "discount": 0.0,
+            "discount_fixed_string": "0.0000",
+            "criterion": "similarity_above_threshold_discount"
+          }
+        ]
+      }
+    ],
+    "boundary_counts": {
+      "fusion_score_exact_clip_boundary": 5,
+      "fusion_score_tie_item_id_order": 2,
+      "similarity_equal_threshold_no_discount": 1
+    },
+    "discount_count": 3,
+    "stage_versions": {
+      "alignment": {
+        "version": 5,
+        "content_hash": "0c115a217be44b8de2c7a6128b1a90d1c4813da32ba85e23e667f0341cd129e5",
+        "changed_this_run": true
+      },
+      "merge": {
+        "version": 4,
+        "content_hash": "7b20dd690cb25cb09b5e627420f3e2e8e03154cec273a04cc007cc48a638a1df",
+        "changed_this_run": false
+      },
+      "normalize": {
+        "version": 4,
+        "content_hash": "8752b3eef780de0a0b9362cbae4c14489e91e1020b2feb77b29a883af900bb62",
+        "changed_this_run": false
+      },
+      "fusion": {
+        "version": 5,
+        "content_hash": "dd887bdc40df4e88bb9f774645586690de4782767076508d69d980805a33d702",
+        "changed_this_run": true
+      },
+      "rerank": {
+        "version": 5,
+        "content_hash": "9a15d66d530242fd0ed6e20209822d6813d92012a987c7cccd50a7359f95bb18",
+        "changed_this_run": true
+      }
+    }
+  },
+  "incremental_vs_full": {
+    "equal": true,
+    "incremental_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+    "full_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8"
+  },
+  "thread_pool_vs_serial": {
+    "equal": true,
+    "thread_pool_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+    "serial_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8"
+  },
+  "budget": {
+    "budget_per_round": 3,
+    "rounds": [
+      {
+        "round": 1,
+        "consumed": 3,
+        "pending_after": 18,
+        "deductions": [
+          [
+            "R001",
+            "I001"
+          ],
+          [
+            "R001",
+            "I002"
+          ],
+          [
+            "R001",
+            "I003"
+          ]
+        ]
+      },
+      {
+        "round": 2,
+        "consumed": 3,
+        "pending_after": 15,
+        "deductions": [
+          [
+            "R001",
+            "I004"
+          ],
+          [
+            "R001",
+            "I005"
+          ],
+          [
+            "R001",
+            "I006"
+          ]
+        ]
+      },
+      {
+        "round": 3,
+        "consumed": 3,
+        "pending_after": 12,
+        "deductions": [
+          [
+            "R001",
+            "I007"
+          ],
+          [
+            "R002",
+            "I006"
+          ],
+          [
+            "R002",
+            "I007"
+          ]
+        ]
+      },
+      {
+        "round": 4,
+        "consumed": 3,
+        "pending_after": 9,
+        "deductions": [
+          [
+            "R002",
+            "I008"
+          ],
+          [
+            "R002",
+            "I009"
+          ],
+          [
+            "R002",
+            "I010"
+          ]
+        ]
+      },
+      {
+        "round": 5,
+        "consumed": 3,
+        "pending_after": 6,
+        "deductions": [
+          [
+            "R003",
+            "I010"
+          ],
+          [
+            "R003",
+            "I011"
+          ],
+          [
+            "R003",
+            "I012"
+          ]
+        ]
+      },
+      {
+        "round": 6,
+        "consumed": 3,
+        "pending_after": 3,
+        "deductions": [
+          [
+            "R003",
+            "I013"
+          ],
+          [
+            "R003",
+            "I014"
+          ],
+          [
+            "R003",
+            "I015"
+          ]
+        ]
+      },
+      {
+        "round": 7,
+        "consumed": 3,
+        "pending_after": 0,
+        "deductions": [
+          [
+            "R003",
+            "I016"
+          ],
+          [
+            "R004",
+            "I017"
+          ],
+          [
+            "R004",
+            "I018"
+          ]
+        ]
+      }
+    ],
+    "pending_empty": true,
+    "canonical_equals_full": true,
+    "canonical_hash": "6199173be5696624a8c7a52418c2315beba0e6a340f6563f6fc80de63279d4c8",
+    "audit_round_count": 7
+  },
+  "snapshot_stale_probe": {
+    "expected_code": "E_SNAPSHOT_STALE",
+    "observed_code": "E_SNAPSHOT_STALE",
+    "error_report": {
+      "ok": false,
+      "code": "E_SNAPSHOT_STALE",
+      "message": "config hash differs from snapshot",
+      "previous_steps": [],
+      "previous_config_hash": "tampered-for-verification",
+      "current_config_hash": "bca07f1b5df6bc8c6fa989dc3625a7bd8e3ae5553f6a88de0a825cd015556e62",
+      "schema_version": 1
+    }
+  }
+}

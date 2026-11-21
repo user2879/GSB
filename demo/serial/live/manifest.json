@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "global_version": 1,
+  "mode": "full",
+  "base_source_hash": "7b6e158399e5c75a3b29ba03eb2bb1b77a125d6c4b27b1e1641ced2ba5de8f1c",
+  "plan_hash": "bd7a8599d5379859d5086c701fe5226bd6f3a4f771d844a93991a92f074726a2",
+  "config_hash": "fe4bd4f7fdadfe655d6cc2c11237ea550046e1bd19ac8569902d1b4da1eefc3c",
+  "config": {
+    "timeline_alignment_ms": 100,
+    "feature_dim": 4,
+    "normalization": "minmax",
+    "channel_weights": {
+      "lexical": 0.45,
+      "semantic": 0.35,
+      "trending": 0.2
+    },
+    "fusion_temperature": 1.0,
+    "fusion_bias": 0.0,
+    "fusion_score_min": 0.0,
+    "fusion_score_max": 1.0,
+    "dedup_similarity_threshold": 0.6,
+    "rerank_window_size": 3,
+    "diversity_discount_factor": 0.7,
+    "fixed_decimal_places": 4,
+    "quantization_levels": 10001,
+    "recompute_budget_per_run": 100,
+    "thread_pool_workers": 4,
+    "snapshot_commit_interval_shards": 2,
+    "similarity_weights": {
+      "category": 0.6,
+      "price_band": 0.4
+    }
+  },
+  "applied_steps": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "completed_shards": [
+    {
+      "shard_id": "lexical#11",
+      "channel": "lexical",
+      "coverage_start_ms": 100,
+      "coverage_end_ms": 200,
+      "fingerprint": "6ed2214a30b3ee6f8cf9efbb3b339f61f24fb7cb56ed3f09adbfb3ef564b0e1b",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/plan/step2/lexical_seq11.jsonl"
+    },
+    {
+      "shard_id": "lexical#2",
+      "channel": "lexical",
+      "coverage_start_ms": 200,
+      "coverage_end_ms": 300,
+      "fingerprint": "7f9a5ba36f341a13191a2bfeeafcc2da47bc2d66484f10d74b524a84099d29dc",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/shards/lexical/seq2.jsonl"
+    },
+    {
+      "shard_id": "semantic#0",
+      "channel": "semantic",
+      "coverage_start_ms": 0,
+      "coverage_end_ms": 100,
+      "fingerprint": "707dbd86b8f0676070e40d1be3a85efe314705a484b761bd00fd32767a1061e6",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/shards/semantic/seq0.jsonl"
+    },
+    {
+      "shard_id": "semantic#1",
+      "channel": "semantic",
+      "coverage_start_ms": 100,
+      "coverage_end_ms": 200,
+      "fingerprint": "2cb4750cd8d5b1832e7cca8c2adce9a360747aa0c1dc51edee5958a41d854b77",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/shards/semantic/seq1.jsonl"
+    },
+    {
+      "shard_id": "semantic#2",
+      "channel": "semantic",
+      "coverage_start_ms": 200,
+      "coverage_end_ms": 300,
+      "fingerprint": "a31c22ce0f7572ebff08ee6848587f3c61e66c62b43f09d754075456e1a57907",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/plan/step1/semantic_seq2.jsonl"
+    },
+    {
+      "shard_id": "trending#0",
+      "channel": "trending",
+      "coverage_start_ms": 0,
+      "coverage_end_ms": 200,
+      "fingerprint": "fab2aeb90afb6d0485f06d2b11d385b02ce39c05fdd565be6125be72c7afb933",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/shards/trending/seq0.jsonl"
+    },
+    {
+      "shard_id": "trending#1",
+      "channel": "trending",
+      "coverage_start_ms": 200,
+      "coverage_end_ms": 300,
+      "fingerprint": "a6a44b6460bc8df09400543e5489c90159b50a9d307e367e9e2cef9a8560115b",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/shards/trending/seq1.jsonl"
+    },
+    {
+      "shard_id": "trending#2",
+      "channel": "trending",
+      "coverage_start_ms": 300,
+      "coverage_end_ms": 400,
+      "fingerprint": "15f7575ab1c7c9128ec64fa9170437def47df299427dcf91521b65f3d81f0579",
+      "source": "/home/zsl/feedback/uidfc5909d3-default-39/samples/plan/step1/trending_seq2.jsonl"
+    }
+  ],
+  "stage_versions": {
+    "alignment": {
+      "version": 1,
+      "content_hash": "0c115a217be44b8de2c7a6128b1a90d1c4813da32ba85e23e667f0341cd129e5",
+      "changed_this_run": true
+    },
+    "merge": {
+      "version": 1,
+      "content_hash": "7b20dd690cb25cb09b5e627420f3e2e8e03154cec273a04cc007cc48a638a1df",
+      "changed_this_run": true
+    },
+    "normalize": {
+      "version": 1,
+      "content_hash": "8752b3eef780de0a0b9362cbae4c14489e91e1020b2feb77b29a883af900bb62",
+      "changed_this_run": true
+    },
+    "fusion": {
+      "version": 1,
+      "content_hash": "dd887bdc40df4e88bb9f774645586690de4782767076508d69d980805a33d702",
+      "changed_this_run": true
+    },
+    "rerank": {
+      "version": 1,
+      "content_hash": "9a15d66d530242fd0ed6e20209822d6813d92012a987c7cccd50a7359f95bb18",
+      "changed_this_run": true
+    }
+  },
+  "consumed_recompute_budget_total": 21,
+  "snapshot_commit_interval_shards": 2
+}

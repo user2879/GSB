@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "seed": 20261121,
+  "steps": [
+    {
+      "step": 1,
+      "name": "append_semantic_and_trending_tail_shards",
+      "operations": [
+        {
+          "op": "append",
+          "source": "plan/step1/semantic_seq2.jsonl"
+        },
+        {
+          "op": "append",
+          "source": "plan/step1/trending_seq2.jsonl"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "name": "replace_lexical_100_200_and_inject_invalid_shard",
+      "operations": [
+        {
+          "op": "replace",
+          "channel": "lexical",
+          "start_ms": 100,
+          "end_ms": 200,
+          "source": "plan/step2/lexical_seq11.jsonl"
+        },
+        {
+          "op": "append",
+          "source": "injections/invalid_shard.jsonl",
+          "injection_id": "INJ-001"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "name": "revoke_lexical_head_shard",
+      "operations": [
+        {
+          "op": "revoke",
+          "channel": "lexical",
+          "shard_seq": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "name": "change_channel_weights_temperature_and_window",
+      "operations": [
+        {
+          "op": "update_config",
+          "patch": {
+            "channel_weights": {
+              "lexical": 0.45,
+              "semantic": 0.35,
+              "trending": 0.2
+            },
+            "rerank_window_size": 3,
+            "diversity_discount_factor": 0.7
+          }
+        }
+      ]
+    }
+  ]
+}
