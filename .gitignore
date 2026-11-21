@@ -11,3 +11,16 @@ node_modules/
 .venv/
 venv/
 __pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Runtime ledgers and logs are reproducible artifacts.
+*.db
+*.db-wal
+*.db-shm
+logs/
+artifacts/injections/
+artifacts/*.db
+demo_output/runtime/
+demo_output/evolved/
+demo_output/*.jsonl

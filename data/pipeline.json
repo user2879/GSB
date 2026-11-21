@@ -1,0 +1,57 @@
+{
+  "format": "mlpipe.pipeline.v1",
+  "fixed_scale": 3,
+  "sharding": {
+    "target_rows": 32,
+    "remainder_policy": "keep_partial"
+  },
+  "stages": [
+    {
+      "id": "canonicalize",
+      "type": "canonicalize",
+      "version": 1,
+      "upstream": null,
+      "params": {
+        "saturate": 1
+      }
+    },
+    {
+      "id": "fill_missing",
+      "type": "fill_missing",
+      "version": 1,
+      "upstream": "canonicalize",
+      "params": {
+        "fill_fixed": 0
+      }
+    },
+    {
+      "id": "normalize_amount",
+      "type": "normalize",
+      "version": 1,
+      "upstream": "fill_missing",
+      "params": {
+        "column": 1
+      }
+    },
+    {
+      "id": "clip_amount",
+      "type": "clip_outliers",
+      "version": 1,
+      "upstream": "normalize_amount",
+      "params": {
+        "column": 1,
+        "z_limit_permille": 2200,
+        "max_outlier_permille": 100
+      }
+    },
+    {
+      "id": "pack",
+      "type": "shard_pack",
+      "version": 1,
+      "upstream": "clip_amount",
+      "params": {
+        "remainder_policy": 1
+      }
+    }
+  ]
+}
