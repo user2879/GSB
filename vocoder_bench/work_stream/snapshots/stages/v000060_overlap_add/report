@@ -1,0 +1,2135 @@
+{
+  "command_cursor": 13,
+  "config": {
+    "align_search_ms": 12.0,
+    "energy_rounding": "half_up",
+    "f0_ratio": 1.0,
+    "frame_length_ms": 20.0,
+    "frame_shift_ms": 10.0,
+    "harmonic_limit": 12,
+    "interactive_budget_ms": 50.0,
+    "max_workers": 2,
+    "ncc_tol": 0.9,
+    "normalization_rule": "cola",
+    "phase_attribution_threshold": 1.5,
+    "phase_bits": 5,
+    "phase_quant_step": 1,
+    "rmse_tol": 0.12,
+    "sample_rate": 16000,
+    "snapshot_interval": 8,
+    "spectral_tol": 0.25,
+    "window_type": "hann"
+  },
+  "config_hash": "7aaaf2325740c16f",
+  "failures": [
+    {
+      "code": "E_AUDIO_FORMAT",
+      "message": "utt_badaudio.wav: missing RIFF/WAVE container",
+      "stage": "load",
+      "utterance_id": "utt_badaudio"
+    },
+    {
+      "code": "E_FEATURE_INVALID",
+      "message": "utt_badfeat.frames.jsonl: duplicate frame index 3",
+      "stage": "load",
+      "utterance_id": "utt_badfeat"
+    }
+  ],
+  "phase_profile": {
+    "phase_bits": 5,
+    "phase_quant_step": 1
+  },
+  "reuse": {
+    "by_stage": {
+      "harmonic": {
+        "lookups": 120,
+        "recomputed": 120,
+        "reused": 0
+      },
+      "metric": {
+        "lookups": 3,
+        "recomputed": 3,
+        "reused": 0
+      },
+      "overlap_add": {
+        "lookups": 3,
+        "recomputed": 3,
+        "reused": 0
+      },
+      "phase": {
+        "lookups": 6,
+        "recomputed": 6,
+        "reused": 0
+      }
+    },
+    "total_lookups": 132,
+    "total_recomputed": 132,
+    "total_reused": 0
+  },
+  "reuse_evidence": [
+    {
+      "cache_key": "5ed4987ad1b4d559",
+      "frame_index": null,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "d20519b3891238db",
+      "frame_index": null,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "683f847ad740f2e6",
+      "frame_index": -1,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a75e64123ca39",
+      "frame_index": 0,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a74e64123c886",
+      "frame_index": 1,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a73e64123c6d3",
+      "frame_index": 2,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a72e64123c520",
+      "frame_index": 3,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a79e64123d105",
+      "frame_index": 4,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a78e64123cf52",
+      "frame_index": 5,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a77e64123cd9f",
+      "frame_index": 6,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a76e64123cbec",
+      "frame_index": 7,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a7de64123d7d1",
+      "frame_index": 8,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "e98a7ce64123d61e",
+      "frame_index": 9,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5940afce0d42",
+      "frame_index": 10,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5a40afce0ef5",
+      "frame_index": 11,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5740afce09dc",
+      "frame_index": 12,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5840afce0b8f",
+      "frame_index": 13,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5540afce0676",
+      "frame_index": 14,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5640afce0829",
+      "frame_index": 15,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5340afce0310",
+      "frame_index": 16,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d5440afce04c3",
+      "frame_index": 17,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d6140afce1ada",
+      "frame_index": 18,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa0d6240afce1c8d",
+      "frame_index": 19,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d340afcaf3b9",
+      "frame_index": 20,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d240afcaf206",
+      "frame_index": 21,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d140afcaf053",
+      "frame_index": 22,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d040afcaeea0",
+      "frame_index": 23,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d740afcafa85",
+      "frame_index": 24,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d640afcaf8d2",
+      "frame_index": 25,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d540afcaf71f",
+      "frame_index": 26,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09d440afcaf56c",
+      "frame_index": 27,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09db40afcb0151",
+      "frame_index": 28,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa09da40afcaff9e",
+      "frame_index": 29,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa064d40afc7da30",
+      "frame_index": 30,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa064e40afc7dbe3",
+      "frame_index": 31,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa064f40afc7dd96",
+      "frame_index": 32,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa065040afc7df49",
+      "frame_index": 33,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa065140afc7e0fc",
+      "frame_index": 34,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fa065240afc7e2af",
+      "frame_index": 35,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "fc7e91b3a0e4942c",
+      "frame_index": -1,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36432044e2f060",
+      "frame_index": 0,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36442044e2f213",
+      "frame_index": 1,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36452044e2f3c6",
+      "frame_index": 2,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36462044e2f579",
+      "frame_index": 3,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36472044e2f72c",
+      "frame_index": 4,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36482044e2f8df",
+      "frame_index": 5,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc36492044e2fa92",
+      "frame_index": 6,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc364a2044e2fc45",
+      "frame_index": 7,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc364b2044e2fdf8",
+      "frame_index": 8,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "dc364c2044e2ffab",
+      "frame_index": 9,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e5d50da17179",
+      "frame_index": 10,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e4d50da16fc6",
+      "frame_index": 11,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e3d50da16e13",
+      "frame_index": 12,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e2d50da16c60",
+      "frame_index": 13,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e9d50da17845",
+      "frame_index": 14,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e8d50da17692",
+      "frame_index": 15,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e7d50da174df",
+      "frame_index": 16,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327e6d50da1732c",
+      "frame_index": 17,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327edd50da17f11",
+      "frame_index": 18,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1327ecd50da17d5e",
+      "frame_index": 19,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b6bd50da48b02",
+      "frame_index": 20,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b6cd50da48cb5",
+      "frame_index": 21,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b69d50da4879c",
+      "frame_index": 22,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b6ad50da4894f",
+      "frame_index": 23,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b67d50da48436",
+      "frame_index": 24,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b68d50da485e9",
+      "frame_index": 25,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b65d50da480d0",
+      "frame_index": 26,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b66d50da48283",
+      "frame_index": 27,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b73d50da4989a",
+      "frame_index": 28,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132b74d50da49a4d",
+      "frame_index": 29,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e71d50da6cb0b",
+      "frame_index": 30,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e70d50da6c958",
+      "frame_index": 31,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e73d50da6ce71",
+      "frame_index": 32,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e72d50da6ccbe",
+      "frame_index": 33,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e75d50da6d1d7",
+      "frame_index": 34,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e74d50da6d024",
+      "frame_index": 35,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e77d50da6d53d",
+      "frame_index": 36,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e76d50da6d38a",
+      "frame_index": 37,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e69d50da6bd73",
+      "frame_index": 38,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "132e68d50da6bbc0",
+      "frame_index": 39,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "d59a8a984d2f5f39",
+      "frame_index": null,
+      "reused": false,
+      "stage": "overlap_add",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "13c127357a058199",
+      "frame_index": null,
+      "reused": false,
+      "stage": "overlap_add",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "b06209ed363ba5e0",
+      "frame_index": null,
+      "reused": false,
+      "stage": "metric",
+      "utterance_id": "utt_rising"
+    },
+    {
+      "cache_key": "1cd1f8852bbcc13a",
+      "frame_index": null,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "f258508513ea1459",
+      "frame_index": -1,
+      "reused": false,
+      "stage": "phase",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7972e3365331",
+      "frame_index": 0,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7872e336517e",
+      "frame_index": 1,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7772e3364fcb",
+      "frame_index": 2,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7672e3364e18",
+      "frame_index": 3,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7d72e33659fd",
+      "frame_index": 4,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7c72e336584a",
+      "frame_index": 5,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7b72e3365697",
+      "frame_index": 6,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7a72e33654e4",
+      "frame_index": 7,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7172e3364599",
+      "frame_index": 8,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "fffb7072e33643e6",
+      "frame_index": 9,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef938154c278a",
+      "frame_index": 10,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9efa38154c293d",
+      "frame_index": 11,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef738154c2424",
+      "frame_index": 12,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef838154c25d7",
+      "frame_index": 13,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef538154c20be",
+      "frame_index": 14,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef638154c2271",
+      "frame_index": 15,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef338154c1d58",
+      "frame_index": 16,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef438154c1f0b",
+      "frame_index": 17,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef138154c19f2",
+      "frame_index": 18,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9ef238154c1ba5",
+      "frame_index": 19,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf3381549e781",
+      "frame_index": 20,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf2381549e5ce",
+      "frame_index": 21,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf1381549e41b",
+      "frame_index": 22,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf0381549e268",
+      "frame_index": 23,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf7381549ee4d",
+      "frame_index": 24,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf6381549ec9a",
+      "frame_index": 25,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf5381549eae7",
+      "frame_index": 26,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bf4381549e934",
+      "frame_index": 27,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9beb381549d9e9",
+      "frame_index": 28,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9bea381549d836",
+      "frame_index": 29,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e986d381546cdf8",
+      "frame_index": 30,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e986e381546cfab",
+      "frame_index": 31,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e986f381546d15e",
+      "frame_index": 32,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9870381546d311",
+      "frame_index": 33,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9871381546d4c4",
+      "frame_index": 34,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9872381546d677",
+      "frame_index": 35,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9873381546d82a",
+      "frame_index": 36,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9874381546d9dd",
+      "frame_index": 37,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9865381546c060",
+      "frame_index": 38,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2e9866381546c213",
+      "frame_index": 39,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2eaff738155a9757",
+      "frame_index": 40,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2eaff638155a95a4",
+      "frame_index": 41,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2eaff938155a9abd",
+      "frame_index": 42,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "2eaff838155a990a",
+      "frame_index": 43,
+      "reused": false,
+      "stage": "harmonic",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "9c704ecea63218b9",
+      "frame_index": null,
+      "reused": false,
+      "stage": "overlap_add",
+      "utterance_id": "utt_vibrato"
+    },
+    {
+      "cache_key": "58a560ee10291e41",
+      "frame_index": null,
+      "reused": false,
+      "stage": "metric",
+      "utterance_id": "utt_falling"
+    },
+    {
+      "cache_key": "8f2a4b20b6fa84d7",
+      "frame_index": null,
+      "reused": false,
+      "stage": "metric",
+      "utterance_id": "utt_vibrato"
+    }
+  ],
+  "utterances": [
+    {
+      "alignment": {
+        "best_offset_ms": 0.0,
+        "best_offset_samples": 0,
+        "correlation": 0.99497297
+      },
+      "attribution": {
+        "component_errors": {
+          "energy_rounding": 1.526e-05,
+          "harmonic_truncation": 0.0,
+          "phase_quantization": 0.02407682
+        },
+        "dominant_stage": "phase_quantization",
+        "first_dominant_stage": null,
+        "offending_frame_range": [],
+        "offending_harmonics": [],
+        "phase_bit_width_deviation_rmse": 0.02407682,
+        "phase_dominant": false,
+        "ranked_stages": [
+          {
+            "error": 0.02407682,
+            "stage": "phase_quantization"
+          },
+          {
+            "error": 1.526e-05,
+            "stage": "energy_rounding"
+          },
+          {
+            "error": 0.0,
+            "stage": "harmonic_truncation"
+          }
+        ],
+        "spectral_pass": true,
+        "threshold_ratio": 0.2006,
+        "waveform_pass": true
+      },
+      "frame_summaries": [
+        {
+          "frame_index": 0,
+          "peak_float": 0.519951,
+          "rms_float": 0.242295,
+          "samples": 320
+        },
+        {
+          "frame_index": 1,
+          "peak_float": 0.515192,
+          "rms_float": 0.233173,
+          "samples": 320
+        },
+        {
+          "frame_index": 2,
+          "peak_float": 0.557332,
+          "rms_float": 0.256495,
+          "samples": 320
+        },
+        {
+          "frame_index": 3,
+          "peak_float": 0.500872,
+          "rms_float": 0.229436,
+          "samples": 320
+        },
+        {
+          "frame_index": 4,
+          "peak_float": 0.519052,
+          "rms_float": 0.229436,
+          "samples": 320
+        },
+        {
+          "frame_index": 5,
+          "peak_float": 0.525199,
+          "rms_float": 0.215036,
+          "samples": 320
+        },
+        {
+          "frame_index": 6,
+          "peak_float": 0.510001,
+          "rms_float": 0.217071,
+          "samples": 320
+        },
+        {
+          "frame_index": 7,
+          "peak_float": 0.562198,
+          "rms_float": 0.253175,
+          "samples": 320
+        },
+        {
+          "frame_index": 8,
+          "peak_float": 0.70084,
+          "rms_float": 0.322634,
+          "samples": 320
+        },
+        {
+          "frame_index": 9,
+          "peak_float": 0.716677,
+          "rms_float": 0.332201,
+          "samples": 320
+        },
+        {
+          "frame_index": 10,
+          "peak_float": 0.754027,
+          "rms_float": 0.354438,
+          "samples": 320
+        },
+        {
+          "frame_index": 11,
+          "peak_float": 0.613861,
+          "rms_float": 0.279363,
+          "samples": 320
+        },
+        {
+          "frame_index": 12,
+          "peak_float": 0.721472,
+          "rms_float": 0.31064,
+          "samples": 320
+        },
+        {
+          "frame_index": 13,
+          "peak_float": 0.687561,
+          "rms_float": 0.304805,
+          "samples": 320
+        },
+        {
+          "frame_index": 14,
+          "peak_float": 0.675496,
+          "rms_float": 0.298812,
+          "samples": 320
+        },
+        {
+          "frame_index": 15,
+          "peak_float": 0.692989,
+          "rms_float": 0.309685,
+          "samples": 320
+        },
+        {
+          "frame_index": 16,
+          "peak_float": 0.725215,
+          "rms_float": 0.342205,
+          "samples": 320
+        },
+        {
+          "frame_index": 17,
+          "peak_float": 0.719418,
+          "rms_float": 0.332865,
+          "samples": 320
+        },
+        {
+          "frame_index": 18,
+          "peak_float": 0.786252,
+          "rms_float": 0.340029,
+          "samples": 320
+        },
+        {
+          "frame_index": 19,
+          "peak_float": 0.765994,
+          "rms_float": 0.353174,
+          "samples": 320
+        },
+        {
+          "frame_index": 20,
+          "peak_float": 0.682728,
+          "rms_float": 0.304874,
+          "samples": 320
+        },
+        {
+          "frame_index": 21,
+          "peak_float": 0.712334,
+          "rms_float": 0.31645,
+          "samples": 320
+        },
+        {
+          "frame_index": 22,
+          "peak_float": 0.722115,
+          "rms_float": 0.344362,
+          "samples": 320
+        },
+        {
+          "frame_index": 23,
+          "peak_float": 0.675731,
+          "rms_float": 0.313547,
+          "samples": 320
+        },
+        {
+          "frame_index": 24,
+          "peak_float": 0.60778,
+          "rms_float": 0.260638,
+          "samples": 320
+        },
+        {
+          "frame_index": 25,
+          "peak_float": 0.599837,
+          "rms_float": 0.264236,
+          "samples": 320
+        },
+        {
+          "frame_index": 26,
+          "peak_float": 0.633486,
+          "rms_float": 0.267917,
+          "samples": 320
+        },
+        {
+          "frame_index": 27,
+          "peak_float": 0.628501,
+          "rms_float": 0.2776,
+          "samples": 320
+        },
+        {
+          "frame_index": 28,
+          "peak_float": 0.709497,
+          "rms_float": 0.334562,
+          "samples": 320
+        },
+        {
+          "frame_index": 29,
+          "peak_float": 0.528647,
+          "rms_float": 0.230251,
+          "samples": 320
+        },
+        {
+          "frame_index": 30,
+          "peak_float": 0.612516,
+          "rms_float": 0.284572,
+          "samples": 320
+        },
+        {
+          "frame_index": 31,
+          "peak_float": 0.541642,
+          "rms_float": 0.222788,
+          "samples": 320
+        },
+        {
+          "frame_index": 32,
+          "peak_float": 0.590712,
+          "rms_float": 0.271081,
+          "samples": 320
+        },
+        {
+          "frame_index": 33,
+          "peak_float": 0.505372,
+          "rms_float": 0.238136,
+          "samples": 320
+        },
+        {
+          "frame_index": 34,
+          "peak_float": 0.477608,
+          "rms_float": 0.200288,
+          "samples": 320
+        },
+        {
+          "frame_index": 35,
+          "peak_float": 0.523758,
+          "rms_float": 0.238971,
+          "samples": 320
+        }
+      ],
+      "metrics": {
+        "normalized_cross_correlation": 0.99497297,
+        "spectral_distance": 0.01291816,
+        "waveform_rmse": 0.02407682
+      },
+      "recomputed_cache_keys": [
+        "5ed4987ad1b4d559",
+        "683f847ad740f2e6",
+        "e98a75e64123ca39",
+        "e98a74e64123c886",
+        "e98a73e64123c6d3",
+        "e98a72e64123c520",
+        "e98a79e64123d105",
+        "e98a78e64123cf52",
+        "e98a77e64123cd9f",
+        "e98a76e64123cbec",
+        "e98a7de64123d7d1",
+        "e98a7ce64123d61e",
+        "fa0d5940afce0d42",
+        "fa0d5a40afce0ef5",
+        "fa0d5740afce09dc",
+        "fa0d5840afce0b8f",
+        "fa0d5540afce0676",
+        "fa0d5640afce0829",
+        "fa0d5340afce0310",
+        "fa0d5440afce04c3",
+        "fa0d6140afce1ada",
+        "fa0d6240afce1c8d",
+        "fa09d340afcaf3b9",
+        "fa09d240afcaf206",
+        "fa09d140afcaf053",
+        "fa09d040afcaeea0",
+        "fa09d740afcafa85",
+        "fa09d640afcaf8d2",
+        "fa09d540afcaf71f",
+        "fa09d440afcaf56c",
+        "fa09db40afcb0151",
+        "fa09da40afcaff9e",
+        "fa064d40afc7da30",
+        "fa064e40afc7dbe3",
+        "fa064f40afc7dd96",
+        "fa065040afc7df49",
+        "fa065140afc7e0fc",
+        "fa065240afc7e2af",
+        "d59a8a984d2f5f39",
+        "58a560ee10291e41"
+      ],
+      "referenced_feature_frames": [
+        "02da1af644655afe",
+        "faa11ddb3dc1c877",
+        "36da25a31e7a3535",
+        "7529492b76f23fd1",
+        "ef6a76c36f2b153d",
+        "39e564e6b979fee1",
+        "d6c16449ec6dfaad",
+        "c07ac3e621ecac6a",
+        "bc0fbf7bb12cffcf",
+        "9e3604d85d2c6280",
+        "e4d845b1b4c31254",
+        "e8591eae93d12660",
+        "e27a81d168b0f644",
+        "86ad4356ce4212a4",
+        "659f1c7e30c319af",
+        "83b9340617d65081",
+        "3338293df6fd4438",
+        "1065deb846bb238a",
+        "8182c90045b504e8",
+        "055a08cf2973207f",
+        "59a90e5a55a0c568",
+        "e34cfd1a4265db69",
+        "759e31c7004a503f",
+        "72b17eb3f63a009c",
+        "4d29e9dc1d36a072",
+        "d6cfdf9e96514ea3",
+        "33beaa8960ed9843",
+        "895df799a3501755",
+        "83876d75c0f51b9b",
+        "1cb63eb00a96bc3e",
+        "376ea077d50f2ecb",
+        "b4d2e6e440baff54",
+        "0882b9f8d564920f",
+        "519787267c1a2554",
+        "62f05aaebd52f63e",
+        "60d52b03916c3a8e"
+      ],
+      "truncation": {
+        "affected_frames": [],
+        "configured_limit": 12,
+        "dropped_harmonics": [],
+        "original_limit": 12
+      },
+      "utterance_id": "utt_falling"
+    },
+    {
+      "alignment": {
+        "best_offset_ms": 0.0625,
+        "best_offset_samples": 1,
+        "correlation": 0.9906732
+      },
+      "attribution": {
+        "component_errors": {
+          "energy_rounding": 1.526e-05,
+          "harmonic_truncation": 0.0,
+          "phase_quantization": 0.036964
+        },
+        "dominant_stage": "phase_quantization",
+        "first_dominant_stage": null,
+        "offending_frame_range": [],
+        "offending_harmonics": [],
+        "phase_bit_width_deviation_rmse": 0.036964,
+        "phase_dominant": false,
+        "ranked_stages": [
+          {
+            "error": 0.036964,
+            "stage": "phase_quantization"
+          },
+          {
+            "error": 1.526e-05,
+            "stage": "energy_rounding"
+          },
+          {
+            "error": 0.0,
+            "stage": "harmonic_truncation"
+          }
+        ],
+        "spectral_pass": true,
+        "threshold_ratio": 0.308,
+        "waveform_pass": true
+      },
+      "frame_summaries": [
+        {
+          "frame_index": 0,
+          "peak_float": 0.496122,
+          "rms_float": 0.252698,
+          "samples": 320
+        },
+        {
+          "frame_index": 1,
+          "peak_float": 0.441783,
+          "rms_float": 0.220358,
+          "samples": 320
+        },
+        {
+          "frame_index": 2,
+          "peak_float": 0.472628,
+          "rms_float": 0.245729,
+          "samples": 320
+        },
+        {
+          "frame_index": 3,
+          "peak_float": 0.481087,
+          "rms_float": 0.21816,
+          "samples": 320
+        },
+        {
+          "frame_index": 4,
+          "peak_float": 0.562181,
+          "rms_float": 0.266086,
+          "samples": 320
+        },
+        {
+          "frame_index": 5,
+          "peak_float": 0.501803,
+          "rms_float": 0.256113,
+          "samples": 320
+        },
+        {
+          "frame_index": 6,
+          "peak_float": 0.588765,
+          "rms_float": 0.277424,
+          "samples": 320
+        },
+        {
+          "frame_index": 7,
+          "peak_float": 0.570464,
+          "rms_float": 0.280626,
+          "samples": 320
+        },
+        {
+          "frame_index": 8,
+          "peak_float": 0.61754,
+          "rms_float": 0.323899,
+          "samples": 320
+        },
+        {
+          "frame_index": 9,
+          "peak_float": 0.610767,
+          "rms_float": 0.300778,
+          "samples": 320
+        },
+        {
+          "frame_index": 10,
+          "peak_float": 0.59832,
+          "rms_float": 0.293188,
+          "samples": 320
+        },
+        {
+          "frame_index": 11,
+          "peak_float": 0.57081,
+          "rms_float": 0.271672,
+          "samples": 320
+        },
+        {
+          "frame_index": 12,
+          "peak_float": 0.588647,
+          "rms_float": 0.267863,
+          "samples": 320
+        },
+        {
+          "frame_index": 13,
+          "peak_float": 0.562531,
+          "rms_float": 0.26545,
+          "samples": 320
+        },
+        {
+          "frame_index": 14,
+          "peak_float": 0.678958,
+          "rms_float": 0.351587,
+          "samples": 320
+        },
+        {
+          "frame_index": 15,
+          "peak_float": 0.672304,
+          "rms_float": 0.332529,
+          "samples": 320
+        },
+        {
+          "frame_index": 16,
+          "peak_float": 0.653083,
+          "rms_float": 0.337739,
+          "samples": 320
+        },
+        {
+          "frame_index": 17,
+          "peak_float": 0.640444,
+          "rms_float": 0.308147,
+          "samples": 320
+        },
+        {
+          "frame_index": 18,
+          "peak_float": 0.691543,
+          "rms_float": 0.309064,
+          "samples": 320
+        },
+        {
+          "frame_index": 19,
+          "peak_float": 0.630706,
+          "rms_float": 0.301572,
+          "samples": 320
+        },
+        {
+          "frame_index": 20,
+          "peak_float": 0.719909,
+          "rms_float": 0.340642,
+          "samples": 320
+        },
+        {
+          "frame_index": 21,
+          "peak_float": 0.685832,
+          "rms_float": 0.361312,
+          "samples": 320
+        },
+        {
+          "frame_index": 22,
+          "peak_float": 0.590213,
+          "rms_float": 0.281151,
+          "samples": 320
+        },
+        {
+          "frame_index": 23,
+          "peak_float": 0.631145,
+          "rms_float": 0.288766,
+          "samples": 320
+        },
+        {
+          "frame_index": 24,
+          "peak_float": 0.645126,
+          "rms_float": 0.329337,
+          "samples": 320
+        },
+        {
+          "frame_index": 25,
+          "peak_float": 0.61302,
+          "rms_float": 0.31184,
+          "samples": 320
+        },
+        {
+          "frame_index": 26,
+          "peak_float": 0.65657,
+          "rms_float": 0.299608,
+          "samples": 320
+        },
+        {
+          "frame_index": 27,
+          "peak_float": 0.600694,
+          "rms_float": 0.269273,
+          "samples": 320
+        },
+        {
+          "frame_index": 28,
+          "peak_float": 0.689376,
+          "rms_float": 0.343068,
+          "samples": 320
+        },
+        {
+          "frame_index": 29,
+          "peak_float": 0.505658,
+          "rms_float": 0.241559,
+          "samples": 320
+        },
+        {
+          "frame_index": 30,
+          "peak_float": 0.578559,
+          "rms_float": 0.266903,
+          "samples": 320
+        },
+        {
+          "frame_index": 31,
+          "peak_float": 0.582627,
+          "rms_float": 0.269592,
+          "samples": 320
+        },
+        {
+          "frame_index": 32,
+          "peak_float": 0.609996,
+          "rms_float": 0.276054,
+          "samples": 320
+        },
+        {
+          "frame_index": 33,
+          "peak_float": 0.535543,
+          "rms_float": 0.268258,
+          "samples": 320
+        },
+        {
+          "frame_index": 34,
+          "peak_float": 0.485842,
+          "rms_float": 0.226502,
+          "samples": 320
+        },
+        {
+          "frame_index": 35,
+          "peak_float": 0.54246,
+          "rms_float": 0.263294,
+          "samples": 320
+        },
+        {
+          "frame_index": 36,
+          "peak_float": 0.424153,
+          "rms_float": 0.201709,
+          "samples": 320
+        },
+        {
+          "frame_index": 37,
+          "peak_float": 0.42593,
+          "rms_float": 0.202796,
+          "samples": 320
+        },
+        {
+          "frame_index": 38,
+          "peak_float": 0.514898,
+          "rms_float": 0.264612,
+          "samples": 320
+        },
+        {
+          "frame_index": 39,
+          "peak_float": 0.460272,
+          "rms_float": 0.226339,
+          "samples": 320
+        }
+      ],
+      "metrics": {
+        "normalized_cross_correlation": 0.9906732,
+        "spectral_distance": 0.04400912,
+        "waveform_rmse": 0.07111939
+      },
+      "recomputed_cache_keys": [
+        "d20519b3891238db",
+        "fc7e91b3a0e4942c",
+        "dc36432044e2f060",
+        "dc36442044e2f213",
+        "dc36452044e2f3c6",
+        "dc36462044e2f579",
+        "dc36472044e2f72c",
+        "dc36482044e2f8df",
+        "dc36492044e2fa92",
+        "dc364a2044e2fc45",
+        "dc364b2044e2fdf8",
+        "dc364c2044e2ffab",
+        "1327e5d50da17179",
+        "1327e4d50da16fc6",
+        "1327e3d50da16e13",
+        "1327e2d50da16c60",
+        "1327e9d50da17845",
+        "1327e8d50da17692",
+        "1327e7d50da174df",
+        "1327e6d50da1732c",
+        "1327edd50da17f11",
+        "1327ecd50da17d5e",
+        "132b6bd50da48b02",
+        "132b6cd50da48cb5",
+        "132b69d50da4879c",
+        "132b6ad50da4894f",
+        "132b67d50da48436",
+        "132b68d50da485e9",
+        "132b65d50da480d0",
+        "132b66d50da48283",
+        "132b73d50da4989a",
+        "132b74d50da49a4d",
+        "132e71d50da6cb0b",
+        "132e70d50da6c958",
+        "132e73d50da6ce71",
+        "132e72d50da6ccbe",
+        "132e75d50da6d1d7",
+        "132e74d50da6d024",
+        "132e77d50da6d53d",
+        "132e76d50da6d38a",
+        "132e69d50da6bd73",
+        "132e68d50da6bbc0",
+        "13c127357a058199",
+        "b06209ed363ba5e0"
+      ],
+      "referenced_feature_frames": [
+        "3ac519c2cbd599a6",
+        "57bb0fe4248b2df5",
+        "ca4e1f8e99b4f702",
+        "f98b33467b05d82e",
+        "e439ce9b8c515e8b",
+        "235bd752016a7899",
+        "730b93d826e9ba04",
+        "072ae973c558240c",
+        "73f15f13bd3e2fcf",
+        "e6e37572acb061a6",
+        "54f55f3db727d245",
+        "7d1ac3ae65f4b54b",
+        "b5667960e4497475",
+        "bd5f9245ee6e4042",
+        "2d62b6f36879f588",
+        "0cb281bdd8711a6e",
+        "50581862b77f14ad",
+        "fee98aefb91d67ce",
+        "285887fca89315c2",
+        "d145c37efd7dd85d",
+        "ab5bf363e692e963",
+        "93ff197d864c90a3",
+        "491147b8cfc35813",
+        "469ba5f66359f872",
+        "2f39a13037ed4791",
+        "2c628d7fc0d221ab",
+        "f4a3d90b3f0e3587",
+        "ab9d908a8883bab4",
+        "678d715d1c838053",
+        "c5c1c63452854b04",
+        "ff10f4348a90939e",
+        "d1458502f0c9f79d",
+        "3f2e645af2651cff",
+        "8e3c5c79f4f65eeb",
+        "e83252e1709c39b5",
+        "d4e7640799099efb",
+        "2934d3d6648558f1",
+        "68b49932f58accdc",
+        "2b51b467f06b9e72",
+        "0583c31ab51458f4"
+      ],
+      "truncation": {
+        "affected_frames": [],
+        "configured_limit": 12,
+        "dropped_harmonics": [],
+        "original_limit": 12
+      },
+      "utterance_id": "utt_rising"
+    },
+    {
+      "alignment": {
+        "best_offset_ms": 0.0625,
+        "best_offset_samples": 1,
+        "correlation": 0.98762966
+      },
+      "attribution": {
+        "component_errors": {
+          "energy_rounding": 1.526e-05,
+          "harmonic_truncation": 0.0,
+          "phase_quantization": 0.0376576
+        },
+        "dominant_stage": "phase_quantization",
+        "first_dominant_stage": null,
+        "offending_frame_range": [],
+        "offending_harmonics": [],
+        "phase_bit_width_deviation_rmse": 0.0376576,
+        "phase_dominant": false,
+        "ranked_stages": [
+          {
+            "error": 0.0376576,
+            "stage": "phase_quantization"
+          },
+          {
+            "error": 1.526e-05,
+            "stage": "energy_rounding"
+          },
+          {
+            "error": 0.0,
+            "stage": "harmonic_truncation"
+          }
+        ],
+        "spectral_pass": true,
+        "threshold_ratio": 0.3138,
+        "waveform_pass": true
+      },
+      "frame_summaries": [
+        {
+          "frame_index": 0,
+          "peak_float": 0.427796,
+          "rms_float": 0.231035,
+          "samples": 320
+        },
+        {
+          "frame_index": 1,
+          "peak_float": 0.432109,
+          "rms_float": 0.249562,
+          "samples": 320
+        },
+        {
+          "frame_index": 2,
+          "peak_float": 0.512616,
+          "rms_float": 0.268869,
+          "samples": 320
+        },
+        {
+          "frame_index": 3,
+          "peak_float": 0.44076,
+          "rms_float": 0.214161,
+          "samples": 320
+        },
+        {
+          "frame_index": 4,
+          "peak_float": 0.453094,
+          "rms_float": 0.271992,
+          "samples": 320
+        },
+        {
+          "frame_index": 5,
+          "peak_float": 0.466033,
+          "rms_float": 0.261595,
+          "samples": 320
+        },
+        {
+          "frame_index": 6,
+          "peak_float": 0.455672,
+          "rms_float": 0.255668,
+          "samples": 320
+        },
+        {
+          "frame_index": 7,
+          "peak_float": 0.51344,
+          "rms_float": 0.288559,
+          "samples": 320
+        },
+        {
+          "frame_index": 8,
+          "peak_float": 0.606463,
+          "rms_float": 0.326666,
+          "samples": 320
+        },
+        {
+          "frame_index": 9,
+          "peak_float": 0.477135,
+          "rms_float": 0.254462,
+          "samples": 320
+        },
+        {
+          "frame_index": 10,
+          "peak_float": 0.467086,
+          "rms_float": 0.263674,
+          "samples": 320
+        },
+        {
+          "frame_index": 11,
+          "peak_float": 0.564757,
+          "rms_float": 0.279481,
+          "samples": 320
+        },
+        {
+          "frame_index": 12,
+          "peak_float": 0.471836,
+          "rms_float": 0.242772,
+          "samples": 320
+        },
+        {
+          "frame_index": 13,
+          "peak_float": 0.5612,
+          "rms_float": 0.269669,
+          "samples": 320
+        },
+        {
+          "frame_index": 14,
+          "peak_float": 0.545743,
+          "rms_float": 0.327729,
+          "samples": 320
+        },
+        {
+          "frame_index": 15,
+          "peak_float": 0.573446,
+          "rms_float": 0.312344,
+          "samples": 320
+        },
+        {
+          "frame_index": 16,
+          "peak_float": 0.56923,
+          "rms_float": 0.317542,
+          "samples": 320
+        },
+        {
+          "frame_index": 17,
+          "peak_float": 0.640396,
+          "rms_float": 0.354895,
+          "samples": 320
+        },
+        {
+          "frame_index": 18,
+          "peak_float": 0.608425,
+          "rms_float": 0.300686,
+          "samples": 320
+        },
+        {
+          "frame_index": 19,
+          "peak_float": 0.526783,
+          "rms_float": 0.286829,
+          "samples": 320
+        },
+        {
+          "frame_index": 20,
+          "peak_float": 0.591073,
+          "rms_float": 0.34917,
+          "samples": 320
+        },
+        {
+          "frame_index": 21,
+          "peak_float": 0.597014,
+          "rms_float": 0.32898,
+          "samples": 320
+        },
+        {
+          "frame_index": 22,
+          "peak_float": 0.546175,
+          "rms_float": 0.310619,
+          "samples": 320
+        },
+        {
+          "frame_index": 23,
+          "peak_float": 0.608246,
+          "rms_float": 0.343919,
+          "samples": 320
+        },
+        {
+          "frame_index": 24,
+          "peak_float": 0.566629,
+          "rms_float": 0.334689,
+          "samples": 320
+        },
+        {
+          "frame_index": 25,
+          "peak_float": 0.613864,
+          "rms_float": 0.346639,
+          "samples": 320
+        },
+        {
+          "frame_index": 26,
+          "peak_float": 0.515594,
+          "rms_float": 0.286183,
+          "samples": 320
+        },
+        {
+          "frame_index": 27,
+          "peak_float": 0.644876,
+          "rms_float": 0.326299,
+          "samples": 320
+        },
+        {
+          "frame_index": 28,
+          "peak_float": 0.594523,
+          "rms_float": 0.297651,
+          "samples": 320
+        },
+        {
+          "frame_index": 29,
+          "peak_float": 0.511056,
+          "rms_float": 0.257916,
+          "samples": 320
+        },
+        {
+          "frame_index": 30,
+          "peak_float": 0.604752,
+          "rms_float": 0.264969,
+          "samples": 320
+        },
+        {
+          "frame_index": 31,
+          "peak_float": 0.513385,
+          "rms_float": 0.275201,
+          "samples": 320
+        },
+        {
+          "frame_index": 32,
+          "peak_float": 0.56676,
+          "rms_float": 0.290032,
+          "samples": 320
+        },
+        {
+          "frame_index": 33,
+          "peak_float": 0.486505,
+          "rms_float": 0.257326,
+          "samples": 320
+        },
+        {
+          "frame_index": 34,
+          "peak_float": 0.474547,
+          "rms_float": 0.244839,
+          "samples": 320
+        },
+        {
+          "frame_index": 35,
+          "peak_float": 0.49983,
+          "rms_float": 0.285921,
+          "samples": 320
+        },
+        {
+          "frame_index": 36,
+          "peak_float": 0.551718,
+          "rms_float": 0.299891,
+          "samples": 320
+        },
+        {
+          "frame_index": 37,
+          "peak_float": 0.457009,
+          "rms_float": 0.221181,
+          "samples": 320
+        },
+        {
+          "frame_index": 38,
+          "peak_float": 0.498814,
+          "rms_float": 0.290519,
+          "samples": 320
+        },
+        {
+          "frame_index": 39,
+          "peak_float": 0.524383,
+          "rms_float": 0.27927,
+          "samples": 320
+        },
+        {
+          "frame_index": 40,
+          "peak_float": 0.452135,
+          "rms_float": 0.215528,
+          "samples": 320
+        },
+        {
+          "frame_index": 41,
+          "peak_float": 0.408277,
+          "rms_float": 0.230276,
+          "samples": 320
+        },
+        {
+          "frame_index": 42,
+          "peak_float": 0.391279,
+          "rms_float": 0.2239,
+          "samples": 320
+        },
+        {
+          "frame_index": 43,
+          "peak_float": 0.361472,
+          "rms_float": 0.204632,
+          "samples": 320
+        }
+      ],
+      "metrics": {
+        "normalized_cross_correlation": 0.98762966,
+        "spectral_distance": 0.01225496,
+        "waveform_rmse": 0.06790216
+      },
+      "recomputed_cache_keys": [
+        "1cd1f8852bbcc13a",
+        "f258508513ea1459",
+        "fffb7972e3365331",
+        "fffb7872e336517e",
+        "fffb7772e3364fcb",
+        "fffb7672e3364e18",
+        "fffb7d72e33659fd",
+        "fffb7c72e336584a",
+        "fffb7b72e3365697",
+        "fffb7a72e33654e4",
+        "fffb7172e3364599",
+        "fffb7072e33643e6",
+        "2e9ef938154c278a",
+        "2e9efa38154c293d",
+        "2e9ef738154c2424",
+        "2e9ef838154c25d7",
+        "2e9ef538154c20be",
+        "2e9ef638154c2271",
+        "2e9ef338154c1d58",
+        "2e9ef438154c1f0b",
+        "2e9ef138154c19f2",
+        "2e9ef238154c1ba5",
+        "2e9bf3381549e781",
+        "2e9bf2381549e5ce",
+        "2e9bf1381549e41b",
+        "2e9bf0381549e268",
+        "2e9bf7381549ee4d",
+        "2e9bf6381549ec9a",
+        "2e9bf5381549eae7",
+        "2e9bf4381549e934",
+        "2e9beb381549d9e9",
+        "2e9bea381549d836",
+        "2e986d381546cdf8",
+        "2e986e381546cfab",
+        "2e986f381546d15e",
+        "2e9870381546d311",
+        "2e9871381546d4c4",
+        "2e9872381546d677",
+        "2e9873381546d82a",
+        "2e9874381546d9dd",
+        "2e9865381546c060",
+        "2e9866381546c213",
+        "2eaff738155a9757",
+        "2eaff638155a95a4",
+        "2eaff938155a9abd",
+        "2eaff838155a990a",
+        "9c704ecea63218b9",
+        "8f2a4b20b6fa84d7"
+      ],
+      "referenced_feature_frames": [
+        "83c9803ce5df6c06",
+        "20c96a3a298da2d8",
+        "a82bc4e4690d805a",
+        "9728a58c838bbf59",
+        "03cea8bef5073bdf",
+        "535ac110c7c8b0e9",
+        "d7b27073bd70c647",
+        "8bece72f7a2d9815",
+        "fda6f5364ca1cdd3",
+        "484af0d05a0b8289",
+        "d4ff1f27f2adaf4d",
+        "9cff1ad78c5a37c0",
+        "bdd43fd8dc0a5c94",
+        "e8fb4bc89ca03283",
+        "147335618a7d60da",
+        "6ccef9cf790d6be1",
+        "75be3d20b1d4eefe",
+        "c321a4b9d0af9567",
+        "16ad24f15a278c50",
+        "77e652cf4b6eb1de",
+        "440c241d03813189",
+        "f457e611d8d4dfa7",
+        "20f808d4c4910d88",
+        "c48ca21b58d328e8",
+        "91f9a7325193cf46",
+        "54106bfdce1dc42a",
+        "f7cff937a6414772",
+        "447e6faea5a0f64b",
+        "8a079bc1125103b6",
+        "12a3ebbb594ed505",
+        "8084417bbc0aa35f",
+        "74fb21f555fc7132",
+        "e5c878aef6ffa12e",
+        "334ade4e15e67d92",
+        "35c5fcc7a3f25123",
+        "34a5de3be01267b2",
+        "e36e7bd7358d4ea4",
+        "3a8053876f4be3c9",
+        "0f66f24112c23522",
+        "aeb8fde3ac2b4275",
+        "cb5c7b4ef14b1539",
+        "6e53d5be3b0f13bd",
+        "a2a744fda8e9eba2",
+        "3ae6e7d093fb0627"
+      ],
+      "truncation": {
+        "affected_frames": [],
+        "configured_limit": 12,
+        "dropped_harmonics": [],
+        "original_limit": 12
+      },
+      "utterance_id": "utt_vibrato"
+    }
+  ],
+  "version": 57
+}
