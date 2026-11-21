@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "kind": "tlstrust.demo_profile",
+  "description": "Deterministic local certificate family and six-revision trust rotation drill",
+  "family": {
+    "roots": 2,
+    "intermediate_levels": 2,
+    "leaves": 1,
+    "validity_days": 90,
+    "key_bits": 2048,
+    "port": 0,
+    "seed": "tlstrust-deterministic-v1",
+    "bind_host": "127.0.0.1",
+    "not_before_ms": 1735689600000
+  },
+  "trust_revision_plan": [
+    {
+      "revision": 1,
+      "label": "baseline-trusted",
+      "change": "trust served chain root at a valid evaluation time",
+      "expected": "PASS"
+    },
+    {
+      "revision": 2,
+      "label": "anchor-rotated-away",
+      "change": "trust a different local root",
+      "expected": "FAIL/UNTRUSTED_ANCHOR"
+    },
+    {
+      "revision": 3,
+      "label": "leaf-revoked",
+      "change": "revoke the served leaf serial number",
+      "expected": "FAIL/REVOKED"
+    },
+    {
+      "revision": 4,
+      "label": "evaluation-after-expiry",
+      "change": "evaluate the chain after leaf expiry",
+      "expected": "FAIL/EXPIRED"
+    },
+    {
+      "revision": 5,
+      "label": "tightened-path-length",
+      "change": "override an intermediate path length to zero",
+      "expected": "FAIL/PATH_LEN"
+    },
+    {
+      "revision": 6,
+      "label": "recovered-trust",
+      "change": "restore the baseline root, revocations and path constraints",
+      "expected": "PASS"
+    }
+  ],
+  "diagnostic_leaves": {
+    "leaf-badsig-01": "FAIL/BAD_SIGNATURE",
+    "leaf-expired-01": "FAIL/EXPIRED",
+    "leaf-overlong-01": "FAIL/PATH_LEN"
+  },
+  "expected_flips": [
+    "1->2 CONCLUSION",
+    "2->3 CATEGORY",
+    "3->4 CATEGORY",
+    "4->5 CATEGORY",
+    "5->6 CONCLUSION"
+  ]
+}
+
