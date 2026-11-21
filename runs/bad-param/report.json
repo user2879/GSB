@@ -1,0 +1,188 @@
+{
+  "configuration": {
+    "config_hash": "8dea81d9b184bb14d1494f27761925848c20f1455c444989bce4df20385728fb",
+    "corpus_hash": "dae728e8379e42f3b2bc28ed8af788eb0b230b80a66a06b790b176ddd5ca475a",
+    "injection_hash": "de0a248b1d92c42e86991c98b834d6ca5e03f11e76853a1f27b23f674785019a",
+    "normalized": {
+      "cache_block_budget": 5,
+      "char_batch_size": 4,
+      "char_block_size": 4,
+      "fixed_decimals": 4,
+      "global_char_budget": 489,
+      "latency_budget_ms": 250,
+      "max_iterations": 512,
+      "max_workers": 1,
+      "per_sample_quota": 30,
+      "processing_unit": "sliding_window",
+      "quantization_level": 6,
+      "seed": 20261121,
+      "snapshot_format_version": 1,
+      "snapshot_interval_batches": 4,
+      "window_chars": 10,
+      "window_stride": 8
+    }
+  },
+  "deterministic": {
+    "budget": {
+      "consumed_char_budget": 0,
+      "deduction_sequence": [],
+      "global_char_budget": 489,
+      "per_sample_quota": 30,
+      "remaining_char_budget": 489
+    },
+    "cache": {
+      "accesses": 0,
+      "checksum_mismatches": 0,
+      "eviction_count": 0,
+      "evictions": [],
+      "hits": 0,
+      "misses": 0,
+      "recompilation_count": 0,
+      "recompilation_log": [],
+      "recomputations": 0,
+      "resident_blocks": []
+    },
+    "failures": [
+      {
+        "code": "E_PARAM_SHAPE_MISMATCH",
+        "exception_type": "WorkbenchError",
+        "injection_id": null,
+        "message": "emission_weights shape (16, 31, 6), expected (17, 31, 6)",
+        "sample_id": "@model",
+        "stage": "load"
+      }
+    ],
+    "feature_hash_collisions": {
+      "colliding_bucket_count": 0,
+      "colliding_buckets": [],
+      "collision_events": 0,
+      "distinct_feature_keys": 0,
+      "hash_buckets": 0,
+      "occupied_buckets": 0,
+      "total_feature_hits": 0
+    },
+    "injections": {
+      "configured": [
+        {
+          "injection_id": "INJ-001",
+          "kind": "nonfinite_score",
+          "sample_id": "SMP-0005",
+          "stage": "emission"
+        },
+        {
+          "injection_id": "INJ-002",
+          "kind": "truncated_labels",
+          "sample_id": "SMP-0011",
+          "stage": "decode"
+        },
+        {
+          "injection_id": "INJ-003",
+          "kind": "hash_bucket_mismatch",
+          "sample_id": "SMP-0017",
+          "stage": "emission"
+        },
+        {
+          "injection_id": "INJ-004",
+          "kind": "quota_lt_min_chars",
+          "sample_id": "SMP-0023",
+          "stage": "schedule"
+        }
+      ],
+      "hits": []
+    },
+    "samples": [],
+    "snapshot": {
+      "completed_sample_ids": [],
+      "consumed_char_budget": 0,
+      "recovery_point_sample_id": null,
+      "status": "model_invalid"
+    },
+    "summary": {
+      "cache_eviction_count": 0,
+      "cache_recomputation_count": 0,
+      "collision_events": 0,
+      "consumed_char_budget": 0,
+      "entity_count": 0,
+      "failed_sample_count": 1,
+      "global_char_budget": 489,
+      "injection_configured_count": 4,
+      "injection_hit_count": 0,
+      "load_failure_count": 0,
+      "processed_sample_count": 0,
+      "remaining_char_budget": 489,
+      "repair_count": 0,
+      "successful_sample_count": 0,
+      "valid_sample_count": 32
+    }
+  },
+  "deterministic_digest": "57783515a079e78a5d9f3b66e3f2a57a0f93b205d0f9570044e0e3e3349e1d76",
+  "diagnostics": {
+    "artifact_counts": {
+      "decode": 0,
+      "emission": 0,
+      "merge": 0
+    },
+    "latency_breaches": [],
+    "latency_budget_ms": 250,
+    "stage_timings_ms": {
+      "@model": {
+        "load": 9.121796,
+        "total": 9.129623
+      }
+    },
+    "total_wall_ms": 9.131812
+  },
+  "generated_at": "2026-11-21T01:47:01.319460+00:00",
+  "model": {
+    "char_embedding_count": 0,
+    "emission_weight_shape": [
+      0,
+      0,
+      0
+    ],
+    "feature_dim": 0,
+    "fixed_decimals": 4,
+    "fixed_scale": 10000,
+    "hash_buckets": 0,
+    "label_count": 0,
+    "labels": [],
+    "model_hash": "448065b161e6bebab289b158fb8170c1f16930d0d46a2540d181f25e21c29937",
+    "model_version": "@invalid",
+    "quantization_level": 6,
+    "quantization_step": 64,
+    "start_weight_shape": [
+      0
+    ],
+    "transition_weight_shape": [
+      0,
+      0
+    ],
+    "vocab_size": 0
+  },
+  "resume": {
+    "completed_sample_count": 0,
+    "consumed_char_budget": 0,
+    "recovery_point_sample_id": null
+  },
+  "run_metadata": {
+    "max_workers": 1,
+    "processing_unit": "sliding_window",
+    "total_wall_ms": 9.131812
+  },
+  "schema_version": 1,
+  "snapshot_manifest": {
+    "artifact_sha256": {},
+    "completed_sample_ids": [],
+    "config_hash": "8dea81d9b184bb14d1494f27761925848c20f1455c444989bce4df20385728fb",
+    "consumed_char_budget": 0,
+    "corpus_hash": "dae728e8379e42f3b2bc28ed8af788eb0b230b80a66a06b790b176ddd5ca475a",
+    "global_version": 0,
+    "param_hash": "448065b161e6bebab289b158fb8170c1f16930d0d46a2540d181f25e21c29937",
+    "param_version": "@invalid",
+    "recovery_point_sample_id": null,
+    "snapshot_format_version": 1,
+    "stage_versions": {},
+    "status": "model_invalid"
+  },
+  "status": "model_invalid"
+}

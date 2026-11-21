@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NER 确定性调度与预算诊断工作台</title>
+<style>
+:root { --ink:#172033; --muted:#65728a; --line:#dce3ef; --bg:#f4f7fc; --panel:#ffffff; --accent:#1357d8; --ok:#087f5b; --warn:#b45309; --bad:#b91c1c; }
+* { box-sizing:border-box; }
+body { margin:0; background:radial-gradient(circle at top left,#e7efff 0,#f4f7fc 32rem); color:var(--ink); font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC",sans-serif; }
+main { max-width:1440px; margin:0 auto; padding:28px 30px 60px; }
+header.hero { display:flex; justify-content:space-between; gap:24px; align-items:flex-start; margin-bottom:22px; }
+h1 { margin:0; font-size:28px; letter-spacing:-.02em; }
+.subtitle { color:var(--muted); margin-top:7px; }
+.status { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:8px 14px; background:#e8f5ee; color:var(--ok); font-weight:700; white-space:nowrap; }
+.status.interrupted { background:#fff4e6; color:var(--warn); }
+.digest { font:12px ui-monospace,SFMono-Regular,Consolas,monospace; color:var(--muted); margin-top:8px; overflow-wrap:anywhere; }
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:18px 0; }
+.metric { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:0 7px 24px rgba(37,63,112,.05); }
+.metric-label { color:var(--muted); font-size:12px; }
+.metric-value { font-size:25px; font-weight:760; letter-spacing:-.03em; }
+.metric-note { color:var(--muted); font-size:11px; min-height:16px; }
+.grid { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:0 10px 30px rgba(37,63,112,.045); min-width:0; }
+.span-4 { grid-column:span 4; } .span-6 { grid-column:span 6; } .span-8 { grid-column:span 8; } .span-12 { grid-column:span 12; }
+@media (max-width:1000px) { .span-4,.span-6,.span-8 { grid-column:span 12; } }
+h2 { margin:0 0 12px; font-size:16px; }
+h3 { margin:0; font-size:15px; }
+.kv { display:grid; grid-template-columns:150px 1fr; gap:7px 12px; font-size:13px; }
+.kv dt { color:var(--muted); } .kv dd { margin:0; overflow-wrap:anywhere; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+.progress { height:16px; border-radius:999px; background:#e8edf6; overflow:hidden; }
+.progress > i { display:block; height:100%; background:linear-gradient(90deg,#1357d8,#38bdf8); }
+.progress-caption { display:flex; justify-content:space-between; margin-top:8px; color:var(--muted); }
+.bar-row { display:grid; grid-template-columns:90px 1fr 100px; align-items:center; gap:10px; margin:9px 0; font-size:12px; }
+.bar { height:11px; border-radius:999px; background:#edf1f7; overflow:hidden; } .bar i { display:block; height:100%; background:#2f6fe4; }
+.bar-row b { text-align:right; font-weight:600; }
+.legend { display:inline-flex; align-items:center; gap:6px; margin:0 12px 8px 0; color:var(--muted); }
+.legend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
+.sample-tools { display:flex; gap:10px; margin-bottom:12px; }
+input[type=search] { flex:1; border:1px solid var(--line); border-radius:10px; padding:10px 12px; font:inherit; background:#fbfcff; }
+.samples { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:12px; }
+.sample-card { border:1px solid var(--line); border-radius:13px; padding:14px; background:#fcfdff; }
+.sample-head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
+.score { color:var(--muted); font:12px ui-monospace,SFMono-Regular,Consolas,monospace; }
+.text-line { font-size:20px; line-height:1.9; letter-spacing:.02em; padding:10px 12px; background:#fff; border:1px solid #edf1f7; border-radius:10px; }
+.text-line span { white-space:pre-wrap; }
+mark.entity { border-radius:5px; padding:2px 1px; font-weight:700; }
+.badges { margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; }
+.entity-badge { border-radius:999px; padding:3px 8px; font-size:11px; font-weight:700; }
+.sample-meta { margin-top:9px; color:var(--muted); font-size:11px; }
+.repairs { margin-top:8px; color:var(--muted); font-size:12px; } .repairs ul { margin:7px 0 0; padding-left:18px; }
+.table-wrap { overflow:auto; max-height:520px; border:1px solid #edf1f7; border-radius:10px; }
+table { border-collapse:collapse; width:100%; font-size:12px; }
+th,td { text-align:left; padding:8px 9px; border-bottom:1px solid #eef2f8; vertical-align:top; }
+th { position:sticky; top:0; background:#f8faff; color:var(--muted); font-weight:650; z-index:1; }
+tr:last-child td { border-bottom:none; }
+code { font:11px ui-monospace,SFMono-Regular,Consolas,monospace; color:#334155; }
+.empty { color:var(--muted); padding:10px 2px; }
+.breach { color:var(--bad); font-weight:700; }
+.footer-note { margin-top:22px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+  <div>
+    <h1>NER 确定性调度与预算诊断工作台</h1>
+    <div class="subtitle">字级哈希特征 · 定点发射打分 · 对数域 BIESO 维特比 · 双预算并行调度 · 原子快照</div>
+    <div class="digest">deterministic digest: 57783515a079e78a5d9f3b66e3f2a57a0f93b205d0f9570044e0e3e3349e1d76</div>
+  </div>
+  <div class="status interrupted">● model_invalid<br><small>workers=1</small></div>
+</header>
+
+<section class="metrics">
+  <div class="metric"><div class="metric-label">成功 / 有效样本</div><div class="metric-value">0 / 32</div><div class="metric-note"></div></div>
+  <div class="metric"><div class="metric-label">失败终态</div><div class="metric-value">1</div><div class="metric-note">加载失败 0</div></div>
+  <div class="metric"><div class="metric-label">实体片段</div><div class="metric-value">0</div><div class="metric-note">修复 0</div></div>
+  <div class="metric"><div class="metric-label">字级预算</div><div class="metric-value">0/489</div><div class="metric-note">剩余 489</div></div>
+  <div class="metric"><div class="metric-label">缓存淘汰</div><div class="metric-value">0</div><div class="metric-note">重算 0</div></div>
+  <div class="metric"><div class="metric-label">注入命中</div><div class="metric-value">0</div><div class="metric-note">配置 4</div></div>
+  <div class="metric"><div class="metric-label">哈希冲突</div><div class="metric-value">0</div><div class="metric-note">桶数 0</div></div>
+</section>
+
+<section class="grid">
+  <div class="panel span-6">
+    <h2>全局字级预算</h2>
+    <div class="progress"><i style="width:0.00%"></i></div>
+    <div class="progress-caption"><span>已消耗 0</span><span>预算 489</span></div>
+    <div class="kv" style="margin-top:16px">
+      <dt>单样本配额</dt><dd>30</dd>
+      <dt>处理单元</dt><dd>sliding_window</dd>
+      <dt>字级批大小</dt><dd>4</dd>
+      <dt>定点 / 量化</dt><dd>4 位 / q6</dd>
+    </div>
+  </div>
+  <div class="panel span-6">
+    <h2>阶段耗时汇总</h2>
+    <div class="bar-row"><span>emission</span><div class="bar"><i style="width:0.00%"></i></div><b>0.000 ms</b></div><div class="bar-row"><span>decode</span><div class="bar"><i style="width:0.00%"></i></div><b>0.000 ms</b></div><div class="bar-row"><span>merge</span><div class="bar"><i style="width:0.00%"></i></div><b>0.000 ms</b></div>
+    <div class="kv" style="margin-top:14px">
+      <dt>总墙钟</dt><dd>9.131812 ms</dd>
+      <dt>交互预算</dt><dd>250 ms</dd>
+      <dt>超预算记录</dt><dd class="">0</dd>
+    </div>
+  </div>
+
+  <div class="panel span-4">
+    <h2>模型与哈希</h2>
+    <dl class="kv">
+      <dt>模型版本</dt><dd>@invalid</dd>
+      <dt>参数哈希</dt><dd>448065b161e6bebab289b158fb8170c1f16930d0d46a2540d181f25e21c29937</dd>
+      <dt>标签数</dt><dd>0</dd>
+      <dt>维度 / 桶</dt><dd>0 / 0</dd>
+      <dt>特征命中</dt><dd>0</dd>
+      <dt>占用桶</dt><dd>0</dd>
+      <dt>冲突桶</dt><dd>0</dd>
+    </dl>
+  </div>
+  <div class="panel span-4">
+    <h2>配置与快照</h2>
+    <dl class="kv">
+      <dt>配置哈希</dt><dd>8dea81d9b184bb14d1494f27761925848c20f1455c444989bce4df20385728fb</dd>
+      <dt>语料哈希</dt><dd>dae728e8379e42f3b2bc28ed8af788eb0b230b80a66a06b790b176ddd5ca475a</dd>
+      <dt>快照状态</dt><dd>model_invalid</dd>
+      <dt>恢复点</dt><dd>无</dd>
+      <dt>并发数</dt><dd>1</dd>
+      <dt>全局版本</dt><dd>0</dd>
+    </dl>
+  </div>
+  <div class="panel span-4">
+    <h2>缓存驻留与重算</h2>
+    <dl class="kv">
+      <dt>缓存预算</dt><dd>None blocks</dd>
+      <dt>访问 / 命中</dt><dd>0 / 0</dd>
+      <dt>未命中</dt><dd>0</dd>
+      <dt>重算</dt><dd>0</dd>
+      <dt>校验不一致</dt><dd class="">0</dd>
+      <dt>驻留块</dt><dd>0</dd>
+    </dl>
+  </div>
+
+  <div class="panel span-12">
+    <h2>实体高亮与逐样本诊断</h2>
+    <div><span class="legend"><i style="background:#991b1b;color:#fee2e2"></i>人物</span><span class="legend"><i style="background:#166534;color:#dcfce7"></i>地点</span><span class="legend"><i style="background:#1e40af;color:#dbeafe"></i>机构</span><span class="legend"><i style="background:#92400e;color:#fef3c7"></i>时间</span></div>
+    <div class="sample-tools"><input id="sample-filter" type="search" placeholder="筛选样本 ID、实体文本或修复码…"></div>
+    <div class="samples" id="sample-list"><div class="empty">无成功样本</div></div>
+  </div>
+
+  <div class="panel span-12">
+    <h2>失败清单</h2>
+    <div class="table-wrap"><table><thead><tr><th>样本</th><th>阶段</th><th>业务码</th><th>异常类型</th><th>注入</th><th>说明</th></tr></thead><tbody><tr><td>@model</td><td>load</td><td>E_PARAM_SHAPE_MISMATCH</td><td>WorkbenchError</td><td>-</td><td>emission_weights shape (16, 31, 6), expected (17, 31, 6)</td></tr></tbody></table></div>
+  </div>
+  <div class="panel span-6">
+    <h2>注入配置与命中</h2>
+    <div class="table-wrap"><table><thead><tr><th>注入编号</th><th>样本</th><th>阶段</th><th>类型</th><th>状态/码</th><th>说明</th></tr></thead><tbody><tr><td>INJ-001</td><td>SMP-0005</td><td>emission</td><td>nonfinite_score</td><td>configured</td></tr><tr><td>INJ-002</td><td>SMP-0011</td><td>decode</td><td>truncated_labels</td><td>configured</td></tr><tr><td>INJ-003</td><td>SMP-0017</td><td>emission</td><td>hash_bucket_mismatch</td><td>configured</td></tr><tr><td>INJ-004</td><td>SMP-0023</td><td>schedule</td><td>quota_lt_min_chars</td><td>configured</td></tr></tbody></table></div>
+  </div>
+  <div class="panel span-6">
+    <h2>预算扣减序列</h2>
+    <div class="empty">无记录</div>
+  </div>
+  <div class="panel span-6">
+    <h2>LRU 淘汰序列</h2>
+    <div class="empty">无记录</div>
+  </div>
+  <div class="panel span-6">
+    <h2>淘汰后重算清单</h2>
+    <div class="empty">无记录</div>
+  </div>
+  <div class="panel span-6">
+    <h2>哈希冲突桶</h2>
+    <div class="empty">无记录</div>
+  </div>
+  <div class="panel span-6">
+    <h2>逐样本阶段耗时</h2>
+    <div class="table-wrap"><table><thead><tr><th>样本</th><th>发射 ms</th><th>解码 ms</th><th>合并 ms</th><th>总计 ms</th></tr></thead><tbody><tr><td>@model</td><td>0.0</td><td>0.0</td><td>0.0</td><td>9.129623</td></tr></tbody></table></div>
+  </div>
+</section>
+<div class="footer-note">本页为离线自包含 HTML；数据来自 report.json。兼容性以 deterministic 区段的 SHA-256 摘要为准，墙钟耗时仅用于诊断。</div>
+</main>
+<script>
+const rawReport = {"configuration": {"config_hash": "8dea81d9b184bb14d1494f27761925848c20f1455c444989bce4df20385728fb", "corpus_hash": "dae728e8379e42f3b2bc28ed8af788eb0b230b80a66a06b790b176ddd5ca475a", "injection_hash": "de0a248b1d92c42e86991c98b834d6ca5e03f11e76853a1f27b23f674785019a", "normalized": {"cache_block_budget": 5, "char_batch_size": 4, "char_block_size": 4, "fixed_decimals": 4, "global_char_budget": 489, "latency_budget_ms": 250, "max_iterations": 512, "max_workers": 1, "per_sample_quota": 30, "processing_unit": "sliding_window", "quantization_level": 6, "seed": 20261121, "snapshot_format_version": 1, "snapshot_interval_batches": 4, "window_chars": 10, "window_stride": 8}}, "deterministic": {"budget": {"consumed_char_budget": 0, "deduction_sequence": [], "global_char_budget": 489, "per_sample_quota": 30, "remaining_char_budget": 489}, "cache": {"accesses": 0, "checksum_mismatches": 0, "eviction_count": 0, "evictions": [], "hits": 0, "misses": 0, "recompilation_count": 0, "recompilation_log": [], "recomputations": 0, "resident_blocks": []}, "failures": [{"code": "E_PARAM_SHAPE_MISMATCH", "exception_type": "WorkbenchError", "injection_id": null, "message": "emission_weights shape (16, 31, 6), expected (17, 31, 6)", "sample_id": "@model", "stage": "load"}], "feature_hash_collisions": {"colliding_bucket_count": 0, "colliding_buckets": [], "collision_events": 0, "distinct_feature_keys": 0, "hash_buckets": 0, "occupied_buckets": 0, "total_feature_hits": 0}, "injections": {"configured": [{"injection_id": "INJ-001", "kind": "nonfinite_score", "sample_id": "SMP-0005", "stage": "emission"}, {"injection_id": "INJ-002", "kind": "truncated_labels", "sample_id": "SMP-0011", "stage": "decode"}, {"injection_id": "INJ-003", "kind": "hash_bucket_mismatch", "sample_id": "SMP-0017", "stage": "emission"}, {"injection_id": "INJ-004", "kind": "quota_lt_min_chars", "sample_id": "SMP-0023", "stage": "schedule"}], "hits": []}, "samples": [], "snapshot": {"completed_sample_ids": [], "consumed_char_budget": 0, "recovery_point_sample_id": null, "status": "model_invalid"}, "summary": {"cache_eviction_count": 0, "cache_recomputation_count": 0, "collision_events": 0, "consumed_char_budget": 0, "entity_count": 0, "failed_sample_count": 1, "global_char_budget": 489, "injection_configured_count": 4, "injection_hit_count": 0, "load_failure_count": 0, "processed_sample_count": 0, "remaining_char_budget": 489, "repair_count": 0, "successful_sample_count": 0, "valid_sample_count": 32}}, "deterministic_digest": "57783515a079e78a5d9f3b66e3f2a57a0f93b205d0f9570044e0e3e3349e1d76", "diagnostics": {"artifact_counts": {"decode": 0, "emission": 0, "merge": 0}, "latency_breaches": [], "latency_budget_ms": 250, "stage_timings_ms": {"@model": {"load": 9.121796, "total": 9.129623}}, "total_wall_ms": 9.131812}, "generated_at": "2026-11-21T01:47:01.319460+00:00", "model": {"char_embedding_count": 0, "emission_weight_shape": [0, 0, 0], "feature_dim": 0, "fixed_decimals": 4, "fixed_scale": 10000, "hash_buckets": 0, "label_count": 0, "labels": [], "model_hash": "448065b161e6bebab289b158fb8170c1f16930d0d46a2540d181f25e21c29937", "model_version": "@invalid", "quantization_level": 6, "quantization_step": 64, "start_weight_shape": [0], "transition_weight_shape": [0, 0], "vocab_size": 0}, "resume": {"completed_sample_count": 0, "consumed_char_budget": 0, "recovery_point_sample_id": null}, "run_metadata": {"max_workers": 1, "processing_unit": "sliding_window", "total_wall_ms": 9.131812}, "schema_version": 1, "snapshot_manifest": {"artifact_sha256": {}, "completed_sample_ids": [], "config_hash": "8dea81d9b184bb14d1494f27761925848c20f1455c444989bce4df20385728fb", "consumed_char_budget": 0, "corpus_hash": "dae728e8379e42f3b2bc28ed8af788eb0b230b80a66a06b790b176ddd5ca475a", "global_version": 0, "param_hash": "448065b161e6bebab289b158fb8170c1f16930d0d46a2540d181f25e21c29937", "param_version": "@invalid", "recovery_point_sample_id": null, "snapshot_format_version": 1, "stage_versions": {}, "status": "model_invalid"}, "status": "model_invalid"};
+const filter = document.getElementById('sample-filter');
+if (filter) {
+  filter.addEventListener('input', () => {
+    const needle = filter.value.trim().toLowerCase();
+    document.querySelectorAll('.sample-card').forEach(card => {
+      card.style.display = !needle || card.textContent.toLowerCase().includes(needle) ? '' : 'none';
+    });
+  });
+}
+</script>
+</body>
+</html>

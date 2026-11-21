@@ -1,0 +1,93 @@
+{
+  "budget": {
+    "consumed_char_budget": 0,
+    "deduction_sequence": [],
+    "global_char_budget": 489,
+    "per_sample_quota": 30,
+    "remaining_char_budget": 489
+  },
+  "cache": {
+    "accesses": 0,
+    "checksum_mismatches": 0,
+    "eviction_count": 0,
+    "evictions": [],
+    "hits": 0,
+    "misses": 0,
+    "recompilation_count": 0,
+    "recompilation_log": [],
+    "recomputations": 0,
+    "resident_blocks": []
+  },
+  "failures": [
+    {
+      "code": "E_PARAM_SHAPE_MISMATCH",
+      "exception_type": "WorkbenchError",
+      "injection_id": null,
+      "message": "emission_weights shape (16, 31, 6), expected (17, 31, 6)",
+      "sample_id": "@model",
+      "stage": "load"
+    }
+  ],
+  "feature_hash_collisions": {
+    "colliding_bucket_count": 0,
+    "colliding_buckets": [],
+    "collision_events": 0,
+    "distinct_feature_keys": 0,
+    "hash_buckets": 0,
+    "occupied_buckets": 0,
+    "total_feature_hits": 0
+  },
+  "injections": {
+    "configured": [
+      {
+        "injection_id": "INJ-001",
+        "kind": "nonfinite_score",
+        "sample_id": "SMP-0005",
+        "stage": "emission"
+      },
+      {
+        "injection_id": "INJ-002",
+        "kind": "truncated_labels",
+        "sample_id": "SMP-0011",
+        "stage": "decode"
+      },
+      {
+        "injection_id": "INJ-003",
+        "kind": "hash_bucket_mismatch",
+        "sample_id": "SMP-0017",
+        "stage": "emission"
+      },
+      {
+        "injection_id": "INJ-004",
+        "kind": "quota_lt_min_chars",
+        "sample_id": "SMP-0023",
+        "stage": "schedule"
+      }
+    ],
+    "hits": []
+  },
+  "samples": [],
+  "snapshot": {
+    "completed_sample_ids": [],
+    "consumed_char_budget": 0,
+    "recovery_point_sample_id": null,
+    "status": "model_invalid"
+  },
+  "summary": {
+    "cache_eviction_count": 0,
+    "cache_recomputation_count": 0,
+    "collision_events": 0,
+    "consumed_char_budget": 0,
+    "entity_count": 0,
+    "failed_sample_count": 1,
+    "global_char_budget": 489,
+    "injection_configured_count": 4,
+    "injection_hit_count": 0,
+    "load_failure_count": 0,
+    "processed_sample_count": 0,
+    "remaining_char_budget": 489,
+    "repair_count": 0,
+    "successful_sample_count": 0,
+    "valid_sample_count": 32
+  }
+}
