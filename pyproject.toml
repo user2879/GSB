@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pose3d-deterministic-solver"
+version = "1.0.0"
+description = "Deterministic multi-view 3D keypoint solver for pose-estimation backends"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy==1.26.4",
+  "Pillow==11.0.0",
+]
+
+[project.scripts]
+pose3d = "pose3d.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pose3d*"]

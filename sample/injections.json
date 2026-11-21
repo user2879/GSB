@@ -1,0 +1,41 @@
+{
+  "injection_version": "inj-2026-11-22-v1",
+  "items": [
+    {
+      "business_code": "E_OBS_INVALID",
+      "fault": "nonfinite_pixel",
+      "field": "u",
+      "id": "INJ-001-NONFINITE-PIXEL",
+      "keypoint_id": "rig/corner_00@instance-A",
+      "stage": "load",
+      "value": "NaN",
+      "view_index": 3
+    },
+    {
+      "business_code": "E_CAMERA_INVALID",
+      "fault": "nonorthogonal_rotation",
+      "id": "INJ-002-NONORTHOGONAL-ROTATION",
+      "keypoint_id": "rig/corner_01@instance-B",
+      "stage": "load",
+      "value": 0.25,
+      "view_index": 2
+    },
+    {
+      "business_code": "E_CFG_INVALID",
+      "fault": "min_disparity_above_limit",
+      "id": "INJ-003-DISPARITY-ABOVE-LIMIT",
+      "keypoint_id": "rig/corner_01@instance-A",
+      "stage": "triangulation",
+      "value": 180.0
+    },
+    {
+      "business_code": "E_CFG_INVALID",
+      "fault": "zero_outlier_threshold",
+      "id": "INJ-004-ZERO-THRESHOLD",
+      "keypoint_id": "rig/corner_03@instance-B",
+      "stage": "rejection",
+      "value": 0.0
+    }
+  ],
+  "schema_version": 1
+}

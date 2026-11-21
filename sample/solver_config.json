@@ -1,0 +1,40 @@
+{
+  "budget": {
+    "global_residual_budget": 20000,
+    "per_keypoint_quota": 2000,
+    "unit": "reprojection_evaluation"
+  },
+  "inputs": {
+    "camera_dir": "cameras",
+    "image_dir": "views",
+    "observations_file": "observations.jsonl",
+    "version_file": "input_version.json"
+  },
+  "outlier_rejection": {
+    "legal_threshold_max_px": 1000.0,
+    "max_rounds": 2,
+    "min_inliers": 3,
+    "threshold_px": 1.5
+  },
+  "quantization": {
+    "error_tolerance": 0.005,
+    "levels": [
+      14,
+      15
+    ],
+    "rounding": "round_half_even"
+  },
+  "scheduler": {
+    "max_workers": 4,
+    "report_precision_digits": 15,
+    "snapshot_commit_interval": 2
+  },
+  "schema_version": 1,
+  "triangulation": {
+    "degenerate_policy": "fail",
+    "degenerate_relative_tolerance": 1e-10,
+    "legal_min_disparity_max_deg": 90.0,
+    "min_disparity_deg": 20.0,
+    "min_views": 3
+  }
+}

@@ -1,0 +1,582 @@
+{
+  "artifacts": [
+    "reports/base_fresh.json",
+    "reports/base_recovered.json",
+    "reports/incremental_after_edit.json",
+    "reports/fresh_after_edit.json",
+    "reports/config_incremental.json",
+    "reports/config_fresh.json",
+    "reports/injection_run.json",
+    "reports/budget_exhaustion.json",
+    "reports/point_quota.json"
+  ],
+  "checks": [
+    {
+      "description": "The fixed-seed generator reproduces byte-identical views, cameras, observations and version metadata.",
+      "details": {
+        "digest": "58a8a9a75334d64eefd4acfe73dbec53864e04925b6644f481f9360b31df5883",
+        "second_digest": "58a8a9a75334d64eefd4acfe73dbec53864e04925b6644f481f9360b31df5883"
+      },
+      "id": "SAMPLE-DETERMINISM",
+      "passed": true
+    },
+    {
+      "description": "Normal sample yields 14 successes, 2 isolated failures and no pending work.",
+      "details": {
+        "failed": 2,
+        "invalid_observation_failures": 1,
+        "keypoints_total": 16,
+        "observation_final_total": 86,
+        "observation_valid_total": 90,
+        "pending": 0,
+        "removed_observations_in_successful_points": 1,
+        "residual_budget_consumed": 270,
+        "residual_budget_remaining": 19730,
+        "succeeded": 14
+      },
+      "id": "BASE-SUCCESS",
+      "passed": true
+    },
+    {
+      "description": "DLT point and float64 residuals are present for a normal keypoint.",
+      "details": {
+        "max_residual_px": 0.11821366581410404,
+        "point": [
+          -0.00025650707032634317,
+          0.6799789309453204,
+          0.6198715971245506
+        ]
+      },
+      "id": "TRIANG-DETERMINISTIC",
+      "passed": true
+    },
+    {
+      "description": "The injected gross reprojection error is removed and the point is refinalized.",
+      "details": {
+        "last_round_residual_px": 0.12261965125850514,
+        "removed_views": [
+          4
+        ],
+        "rounds_executed": 1
+      },
+      "id": "OUTLIER-REJECTION",
+      "passed": true
+    },
+    {
+      "description": "Low-disparity view pairs are recorded and the point is not silently retriangulated with all views.",
+      "details": {
+        "error_codes": [
+          "E_DISPARITY_INSUFFICIENT"
+        ],
+        "excluded_pairs": [
+          {
+            "angle_deg": 9.688786851046036,
+            "excluded": true,
+            "views": [
+              1,
+              2
+            ]
+          },
+          {
+            "angle_deg": 14.675286620441362,
+            "excluded": true,
+            "views": [
+              1,
+              3
+            ]
+          },
+          {
+            "angle_deg": 4.986499769500694,
+            "excluded": true,
+            "views": [
+              2,
+              3
+            ]
+          }
+        ]
+      },
+      "id": "DISPARITY-SCREEN",
+      "passed": true
+    },
+    {
+      "description": "Dropping the worst observation would fall below min_inliers; no final point is committed.",
+      "details": {
+        "error_codes": [
+          "E_INLIER_SHORTAGE"
+        ],
+        "trace": [
+          {
+            "decision": "inlier_shortage",
+            "min_inliers": 3,
+            "remaining_after_removal": 2,
+            "round": 1,
+            "state_after": null,
+            "state_before": {
+              "max_residual_px": 21.769725902176525,
+              "max_residual_view": 4,
+              "point": [
+                -0.0970741363883791,
+                -0.586224778592774,
+                0.4980481185053219
+              ],
+              "residuals": [
+                {
+                  "depth": 3.4312832775871884,
+                  "dx": 15.754836141545866,
+                  "dy": 12.694852033343153,
+                  "projected_u": 280.1454206224128,
+                  "projected_v": 229.95032312190511,
+                  "residual_px": 20.232996070662313,
+                  "u": 264.39058448086695,
+                  "v": 217.25547108856196,
+                  "view_index": 3
+                },
+                {
+                  "depth": 3.778906929255308,
+                  "dx": -7.815798053893218,
+                  "dy": -20.318323420908882,
+                  "projected_u": 398.753580892012,
+                  "projected_v": 230.93229230670107,
+                  "residual_px": 21.769725902176525,
+                  "u": 406.5693789459052,
+                  "v": 251.25061572760995,
+                  "view_index": 4
+                },
+                {
+                  "depth": 3.1927151716867828,
+                  "dx": 15.378350826760084,
+                  "dy": 11.181247786932971,
+                  "projected_u": 541.4386566422882,
+                  "projected_v": 229.1526830860855,
+                  "residual_px": 19.013520879198204,
+                  "u": 526.0603058155281,
+                  "v": 217.97143529915252,
+                  "view_index": 5
+                }
+              ],
+              "views": [
+                3,
+                4,
+                5
+              ]
+            },
+            "worst_residual_px": 21.769725902176525,
+            "worst_view": 4,
+            "would_remove_view": 4
+          }
+        ]
+      },
+      "id": "INLIER-SHORTAGE",
+      "passed": true
+    },
+    {
+      "description": "An out-of-bounds observation is rejected while the remaining observations finalize.",
+      "details": {
+        "error_codes": [
+          "E_OBS_INVALID"
+        ],
+        "final_observations": 6,
+        "status": "ok"
+      },
+      "id": "OBS-INVALID-CONTINUE",
+      "passed": true
+    },
+    {
+      "description": "Same-base keypoints with distinct instance suffixes are solved independently.",
+      "details": {
+        "A": [
+          -0.7900189491148175,
+          -0.34017661522726095,
+          -0.14002948189749276
+        ],
+        "B": [
+          0.1498290198541685,
+          -0.1500326564783435,
+          -0.10003616843552221
+        ]
+      },
+      "id": "INSTANCE-AMBIGUITY",
+      "passed": true
+    },
+    {
+      "description": "An unchanged input restores the whole-stage snapshot and reuses every stage.",
+      "details": {
+        "recomputed_points": [],
+        "recovery_decision": "exact_snapshot_available",
+        "reused_points": 16,
+        "snapshot_decision": "unchanged"
+      },
+      "id": "SNAPSHOT-RECOVERY",
+      "passed": true
+    },
+    {
+      "description": "A single-observation edit recomputes only that keypoint and matches a blank full rebuild.",
+      "details": {
+        "core_equal": true,
+        "fresh_snapshot": "fda68c4096bdfbf8f9ce487fef1000f32ce9de52bf5338ae264929e5c9c4a06c",
+        "incremental_snapshot": "fda68c4096bdfbf8f9ce487fef1000f32ce9de52bf5338ae264929e5c9c4a06c",
+        "recomputed_points": [
+          "aux/marker@instance-A"
+        ],
+        "reused_count": 15
+      },
+      "id": "INCREMENTAL-EQUIVALENCE",
+      "passed": true
+    },
+    {
+      "description": "Changing only the outlier threshold reuses load/triangulation and reruns rejection downstream.",
+      "details": {
+        "core_equal": true,
+        "stage_recomputed": {
+          "finalization": 14,
+          "load": 0,
+          "rejection": 15,
+          "triangulation": 0
+        },
+        "stage_reused": {
+          "finalization": 0,
+          "load": 16,
+          "rejection": 0,
+          "triangulation": 16
+        }
+      },
+      "id": "CONFIG-STAGE-INVALIDATION",
+      "passed": true
+    },
+    {
+      "description": "Thread-pool width and completion order do not change any core report field.",
+      "details": {
+        "core_equal": true,
+        "parallel_summary": {
+          "failed": 2,
+          "invalid_observation_failures": 1,
+          "keypoints_total": 16,
+          "observation_final_total": 86,
+          "observation_valid_total": 90,
+          "pending": 0,
+          "removed_observations_in_successful_points": 1,
+          "residual_budget_consumed": 270,
+          "residual_budget_remaining": 19730,
+          "succeeded": 14
+        },
+        "serial_summary": {
+          "failed": 2,
+          "invalid_observation_failures": 1,
+          "keypoints_total": 16,
+          "observation_final_total": 86,
+          "observation_valid_total": 90,
+          "pending": 0,
+          "removed_observations_in_successful_points": 1,
+          "residual_budget_consumed": 270,
+          "residual_budget_remaining": 19730,
+          "succeeded": 14
+        }
+      },
+      "id": "CONCURRENCY-INVARIANCE",
+      "passed": true
+    },
+    {
+      "description": "All four real fault injections hit their mapped business codes without blocking other points.",
+      "details": {
+        "hits": {
+          "INJ-001-NONFINITE-PIXEL": {
+            "affected": [
+              "rig/corner_00@instance-A"
+            ],
+            "business_codes": [
+              "E_OBS_INVALID"
+            ]
+          },
+          "INJ-002-NONORTHOGONAL-ROTATION": {
+            "affected": [
+              "rig/corner_01@instance-B"
+            ],
+            "business_codes": [
+              "E_CAMERA_INVALID"
+            ]
+          },
+          "INJ-003-DISPARITY-ABOVE-LIMIT": {
+            "affected": [
+              "rig/corner_01@instance-A"
+            ],
+            "business_codes": [
+              "E_CFG_INVALID"
+            ]
+          },
+          "INJ-004-ZERO-THRESHOLD": {
+            "affected": [
+              "rig/corner_03@instance-B"
+            ],
+            "business_codes": [
+              "E_CFG_INVALID"
+            ]
+          }
+        },
+        "summary": {
+          "failed": 5,
+          "invalid_observation_failures": 2,
+          "keypoints_total": 16,
+          "observation_final_total": 67,
+          "observation_valid_total": 89,
+          "pending": 0,
+          "removed_observations_in_successful_points": 1,
+          "residual_budget_consumed": 219,
+          "residual_budget_remaining": 19781,
+          "succeeded": 11
+        }
+      },
+      "id": "FAULT-INJECTION-ISOLATION",
+      "passed": true
+    },
+    {
+      "description": "A zero global budget queues every keypoint in stable lexical order without deduction.",
+      "details": {
+        "budget": {
+          "consumed": 0,
+          "exhausted": true,
+          "initial": 0,
+          "ledger": [],
+          "remaining": 0,
+          "unit": "reprojection_evaluation"
+        },
+        "pending_queue": [
+          "aux/marker@instance-A",
+          "bounds/tip@instance-A",
+          "fragile/tip@instance-A",
+          "low/parallax@instance-A",
+          "rig/corner_00@instance-A",
+          "rig/corner_00@instance-B",
+          "rig/corner_01@instance-A",
+          "rig/corner_01@instance-B",
+          "rig/corner_02@instance-A",
+          "rig/corner_02@instance-B",
+          "rig/corner_03@instance-A",
+          "rig/corner_03@instance-B",
+          "rig/corner_04@instance-A",
+          "rig/corner_04@instance-B",
+          "rig/corner_05@instance-A",
+          "rig/corner_05@instance-B"
+        ]
+      },
+      "id": "GLOBAL-BUDGET",
+      "passed": true
+    },
+    {
+      "description": "Per-keypoint quota aborts work and every ledger entry preserves before/amount/after identity.",
+      "details": {
+        "budget": {
+          "consumed": 87,
+          "exhausted": false,
+          "initial": 20000,
+          "ledger": [
+            {
+              "after": 19994,
+              "amount": 6,
+              "before": 20000,
+              "keypoint_id": "aux/marker@instance-A",
+              "purpose": "point_solve",
+              "sequence": 1
+            },
+            {
+              "after": 19988,
+              "amount": 6,
+              "before": 19994,
+              "keypoint_id": "bounds/tip@instance-A",
+              "purpose": "point_solve",
+              "sequence": 2
+            },
+            {
+              "after": 19985,
+              "amount": 3,
+              "before": 19988,
+              "keypoint_id": "fragile/tip@instance-A",
+              "purpose": "point_solve",
+              "sequence": 3
+            },
+            {
+              "after": 19985,
+              "amount": 0,
+              "before": 19985,
+              "keypoint_id": "low/parallax@instance-A",
+              "purpose": "point_solve",
+              "sequence": 4
+            },
+            {
+              "after": 19979,
+              "amount": 6,
+              "before": 19985,
+              "keypoint_id": "rig/corner_00@instance-A",
+              "purpose": "point_solve",
+              "sequence": 5
+            },
+            {
+              "after": 19973,
+              "amount": 6,
+              "before": 19979,
+              "keypoint_id": "rig/corner_00@instance-B",
+              "purpose": "point_solve",
+              "sequence": 6
+            },
+            {
+              "after": 19967,
+              "amount": 6,
+              "before": 19973,
+              "keypoint_id": "rig/corner_01@instance-A",
+              "purpose": "point_solve",
+              "sequence": 7
+            },
+            {
+              "after": 19961,
+              "amount": 6,
+              "before": 19967,
+              "keypoint_id": "rig/corner_01@instance-B",
+              "purpose": "point_solve",
+              "sequence": 8
+            },
+            {
+              "after": 19955,
+              "amount": 6,
+              "before": 19961,
+              "keypoint_id": "rig/corner_02@instance-A",
+              "purpose": "point_solve",
+              "sequence": 9
+            },
+            {
+              "after": 19949,
+              "amount": 6,
+              "before": 19955,
+              "keypoint_id": "rig/corner_02@instance-B",
+              "purpose": "point_solve",
+              "sequence": 10
+            },
+            {
+              "after": 19943,
+              "amount": 6,
+              "before": 19949,
+              "keypoint_id": "rig/corner_03@instance-A",
+              "purpose": "point_solve",
+              "sequence": 11
+            },
+            {
+              "after": 19937,
+              "amount": 6,
+              "before": 19943,
+              "keypoint_id": "rig/corner_03@instance-B",
+              "purpose": "point_solve",
+              "sequence": 12
+            },
+            {
+              "after": 19931,
+              "amount": 6,
+              "before": 19937,
+              "keypoint_id": "rig/corner_04@instance-A",
+              "purpose": "point_solve",
+              "sequence": 13
+            },
+            {
+              "after": 19925,
+              "amount": 6,
+              "before": 19931,
+              "keypoint_id": "rig/corner_04@instance-B",
+              "purpose": "point_solve",
+              "sequence": 14
+            },
+            {
+              "after": 19919,
+              "amount": 6,
+              "before": 19925,
+              "keypoint_id": "rig/corner_05@instance-A",
+              "purpose": "point_solve",
+              "sequence": 15
+            },
+            {
+              "after": 19913,
+              "amount": 6,
+              "before": 19919,
+              "keypoint_id": "rig/corner_05@instance-B",
+              "purpose": "point_solve",
+              "sequence": 16
+            }
+          ],
+          "remaining": 19913,
+          "unit": "reprojection_evaluation"
+        },
+        "quota_failures": [
+          "aux/marker@instance-A",
+          "bounds/tip@instance-A",
+          "rig/corner_00@instance-A",
+          "rig/corner_00@instance-B",
+          "rig/corner_01@instance-A",
+          "rig/corner_01@instance-B",
+          "rig/corner_02@instance-A",
+          "rig/corner_02@instance-B",
+          "rig/corner_03@instance-A",
+          "rig/corner_03@instance-B",
+          "rig/corner_04@instance-A",
+          "rig/corner_04@instance-B",
+          "rig/corner_05@instance-A",
+          "rig/corner_05@instance-B"
+        ]
+      },
+      "id": "POINT-QUOTA-AND-LEDGER",
+      "passed": true
+    },
+    {
+      "description": "Manifest fields, stage files and whole-directory replacement leave no temporary artifacts.",
+      "details": {
+        "camera_hash": "19bef909e6490d83cb93623c45240691858fc0fa2037f9dd9539749a75f5e715",
+        "completed_count": 16,
+        "config_hash": "b065d3abbfb2dc1b85c9c4504ca14709e5d8e85dc339aa23a14c23e1c8b34105",
+        "consumed_budget": 270,
+        "global_version": "6ed872f03a283627d701476fef7dc52211b4315363d2c57b7fdfa4d9cbe1f6cf",
+        "stage_files": [
+          "finalization.json",
+          "load.json",
+          "rejection.json",
+          "triangulation.json"
+        ]
+      },
+      "id": "SNAPSHOT-MANIFEST-ATOMIC",
+      "passed": true
+    },
+    {
+      "description": "Final residual statistics and low/high fixed-point error propagation are reported with binary64 precision.",
+      "details": {
+        "final_residual_count": 83,
+        "final_residual_max_px": 0.14900253309921915,
+        "final_residual_rmse_px": 0.0778931261374545,
+        "first_tolerance_exceeded_stage_counts": {
+          "triangulation": 7
+        },
+        "float_format": "IEEE-754 binary64; JSON emits shortest round-trip decimal",
+        "high_chain_point_delta_l2_max": 2.1139873145260946e-05,
+        "high_chain_residual_delta_max_px": 0.005984870923266078,
+        "low_chain_point_delta_l2_max": 4.3938395160969625e-05,
+        "low_chain_residual_delta_max_px": 0.010048972523047331,
+        "minimum_significant_digits": 6,
+        "removal_flip_count": 0,
+        "static_primary_point_delta_l2_max": 4.3938395160969625e-05,
+        "static_primary_residual_delta_max_px": 3.0258503410596216e-05,
+        "successful_points": 14
+      },
+      "id": "PRECISION-TRACE",
+      "passed": true
+    }
+  ],
+  "sample": {
+    "keypoints": 16,
+    "manifest_version": "obs-2026-11-22-v1",
+    "path": "sample",
+    "seed": 20261122,
+    "views": 6
+  },
+  "schema_version": 1,
+  "summary": {
+    "all_passed": true,
+    "checks_failed": 0,
+    "checks_passed": 17,
+    "checks_total": 17,
+    "unit_tests_command": "python -m unittest discover -v",
+    "unit_tests_result": "19 tests passed (run separately)"
+  }
+}
