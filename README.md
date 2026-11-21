@@ -1,23 +1,162 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向本地 Windows 环境的云原生集群租约持有权水位组件，核心业务问题是“同一集群租约在多次续约、到期回收与强制终止之间的持有权归属如何被唯一裁决并留下可复核账本”。用户在本地 JSON 文件中声明一组集群（集群标识、127.0.0.1 回环端口、租约时长毫秒、续约间隔毫秒、租约容量）与一组候选持有者（持有者标识、优先级整数、目标集群列表），并给出 NDJSON 租约事件流：每行含事件序号、单调不降的整数毫秒时间戳、集群标识、持有者标识与事件类型（申请、续约、主动释放）。系统须为每个集群在声明端口启动确定性租约仲裁服务子进程，通过回环 TCP 的 JSON 行协议接收持有者请求，按集群租约容量与持有者优先级裁决持有权，持有权仅在持有者续约成功时延续，超过租约时长未续约须到期回收并允许其他持有者接管。组件须维护集群租约水位账本，支持租约容量或时长演进后的整体替换、强制终止后的恢复以及恢复后的重放校验。
+# 云原生集群租约持有权水位组件
 
-任务环境与准备：
-安装 Python 3.11 或以上版本，并确认 tkinter 随安装包可用（Windows 官方安装包默认包含）。
-安装 NumPy 与 SQLite 驱动：pip install numpy；sqlite3 使用 Python 标准库，无需额外安装。
-在工作区根目录创建 samples 目录，放置本地 JSON 集群声明、持有者声明、租约事件流与确定性样本文件，样本不依赖网络与外部账号。
-确认 127.0.0.1 上待用高位端口未被占用，仲裁服务子进程统一以 python -m 方式从本仓库脚本启动。
-运行任务前关闭占用同端口的其他本地进程，避免端口占用异常与真实场景混淆。
+这是一个面向本地 Windows 环境的确定性集群租约仲裁组件。它为每个声明集群启动独立 Python 子进程，仅绑定 `127.0.0.1` 回环端口，通过 JSON Lines 协议裁决申请、续约和主动释放；当前裁决、有效租约、水位与进度持久化在 SQLite 中。
 
-业务要求：
-1. 实现集群声明、候选持有者与租约事件流的加载及强校验：从本地 JSON 读取集群集合（集群标识、127.0.0.1 回环端口、租约时长毫秒、续约间隔毫秒、租约容量）与持有者集合（持有者标识、优先级整数、目标集群列表），从 NDJSON 逐行读取租约事件；校验集群标识与持有者标识唯一、端口为 127.0.0.1 回环字面量且全局不重复、租约时长与续约间隔为正整数且续约间隔小于租约时长、租约容量为正整数、持有者目标集群存在、事件序号连续唯一且时间戳单调不降；任一不合法须以 E_SPEC 整体拒绝加载并输出首个违规字段。
-2. 实现确定性租约仲裁服务的本地子进程编排与逐行协议：以 Windows 子进程方式为每个集群在声明端口启动仲裁服务，平台通过回环 TCP 的 JSON 行协议下发持有者请求并接收裁决回执；握手须有真实套接字超时，端口占用须以 E_PORT 报告，握手超时与回执字段缺失须分别以 E_HANDSHAKE、E_REPLY 报告；仲裁服务须按集群租约容量与持有者优先级裁决持有权，同一集群同一时刻有效持有数不得超过容量，相同请求序列多次下发必须得到逐字节一致的裁决序列与持有权归属。
-3. 实现租约持有权状态机与过期回收：租约在 granted、renewed、released、expired 间迁移，持有权仅有在租约时长内心跳续约成功才延续，超过租约时长未续约须以服务端单调时钟真实计时判定到期回收并允许其他持有者按优先级接管；主动释放须立即归还容量并记录原因；每次迁迁移须记录事件序号、迁移前状态、迁移后状态、触发原因与当时有效持有数，同一事件在任意处理顺序下必须得到相同状态迁移序列。
-4. 实现租约水位账本的持久化与唯一裁决：以本地 SQLite 持久化每个集群在每个事件后的有效租约集合、各持有者持有权起止时刻、已用容量与水位（已用容量占租约容量比例，以会话缩放因子按整数定点表示并声明截断方向）；同一集群同一事件序号只允许一个已提交裁决，重复提交须幂等返回已有记录；账本须携带整数格式版本与整体内容摘要，内容摘要由集群标识、事件序号、裁决结论与有效租约集合按显式稳定序列化规则推导，不得依赖字典或哈希遍历顺序。
-5. 实现租约容量或时长演进后的整体替换与陈旧结论防护：当集群租约容量、租约时长或被接管优先级被修改后参数版本号单调递增，旧版本下已产生的持有权归属、水位记录与过期判定须整体标记为陈旧且不得参与当前展示与统计；当前视图须整体替换而非增量合并，替换时须稳定列出被撤销的有效租约、被保留的只读记录与被丢弃的陈旧记录；替换后须按新参数重新裁决并输出受影响集群集合与替换依据。
-6. 实现强制终止后的恢复与未知状态标注：每处理一个事件批次须在同一 SQLite 事务中写入该批次裁决记录、有效租约集合、水位与进度游标；进程被强制终止后重启只能依据已完整提交的记录恢复，处于未提交事务中的事件须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告；恢复后须按账本记录的租约时长为已持有租约重新计算到期时刻，并在报告中区分真实续约延续与恢复重算延续。
-7. 实现会话快照的版本识别与恢复后一致性重放校验：快照持久化参数版本、事件流内容摘要、各集群有效租约集合、水位记录与裁决账本摘要并携带整数格式版本与内容摘要；重新打开快照时须先比较快照参数版本与内容摘要同当前会话是否一致，不一致须整体替换租约集合、水位与账本状态而非增量合并，并以 E_SNAPSHOT 报明差异依据；恢复后按快照记录的参数版本与事件游标重新驱动仲裁服务并重算已完成事件的持有权归属与水位，与快照逐项比较，差异须定位到首个不一致的集群标识、事件序号与字段并以 E_REPLAY 报明依据。
-8. 实现异常注入、结构化日志与 Tkinter 诊断界面：支持以命令行参数分别注入持有者目标集群引用缺失、租约时长小于续约间隔、快照内容摘要不符三类异常，分别以 E_REF、E_TIMING、E_SNAPSHOT 业务码报告并写入结构化日志，注入仅改变输入文件或参数而不改动源码；Tkinter 界面展示每个集群的有效租约与持有者、剩余租约时长、已用容量与水位曲线、状态迁移轨迹、参数版本与快照列表，渲染顺序稳定且刷新不改变账本内容。
+核心性质：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 当前参数版本下，同一 `(cluster_id, event_seq)` 只能有一条有效裁决。
+- 同一事件序列在 `logical` 时钟模式下产生逐字节一致的裁决回执与账本摘要。
+- 容量满时只允许严格更高优先级的持有者以稳定规则接管最低优先级租约。
+- 每批裁决、有效租约、水位和进度在同一 SQLite 事务中提交。
+- 参数演进、强制终止恢复和快照恢复采用整体视图替换或提交游标恢复，不做增量猜测。
+- Tkinter 诊断界面以只读连接打开 SQLite，刷新不会改写账本。
 
-验收：
-使用本地样本验证租约裁决唯一性、到期回收、整体替换、强制终止后恢复及异常注入业务码。
+## 环境准备（Windows）
+
+1. 安装 Python 3.11 或以上，官方安装包默认包含 `tkinter`。
+2. 安装 NumPy：`py -3.11 -m pip install -r requirements.txt`（等价于安装 `numpy`）。
+3. 确认 tkinter：`py -3.11 -c "import tkinter; print(tkinter.TkVersion)"`。
+4. 检查样本端口是否被占用：
+
+   ```powershell
+   Get-NetTCPConnection -LocalPort 39171,39172 -ErrorAction SilentlyContinue
+   ```
+
+5. 若被其他本地进程占用，先关闭该进程再运行。组件不会访问非回环地址。
+
+SQLite 使用 Python 标准库 `sqlite3`，不需要额外驱动。项目不使用 Docker 或其他容器。
+
+## 快速运行
+
+```powershell
+python -m cluster_lease validate --clusters samples/clusters.json --holders samples/holders.json --events samples/events.ndjson
+
+python -m cluster_lease run --clusters samples/clusters.json --holders samples/holders.json --events samples/events.ndjson --db build/state.db --runtime-dir build/runtime --batch-size 4 --clock-mode logical --snapshot-out snapshots/session-v1.json
+
+python -m cluster_lease snapshot-open --clusters samples/clusters.json --holders samples/holders.json --events samples/events.ndjson --db build/state.db --snapshot snapshots/session-v1.json
+
+python -m cluster_lease evolve --clusters samples/clusters_evolved.json --holders samples/holders_evolved.json --events samples/events.ndjson --db build/state.db
+
+python -m cluster_lease recover --clusters samples/clusters_evolved.json --holders samples/holders_evolved.json --events samples/events.ndjson --db build/state.db
+
+python -m cluster_lease snapshot-create --clusters samples/clusters_evolved.json --holders samples/holders_evolved.json --events samples/events.ndjson --db build/state.db --out snapshots/session-v2.json
+
+python -m cluster_lease inspect --db build/state.db
+
+python -m cluster_lease gui --db build/state.db
+```
+
+每个命令均可使用 `--log logs/command.jsonl` 写结构化 JSONL 日志，并用 `--report artifacts/report.json` 落盘最终 JSON。
+
+## 输入格式
+
+集群声明支持根数组或 `{"clusters": [...]}`：
+
+```json
+{
+  "clusters": [
+    {
+      "cluster_id": "alpha",
+      "host": "127.0.0.1",
+      "port": 39171,
+      "lease_duration_ms": 5000,
+      "renewal_interval_ms": 1000,
+      "capacity": 1
+    }
+  ]
+}
+```
+
+持有者声明支持根数组或 `{"holders": [...]}`：
+
+```json
+{
+  "holders": [
+    {"holder_id": "h-high", "priority": 9, "targets": ["alpha"]}
+  ]
+}
+```
+
+事件流为 NDJSON，序号从 1 连续递增，时间戳单调不降：
+
+```json
+{"event_seq":1,"timestamp_ms":0,"cluster_id":"alpha","holder_id":"h-high","event_type":"apply"}
+{"event_seq":2,"timestamp_ms":1000,"cluster_id":"alpha","holder_id":"h-high","event_type":"renew"}
+{"event_seq":3,"timestamp_ms":1100,"cluster_id":"alpha","holder_id":"h-high","event_type":"release"}
+```
+
+`event_type` 接受 `apply/renew/release`，也接受中文标签 `申请/续约/主动释放`。字段定义详见 `docs/DESIGN.md`。
+
+正常规格错误统一以 `E_SPEC` 拒绝整个加载过程，并给出首个违规字段，例如 `clusters[1].port`。三类受控注入使用额外业务码：`E_REF`、`E_TIMING`、`E_SNAPSHOT`。
+
+## 状态机与时钟
+
+租约状态为 `granted -> renewed -> released`，未续约时进入 `expired`。到达 `expires_ms` 的租约在服务处理下一个请求时先回收到期租约，再裁决当前请求。容量已满时，严格更高优先级的申请者可接管当前最低优先级租约；同优先级不抢占。
+
+时钟模式：
+
+- `logical`：只使用事件时间戳，适用于确定性重放和验收。
+- `hybrid`：事件时间或服务端单调时钟任一到期即回收，是 `run` 默认值。
+- `real`：只使用服务端单调时钟。
+
+快照重放和参数演进重放强制使用 `logical`。样本租约时长为 5000 ms，普通本地运行不会触发混合时钟误判；真实计时路径另有自动化测试。
+
+## 账本、演进与恢复
+
+SQLite 账本包含参数版本、裁决、当前有效租约、持有者持有权起止区间、逐事件水位、进度游标、批运行记录和快照目录。水位按固定整数缩放因子 `1_000_000` 表示，截断方向为 `floor`；每条记录显式携带缩放因子和截断方向。
+
+裁决摘要由集群标识、事件序号、裁决结论、原因和稳定排序的有效租约集合按规范 JSON 计算。账本整体摘要不依赖字典插入顺序或 Python 哈希遍历顺序。
+
+批处理流程：
+
+1. 先提交 `inflight` 批标记。
+2. 向对应集群子进程逐行发送请求。
+3. 在同一个 SQLite 事务中提交该批裁决、最终有效租约、逐事件水位、进度游标和 `committed` 批状态。
+
+强制终止后，遗留 `inflight` 批次会被标记为 `unknown` 并要求重跑；恢复只使用已完整提交的游标，不生成“强制终止时退出报告”。已持有租约按账本记录的租约时长重算到期时间，报告中区分 `true_renewal_continuation` 与 `recovery_recomputed_continuation`。
+
+验收脚本可通过 `--crash-after-inflight-batch N` 注入强制终止；这是测试用故障入口，不改变业务源码。
+
+参数演进比较容量、租约时长、续约间隔、端口及接管优先级摘要。受影响集群参数版本加一，旧裁决/水位/有效租约整体标记为陈旧，然后按新参数完整重放事件并原子替换当前视图。
+
+快照携带整数格式版本、参数版本、事件流摘要、有效租约、水位、裁决账本和内容摘要。打开时先校验快照自身摘要，再比较当前会话；不一致时整体替换当前视图并返回 `E_SNAPSHOT`。随后用快照参数版本和游标重新驱动子进程，逐事件比较裁决与水位；首个差异以 `E_REPLAY` 定位到集群、事件序号和字段。
+
+## 异常注入
+
+```powershell
+python -m cluster_lease validate ... --inject missing-ref   # E_REF
+python -m cluster_lease validate ... --inject timing        # E_TIMING
+python -m cluster_lease snapshot-open ... --inject snapshot # E_SNAPSHOT
+```
+
+注入只修改载入内存的输入参数，不改源码或磁盘输入文件。所有错误同时写入 `--log` 指定的结构化日志。
+
+## 业务码
+
+| 业务码 | 含义 |
+| --- | --- |
+| `E_SPEC` | 输入规格不合法，整体拒绝加载 |
+| `E_REF` | 持有者目标集群引用缺失注入 |
+| `E_TIMING` | 租约时长与续约间隔关系错误注入 |
+| `E_PORT` | 回环端口被占用 |
+| `E_HANDSHAKE` | 子进程握手真实套接字超时 |
+| `E_REPLY` | 回执字段缺失、格式错误或超时 |
+| `E_SNAPSHOT` | 快照摘要/参数版本/会话内容不一致 |
+| `E_REPLAY` | 快照恢复后重放与账本不一致 |
+| `E_STATE` | 数据库状态与命令不匹配 |
+| `E_ENV` | 本地运行环境不满足要求，例如缺少 tkinter/显示 |
+
+## 测试与实测
+
+```powershell
+python -m unittest discover -s tests -t . -v
+python scripts/run_acceptance.py
+```
+
+当前工作区实际结果：
+
+- 8 项自动化测试全部通过，覆盖规格校验、注入、状态机、真实时钟到期、端口/握手/回执错误、确定性、演进、快照重放、崩溃恢复。
+- 端到端验收 13 项全部通过；两次全新运行的裁决回执摘要均为 `82dc9afc080900e26ab798867b29a48d2e81002b792a81ee5b0725f04fe97db0`，初始账本摘要均为 `2ca12e136d69a92f7430447879af4f45e6402ae2892013c886be565e4a5616eb`。
+- 当前测试容器是 Linux Python 3.11.0rc1 且未安装 tkinter；核心功能、SQLite、TCP 子进程已实测，GUI 未在该容器渲染，仅验证了缺 tkinter 时返回 `E_ENV`。Windows 官方 Python 自带 tkinter，可直接运行 `gui` 子命令。
+
+详细协议、事务和校验规则见 `docs/DESIGN.md`，实测命令与输出摘要见 `docs/VALIDATION.md`。

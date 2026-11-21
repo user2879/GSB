@@ -1,0 +1,169 @@
+{
+  "clock_mode": "logical",
+  "decision_sequence": [
+    {
+      "active_holder_ids": ["h-mid"],
+      "cluster_id": "alpha",
+      "decision": "granted",
+      "event_seq": 1,
+      "reason": "capacity_available",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-mid"],
+      "cluster_id": "alpha",
+      "decision": "renewed",
+      "event_seq": 2,
+      "reason": "renewal_accepted",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-mid"],
+      "cluster_id": "beta",
+      "decision": "granted",
+      "event_seq": 3,
+      "reason": "capacity_available",
+      "used_capacity": 1,
+      "watermark_fixed": 500000
+    },
+    {
+      "active_holder_ids": ["h-low", "h-mid"],
+      "cluster_id": "beta",
+      "decision": "granted",
+      "event_seq": 4,
+      "reason": "capacity_available",
+      "used_capacity": 2,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-high", "h-mid"],
+      "cluster_id": "beta",
+      "decision": "granted",
+      "event_seq": 5,
+      "reason": "higher_priority_takeover",
+      "used_capacity": 2,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-high"],
+      "cluster_id": "alpha",
+      "decision": "granted",
+      "event_seq": 6,
+      "reason": "higher_priority_takeover",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-high"],
+      "cluster_id": "alpha",
+      "decision": "renewed",
+      "event_seq": 7,
+      "reason": "renewal_accepted",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-high"],
+      "cluster_id": "alpha",
+      "decision": "rejected",
+      "event_seq": 8,
+      "reason": "capacity_full_lower_priority",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-high"],
+      "cluster_id": "alpha",
+      "decision": "rejected",
+      "event_seq": 9,
+      "reason": "capacity_full_lower_priority",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-mid"],
+      "cluster_id": "alpha",
+      "decision": "granted",
+      "event_seq": 10,
+      "reason": "capacity_available",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": ["h-low"],
+      "cluster_id": "beta",
+      "decision": "granted",
+      "event_seq": 11,
+      "reason": "capacity_available",
+      "used_capacity": 1,
+      "watermark_fixed": 500000
+    },
+    {
+      "active_holder_ids": ["h-high", "h-low"],
+      "cluster_id": "beta",
+      "decision": "granted",
+      "event_seq": 12,
+      "reason": "capacity_available",
+      "used_capacity": 2,
+      "watermark_fixed": 1000000
+    },
+    {
+      "active_holder_ids": [],
+      "cluster_id": "alpha",
+      "decision": "released",
+      "event_seq": 13,
+      "reason": "holder_released",
+      "used_capacity": 0,
+      "watermark_fixed": 0
+    },
+    {
+      "active_holder_ids": ["h-low"],
+      "cluster_id": "alpha",
+      "decision": "granted",
+      "event_seq": 14,
+      "reason": "capacity_available",
+      "used_capacity": 1,
+      "watermark_fixed": 1000000
+    }
+  ],
+  "event_stream_digest": "9146963274e26298f915e3b952fe239a4719f4e0a8ee468901c9aaab851e905d",
+  "final_active_leases": {
+    "alpha": [
+      {
+        "expires_ms": 16100,
+        "holder_id": "h-low",
+        "last_renewed_ms": 11100,
+        "priority": 1,
+        "renewal_count": 0,
+        "started_ms": 11100,
+        "state": "granted"
+      }
+    ],
+    "beta": [
+      {
+        "expires_ms": 15600,
+        "holder_id": "h-high",
+        "last_renewed_ms": 10600,
+        "priority": 9,
+        "renewal_count": 0,
+        "started_ms": 10600,
+        "state": "granted"
+      },
+      {
+        "expires_ms": 15500,
+        "holder_id": "h-low",
+        "last_renewed_ms": 10500,
+        "priority": 1,
+        "renewal_count": 0,
+        "started_ms": 10500,
+        "state": "granted"
+      }
+    ]
+  },
+  "ledger_content_digest": "2ca12e136d69a92f7430447879af4f45e6402ae2892013c886be565e4a5616eb",
+  "reply_sequence_digest": "82dc9afc080900e26ab798867b29a48d2e81002b792a81ee5b0725f04fe97db0",
+  "watermark_scale": 1000000,
+  "watermark_truncation": "floor"
+}
