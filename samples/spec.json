@@ -1,0 +1,76 @@
+{
+  "duration_factor_ms": 20,
+  "global_concurrency": 2,
+  "instance_set_version": 1,
+  "instances": [
+    {
+      "behavior": "normal",
+      "host": "127.0.0.1",
+      "hosts": [
+        "alpha"
+      ],
+      "instance_id": "svc-a",
+      "port": 18301,
+      "weight": 2
+    },
+    {
+      "behavior": "delay",
+      "delay_ms": 5000,
+      "host": "127.0.0.1",
+      "hosts": [
+        "beta"
+      ],
+      "instance_id": "svc-b",
+      "port": 18302,
+      "weight": 1
+    },
+    {
+      "behavior": "error",
+      "host": "127.0.0.1",
+      "hosts": [
+        "gamma"
+      ],
+      "instance_id": "svc-c",
+      "port": 18303,
+      "weight": 1
+    },
+    {
+      "behavior": "refused",
+      "host": "127.0.0.1",
+      "hosts": [],
+      "instance_id": "svc-d",
+      "port": 18304,
+      "weight": 1
+    }
+  ],
+  "probe_policy": {
+    "eject_threshold": 3,
+    "failure_threshold": 2,
+    "interval_ms": 100,
+    "policy_version": 1,
+    "timeout_ms": 150
+  },
+  "rule_version": 1,
+  "tenant_set_version": 1,
+  "tenants": [
+    {
+      "burst": 1,
+      "max_concurrency": 1,
+      "share": 40,
+      "tenant_id": "alpha"
+    },
+    {
+      "burst": 1,
+      "max_concurrency": 1,
+      "share": 25,
+      "tenant_id": "beta"
+    },
+    {
+      "burst": 0,
+      "max_concurrency": 2,
+      "share": 20,
+      "tenant_id": "gamma"
+    }
+  ],
+  "total_share_cap": 100
+}
