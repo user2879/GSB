@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "manifest": {
+    "schema_version": 1,
+    "dataset_id": "local-mvcc-seed-20261122",
+    "txn_set_version": 1,
+    "chain_version": 1,
+    "budget_version": 1,
+    "read_point_set_version": 1
+  },
+  "transactions": [
+    {
+      "txn_id": "T1",
+      "start_seq": 1,
+      "outcome": "committed",
+      "commit_seq": 3
+    },
+    {
+      "txn_id": "T2",
+      "start_seq": 2,
+      "outcome": "committed",
+      "commit_seq": 5
+    },
+    {
+      "txn_id": "T3",
+      "start_seq": 4,
+      "outcome": "committed",
+      "commit_seq": 8
+    },
+    {
+      "txn_id": "T4",
+      "start_seq": 6,
+      "outcome": "committed",
+      "commit_seq": 10
+    },
+    {
+      "txn_id": "T5",
+      "start_seq": 7,
+      "outcome": "rolledback"
+    },
+    {
+      "txn_id": "T6",
+      "start_seq": 9,
+      "outcome": "committed",
+      "commit_seq": 12
+    },
+    {
+      "txn_id": "T7",
+      "start_seq": 11,
+      "outcome": "committed",
+      "commit_seq": 14
+    },
+    {
+      "txn_id": "T8",
+      "start_seq": 13,
+      "outcome": "rolledback"
+    },
+    {
+      "txn_id": "T9",
+      "start_seq": 15,
+      "outcome": "committed",
+      "commit_seq": 18
+    },
+    {
+      "txn_id": "T10",
+      "start_seq": 16,
+      "outcome": "committed",
+      "commit_seq": 20
+    }
+  ],
+  "records": [
+    {
+      "row_key": "acct:1",
+      "version_no": 1,
+      "txn_id": "T1",
+      "value_summary": {
+        "balance": 102,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:d4fa7c18766c8cb2699f3f80a653e2ffa5e824383587e46c0b71c075555f08c4",
+      "prev_version": null
+    },
+    {
+      "row_key": "acct:1",
+      "version_no": 2,
+      "txn_id": "T2",
+      "value_summary": {
+        "balance": 122,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:8f281b2b518caa3d6791e005dd17ffaa8a8a0f4107aa8ea4b57e41c814c244ab",
+      "prev_version": 1
+    },
+    {
+      "row_key": "acct:1",
+      "version_no": 3,
+      "txn_id": "T3",
+      "value_summary": {
+        "balance": 137,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:69ea36d96c6f7b96fb2356303a3ca72cb797ea4d1127038f2314dea12c456e87",
+      "prev_version": 2
+    },
+    {
+      "row_key": "acct:1",
+      "version_no": 4,
+      "txn_id": "T5",
+      "value_summary": {
+        "balance": 1001,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:b80323c23b3251d8d6ce65f0e2bf26aedb486b5bbe3c4c313b734737658d731f",
+      "prev_version": 3
+    },
+    {
+      "row_key": "acct:1",
+      "version_no": 5,
+      "txn_id": "T6",
+      "value_summary": {
+        "balance": 152,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:5134f279f2ae5d388fbca40f2a1d4b5f92306086e6e942f2715cbd440f46439e",
+      "prev_version": 4
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 1,
+      "txn_id": "T2",
+      "value_summary": {
+        "balance": 202,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:ba45bd3934788c86b321f2c1fe50539625dce904f1e391bd376ae5186933816b",
+      "prev_version": null
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 2,
+      "txn_id": "T4",
+      "value_summary": {
+        "balance": 262,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:287329ed74912ac75f63ad1da8d2e6fbeb2ebb7016c2a55bf28e623735198d33",
+      "prev_version": 1
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 3,
+      "txn_id": "T4",
+      "value_summary": {
+        "balance": 282,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:5c9c0ceb06776008918ff1de910eaf92f4bb6f5379f0b7a7add6bf8dd03ca717",
+      "prev_version": 2
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 4,
+      "txn_id": "T5",
+      "value_summary": {
+        "balance": 5,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:2c1de0ffaf5b1e1944633467ceb8ffbda5da62c2cc482ff82607ff09cfe162cc",
+      "prev_version": 3
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 5,
+      "txn_id": "T7",
+      "value_summary": {
+        "balance": 322,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:0f7a723e807bcc5efb3cc51722e57c436487987eea37a6e93f680a93216f6a27",
+      "prev_version": 4
+    },
+    {
+      "row_key": "acct:2",
+      "version_no": 6,
+      "txn_id": "T9",
+      "value_summary": {
+        "balance": 402,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:610df1f3f20913d5c42b867d7512ba5cc200cb176cac19fd167fc8415b97aed7",
+      "prev_version": 5
+    },
+    {
+      "row_key": "acct:3",
+      "version_no": 1,
+      "txn_id": "T3",
+      "value_summary": {
+        "balance": 127,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:34cf499eca59726e8e63e72c8d1602bfd9ed6ed004bad4ac077943cdc6f080b9",
+      "prev_version": null
+    },
+    {
+      "row_key": "acct:3",
+      "version_no": 2,
+      "txn_id": "T6",
+      "value_summary": {
+        "balance": 75,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:66774134742efa8a0d4ddab5600eb59ccf859e51a799603e69db850dd30fbb65",
+      "prev_version": 1
+    },
+    {
+      "row_key": "acct:3",
+      "version_no": 3,
+      "txn_id": "T8",
+      "value_summary": {
+        "balance": 88,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:3086dbf26c4a6c4f48ae618653cbd57125891ff65f6984a6ac8d9f29f896479b",
+      "prev_version": 2
+    },
+    {
+      "row_key": "acct:3",
+      "version_no": 4,
+      "txn_id": "T10",
+      "value_summary": {
+        "balance": 110,
+        "currency": "CNY"
+      },
+      "value_digest": "sha256:011149853e29794a2eacd9ad81e465db45d7f0112a1c038559c176e9c11c1d8c",
+      "prev_version": 3
+    }
+  ],
+  "read_points": [
+    {
+      "read_point_id": "RP01",
+      "snapshot_seq": 9,
+      "reader_txn_id": "T3"
+    },
+    {
+      "read_point_id": "RP02",
+      "snapshot_seq": 11,
+      "reader_txn_id": "T4"
+    },
+    {
+      "read_point_id": "RP03",
+      "snapshot_seq": 16,
+      "reader_txn_id": "T6"
+    },
+    {
+      "read_point_id": "RP04",
+      "snapshot_seq": 7,
+      "reader_txn_id": "T3"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "Q01",
+      "read_point_id": "RP01",
+      "row_key": "acct:1",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 132
+          }
+        ]
+      },
+      "priority": 10
+    },
+    {
+      "query_id": "Q02",
+      "read_point_id": "RP01",
+      "row_key": "acct:2",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 252
+          }
+        ]
+      },
+      "priority": 20
+    },
+    {
+      "query_id": "Q03",
+      "read_point_id": "RP02",
+      "row_key": "acct:2",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 252
+          }
+        ]
+      },
+      "priority": 10
+    },
+    {
+      "query_id": "Q04",
+      "read_point_id": "RP02",
+      "row_key": "acct:1",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 142
+          }
+        ]
+      },
+      "priority": 20
+    },
+    {
+      "query_id": "Q05",
+      "read_point_id": "RP03",
+      "row_key": "acct:1",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 152
+          }
+        ]
+      },
+      "priority": 10
+    },
+    {
+      "query_id": "Q06",
+      "read_point_id": "RP03",
+      "row_key": "acct:2",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 352
+          }
+        ]
+      },
+      "priority": 20
+    },
+    {
+      "query_id": "Q07",
+      "read_point_id": "RP04",
+      "row_key": "acct:3",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 122
+          }
+        ]
+      },
+      "priority": 10
+    },
+    {
+      "query_id": "Q08",
+      "read_point_id": "RP02",
+      "row_key": "acct:3",
+      "predicate": {
+        "mode": "all",
+        "conditions": [
+          {
+            "column": "balance",
+            "op": ">=",
+            "value": 72
+          }
+        ]
+      },
+      "priority": 20
+    }
+  ],
+  "budget": {
+    "global_cost_budget": 35,
+    "round_cost_budget": 14,
+    "global_concurrency": 3,
+    "per_read_point_concurrency": 1,
+    "task_timeout_ms": 1000
+  },
+  "visibility_policy": {
+    "own_uncommitted_visible": true,
+    "own_write_ignores_snapshot": true,
+    "declaration": "Read-your-own-writes is explicit: a committed version written by the reader transaction may ignore snapshot_seq when own_write_ignores_snapshot is true. Rolled-back versions are never visible."
+  }
+}
