@@ -1,0 +1,72 @@
+{
+  "defaults": {
+    "directions": [
+      "upstream",
+      "downstream"
+    ],
+    "include_self": true,
+    "max_depth": 2
+  },
+  "rules": [
+    {
+      "directions": [
+        "upstream",
+        "downstream"
+      ],
+      "include_self": true,
+      "max_depth": 2,
+      "rule_id": "checkout-both",
+      "services": [
+        "checkout"
+      ]
+    },
+    {
+      "directions": [
+        "upstream"
+      ],
+      "include_self": true,
+      "max_depth": 0,
+      "rule_id": "database-upstream",
+      "services": [
+        "database"
+      ]
+    },
+    {
+      "directions": [
+        "upstream"
+      ],
+      "include_self": true,
+      "max_depth": 2,
+      "rule_id": "gateway-upstream",
+      "services": [
+        "gateway"
+      ]
+    },
+    {
+      "directions": [
+        "upstream"
+      ],
+      "include_self": true,
+      "max_depth": 2,
+      "rule_id": "search-upstream",
+      "services": [
+        "search"
+      ]
+    },
+    {
+      "directions": [
+        "upstream",
+        "downstream"
+      ],
+      "include_self": true,
+      "max_depth": 2,
+      "rule_id": "storage-both",
+      "services": [
+        "payment",
+        "inventory"
+      ]
+    }
+  ],
+  "schema": "alert-pipeline/root-rules",
+  "version": 3
+}

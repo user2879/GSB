@@ -1,0 +1,72 @@
+{
+  "dependencies": [
+    {
+      "from": "auth",
+      "to": "database"
+    },
+    {
+      "from": "checkout",
+      "to": "auth"
+    },
+    {
+      "from": "checkout",
+      "to": "inventory"
+    },
+    {
+      "from": "checkout",
+      "to": "payment"
+    },
+    {
+      "from": "gateway",
+      "to": "checkout"
+    },
+    {
+      "from": "gateway",
+      "to": "search"
+    },
+    {
+      "from": "inventory",
+      "to": "database"
+    },
+    {
+      "from": "notifier",
+      "to": "checkout"
+    },
+    {
+      "from": "payment",
+      "to": "database"
+    },
+    {
+      "from": "search",
+      "to": "database"
+    }
+  ],
+  "schema": "alert-pipeline/service-graph",
+  "services": [
+    {
+      "service_id": "auth"
+    },
+    {
+      "service_id": "checkout"
+    },
+    {
+      "service_id": "database"
+    },
+    {
+      "service_id": "gateway"
+    },
+    {
+      "service_id": "inventory"
+    },
+    {
+      "service_id": "notifier"
+    },
+    {
+      "service_id": "payment"
+    },
+    {
+      "service_id": "search"
+    }
+  ],
+  "version": 4
+}

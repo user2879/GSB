@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alert-denoiser"
+version = "1.0.0"
+description = "Deterministic alert denoising, root-cause correlation, replay and verification"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+alert-pipeline = "alert_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["alert_pipeline*"]
