@@ -1,0 +1,320 @@
+{
+  "batches": [
+    {
+      "add_samples": [
+        {
+          "domain": "presale",
+          "gold_slots": [
+            [
+              "product",
+              [
+                "headphone"
+              ],
+              2
+            ]
+          ],
+          "intent": "price_inquiry",
+          "tokens": [
+            "discount",
+            "promotion",
+            "headphone",
+            "please"
+          ],
+          "utterance_id": "U101"
+        },
+        {
+          "domain": "aftersale",
+          "gold_slots": [
+            [
+              "product",
+              [
+                "tablet"
+              ],
+              3
+            ],
+            [
+              "issue_part",
+              [
+                "camera"
+              ],
+              0
+            ]
+          ],
+          "intent": "repair_request",
+          "tokens": [
+            "camera",
+            "broken",
+            "repair",
+            "tablet",
+            "urgent"
+          ],
+          "utterance_id": "U102"
+        }
+      ],
+      "batch_id": "B1",
+      "intent_migrations": [],
+      "slot_pattern_edits": [],
+      "threshold_edits": {}
+    },
+    {
+      "add_samples": [
+        {
+          "domain": "billing",
+          "gold_slots": [
+            [
+              "invoice_type",
+              [
+                "electronic_invoice"
+              ],
+              2
+            ],
+            [
+              "invoice_amount",
+              [
+                "299"
+              ],
+              4
+            ]
+          ],
+          "intent": "invoice_issue",
+          "tokens": [
+            "duplicate",
+            "invoice",
+            "electronic_invoice",
+            "amount",
+            "299"
+          ],
+          "utterance_id": "U201"
+        },
+        {
+          "domain": "logistics",
+          "gold_slots": [
+            [
+              "city",
+              [
+                "guangzhou"
+              ],
+              3
+            ],
+            [
+              "time_window",
+              [
+                "afternoon"
+              ],
+              4
+            ]
+          ],
+          "intent": "delivery_change",
+          "tokens": [
+            "ship",
+            "parcel",
+            "dispatch",
+            "guangzhou",
+            "afternoon"
+          ],
+          "utterance_id": "U202"
+        }
+      ],
+      "batch_id": "B2",
+      "intent_migrations": [
+        {
+          "intent": "product_consult",
+          "source_domain": "presale",
+          "target_domain": "aftersale"
+        }
+      ],
+      "slot_pattern_edits": [],
+      "threshold_edits": {}
+    },
+    {
+      "add_samples": [
+        {
+          "domain": "aftersale",
+          "gold_slots": [
+            [
+              "product",
+              [
+                "phone"
+              ],
+              1
+            ],
+            [
+              "issue_part",
+              [
+                "battery"
+              ],
+              99
+            ]
+          ],
+          "intent": "repair_request",
+          "tokens": [
+            "broken",
+            "phone",
+            "and",
+            "laptop",
+            "fault",
+            "repair"
+          ],
+          "utterance_id": "U301"
+        },
+        {
+          "domain": "logistics",
+          "gold_slots": [
+            [
+              "city",
+              [
+                "shenzhen"
+              ],
+              2
+            ]
+          ],
+          "intent": "track_shipment",
+          "tokens": [
+            "track",
+            "ship",
+            "shenzhen",
+            "courier",
+            "parcel"
+          ],
+          "utterance_id": "U302"
+        },
+        {
+          "domain": "presale",
+          "gold_slots": [],
+          "intent": "price_inquiry",
+          "tokens": [
+            "price",
+            "phone",
+            "ZZZ_NOT_A_TOKEN"
+          ],
+          "utterance_id": "U901"
+        },
+        {
+          "domain": "mars",
+          "gold_slots": [],
+          "intent": "repair_request",
+          "tokens": [
+            "repair"
+          ],
+          "utterance_id": "U902"
+        },
+        {
+          "domain": "aftersale",
+          "gold_slots": [],
+          "intent": "price_inquiry",
+          "tokens": [
+            "repair"
+          ],
+          "utterance_id": "U903"
+        },
+        {
+          "domain": "presale",
+          "gold_slots": [],
+          "intent": "price_inquiry",
+          "tokens": [
+            "price",
+            "phone"
+          ],
+          "utterance_id": "U001"
+        },
+        {
+          "domain": "presale",
+          "gold_slots": [
+            [
+              "ghost_slot",
+              [
+                "phone"
+              ],
+              1
+            ]
+          ],
+          "intent": "price_inquiry",
+          "tokens": [
+            "price",
+            "phone"
+          ],
+          "utterance_id": "U904"
+        }
+      ],
+      "batch_id": "B3",
+      "intent_migrations": [],
+      "slot_pattern_edits": [
+        {
+          "add_slot_values": [],
+          "intent": "track_shipment",
+          "required_slots": [
+            "city",
+            "time_window"
+          ]
+        }
+      ],
+      "threshold_edits": {
+        "intent": "0.3"
+      }
+    },
+    {
+      "add_samples": [],
+      "batch_id": "B4",
+      "intent_migrations": [
+        {
+          "intent": "product_consult",
+          "source_domain": "aftersale",
+          "target_domain": "presale"
+        }
+      ],
+      "slot_pattern_edits": [
+        {
+          "add_slot_values": [
+            {
+              "slot": "city",
+              "values": [
+                [
+                  "hangzhou"
+                ],
+                [
+                  "shenzhen"
+                ]
+              ]
+            }
+          ],
+          "intent": "track_shipment",
+          "required_slots": [
+            "city"
+          ]
+        }
+      ],
+      "threshold_edits": {
+        "active_quantization_level": "fine"
+      }
+    },
+    {
+      "add_samples": [
+        {
+          "domain": "logistics",
+          "gold_slots": [
+            [
+              "city",
+              [
+                "hangzhou"
+              ],
+              2
+            ]
+          ],
+          "intent": "track_shipment",
+          "tokens": [
+            "track",
+            "parcel",
+            "hangzhou",
+            "courier"
+          ],
+          "utterance_id": "U401"
+        }
+      ],
+      "batch_id": "B5",
+      "intent_migrations": [],
+      "slot_pattern_edits": [],
+      "threshold_edits": {}
+    }
+  ],
+  "plan_id": "plan-001"
+}

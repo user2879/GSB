@@ -1,0 +1,344 @@
+{
+  "active_quantization_level": "medium",
+  "domain_intents": {
+    "aftersale": [
+      "repair_request",
+      "refund_request"
+    ],
+    "billing": [
+      "invoice_issue",
+      "receipt_settlement"
+    ],
+    "logistics": [
+      "track_shipment",
+      "delivery_change"
+    ],
+    "presale": [
+      "price_inquiry",
+      "product_consult"
+    ]
+  },
+  "domain_word_bags": {
+    "aftersale": {
+      "battery": 1,
+      "broken": 3,
+      "camera": 1,
+      "complain": 1,
+      "exchange": 2,
+      "fault": 2,
+      "keyboard_fault": 1,
+      "maintain": 1,
+      "quality": 1,
+      "refund": 3,
+      "repair": 3,
+      "return": 2,
+      "screen": 1,
+      "service": 1,
+      "speaker": 1
+    },
+    "billing": {
+      "amount": 2,
+      "company": 1,
+      "deduct": 1,
+      "duplicate": 2,
+      "electronic_invoice": 1,
+      "invoice": 3,
+      "ordinary_invoice": 1,
+      "personal": 1,
+      "receipt": 2,
+      "reissue": 2,
+      "settle": 1,
+      "special_invoice": 1,
+      "tax": 2
+    },
+    "logistics": {
+      "address": 2,
+      "beijing": 1,
+      "courier": 2,
+      "delay": 2,
+      "delivery": 2,
+      "dispatch": 1,
+      "guangzhou": 1,
+      "hangzhou": 1,
+      "parcel": 1,
+      "shanghai": 1,
+      "shenzhen": 1,
+      "ship": 3,
+      "sign": 1,
+      "track": 3,
+      "warehouse": 1
+    },
+    "presale": {
+      "compare": 1,
+      "consult": 3,
+      "discount": 3,
+      "feature": 1,
+      "headphone": 1,
+      "keyboard": 1,
+      "laptop": 1,
+      "new_arrival": 1,
+      "phone": 1,
+      "price": 3,
+      "promotion": 2,
+      "recommend": 2,
+      "stock": 2,
+      "tablet": 1,
+      "warranty": 1
+    }
+  },
+  "domains": [
+    "aftersale",
+    "billing",
+    "logistics",
+    "presale"
+  ],
+  "fixed_point_bits": 16,
+  "intent_required_slots": {
+    "delivery_change": [
+      "city",
+      "time_window"
+    ],
+    "invoice_issue": [
+      "invoice_type",
+      "invoice_amount"
+    ],
+    "price_inquiry": [
+      "product"
+    ],
+    "product_consult": [
+      "product"
+    ],
+    "receipt_settlement": [
+      "invoice_amount"
+    ],
+    "refund_request": [
+      "product",
+      "issue_part"
+    ],
+    "repair_request": [
+      "product",
+      "issue_part"
+    ],
+    "track_shipment": [
+      "city"
+    ]
+  },
+  "intent_templates": {
+    "delivery_change": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "delivery",
+        "delay",
+        "address",
+        "dispatch"
+      ]
+    },
+    "invoice_issue": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "invoice",
+        "reissue",
+        "duplicate",
+        "tax"
+      ]
+    },
+    "price_inquiry": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "price",
+        "discount",
+        "promotion"
+      ]
+    },
+    "product_consult": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "consult",
+        "recommend",
+        "feature",
+        "compare"
+      ]
+    },
+    "receipt_settlement": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "receipt",
+        "settle",
+        "deduct",
+        "amount"
+      ]
+    },
+    "refund_request": {
+      "negation_window": 1,
+      "negations": [
+        "not"
+      ],
+      "triggers": [
+        "refund",
+        "return",
+        "exchange",
+        "complain"
+      ]
+    },
+    "repair_request": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "repair",
+        "broken",
+        "fault",
+        "maintain"
+      ]
+    },
+    "track_shipment": {
+      "negation_window": 1,
+      "negations": [],
+      "triggers": [
+        "track",
+        "ship",
+        "parcel",
+        "courier"
+      ]
+    }
+  },
+  "max_workers": 4,
+  "quantization_levels": {
+    "coarse": {
+      "bits": 1,
+      "grid": "0.1"
+    },
+    "fine": {
+      "bits": 4,
+      "grid": "0.0001"
+    },
+    "medium": {
+      "bits": 2,
+      "grid": "0.01"
+    }
+  },
+  "recalibration": {
+    "completeness_weight": "0.2",
+    "floor": "0.02",
+    "suppression_weight": "0.05"
+  },
+  "slot_budget_per_batch": 16,
+  "slot_definitions": {
+    "city": {
+      "values": [
+        [
+          "beijing"
+        ],
+        [
+          "shanghai"
+        ],
+        [
+          "guangzhou"
+        ],
+        [
+          "shenzhen"
+        ],
+        [
+          "hangzhou"
+        ]
+      ]
+    },
+    "invoice_amount": {
+      "values": [
+        [
+          "100"
+        ],
+        [
+          "299"
+        ],
+        [
+          "1299"
+        ],
+        [
+          "4999"
+        ],
+        [
+          "8999"
+        ]
+      ]
+    },
+    "invoice_type": {
+      "values": [
+        [
+          "special_invoice"
+        ],
+        [
+          "ordinary_invoice"
+        ],
+        [
+          "electronic_invoice"
+        ]
+      ]
+    },
+    "issue_part": {
+      "values": [
+        [
+          "screen"
+        ],
+        [
+          "battery"
+        ],
+        [
+          "keyboard_fault"
+        ],
+        [
+          "camera"
+        ],
+        [
+          "speaker"
+        ]
+      ]
+    },
+    "product": {
+      "values": [
+        [
+          "phone"
+        ],
+        [
+          "laptop"
+        ],
+        [
+          "headphone"
+        ],
+        [
+          "tablet"
+        ],
+        [
+          "keyboard"
+        ]
+      ]
+    },
+    "time_window": {
+      "values": [
+        [
+          "morning"
+        ],
+        [
+          "afternoon"
+        ],
+        [
+          "evening"
+        ],
+        [
+          "weekend"
+        ]
+      ]
+    }
+  },
+  "slot_match_window": 2,
+  "snapshot_commit_interval": 1,
+  "thresholds": {
+    "domain": "0.15",
+    "intent": "0.25"
+  },
+  "version": 1
+}

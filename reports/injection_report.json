@@ -1,0 +1,81 @@
+{
+  "all_hit": true,
+  "manifest_id": "injection-001",
+  "results": [
+    {
+      "code": "E_INJECTION_ILLEGAL_TOKEN",
+      "detail": {
+        "code": "E_INJECTION_ILLEGAL_TOKEN",
+        "illegal_tokens": [
+          "HACKED_TOKEN"
+        ],
+        "message": "illegal token(s) rejected at validation boundary: ['HACKED_TOKEN']"
+      },
+      "hit": true,
+      "id": "INJ-0001",
+      "kind": "illegal_token"
+    },
+    {
+      "code": "E_INJECTION_MIGRATION_CONFLICT",
+      "detail": {
+        "code": "E_INJECTION_MIGRATION_CONFLICT",
+        "detail": "E_INJECTION_MIGRATION_CONFLICT",
+        "message": "migration target domain unknown: unknown_realm"
+      },
+      "hit": true,
+      "id": "INJ-0002",
+      "kind": "migration_conflict"
+    },
+    {
+      "code": "E_INJECTION_MIGRATION_CONFLICT",
+      "detail": {
+        "code": "E_INJECTION_MIGRATION_CONFLICT",
+        "detail": "E_INJECTION_MIGRATION_CONFLICT",
+        "message": "migration intent not present in hierarchy: ghost_intent"
+      },
+      "hit": true,
+      "id": "INJ-0003",
+      "kind": "migration_conflict"
+    },
+    {
+      "code": "E_THRESHOLD_NOT_FINITE",
+      "detail": {
+        "code": "E_THRESHOLD_NOT_FINITE",
+        "message": "non-finite threshold rejected: 'NaN'"
+      },
+      "hit": true,
+      "id": "INJ-0004",
+      "kind": "non_finite_threshold"
+    },
+    {
+      "code": "E_THRESHOLD_NOT_FINITE",
+      "detail": {
+        "code": "E_THRESHOLD_NOT_FINITE",
+        "message": "non-finite threshold rejected: 'Infinity'"
+      },
+      "hit": true,
+      "id": "INJ-0005",
+      "kind": "non_finite_threshold"
+    },
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail": {
+        "code": "E_CONFIG_INVALID",
+        "message": "threshold outside [0,1] rejected: 1.7"
+      },
+      "hit": true,
+      "id": "INJ-0006",
+      "kind": "non_finite_threshold"
+    }
+  ],
+  "sample_validation_failures": {},
+  "total": 6,
+  "unique_ids": [
+    "INJ-0001",
+    "INJ-0002",
+    "INJ-0003",
+    "INJ-0004",
+    "INJ-0005",
+    "INJ-0006"
+  ]
+}

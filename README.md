@@ -19,3 +19,24 @@
 
 验收：
 用本地多批样本验证两级路由、槽位回填再校准、增量与全量一致及预算与异常隔离。
+
+---
+
+## 交付实现（分层意图路由与槽位回填工作台）
+
+实现代码见 `workbench/`，确定性语料生成见 `scripts/gen_corpus.py`，端到端演示见
+`scripts/run_demo.py`，完整设计与验证记录见 `docs_tech.md`。
+
+```bash
+python3 -m virtualenv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python scripts/gen_corpus.py
+python scripts/run_demo.py
+python -m unittest discover -s tests -v
+```
+
+- 两级路由（领域词袋加权命中 + 触发/否定消解）、带窗口最长匹配槽位回填与抑制清单
+- Q16 定点再校准 + 三档十进制网格量化，再校准前后值分别落盘
+- 内容指纹阶段缓存与意图级精确失效；待办预算账本与 `E_SLOT_BUDGET_PENDING`
+- 增量与全量重建逐字段一致；线程池并发与串行一致；快照原子替换与 `E_CONFIG_CHANGED`
+- 异常注入隔离与 JSON 诊断报告（非法词项 / 迁域冲突 / 非有限阈值）

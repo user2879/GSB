@@ -1,0 +1,45 @@
+{
+  "injections": [
+    {
+      "id": "INJ-0001",
+      "kind": "illegal_token",
+      "tokens": [
+        "price",
+        "phone",
+        "HACKED_TOKEN"
+      ]
+    },
+    {
+      "id": "INJ-0002",
+      "intent": "repair_request",
+      "kind": "migration_conflict",
+      "source_domain": "aftersale",
+      "target_domain": "unknown_realm"
+    },
+    {
+      "id": "INJ-0003",
+      "intent": "ghost_intent",
+      "kind": "migration_conflict",
+      "target_domain": "presale"
+    },
+    {
+      "id": "INJ-0004",
+      "kind": "non_finite_threshold",
+      "level": "intent",
+      "value": "NaN"
+    },
+    {
+      "id": "INJ-0005",
+      "kind": "non_finite_threshold",
+      "level": "domain",
+      "value": "Infinity"
+    },
+    {
+      "id": "INJ-0006",
+      "kind": "non_finite_threshold",
+      "level": "intent",
+      "value": "1.7"
+    }
+  ],
+  "manifest_id": "injection-001"
+}
