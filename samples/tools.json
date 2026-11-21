@@ -1,0 +1,23 @@
+{
+ "tools": [
+  {
+   "name": "sentiment_polarity",
+   "param_schema": {
+    "pos_count": "integer",
+    "neg_count": "integer",
+    "term_count": "integer"
+   },
+   "formula": "(pos_count - neg_count) / max(term_count, 1) * 0.5 + 0.5",
+   "dimension": "sentiment_polarity"
+  },
+  {
+   "name": "speech_rate",
+   "param_schema": {
+    "word_count": "integer",
+    "duration_ms": "integer"
+   },
+   "formula": "word_count / max(duration_ms, 1) * 1000",
+   "dimension": "ratio"
+  }
+ ]
+}

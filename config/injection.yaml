@@ -1,0 +1,16 @@
+# Independent fault-injection config.  Each entry carries a unique
+# injection id that is written into the report to prove the hit.
+injections:
+  - id: INJ-ACOUSTIC-NONFINITE-001
+    type: nonfinite_acoustic
+    target_turn: T007
+    field: pitch_mean
+  - id: INJ-TOOL-DIMENSION-002
+    type: tool_dimension_mismatch
+    target_tool: sentiment_polarity
+    dimension: ratio
+  - id: INJ-PRECISION-RANGE-003
+    type: precision_out_of_range
+    frac_bits: 7
+  - id: INJ-WEIGHTS-ZERO-004
+    type: weights_all_zero
