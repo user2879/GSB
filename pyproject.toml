@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "configmesh"
+version = "1.0.0"
+description = "Local cross-component configuration distribution and verification platform"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[tool.setuptools]
+packages = ["configmesh"]
+
+[project.scripts]
+configmesh = "configmesh.cli:main"

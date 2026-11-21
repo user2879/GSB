@@ -1,0 +1,41 @@
+{
+  "versions": [
+    {
+      "version": 1,
+      "items": [
+        {"key": "base_temp", "value": 21.5},
+        {"key": "base_pressure", "value": 101.25},
+        {"key": "base_flow", "value": 7.0},
+        {"key": "heat_index", "derived_from": {"base_temp": 1.4, "base_pressure": 0.02}},
+        {"key": "flow_score", "derived_from": {"base_flow": 2.5, "base_temp": -0.3}}
+      ],
+      "targets": ["node_alpha", "node_beta"],
+      "strategy": {"mode": "full", "shard_count": 1}
+    },
+    {
+      "version": 2,
+      "items": [
+        {"key": "base_temp", "value": 22.75},
+        {"key": "base_pressure", "value": 101.25},
+        {"key": "base_flow", "value": 7.0},
+        {"key": "heat_index", "derived_from": {"base_temp": 1.4, "base_pressure": 0.02}},
+        {"key": "flow_score", "derived_from": {"base_flow": 2.5, "base_temp": -0.3}}
+      ],
+      "targets": ["node_alpha", "node_beta"],
+      "strategy": {"mode": "full", "shard_count": 1}
+    },
+    {
+      "version": 3,
+      "items": [
+        {"key": "base_temp", "value": 22.75},
+        {"key": "base_pressure", "value": 101.25},
+        {"key": "base_flow", "value": 8.5},
+        {"key": "heat_index", "derived_from": {"base_temp": 1.4, "base_pressure": 0.02}},
+        {"key": "flow_score", "derived_from": {"base_flow": 2.5, "base_temp": -0.3}},
+        {"key": "gamma_mix", "derived_from": {"base_flow": 1.0, "base_pressure": 0.1}}
+      ],
+      "targets": ["node_alpha", "node_beta", "node_gamma"],
+      "strategy": {"mode": "shard", "shard_count": 2}
+    }
+  ]
+}
