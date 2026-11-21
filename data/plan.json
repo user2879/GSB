@@ -1,0 +1,64 @@
+{
+  "format_version": 1,
+  "plan_version": 1,
+  "seed": 20261122,
+  "block_size_kb": 32,
+  "memory_budget_mib": 4,
+  "max_batch_size": 4,
+  "layers": [
+    {
+      "id": "merge",
+      "input_dim": 32,
+      "output_dim": 16,
+      "param_count": 163840,
+      "precision": "fixed",
+      "scale": 5
+    },
+    {
+      "id": "stem",
+      "input_dim": 8,
+      "output_dim": 16,
+      "param_count": 65536,
+      "precision": "float32",
+      "scale": 0
+    },
+    {
+      "id": "head",
+      "input_dim": 16,
+      "output_dim": 8,
+      "param_count": 49152,
+      "precision": "float32",
+      "scale": 0
+    },
+    {
+      "id": "branch_b",
+      "input_dim": 16,
+      "output_dim": 16,
+      "param_count": 98304,
+      "precision": "fixed",
+      "scale": 3
+    },
+    {
+      "id": "branch_a",
+      "input_dim": 16,
+      "output_dim": 16,
+      "param_count": 131072,
+      "precision": "fixed",
+      "scale": 4
+    }
+  ],
+  "consumers": {
+    "stem": ["branch_b", "branch_a"],
+    "branch_a": ["merge"],
+    "branch_b": ["merge"],
+    "merge": ["head"],
+    "head": []
+  },
+  "memory_derived_from": {
+    "stem": [],
+    "branch_a": ["stem"],
+    "branch_b": ["stem"],
+    "merge": ["branch_b", "branch_a"],
+    "head": ["merge"]
+  }
+}
