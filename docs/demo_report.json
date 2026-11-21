@@ -1,0 +1,468 @@
+{
+  "all_business_codes": {
+    "E_CAPACITY": "E_CAPACITY",
+    "E_INTEGRITY": "E_INTEGRITY",
+    "E_VERSION": "E_VERSION"
+  },
+  "scenarios": {
+    "capacity_injection": {
+      "code": "E_CAPACITY",
+      "details": {
+        "free_bytes": 767,
+        "rejected_keys": [
+          "obj-alpha"
+        ],
+        "required_bytes": 2048,
+        "tier_id": "cold"
+      },
+      "field": "capacity_bytes",
+      "message": "冷层 cold 余量不足以接纳迁出对象 obj-alpha",
+      "raised": true,
+      "recoverable_view": {
+        "active_spec_version": 1,
+        "pending_plan": null,
+        "placement": {
+          "obj-alpha": "hot",
+          "obj-bravo": "hot",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "hot",
+          "obj-golf": "hot",
+          "obj-hotel": "hot"
+        },
+        "progress": {
+          "active_plan_id": null,
+          "active_spec_version": 1,
+          "digest": "0708f436c367ad5315ecc4e6d0d8cacde96e18ce689a43626db4fa0fcbf1c05f",
+          "id": 1,
+          "last_committed_seq": 0,
+          "next_batch_index": 0
+        },
+        "tiers": [
+          {
+            "capacity_bytes": 80896,
+            "cost": 0,
+            "eviction_priority": 1,
+            "free_bytes": 80896,
+            "object_count": 0,
+            "role": "cold",
+            "rw_weight": 8,
+            "tier_id": "cold",
+            "unit_cost": 1,
+            "used_bytes": 0
+          },
+          {
+            "capacity_bytes": 20224,
+            "cost": 101120,
+            "eviction_priority": 10,
+            "free_bytes": 0,
+            "object_count": 8,
+            "role": "hot",
+            "rw_weight": 2,
+            "tier_id": "hot",
+            "unit_cost": 5,
+            "used_bytes": 20224
+          }
+        ]
+      }
+    },
+    "crash_rebuild": {
+      "crash_key": "obj-alpha",
+      "recovery": {
+        "aborted_open_batches": [
+          1
+        ],
+        "committed_objects": 7,
+        "rebuilt_objects": 1,
+        "resolutions": [
+          {
+            "key": "obj-alpha",
+            "mode": "rebuild",
+            "physical_tiers_before": [
+              "cold"
+            ],
+            "resolved_tier": "cold"
+          }
+        ],
+        "rolled_back_objects": 0,
+        "unknown_keys": [
+          "obj-alpha"
+        ],
+        "unknown_objects": 1
+      },
+      "view": {
+        "active_spec_version": 1,
+        "pending_plan": {
+          "plan_digest": "4710c8f8300d996b35fb8669129dfc3eb8c7497e3e949fcc65243c004a45840c",
+          "plan_id": 1,
+          "status": "pending"
+        },
+        "placement": {
+          "obj-alpha": "cold",
+          "obj-bravo": "hot",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "hot",
+          "obj-golf": "hot",
+          "obj-hotel": "hot"
+        },
+        "progress": {
+          "active_plan_id": 1,
+          "active_spec_version": 1,
+          "digest": "0708f436c367ad5315ecc4e6d0d8cacde96e18ce689a43626db4fa0fcbf1c05f",
+          "id": 1,
+          "last_committed_seq": 0,
+          "next_batch_index": 0
+        },
+        "tiers": [
+          {
+            "capacity_bytes": 80896,
+            "cost": 2048,
+            "eviction_priority": 1,
+            "free_bytes": 78848,
+            "object_count": 1,
+            "role": "cold",
+            "rw_weight": 8,
+            "tier_id": "cold",
+            "unit_cost": 1,
+            "used_bytes": 2048
+          },
+          {
+            "capacity_bytes": 20224,
+            "cost": 90880,
+            "eviction_priority": 10,
+            "free_bytes": 2048,
+            "object_count": 7,
+            "role": "hot",
+            "rw_weight": 2,
+            "tier_id": "hot",
+            "unit_cost": 5,
+            "used_bytes": 18176
+          }
+        ]
+      }
+    },
+    "crash_rollback": {
+      "crash_key": "obj-alpha",
+      "inspect": {
+        "aborted_open_batches": [
+          1
+        ],
+        "committed_objects": 7,
+        "rebuilt_objects": 0,
+        "resolutions": [],
+        "rolled_back_objects": 0,
+        "unknown_keys": [
+          "obj-alpha"
+        ],
+        "unknown_objects": 1
+      },
+      "recovery": {
+        "aborted_open_batches": [
+          1
+        ],
+        "committed_objects": 7,
+        "rebuilt_objects": 0,
+        "resolutions": [
+          {
+            "key": "obj-alpha",
+            "mode": "rollback",
+            "physical_tiers_before": [
+              "cold"
+            ],
+            "resolved_tier": "hot"
+          }
+        ],
+        "rolled_back_objects": 1,
+        "unknown_keys": [
+          "obj-alpha"
+        ],
+        "unknown_objects": 1
+      },
+      "replay": {
+        "batches_compared": 0,
+        "final_cost": {
+          "cold": 0,
+          "hot": 101120
+        },
+        "final_occupancy": {
+          "cold": 0,
+          "hot": 20224
+        },
+        "final_placement": {
+          "obj-alpha": "hot",
+          "obj-bravo": "hot",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "hot",
+          "obj-golf": "hot",
+          "obj-hotel": "hot"
+        },
+        "steps_compared": 0
+      }
+    },
+    "happy_path": {
+      "batch_count": 2,
+      "batch_limit": 2,
+      "conclusion": {
+        "batches": 2,
+        "evict_keys": [
+          "obj-alpha",
+          "obj-hotel",
+          "obj-bravo",
+          "obj-foxtrot"
+        ],
+        "executed_batches": [
+          1,
+          2
+        ],
+        "migrations_committed": 4,
+        "occupancy": {
+          "cold": 8448,
+          "hot": 11776
+        },
+        "plan_digest": "4710c8f8300d996b35fb8669129dfc3eb8c7497e3e949fcc65243c004a45840c",
+        "promote_keys": [],
+        "retained_keys": [
+          "obj-charlie",
+          "obj-delta",
+          "obj-echo",
+          "obj-golf"
+        ],
+        "spec_version": 1
+      },
+      "evict_keys": [
+        "obj-alpha",
+        "obj-hotel",
+        "obj-bravo",
+        "obj-foxtrot"
+      ],
+      "ledger_view": {
+        "active_spec_version": 1,
+        "pending_plan": null,
+        "placement": {
+          "obj-alpha": "cold",
+          "obj-bravo": "cold",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "cold",
+          "obj-golf": "hot",
+          "obj-hotel": "cold"
+        },
+        "progress": {
+          "active_plan_id": null,
+          "active_spec_version": 1,
+          "digest": "0708f436c367ad5315ecc4e6d0d8cacde96e18ce689a43626db4fa0fcbf1c05f",
+          "id": 1,
+          "last_committed_seq": 4,
+          "next_batch_index": 2
+        },
+        "tiers": [
+          {
+            "capacity_bytes": 80896,
+            "cost": 8448,
+            "eviction_priority": 1,
+            "free_bytes": 72448,
+            "object_count": 4,
+            "role": "cold",
+            "rw_weight": 8,
+            "tier_id": "cold",
+            "unit_cost": 1,
+            "used_bytes": 8448
+          },
+          {
+            "capacity_bytes": 20224,
+            "cost": 58880,
+            "eviction_priority": 10,
+            "free_bytes": 8448,
+            "object_count": 4,
+            "role": "hot",
+            "rw_weight": 2,
+            "tier_id": "hot",
+            "unit_cost": 5,
+            "used_bytes": 11776
+          }
+        ]
+      },
+      "plan_deterministic": true,
+      "plan_digest": "4710c8f8300d996b35fb8669129dfc3eb8c7497e3e949fcc65243c004a45840c",
+      "promote_keys": [],
+      "replay": {
+        "batches_compared": 2,
+        "final_cost": {
+          "cold": 8448,
+          "hot": 58880
+        },
+        "final_occupancy": {
+          "cold": 8448,
+          "hot": 11776
+        },
+        "final_placement": {
+          "obj-alpha": "cold",
+          "obj-bravo": "cold",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "cold",
+          "obj-golf": "hot",
+          "obj-hotel": "cold"
+        },
+        "steps_compared": 4
+      },
+      "retained_keys": [
+        "obj-charlie",
+        "obj-delta",
+        "obj-echo",
+        "obj-golf"
+      ],
+      "steps": 4
+    },
+    "integrity_injection": {
+      "code": "E_INTEGRITY",
+      "details": {
+        "ledger_bytes": 20224,
+        "scan_bytes": 19200,
+        "tier_id": "hot"
+      },
+      "field": "used_bytes",
+      "ledger_reopen_ok": true,
+      "message": "层 hot 目录字节数 19200 与账本 20224 不一致",
+      "raised": true,
+      "victim": "/tmp/final_demo_1795291493/demo_run/03_integrity/tiers/hot/97038c750d30933ce5197a0aaf36bdf622b2edbd4a2e683849d307099a18fec0.bin"
+    },
+    "version_evolution": {
+      "active_conclusion": {
+        "conclusion_id": 1,
+        "payload": {
+          "batches": 2,
+          "evict_keys": [
+            "obj-alpha",
+            "obj-hotel",
+            "obj-bravo",
+            "obj-foxtrot"
+          ],
+          "executed_batches": [
+            1,
+            2
+          ],
+          "migrations_committed": 4,
+          "occupancy": {
+            "cold": 8448,
+            "hot": 11776
+          },
+          "plan_digest": "917b999968dc33cd7397030c96e3ca286f73128175782158e0fd9258e879c12c",
+          "promote_keys": [],
+          "retained_keys": [
+            "obj-charlie",
+            "obj-delta",
+            "obj-echo",
+            "obj-golf"
+          ],
+          "spec_version": 2
+        },
+        "spec_version": 2
+      },
+      "current_view": {
+        "active_spec_version": 2,
+        "pending_plan": null,
+        "placement": {
+          "obj-alpha": "cold",
+          "obj-bravo": "cold",
+          "obj-charlie": "hot",
+          "obj-delta": "hot",
+          "obj-echo": "hot",
+          "obj-foxtrot": "cold",
+          "obj-golf": "hot",
+          "obj-hotel": "cold"
+        },
+        "progress": {
+          "active_plan_id": null,
+          "active_spec_version": 2,
+          "digest": "0708f436c367ad5315ecc4e6d0d8cacde96e18ce689a43626db4fa0fcbf1c05f",
+          "id": 1,
+          "last_committed_seq": 4,
+          "next_batch_index": 2
+        },
+        "tiers": [
+          {
+            "capacity_bytes": 80896,
+            "cost": 8448,
+            "eviction_priority": 1,
+            "free_bytes": 72448,
+            "object_count": 4,
+            "role": "cold",
+            "rw_weight": 8,
+            "tier_id": "cold",
+            "unit_cost": 1,
+            "used_bytes": 8448
+          },
+          {
+            "capacity_bytes": 20224,
+            "cost": 58880,
+            "eviction_priority": 10,
+            "free_bytes": 8448,
+            "object_count": 4,
+            "role": "hot",
+            "rw_weight": 2,
+            "tier_id": "hot",
+            "unit_cost": 5,
+            "used_bytes": 11776
+          }
+        ]
+      },
+      "superseded_plan_fragments": [
+        {
+          "plan_digest": "4710c8f8300d996b35fb8669129dfc3eb8c7497e3e949fcc65243c004a45840c",
+          "plan_id": 1,
+          "spec_version": 1,
+          "superseded_ms": 2000
+        }
+      ],
+      "v1": "73d262312c001633fc71af7980645c98f938b7beff44feed247296de84217224",
+      "v2": 2,
+      "v2_conclusion": {
+        "batches": 2,
+        "evict_keys": [
+          "obj-alpha",
+          "obj-hotel",
+          "obj-bravo",
+          "obj-foxtrot"
+        ],
+        "executed_batches": [
+          1,
+          2
+        ],
+        "migrations_committed": 4,
+        "occupancy": {
+          "cold": 8448,
+          "hot": 11776
+        },
+        "plan_digest": "917b999968dc33cd7397030c96e3ca286f73128175782158e0fd9258e879c12c",
+        "promote_keys": [],
+        "retained_keys": [
+          "obj-charlie",
+          "obj-delta",
+          "obj-echo",
+          "obj-golf"
+        ],
+        "spec_version": 2
+      }
+    },
+    "version_injection": {
+      "code": "E_VERSION",
+      "details": {
+        "file_version": 999,
+        "supported_version": 3
+      },
+      "field": "format_version",
+      "message": "账本格式版本冲突: 文件版本 999，软件支持版本 3",
+      "original_ledger_ok": true,
+      "raised": true
+    }
+  },
+  "seed": 20261122
+}
