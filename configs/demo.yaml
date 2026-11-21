@@ -1,0 +1,110 @@
+schema_version: 1
+seed: 20261122
+
+paths:
+  dataset: ../samples/demo_dataset.yaml
+  outputs: ../outputs
+
+data:
+  include_columns:
+    - order_value
+    - items_per_order
+    - discount_rate
+    - tenure_months
+    - region
+    - acquisition_channel
+    - member
+    - value_copy
+    - random_score
+  expected_types:
+    order_value: numeric
+    items_per_order: numeric
+    discount_rate: numeric
+    tenure_months: numeric
+    region: categorical
+    acquisition_channel: categorical
+    member: categorical
+    value_copy: numeric
+    random_score: numeric
+  target_columns: [segment]
+  sample_scale: 1.0
+  max_rows: 480
+  sample_overrides: {}
+
+preprocessing:
+  method: standard
+  train_fraction: 0.7
+  drop_redundant: true
+  epsilon: 1.0e-9
+  quantile_points: 65
+
+methods:
+  KMeans:
+    enabled: true
+    candidates:
+      - {n_clusters: 2, max_iter: 35, tol: 1.0e-6}
+      - {n_clusters: 3, max_iter: 35, tol: 1.0e-6}
+      - {n_clusters: 4, max_iter: 35, tol: 1.0e-6}
+  DBSCAN:
+    enabled: true
+    candidates:
+      - {eps: 0.05, min_samples: 5}
+      - {eps: 0.52, min_samples: 4}
+  GaussianMixture:
+    enabled: true
+    candidates:
+      - {n_components: 2, covariance_type: full, max_iter: 30, tol: 1.0e-5, reg_covar: 1.0e-6}
+      - {n_components: 3, covariance_type: full, max_iter: 35, tol: 1.0e-5, reg_covar: 1.0e-6}
+      - {n_components: 3, covariance_type: diag, max_iter: 35, tol: 1.0e-5, reg_covar: 1.0e-6}
+
+evaluation:
+  metrics: [silhouette, calinski_harabasz, density_log_likelihood]
+  primary_metric: silhouette
+  density_reg_covar: 1.0e-6
+  boundary_threshold: null
+
+scheduler:
+  global_iteration_budget: 150
+  per_candidate_iteration_quota: 18
+  cache_resident_blocks: 8
+  block_size: 64
+  max_workers: 4
+  snapshot_commit_interval: 2
+  algorithm_version: det-v1
+
+reuse:
+  enabled: true
+  salt: diagnostics-demo-v1
+
+snapshot:
+  enabled: true
+  version: 1
+
+injections:
+  - id: INJ-001
+    type: non_finite_feature
+    stage: preprocess
+    target:
+      sample_id: S00017
+      column: random_score
+      value: inf
+  - id: INJ-002
+    type: hyperparameter_out_of_range
+    stage: cluster
+    target:
+      method: KMeans
+      params_match: {n_clusters: 2}
+      parameter: n_clusters
+      value: 0
+  - id: INJ-003
+    type: threshold_boundary_equal
+    stage: evaluation
+    target:
+      method: GaussianMixture
+      params_match: {n_components: 3, covariance_type: full}
+  - id: INJ-004
+    type: data_size_over_limit
+    stage: load
+    target:
+      max_rows: 360
+    requested_rows: 361

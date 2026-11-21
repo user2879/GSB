@@ -1,0 +1,72 @@
+dataset:
+  name: growth_ops_synthetic
+  seed: 20261122
+  rows: 240
+  max_rows: 480
+  latent_groups: 3
+  id_prefix: S
+  id_width: 5
+  structure:
+    target_columns: [segment]
+    expected_clusters: 3
+  columns:
+    - name: order_value
+      type: numeric
+      distribution: normal
+      group_means: [24.0, 52.0, 86.0]
+      group_stds: [5.0, 8.0, 14.0]
+      missing_rate: 0.03
+    - name: items_per_order
+      type: numeric
+      distribution: normal
+      group_means: [1.4, 3.8, 8.1]
+      group_stds: [0.35, 0.9, 1.8]
+      missing_rate: 0.015
+    - name: discount_rate
+      type: numeric
+      distribution: normal
+      group_means: [0.05, 0.14, 0.29]
+      group_stds: [0.018, 0.035, 0.06]
+      missing_rate: 0.02
+    - name: tenure_months
+      type: numeric
+      distribution: normal
+      group_means: [3.0, 11.0, 26.0]
+      group_stds: [1.2, 3.5, 6.0]
+      missing_rate: 0.025
+    - name: region
+      type: categorical
+      cardinality: 5
+      prefix: R
+      group_categories: [R_00, R_01, R_02]
+      group_alignment: 0.76
+      missing_rate: 0.02
+    - name: acquisition_channel
+      type: categorical
+      cardinality: 48
+      prefix: CH
+      zipf_exponent: 1.15
+      missing_rate: 0.035
+    - name: member
+      type: categorical
+      categories: [no, yes]
+      group_alignment: 0.6
+      group_categories: [no, yes, yes]
+      missing_rate: 0.01
+    - name: value_copy
+      type: numeric
+      derived:
+        source: order_value
+        multiplier: 1.0
+        offset: 0.0
+      missing_rate: 0.0
+    - name: random_score
+      type: numeric
+      distribution: normal
+      mean: 0.0
+      std: 1.0
+      missing_rate: 0.01
+    - name: segment
+      type: categorical
+      latent_target: true
+      group_labels: [value_seeker, core_customer, premium]

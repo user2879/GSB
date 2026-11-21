@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Cluster Diagnostics Workbench</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div>
+            <div class="brand">TABLE<span>//</span>CLUSTER LAB</div>
+            <div class="brand-sub">Deterministic clustering &amp; density diagnostics</div>
+          </div>
+        </div>
+        <div class="topbar-meta">
+          <span class="env-pill"><span class="pulse"></span> LOCAL · OFFLINE</span>
+          <span class="digest-pill" id="digestPill" title="Determinism digest">digest —</span>
+          <button class="button button-ghost" id="verifyButton">A/B parity check</button>
+          <button class="button button-primary" id="runButton">Run experiment</button>
+        </div>
+      </header>
+
+      <aside class="sidebar">
+        <section class="side-section">
+          <div class="section-kicker">Experiment controls</div>
+          <div class="control-block">
+            <label class="field-label">Preprocessing</label>
+            <div class="segmented" id="preprocessSegmented">
+              <button class="segment active" data-value="standard">Standard</button>
+              <button class="segment" data-value="quantile">Quantile</button>
+            </div>
+          </div>
+          <div class="control-grid">
+            <label class="field">
+              <span class="field-label">Sample scale</span>
+              <select id="sampleScale"></select>
+            </label>
+            <label class="field">
+              <span class="field-label">Threads</span>
+              <select id="maxWorkers">
+                <option value="1">1 · serial</option>
+                <option value="2">2</option>
+                <option value="4" selected>4</option>
+                <option value="8">8</option>
+              </select>
+            </label>
+          </div>
+          <div class="control-grid three">
+            <label class="field">
+              <span class="field-label">Global budget</span>
+              <input id="globalBudget" type="number" min="1" step="1" value="150" />
+            </label>
+            <label class="field">
+              <span class="field-label">Candidate quota</span>
+              <input id="candidateQuota" type="number" min="1" step="1" value="18" />
+            </label>
+            <label class="field">
+              <span class="field-label">Cache blocks</span>
+              <input id="cacheBlocks" type="number" min="1" step="1" value="8" />
+            </label>
+          </div>
+          <div class="control-grid">
+            <label class="field">
+              <span class="field-label">Snapshot version</span>
+              <input id="snapshotVersion" type="number" min="1" step="1" value="1" />
+            </label>
+            <label class="switch-field">
+              <span class="field-label">Injections</span>
+              <input id="injectionsEnabled" type="checkbox" checked />
+              <span class="switch"><span></span></span>
+            </label>
+          </div>
+          <button class="button button-block button-primary" id="sidebarRunButton">Run deterministic pass</button>
+          <div class="run-state" id="runState">
+            <span class="state-dot"></span>
+            <span id="runStateText">Ready</span>
+          </div>
+        </section>
+
+        <section class="side-section compact">
+          <div class="section-kicker">Active dataset</div>
+          <div class="mini-stat"><span>Table</span><strong id="sideDataset">—</strong></div>
+          <div class="mini-stat"><span>Rows</span><strong id="sideRows">—</strong></div>
+          <div class="mini-stat"><span>Feature matrix</span><strong id="sideFeatures">—</strong></div>
+          <div class="mini-stat"><span>Preprocess source</span><strong id="sideSource">—</strong></div>
+        </section>
+
+        <section class="side-section compact">
+          <div class="section-kicker">Fingerprint chain</div>
+          <div class="fingerprint" title="Dataset descriptor fingerprint"><span>DATA</span><code id="fpData">—</code></div>
+          <div class="fingerprint" title="Preprocess artifact fingerprint"><span>PRE</span><code id="fpPre">—</code></div>
+          <div class="fingerprint" title="Diagnostics artifact fingerprint"><span>DIAG</span><code id="fpDiag">—</code></div>
+        </section>
+
+        <section class="side-section snapshot-note" id="snapshotNote">
+          <div class="section-kicker">Snapshot state</div>
+          <p>Waiting for a run.</p>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section class="hero">
+          <div>
+            <div class="eyebrow">CLUSTERING OBSERVATORY / SINGLE RUN</div>
+            <h1>Reproducibility under real resource pressure.</h1>
+            <p class="hero-copy">
+              Inspect hard assignments, density behavior, deterministic budget consumption, cache eviction,
+              incremental reuse and isolated fault injections in one auditable pass.
+            </p>
+          </div>
+          <div class="run-badge">
+            <span class="run-badge-label">RUN STATUS</span>
+            <span class="status-chip" id="runStatus">NO RUN</span>
+            <span class="run-id" id="runId">—</span>
+            <span class="run-time" id="runTime">—</span>
+          </div>
+        </section>
+
+        <section class="kpi-grid" id="kpiGrid">
+          <article class="kpi-card"><span class="kpi-label">Generated rows</span><strong id="kpiRows">—</strong><small id="kpiRowsSub">deterministic seed</small></article>
+          <article class="kpi-card"><span class="kpi-label">Ranked candidates</span><strong id="kpiRanked">—</strong><small id="kpiRankedSub">invalid retained separately</small></article>
+          <article class="kpi-card"><span class="kpi-label">Budget reserved</span><strong id="kpiBudget">—</strong><small id="kpiBudgetSub">iterations</small></article>
+          <article class="kpi-card accent"><span class="kpi-label">Injection hits</span><strong id="kpiInjection">—</strong><small id="kpiInjectionSub">mapped business codes</small></article>
+        </section>
+
+        <section class="overview-grid">
+          <article class="panel rank-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-kicker">Leaderboard</div>
+                <h2>Candidate quality</h2>
+              </div>
+              <span class="panel-meta" id="primaryMetricLabel">primary · silhouette</span>
+            </div>
+            <div class="rank-chart" id="rankChart"><div class="empty-state">Run the workbench to rank candidates.</div></div>
+          </article>
+
+          <article class="panel preprocess-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-kicker">Preprocess signal</div>
+                <h2>Feature contract</h2>
+              </div>
+              <span class="panel-meta" id="preprocessMethod">—</span>
+            </div>
+            <div class="preprocess-summary" id="preprocessSummary"></div>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <nav class="tabs" id="tabs">
+            <button class="tab active" data-tab="leaderboard">Leaderboard</button>
+            <button class="tab" data-tab="assignments">Assignments</button>
+            <button class="tab" data-tab="scheduling">Scheduling</button>
+            <button class="tab" data-tab="reuse">Reuse ledger</button>
+            <button class="tab" data-tab="snapshots">Snapshots</button>
+            <button class="tab" data-tab="injections">Injections</button>
+            <button class="tab" data-tab="failures">Failures</button>
+            <button class="tab" data-tab="raw">Raw report</button>
+          </nav>
+          <div class="tab-panel" id="tabPanel"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
