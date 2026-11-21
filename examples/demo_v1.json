@@ -1,0 +1,120 @@
+{
+  "format_version": 1,
+  "spec_version": 1,
+  "seed": 20261122,
+  "input": {
+    "size": 12,
+    "scale": 37
+  },
+  "nodes": [
+    {
+      "id": "n1",
+      "host": "127.0.0.1",
+      "port": 47831,
+      "quota": 1,
+      "shard_delay_ms": 90,
+      "startup_timeout_ms": 3000
+    },
+    {
+      "id": "n2",
+      "host": "127.0.0.1",
+      "port": 47832,
+      "quota": 1,
+      "shard_delay_ms": 90,
+      "startup_timeout_ms": 3000
+    },
+    {
+      "id": "n3",
+      "host": "127.0.0.1",
+      "port": 47833,
+      "quota": 1,
+      "shard_delay_ms": 50,
+      "startup_timeout_ms": 3000,
+      "faults": [
+        {
+          "shard_index": 0,
+          "remaining": 1,
+          "mode": "error_reply"
+        }
+      ]
+    }
+  ],
+  "configs": [
+    {
+      "version": 1,
+      "priority": 1,
+      "target_nodes": [
+        "n1",
+        "n2",
+        "n3"
+      ],
+      "shards": 3,
+      "items": {
+        "alpha": 5,
+        "beta": 1.25,
+        "gamma": "v1"
+      }
+    },
+    {
+      "version": 2,
+      "priority": 9,
+      "target_nodes": [
+        "n1",
+        "n2",
+        "n3"
+      ],
+      "shards": 3,
+      "items": {
+        "alpha": 11,
+        "beta": 2.75,
+        "gamma": "v2"
+      }
+    }
+  ],
+  "budget": {
+    "global_concurrency": 2,
+    "timeout_ms": 3000,
+    "retry_backoff_ms": [
+      300,
+      600
+    ],
+    "max_retries": 2
+  },
+  "tasks": [
+    {
+      "id": "t-v1-n1",
+      "config_version": 1,
+      "node": "n1",
+      "priority": 2,
+      "release_after_ms": 0
+    },
+    {
+      "id": "t-v1-n2",
+      "config_version": 1,
+      "node": "n2",
+      "priority": 2,
+      "release_after_ms": 0
+    },
+    {
+      "id": "t-v1-n3",
+      "config_version": 1,
+      "node": "n3",
+      "priority": 3,
+      "release_after_ms": 0
+    },
+    {
+      "id": "t-v2-n1",
+      "config_version": 2,
+      "node": "n1",
+      "priority": 9,
+      "release_after_ms": 140
+    },
+    {
+      "id": "t-v2-n3",
+      "config_version": 2,
+      "node": "n3",
+      "priority": 9,
+      "release_after_ms": 320
+    }
+  ]
+}

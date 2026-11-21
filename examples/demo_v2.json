@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "spec_version": 2,
+  "seed": 20261122,
+  "input": {"size": 12, "scale": 37},
+  "nodes": [
+    {"id": "n1", "host": "127.0.0.1", "port": 47831, "quota": 2, "shard_delay_ms": 30, "startup_timeout_ms": 3000},
+    {"id": "n2", "host": "127.0.0.1", "port": 47832, "quota": 2, "shard_delay_ms": 30, "startup_timeout_ms": 3000},
+    {"id": "n3", "host": "127.0.0.1", "port": 47833, "quota": 2, "shard_delay_ms": 30, "startup_timeout_ms": 3000}
+  ],
+  "configs": [
+    {"version": 3, "priority": 5, "target_nodes": ["n1", "n2", "n3"], "shards": 3,
+     "items": {"alpha": 21, "beta": 3.5, "gamma": "v3"}}
+  ],
+  "budget": {"global_concurrency": 3, "timeout_ms": 3000, "retry_backoff_ms": [10, 20], "max_retries": 1},
+  "tasks": [
+    {"id": "t-v3-n1", "config_version": 3, "node": "n1", "priority": 5, "release_after_ms": 0},
+    {"id": "t-v3-n2", "config_version": 3, "node": "n2", "priority": 5, "release_after_ms": 0},
+    {"id": "t-v3-n3", "config_version": 3, "node": "n3", "priority": 5, "release_after_ms": 0}
+  ]
+}
