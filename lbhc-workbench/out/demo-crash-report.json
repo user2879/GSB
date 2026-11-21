@@ -1,0 +1,547 @@
+{
+  "spec_version": 1,
+  "spec_digest": "76125217f4deca74c91092c6d643858ac44fb1f4d1b7147ec24c09794edeb8cc",
+  "path": "stratified",
+  "path_params": {
+    "instances": 10,
+    "pools": 2,
+    "global_budget": 4,
+    "pool_quota_sum": 5,
+    "budget_headroom": 0,
+    "reason": "stratified path: 10 instances across 2 pools exceed 2x per-round capacity 4; probing every instance each round would exhaust the budget"
+  },
+  "resumed": true,
+  "rounds": [
+    {
+      "round": 2,
+      "dispatched": [
+        {
+          "seq": 12,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.015
+        },
+        {
+          "seq": 13,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.006
+        },
+        {
+          "seq": 14,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 0.006
+        },
+        {
+          "seq": 15,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 11.424
+        },
+        {
+          "seq": 16,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.006
+        },
+        {
+          "seq": 17,
+          "instance_id": "t2",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.79
+        },
+        {
+          "seq": 18,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 50.469
+        },
+        {
+          "seq": 19,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 13.476
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "dispatched": [
+        {
+          "seq": 20,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.015
+        },
+        {
+          "seq": 21,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.01
+        },
+        {
+          "seq": 22,
+          "instance_id": "h3",
+          "pool_id": "pool-http",
+          "wait_ms": 0.008
+        },
+        {
+          "seq": 23,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 11.116
+        },
+        {
+          "seq": 24,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 9.235
+        },
+        {
+          "seq": 25,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 26,
+          "instance_id": "t2",
+          "pool_id": "pool-tcp",
+          "wait_ms": 9.079
+        },
+        {
+          "seq": 27,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 51.861
+        },
+        {
+          "seq": 28,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.158
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "dispatched": [
+        {
+          "seq": 29,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.015
+        },
+        {
+          "seq": 30,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 31,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 0.008
+        },
+        {
+          "seq": 32,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 33,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.201
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "dispatched": [
+        {
+          "seq": 34,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.017
+        },
+        {
+          "seq": 35,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 36,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 0.006
+        },
+        {
+          "seq": 37,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 38,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 11.32
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "dispatched": [
+        {
+          "seq": 39,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.019
+        },
+        {
+          "seq": 40,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.01
+        },
+        {
+          "seq": 41,
+          "instance_id": "h3",
+          "pool_id": "pool-http",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 42,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 10.846
+        },
+        {
+          "seq": 43,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 13.385
+        },
+        {
+          "seq": 44,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.012
+        },
+        {
+          "seq": 45,
+          "instance_id": "t2",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.811
+        },
+        {
+          "seq": 46,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 51.272
+        },
+        {
+          "seq": 47,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 16.507
+        }
+      ]
+    },
+    {
+      "round": 7,
+      "dispatched": [
+        {
+          "seq": 48,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.082
+        },
+        {
+          "seq": 49,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 0.007
+        },
+        {
+          "seq": 50,
+          "instance_id": "h5",
+          "pool_id": "pool-http",
+          "wait_ms": 0.008
+        },
+        {
+          "seq": 51,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.102
+        },
+        {
+          "seq": 52,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 11.772
+        }
+      ]
+    }
+  ],
+  "initiated_sequence": [
+    "h1",
+    "h2",
+    "h4",
+    "h5",
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "h1",
+    "h4",
+    "h5",
+    "t3",
+    "t4",
+    "h1",
+    "h4",
+    "h5",
+    "t3",
+    "t4",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "h1",
+    "h4",
+    "h5",
+    "t3",
+    "t4"
+  ],
+  "queue_wait_stats": {
+    "count": 41,
+    "mean_ms": 7.661,
+    "p50_ms": 0.017,
+    "p95_ms": 50.469,
+    "max_ms": 51.861
+  },
+  "budget": {
+    "global_budget": 4,
+    "rate_limit_per_sec": 40,
+    "peak_global_inflight": 4,
+    "peak_pool_inflight": {
+      "pool-http": 3,
+      "pool-tcp": 2
+    },
+    "pool_quotas": {
+      "pool-http": 3,
+      "pool-tcp": 2
+    }
+  },
+  "transitions": [
+    {
+      "id": 1,
+      "version": 1,
+      "probe_seq": 9,
+      "instance_id": "h1",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 3,
+      "version": 1,
+      "probe_seq": 10,
+      "instance_id": "h2",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 2,
+      "version": 1,
+      "probe_seq": 11,
+      "instance_id": "h3",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 4,
+      "version": 1,
+      "probe_seq": 14,
+      "instance_id": "h4",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "digest_mismatch"
+    },
+    {
+      "id": 5,
+      "version": 1,
+      "probe_seq": 15,
+      "instance_id": "h5",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "conn_refused"
+    },
+    {
+      "id": 6,
+      "version": 1,
+      "probe_seq": 16,
+      "instance_id": "t1",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 7,
+      "version": 1,
+      "probe_seq": 17,
+      "instance_id": "t2",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 9,
+      "version": 1,
+      "probe_seq": 27,
+      "instance_id": "t3",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "timeout"
+    },
+    {
+      "id": 8,
+      "version": 1,
+      "probe_seq": 28,
+      "instance_id": "t4",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "conn_refused"
+    }
+  ],
+  "final_view": [
+    {
+      "instance_id": "h1",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 8,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 48,
+      "stale": 0
+    },
+    {
+      "instance_id": "h2",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 5,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 40,
+      "stale": 0
+    },
+    {
+      "instance_id": "h3",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 4,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 41,
+      "stale": 0
+    },
+    {
+      "instance_id": "h4",
+      "pool_id": "pool-http",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 7,
+      "last_reason": "digest_mismatch",
+      "last_probe_seq": 49,
+      "stale": 0
+    },
+    {
+      "instance_id": "h5",
+      "pool_id": "pool-http",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 7,
+      "last_reason": "conn_refused",
+      "last_probe_seq": 50,
+      "stale": 0
+    },
+    {
+      "instance_id": "h6",
+      "pool_id": "pool-http",
+      "state": "draining",
+      "consec_success": 0,
+      "consec_failure": 0,
+      "last_reason": "declared_draining",
+      "last_probe_seq": -1,
+      "stale": 0
+    },
+    {
+      "instance_id": "t1",
+      "pool_id": "pool-tcp",
+      "state": "healthy",
+      "consec_success": 4,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 44,
+      "stale": 0
+    },
+    {
+      "instance_id": "t2",
+      "pool_id": "pool-tcp",
+      "state": "healthy",
+      "consec_success": 4,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 45,
+      "stale": 0
+    },
+    {
+      "instance_id": "t3",
+      "pool_id": "pool-tcp",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 7,
+      "last_reason": "timeout",
+      "last_probe_seq": 51,
+      "stale": 0
+    },
+    {
+      "instance_id": "t4",
+      "pool_id": "pool-tcp",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 7,
+      "last_reason": "conn_refused",
+      "last_probe_seq": 52,
+      "stale": 0
+    }
+  ],
+  "stale_diff": [],
+  "replay": {
+    "version": 1,
+    "probes_replayed": 53,
+    "transitions_verified": 9,
+    "instances_verified": 10
+  }
+}

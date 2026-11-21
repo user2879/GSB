@@ -1,0 +1,16 @@
+{"digest": "ab173ddfedf788ac2621b9a95dc16b01c2e66473856b50e92caec804d7c41fd4", "event": "spec_loaded", "instances": 9, "pools": 2, "ts": "2026-11-22T01:34:34+0800", "version": 2}
+{"event": "spec_evolved", "new_version": 2, "old_version": 1, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "h1", "pid": 50779, "port": 18601, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "h2", "pid": 50780, "port": 18602, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "h3", "pid": 50781, "port": 18603, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "mismatch", "event": "backend_spawned", "instance_id": "h4", "pid": 50782, "port": 18604, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "h6", "pid": 50783, "port": 18606, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "t1", "pid": 50784, "port": 18607, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "ok", "event": "backend_spawned", "instance_id": "t2", "pid": 50785, "port": 18608, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "delay", "event": "backend_spawned", "instance_id": "t3", "pid": 50786, "port": 18609, "ts": "2026-11-22T01:34:34+0800"}
+{"behavior": "refused", "event": "backend_spawned", "instance_id": "t4", "pid": 50787, "port": 18610, "ts": "2026-11-22T01:34:34+0800"}
+{"budget_headroom": 0, "event": "path_selected", "global_budget": 3, "instances": 9, "path": "stratified", "pool_quota_sum": 5, "pools": 2, "reason": "stratified path: 9 instances across 2 pools exceed 2x per-round capacity 3; probing every instance each round would exhaust the budget", "ts": "2026-11-22T01:34:34+0800"}
+{"event": "round_done", "initiated": ["h1", "h2", "h3", "h4", "t1", "t2", "t3", "t4"], "path": "stratified", "round": 0, "ts": "2026-11-22T01:34:35+0800"}
+{"event": "round_done", "initiated": ["h1", "h2", "h3", "h4", "t1", "t2", "t3", "t4"], "path": "stratified", "round": 1, "ts": "2026-11-22T01:34:35+0800"}
+{"changes": 1, "event": "view_replaced", "ts": "2026-11-22T01:34:35+0800"}
+{"event": "run_complete", "path": "stratified", "probes": 16, "transitions": 6, "ts": "2026-11-22T01:34:35+0800", "version": 2}

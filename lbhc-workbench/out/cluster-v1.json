@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "global": {
+    "concurrency_budget": 4,
+    "rate_limit_per_sec": 40
+  },
+  "pools": [
+    {
+      "id": "pool-http",
+      "protocol": "http",
+      "timeout_ms": 250,
+      "interval_ms": 250,
+      "success_threshold": 2,
+      "failure_threshold": 2,
+      "concurrency_quota": 3,
+      "expect_body": "OK",
+      "backends": [
+        {
+          "id": "h1",
+          "host": "127.0.0.1",
+          "port": 18601,
+          "weight": 100,
+          "role": "active",
+          "behavior": "ok"
+        },
+        {
+          "id": "h2",
+          "host": "127.0.0.1",
+          "port": 18602,
+          "weight": 80,
+          "role": "active",
+          "behavior": "ok"
+        },
+        {
+          "id": "h3",
+          "host": "127.0.0.1",
+          "port": 18603,
+          "weight": 60,
+          "role": "active",
+          "behavior": "ok"
+        },
+        {
+          "id": "h4",
+          "host": "127.0.0.1",
+          "port": 18604,
+          "weight": 40,
+          "role": "active",
+          "behavior": "mismatch"
+        },
+        {
+          "id": "h5",
+          "host": "127.0.0.1",
+          "port": 18605,
+          "weight": 20,
+          "role": "active",
+          "behavior": "refused"
+        },
+        {
+          "id": "h6",
+          "host": "127.0.0.1",
+          "port": 18606,
+          "weight": 10,
+          "role": "draining",
+          "behavior": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pool-tcp",
+      "protocol": "tcp",
+      "timeout_ms": 200,
+      "interval_ms": 250,
+      "success_threshold": 2,
+      "failure_threshold": 3,
+      "concurrency_quota": 2,
+      "expect_body": "OK",
+      "backends": [
+        {
+          "id": "t1",
+          "host": "127.0.0.1",
+          "port": 18607,
+          "weight": 90,
+          "role": "active",
+          "behavior": "ok"
+        },
+        {
+          "id": "t2",
+          "host": "127.0.0.1",
+          "port": 18608,
+          "weight": 70,
+          "role": "active",
+          "behavior": "ok"
+        },
+        {
+          "id": "t3",
+          "host": "127.0.0.1",
+          "port": 18609,
+          "weight": 50,
+          "role": "active",
+          "behavior": "delay"
+        },
+        {
+          "id": "t4",
+          "host": "127.0.0.1",
+          "port": 18610,
+          "weight": 30,
+          "role": "active",
+          "behavior": "refused"
+        }
+      ]
+    }
+  ]
+}

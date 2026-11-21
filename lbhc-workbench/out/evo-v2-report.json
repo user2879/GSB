@@ -1,0 +1,483 @@
+{
+  "spec_version": 2,
+  "spec_digest": "162239ce2f6e3a2479fdfd0cfa88f55a98ef3efe7c27913673b3853dc0c746b8",
+  "path": "stratified",
+  "path_params": {
+    "instances": 10,
+    "pools": 2,
+    "global_budget": 3,
+    "pool_quota_sum": 4,
+    "budget_headroom": 0,
+    "reason": "stratified path: 10 instances across 2 pools exceed 2x per-round capacity 3; probing every instance each round would exhaust the budget"
+  },
+  "resumed": false,
+  "rounds": [
+    {
+      "round": 0,
+      "dispatched": [
+        {
+          "seq": 0,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.023
+        },
+        {
+          "seq": 1,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.013
+        },
+        {
+          "seq": 2,
+          "instance_id": "h3",
+          "pool_id": "pool-http",
+          "wait_ms": 13.259
+        },
+        {
+          "seq": 3,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 10.041
+        },
+        {
+          "seq": 4,
+          "instance_id": "h7",
+          "pool_id": "pool-http",
+          "wait_ms": 9.974
+        },
+        {
+          "seq": 5,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.014
+        },
+        {
+          "seq": 6,
+          "instance_id": "t2",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.49
+        },
+        {
+          "seq": 7,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 52.07
+        },
+        {
+          "seq": 8,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.352
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "dispatched": [
+        {
+          "seq": 9,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.017
+        },
+        {
+          "seq": 10,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.008
+        },
+        {
+          "seq": 11,
+          "instance_id": "h3",
+          "pool_id": "pool-http",
+          "wait_ms": 14.136
+        },
+        {
+          "seq": 12,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 9.396
+        },
+        {
+          "seq": 13,
+          "instance_id": "h7",
+          "pool_id": "pool-http",
+          "wait_ms": 8.948
+        },
+        {
+          "seq": 14,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.008
+        },
+        {
+          "seq": 15,
+          "instance_id": "t2",
+          "pool_id": "pool-tcp",
+          "wait_ms": 8.977
+        },
+        {
+          "seq": 16,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 53.368
+        },
+        {
+          "seq": 17,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 9.179
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "dispatched": [
+        {
+          "seq": 18,
+          "instance_id": "h1",
+          "pool_id": "pool-http",
+          "wait_ms": 0.019
+        },
+        {
+          "seq": 19,
+          "instance_id": "h2",
+          "pool_id": "pool-http",
+          "wait_ms": 0.01
+        },
+        {
+          "seq": 20,
+          "instance_id": "h4",
+          "pool_id": "pool-http",
+          "wait_ms": 18.063
+        },
+        {
+          "seq": 21,
+          "instance_id": "t1",
+          "pool_id": "pool-tcp",
+          "wait_ms": 0.009
+        },
+        {
+          "seq": 22,
+          "instance_id": "t3",
+          "pool_id": "pool-tcp",
+          "wait_ms": 10.273
+        },
+        {
+          "seq": 23,
+          "instance_id": "t4",
+          "pool_id": "pool-tcp",
+          "wait_ms": 51.356
+        }
+      ]
+    }
+  ],
+  "initiated_sequence": [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h7",
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h7",
+    "t1",
+    "t2",
+    "t3",
+    "t4",
+    "h1",
+    "h2",
+    "h4",
+    "t1",
+    "t3",
+    "t4"
+  ],
+  "budget": {
+    "global_budget": 3,
+    "rate_limit_per_sec": 40,
+    "peak_global_inflight": 3,
+    "peak_pool_inflight": {
+      "pool-http": 2,
+      "pool-tcp": 2
+    },
+    "pool_quotas": {
+      "pool-http": 2,
+      "pool-tcp": 2
+    }
+  },
+  "transitions": [
+    {
+      "id": 10,
+      "version": 2,
+      "probe_seq": 9,
+      "instance_id": "h1",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 11,
+      "version": 2,
+      "probe_seq": 10,
+      "instance_id": "h2",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 12,
+      "version": 2,
+      "probe_seq": 11,
+      "instance_id": "h3",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 13,
+      "version": 2,
+      "probe_seq": 12,
+      "instance_id": "h4",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "digest_mismatch"
+    },
+    {
+      "id": 14,
+      "version": 2,
+      "probe_seq": 13,
+      "instance_id": "h7",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 15,
+      "version": 2,
+      "probe_seq": 14,
+      "instance_id": "t1",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 16,
+      "version": 2,
+      "probe_seq": 15,
+      "instance_id": "t2",
+      "from_state": "unknown",
+      "to_state": "healthy",
+      "reason_category": "threshold_met"
+    },
+    {
+      "id": 18,
+      "version": 2,
+      "probe_seq": 22,
+      "instance_id": "t3",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "timeout"
+    },
+    {
+      "id": 17,
+      "version": 2,
+      "probe_seq": 23,
+      "instance_id": "t4",
+      "from_state": "unknown",
+      "to_state": "unhealthy",
+      "reason_category": "conn_refused"
+    }
+  ],
+  "final_view": [
+    {
+      "instance_id": "h1",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 3,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 18,
+      "stale": 0
+    },
+    {
+      "instance_id": "h2",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 3,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 19,
+      "stale": 0
+    },
+    {
+      "instance_id": "h3",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 2,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 11,
+      "stale": 0
+    },
+    {
+      "instance_id": "h4",
+      "pool_id": "pool-http",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 3,
+      "last_reason": "digest_mismatch",
+      "last_probe_seq": 20,
+      "stale": 0
+    },
+    {
+      "instance_id": "h6",
+      "pool_id": "pool-http",
+      "state": "draining",
+      "consec_success": 0,
+      "consec_failure": 0,
+      "last_reason": "declared_draining",
+      "last_probe_seq": -1,
+      "stale": 0
+    },
+    {
+      "instance_id": "h7",
+      "pool_id": "pool-http",
+      "state": "healthy",
+      "consec_success": 2,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 13,
+      "stale": 0
+    },
+    {
+      "instance_id": "t1",
+      "pool_id": "pool-tcp",
+      "state": "healthy",
+      "consec_success": 3,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 21,
+      "stale": 0
+    },
+    {
+      "instance_id": "t2",
+      "pool_id": "pool-tcp",
+      "state": "healthy",
+      "consec_success": 2,
+      "consec_failure": 0,
+      "last_reason": "threshold_met",
+      "last_probe_seq": 15,
+      "stale": 0
+    },
+    {
+      "instance_id": "t3",
+      "pool_id": "pool-tcp",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 3,
+      "last_reason": "timeout",
+      "last_probe_seq": 22,
+      "stale": 0
+    },
+    {
+      "instance_id": "t4",
+      "pool_id": "pool-tcp",
+      "state": "unhealthy",
+      "consec_success": 0,
+      "consec_failure": 3,
+      "last_reason": "conn_refused",
+      "last_probe_seq": 23,
+      "stale": 0
+    }
+  ],
+  "stale_diff": [
+    {
+      "instance_id": "h1",
+      "change": "updated",
+      "old_state": "healthy",
+      "new_state": "unknown",
+      "old_reason": "threshold_met",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "h2",
+      "change": "updated",
+      "old_state": "healthy",
+      "new_state": "unknown",
+      "old_reason": "threshold_met",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "h3",
+      "change": "updated",
+      "old_state": "healthy",
+      "new_state": "unknown",
+      "old_reason": "threshold_met",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "h4",
+      "change": "updated",
+      "old_state": "unhealthy",
+      "new_state": "unknown",
+      "old_reason": "digest_mismatch",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "h5",
+      "change": "removed",
+      "old_state": "unhealthy",
+      "old_reason": "conn_refused"
+    },
+    {
+      "instance_id": "h7",
+      "change": "added",
+      "new_state": "unknown",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "t1",
+      "change": "updated",
+      "old_state": "healthy",
+      "new_state": "unknown",
+      "old_reason": "threshold_met",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "t2",
+      "change": "updated",
+      "old_state": "healthy",
+      "new_state": "unknown",
+      "old_reason": "threshold_met",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "t3",
+      "change": "updated",
+      "old_state": "unhealthy",
+      "new_state": "unknown",
+      "old_reason": "timeout",
+      "new_reason": ""
+    },
+    {
+      "instance_id": "t4",
+      "change": "updated",
+      "old_state": "unhealthy",
+      "new_state": "unknown",
+      "old_reason": "conn_refused",
+      "new_reason": ""
+    }
+  ],
+  "replay": {
+    "version": 2,
+    "probes_replayed": 24,
+    "transitions_verified": 9,
+    "instances_verified": 10
+  }
+}
