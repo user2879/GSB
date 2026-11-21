@@ -1,0 +1,184 @@
+{
+  "backends": [
+    {
+      "backend_id": "stable-a",
+      "model_version": "mlp-stable-1",
+      "host": "127.0.0.1",
+      "port": 18000,
+      "model_dim": 8,
+      "hidden_dim": 6,
+      "seed": 101,
+      "quant_version": 1
+    },
+    {
+      "backend_id": "gray-a",
+      "model_version": "mlp-gray-1",
+      "host": "127.0.0.1",
+      "port": 18001,
+      "model_dim": 8,
+      "hidden_dim": 6,
+      "seed": 202,
+      "quant_version": 1
+    },
+    {
+      "backend_id": "stable-b",
+      "model_version": "mlp-stable-b-1",
+      "host": "127.0.0.1",
+      "port": 18002,
+      "model_dim": 6,
+      "hidden_dim": 4,
+      "seed": 303,
+      "quant_version": 1
+    },
+    {
+      "backend_id": "gray-b",
+      "model_version": "mlp-gray-b-1",
+      "host": "127.0.0.1",
+      "port": 18003,
+      "model_dim": 6,
+      "hidden_dim": 4,
+      "seed": 404,
+      "quant_version": 1
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "rule-chat",
+      "prefix": "chat/",
+      "stable_backend": "stable-a",
+      "gray_backend": "gray-a",
+      "gray_weight_bp": 4000,
+      "batch_size": 4
+    },
+    {
+      "rule_id": "rule-vision",
+      "prefix": "vision/",
+      "stable_backend": "stable-b",
+      "gray_backend": "gray-b",
+      "gray_weight_bp": 2500,
+      "batch_size": 3
+    }
+  ],
+  "request_stream": [
+    {
+      "sample_id": "sample-000",
+      "rule_id": "rule-chat",
+      "client_key": "client-00"
+    },
+    {
+      "sample_id": "sample-001",
+      "rule_id": "rule-vision",
+      "client_key": "client-01"
+    },
+    {
+      "sample_id": "sample-002",
+      "rule_id": "rule-chat",
+      "client_key": "client-02"
+    },
+    {
+      "sample_id": "sample-003",
+      "rule_id": "rule-vision",
+      "client_key": "client-03"
+    },
+    {
+      "sample_id": "sample-004",
+      "rule_id": "rule-chat",
+      "client_key": "client-04"
+    },
+    {
+      "sample_id": "sample-005",
+      "rule_id": "rule-vision",
+      "client_key": "client-05"
+    },
+    {
+      "sample_id": "sample-006",
+      "rule_id": "rule-chat",
+      "client_key": "client-06"
+    },
+    {
+      "sample_id": "sample-007",
+      "rule_id": "rule-vision",
+      "client_key": "client-07"
+    },
+    {
+      "sample_id": "sample-008",
+      "rule_id": "rule-chat",
+      "client_key": "client-08"
+    },
+    {
+      "sample_id": "sample-009",
+      "rule_id": "rule-vision",
+      "client_key": "client-09"
+    },
+    {
+      "sample_id": "sample-010",
+      "rule_id": "rule-chat",
+      "client_key": "client-00"
+    },
+    {
+      "sample_id": "sample-011",
+      "rule_id": "rule-vision",
+      "client_key": "client-01"
+    },
+    {
+      "sample_id": "sample-012",
+      "rule_id": "rule-chat",
+      "client_key": "client-02"
+    },
+    {
+      "sample_id": "sample-013",
+      "rule_id": "rule-vision",
+      "client_key": "client-03"
+    },
+    {
+      "sample_id": "sample-014",
+      "rule_id": "rule-chat",
+      "client_key": "client-04"
+    },
+    {
+      "sample_id": "sample-015",
+      "rule_id": "rule-vision",
+      "client_key": "client-05"
+    },
+    {
+      "sample_id": "sample-016",
+      "rule_id": "rule-chat",
+      "client_key": "client-06"
+    },
+    {
+      "sample_id": "sample-017",
+      "rule_id": "rule-vision",
+      "client_key": "client-07"
+    },
+    {
+      "sample_id": "sample-018",
+      "rule_id": "rule-chat",
+      "client_key": "client-08"
+    },
+    {
+      "sample_id": "sample-019",
+      "rule_id": "rule-vision",
+      "client_key": "client-09"
+    },
+    {
+      "sample_id": "sample-020",
+      "rule_id": "rule-chat",
+      "client_key": "client-00"
+    },
+    {
+      "sample_id": "sample-021",
+      "rule_id": "rule-vision",
+      "client_key": "client-01"
+    },
+    {
+      "sample_id": "sample-022",
+      "rule_id": "rule-chat",
+      "client_key": "client-02"
+    },
+    {
+      "sample_id": "sample-023",
+      "rule_id": "rule-vision",
+      "client_key": "client-03"
+    }
+  ]
+}

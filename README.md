@@ -21,3 +21,16 @@ Windows 10 及以上本地环境，Python 3.11 已安装并可在命令行调用
 
 验收：
 使用本地确定性样本验证灰度分流、热更新归并快照重建、恢复重放与异常业务码，附运行结果。
+
+---
+
+# 交付实现导航
+
+本任务已在当前工作区从零实现，完整设计与实际验证结果见 `docs/TECHNICAL_NOTES.md`。
+
+- 可集成 Python 包：`hotgray/`（声明校验、确定性生成、后端子进程、网关、SQLite 持久化、快照重建、权威重算、Tkinter 界面、CLI）
+- 确定性样本：`python -m hotgray.samples --out-dir samples`（输出合法与非法两份声明）
+- 可重复演示：`scripts/demo_e2e.py`、`scripts/demo_recovery.py`（含 SIGKILL 强制终止）、`scripts/demo_faults.py`（三类异常注入）
+- Windows 环境脚本：`scripts/setup_env.ps1`、`scripts/run_demos.ps1`；Linux/WSL 对应 `scripts/setup_env.sh`
+- 测试：`python -m unittest discover -s tests`（25 个用例，覆盖确定性、分流、E_SPEC/E_PORT/E_HANDSHAKE/E_REPLY、热替换拆批、重建不相交、恢复重放、E_SNAPSHOT/E_REPLAY）
+- 实际运行结果：`artifacts/test_results.txt`、`artifacts/demo_e2e_result.json`、`artifacts/demo_recovery_result.txt`、`artifacts/demo_faults_result.json`
