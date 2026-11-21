@@ -1,0 +1,27 @@
+schema_version: 1
+injections:
+- id: INJ-001
+  document_id: news-0002
+  stage: split
+  kind: empty_paragraph
+  code: E_DOC_INVALID
+- id: INJ-002
+  document_id: news-0003
+  stage: scoring
+  kind: illegal_entity
+  code: E_DOC_INVALID
+- id: INJ-003
+  document_id: news-0005
+  stage: selection
+  kind: zero_summary_length
+  code: E_CONFIG_INVALID
+- id: INJ-004
+  document_id: news-0007
+  stage: scoring
+  kind: decimal_width_out_of_range
+  code: E_CONFIG_INVALID
+- id: INJ-005
+  document_id: news-0009
+  stage: rewrite
+  kind: missing_template
+  code: E_CONFIG_INVALID

@@ -1,0 +1,14 @@
+[project]
+name = "cn-news-diagnostic-workbench"
+version = "0.1.0"
+description = "Deterministic Chinese news summarization and rewriting diagnostic workbench"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "PyYAML>=6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["."]

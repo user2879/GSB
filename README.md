@@ -1,22 +1,196 @@
-在空白工作区构建一个面向中文新闻摘要与重写的诊断工作台，核心解决摘要结果在反复编辑输入文档、调整摘要长度与重写风格参数、以及中断恢复场景下的状态演进与恢复一致性问题。输入为一个本地样本目录：若干篇由固定种子程序从受控词表生成的结构化新闻 JSON（每篇含文档 ID、标题、段落列表、实体列表与事件三元组），一份摘要与重写配置 YAML（最大摘要句数、句子打分权重、实体覆盖权重、重写风格模板 ID、同义替换表版本、定点小数位宽、线程池并发数、快照提交间隔文档数），以及一份编辑命令流 JSON（每条命令可替换文档、增删段落、修改摘要长度或重写风格参数、追加或回滚编辑批次）。工作台需完成句子切分、句子重要性打分、摘要句选择、风格化重写与结果汇总五个阶段，每个阶段产物需带内容指纹并以临时目录整体替换方式持久化；工作台支持增量运行与从空白全量重建，任意编辑命令序列后的增量结果必须与全量重建逐字段一致；任意阶段收到可处理的退出信号时须完成当前文档的原子提交后以整数退出码 0 退出，强制终止后重启仅依据已完整替换的快照恢复。
+# 中文新闻摘要与重写诊断工作台
 
-任务环境与准备：
-安装 Python 3.11 与 NumPy，无需外部网络与 GPU。
-在空白工作区创建项目目录，预置生成新闻 JSON、摘要配置与编辑命令流的本地脚本，固定随机种子。
-准备独立注入配置文件样例，覆盖空段落、非法实体、模板引用缺失、摘要长度为零与位宽越界。
-确认工作目录可写临时目录与快照目录，运行前清理旧快照。
+本项目在本地完成中文新闻的句子切分、定点打分、摘要选择、风格化重写和结果汇总，重点验证反复编辑、参数调整、并发执行、优雅中断及强制终止后的状态一致性。
 
-业务要求：
-1. 实现文档与配置加载层：逐行解析新闻 JSON、摘要配置与编辑命令流，校验文档 ID 唯一、标题与段落非空、实体与事件三元组结构完整、最大摘要句数为正整数、风格模板 ID 在同义替换表版本中已声明、定点小数位宽与并发数合法；不合法条目分别输出 E_DOC_INVALID、E_CONFIG_INVALID、E_COMMAND_INVALID 业务码并进入失败清单，失败文档不得进入后续阶段。
-2. 实现句子切分与句子重要性打分阶段：按中文标点与段落边界切分句子并记录每句在原文中的起止偏移；句子得分由词频、实体覆盖与位置衰减以固定运算顺序合成，并按定点小数位宽转为定点整数；同一文档与配置下多次运行必须得到逐句一致的切分结果与得分，实体覆盖为零的句子须按固定规则记录得分来源。
-3. 实现摘要句选择与风格化重写阶段：按得分降序、同分按句子起始偏移升序选择不超过最大摘要句数的句子，被选句子须满足实体覆盖下限；重写阶段按风格模板与同义替换表做确定性替换，替换候选并列时按替换表条目序决断；替换导致句子长度超限时按固定截断规则处理并记录截断位置，输出摘要文本、逐句来源偏移与替换记录。
-4. 实现基于内容指纹的阶段级精确失效判定：为切分、打分、选择、重写与汇总各阶段产物计算由上游内容指纹、配置指纹与同义替换表版本派生的缓存键，并记录每个摘要句引用的原文句集合与实体集合；当替换文档、增删段落或修改摘要长度、风格模板、替换表版本时，仅将受影响阶段及其下游标记失效并纳入重算集合，未失效阶段必须直接复用缓存产物且不得重新计算。
-5. 保证任意编辑命令序列后增量运行与从空白全量重建逐字段一致：从任意初始状态施加包含文档替换、段落增删、摘要长度调整、风格参数修改与批次回滚的编辑序列，每次命令后增量运行得到的摘要文本、逐句得分、替换记录、失效复用清单、缓存键与失败清单顺序，必须与按相同最终文档集合和配置一次性全量运行的结果完全相同。
-6. 实现阶段化快照整体替换与恢复判定：将切分、打分、选择、重写、汇总划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、同义替换表版本、已完成文档游标与各阶段产物版本；启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并拒绝复用；收到可处理的退出信号时完成当前文档产物落盘后以整数退出码 0 退出，强制终止后仅依据已完整替换的快照恢复。
-7. 实现并发执行与串行结果一致性：使用线程池并发执行文档的切分、打分与重写，最大并发数取自配置且不得超过；每个文档任务携带由文档 ID 与阶段名派生的稳定排序键，无论线程调度顺序与并发度如何，最终文档顺序、逐句得分与摘要顺序、替换记录顺序、失效复用清单顺序与失败清单顺序，必须与单线程按文档 ID 字典序执行的结果完全一致。
-8. 实现异常注入隔离与诊断报告输出：以独立注入配置对指定文档指定阶段施加真实输入故障（空段落、实体列表含非法项、同义替换表条目引用不存在的模板、摘要长度为零、定点位宽越界），注入项编号写入报告以证明命中并映射到对应业务码；单文档在任一阶段抛异常时记录文档 ID、阶段名、业务码与异常类型到失败清单并继续处理其余文档，失败文档不得进入汇总；每次完整运行生成 JSON 报告，含摘要统计、失效复用计数、快照版本号、失败清单与各阶段耗时。
+项目只读取本地受控样本，不访问网络，不依赖 Docker 或 GPU。运行环境为 Python 3.11、NumPy 1.26 和 PyYAML。打分使用 `Decimal` 固定运算顺序，NumPy 作为环境依赖预装，避免浮点数导致跨运行漂移。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-使用本地样本验证摘要与重写结果、增量与全量一致及快照恢复，附运行报告。
+```bash
+python3 scripts/generate_samples.py
+python3 -m news_diag run --clean-snapshots
+python3 -m news_diag run                    # 无变更增量：应复用全部阶段产物
+python3 -m news_diag verify                 # 逐命令比较增量与空白全量
+python3 -m pytest -q
+python3 scripts/run_acceptance.py            # 一键生成汇总验收报告
+```
+
+默认输入位于 `samples/`，默认快照位于 `.workbench/snapshots/`，输出位于 `artifacts/`。
+
+```text
+samples/news.jsonl          固定种子生成的新闻 JSONL
+samples/config.yaml         摘要与重写配置
+samples/commands.jsonl      编辑命令流
+samples/injections.yaml     五类真实输入故障注入
+samples/invalid_documents.jsonl
+samples/invalid_config.yaml
+samples/invalid_commands.jsonl
+artifacts/report.json       最近一次运行诊断报告
+artifacts/output.json       最近一次运行的规范结果投影
+artifacts/acceptance_report.json  汇总验收报告
+```
+
+## 输入契约
+
+### 新闻文档
+
+`news.jsonl` 每行一个文档，也接受一个 JSON 数组。核心结构：
+
+```json
+{
+  "document_id": "news-0001",
+  "title": "标题",
+  "paragraphs": ["第一段。", "第二段。"],
+  "entities": [{"id": "e1", "text": "云海市发改委", "type": "ORG"}],
+  "events": [{"subject": "云海市发改委", "predicate": "发布", "object": "年度计划"}]
+}
+```
+
+校验包括文档 ID 唯一、标题和每个段落非空、实体有有效 `id/text/type`、实体 ID 不重复、事件三元组三个字段完整。非法条目进入 `load` 阶段失败清单，业务码为 `E_DOC_INVALID`，不会进入后续阶段。
+
+### 配置
+
+`config.yaml` 的主要字段：
+
+```yaml
+max_summary_sentences: 3
+scoring:
+  word_frequency_weight: "0.45"
+  entity_coverage_weight: "0.35"
+  position_decay_weight: "0.20"
+  entity_coverage_min: "0.16"
+  position_decay_base: "0.96"
+fixed_decimal_places: 4
+thread_pool_size: 4
+snapshot_commit_interval_docs: 2
+rewrite:
+  style_template_id: official
+  synonym_table_version: v1
+  max_chars: 62
+synonym_tables:
+  v1:
+    templates:
+      official: {prefix: "【要闻】", suffix: "", max_chars: 60}
+    entries:
+      - {template_id: official, source: "表示", candidates: ["指出", "强调"]}
+```
+
+配置校验覆盖正整数摘要句数、权重与实体覆盖下限、0..9 定点位宽、1..64 并发数、提交间隔、长度上限、模板声明和每个同义替换条目的模板引用。配置非法为 `E_CONFIG_INVALID`。
+
+### 编辑命令
+
+`commands.jsonl` 每行一条命令。支持：
+
+- `replace_document`：替换或新增完整文档。
+- `add_paragraph` / `remove_paragraph`：按 `index` 增删段落，禁止删除唯一段落。
+- `set_max_summary_sentences`：调整摘要长度。
+- `set_style_template`、`set_synonym_table_version`、`set_rewrite_style`：调整重写风格参数。
+- `set_scoring`、`set_fixed_decimal_places`：调整打分参数。
+- `append_batch`：追加带 `batch_id` 的命令批次。
+- `rollback_last_batch` / `rollback_batch`：恢复最新批次之前的完整文档与配置状态，批次历史随快照持久化。
+
+无效命令进入 `command` 阶段失败清单，业务码为 `E_COMMAND_INVALID`；同一条命令流中的其余命令继续处理。
+
+## 五阶段处理
+
+1. **切分**：按中文句末标点和段落边界切分；句子保存 `paragraph_index`、全局 `start/end` 与原文片段。偏移基于段落以 `\n` 连接后的稳定原文。
+2. **打分**：以配置词表做最长匹配分词。固定运算顺序为
+   `word_frequency_weight * 词频占比 + entity_coverage_weight * 实体覆盖率 + position_decay_weight * 位置衰减`，
+   最后按 `ROUND_HALF_UP` 转为定点整数。实体覆盖为零时，`score_sources` 固定不包含 `entity_coverage` 并设置 `entity_coverage_zero=true`。
+3. **选择**：只选择实体覆盖达到下限的句子；按得分降序、起点升序、终点升序、句子 ID 升序稳定排序。
+4. **重写**：按替换表条目顺序扫描；同一位置仅采用首个匹配条目，候选列表固定采用索引 0。超长文本硬截断到有效上限，记录 `truncation_offset` 和原始长度。
+5. **汇总**：只聚合成功文档，输出摘要、逐句来源、实体集合、替换记录、截断记录与统计。失败文档不进入汇总。
+
+## 精确失效与一致性
+
+每个阶段产物都包含：
+
+```json
+{"cache_key": "...", "fingerprint": "...", "payload": {}}
+```
+
+缓存键由阶段名、文档 ID、上游内容指纹、该阶段配置指纹以及适用的同义替换表版本派生。具体依赖如下：
+
+| 变更 | 失效范围 |
+| --- | --- |
+| 替换文档、增删段落 | 该文档切分、打分、选择、重写、汇总 |
+| 调整摘要句数或实体覆盖下限 | 选择、重写、汇总 |
+| 调整风格模板、替换表版本或最大长度 | 重写、汇总 |
+| 调整词频/实体/位置权重或定点位宽 | 打分、选择、重写、汇总 |
+
+命中缓存时直接复用 payload，不调用对应阶段函数；运行报告的 `invalidation_reuse` 会逐项标记 `reused/recomputed/failed`。`output.json` 中的 `invalidation_reuse` 是规范化的阶段键清单，不含运行时状态，因此增量与全量可逐字段比较。
+
+验证命令会对每条命令后的最终状态执行：
+
+- 同一快照目录继续增量运行；
+- 独立快照目录忽略旧缓存、从空白应用同一命令前缀；
+- 比较完整 `output.json`，包括文档顺序、切分与偏移、逐句得分、选择顺序、摘要文本、替换/截断记录、失败清单顺序、缓存键和阶段键顺序。
+
+## 快照、恢复与信号
+
+`SnapshotStore` 采用代际提交：
+
+1. 新状态写入 `snapshots/.tmp-*` 临时目录并 `fsync`；
+2. 临时目录原子重命名为唯一的 `gen-00000000000N/`；
+3. 原子替换 `CURRENT` 指针，使其指向完整代。
+
+重启只读取 `CURRENT` 指向的 `state.json`。未完成临时目录、未发布代和损坏代均忽略。快照记录全局版本、配置哈希、基础文档哈希、同义替换表版本、命令前缀哈希、已完成文档游标、有效配置覆盖、批次历史和五个阶段的产物版本。
+
+启动时会校验配置哈希、基础文档哈希和已应用命令前缀。若指定 `--expect-version`，还会校验全局版本。不匹配时报告 `E_SNAPSHOT_STALE`，拒绝复用旧缓存并从当前输入重建。
+
+安装 `SIGTERM` / `SIGINT` 处理器。信号只设置停止事件；正在处理的文档完成各阶段后，在文档边界提交快照并以整数 `0` 退出。`--stop-after-docs N` 提供可重复的模拟信号路径。强制 `SIGKILL` 不会留下可见半成品，重启从最后完整代继续。
+
+## 异常注入
+
+`samples/injections.yaml` 针对指定文档和阶段修改真实局部输入，再调用生产校验器：
+
+| 编号 | 故障 | 阶段 | 业务码 |
+| --- | --- | --- | --- |
+| INJ-001 | 空段落 | split | E_DOC_INVALID |
+| INJ-002 | 非法实体 | scoring | E_DOC_INVALID |
+| INJ-003 | 摘要长度为零 | selection | E_CONFIG_INVALID |
+| INJ-004 | 定点位宽越界 | scoring | E_CONFIG_INVALID |
+| INJ-005 | 替换表条目引用缺失模板 | rewrite | E_CONFIG_INVALID |
+
+报告写入注入编号、命中状态、实际业务码和 `code_match`。单文档失败被隔离，其余文档继续运行和汇总。
+
+## CLI
+
+```bash
+# 增量或首次全量
+python3 -m news_diag run \
+  --docs samples/news.jsonl \
+  --config samples/config.yaml \
+  --commands samples/commands.jsonl \
+  --snapshot-dir .workbench/snapshots \
+  --report artifacts/report.json \
+  --output artifacts/output.json
+
+# 忽略旧缓存并清理快照目录
+python3 -m news_diag run --rebuild --clean-snapshots
+
+# 故障注入
+python3 -m news_diag run --injections samples/injections.yaml \
+  --snapshot-dir .workbench/injection-snapshots \
+  --report artifacts/injection_report.json \
+  --output artifacts/injection_output.json
+
+# 逐步比较增量与空白全量
+python3 -m news_diag verify
+```
+
+`run` 对业务条目失败仍返回 0，并把错误写入报告；配置无法加载等无法启动的情况返回 2。`verify` 全部一致返回 0，否则返回 1。
+
+## 实际验收结果
+
+`python3 scripts/run_acceptance.py` 生成的 `artifacts/acceptance_report.json` 记录了以下实测值：
+
+- 全量运行：10 篇成功摘要、1 条预期 `E_COMMAND_INVALID`、41 个阶段项；20 条摘要句、35 条替换、13 条截断。
+- 无变更增量：41/41 阶段项复用，规范结果与全量完全相同。
+- 逐命令比较：0..11 共 12 个状态全部逐字段一致。
+- 异常注入：5/5 命中，5 个注入的业务码全部匹配，5 篇故障文档被隔离，其余 5 篇进入汇总。
+- 模拟优雅中断：收到可处理停止事件后退出 0，恢复运行结果与全量一致。
+- 真实 `SIGTERM`：退出码 0，报告记录 `handled_signal=15`，恢复结果与全量一致。
+- 真实 `SIGKILL`：从 `gen-000000000001` 完整代恢复，8 个已有阶段产物复用，最终结果与全量一致。
+- 陈旧快照：`--expect-version` 不匹配时产生 `E_SNAPSHOT_STALE`，复用数为 0。
+- 自动化测试：11 项全部通过。

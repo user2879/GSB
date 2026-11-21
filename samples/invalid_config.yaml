@@ -1,0 +1,464 @@
+schema_version: 1
+max_summary_sentences: 0
+scoring:
+  word_frequency_weight: '0.45'
+  entity_coverage_weight: '0.35'
+  position_decay_weight: '0.20'
+  entity_coverage_min: '0.16'
+  position_decay_base: '0.96'
+fixed_decimal_places: 12
+thread_pool_size: 0
+snapshot_commit_interval_docs: 2
+vocabulary:
+- 云海市发改委
+- 星河能源集团
+- 东港区交通局
+- 远山农业合作社
+- 北辰科技公司
+- 临江气象台
+- 南川区教育局
+- 海岳港口集团
+- 新闻发布会
+- 城市更新
+- 新能源公交
+- 春耕保障
+- 数字政务
+- 港区物流
+- 校园餐管理
+- 相关负责人
+- 重点项目
+- 服务窗口
+- 居民出行
+- 应急物资
+- 调度平台
+- 年度计划
+- 现场检查
+- 风险隐患
+- 下一步
+- 表示
+- 指出
+- 宣布
+- 强调
+- 推进
+- 完成
+- 启动
+- 优化
+- 发布
+- 记者
+- 目前
+- 此外
+- 预计
+- 覆盖
+- 提升
+- 保障
+- 建设
+- 运行
+- 群众
+- 部门
+- 项目
+- 工作
+rewrite:
+  style_template_id: not-declared
+  synonym_table_version: v1
+  max_chars: 62
+synonym_tables:
+  v1:
+    templates:
+      official:
+        prefix: 【要闻】
+        suffix: ''
+        max_chars: 60
+      brief:
+        prefix: 简讯：
+        suffix: ''
+        max_chars: 50
+      factual:
+        prefix: 事实：
+        suffix: ''
+        max_chars: 46
+    entries:
+    - template_id: official
+      source: 表示
+      candidates:
+      - 指出
+      - 强调
+    - template_id: official
+      source: 指出
+      candidates:
+      - 说明
+      - 表示
+    - template_id: official
+      source: 宣布
+      candidates:
+      - 公布
+      - 宣布
+    - template_id: official
+      source: 强调
+      candidates:
+      - 重申
+      - 强调
+    - template_id: official
+      source: 推进
+      candidates:
+      - 开展
+      - 推动
+    - template_id: official
+      source: 完成
+      candidates:
+      - 办结
+      - 完成
+    - template_id: official
+      source: 启动
+      candidates:
+      - 开启
+      - 启动
+    - template_id: official
+      source: 优化
+      candidates:
+      - 改进
+      - 优化
+    - template_id: official
+      source: 发布
+      candidates:
+      - 披露
+      - 发布
+    - template_id: official
+      source: 目前
+      candidates:
+      - 当前
+      - 眼下
+    - template_id: official
+      source: 此外
+      candidates:
+      - 同时
+      - 另外
+    - template_id: official
+      source: 记者
+      candidates:
+      - 记者
+      - 通讯员
+    - template_id: brief
+      source: 表示
+      candidates:
+      - 指出
+      - 强调
+    - template_id: brief
+      source: 指出
+      candidates:
+      - 说明
+      - 表示
+    - template_id: brief
+      source: 宣布
+      candidates:
+      - 公布
+      - 宣布
+    - template_id: brief
+      source: 表示
+      candidates:
+      - 称
+      - 回应
+    - template_id: brief
+      source: 强调
+      candidates:
+      - 重申
+      - 强调
+    - template_id: brief
+      source: 推进
+      candidates:
+      - 开展
+      - 推动
+    - template_id: brief
+      source: 完成
+      candidates:
+      - 办结
+      - 完成
+    - template_id: brief
+      source: 启动
+      candidates:
+      - 开启
+      - 启动
+    - template_id: brief
+      source: 优化
+      candidates:
+      - 改进
+      - 优化
+    - template_id: brief
+      source: 发布
+      candidates:
+      - 披露
+      - 发布
+    - template_id: brief
+      source: 目前
+      candidates:
+      - 当前
+      - 眼下
+    - template_id: brief
+      source: 此外
+      candidates:
+      - 同时
+      - 另外
+    - template_id: brief
+      source: 记者
+      candidates:
+      - 记者
+      - 通讯员
+    - template_id: factual
+      source: 表示
+      candidates:
+      - 指出
+      - 强调
+    - template_id: factual
+      source: 指出
+      candidates:
+      - 说明
+      - 表示
+    - template_id: factual
+      source: 宣布
+      candidates:
+      - 公布
+      - 宣布
+    - template_id: factual
+      source: 强调
+      candidates:
+      - 重申
+      - 强调
+    - template_id: factual
+      source: 推进
+      candidates:
+      - 开展
+      - 推动
+    - template_id: factual
+      source: 完成
+      candidates:
+      - 办结
+      - 完成
+    - template_id: factual
+      source: 启动
+      candidates:
+      - 开启
+      - 启动
+    - template_id: factual
+      source: 优化
+      candidates:
+      - 改进
+      - 优化
+    - template_id: factual
+      source: 发布
+      candidates:
+      - 披露
+      - 发布
+    - template_id: factual
+      source: 目前
+      candidates:
+      - 当前
+      - 眼下
+    - template_id: factual
+      source: 此外
+      candidates:
+      - 同时
+      - 另外
+    - template_id: factual
+      source: 记者
+      candidates:
+      - 记者
+      - 通讯员
+  v2:
+    templates:
+      official:
+        prefix: 【深度】
+        suffix: ''
+        max_chars: 56
+      brief:
+        prefix: 快讯｜
+        suffix: ''
+        max_chars: 44
+      factual:
+        prefix: 记录：
+        suffix: ''
+        max_chars: 40
+    entries:
+    - template_id: official
+      source: 表示
+      candidates:
+      - 强调
+      - 指出
+    - template_id: official
+      source: 指出
+      candidates:
+      - 表示
+      - 说明
+    - template_id: official
+      source: 宣布
+      candidates:
+      - 宣布
+      - 公布
+    - template_id: official
+      source: 强调
+      candidates:
+      - 强调
+      - 重申
+    - template_id: official
+      source: 推进
+      candidates:
+      - 推动
+      - 开展
+    - template_id: official
+      source: 完成
+      candidates:
+      - 完成
+      - 办结
+    - template_id: official
+      source: 启动
+      candidates:
+      - 启动
+      - 开启
+    - template_id: official
+      source: 优化
+      candidates:
+      - 优化
+      - 改进
+    - template_id: official
+      source: 发布
+      candidates:
+      - 发布
+      - 披露
+    - template_id: official
+      source: 目前
+      candidates:
+      - 眼下
+      - 当前
+    - template_id: official
+      source: 此外
+      candidates:
+      - 另外
+      - 同时
+    - template_id: official
+      source: 记者
+      candidates:
+      - 通讯员
+      - 记者
+    - template_id: brief
+      source: 表示
+      candidates:
+      - 强调
+      - 指出
+    - template_id: brief
+      source: 指出
+      candidates:
+      - 表示
+      - 说明
+    - template_id: brief
+      source: 宣布
+      candidates:
+      - 宣布
+      - 公布
+    - template_id: brief
+      source: 表示
+      candidates:
+      - 回应
+      - 称
+    - template_id: brief
+      source: 强调
+      candidates:
+      - 强调
+      - 重申
+    - template_id: brief
+      source: 推进
+      candidates:
+      - 推动
+      - 开展
+    - template_id: brief
+      source: 完成
+      candidates:
+      - 完成
+      - 办结
+    - template_id: brief
+      source: 启动
+      candidates:
+      - 启动
+      - 开启
+    - template_id: brief
+      source: 优化
+      candidates:
+      - 优化
+      - 改进
+    - template_id: brief
+      source: 发布
+      candidates:
+      - 发布
+      - 披露
+    - template_id: brief
+      source: 目前
+      candidates:
+      - 眼下
+      - 当前
+    - template_id: brief
+      source: 此外
+      candidates:
+      - 另外
+      - 同时
+    - template_id: brief
+      source: 记者
+      candidates:
+      - 通讯员
+      - 记者
+    - template_id: factual
+      source: 表示
+      candidates:
+      - 强调
+      - 指出
+    - template_id: factual
+      source: 指出
+      candidates:
+      - 表示
+      - 说明
+    - template_id: factual
+      source: 宣布
+      candidates:
+      - 宣布
+      - 公布
+    - template_id: factual
+      source: 强调
+      candidates:
+      - 强调
+      - 重申
+    - template_id: factual
+      source: 推进
+      candidates:
+      - 推动
+      - 开展
+    - template_id: factual
+      source: 完成
+      candidates:
+      - 完成
+      - 办结
+    - template_id: factual
+      source: 启动
+      candidates:
+      - 启动
+      - 开启
+    - template_id: factual
+      source: 优化
+      candidates:
+      - 优化
+      - 改进
+    - template_id: factual
+      source: 发布
+      candidates:
+      - 发布
+      - 披露
+    - template_id: factual
+      source: 目前
+      candidates:
+      - 眼下
+      - 当前
+    - template_id: factual
+      source: 此外
+      candidates:
+      - 另外
+      - 同时
+    - template_id: factual
+      source: 记者
+      candidates:
+      - 通讯员
+      - 记者

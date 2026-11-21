@@ -1,0 +1,11 @@
+{"type": "add_paragraph", "document_id": "news-0002", "index": 1, "paragraph": "云海市发改委表示，数字政务项目将优化居民出行服务。"}
+{"type": "set_max_summary_sentences", "value": 2}
+{"type": "set_style_template", "style_template_id": "brief"}
+{"type": "set_synonym_table_version", "version": "v2"}
+{"type": "replace_document", "document": {"document_id": "news-0004", "title": "城市更新项目完成阶段验收", "paragraphs": ["北辰科技公司发布城市更新项目阶段结果。北辰科技公司表示，调度平台已完成联调。海岳港口集团指出，服务窗口将覆盖更多企业。", "临江气象台与东港区交通局共同开展现场检查。东港区交通局强调，风险隐患已经完成整改。"], "entities": [{"id": "e4-1", "text": "北辰科技公司", "type": "ORG"}, {"id": "e4-2", "text": "临江气象台", "type": "GOV"}, {"id": "e4-3", "text": "南川区教育局", "type": "COMPANY"}, {"id": "e4-4", "text": "海岳港口集团", "type": "ORG"}, {"id": "e4-5", "text": "云海市发改委", "type": "GOV"}], "events": [{"subject": "北辰科技公司", "predicate": "优化", "object": "数字政务"}, {"subject": "南川区教育局", "predicate": "检查", "object": "海岳港口集团"}]}}
+{"type": "add_paragraph", "document_id": "news-9999", "paragraph": "无效目标"}
+{"type": "set_rewrite_style", "rewrite": {"style_template_id": "official", "max_chars": 30}}
+{"type": "append_batch", "batch_id": "batch-shift", "commands": [{"type": "remove_paragraph", "document_id": "news-0005", "index": 0}, {"type": "add_paragraph", "document_id": "news-0005", "index": 0, "paragraph": "海岳港口集团表示，港区物流调度平台已经启动。"}]}
+{"type": "rollback_last_batch", "batch_id": "batch-shift"}
+{"type": "remove_paragraph", "document_id": "news-0007", "index": 0}
+{"type": "set_scoring", "scoring": {"entity_coverage_min": "0.15"}}
