@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deterministic-multichannel-fusion"
+version = "1.0.0"
+description = "Deterministic multi-channel candidate score fusion with auditable budgeting and incremental snapshots"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<2"]
+
+[tool.setuptools.packages.find]
+include = ["candidate_fusion*"]
