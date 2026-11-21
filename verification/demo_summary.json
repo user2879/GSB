@@ -1,0 +1,198 @@
+{
+  "budget_failure_codes": [
+    "E_CONFIG_INVALID",
+    "E_POINT_BUDGET_EXHAUSTED",
+    "E_SAMPLE_INVALID"
+  ],
+  "final_dataset": "demo_workspace/final_dataset (recreated by demo)",
+  "full_failure_codes": [
+    "E_CONFIG_INVALID",
+    "E_SAMPLE_INVALID"
+  ],
+  "full_summary": {
+    "failure_count": 4,
+    "injection_hit_count": 4,
+    "series_count": 4,
+    "successful_model_windows": 110,
+    "task_count": 111,
+    "window_count": 37
+  },
+  "incremental_steps": [
+    {
+      "failure_codes": [
+        "E_CONFIG_INVALID",
+        "E_SAMPLE_INVALID"
+      ],
+      "invalidated_task_count": 75,
+      "metric_computed": 74,
+      "metric_reused": 0,
+      "name": "initial_full",
+      "prediction_computed": 74,
+      "prediction_reused": 0,
+      "report": "01_initial.json",
+      "snapshot_status": "EMPTY",
+      "training_computed": 75,
+      "training_reused": 0,
+      "unchanged_task_count": 0
+    },
+    {
+      "failure_codes": [
+        "E_CONFIG_INVALID",
+        "E_SAMPLE_INVALID"
+      ],
+      "invalidated_task_count": 18,
+      "metric_computed": 18,
+      "metric_reused": 56,
+      "name": "incremental_sequence_replace",
+      "prediction_computed": 18,
+      "prediction_reused": 56,
+      "report": "02_incremental_sequence_replace.json",
+      "snapshot_status": "RESUMED",
+      "training_computed": 18,
+      "training_reused": 57,
+      "unchanged_task_count": 57
+    },
+    {
+      "failure_codes": [
+        "E_CONFIG_INVALID",
+        "E_SAMPLE_INVALID"
+      ],
+      "invalidated_task_count": 50,
+      "metric_computed": 49,
+      "metric_reused": 25,
+      "name": "incremental_model_params",
+      "prediction_computed": 49,
+      "prediction_reused": 25,
+      "report": "03_incremental_model_params.json",
+      "snapshot_status": "E_SNAPSHOT_STALE",
+      "training_computed": 50,
+      "training_reused": 25,
+      "unchanged_task_count": 25
+    },
+    {
+      "failure_codes": [
+        "E_CONFIG_INVALID",
+        "E_SAMPLE_INVALID"
+      ],
+      "invalidated_task_count": 75,
+      "metric_computed": 74,
+      "metric_reused": 0,
+      "name": "incremental_quantization",
+      "prediction_computed": 74,
+      "prediction_reused": 0,
+      "report": "04_incremental_quantization.json",
+      "snapshot_status": "E_SNAPSHOT_STALE",
+      "training_computed": 0,
+      "training_reused": 75,
+      "unchanged_task_count": 0
+    },
+    {
+      "failure_codes": [
+        "E_CONFIG_INVALID",
+        "E_SAMPLE_INVALID"
+      ],
+      "invalidated_task_count": 111,
+      "metric_computed": 110,
+      "metric_reused": 0,
+      "name": "incremental_window_params",
+      "prediction_computed": 110,
+      "prediction_reused": 0,
+      "report": "05_incremental_window_params.json",
+      "snapshot_status": "E_SNAPSHOT_STALE",
+      "training_computed": 111,
+      "training_reused": 0,
+      "unchanged_task_count": 0
+    }
+  ],
+  "injection_mapping": {
+    "INJ-001": "E_SAMPLE_INVALID",
+    "INJ-002": "E_SAMPLE_INVALID",
+    "INJ-003": "E_CONFIG_INVALID",
+    "INJ-004": "E_CONFIG_INVALID"
+  },
+  "injection_unhit_ids": [],
+  "model_aggregates": {
+    "autoregressive": {
+      "absolute_error_sum_fixed": 268371.0,
+      "fixed_step": 0.002,
+      "mae": 4.835513513513513,
+      "mape": 24.33208430434032,
+      "percentage_error_sum": 27.008613577817755,
+      "percentage_point_count": 111,
+      "point_count": 111,
+      "rmse": 10.404151460047263,
+      "squared_error_sum_fixed": 3003836701.0,
+      "tolerance_exceeded_windows": 37,
+      "window_count": 37
+    },
+    "moving_average": {
+      "absolute_error_sum_fixed": 115322.0,
+      "fixed_step": 0.002,
+      "mae": 2.1355925925925927,
+      "mape": 10.141164814991075,
+      "percentage_error_sum": 10.952458000190362,
+      "percentage_point_count": 108,
+      "point_count": 108,
+      "rmse": 2.4004357320502674,
+      "squared_error_sum_fixed": 155576476.0,
+      "tolerance_exceeded_windows": 36,
+      "window_count": 36
+    },
+    "naive_persistence": {
+      "absolute_error_sum_fixed": 93668.0,
+      "fixed_step": 0.002,
+      "mae": 1.6877117117117117,
+      "mape": 7.980820377745129,
+      "percentage_error_sum": 8.858710619297094,
+      "percentage_point_count": 111,
+      "point_count": 111,
+      "rmse": 2.0345290355255186,
+      "squared_error_sum_fixed": 114865808.0,
+      "tolerance_exceeded_windows": 35,
+      "window_count": 37
+    }
+  },
+  "parity": {
+    "concurrency_1_vs_4": {
+      "difference_count": 0,
+      "differences": [],
+      "equal": true,
+      "left_failures": 4,
+      "right_failures": 4
+    },
+    "incremental_vs_full": {
+      "difference_count": 0,
+      "differences": [],
+      "equal": true,
+      "left_failures": 4,
+      "right_failures": 4
+    },
+    "repeat_vs_full": {
+      "difference_count": 0,
+      "differences": [],
+      "equal": true,
+      "left_failures": 4,
+      "right_failures": 4
+    },
+    "resumed_vs_full": {
+      "difference_count": 0,
+      "differences": [],
+      "equal": true,
+      "left_failures": 4,
+      "right_failures": 4
+    }
+  },
+  "quota_failure_codes": [
+    "E_CONFIG_INVALID",
+    "E_SAMPLE_INVALID",
+    "E_SERIES_QUOTA_EXHAUSTED"
+  ],
+  "reports_dir": "demo_workspace/reports (recreated by `python -m ts_pipeline demo`)",
+  "seed": 20261122,
+  "snapshot_interrupt": {
+    "exit_code": 0,
+    "resume_parity": true,
+    "status": "interrupted"
+  },
+  "status": "ok"
+}

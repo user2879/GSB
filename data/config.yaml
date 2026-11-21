@@ -1,0 +1,23 @@
+schema_version: 1
+samples: samples.jsonl
+injection_manifest: injections.json
+backtest:
+  window_length: 12
+  step: 4
+  forecast_horizon: 3
+  error_tolerance: 0.65
+models:
+  enabled: [naive_persistence, moving_average, autoregressive]
+  moving_average_window: 3
+  feature_lag_order: 3
+  autoregressive_regularization: 1e-06
+quantization:
+  fixed_decimal_places: 3
+  quantization_level: 1
+scheduler:
+  concurrency: 4
+  batch_point_budget: 500000
+  per_series_point_quota: 500000
+snapshot:
+  commit_interval_windows: 2
+  version: 1

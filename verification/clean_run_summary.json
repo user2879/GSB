@@ -1,0 +1,64 @@
+{
+  "exit_code": 0,
+  "failure_codes": [
+    "E_CONFIG_INVALID",
+    "E_SAMPLE_INVALID"
+  ],
+  "injection_mapping": {
+    "INJ-001": "E_SAMPLE_INVALID",
+    "INJ-002": "E_SAMPLE_INVALID",
+    "INJ-003": "E_CONFIG_INVALID",
+    "INJ-004": "E_CONFIG_INVALID"
+  },
+  "model_aggregates": {
+    "autoregressive": {
+      "absolute_error_sum_fixed": 72461.0,
+      "fixed_step": 0.001,
+      "mae": 0.9792027027027027,
+      "mape": 4.6979762964116505,
+      "percentage_error_sum": 3.476502459344621,
+      "percentage_point_count": 74,
+      "point_count": 74,
+      "rmse": 1.293959766908685,
+      "squared_error_sum_fixed": 123900559.0,
+      "tolerance_exceeded_windows": 23,
+      "window_count": 25
+    },
+    "moving_average": {
+      "absolute_error_sum_fixed": 149102.0,
+      "fixed_step": 0.001,
+      "mae": 2.1000281690140845,
+      "mape": 9.887434759475116,
+      "percentage_error_sum": 7.020078679227333,
+      "percentage_point_count": 71,
+      "point_count": 71,
+      "rmse": 2.408785311325262,
+      "squared_error_sum_fixed": 411959514.0,
+      "tolerance_exceeded_windows": 24,
+      "window_count": 24
+    },
+    "naive_persistence": {
+      "absolute_error_sum_fixed": 125229.0,
+      "fixed_step": 0.001,
+      "mae": 1.6922837837837839,
+      "mape": 7.721815078196322,
+      "percentage_error_sum": 5.714143157865278,
+      "percentage_point_count": 74,
+      "point_count": 74,
+      "rmse": 2.051337194072146,
+      "squared_error_sum_fixed": 311390837.0,
+      "tolerance_exceeded_windows": 24,
+      "window_count": 25
+    }
+  },
+  "snapshot_status": "EMPTY",
+  "status": "completed",
+  "summary": {
+    "failure_count": 4,
+    "injection_hit_count": 4,
+    "series_count": 4,
+    "successful_model_windows": 74,
+    "task_count": 75,
+    "window_count": 25
+  }
+}

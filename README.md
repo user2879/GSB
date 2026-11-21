@@ -1,22 +1,276 @@
-当前是空白工作区，需要从零构建一个面向本地确定性样本的时序预测数据处理管线与结果验证工具，核心解决可复现验证与异常注入两条主线在分窗回测、基线模型训练与快照恢复之间的耦合问题。输入为一个本地样本目录：一份时序样本 JSONL（每行含序列 ID、按固定种子程序生成的等间隔观测值、时间戳毫秒与可选缺失标记）、一份预测配置 YAML（回测窗口长度与步长、预测步长、基线模型集合、特征滞后阶数、定点小数位宽与量化档位、误差容差、线程池并发数、单批观测点预算、快照提交间隔窗口数、注入清单路径）。基线模型集合至少包含朴素持续、移动平均与自回归三个模型，三者共用同一输入输出接口，且必须各自显式记录训练窗口、拟合参数与残差序列。管线需按回测窗口切分序列、训练基线模型、逐窗口预测并汇总误差指标，同时支持通过独立注入清单对指定序列指定窗口施加真实输入故障以验证异常处理，任何一次中断或强制终止后重启都必须收敛到与从空白工作区全量重建一致的结果。
+# Deterministic Time-Series Backtest Pipeline
 
-任务环境与准备：
-准备 Windows 本机并安装 Python 3.10 及以上版本，确认 python 与 pip 可在命令行调用。
-安装 NumPy 并确认版本可导入；其余能力仅使用 Python 标准库，不引入任何外部服务或网络依赖。
-在空白工作区中创建任务目录，并按题目约定自行准备本地确定性时序样本 JSONL、预测配置 YAML 与注入清单；样本与配置全部由固定种子程序生成，不依赖真实数据、账号或站点。
-运行环境全部在本地完成，不使用容器或镜像；验证时在 Windows 命令行执行脚本并检查生成的 JSON 报告与退出码。
+This workspace contains a local, deterministic time-series forecasting pipeline and result-verification tool. It is designed for Windows command-line execution with Python 3.10+ and NumPy. No container, service, network call, database, or third-party YAML package is used.
 
-业务要求：
-1. 实现时序样本与配置加载层：逐行解析样本 JSONL 与配置 YAML 及注入清单，校验序列 ID 唯一、观测值均为有限数或缺失标记、时间戳等间隔且严格递增、回测窗口长度与步长为正整数且步长不超过窗口长度、预测步长非负、定点小数位宽与量化档位在允许枚举内、注入清单引用的序列与窗口存在；非法条目分别输出 E_SAMPLE_INVALID 或 E_CONFIG_INVALID 并进入失败清单，其余条目继续处理
-2. 实现按回测窗口划分的确定性训练窗口构造：以回测窗口长度与步长切出训练窗口，缺失观测按在该窗口已见观测上的固定插补规则填补并在产物中标注插补位置与插补来源窗口；窗口切分与插补必须只读取该窗口及其之前的数据，严禁使用未来观测；同一序列在相同配置下多次运行必须得到逐窗口一致的训练样本集与插补记录
-3. 实现朴素持续、移动平均与自回归三个共用同一输入输出接口的基线模型：各自显式记录训练窗口、拟合参数与残差序列，移动平均窗长与自回归滞后阶数取自配置，自回归以固定正规方程求解并在矩阵近奇异时按配置正则系数处理而非抛异常；模型对同一训练窗口的输出必须逐值一致，禁止依赖运行时全局随机状态
-4. 实现逐窗口预测与定点量化误差指标汇总：按预测步长输出各窗口预测值，预测值与实际值依定点小数位宽与量化档位转为定点整数后再计算平均绝对误差、均方根误差与平均绝对百分比误差，累加顺序固定为窗口序号升序、窗口内步序升序；误差超过配置容差时标记窗口并记录误差首次超出容差的步序与分项误差，三个模型指标并列
-5. 实现基于内容指纹的窗口级精确失效判定：为插补与窗口切分、每模型训练产物、预测结果与误差指标计算由上游内容指纹、参数指纹与量化档位派生的缓存键，并记录每个误差指标引用的窗口与模型；当替换某序列、修改回测窗口长度或步长、调整模型超参与量化档位时，仅将受影响窗口与模型及其下游标记失效并纳入重算集合，未失效窗口与模型必须直接复用且不得重新训练
-6. 实现单批观测点预算与单序列配额的并行调度：多序列窗口通过线程池并发训练与预测，最大并发数取自配置；调度器维护全局剩余观测点预算并按序列 ID 稳定顺序分配单序列配额，任一序列累计处理观测点超出配额即中止该序列并以 E_SERIES_QUOTA_EXHAUSTED 记录，全局预算耗尽时对未完成窗口输出 E_POINT_BUDGET_EXHAUSTED 并保留待处理游标；每个窗口与模型任务携带由序列 ID、窗口序号与模型名派生的稳定排序键，无论线程调度顺序、并发度与预算耗尽时机如何，最终结果顺序与失败清单顺序必须与单线程按稳定键顺序执行一致
-7. 实现阶段化快照整体替换与中断恢复判定：将加载校验、窗口切分与插补、模型训练、预测与指标汇总划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、注入清单哈希、已完成序列与窗口游标、已消耗观测点预算与各阶段产物版本；启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并重建，收到可处理的退出信号时完成当前阶段原子提交后以整数退出码 0 退出，进程被强制终止后仅依据已完整替换的快照恢复
-8. 实现异常注入隔离与可复现验证报告输出：以独立注入清单对指定序列指定窗口施加真实输入故障，包括非有限观测值、时间戳非等间隔、窗口长度大于序列可用长度与量化档位越界，注入项编号须写入报告以证明命中并映射到对应业务码；单窗口在某阶段抛异常时记录序列 ID、窗口序号、模型名、阶段名与业务码并继续其余窗口，失败窗口不得进入指标汇总；从任意初始状态执行含序列替换、窗口参数调整、模型超参变更与量化档位切换的编辑序列后，增量运行得到的各模型逐窗口预测、误差指标、插补记录、失效复用清单与失败清单顺序，必须与从空白工作区按相同最终样本与配置一次性全量重建逐字段一致；每次完整运行生成 JSON 报告，含各模型逐窗口误差、超差窗口清单、注入命中清单、快照版本号与各阶段耗时
+The implementation covers two coupled concerns:
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- reproducible windowed backtesting, baseline training, fixed-point metrics, incremental recomputation, and crash-safe snapshots;
+- isolated real-input fault injection, stable failure ordering, and field-level incremental/full parity evidence.
 
-验收：
-使用本地时序样本验证三基线模型的回测指标、增量与全量一致及注入故障处理，输出 JSON 报告。
+## Deliverables
+
+- `ts_pipeline/` — pipeline implementation.
+- `tests/test_pipeline.py` — standard-library `unittest` suite.
+- `data/` — deterministic JSONL samples, YAML config, and injection manifest.
+- `reports/full_report.json` — a full-run report for `data/config.yaml`.
+- `verification/` — recorded demo summary, parity reports, and unittest output.
+- `scripts/run_windows_checks.bat` — Windows one-command test/demo entry point.
+- `requirements.txt` — NumPy dependency only.
+
+## Environment
+
+Verified locally with Python `3.11.0rc1` and NumPy `1.26.4`. The code targets Python 3.10 or newer.
+
+Windows `cmd.exe`:
+
+```bat
+python --version
+python -m pip install -r requirements.txt
+python -c "import numpy; print(numpy.__version__)"
+```
+
+## Quick Start
+
+Generate deterministic fixtures:
+
+```bat
+python -m ts_pipeline generate --out data --seed 20261122 --force
+```
+
+Run a clean backtest:
+
+```bat
+python -m ts_pipeline run ^
+  --config data\config.yaml ^
+  --state-dir .pipeline_state ^
+  --report reports\full_report.json ^
+  --reset
+```
+
+Run all verification scenarios, including incremental edits, a fresh full rebuild, repeat-cache reuse, snapshot interruption/resume, concurrency 1 vs 4, quota exhaustion, and budget exhaustion:
+
+```bat
+python -m ts_pipeline demo --root demo_workspace --seed 20261122 --force
+```
+
+Run tests:
+
+```bat
+python -m unittest discover -s tests -v
+```
+
+Or run both:
+
+```bat
+scripts\run_windows_checks.bat
+```
+
+`run` exits `0` for a completed run, including runs that contain isolated window/model failures. Fatal load or configuration errors return `2`. A handled interrupt commits the current stage and returns `0` with `status: interrupted`.
+
+## Input Formats
+
+### Samples (`data/samples.jsonl`)
+
+One JSON object per line. Duplicate IDs are rejected. Values must be finite numbers or a missing marker (`null` or `"MISSING"`), and timestamps must be strictly increasing with a constant interval.
+
+```json
+{"sequence_id":"s-alpha","timestamps_ms":[1700000000000,1700000001000],"values":[13.7,null],"missing":[false,true]}
+```
+
+Invalid lines emit `E_SAMPLE_INVALID`; valid sequences continue to be processed.
+
+### Configuration (`data/config.yaml`)
+
+The bundled YAML loader supports the subset used here: nested mappings, block/inline lists, quoted scalars, numbers, booleans, null, and comments. JSON is also accepted.
+
+```yaml
+schema_version: 1
+samples: samples.jsonl
+injection_manifest: injections.json
+backtest:
+  window_length: 12
+  step: 4
+  forecast_horizon: 3
+  error_tolerance: 0.65
+models:
+  enabled: [naive_persistence, moving_average, autoregressive]
+  moving_average_window: 3
+  feature_lag_order: 3
+  autoregressive_regularization: 1.0e-6
+quantization:
+  fixed_decimal_places: 3
+  quantization_level: 1
+scheduler:
+  concurrency: 4
+  batch_point_budget: 500000
+  per_series_point_quota: 500000
+snapshot:
+  commit_interval_windows: 2
+  version: 1
+```
+
+Allowed values:
+
+- `fixed_decimal_places`: `0..6`
+- `quantization_level`: `1, 2, 5, 10, 20, 50, 100`
+- all three baseline models must be enabled
+- `step <= window_length`
+
+Core configuration errors emit `E_CONFIG_INVALID`. Invalid injection-list entries also emit `E_CONFIG_INVALID` and are skipped while valid injections continue.
+
+### Injection Manifest (`data/injections.json`)
+
+Injection is independent from the sample file. A valid item targets an existing sequence/window and is recorded by ID in the report.
+
+```json
+{
+  "injections": [
+    {"id":"INJ-001","kind":"non_finite_observation","sequence_id":"s-beta","window_index":1,"position":4,"value":"NaN"},
+    {"id":"INJ-002","kind":"irregular_timestamp","sequence_id":"s-gamma","window_index":2,"position":5,"offset_ms":17},
+    {"id":"INJ-003","kind":"window_too_long","sequence_id":"s-alpha","window_index":3,"window_length":99},
+    {"id":"INJ-004","kind":"quantization_out_of_range","sequence_id":"s-delta","window_index":1,"model":"moving_average","quantization_level":999}
+  ]
+}
+```
+
+| Kind | Mapped business code |
+|---|---|
+| `non_finite_observation` | `E_SAMPLE_INVALID` |
+| `irregular_timestamp` | `E_SAMPLE_INVALID` |
+| `window_too_long` | `E_CONFIG_INVALID` |
+| `quantization_out_of_range` | `E_CONFIG_INVALID` |
+
+A window fault affects only its target window. A quantization fault can target one model or all models. Failures carry sequence ID, window index, model name, stage, code, and injection ID. Failed windows are excluded from metric aggregation.
+
+## Pipeline Semantics
+
+### Windows and imputation
+
+For window index `i`, training indices are `[i*step, i*step+window_length)` and forecast indices follow immediately for `forecast_horizon` points. Only windows with a complete forecast range are scheduled.
+
+Missing training values are filled deterministically inside the same window:
+
+- linear interpolation when observations exist on both sides;
+- carry-forward or carry-backward at an edge;
+- fail the window when the window contains no observed training value.
+
+Every fill records its position, method, source positions, source window, and filled value. Window construction never reads training data beyond the current training window.
+
+### Baseline models
+
+All models implement the same `fit(...) -> artifact` / `predict(artifact, horizon) -> list[float]` interface. Each artifact explicitly contains:
+
+- the complete training window and its content fingerprint;
+- fitted parameters;
+- the residual sequence and residual fingerprint.
+
+Models:
+
+- `naive_persistence` — repeats the last training value.
+- `moving_average` — uses `moving_average_window` from config.
+- `autoregressive` — uses `feature_lag_order`, intercept and lag coefficients. The fixed normal equations include the configured ridge regularization. Singular systems fall back deterministically to a pseudo-inverse rather than throwing.
+
+No model accesses global random state.
+
+### Quantization and metrics
+
+Predictions and actual values are converted to fixed-point buckets using:
+
+```text
+step = quantization_level / 10^fixed_decimal_places
+bucket = round_half_up(value / step)
+```
+
+MAE, RMSE, and MAPE are computed from fixed-point integer errors, then scaled by `step`. Window traversal is stable: series ID ascending, window index ascending, step index ascending. Each window records the first step exceeding tolerance and its absolute, squared, and percentage error components. `metric_matrix` presents all three models side by side for each window.
+
+### Cache keys and invalidation
+
+The key dependency chain is:
+
+```text
+series content
+  -> window content + window spec + window fault fingerprint
+  -> per-model training key (model parameter fingerprint)
+  -> prediction key (horizon + quantization fingerprint)
+  -> metric key (actual fingerprint + tolerance)
+```
+
+Changing a sequence invalidates only its windows. Changing one model's hyperparameters leaves the other models' training artifacts reusable. Changing quantization reuses all training artifacts and recomputes predictions/metrics. Changing window length or step invalidates window splitting and downstream artifacts. `incremental_audit` records invalidated/unchanged tasks and reused/computed layers.
+
+### Scheduler, budget, and quota
+
+A task is identified by the stable key:
+
+```text
+<sequence_id>#W<eight-digit window index>#<model name>
+```
+
+Each model/window task logically costs `window_length + forecast_horizon` observation points. Budget decisions are made in stable series/task order before threads run, so cache hits do not alter budget outcomes and thread timing cannot change results.
+
+- Series allocation proceeds in stable sequence-ID order.
+- Exceeding `per_series_point_quota` aborts the rest of that series with `E_SERIES_QUOTA_EXHAUSTED`.
+- Exhausting `batch_point_budget` marks unfinished tasks with `E_POINT_BUDGET_EXHAUSTED` and stores `pending_cursor`.
+- Training and prediction execute in a bounded `ThreadPoolExecutor`; results are collected and sorted by stable task key.
+
+### Snapshots and interruption
+
+Stages are `load`, `windows`, `models`, and `metrics`. Each checkpoint is written into a temporary generation directory and then published by atomically replacing the manifest. The manifest records:
+
+- snapshot schema/version and generation;
+- config, injection, and sample hashes;
+- completed series/windows/tasks and pending cursor;
+- consumed budget;
+- stage product versions;
+- committed cache inventory.
+
+At startup, snapshot version or config-hash mismatch produces `E_SNAPSHOT_STALE` and rebuilds stage products. Committed content artifacts whose keys are unchanged are still reusable.
+
+Only artifacts listed in the last fully published generation inventory are read. A forced process kill can leave orphan temp/cache files, but they are ignored on restart. A handled `SIGINT`/`SIGTERM` finishes the current stage, commits it, writes an interrupted report, and exits `0`.
+
+## Report
+
+Reports are JSON and include:
+
+- per-model window predictions, training windows, fitted parameters, residual sequences, quantized points, MAE/RMSE/MAPE, tolerance flags and first-exceeded details;
+- global imputation records and fixed-point window artifacts;
+- `metric_matrix` and over-tolerance window lists;
+- injection manifest items, hit IDs, and business-code mapping;
+- stable failure list and scheduler status;
+- cache/invalidation audit and cache plan;
+- snapshot version/status and per-stage timings;
+- sample/config/injection hashes.
+
+`python -m ts_pipeline compare --left A.json --right B.json` compares result-bearing fields. Execution-only fields such as timings, generation IDs, snapshot status, concurrency, and incremental history are intentionally excluded. The comparison covers predictions, metrics, imputation, failure order, cache plan, injections, and scheduler outcomes.
+
+## Actual Verification
+
+Recorded in `verification/test_results.txt`:
+
+```text
+Ran 9 tests in about 13.6s
+OK
+```
+
+Clean run on `data/config.yaml` (`reports/full_report.json`):
+
+- exit code `0`, status `completed`;
+- 4 sequences, 25 valid windows, 75 model tasks, 74 successful model windows;
+- 4 injection hits, no unhit injections;
+- failures: two `E_SAMPLE_INVALID` and two `E_CONFIG_INVALID`, sorted by stable key;
+- aggregate MAE/RMSE/MAPE:
+  - naive persistence: `1.692284 / 2.051337 / 7.721815%`
+  - moving average: `2.100028 / 2.408785 / 9.887435%`
+  - autoregressive: `0.979203 / 1.293960 / 4.697976%`
+
+End-to-end demo (`verification/demo_summary.json`):
+
+- incremental edit sequence vs fresh full rebuild: 0 differences;
+- repeat incremental vs full: 0 differences;
+- interrupted after `windows`, resumed, vs full: 0 differences;
+- concurrency 1 vs 4: 0 differences;
+- quota run emitted `E_SERIES_QUOTA_EXHAUSTED`;
+- budget run emitted `E_POINT_BUDGET_EXHAUSTED` and preserved a pending cursor;
+- quant-only edit reused all 75 existing training artifacts and recomputed 0 trainings;
+- sequence replacement invalidated 18 tasks and reused 57 unchanged tasks;
+- removing one committed cache-inventory entry caused exactly that window to recompute while the rest were reused;
+- single-model hyperparameter edit invalidated only `moving_average` and `autoregressive` tasks while reusing `naive_persistence`.
