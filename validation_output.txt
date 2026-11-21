@@ -1,0 +1,223 @@
+AQEVAL_DEMO_BEGIN
+workspace=/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace
+initial: files=6 parsed=18 reuse=0 recompute=24
+conversions:
+  v1->v2   records=6 failures=0 degradations=0 codes=-
+  v2->v1   records=6 failures=0 degradations=12 codes=DEG_LEVEL_METADATA_LOST,DEG_V1_TRUNCATION
+  v1->v3   records=6 failures=0 degradations=6 codes=DEG_FRAME_SUMMARY_UNAVAILABLE
+  v3->v1   records=6 failures=0 degradations=18 codes=DEG_FRAME_SUMMARY_DROPPED,DEG_LEVEL_METADATA_LOST,DEG_V1_TRUNCATION
+  v2->v3   records=6 failures=0 degradations=6 codes=DEG_FRAME_SUMMARY_UNAVAILABLE
+  v3->v2   records=6 failures=0 degradations=6 codes=DEG_FRAME_SUMMARY_DROPPED
+edits: operations=12 runs=12
+final: failures=0 degradations=36 boundaries=30 reuse=24 recompute=0
+injections: INJ-001=DEG_V1_TRUNCATION:HIT, INJ-002=DEG_V3_FIXED_WIDTH:HIT, INJ-003=E_LEVEL_UNMAPPED:MISS, INJ-004=BOUNDARY_EXACT_THRESHOLD:HIT, INJ-005=CONCURRENCY_STABLE_ORDER:HIT, INJ-006=E_SNAPSHOT_STALE:HIT, INJ-007=E_EVAL_FORMAT:MISS, INJ-008=E_AUDIO_FORMAT:MISS
+snapshot_resume: interrupted=True parse_resumed=True resumed_stages=parse
+full_rebuild_equivalence: equal=True fields={"active_version": true, "boundary_samples": true, "canonical": true, "consistency": true, "degradations": true, "deviations": true, "failures": true, "ledger_order": true, "output_sha256": true}
+serial_vs_concurrent: equal=True fields={"active_version": true, "boundary_samples": true, "canonical": true, "consistency": true, "degradations": true, "deviations": true, "failures": true, "ledger_order": true, "output_sha256": true}
+summary_json=/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/demo_summary.json
+AQEVAL_DEMO_END
+{
+  "config_hash": "b76dfd8032764f8ace76ff53829532ed3b8d32c4a6c692a1725df65774e6bc2b",
+  "exchange_files": {
+    "v1": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/eval/v1/results_v1.txt",
+    "v2": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/eval/v2/results_v2.json",
+    "v3": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/eval/v3/results_v3.bin"
+  },
+  "initial_results": [
+    {
+      "file_id": "sample_clean",
+      "level_code": "3",
+      "level_name": "excellent",
+      "total_permille": 920
+    },
+    {
+      "file_id": "sample_snr6",
+      "level_code": "1",
+      "level_name": "fair",
+      "total_permille": 720
+    },
+    {
+      "file_id": "sample_clip",
+      "level_code": "1",
+      "level_name": "fair",
+      "total_permille": 770
+    },
+    {
+      "file_id": "sample_dropout",
+      "level_code": "1",
+      "level_name": "fair",
+      "total_permille": 720
+    },
+    {
+      "file_id": "sample_floor",
+      "level_code": "2",
+      "level_name": "good",
+      "total_permille": 780
+    },
+    {
+      "file_id": "sample_boundary",
+      "level_code": "1",
+      "level_name": "fair",
+      "total_permille": 755
+    }
+  ],
+  "level_map_hash": "9bef4c0126a6b16b56513a1095b89b7ad8416d3624a445102cf2ba11282fea43",
+  "sample_hashes": {
+    "sample_boundary": "81b634184a87f8059131621eb9a3cde6716cfe4183c8ccc71b5e8781528dfba2",
+    "sample_clean": "06bf792dc378b99937efc2fad96513491793cca0579cb789d158cf4ccda400bd",
+    "sample_clip": "45f24e2864ffbf4fe41a933976fe2f99bd3b8f0e3c9b3fe90ae314cd149502ff",
+    "sample_dropout": "c13080ff83db1f5bb1884c9727dc8f6dfd3304bef6eaebb8576f9a24efcb2bc1",
+    "sample_floor": "53ff5cde9f1938169584b3ed92a194184e155a52f21ca93eec96ba198f676004",
+    "sample_snr6": "4dfa9edaeca7948c84ff5dac0fd1f489ea32a21c7ba399ccb11911f761ec273c"
+  },
+  "samples": 6,
+  "workspace": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace"
+}
+{
+  "concurrency": {
+    "configured_cap": 8,
+    "configured_max": 4,
+    "feature_serial_matches": true,
+    "feature_verification_mode": "serial_recompute",
+    "score_serial_matches": true,
+    "score_verification_mode": "serial_recompute",
+    "serial_matches_concurrent": true,
+    "within_cap": true,
+    "workers": 4
+  },
+  "injections": [
+    {
+      "business_code": "DEG_V1_TRUNCATION",
+      "description": "v1 permille truncation",
+      "files": [],
+      "hit": true,
+      "hit_count": 6,
+      "id": "INJ-001"
+    },
+    {
+      "business_code": "DEG_V3_FIXED_WIDTH",
+      "description": "v3 fixed-width loss",
+      "files": [],
+      "hit": false,
+      "hit_count": 0,
+      "id": "INJ-002"
+    },
+    {
+      "business_code": "E_LEVEL_UNMAPPED",
+      "description": "level code/name not mapped",
+      "files": [],
+      "hit": false,
+      "hit_count": 0,
+      "id": "INJ-003"
+    },
+    {
+      "business_code": "BOUNDARY_EXACT_THRESHOLD",
+      "description": "exact scoring threshold",
+      "files": [
+        "sample_boundary",
+        "sample_clean",
+        "sample_clip",
+        "sample_dropout",
+        "sample_floor",
+        "sample_snr6"
+      ],
+      "hit": true,
+      "hit_count": 24,
+      "id": "INJ-004"
+    },
+    {
+      "business_code": "CONCURRENCY_STABLE_ORDER",
+      "description": "serial/concurrent equality",
+      "files": [],
+      "hit": true,
+      "hit_count": 1,
+      "id": "INJ-005"
+    },
+    {
+      "business_code": "E_SNAPSHOT_STALE",
+      "description": "stale snapshot rebuild",
+      "files": [],
+      "hit": false,
+      "hit_count": 0,
+      "id": "INJ-006"
+    },
+    {
+      "business_code": "E_EVAL_FORMAT",
+      "description": "malformed exchange record",
+      "files": [],
+      "hit": false,
+      "hit_count": 0,
+      "id": "INJ-007"
+    },
+    {
+      "business_code": "E_AUDIO_FORMAT",
+      "description": "invalid/missing audio",
+      "files": [],
+      "hit": false,
+      "hit_count": 0,
+      "id": "INJ-008"
+    }
+  ],
+  "outputs": {
+    "bypass_path": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/output/bypass_active.json",
+    "bypass_sha256": "d6acd6548c30a1f5840ce2bebdc6230354c23e05bf0768405029499979b4e35f",
+    "path": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/output/active_v2.json",
+    "record_count": 6,
+    "sha256": "c3808bf56a539eec6a772d4e84da7279eb58252ffe0ff89fc77944a6b3d2ea08",
+    "size": 4704,
+    "version": 2
+  },
+  "report": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/reports/diagnostic.json",
+  "snapshot": {
+    "active_version": 2,
+    "complete": true,
+    "config_hash": "b76dfd8032764f8ace76ff53829532ed3b8d32c4a6c692a1725df65774e6bc2b",
+    "content_fingerprint": "ef78d4280ade6c17256beb042c91d9b5a120238c0979b6589909398fcebe88a3",
+    "global_version": 1,
+    "job_version": 0,
+    "level_map_hash": "9bef4c0126a6b16b56513a1095b89b7ad8416d3624a445102cf2ba11282fea43",
+    "output_digest": "4f044b618ff08e5617750aa83b11e35ace8e95b42dc81451ca6c4a4be0b087a5",
+    "report_path": "/home/zsl/feedback/uidfc5909d3-default-84/sample_workspace/reports/diagnostic.json",
+    "resumed_stages": [],
+    "run_id": "run-000001",
+    "schema": "aqeval.snapshot.v1",
+    "stages": {
+      "conversion": {
+        "artifact_version": "69687f980ee07bbbd8460cd18719c6a53c6fa3e0baab2db5c10cb1c955e64be7",
+        "complete": true,
+        "file": "../../stages/run-000001-conversion-69687f980ee07bbb.json",
+        "input_fingerprint": "cda2b9341bd24f5f43b980242c75508aa79b4d973736d97e2f59ae7719f2fa87"
+      },
+      "features": {
+        "artifact_version": "965e2eda93e969031609e15b2830e1df94da437d85922bd72bebab0a682bc769",
+        "complete": true,
+        "file": "../../stages/run-000001-features-965e2eda93e96903.json",
+        "input_fingerprint": "4aef314de0a773450f2aa8985aa7834275794c0a230a56d7e524b4260578fae1"
+      },
+      "parse": {
+        "artifact_version": "7d5b410c7fc76efc5b05431ee533e77fef1bfe578454be03c74bd7014467bc3b",
+        "complete": true,
+        "file": "../../stages/run-000001-parse-7d5b410c7fc76efc.json",
+        "input_fingerprint": "f8fc469699ac2e6d0aba8d75020666ea0c02431bd2eda1e9fd44c34d4c49d7ec"
+      },
+      "scores": {
+        "artifact_version": "803ee974a022b749e60abbc1e9187afc6bb3cbb4ac5f0d89f10ed5bf122ebe35",
+        "complete": true,
+        "file": "../../stages/run-000001-scores-803ee974a022b749.json",
+        "input_fingerprint": "9159d4a4a64a0b5da1e6368971fbd92cf4749b2b7d580842453501f13ba5fd45"
+      }
+    },
+    "stale": false,
+    "stale_code": null,
+    "version_fingerprint": "109bd6c3ec67f88876b0648fe2b0f32bdae4a175701d14c7abd869a8126d0750"
+  },
+  "summary": {
+    "boundary_count": 24,
+    "canonical_count": 6,
+    "degradation_count": 30,
+    "failure_count": 0,
+    "parsed_count": 18,
+    "recompute_count": 24,
+    "reuse_count": 0
+  }
+}

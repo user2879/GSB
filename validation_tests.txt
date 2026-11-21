@@ -1,0 +1,40 @@
+test_low_fixed_bits_emit_loss (test_aqeval.ConversionTests.test_low_fixed_bits_emit_loss) ... ok
+test_missing_level_mapping_is_explicit (test_aqeval.ConversionTests.test_missing_level_mapping_is_explicit) ... ok
+test_v1_to_v2_exact_precision_and_names (test_aqeval.ConversionTests.test_v1_to_v2_exact_precision_and_names) ... ok
+test_v1_to_v3_records_missing_frame_summary_degradation (test_aqeval.ConversionTests.test_v1_to_v3_records_missing_frame_summary_degradation) ... ok
+test_v2_to_v1_bypass_contains_residual_and_discarded_name (test_aqeval.ConversionTests.test_v2_to_v1_bypass_contains_residual_and_discarded_name) ... ok
+test_v3_to_v1_roundtrip_preserves_total_at_permille (test_aqeval.ConversionTests.test_v3_to_v1_roundtrip_preserves_total_at_permille) ... ok
+test_v3_to_v2_records_dropped_frame_summaries (test_aqeval.ConversionTests.test_v3_to_v2_records_dropped_frame_summaries) ... ok
+test_all_three_versions_parse_to_same_ids_and_dimensions (test_aqeval.FormatTests.test_all_three_versions_parse_to_same_ids_and_dimensions) ... ok
+test_malformed_and_duplicate_v1_are_format_failures (test_aqeval.FormatTests.test_malformed_and_duplicate_v1_are_format_failures) ... ok
+test_unmapped_code_reports_business_error (test_aqeval.FormatTests.test_unmapped_code_reports_business_error) ... ok
+test_v1_fixed_width_format_and_precision (test_aqeval.FormatTests.test_v1_fixed_width_format_and_precision) ... ok
+test_v2_retains_precision_tag (test_aqeval.FormatTests.test_v2_retains_precision_tag) ... ok
+test_v3_checksum_detects_corruption (test_aqeval.FormatTests.test_v3_checksum_detects_corruption) ... ok
+test_generated_workspace_has_all_versions_and_manifest (test_aqeval.GeneratorTests.test_generated_workspace_has_all_versions_and_manifest) ... ok
+test_sample_generation_is_byte_deterministic (test_aqeval.GeneratorTests.test_sample_generation_is_byte_deterministic) ... ok
+test_audio_replacement_only_invalidates_one_file (test_aqeval.PipelineTests.test_audio_replacement_only_invalidates_one_file) ... ok
+test_clipping_threshold_invalidates_feature_summary_and_downstream (test_aqeval.PipelineTests.test_clipping_threshold_invalidates_feature_summary_and_downstream) ... ok
+test_incremental_and_cold_rebuild_products_are_equal (test_aqeval.PipelineTests.test_incremental_and_cold_rebuild_products_are_equal) ... ok
+test_initial_and_noop_runs_reuse_all_artifacts (test_aqeval.PipelineTests.test_initial_and_noop_runs_reuse_all_artifacts) ... ok
+test_level_removal_reports_unmapped_and_only_affects_users (test_aqeval.PipelineTests.test_level_removal_reports_unmapped_and_only_affects_users) ... ok
+test_report_contains_diagnostics_and_injections (test_aqeval.PipelineTests.test_report_contains_diagnostics_and_injections) ... ok
+test_serial_and_concurrent_runs_are_equal (test_aqeval.PipelineTests.test_serial_and_concurrent_runs_are_equal) ... ok
+test_serial_verification_does_not_recompute_reused_files (test_aqeval.PipelineTests.test_serial_verification_does_not_recompute_reused_files) ... ok
+test_snapshot_interrupt_and_resume (test_aqeval.PipelineTests.test_snapshot_interrupt_and_resume) ... ok
+test_unrelated_level_addition_reuses_serialization (test_aqeval.PipelineTests.test_unrelated_level_addition_reuses_serialization) ... ok
+test_v3_bit_width_change_does_not_invalidate_active_v2 (test_aqeval.PipelineTests.test_v3_bit_width_change_does_not_invalidate_active_v2) ... ok
+test_version_switch_only_invalidates_serialization (test_aqeval.PipelineTests.test_version_switch_only_invalidates_serialization) ... ok
+test_weight_change_only_recomputes_totals_and_serialization (test_aqeval.PipelineTests.test_weight_change_only_recomputes_totals_and_serialization) ... ok
+test_worker_count_is_capped (test_aqeval.PipelineTests.test_worker_count_is_capped) ... ok
+test_boundary_sample_hits_exact_continuity_threshold (test_aqeval.ScoringTests.test_boundary_sample_hits_exact_continuity_threshold) ... ok
+test_continuity_uses_configured_zero_run_threshold (test_aqeval.ScoringTests.test_continuity_uses_configured_zero_run_threshold) ... ok
+test_level_flip_causes_distinguish_permille_and_fixed_width (test_aqeval.ScoringTests.test_level_flip_causes_distinguish_permille_and_fixed_width) ... ok
+test_level_mapping_missing_is_classified_in_consistency (test_aqeval.ScoringTests.test_level_mapping_missing_is_classified_in_consistency) ... ok
+test_noise_floor_uses_low_energy_frames_only (test_aqeval.ScoringTests.test_noise_floor_uses_low_energy_frames_only) ... ok
+test_scoring_is_deterministic_and_quantized (test_aqeval.ScoringTests.test_scoring_is_deterministic_and_quantized) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 22.421s
+
+OK

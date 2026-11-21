@@ -1,0 +1,92 @@
+{
+  "active_version": 2,
+  "config_revision": 11,
+  "global_run": 13,
+  "initial_config_hash": "b76dfd8032764f8ace76ff53829532ed3b8d32c4a6c692a1725df65774e6bc2b",
+  "initial_level_map_hash": "9bef4c0126a6b16b56513a1095b89b7ad8416d3624a445102cf2ba11282fea43",
+  "last_edits": [
+    {
+      "dimension": "noise",
+      "op": "set_weight",
+      "value": 0.35
+    },
+    {
+      "key": "silence_threshold_dbfs",
+      "op": "set_threshold",
+      "value": -42.0
+    },
+    {
+      "op": "set_quantization_levels",
+      "value": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350,
+        400,
+        450,
+        500,
+        550,
+        600,
+        650,
+        700,
+        750,
+        800,
+        850,
+        900,
+        950,
+        1000
+      ]
+    },
+    {
+      "op": "set_fixed_bits",
+      "value": 2
+    },
+    {
+      "file_id": "sample_snr6",
+      "op": "replace_audio",
+      "source": "replacements/sample_snr6.wav"
+    },
+    {
+      "code": "4",
+      "min_total_permille": 950,
+      "name": "outstanding",
+      "op": "add_level"
+    },
+    {
+      "code": "2",
+      "op": "set_level_threshold",
+      "value": 800
+    },
+    {
+      "code": "4",
+      "op": "remove_level"
+    },
+    {
+      "op": "set_concurrency",
+      "value": 4
+    },
+    {
+      "op": "switch_version",
+      "value": 3
+    },
+    {
+      "op": "switch_version",
+      "value": 1
+    },
+    {
+      "op": "switch_version",
+      "value": 2
+    }
+  ],
+  "last_run": {
+    "config_hash": "0daa34654ae4888b00596603d4b34d297ad56decdb63fa63106d9a08596ffd61",
+    "content_fingerprint": "c630060d9ea010261b11133744e6f9276272439c4c224d4e8c00d9c4df42eaee",
+    "output_digest": "9e42a0a51d6006ce5da40da004e9619598d407ba45ffc671f5e9081f07041765",
+    "report": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/reports/diagnostic.json"
+  },
+  "schema": "aqeval.state.v1"
+}

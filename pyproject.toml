@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aqeval"
+version = "1.0.0"
+description = "Deterministic audio-quality evaluation exchange toolkit"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<2"]
+
+[project.scripts]
+aqeval = "aqeval.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aqeval*"]
+
+[tool.setuptools.package-data]
+aqeval = ["py.typed"]
+

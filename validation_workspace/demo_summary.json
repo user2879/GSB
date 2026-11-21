@@ -1,0 +1,809 @@
+{
+  "conversions": [
+    {
+      "degradation_codes": [],
+      "degradations": 0,
+      "failures": 0,
+      "output_sha256": "4985573fd6ed78a8971968fe63fc37514f87ab99fa53b74982b89339e43365a9",
+      "pair": "v1->v2",
+      "records": 6
+    },
+    {
+      "degradation_codes": [
+        "DEG_LEVEL_METADATA_LOST",
+        "DEG_V1_TRUNCATION"
+      ],
+      "degradations": 12,
+      "failures": 0,
+      "output_sha256": "b74a4a56d09f6647b5fb66247d9f7b8b09147aea82acd300424786ff2e66c6e7",
+      "pair": "v2->v1",
+      "records": 6
+    },
+    {
+      "degradation_codes": [
+        "DEG_FRAME_SUMMARY_UNAVAILABLE"
+      ],
+      "degradations": 6,
+      "failures": 0,
+      "output_sha256": "4c22bf0d2a7312737653c797e93797a75f69988340f5c030adfb7b7be550ea6c",
+      "pair": "v1->v3",
+      "records": 6
+    },
+    {
+      "degradation_codes": [
+        "DEG_FRAME_SUMMARY_DROPPED",
+        "DEG_LEVEL_METADATA_LOST",
+        "DEG_V1_TRUNCATION"
+      ],
+      "degradations": 18,
+      "failures": 0,
+      "output_sha256": "b74a4a56d09f6647b5fb66247d9f7b8b09147aea82acd300424786ff2e66c6e7",
+      "pair": "v3->v1",
+      "records": 6
+    },
+    {
+      "degradation_codes": [
+        "DEG_FRAME_SUMMARY_UNAVAILABLE"
+      ],
+      "degradations": 6,
+      "failures": 0,
+      "output_sha256": "b3467f9941723c6f235150998fe4c84302087e8dfc6243ab7e650c48f2e653e0",
+      "pair": "v2->v3",
+      "records": 6
+    },
+    {
+      "degradation_codes": [
+        "DEG_FRAME_SUMMARY_DROPPED"
+      ],
+      "degradations": 6,
+      "failures": 0,
+      "output_sha256": "601849bbaeec159548f48f7b4ad48bad50d7efd592d0414e6b770be2ba1f7b21",
+      "pair": "v3->v2",
+      "records": 6
+    }
+  ],
+  "edit_sequence": {
+    "applied": [
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": true,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 1,
+        "op": "set_weight"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": true,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 2,
+        "op": "set_threshold"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": true,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 3,
+        "op": "set_quantization_levels"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": true,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 4,
+        "op": "set_fixed_bits"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [
+          "sample_snr6"
+        ],
+        "changed_config": false,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 4,
+        "op": "replace_audio"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": true,
+        "changed_version": false,
+        "config_revision": 5,
+        "op": "add_level"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": true,
+        "changed_version": false,
+        "config_revision": 6,
+        "op": "set_level_threshold"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": true,
+        "changed_version": false,
+        "config_revision": 7,
+        "op": "remove_level"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": true,
+        "changed_levels": false,
+        "changed_version": false,
+        "config_revision": 8,
+        "op": "set_concurrency"
+      },
+      {
+        "active_version": 3,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": false,
+        "changed_version": true,
+        "config_revision": 9,
+        "op": "switch_version"
+      },
+      {
+        "active_version": 1,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": false,
+        "changed_version": true,
+        "config_revision": 10,
+        "op": "switch_version"
+      },
+      {
+        "active_version": 2,
+        "changed_audio": [],
+        "changed_config": false,
+        "changed_levels": false,
+        "changed_version": true,
+        "config_revision": 11,
+        "op": "switch_version"
+      }
+    ],
+    "operation_count": 12,
+    "runs": [
+      {
+        "after_op": {
+          "dimension": "noise",
+          "op": "set_weight",
+          "value": 0.35
+        },
+        "output_sha256": "9c9bd896694125db2765e5534f99590e2f11d6fdd1cdf80b19c954e9902b35d0",
+        "recompute_count": 12,
+        "reuse_count": 12,
+        "stale": true,
+        "summary": {
+          "boundary_count": 23,
+          "canonical_count": 6,
+          "degradation_count": 35,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 12,
+          "reuse_count": 12
+        }
+      },
+      {
+        "after_op": {
+          "key": "silence_threshold_dbfs",
+          "op": "set_threshold",
+          "value": -42.0
+        },
+        "output_sha256": "9c9bd896694125db2765e5534f99590e2f11d6fdd1cdf80b19c954e9902b35d0",
+        "recompute_count": 18,
+        "reuse_count": 6,
+        "stale": true,
+        "summary": {
+          "boundary_count": 23,
+          "canonical_count": 6,
+          "degradation_count": 35,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 18,
+          "reuse_count": 6
+        }
+      },
+      {
+        "after_op": {
+          "op": "set_quantization_levels",
+          "value": [
+            0,
+            50,
+            100,
+            150,
+            200,
+            250,
+            300,
+            350,
+            400,
+            450,
+            500,
+            550,
+            600,
+            650,
+            700,
+            750,
+            800,
+            850,
+            900,
+            950,
+            1000
+          ]
+        },
+        "output_sha256": "cfbec834fdb8b5d31791cc852753dfd87881044b5a2e3fff7586eb4ab1625dba",
+        "recompute_count": 18,
+        "reuse_count": 6,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 18,
+          "reuse_count": 6
+        }
+      },
+      {
+        "after_op": {
+          "op": "set_fixed_bits",
+          "value": 2
+        },
+        "output_sha256": "cfbec834fdb8b5d31791cc852753dfd87881044b5a2e3fff7586eb4ab1625dba",
+        "recompute_count": 0,
+        "reuse_count": 24,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 0,
+          "reuse_count": 24
+        }
+      },
+      {
+        "after_op": {
+          "file_id": "sample_snr6",
+          "op": "replace_audio",
+          "source": "replacements/sample_snr6.wav"
+        },
+        "output_sha256": "a3e96fbe988a974935e74a69325e7b92f98774a97fd54573ebd41fa75f02fb84",
+        "recompute_count": 4,
+        "reuse_count": 20,
+        "stale": false,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 4,
+          "reuse_count": 20
+        }
+      },
+      {
+        "after_op": {
+          "code": "4",
+          "min_total_permille": 950,
+          "name": "outstanding",
+          "op": "add_level"
+        },
+        "output_sha256": "a3e96fbe988a974935e74a69325e7b92f98774a97fd54573ebd41fa75f02fb84",
+        "recompute_count": 0,
+        "reuse_count": 24,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 0,
+          "reuse_count": 24
+        }
+      },
+      {
+        "after_op": {
+          "code": "2",
+          "op": "set_level_threshold",
+          "value": 800
+        },
+        "output_sha256": "932fbf0084a6c64806ec0d3d3ebaefbb67cf79a99be316fc54296962acc1617d",
+        "recompute_count": 3,
+        "reuse_count": 21,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 3,
+          "reuse_count": 21
+        }
+      },
+      {
+        "after_op": {
+          "code": "4",
+          "op": "remove_level"
+        },
+        "output_sha256": "932fbf0084a6c64806ec0d3d3ebaefbb67cf79a99be316fc54296962acc1617d",
+        "recompute_count": 0,
+        "reuse_count": 24,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 0,
+          "reuse_count": 24
+        }
+      },
+      {
+        "after_op": {
+          "op": "set_concurrency",
+          "value": 4
+        },
+        "output_sha256": "932fbf0084a6c64806ec0d3d3ebaefbb67cf79a99be316fc54296962acc1617d",
+        "recompute_count": 0,
+        "reuse_count": 24,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 0,
+          "reuse_count": 24
+        }
+      },
+      {
+        "after_op": {
+          "op": "switch_version",
+          "value": 3
+        },
+        "output_sha256": "1a847919947312b4dad36661967bb94dbc383759aa403177f833d16b020fd3a9",
+        "recompute_count": 6,
+        "reuse_count": 18,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 6,
+          "reuse_count": 18
+        }
+      },
+      {
+        "after_op": {
+          "op": "switch_version",
+          "value": 1
+        },
+        "output_sha256": "3d19b4d249b5d44680f3af8992a3bba219fd24e3f21b4b7b47d10bb37de8bfff",
+        "recompute_count": 6,
+        "reuse_count": 18,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 48,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 6,
+          "reuse_count": 18
+        }
+      },
+      {
+        "after_op": {
+          "op": "switch_version",
+          "value": 2
+        },
+        "output_sha256": "932fbf0084a6c64806ec0d3d3ebaefbb67cf79a99be316fc54296962acc1617d",
+        "recompute_count": 0,
+        "reuse_count": 24,
+        "stale": true,
+        "summary": {
+          "boundary_count": 30,
+          "canonical_count": 6,
+          "degradation_count": 36,
+          "failure_count": 0,
+          "parsed_count": 18,
+          "recompute_count": 0,
+          "reuse_count": 24
+        }
+      }
+    ]
+  },
+  "final_run": {
+    "concurrency": {
+      "configured_cap": 8,
+      "configured_max": 4,
+      "feature_serial_matches": true,
+      "feature_verification_mode": "cache_reuse",
+      "score_serial_matches": true,
+      "score_verification_mode": "cache_reuse",
+      "serial_matches_concurrent": true,
+      "within_cap": true,
+      "workers": 4
+    },
+    "degradation_statistics": {
+      "groups": [
+        {
+          "absolute_residual_micro": 0,
+          "code": "DEG_FRAME_SUMMARY_DROPPED",
+          "count": 6,
+          "files": [
+            "sample_boundary",
+            "sample_clean",
+            "sample_clip",
+            "sample_dropout",
+            "sample_floor",
+            "sample_snr6"
+          ],
+          "source_version": 0,
+          "target_version": 1
+        },
+        {
+          "absolute_residual_micro": 0,
+          "code": "DEG_LEVEL_METADATA_LOST",
+          "count": 6,
+          "files": [
+            "sample_boundary",
+            "sample_clean",
+            "sample_clip",
+            "sample_dropout",
+            "sample_floor",
+            "sample_snr6"
+          ],
+          "source_version": 0,
+          "target_version": 1
+        },
+        {
+          "absolute_residual_micro": 2761,
+          "code": "DEG_V1_TRUNCATION",
+          "count": 6,
+          "files": [
+            "sample_boundary",
+            "sample_clean",
+            "sample_clip",
+            "sample_dropout",
+            "sample_floor",
+            "sample_snr6"
+          ],
+          "source_version": 0,
+          "target_version": 1
+        },
+        {
+          "absolute_residual_micro": 0,
+          "code": "DEG_FRAME_SUMMARY_DROPPED",
+          "count": 12,
+          "files": [
+            "sample_boundary",
+            "sample_clean",
+            "sample_clip",
+            "sample_dropout",
+            "sample_floor",
+            "sample_snr6"
+          ],
+          "source_version": 0,
+          "target_version": 2
+        },
+        {
+          "absolute_residual_micro": 12381,
+          "code": "DEG_V3_FIXED_WIDTH",
+          "count": 6,
+          "files": [
+            "sample_boundary",
+            "sample_clean",
+            "sample_clip",
+            "sample_dropout",
+            "sample_floor",
+            "sample_snr6"
+          ],
+          "source_version": 0,
+          "target_version": 3
+        }
+      ],
+      "total_entries": 36
+    },
+    "injections": [
+      {
+        "business_code": "DEG_V1_TRUNCATION",
+        "description": "v1 permille truncation",
+        "files": [],
+        "hit": true,
+        "hit_count": 6,
+        "id": "INJ-001"
+      },
+      {
+        "business_code": "DEG_V3_FIXED_WIDTH",
+        "description": "v3 fixed-width loss",
+        "files": [],
+        "hit": true,
+        "hit_count": 6,
+        "id": "INJ-002"
+      },
+      {
+        "business_code": "E_LEVEL_UNMAPPED",
+        "description": "level code/name not mapped",
+        "files": [],
+        "hit": false,
+        "hit_count": 0,
+        "id": "INJ-003"
+      },
+      {
+        "business_code": "BOUNDARY_EXACT_THRESHOLD",
+        "description": "exact scoring threshold",
+        "files": [
+          "sample_boundary",
+          "sample_clean",
+          "sample_clip",
+          "sample_dropout",
+          "sample_floor",
+          "sample_snr6"
+        ],
+        "hit": true,
+        "hit_count": 30,
+        "id": "INJ-004"
+      },
+      {
+        "business_code": "CONCURRENCY_STABLE_ORDER",
+        "description": "serial/concurrent equality",
+        "files": [],
+        "hit": true,
+        "hit_count": 1,
+        "id": "INJ-005"
+      },
+      {
+        "business_code": "E_SNAPSHOT_STALE",
+        "description": "stale snapshot rebuild",
+        "files": [],
+        "hit": true,
+        "hit_count": 1,
+        "id": "INJ-006"
+      },
+      {
+        "business_code": "E_EVAL_FORMAT",
+        "description": "malformed exchange record",
+        "files": [],
+        "hit": false,
+        "hit_count": 0,
+        "id": "INJ-007"
+      },
+      {
+        "business_code": "E_AUDIO_FORMAT",
+        "description": "invalid/missing audio",
+        "files": [],
+        "hit": false,
+        "hit_count": 0,
+        "id": "INJ-008"
+      }
+    ],
+    "outputs": {
+      "bypass_path": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/output/bypass_active.json",
+      "bypass_sha256": "276b4ae37b86e507b754a5a3922cff6e48c36d188893a50d1466e2db1f2875d8",
+      "path": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/output/active_v2.json",
+      "record_count": 6,
+      "sha256": "932fbf0084a6c64806ec0d3d3ebaefbb67cf79a99be316fc54296962acc1617d",
+      "size": 4735,
+      "version": 2
+    },
+    "snapshot": {
+      "active_version": 2,
+      "complete": true,
+      "config_hash": "0daa34654ae4888b00596603d4b34d297ad56decdb63fa63106d9a08596ffd61",
+      "content_fingerprint": "c630060d9ea010261b11133744e6f9276272439c4c224d4e8c00d9c4df42eaee",
+      "global_version": 13,
+      "job_version": 11,
+      "level_map_hash": "973e0dee88091bd0ddac914c33375a3527c41946ad55c6544e71d5c7607f5b33",
+      "output_digest": "9e42a0a51d6006ce5da40da004e9619598d407ba45ffc671f5e9081f07041765",
+      "report_path": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/reports/diagnostic.json",
+      "resumed_stages": [],
+      "run_id": "run-000013",
+      "schema": "aqeval.snapshot.v1",
+      "stages": {
+        "conversion": {
+          "artifact_version": "58467411eb707328b7721181be5c3ffd351bb217a44e2175439848196cdc001d",
+          "complete": true,
+          "file": "../../stages/run-000013-conversion-58467411eb707328.json",
+          "input_fingerprint": "e6508348b9cf2d87d96f0757e54b20eb380dda75efcb379f91f0d9729c824493"
+        },
+        "features": {
+          "artifact_version": "246b739b47bf0b31ccfaa87bbb1bfe320d62e3a46ef85de68aa864234ccf86f2",
+          "complete": true,
+          "file": "../../stages/run-000013-features-246b739b47bf0b31.json",
+          "input_fingerprint": "dd51060c810df0292577e79e3bdf695d79a93d0c1f7668a285855af38be34a59"
+        },
+        "parse": {
+          "artifact_version": "d130883afe01ee2c83b8cffbf2b5d482c448f3446afc9a984c8462eebe9971eb",
+          "complete": true,
+          "file": "../../stages/run-000013-parse-d130883afe01ee2c.json",
+          "input_fingerprint": "cd3d15f2487616b245df6a96367a14baa68cc5e6eba52f56ac70ea520ee946c6"
+        },
+        "scores": {
+          "artifact_version": "1c73f9241dca40b1333f35290d72b388a3bc9aa7d924c48f59b8509d40b868c7",
+          "complete": true,
+          "file": "../../stages/run-000013-scores-1c73f9241dca40b1.json",
+          "input_fingerprint": "e9077c7040f7273fca5b5b47fcd20a83cbc7eef61a9048c3e3b337b1a73316a9"
+        }
+      },
+      "stale": true,
+      "stale_code": "E_SNAPSHOT_STALE",
+      "version_fingerprint": "5d1090449f86d4842cc8e84a041ce38468afabf0c3123eecd2008a063b57be94"
+    },
+    "summary": {
+      "boundary_count": 30,
+      "canonical_count": 6,
+      "degradation_count": 36,
+      "failure_count": 0,
+      "parsed_count": 18,
+      "recompute_count": 0,
+      "reuse_count": 24
+    }
+  },
+  "full_rebuild_comparison": {
+    "equal": true,
+    "fields": {
+      "active_version": true,
+      "boundary_samples": true,
+      "canonical": true,
+      "consistency": true,
+      "degradations": true,
+      "deviations": true,
+      "failures": true,
+      "ledger_order": true,
+      "output_sha256": true
+    },
+    "left_digest": "b858986afc0bec64f99092bcb791710ea3fb234a286edb880de0a6505bedc7a2",
+    "left_recompute_count": 0,
+    "left_reuse_count": 24,
+    "right_digest": "b858986afc0bec64f99092bcb791710ea3fb234a286edb880de0a6505bedc7a2",
+    "right_recompute_count": 24,
+    "right_reuse_count": 0
+  },
+  "generated": {
+    "config_hash": "b76dfd8032764f8ace76ff53829532ed3b8d32c4a6c692a1725df65774e6bc2b",
+    "exchange_files": {
+      "v1": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/eval/v1/results_v1.txt",
+      "v2": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/eval/v2/results_v2.json",
+      "v3": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/eval/v3/results_v3.bin"
+    },
+    "initial_results": [
+      {
+        "file_id": "sample_clean",
+        "level_code": "3",
+        "level_name": "excellent",
+        "total_permille": 920
+      },
+      {
+        "file_id": "sample_snr6",
+        "level_code": "1",
+        "level_name": "fair",
+        "total_permille": 720
+      },
+      {
+        "file_id": "sample_clip",
+        "level_code": "1",
+        "level_name": "fair",
+        "total_permille": 770
+      },
+      {
+        "file_id": "sample_dropout",
+        "level_code": "1",
+        "level_name": "fair",
+        "total_permille": 720
+      },
+      {
+        "file_id": "sample_floor",
+        "level_code": "2",
+        "level_name": "good",
+        "total_permille": 780
+      },
+      {
+        "file_id": "sample_boundary",
+        "level_code": "1",
+        "level_name": "fair",
+        "total_permille": 755
+      }
+    ],
+    "level_map_hash": "9bef4c0126a6b16b56513a1095b89b7ad8416d3624a445102cf2ba11282fea43",
+    "sample_hashes": {
+      "sample_boundary": "81b634184a87f8059131621eb9a3cde6716cfe4183c8ccc71b5e8781528dfba2",
+      "sample_clean": "06bf792dc378b99937efc2fad96513491793cca0579cb789d158cf4ccda400bd",
+      "sample_clip": "45f24e2864ffbf4fe41a933976fe2f99bd3b8f0e3c9b3fe90ae314cd149502ff",
+      "sample_dropout": "c13080ff83db1f5bb1884c9727dc8f6dfd3304bef6eaebb8576f9a24efcb2bc1",
+      "sample_floor": "53ff5cde9f1938169584b3ed92a194184e155a52f21ca93eec96ba198f676004",
+      "sample_snr6": "4dfa9edaeca7948c84ff5dac0fd1f489ea32a21c7ba399ccb11911f761ec273c"
+    },
+    "samples": 6,
+    "workspace": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace"
+  },
+  "initial_run": {
+    "concurrency": {
+      "configured_cap": 8,
+      "configured_max": 4,
+      "feature_serial_matches": true,
+      "feature_verification_mode": "serial_recompute",
+      "score_serial_matches": true,
+      "score_verification_mode": "serial_recompute",
+      "serial_matches_concurrent": true,
+      "within_cap": true,
+      "workers": 4
+    },
+    "outputs": {
+      "bypass_path": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/output/bypass_active.json",
+      "bypass_sha256": "d6acd6548c30a1f5840ce2bebdc6230354c23e05bf0768405029499979b4e35f",
+      "path": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace/output/active_v2.json",
+      "record_count": 6,
+      "sha256": "c3808bf56a539eec6a772d4e84da7279eb58252ffe0ff89fc77944a6b3d2ea08",
+      "size": 4704,
+      "version": 2
+    },
+    "summary": {
+      "boundary_count": 24,
+      "canonical_count": 6,
+      "degradation_count": 30,
+      "failure_count": 0,
+      "parsed_count": 18,
+      "recompute_count": 24,
+      "reuse_count": 0
+    }
+  },
+  "schema": "aqeval.demo.v1",
+  "serial_vs_concurrent_comparison": {
+    "equal": true,
+    "fields": {
+      "active_version": true,
+      "boundary_samples": true,
+      "canonical": true,
+      "consistency": true,
+      "degradations": true,
+      "deviations": true,
+      "failures": true,
+      "ledger_order": true,
+      "output_sha256": true
+    },
+    "left_digest": "b858986afc0bec64f99092bcb791710ea3fb234a286edb880de0a6505bedc7a2",
+    "left_recompute_count": 0,
+    "left_reuse_count": 24,
+    "right_digest": "b858986afc0bec64f99092bcb791710ea3fb234a286edb880de0a6505bedc7a2",
+    "right_recompute_count": 24,
+    "right_reuse_count": 0
+  },
+  "snapshot_resume": {
+    "interrupted": true,
+    "interruption_error": "run intentionally interrupted after committed stage parse",
+    "manifest_after_interrupt": {
+      "complete": false,
+      "stages": [
+        "parse"
+      ]
+    },
+    "parse_resumed": true,
+    "resumed_stages": [
+      "parse"
+    ]
+  },
+  "workspace": "/home/zsl/feedback/uidfc5909d3-default-84/validation_workspace"
+}
