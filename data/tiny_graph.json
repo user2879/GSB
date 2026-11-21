@@ -1,0 +1,113 @@
+{
+  "config": {
+    "scale_exponent": 0
+  },
+  "nodes": [
+    {
+      "node_id": 0,
+      "label": 100
+    },
+    {
+      "node_id": 1,
+      "label": 101
+    },
+    {
+      "node_id": 2,
+      "label": 102
+    },
+    {
+      "node_id": 3,
+      "label": 103
+    },
+    {
+      "node_id": 4,
+      "label": 104
+    },
+    {
+      "node_id": 5,
+      "label": 105
+    }
+  ],
+  "edges": [
+    {
+      "source": 0,
+      "target": 1,
+      "weight_micro": 1500000
+    },
+    {
+      "source": 0,
+      "target": 2,
+      "weight_micro": 2400000
+    },
+    {
+      "source": 1,
+      "target": 2,
+      "weight_micro": 700000
+    },
+    {
+      "source": 1,
+      "target": 3,
+      "weight_micro": 3300000
+    },
+    {
+      "source": 2,
+      "target": 3,
+      "weight_micro": 1900000
+    },
+    {
+      "source": 2,
+      "target": 4,
+      "weight_micro": 2600000
+    },
+    {
+      "source": 3,
+      "target": 4,
+      "weight_micro": 600000
+    },
+    {
+      "source": 3,
+      "target": 5,
+      "weight_micro": 4200000
+    },
+    {
+      "source": 4,
+      "target": 5,
+      "weight_micro": 1300000
+    },
+    {
+      "source": 0,
+      "target": 5,
+      "weight_micro": 9800000
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "q-small-cap",
+      "source": 0,
+      "targets": [
+        3,
+        4,
+        5
+      ],
+      "cap_micro": 4500000
+    },
+    {
+      "query_id": "q-wide-cap",
+      "source": 0,
+      "targets": [
+        2,
+        4,
+        5
+      ],
+      "cap_micro": 9000000
+    },
+    {
+      "query_id": "q-indistinct",
+      "source": 0,
+      "targets": [
+        4
+      ],
+      "cap_micro": 4899999
+    }
+  ]
+}

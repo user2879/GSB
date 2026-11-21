@@ -1,0 +1,33 @@
+# 验证结果
+
+生成时间: 2026-11-22 01:58:29 CST
+
+## 环境
+Python 3.11.0rc1
+NumPy 1.26.4
+sqlite3 3.37.2
+ModuleNotFoundError: No module named 'tkinter'
+
+## 单元测试
+test_indistinct_and_within_classification (test_traversal.DeterminismTest.test_indistinct_and_within_classification) ... ok
+test_pruning_records_cap_breach (test_traversal.DeterminismTest.test_pruning_records_cap_breach) ... ok
+test_unreachable_target_explicit_row (test_traversal.DeterminismTest.test_unreachable_target_explicit_row) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.817s
+
+OK
+
+## 确定性重放演示(尾部)
+  q-wide-cap target=4 delta_micro=1000000 within -> within
+  q-wide-cap target=5 delta_micro=1000000 within -> within
+  q-indistinct target=4 delta_micro=1000000 within -> indeterminate_error_cross
+
+=== 5. snapshot + deterministic replay ===
+saved digest: f9ea0e7c132a9e14b9544d4f ...
+restore: {'snapshot_id': 'demo-snapshot', 'replay': 'ok', 'digest': 'f9ea0e7c132a9e14b9544d4f43b08f5e7e3d0b575426accd915e42d750467102'}
+
+=== 6. tamper detection -> E_REPLAY ===
+  E_REPLAY: query=q-small-cap target=3 field=dist_fp
+
+demo complete.
