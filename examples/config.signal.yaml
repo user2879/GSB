@@ -1,0 +1,42 @@
+schema_version: 1
+quantization:
+  default_bits: 8
+  scheme: symmetric
+  group_size: 4
+  group_axis: -1
+  per_channel_scaling: true
+  scale_significant_digits: 7
+layers:
+  embed:
+    bits: 8
+    group_size: 4
+  encoder.attn.k:
+    bits: 4
+    group_size: 4
+  encoder.attn.q:
+    bits: 8
+    group_size: 8
+  encoder.attn.v:
+    bits: 4
+    group_size: 4
+  encoder.norm:
+    bits: 8
+    group_size: 4
+  head:
+    bits: 4
+    group_size: 8
+full_precision_layers:
+- encoder.norm
+deployment:
+  package_format_version: 1.0.0
+  artifact_name: demo-transformer-slice
+runtime:
+  interaction_latency_budget_ms: 20
+  concurrency: 4
+  point_budget_per_batch: 65536
+  snapshot_commit_interval: 1
+  stage_delay_ms: 600
+distillation:
+  temperature: 2.0
+  soft_label_weight: 0.35
+  correction_gain: 1.0

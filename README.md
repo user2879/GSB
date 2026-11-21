@@ -1,22 +1,203 @@
-在空白工作区从零构建一个面向模型压缩与部署场景的可集成领域组件与完整示例，用于把已训练模型按压缩方案逐层压缩、导出部署包，并在压缩方案反复调整、层权重局部替换与部署包重建之间维护增量状态。输入为本地确定性样本目录：一份按固定种子生成的逐层权重包 JSONL（每行含层名、形状、权重数组与层内容版本号），一份校准样本集 JSON（若干输入向量与参考输出），一份压缩与部署配置 YAML（逐层目标位宽与分组粒度、是否启用逐通道缩放、需保留为全精度的层白名单、部署包格式版本号、交互延迟预算毫秒、并发数、单批量化点数预算、快照提交间隔）。组件需产出逐层量化参数、量化后权重摘要、部署包清单、误差报告与增量诊断摘要，并保证任意编辑序列后增量运行与从空白全量重建逐字段一致。
+# LayerPack：增量模型量化与部署包组件
 
-任务环境与准备：
-安装 Python 3.10 及以上版本，确认可导入 numpy 与 pytest，无需联网下载任何模型或数据集。
-在空白工作区创建项目目录，本地生成逐层权重包 JSONL、校准样本 JSON 与压缩部署配置 YAML 等确定性样本，样本由固定种子程序生成并随项目保存。
-确认磁盘可写用于阶段快照的临时目录与整体替换提交，并在配置中预留交互延迟预算、单批预算与并发数字段供验收时调整。
-准备本地测试用的命令序列与注入配置样例文件，用于验证增量一致性、预算语义与异常业务码；不使用容器或外部服务。
+LayerPack 是一个可嵌入的本地领域组件，在逐层权重包、校准集和压缩配置之上执行：
 
-业务要求：
-1. 实现权重包、校准集与配置加载层：逐行解析权重包 JSONL 并按层名与形状校验，校验层名唯一、形状维度为正整数、权重元素为有限数、层内容版本号单调；加载配置与校准集，校验目标位宽在允许枚举内、分组粒度能整除对应维度、白名单层均存在于权重包、并发数与单批预算为正整数；不合规分别输出 E_CONFIG_INVALID、E_WEIGHT_SHAPE_MISMATCH、E_NONFINITE_WEIGHT、E_CALIB_MISSING 并进入失败清单。
-2. 实现逐层定点量化与反量化核心：按目标位宽与分组粒度对每层计算对称与非对称两组缩放因子与零点，缩放因子用 float64 计算后按配置有效位数裁剪，反量化后逐元素统计最大绝对误差与均方误差；分组内元素累加顺序固定为原形顺序，缩放因子恰为零时按固定规则退化为整层缩放并记录退化来源；同一层在相同配置下多次运行必须得到逐元素一致的反量化结果。
-3. 实现校准集误差评估与轻量蒸馏校正：在固定校准样本上计算原始权重输出与量化反量化输出的逐样本偏差，按配置蒸馏温度构造软标签、按软标签权重把量化输出向原始输出校正，输出校正前后逐样本偏差与校正量；校正量计算同样使用固定运算顺序，软标签权重为零时记录关闭标记而非跳过样本，校正前后误差对比须真实随位宽切换而变化。
-4. 实现基于内容指纹的依赖失效判定与精确重算范围：为量化参数、反量化权重摘要、校准偏差与部署包清单分别计算由层内容指纹、参数指纹与校准集指纹派生的缓存键，并记录每层引用的配置字段与校准样本集合；当修改某层位宽、切换量化方案、调整分组粒度、替换某层权重或校准样本时，仅使受影响层及其下游校准偏差与部署包清单失效，未失效层必须直接复用已持久化产物。
-5. 实现交互命令驱动的增量运行与全量重建逐字段一致：支持修改层位宽、切换量化方案、调整分组粒度、开关逐通道缩放、修改蒸馏温度与软标签权重、替换某层权重与校准样本八类命令；从任意初始状态执行任意命令序列后，增量运行得到的逐层量化参数、反量化摘要、失真指标、校正后偏差、部署包清单与失败清单顺序，必须与从空白工作区按相同最终状态一次性全量运行的结果逐字段一致，并输出失效与复用清单证明复用真实发生。
-6. 实现交互延迟预算内的响应语义：每条交互命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，包含已完成层数、当前误差统计、受影响层清单与进度；预算内无法得到最新参数下的结果时返回带 E_INTERACT_BUDGET_PENDING 业务码的中间状态而非阻塞至全部完成，随后再到齐最新结果；中间状态与最终结果须能被客户端区分，且中间状态不得写入持久化产物。
-7. 实现单批量化点数预算约束下的并发调度与串行一致性：多任务通过线程池并发执行层量化与校准评估，最大并发数取自配置且不得超过；调度器按层名字典序稳定顺序消耗单批量化点数预算，预算不足时保留待算队列并以 E_POINT_BUDGET_PENDING 标记未完成项，每个任务携带由层名与阶段名派生的稳定排序键；无论线程调度顺序、并发度与预算耗尽时机如何，最终层顺序、误差表顺序、复用清单顺序与预算扣减序列必须与单线程串行执行一致。
-8. 实现阶段快照整体替换、版本识别、恢复判定与诊断报告：将加载校验、量化与反量化、校准评估、部署包汇总划分为阶段，各阶段先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、校准集哈希、已完成层列表与各阶段产物版本，替换前须比对版本变化而非逐文件覆盖；收到可处理的退出信号时完成当前阶段提交后以整数退出码 0 退出，强制终止后重启仅依据已完整替换的快照恢复并输出恢复点，不得承诺一定生成退出报告；每次运行输出诊断报告，含逐层误差表、失效与复用计数、退化与关闭标记、待算队列、快照版本号与失败清单业务码。
+- 对称/非对称定点量化与反量化；
+- 分组量化、逐通道缩放、全精度层白名单；
+- 校准集误差评估与软标签蒸馏校正；
+- 基于内容指纹的增量失效与持久化复用；
+- 单批点数预算下的稳定并发调度；
+- 四阶段原子快照、崩溃恢复与诊断报告；
+- 八类交互编辑命令，以及增量/全量逐字段一致性验收。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+项目不需要容器、外部服务或网络。所有样本由固定种子在本地生成。
 
-验收：
-用本地样本执行编辑序列，核验增量与全量结果逐字段一致、预算与快照恢复语义及诊断报告。
+## 快速开始
+
+环境要求：Python 3.10+，`numpy`、`PyYAML`、`pytest`。
+
+```bash
+python3 -m pytest -q
+python3 -m layerpack validate \
+  --weights samples/weights.jsonl \
+  --calibration samples/calibration.json \
+  --config samples/config.yaml --pretty
+```
+
+执行一次完整压缩：
+
+```bash
+python3 -m layerpack run \
+  --weights samples/weights.jsonl \
+  --calibration samples/calibration.json \
+  --config samples/config.yaml \
+  --state-dir .layerpack/demo --pretty
+```
+
+应用八类命令并直接比较“增量最终状态”与“空白目录全量重建”：
+
+```bash
+python3 -m layerpack commands \
+  --commands examples/commands-all-eight.jsonl \
+  --weights samples/weights.jsonl \
+  --calibration samples/calibration.json \
+  --config samples/config.yaml \
+  --state-dir .layerpack/eight-command-demo \
+  --reset --latency-budget-ms 0 --full-compare
+```
+
+命令最终会输出：
+
+- `interim` 帧：带 `E_INTERACT_BUDGET_PENDING`，`persisted=false`；
+- `final` 帧：带完整结果与诊断，`persisted=true`；
+- `full_comparison.equal=true` 时，增量结果与空白全量重建逐字段一致。
+
+## 项目结构
+
+```text
+layerpack/
+  config.py       配置加载、归一化与校验
+  loader.py       JSONL/JSON/YAML 加载与业务码
+  quantize.py     对称/非对称定点量化和误差统计
+  calibration.py  校准误差与软标签校正
+  fingerprint.py  规范化 JSON、数组指纹、固定顺序数值运算
+  cache.py        量化/反量化/校准/清单内容寻址缓存
+  scheduler.py    单批点数预算与线程池稳定调度
+  snapshot.py     阶段临时目录、原子替换、恢复点
+  deployment.py   部署清单与原子部署包导出
+  engine.py       四阶段引擎与诊断
+  session.py      八类命令和会话状态
+  interaction.py  交互延迟预算与 interim/final 帧
+  cli.py          命令行入口
+samples/          固定种子生成的确定性样本
+examples/         命令序列与注入配置
+tests/            本地验收测试
+scripts/          样本重生成脚本
+docs/             架构、验收和格式说明
+```
+
+## 输入格式
+
+### 权重包 JSONL
+
+每行一个层对象。数组按 C 顺序展开，也接受与 `shape` 完全一致的嵌套数组。
+
+```json
+{"name":"embed","shape":[6,8],"weights":[0.1,-0.2],"content_version":1}
+```
+
+校验规则：
+
+- 层名非空且唯一；
+- 形状为非空正整数列表，元素数必须匹配；
+- 所有元素有限；
+- 文件顺序上的 `content_version` 单调不减。
+
+### 校准集 JSON
+
+```json
+{
+  "samples": [
+    {
+      "id": "cal-00",
+      "input": [0.1, 0.2],
+      "reference_output": [0.3],
+      "layers": ["all"]
+    }
+  ]
+}
+```
+
+每层的输出定义为：权重最后一维与 `input` 做固定顺序点积；对二维及以上权重，逐行展平输出。`layers` 为空或包含 `"all"` 时适用于所有层。
+
+### 压缩部署配置 YAML
+
+```yaml
+schema_version: 1
+quantization:
+  default_bits: 8
+  scheme: symmetric          # symmetric | asymmetric
+  group_size: 4
+  group_axis: -1
+  per_channel_scaling: true
+  scale_significant_digits: 7
+layers:
+  encoder.attn.k:
+    bits: 4
+    group_size: 4
+full_precision_layers: ["encoder.norm"]
+deployment:
+  package_format_version: "1.0.0"
+  artifact_name: "demo-transformer-slice"
+runtime:
+  interaction_latency_budget_ms: 20
+  concurrency: 4
+  point_budget_per_batch: 65536
+  snapshot_commit_interval: 1
+  stage_delay_ms: 0
+distillation:
+  temperature: 2.0
+  soft_label_weight: 0.35
+  correction_gain: 1.0
+```
+
+允许位宽为 `2, 4, 8, 16`。`group_size` 必须整除 `group_axis` 指向的维度。`stage_delay_ms` 是测试友好字段，用于稳定制造“交互预算内尚未完成”的窗口；生产配置可保持 0。
+
+## 输出与状态目录
+
+一次运行的核心结果包含：
+
+- `layers[]`：逐层量化参数、量化码摘要、反量化摘要、失真指标；
+- `calibration[]`：逐样本校正前/后偏差、校正量、软标签关闭标记；
+- `error_report`：逐层误差表与总量；
+- `deployment_manifest`：部署格式、逐层摘要、总量、全局清单指纹；
+- `failure_list`：按阶段、层名、业务码稳定排序的失败清单。
+
+诊断位于 `reports/diagnostics.json`，包含：
+
+- 已完成层、受影响层、失效/复用清单与计数；
+- 逐层误差、退化组来源、软标签关闭层；
+- 待算队列、预算扣减序列、批次与最大并发；
+- 快照版本、阶段版本、恢复点、配置/校准/权重哈希；
+- 全部失败业务码和明细。
+
+部署包位于 `deploy/package-<manifest_sha256前20位>/`，包含 `manifest.json`、逐层量化码和参数，`deploy/current.json` 原子指向当前包。
+
+## 业务码
+
+| 业务码 | 含义 |
+| --- | --- |
+| `E_CONFIG_INVALID` | YAML、枚举、分组、白名单、并发/预算字段非法 |
+| `E_WEIGHT_SHAPE_MISMATCH` | JSONL、层名重复、形状/元素数/版本单调性非法 |
+| `E_NONFINITE_WEIGHT` | 权重包含 NaN/Inf |
+| `E_CALIB_MISSING` | 校准文件、样本、输入维度或引用层缺失 |
+| `E_INTERACT_BUDGET_PENDING` | 交互预算内只返回最近完成摘要 |
+| `E_POINT_BUDGET_PENDING` | 单批点数预算不足，存在待算队列 |
+
+## 交互命令
+
+命令为 JSON/JSONL，支持：
+
+```json
+{"type":"set_bits","layer":"head","bits":8}
+{"type":"set_scheme","scheme":"asymmetric"}
+{"type":"set_group_size","layer":"encoder.attn.k","group_size":8}
+{"type":"set_per_channel","enabled":false}
+{"type":"set_temperature","value":1.5}
+{"type":"set_soft_label_weight","value":0.2}
+{"type":"replace_layer_weights","layer":"head","shape":[4,8],"weights":[...]}
+{"type":"replace_calibration_sample","sample":{...}}
+```
+
+全局命令省略 `layer` 时作用于全部层。权重替换省略 `content_version` 时分配最大版本号 + 1。会话状态只在最终帧产生后写入 `session/state-<hash>/`，中间帧不会提交命令。
+
+## 确定性约定
+
+- 浮点运算统一使用 `float64`，缩放因子按十进制有效位向零截断；
+- 量化取整固定为 nearest-ties-to-even；
+- 组内统计、点积、校正和误差累计均按原形 C 顺序逐项执行；
+- 所有层、样本、失败、复用和预算事件均按稳定键排序；
+- 线程只改变执行先后，不改变结果、顺序或预算扣减序列；
+- 任何未失效产物从内容寻址缓存直接加载。
+
+更完整的设计与验收说明见 `docs/architecture.md` 和 `docs/acceptance.md`。
