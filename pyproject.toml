@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "candidate-exchange-validator"
+version = "1.0.0"
+description = "Offline candidate-box exchange, matching, incremental cache and snapshot validation tool"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "Pillow>=9.0"]
+
+[project.scripts]
+candidate-exchange = "candidate_exchange.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["candidate_exchange*"]

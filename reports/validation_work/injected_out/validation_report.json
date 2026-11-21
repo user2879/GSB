@@ -1,0 +1,5943 @@
+{
+  "active_version": "v1",
+  "concurrency": {
+    "ordering_contract": "sorted by series name, then track sort key",
+    "requested_workers": 4,
+    "series_execution_order": [
+      "alpha_seq",
+      "beta_seq",
+      "gamma_seq"
+    ],
+    "workers": 4
+  },
+  "config": {
+    "class_map": {
+      "1": "pedestrian",
+      "2": "vehicle",
+      "3": "noise"
+    },
+    "config_hash": "e0240e6d6277152e0236c57a52949ab504ab97d1849bbbfd4be9fb1e437d4ebb",
+    "detection_parameter_fingerprint": "e58cff8ac3c292e24af3d0e7319d62fc5881a18d6e978f7094eea287ff35763c",
+    "detection_parameters": {
+      "candidate_pool_capacity": 3,
+      "class_colors": {
+        "1": [
+          224,
+          72,
+          72
+        ],
+        "2": [
+          64,
+          120,
+          224
+        ],
+        "3": [
+          72,
+          196,
+          112
+        ]
+      },
+      "class_map": {
+        "1": "pedestrian",
+        "2": "vehicle",
+        "3": "noise"
+      },
+      "color_mean_threshold": 22.0,
+      "edge_density_threshold": 0.055,
+      "frame_overrides": {
+        "beta_seq": {
+          "3": {
+            "fusion_weights": {
+              "color": "NaN",
+              "edge": 0.42
+            }
+          }
+        }
+      },
+      "fusion_weights": {
+        "color": 0.58,
+        "edge": 0.42
+      },
+      "scales": [
+        [
+          28,
+          36
+        ],
+        [
+          32,
+          44
+        ],
+        [
+          44,
+          60
+        ],
+        [
+          48,
+          72
+        ]
+      ],
+      "schema_version": "1.0",
+      "step": 8
+    },
+    "effective_snapshot_commit_interval": 2,
+    "effective_workers": 4,
+    "match_config": {
+      "concurrency": 4,
+      "fixed_decimal_places": 3,
+      "iou_threshold": 0.35,
+      "max_gap_frames": 2,
+      "pool_eviction_rule": "score_desc_then_coord_lex",
+      "snapshot_commit_interval": 2
+    },
+    "match_config_fingerprint": "2a300da9c70e0fdd0a452357b8cbdb6e9ba9d95c32080a88301460b08078dd6f"
+  },
+  "conversion": null,
+  "conversion_error": {
+    "details": {},
+    "error_code": "E_CLASS_UNKNOWN",
+    "frame_index": 3,
+    "message": "class code 99 cannot be mapped for v1->v2",
+    "series_name": "alpha_seq",
+    "stage": "conversion"
+  },
+  "failure_frames": [
+    {
+      "error_code": "E_FIELD_TRUNCATED",
+      "frame_index": 1,
+      "injection_id": "INJ-002",
+      "series_name": "alpha_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "error_code": "E_CLASS_UNKNOWN",
+      "frame_index": 3,
+      "injection_id": "INJ-005",
+      "series_name": "alpha_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "error_code": "E_CLASS_UNKNOWN",
+      "frame_index": 3,
+      "injection_id": null,
+      "series_name": "alpha_seq",
+      "stage": "serialization"
+    },
+    {
+      "error_code": "E_IMAGE_INVALID",
+      "frame_index": 2,
+      "injection_id": "INJ-001",
+      "series_name": "beta_seq",
+      "stage": "detection"
+    },
+    {
+      "error_code": "E_NON_FINITE",
+      "frame_index": 3,
+      "injection_id": "INJ-004",
+      "series_name": "beta_seq",
+      "stage": "detection"
+    },
+    {
+      "error_code": "E_SERIALIZE_INVALID",
+      "frame_index": 4,
+      "injection_id": "INJ-007",
+      "series_name": "beta_seq",
+      "stage": "serialization"
+    },
+    {
+      "error_code": "E_COORD_INVALID",
+      "frame_index": 2,
+      "injection_id": "INJ-003",
+      "series_name": "gamma_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "error_code": "E_MATCH_INVALID",
+      "frame_index": 3,
+      "injection_id": "INJ-006",
+      "series_name": "gamma_seq",
+      "stage": "matching"
+    }
+  ],
+  "failures": [
+    {
+      "details": {
+        "line_number": 7,
+        "missing_fields": [
+          "class_code"
+        ]
+      },
+      "error_code": "E_FIELD_TRUNCATED",
+      "exception_type": "BusinessError",
+      "frame_index": 1,
+      "injection_id": "INJ-002",
+      "message": "v1 line 7 is missing required fields: ['class_code']",
+      "series_name": "alpha_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "details": {
+        "class_code": 99
+      },
+      "error_code": "E_CLASS_UNKNOWN",
+      "exception_type": "BusinessError",
+      "frame_index": 3,
+      "injection_id": "INJ-005",
+      "message": "class code 99 is not present in class_map",
+      "series_name": "alpha_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "details": {},
+      "error_code": "E_CLASS_UNKNOWN",
+      "exception_type": "BusinessError",
+      "frame_index": 3,
+      "injection_id": null,
+      "message": "class code 99 cannot be mapped for v1->v2",
+      "series_name": "alpha_seq",
+      "stage": "serialization"
+    },
+    {
+      "details": {},
+      "error_code": "E_IMAGE_INVALID",
+      "exception_type": "OSError",
+      "frame_index": 2,
+      "injection_id": "INJ-001",
+      "message": "PNG validation failed: Truncated File Read",
+      "series_name": "beta_seq",
+      "stage": "detection"
+    },
+    {
+      "details": {},
+      "error_code": "E_NON_FINITE",
+      "exception_type": "BusinessError",
+      "frame_index": 3,
+      "injection_id": "INJ-004",
+      "message": "non-finite fusion weight color=nan",
+      "series_name": "beta_seq",
+      "stage": "detection"
+    },
+    {
+      "details": {
+        "injection_type": "serialization_forced_error"
+      },
+      "error_code": "E_SERIALIZE_INVALID",
+      "exception_type": "InjectedFailure",
+      "frame_index": 4,
+      "injection_id": "INJ-007",
+      "message": "injected runtime failure for serialization_forced_error",
+      "series_name": "beta_seq",
+      "stage": "serialization"
+    },
+    {
+      "details": {
+        "box": [
+          61.0,
+          31.0,
+          260.0,
+          220.0
+        ],
+        "image_size": [
+          192,
+          128
+        ]
+      },
+      "error_code": "E_COORD_INVALID",
+      "exception_type": "BusinessError",
+      "frame_index": 2,
+      "injection_id": "INJ-003",
+      "message": "candidate coordinates are non-monotonic or outside the image",
+      "series_name": "gamma_seq",
+      "stage": "parsing_v1"
+    },
+    {
+      "details": {
+        "injection_type": "matching_forced_error"
+      },
+      "error_code": "E_MATCH_INVALID",
+      "exception_type": "InjectedFailure",
+      "frame_index": 3,
+      "injection_id": "INJ-006",
+      "message": "injected runtime failure for matching_forced_error",
+      "series_name": "gamma_seq",
+      "stage": "matching"
+    }
+  ],
+  "format_fingerprints": {
+    "active": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+    "active_version": "v1",
+    "v1": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+    "v2": "27c8a54240aeab5919d3669f3fbfde3acd84ce4973e84278b237b2e1a02284d1"
+  },
+  "frames": [
+    {
+      "candidate_key": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d",
+      "candidates": [
+        {
+          "box": [
+            35.0,
+            77.0,
+            82.0,
+            101.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 2,
+            "score_pm": 834
+          },
+          "frame_index": 0,
+          "integer_box": [
+            35,
+            77,
+            82,
+            101
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.834,
+          "score_pm": 834,
+          "series_name": "alpha_seq",
+          "source_ordinal": 2,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            18.0,
+            24.0,
+            48.0,
+            67.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 3,
+            "score_pm": 793
+          },
+          "frame_index": 0,
+          "integer_box": [
+            18,
+            24,
+            48,
+            67
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.793,
+          "score_pm": 793,
+          "series_name": "alpha_seq",
+          "source_ordinal": 3,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            46.0,
+            114.0,
+            58.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 4,
+            "score_pm": 330
+          },
+          "frame_index": 0,
+          "integer_box": [
+            46,
+            114,
+            58,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "alpha_seq",
+          "source_ordinal": 4,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            29.0,
+            106.0,
+            40.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 5,
+            "score_pm": 221
+          },
+          "frame_index": 0,
+          "integer_box": [
+            29,
+            106,
+            40,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.221,
+          "score_pm": 221,
+          "series_name": "alpha_seq",
+          "source_ordinal": 5,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            13.0,
+            99.0,
+            23.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 6,
+            "score_pm": 192
+          },
+          "frame_index": 0,
+          "integer_box": [
+            13,
+            99,
+            23,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.192,
+          "score_pm": 192,
+          "series_name": "alpha_seq",
+          "source_ordinal": 6,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 0,
+      "image_sha256": "c7388a06438ee49836bdcf5228cdf2ad28e48ebedf8d9845444d2a39615dd3f6",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5",
+      "candidates": [
+        {
+          "box": [
+            57.0,
+            74.0,
+            102.0,
+            99.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 12,
+            "score_pm": 896
+          },
+          "frame_index": 2,
+          "integer_box": [
+            57,
+            74,
+            102,
+            99
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.896,
+          "score_pm": 896,
+          "series_name": "alpha_seq",
+          "source_ordinal": 12,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            45.0,
+            30.0,
+            76.0,
+            71.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 13,
+            "score_pm": 855
+          },
+          "frame_index": 2,
+          "integer_box": [
+            45,
+            30,
+            76,
+            71
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.855,
+          "score_pm": 855,
+          "series_name": "alpha_seq",
+          "source_ordinal": 13,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            33.0,
+            107.0,
+            45.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 14,
+            "score_pm": 243
+          },
+          "frame_index": 2,
+          "integer_box": [
+            33,
+            107,
+            45,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.243,
+          "score_pm": 243,
+          "series_name": "alpha_seq",
+          "source_ordinal": 14,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            16.0,
+            99.0,
+            27.0,
+            109.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 15,
+            "score_pm": 214
+          },
+          "frame_index": 2,
+          "integer_box": [
+            16,
+            99,
+            27,
+            109
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.214,
+          "score_pm": 214,
+          "series_name": "alpha_seq",
+          "source_ordinal": 15,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 2,
+      "image_sha256": "d7939ea267c9cb99ee34ebf3438db12c2270587273f8bb7fa5c29cf2b833a0e8",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+      "candidates": [
+        {
+          "box": [
+            77.0,
+            69.0,
+            123.0,
+            95.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 20,
+            "score_pm": 958
+          },
+          "frame_index": 4,
+          "integer_box": [
+            77,
+            69,
+            123,
+            95
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.958,
+          "score_pm": 958,
+          "series_name": "alpha_seq",
+          "source_ordinal": 20,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            73.0,
+            30.0,
+            102.0,
+            72.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 21,
+            "score_pm": 917
+          },
+          "frame_index": 4,
+          "integer_box": [
+            73,
+            30,
+            102,
+            72
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.917,
+          "score_pm": 917,
+          "series_name": "alpha_seq",
+          "source_ordinal": 21,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            48.0,
+            113.0,
+            59.0,
+            123.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 22,
+            "score_pm": 330
+          },
+          "frame_index": 4,
+          "integer_box": [
+            48,
+            113,
+            59,
+            123
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "alpha_seq",
+          "source_ordinal": 22,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            32.0,
+            106.0,
+            42.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 23,
+            "score_pm": 265
+          },
+          "frame_index": 4,
+          "integer_box": [
+            32,
+            106,
+            42,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.265,
+          "score_pm": 265,
+          "series_name": "alpha_seq",
+          "source_ordinal": 23,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            14.0,
+            100.0,
+            26.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 24,
+            "score_pm": 236
+          },
+          "frame_index": 4,
+          "integer_box": [
+            14,
+            100,
+            26,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.236,
+          "score_pm": 236,
+          "series_name": "alpha_seq",
+          "source_ordinal": 24,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 4,
+      "image_sha256": "2f7a638b5b34f18ddc806db0dde7f2a8d152a67d422b8d1767a897183377dd08",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+      "candidates": [
+        {
+          "box": [
+            83.0,
+            24.0,
+            113.0,
+            66.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 25,
+            "score_pm": 948
+          },
+          "frame_index": 5,
+          "integer_box": [
+            83,
+            24,
+            113,
+            66
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.948,
+          "score_pm": 948,
+          "series_name": "alpha_seq",
+          "source_ordinal": 25,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            85.0,
+            69.0,
+            132.0,
+            95.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 26,
+            "score_pm": 718
+          },
+          "frame_index": 5,
+          "integer_box": [
+            85,
+            69,
+            132,
+            95
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.718,
+          "score_pm": 718,
+          "series_name": "alpha_seq",
+          "source_ordinal": 26,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            50.0,
+            113.0,
+            62.0,
+            123.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 27,
+            "score_pm": 330
+          },
+          "frame_index": 5,
+          "integer_box": [
+            50,
+            113,
+            62,
+            123
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "alpha_seq",
+          "source_ordinal": 27,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            33.0,
+            106.0,
+            44.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 28,
+            "score_pm": 276
+          },
+          "frame_index": 5,
+          "integer_box": [
+            33,
+            106,
+            44,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.276,
+          "score_pm": 276,
+          "series_name": "alpha_seq",
+          "source_ordinal": 28,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            17.0,
+            100.0,
+            27.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 29,
+            "score_pm": 247
+          },
+          "frame_index": 5,
+          "integer_box": [
+            17,
+            100,
+            27,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.247,
+          "score_pm": 247,
+          "series_name": "alpha_seq",
+          "source_ordinal": 29,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 5,
+      "image_sha256": "8f8ab40897e9ae3a4ff26f16e3b9a2eddc3810c756e09da650ef35d1c931b639",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+      "candidates": [
+        {
+          "box": [
+            94.0,
+            22.0,
+            124.0,
+            65.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 30,
+            "score_pm": 979
+          },
+          "frame_index": 6,
+          "integer_box": [
+            94,
+            22,
+            124,
+            65
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.979,
+          "score_pm": 979,
+          "series_name": "alpha_seq",
+          "source_ordinal": 30,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            93.0,
+            68.0,
+            140.0,
+            92.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 31,
+            "score_pm": 749
+          },
+          "frame_index": 6,
+          "integer_box": [
+            93,
+            68,
+            140,
+            92
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.749,
+          "score_pm": 749,
+          "series_name": "alpha_seq",
+          "source_ordinal": 31,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            46.0,
+            114.0,
+            58.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 32,
+            "score_pm": 330
+          },
+          "frame_index": 6,
+          "integer_box": [
+            46,
+            114,
+            58,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "alpha_seq",
+          "source_ordinal": 32,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            29.0,
+            106.0,
+            40.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 33,
+            "score_pm": 287
+          },
+          "frame_index": 6,
+          "integer_box": [
+            29,
+            106,
+            40,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.287,
+          "score_pm": 287,
+          "series_name": "alpha_seq",
+          "source_ordinal": 33,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            13.0,
+            99.0,
+            23.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 34,
+            "score_pm": 258
+          },
+          "frame_index": 6,
+          "integer_box": [
+            13,
+            99,
+            23,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.258,
+          "score_pm": 258,
+          "series_name": "alpha_seq",
+          "source_ordinal": 34,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 6,
+      "image_sha256": "1f59565528b7d8113853aba551cafbcaf3d9648d9fe29987f415fd1427af8132",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d",
+      "candidates": [
+        {
+          "box": [
+            107.0,
+            70.0,
+            152.0,
+            94.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 35,
+            "score_pm": 780
+          },
+          "frame_index": 7,
+          "integer_box": [
+            107,
+            70,
+            152,
+            94
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.78,
+          "score_pm": 780,
+          "series_name": "alpha_seq",
+          "source_ordinal": 35,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            110.0,
+            20.0,
+            141.0,
+            63.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 36,
+            "score_pm": 739
+          },
+          "frame_index": 7,
+          "integer_box": [
+            110,
+            20,
+            141,
+            63
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.739,
+          "score_pm": 739,
+          "series_name": "alpha_seq",
+          "source_ordinal": 36,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            49.0,
+            114.0,
+            59.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 37,
+            "score_pm": 330
+          },
+          "frame_index": 7,
+          "integer_box": [
+            49,
+            114,
+            59,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "alpha_seq",
+          "source_ordinal": 37,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            31.0,
+            106.0,
+            43.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 38,
+            "score_pm": 298
+          },
+          "frame_index": 7,
+          "integer_box": [
+            31,
+            106,
+            43,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.298,
+          "score_pm": 298,
+          "series_name": "alpha_seq",
+          "source_ordinal": 38,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            14.0,
+            99.0,
+            25.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 39,
+            "score_pm": 269
+          },
+          "frame_index": 7,
+          "integer_box": [
+            14,
+            99,
+            25,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.269,
+          "score_pm": 269,
+          "series_name": "alpha_seq",
+          "source_ordinal": 39,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 7,
+      "image_sha256": "712ebf57ff0014523ece9bfd281a4d7372e46c857f871c30bae6d3ca16ccfcb2",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "alpha_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+      "candidates": [
+        {
+          "box": [
+            44.0,
+            77.0,
+            89.0,
+            101.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 40,
+            "score_pm": 931
+          },
+          "frame_index": 0,
+          "integer_box": [
+            44,
+            77,
+            89,
+            101
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.931,
+          "score_pm": 931,
+          "series_name": "beta_seq",
+          "source_ordinal": 40,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            28.0,
+            27.0,
+            59.0,
+            70.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 41,
+            "score_pm": 890
+          },
+          "frame_index": 0,
+          "integer_box": [
+            28,
+            27,
+            59,
+            70
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.89,
+          "score_pm": 890,
+          "series_name": "beta_seq",
+          "source_ordinal": 41,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            47.0,
+            114.0,
+            57.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 42,
+            "score_pm": 330
+          },
+          "frame_index": 0,
+          "integer_box": [
+            47,
+            114,
+            57,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "beta_seq",
+          "source_ordinal": 42,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            29.0,
+            106.0,
+            41.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 43,
+            "score_pm": 234
+          },
+          "frame_index": 0,
+          "integer_box": [
+            29,
+            106,
+            41,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.234,
+          "score_pm": 234,
+          "series_name": "beta_seq",
+          "source_ordinal": 43,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            12.0,
+            99.0,
+            23.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 44,
+            "score_pm": 205
+          },
+          "frame_index": 0,
+          "integer_box": [
+            12,
+            99,
+            23,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.205,
+          "score_pm": 205,
+          "series_name": "beta_seq",
+          "source_ordinal": 44,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 0,
+      "image_sha256": "3ef095514501b96583c05ebf48ea97910544acbbd26b8b745e4efae4e5e7e9f3",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "beta_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+      "candidates": [
+        {
+          "box": [
+            52.0,
+            75.0,
+            97.0,
+            100.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 45,
+            "score_pm": 962
+          },
+          "frame_index": 1,
+          "integer_box": [
+            52,
+            75,
+            97,
+            100
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.962,
+          "score_pm": 962,
+          "series_name": "beta_seq",
+          "source_ordinal": 45,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            39.0,
+            29.0,
+            70.0,
+            70.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 46,
+            "score_pm": 921
+          },
+          "frame_index": 1,
+          "integer_box": [
+            39,
+            29,
+            70,
+            70
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.921,
+          "score_pm": 921,
+          "series_name": "beta_seq",
+          "source_ordinal": 46,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            49.0,
+            113.0,
+            59.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 47,
+            "score_pm": 330
+          },
+          "frame_index": 1,
+          "integer_box": [
+            49,
+            113,
+            59,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "beta_seq",
+          "source_ordinal": 47,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            31.0,
+            107.0,
+            43.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 48,
+            "score_pm": 245
+          },
+          "frame_index": 1,
+          "integer_box": [
+            31,
+            107,
+            43,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.245,
+          "score_pm": 245,
+          "series_name": "beta_seq",
+          "source_ordinal": 48,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            14.0,
+            99.0,
+            25.0,
+            109.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 49,
+            "score_pm": 216
+          },
+          "frame_index": 1,
+          "integer_box": [
+            14,
+            99,
+            25,
+            109
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.216,
+          "score_pm": 216,
+          "series_name": "beta_seq",
+          "source_ordinal": 49,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 1,
+      "image_sha256": "87bddd1fbd645484fa845180abdbf1847ac608b1a3d842bec7b4065f072ca08d",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "beta_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+      "candidates": [],
+      "frame_index": 4,
+      "image_sha256": "8e50dbcc8b248d0ce791d01c0e799f105381376417ebd4952bdebf5aa2325b19",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "beta_seq",
+      "status": "failed"
+    },
+    {
+      "candidate_key": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+      "candidates": [
+        {
+          "box": [
+            93.0,
+            68.0,
+            140.0,
+            92.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 63,
+            "score_pm": 815
+          },
+          "frame_index": 5,
+          "integer_box": [
+            93,
+            68,
+            140,
+            92
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.815,
+          "score_pm": 815,
+          "series_name": "beta_seq",
+          "source_ordinal": 63,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            93.0,
+            24.0,
+            123.0,
+            67.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 64,
+            "score_pm": 774
+          },
+          "frame_index": 5,
+          "integer_box": [
+            93,
+            24,
+            123,
+            67
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.774,
+          "score_pm": 774,
+          "series_name": "beta_seq",
+          "source_ordinal": 64,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            50.0,
+            114.0,
+            62.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 65,
+            "score_pm": 330
+          },
+          "frame_index": 5,
+          "integer_box": [
+            50,
+            114,
+            62,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "beta_seq",
+          "source_ordinal": 65,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            33.0,
+            106.0,
+            44.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 66,
+            "score_pm": 289
+          },
+          "frame_index": 5,
+          "integer_box": [
+            33,
+            106,
+            44,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.289,
+          "score_pm": 289,
+          "series_name": "beta_seq",
+          "source_ordinal": 66,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            17.0,
+            99.0,
+            27.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 67,
+            "score_pm": 260
+          },
+          "frame_index": 5,
+          "integer_box": [
+            17,
+            99,
+            27,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.26,
+          "score_pm": 260,
+          "series_name": "beta_seq",
+          "source_ordinal": 67,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 5,
+      "image_sha256": "6ff1d630b23fd2e9a6b87a0242469878eb65a2e69319597794cb7728bd1d95c3",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "beta_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a",
+      "candidates": [
+        {
+          "box": [
+            102.0,
+            70.0,
+            147.0,
+            94.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 68,
+            "score_pm": 846
+          },
+          "frame_index": 6,
+          "integer_box": [
+            102,
+            70,
+            147,
+            94
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.846,
+          "score_pm": 846,
+          "series_name": "beta_seq",
+          "source_ordinal": 68,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            104.0,
+            21.0,
+            135.0,
+            64.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 69,
+            "score_pm": 805
+          },
+          "frame_index": 6,
+          "integer_box": [
+            104,
+            21,
+            135,
+            64
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.805,
+          "score_pm": 805,
+          "series_name": "beta_seq",
+          "source_ordinal": 69,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            47.0,
+            114.0,
+            57.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 70,
+            "score_pm": 330
+          },
+          "frame_index": 6,
+          "integer_box": [
+            47,
+            114,
+            57,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "beta_seq",
+          "source_ordinal": 70,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            29.0,
+            106.0,
+            41.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 71,
+            "score_pm": 300
+          },
+          "frame_index": 6,
+          "integer_box": [
+            29,
+            106,
+            41,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.3,
+          "score_pm": 300,
+          "series_name": "beta_seq",
+          "source_ordinal": 71,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            12.0,
+            99.0,
+            23.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 72,
+            "score_pm": 271
+          },
+          "frame_index": 6,
+          "integer_box": [
+            12,
+            99,
+            23,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.271,
+          "score_pm": 271,
+          "series_name": "beta_seq",
+          "source_ordinal": 72,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 6,
+      "image_sha256": "c33fd40b6636e1dc287bba39af97dac18c87c9c955c2b2791c484d7109f1cf0b",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "beta_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+      "candidates": [
+        {
+          "box": [
+            52.0,
+            76.0,
+            97.0,
+            101.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 73,
+            "score_pm": 757
+          },
+          "frame_index": 0,
+          "integer_box": [
+            52,
+            76,
+            97,
+            101
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.757,
+          "score_pm": 757,
+          "series_name": "gamma_seq",
+          "source_ordinal": 73,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            38.0,
+            28.0,
+            69.0,
+            69.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 74,
+            "score_pm": 716
+          },
+          "frame_index": 0,
+          "integer_box": [
+            38,
+            28,
+            69,
+            69
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.716,
+          "score_pm": 716,
+          "series_name": "gamma_seq",
+          "source_ordinal": 74,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            47.0,
+            113.0,
+            57.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 75,
+            "score_pm": 330
+          },
+          "frame_index": 0,
+          "integer_box": [
+            47,
+            113,
+            57,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "gamma_seq",
+          "source_ordinal": 75,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            29.0,
+            107.0,
+            41.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 76,
+            "score_pm": 247
+          },
+          "frame_index": 0,
+          "integer_box": [
+            29,
+            107,
+            41,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.247,
+          "score_pm": 247,
+          "series_name": "gamma_seq",
+          "source_ordinal": 76,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            12.0,
+            99.0,
+            23.0,
+            109.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 77,
+            "score_pm": 218
+          },
+          "frame_index": 0,
+          "integer_box": [
+            12,
+            99,
+            23,
+            109
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.218,
+          "score_pm": 218,
+          "series_name": "gamma_seq",
+          "source_ordinal": 77,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 0,
+      "image_sha256": "2761c2f2f28b028edf521f0df16e56823c021370f8e6e66a6088a3429d80ff0d",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "gamma_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+      "candidates": [
+        {
+          "box": [
+            59.0,
+            72.0,
+            105.0,
+            97.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 78,
+            "score_pm": 788
+          },
+          "frame_index": 1,
+          "integer_box": [
+            59,
+            72,
+            105,
+            97
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.788,
+          "score_pm": 788,
+          "series_name": "gamma_seq",
+          "source_ordinal": 78,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            50.0,
+            31.0,
+            79.0,
+            72.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 79,
+            "score_pm": 747
+          },
+          "frame_index": 1,
+          "integer_box": [
+            50,
+            31,
+            79,
+            72
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.747,
+          "score_pm": 747,
+          "series_name": "gamma_seq",
+          "source_ordinal": 79,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            48.0,
+            113.0,
+            59.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 80,
+            "score_pm": 330
+          },
+          "frame_index": 1,
+          "integer_box": [
+            48,
+            113,
+            59,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "gamma_seq",
+          "source_ordinal": 80,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            32.0,
+            107.0,
+            42.0,
+            115.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 81,
+            "score_pm": 258
+          },
+          "frame_index": 1,
+          "integer_box": [
+            32,
+            107,
+            42,
+            115
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.258,
+          "score_pm": 258,
+          "series_name": "gamma_seq",
+          "source_ordinal": 81,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            14.0,
+            99.0,
+            26.0,
+            109.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 82,
+            "score_pm": 229
+          },
+          "frame_index": 1,
+          "integer_box": [
+            14,
+            99,
+            26,
+            109
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.229,
+          "score_pm": 229,
+          "series_name": "gamma_seq",
+          "source_ordinal": 82,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 1,
+      "image_sha256": "4c79054d75b33272dd3d2aa799f0c648908dba263e3ad1ee21c1bdd8d6aa2a1e",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "gamma_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+      "candidates": [],
+      "frame_index": 3,
+      "image_sha256": "3814365e511943dc7801b6560f3c062e54efa87e7ad38fc4bc6fff504e8a2ed8",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "gamma_seq",
+      "status": "failed"
+    },
+    {
+      "candidate_key": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+      "candidates": [
+        {
+          "box": [
+            88.0,
+            68.0,
+            135.0,
+            92.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 91,
+            "score_pm": 881
+          },
+          "frame_index": 4,
+          "integer_box": [
+            88,
+            68,
+            135,
+            92
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.881,
+          "score_pm": 881,
+          "series_name": "gamma_seq",
+          "source_ordinal": 91,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            87.0,
+            24.0,
+            117.0,
+            67.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 92,
+            "score_pm": 840
+          },
+          "frame_index": 4,
+          "integer_box": [
+            87,
+            24,
+            117,
+            67
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.84,
+          "score_pm": 840,
+          "series_name": "gamma_seq",
+          "source_ordinal": 92,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            48.0,
+            114.0,
+            60.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 93,
+            "score_pm": 330
+          },
+          "frame_index": 4,
+          "integer_box": [
+            48,
+            114,
+            60,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "gamma_seq",
+          "source_ordinal": 93,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            31.0,
+            106.0,
+            42.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 94,
+            "score_pm": 291
+          },
+          "frame_index": 4,
+          "integer_box": [
+            31,
+            106,
+            42,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.291,
+          "score_pm": 291,
+          "series_name": "gamma_seq",
+          "source_ordinal": 94,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            15.0,
+            99.0,
+            25.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 95,
+            "score_pm": 262
+          },
+          "frame_index": 4,
+          "integer_box": [
+            15,
+            99,
+            25,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.262,
+          "score_pm": 262,
+          "series_name": "gamma_seq",
+          "source_ordinal": 95,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 4,
+      "image_sha256": "efbe97a852c0058afb3f99ae8da82435bf2d9f15f941232c81183a6c5bd0746a",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "gamma_seq",
+      "status": "ok"
+    },
+    {
+      "candidate_key": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e",
+      "candidates": [
+        {
+          "box": [
+            102.0,
+            69.0,
+            147.0,
+            93.0
+          ],
+          "class_code": 2,
+          "class_name": "vehicle",
+          "extra": {
+            "line_number": 96,
+            "score_pm": 912
+          },
+          "frame_index": 5,
+          "integer_box": [
+            102,
+            69,
+            147,
+            93
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.912,
+          "score_pm": 912,
+          "series_name": "gamma_seq",
+          "source_ordinal": 96,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            103.0,
+            22.0,
+            134.0,
+            65.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 97,
+            "score_pm": 871
+          },
+          "frame_index": 5,
+          "integer_box": [
+            103,
+            22,
+            134,
+            65
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.871,
+          "score_pm": 871,
+          "series_name": "gamma_seq",
+          "source_ordinal": 97,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            51.0,
+            114.0,
+            61.0,
+            122.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 98,
+            "score_pm": 330
+          },
+          "frame_index": 5,
+          "integer_box": [
+            51,
+            114,
+            61,
+            122
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.33,
+          "score_pm": 330,
+          "series_name": "gamma_seq",
+          "source_ordinal": 98,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            33.0,
+            106.0,
+            45.0,
+            116.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 99,
+            "score_pm": 302
+          },
+          "frame_index": 5,
+          "integer_box": [
+            33,
+            106,
+            45,
+            116
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.302,
+          "score_pm": 302,
+          "series_name": "gamma_seq",
+          "source_ordinal": 99,
+          "source_version": "v1"
+        },
+        {
+          "box": [
+            16.0,
+            99.0,
+            27.0,
+            108.0
+          ],
+          "class_code": 1,
+          "class_name": "pedestrian",
+          "extra": {
+            "line_number": 100,
+            "score_pm": 273
+          },
+          "frame_index": 5,
+          "integer_box": [
+            16,
+            99,
+            27,
+            108
+          ],
+          "missing_fields": [],
+          "precision_label": "per_mille_exact",
+          "score": 0.273,
+          "score_pm": 273,
+          "series_name": "gamma_seq",
+          "source_ordinal": 100,
+          "source_version": "v1"
+        }
+      ],
+      "frame_index": 5,
+      "image_sha256": "4a46b55f5c37e75cbf0584edeac0888f84a7843c35aa2ecfa6781287b593f1c2",
+      "image_size": [
+        192,
+        128
+      ],
+      "series_name": "gamma_seq",
+      "status": "ok"
+    }
+  ],
+  "injections": {
+    "all_hit": true,
+    "configured": [
+      {
+        "expected_code": "E_IMAGE_INVALID",
+        "frame_index": 2,
+        "id": "INJ-001",
+        "series_name": "beta_seq",
+        "stage": "detection",
+        "type": "truncated_png"
+      },
+      {
+        "expected_code": "E_FIELD_TRUNCATED",
+        "frame_index": 1,
+        "id": "INJ-002",
+        "series_name": "alpha_seq",
+        "stage": "parsing_v1",
+        "type": "v1_field_missing"
+      },
+      {
+        "expected_code": "E_COORD_INVALID",
+        "frame_index": 2,
+        "id": "INJ-003",
+        "series_name": "gamma_seq",
+        "stage": "parsing",
+        "type": "coordinate_out_of_bounds"
+      },
+      {
+        "expected_code": "E_NON_FINITE",
+        "frame_index": 3,
+        "id": "INJ-004",
+        "series_name": "beta_seq",
+        "stage": "detection",
+        "type": "non_finite_weight"
+      },
+      {
+        "expected_code": "E_CLASS_UNKNOWN",
+        "frame_index": 3,
+        "id": "INJ-005",
+        "series_name": "alpha_seq",
+        "stage": "parsing",
+        "type": "class_code_not_in_map"
+      },
+      {
+        "expected_code": "E_MATCH_INVALID",
+        "frame_index": 3,
+        "id": "INJ-006",
+        "series_name": "gamma_seq",
+        "stage": "matching",
+        "type": "matching_forced_error"
+      },
+      {
+        "expected_code": "E_SERIALIZE_INVALID",
+        "frame_index": 4,
+        "id": "INJ-007",
+        "series_name": "beta_seq",
+        "stage": "serialization",
+        "type": "serialization_forced_error"
+      }
+    ],
+    "hits": [
+      {
+        "configured_stage": "detection",
+        "expected_code": "E_IMAGE_INVALID",
+        "frame_index": 2,
+        "hit": true,
+        "id": "INJ-001",
+        "observed_error_code": "E_IMAGE_INVALID",
+        "observed_stage": "detection",
+        "series_name": "beta_seq",
+        "type": "truncated_png"
+      },
+      {
+        "configured_stage": "parsing_v1",
+        "expected_code": "E_FIELD_TRUNCATED",
+        "frame_index": 1,
+        "hit": true,
+        "id": "INJ-002",
+        "observed_error_code": "E_FIELD_TRUNCATED",
+        "observed_stage": "parsing_v1",
+        "series_name": "alpha_seq",
+        "type": "v1_field_missing"
+      },
+      {
+        "configured_stage": "parsing",
+        "expected_code": "E_COORD_INVALID",
+        "frame_index": 2,
+        "hit": true,
+        "id": "INJ-003",
+        "observed_error_code": "E_COORD_INVALID",
+        "observed_stage": "parsing_v1",
+        "series_name": "gamma_seq",
+        "type": "coordinate_out_of_bounds"
+      },
+      {
+        "configured_stage": "detection",
+        "expected_code": "E_NON_FINITE",
+        "frame_index": 3,
+        "hit": true,
+        "id": "INJ-004",
+        "observed_error_code": "E_NON_FINITE",
+        "observed_stage": "detection",
+        "series_name": "beta_seq",
+        "type": "non_finite_weight"
+      },
+      {
+        "configured_stage": "parsing",
+        "expected_code": "E_CLASS_UNKNOWN",
+        "frame_index": 3,
+        "hit": true,
+        "id": "INJ-005",
+        "observed_error_code": "E_CLASS_UNKNOWN",
+        "observed_stage": "parsing_v1",
+        "series_name": "alpha_seq",
+        "type": "class_code_not_in_map"
+      },
+      {
+        "configured_stage": "matching",
+        "expected_code": "E_MATCH_INVALID",
+        "frame_index": 3,
+        "hit": true,
+        "id": "INJ-006",
+        "observed_error_code": "E_MATCH_INVALID",
+        "observed_stage": "matching",
+        "series_name": "gamma_seq",
+        "type": "matching_forced_error"
+      },
+      {
+        "configured_stage": "serialization",
+        "expected_code": "E_SERIALIZE_INVALID",
+        "frame_index": 4,
+        "hit": true,
+        "id": "INJ-007",
+        "observed_error_code": "E_SERIALIZE_INVALID",
+        "observed_stage": "serialization",
+        "series_name": "beta_seq",
+        "type": "serialization_forced_error"
+      }
+    ]
+  },
+  "input_fingerprint": "2f8d2d915ff60f30908ae93011481007a62da120ae8cba688d788c8bc51b113e",
+  "invalidation": {
+    "frame_ledger": [
+      {
+        "action": "recomputed",
+        "cache_key": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_FIELD_TRUNCATED",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5",
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_CLASS_UNKNOWN",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "frame_index": 6,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d",
+        "frame_index": 7,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_IMAGE_INVALID",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_NON_FINITE",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a",
+        "frame_index": 6,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_COORD_INVALID",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      }
+    ],
+    "ledger": [
+      {
+        "action": "recomputed",
+        "cache_key": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_FIELD_TRUNCATED",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5",
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_CLASS_UNKNOWN",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "frame_index": 6,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d",
+        "frame_index": 7,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "alpha_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_IMAGE_INVALID",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_NON_FINITE",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a",
+        "frame_index": 6,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "beta_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "frame_index": 0,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+        "frame_index": 1,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "failed",
+        "cache_key": null,
+        "frame_index": 2,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "E_COORD_INVALID",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+        "frame_index": 3,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "frame_index": 4,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e",
+        "frame_index": 5,
+        "kind": "frame",
+        "previous_cache_key": null,
+        "reason": "new-frame",
+        "series_name": "gamma_seq"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "5136530d69e5c382fb94531b7e9f4425b7d79c938feb66f316c11e68d2e5a916",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:12383599baf9"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d847b86eefb3e9dd380303e07273102efa0f239ed3231be33ef3140a6f2c07d1",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:22311e5cb185"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "f5ad5dfc3c0eb55dc0f5ee0a1dff30c329e785829e5f5fcc769931f165deb2fe",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "b924bee9758bf76411ecd701d6442a3960b7e6bc88aafb37cfd38344a308557b",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:f29492473485"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "b79439211d05b7795daabe4502441dd00bdf76b95eeecdb31f3130e952fee27d",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0002:0619109032ff"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "ab1c86849e09b72b46cadb5b3fb57c23f5da8cda71b95c04a36e9e8f31820a2a",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0004:1514a98d56dc"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c612d5d25aa0593565a0b5da8b44f280fbfda51892c0d4d1852cdeaacad8eae6",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0004:51dc7241240d"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "959f95d7cf59e2284dd0d8000e7e036ce69bd199acc3573dae72ed14a8f5fe48",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0007:497b664192ea"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "168093a4604f33da58fdaa4f3a8aa429a4d5c88b1dbc4bb1ef52158d68492b3e",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0000:5955e3b37c6a"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "1d1a39c83adefac35d87154546106b5a700901bb4677fb2f9714612075519ba0",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0002:1c0dfda44bb0"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "86e76d5f6fc0a2c2eed92fa0b3e801bb5be55867be294bc9e81c9fdae6d58ca1",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0004:668ed07734b8"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c22bcc4e398b2a1daa5150a7984aa995d4595d07d31600b80c5af37d8dbb34b5",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:08ccb8993d13"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "68f64154098adfe725f8266b28f686371fdff2de292ccaf84efbff578e5701b8",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:1c66c212846f"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c9ce3889d0b9219fb90c39e105a9c886d52e7ff977bf2daba196d0893644ed64",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3cbe629c735053216cc418e6904b4c6ac31102af6a6c6832c51828dff85590df",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:92e842ef2870"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "fbfd3d88c5629e3b81e8d31bac02a5bc1017233513f9b354543524c4dabf3686",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0005:128508fd0995"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3fe1d49e3ac53fb35fc36d4019fa594371456fb41c8c45b1570ba9e724b31dc1",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C02:F0000:9860571a70bc"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d9b96710ddf8b9be5aac03abd0182e8ba2e14f43ccecd8658570109d3edef643",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C02:F0004:4f5bdea9a42e"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "61736d5afcedd9ca5028f71cf6a6e11b2014a63eef69a9b68034f791eb5a02eb",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "1d558a615db72a400e9c9c1826aeeefb79de52585b56642fb45a0d25333e5c07",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:ea2bbf6632a1"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "54235fc90b91b7fb607d249e0d24d8e21fac4e14508922a132b9f7b841b26488",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "4b74a6e1d829e40276c01782e48a97cccefd62b3d47499bcbf0dc64f972c533a",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:f2c29856db03"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "bbc4f67fb893bc8c1a83469777da0a1e4b10290d1a7be618b32b28196d429ab4",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0004:6b0a962806f6"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "9e7dc3a9b3254e47d4ed60656dc51ef04c3ec337617fce5ca975df48038b95d3",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0005:8562bce5c1f9"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d5547fe0d1d3a5e222e224a4cdcca7ae19e6cd036845cdec1f798c0ce623cc64",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C02:F0000:10268735038a"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "f8f108846790f003d08f6418e1f1a6cbf78c46ab416b30aebfd9400f633dbd10",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C02:F0004:1986ae95052c"
+      }
+    ],
+    "match_audits": [
+      {
+        "closed": [
+          "alpha_seq:C01:F0000:12383599baf9",
+          "alpha_seq:C01:F0000:22311e5cb185",
+          "alpha_seq:C01:F0002:0619109032ff",
+          "alpha_seq:C02:F0000:5955e3b37c6a",
+          "alpha_seq:C02:F0002:1c0dfda44bb0"
+        ],
+        "created": [
+          "alpha_seq:C01:F0000:12383599baf9",
+          "alpha_seq:C01:F0000:22311e5cb185",
+          "alpha_seq:C01:F0000:f29492473485",
+          "alpha_seq:C01:F0000:66fcf40a9d08",
+          "alpha_seq:C01:F0002:0619109032ff",
+          "alpha_seq:C01:F0004:1514a98d56dc",
+          "alpha_seq:C01:F0004:51dc7241240d",
+          "alpha_seq:C01:F0007:497b664192ea",
+          "alpha_seq:C02:F0000:5955e3b37c6a",
+          "alpha_seq:C02:F0002:1c0dfda44bb0",
+          "alpha_seq:C02:F0004:668ed07734b8"
+        ],
+        "evicted": [
+          {
+            "frame_index": 0,
+            "last_box": [
+              13,
+              99,
+              23,
+              108
+            ],
+            "last_score_pm": 192,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 2,
+            "last_box": [
+              16,
+              99,
+              27,
+              109
+            ],
+            "last_score_pm": 214,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 2,
+            "last_box": [
+              33,
+              107,
+              45,
+              115
+            ],
+            "last_score_pm": 243,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              14,
+              100,
+              26,
+              108
+            ],
+            "last_score_pm": 236,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              32,
+              106,
+              42,
+              115
+            ],
+            "last_score_pm": 265,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              17,
+              100,
+              27,
+              108
+            ],
+            "last_score_pm": 247,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              33,
+              106,
+              44,
+              115
+            ],
+            "last_score_pm": 276,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "frame_index": 6,
+            "last_box": [
+              13,
+              99,
+              23,
+              108
+            ],
+            "last_score_pm": 258,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 7,
+            "last_box": [
+              14,
+              99,
+              25,
+              108
+            ],
+            "last_score_pm": 269,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "frame_index": 7,
+            "last_box": [
+              31,
+              106,
+              43,
+              116
+            ],
+            "last_score_pm": 298,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          }
+        ],
+        "extended": [
+          "alpha_seq:C01:F0000:f29492473485",
+          "alpha_seq:C01:F0004:51dc7241240d",
+          "alpha_seq:C01:F0004:1514a98d56dc",
+          "alpha_seq:C01:F0004:1514a98d56dc",
+          "alpha_seq:C01:F0004:51dc7241240d",
+          "alpha_seq:C01:F0004:51dc7241240d",
+          "alpha_seq:C01:F0000:f29492473485",
+          "alpha_seq:C02:F0004:668ed07734b8",
+          "alpha_seq:C02:F0004:668ed07734b8",
+          "alpha_seq:C02:F0004:668ed07734b8"
+        ],
+        "recomputed": [
+          "alpha_seq:C01:F0000:12383599baf9",
+          "alpha_seq:C01:F0000:22311e5cb185",
+          "alpha_seq:C01:F0000:66fcf40a9d08",
+          "alpha_seq:C01:F0000:f29492473485",
+          "alpha_seq:C01:F0002:0619109032ff",
+          "alpha_seq:C01:F0004:1514a98d56dc",
+          "alpha_seq:C01:F0004:51dc7241240d",
+          "alpha_seq:C01:F0007:497b664192ea",
+          "alpha_seq:C02:F0000:5955e3b37c6a",
+          "alpha_seq:C02:F0002:1c0dfda44bb0",
+          "alpha_seq:C02:F0004:668ed07734b8"
+        ],
+        "reentered": [
+          {
+            "eviction_count": 1,
+            "frame_index": 2,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "eviction_count": 1,
+            "frame_index": 4,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "eviction_count": 2,
+            "frame_index": 4,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "eviction_count": 2,
+            "frame_index": 5,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "eviction_count": 3,
+            "frame_index": 5,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "eviction_count": 3,
+            "frame_index": 6,
+            "track_id": "alpha_seq:C01:F0000:f29492473485"
+          },
+          {
+            "eviction_count": 4,
+            "frame_index": 6,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          },
+          {
+            "eviction_count": 5,
+            "frame_index": 7,
+            "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+          }
+        ],
+        "reused": [],
+        "series_name": "alpha_seq"
+      },
+      {
+        "closed": [
+          "beta_seq:C01:F0000:92e842ef2870",
+          "beta_seq:C02:F0000:9860571a70bc"
+        ],
+        "created": [
+          "beta_seq:C01:F0000:92e842ef2870",
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0000:1c66c212846f",
+          "beta_seq:C01:F0000:1ce7ec83030d",
+          "beta_seq:C01:F0004:42202e2f0f79",
+          "beta_seq:C01:F0005:128508fd0995",
+          "beta_seq:C02:F0000:9860571a70bc",
+          "beta_seq:C02:F0004:4f5bdea9a42e"
+        ],
+        "evicted": [
+          {
+            "frame_index": 0,
+            "last_box": [
+              12,
+              99,
+              23,
+              108
+            ],
+            "last_score_pm": 205,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "frame_index": 1,
+            "last_box": [
+              14,
+              99,
+              25,
+              109
+            ],
+            "last_score_pm": 216,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              15,
+              100,
+              25,
+              108
+            ],
+            "last_score_pm": 249,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              31,
+              106,
+              42,
+              115
+            ],
+            "last_score_pm": 278,
+            "track_id": "beta_seq:C01:F0000:1c66c212846f"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              17,
+              99,
+              27,
+              108
+            ],
+            "last_score_pm": 260,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              33,
+              106,
+              44,
+              116
+            ],
+            "last_score_pm": 289,
+            "track_id": "beta_seq:C01:F0000:1c66c212846f"
+          },
+          {
+            "frame_index": 6,
+            "last_box": [
+              12,
+              99,
+              23,
+              108
+            ],
+            "last_score_pm": 271,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "frame_index": 6,
+            "last_box": [
+              29,
+              106,
+              41,
+              116
+            ],
+            "last_score_pm": 300,
+            "track_id": "beta_seq:C01:F0000:1c66c212846f"
+          }
+        ],
+        "extended": [
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0000:1c66c212846f",
+          "beta_seq:C01:F0000:92e842ef2870",
+          "beta_seq:C01:F0000:1c66c212846f",
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0005:128508fd0995",
+          "beta_seq:C02:F0000:9860571a70bc",
+          "beta_seq:C02:F0004:4f5bdea9a42e",
+          "beta_seq:C02:F0004:4f5bdea9a42e"
+        ],
+        "recomputed": [
+          "beta_seq:C01:F0000:08ccb8993d13",
+          "beta_seq:C01:F0000:1c66c212846f",
+          "beta_seq:C01:F0000:1ce7ec83030d",
+          "beta_seq:C01:F0000:92e842ef2870",
+          "beta_seq:C01:F0004:42202e2f0f79",
+          "beta_seq:C01:F0005:128508fd0995",
+          "beta_seq:C02:F0000:9860571a70bc",
+          "beta_seq:C02:F0004:4f5bdea9a42e"
+        ],
+        "reentered": [
+          {
+            "eviction_count": 1,
+            "frame_index": 1,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "eviction_count": 2,
+            "frame_index": 4,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "eviction_count": 1,
+            "frame_index": 5,
+            "track_id": "beta_seq:C01:F0000:1c66c212846f"
+          },
+          {
+            "eviction_count": 3,
+            "frame_index": 5,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          },
+          {
+            "eviction_count": 2,
+            "frame_index": 6,
+            "track_id": "beta_seq:C01:F0000:1c66c212846f"
+          },
+          {
+            "eviction_count": 4,
+            "frame_index": 6,
+            "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+          }
+        ],
+        "reused": [],
+        "series_name": "beta_seq"
+      },
+      {
+        "closed": [
+          "gamma_seq:C01:F0000:ea2bbf6632a1",
+          "gamma_seq:C02:F0000:10268735038a"
+        ],
+        "created": [
+          "gamma_seq:C01:F0000:ea2bbf6632a1",
+          "gamma_seq:C01:F0000:f2c29856db03",
+          "gamma_seq:C01:F0000:96a4b3b58a84",
+          "gamma_seq:C01:F0000:ebe752126e41",
+          "gamma_seq:C01:F0004:6b0a962806f6",
+          "gamma_seq:C01:F0005:8562bce5c1f9",
+          "gamma_seq:C02:F0000:10268735038a",
+          "gamma_seq:C02:F0004:1986ae95052c"
+        ],
+        "evicted": [
+          {
+            "frame_index": 0,
+            "last_box": [
+              12,
+              99,
+              23,
+              109
+            ],
+            "last_score_pm": 218,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "frame_index": 1,
+            "last_box": [
+              14,
+              99,
+              26,
+              109
+            ],
+            "last_score_pm": 229,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              15,
+              99,
+              25,
+              108
+            ],
+            "last_score_pm": 262,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "frame_index": 4,
+            "last_box": [
+              31,
+              106,
+              42,
+              116
+            ],
+            "last_score_pm": 291,
+            "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              16,
+              99,
+              27,
+              108
+            ],
+            "last_score_pm": 273,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "frame_index": 5,
+            "last_box": [
+              33,
+              106,
+              45,
+              116
+            ],
+            "last_score_pm": 302,
+            "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+          }
+        ],
+        "extended": [
+          "gamma_seq:C01:F0000:f2c29856db03",
+          "gamma_seq:C01:F0000:96a4b3b58a84",
+          "gamma_seq:C01:F0000:ea2bbf6632a1",
+          "gamma_seq:C01:F0000:f2c29856db03",
+          "gamma_seq:C01:F0000:96a4b3b58a84",
+          "gamma_seq:C01:F0000:f2c29856db03",
+          "gamma_seq:C02:F0000:10268735038a",
+          "gamma_seq:C02:F0004:1986ae95052c"
+        ],
+        "recomputed": [
+          "gamma_seq:C01:F0000:96a4b3b58a84",
+          "gamma_seq:C01:F0000:ea2bbf6632a1",
+          "gamma_seq:C01:F0000:ebe752126e41",
+          "gamma_seq:C01:F0000:f2c29856db03",
+          "gamma_seq:C01:F0004:6b0a962806f6",
+          "gamma_seq:C01:F0005:8562bce5c1f9",
+          "gamma_seq:C02:F0000:10268735038a",
+          "gamma_seq:C02:F0004:1986ae95052c"
+        ],
+        "reentered": [
+          {
+            "eviction_count": 1,
+            "frame_index": 1,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "eviction_count": 2,
+            "frame_index": 4,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          },
+          {
+            "eviction_count": 1,
+            "frame_index": 5,
+            "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+          },
+          {
+            "eviction_count": 3,
+            "frame_index": 5,
+            "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+          }
+        ],
+        "reused": [],
+        "series_name": "gamma_seq"
+      }
+    ],
+    "track_ledger": [
+      {
+        "action": "recomputed",
+        "cache_key": "5136530d69e5c382fb94531b7e9f4425b7d79c938feb66f316c11e68d2e5a916",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:12383599baf9"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d847b86eefb3e9dd380303e07273102efa0f239ed3231be33ef3140a6f2c07d1",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:22311e5cb185"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "f5ad5dfc3c0eb55dc0f5ee0a1dff30c329e785829e5f5fcc769931f165deb2fe",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "b924bee9758bf76411ecd701d6442a3960b7e6bc88aafb37cfd38344a308557b",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0000:f29492473485"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "b79439211d05b7795daabe4502441dd00bdf76b95eeecdb31f3130e952fee27d",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0002:0619109032ff"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "ab1c86849e09b72b46cadb5b3fb57c23f5da8cda71b95c04a36e9e8f31820a2a",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0004:1514a98d56dc"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c612d5d25aa0593565a0b5da8b44f280fbfda51892c0d4d1852cdeaacad8eae6",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0004:51dc7241240d"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "959f95d7cf59e2284dd0d8000e7e036ce69bd199acc3573dae72ed14a8f5fe48",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C01:F0007:497b664192ea"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "168093a4604f33da58fdaa4f3a8aa429a4d5c88b1dbc4bb1ef52158d68492b3e",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0000:5955e3b37c6a"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "1d1a39c83adefac35d87154546106b5a700901bb4677fb2f9714612075519ba0",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0002:1c0dfda44bb0"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "86e76d5f6fc0a2c2eed92fa0b3e801bb5be55867be294bc9e81c9fdae6d58ca1",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "alpha_seq",
+        "track_id": "alpha_seq:C02:F0004:668ed07734b8"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c22bcc4e398b2a1daa5150a7984aa995d4595d07d31600b80c5af37d8dbb34b5",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:08ccb8993d13"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "68f64154098adfe725f8266b28f686371fdff2de292ccaf84efbff578e5701b8",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:1c66c212846f"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "c9ce3889d0b9219fb90c39e105a9c886d52e7ff977bf2daba196d0893644ed64",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3cbe629c735053216cc418e6904b4c6ac31102af6a6c6832c51828dff85590df",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0000:92e842ef2870"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "fbfd3d88c5629e3b81e8d31bac02a5bc1017233513f9b354543524c4dabf3686",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C01:F0005:128508fd0995"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "3fe1d49e3ac53fb35fc36d4019fa594371456fb41c8c45b1570ba9e724b31dc1",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C02:F0000:9860571a70bc"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d9b96710ddf8b9be5aac03abd0182e8ba2e14f43ccecd8658570109d3edef643",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "beta_seq",
+        "track_id": "beta_seq:C02:F0004:4f5bdea9a42e"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "61736d5afcedd9ca5028f71cf6a6e11b2014a63eef69a9b68034f791eb5a02eb",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "1d558a615db72a400e9c9c1826aeeefb79de52585b56642fb45a0d25333e5c07",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:ea2bbf6632a1"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "54235fc90b91b7fb607d249e0d24d8e21fac4e14508922a132b9f7b841b26488",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "4b74a6e1d829e40276c01782e48a97cccefd62b3d47499bcbf0dc64f972c533a",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0000:f2c29856db03"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "bbc4f67fb893bc8c1a83469777da0a1e4b10290d1a7be618b32b28196d429ab4",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0004:6b0a962806f6"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "9e7dc3a9b3254e47d4ed60656dc51ef04c3ec337617fce5ca975df48038b95d3",
+        "class_code": 1,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C01:F0005:8562bce5c1f9"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "d5547fe0d1d3a5e222e224a4cdcca7ae19e6cd036845cdec1f798c0ce623cc64",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C02:F0000:10268735038a"
+      },
+      {
+        "action": "recomputed",
+        "cache_key": "f8f108846790f003d08f6418e1f1a6cbf78c46ab416b30aebfd9400f633dbd10",
+        "class_code": 2,
+        "kind": "track",
+        "previous_cache_key": null,
+        "reason": "new-track",
+        "series_name": "gamma_seq",
+        "track_id": "gamma_seq:C02:F0004:1986ae95052c"
+      }
+    ]
+  },
+  "process_exit_semantics": {
+    "business_errors_in_exit_code": false,
+    "configuration_exit_code": 2,
+    "simulated_termination_exit_code": 75,
+    "success_exit_code": 0,
+    "unexpected_exit_code": 3
+  },
+  "report_path": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/injected_out/validation_report.json",
+  "schema_version": "candidate-exchange-report-v1",
+  "serialization": {
+    "frame_count": 14,
+    "path": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/injected_out/serialization/frames.jsonl",
+    "sha256": "91bd19a726e82200bdbf0e6a24ac0ce352d49674c776b003f64f849a27e21707",
+    "tracks_pruned_after_serialization_failure": [
+      "beta_seq:C01:F0000:08ccb8993d13",
+      "beta_seq:C01:F0000:1c66c212846f",
+      "beta_seq:C01:F0000:1ce7ec83030d",
+      "beta_seq:C01:F0004:42202e2f0f79",
+      "beta_seq:C02:F0004:4f5bdea9a42e"
+    ]
+  },
+  "sidecar_metadata_hash": "b57ec1e3395eea5d7b1bd5dc21ec3d230dfc6e988eb9699cb348bc549bd58902",
+  "snapshot": {
+    "final_manifest": {
+      "complete_stages": [
+        "detection",
+        "matching",
+        "serialization"
+      ],
+      "config_hash": "e0240e6d6277152e0236c57a52949ab504ab97d1849bbbfd4be9fb1e437d4ebb",
+      "created_unix_ms": 1795297004162,
+      "extra": {
+        "active_version": "v1",
+        "series_count": 3,
+        "workers": 4
+      },
+      "format_fingerprints": {
+        "active": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+        "active_version": "v1",
+        "v1": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+        "v2": "27c8a54240aeab5919d3669f3fbfde3acd84ce4973e84278b237b2e1a02284d1"
+      },
+      "global_version": 5,
+      "input_fingerprint": "2f8d2d915ff60f30908ae93011481007a62da120ae8cba688d788c8bc51b113e",
+      "manifest_version": 1,
+      "parent_version": 4,
+      "partial": false,
+      "sidecar_metadata_hash": "b57ec1e3395eea5d7b1bd5dc21ec3d230dfc6e988eb9699cb348bc549bd58902",
+      "snapshot_commit_interval": 2,
+      "stages": {
+        "detection": {
+          "bytes": 50828,
+          "partial": false,
+          "path": "stages/detection.json",
+          "sha256": "85aae9099f7879166c8057ca7a8d23a42bc02c79e362094e8d4248c41678701c",
+          "stage_version": 5
+        },
+        "matching": {
+          "bytes": 66056,
+          "partial": false,
+          "path": "stages/matching.json",
+          "sha256": "2b45e627cd4ff3d51de0cee3336ba6524002ae6ff30a828c14548d803f8dca06",
+          "stage_version": 5
+        },
+        "serialization": {
+          "bytes": 175948,
+          "partial": false,
+          "path": "stages/serialization.json",
+          "sha256": "dfac6139b7d708a7ca3ae93a9cccaf19e6920d6c1fe06f7d14535ec7ec67dd98",
+          "stage_version": 5
+        }
+      },
+      "version_id": "000000000005"
+    },
+    "recovered_from_version": null,
+    "recovery_point_version": 5,
+    "root": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/snapshots_injected"
+  },
+  "snapshot_commits": [
+    {
+      "global_version": 1,
+      "partial": true,
+      "stage": "detection",
+      "stages": [
+        "detection"
+      ]
+    },
+    {
+      "global_version": 2,
+      "partial": false,
+      "stage": "detection",
+      "stages": [
+        "detection"
+      ]
+    },
+    {
+      "global_version": 3,
+      "partial": true,
+      "stage": "matching",
+      "stages": [
+        "detection",
+        "matching"
+      ]
+    },
+    {
+      "global_version": 4,
+      "partial": false,
+      "stage": "matching",
+      "stages": [
+        "detection",
+        "matching"
+      ]
+    },
+    {
+      "global_version": 5,
+      "partial": false,
+      "stage": "serialization",
+      "stages": [
+        "detection",
+        "matching",
+        "serialization"
+      ]
+    }
+  ],
+  "snapshot_recovery_at_start": {
+    "available_stages": [],
+    "ignored_temporary_directories": [],
+    "recovered": false,
+    "recovery_point_version": null
+  },
+  "status": "completed_with_failures",
+  "summary": {
+    "candidate_count": 69,
+    "failure_count": 8,
+    "frame_count": 16,
+    "injection_count": 7,
+    "injection_hit_count": 7,
+    "recomputed_frame_count": 16,
+    "recomputed_track_count": 26,
+    "reused_frame_count": 0,
+    "reused_track_count": 0,
+    "series_count": 3,
+    "successful_frame_count": 14,
+    "track_count": 26
+  },
+  "tool_version": "1.0.0",
+  "tracks": [
+    {
+      "cache_key": "5136530d69e5c382fb94531b7e9f4425b7d79c938feb66f316c11e68d2e5a916",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 0,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            18,
+            24,
+            48,
+            67
+          ],
+          "candidate_key": "e4ce1ad8371978fbfa4cfad1bc4bfb9d84b3ac60c595b4b4304973bc1e964882",
+          "center": [
+            33000,
+            45500
+          ],
+          "frame_index": 0,
+          "score_pm": 793,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0000:12383599baf9"
+    },
+    {
+      "cache_key": "d847b86eefb3e9dd380303e07273102efa0f239ed3231be33ef3140a6f2c07d1",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 0,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            46,
+            114,
+            58,
+            122
+          ],
+          "candidate_key": "502c6a65f150fc17f2390b923d91c5857bf4aaa6f48e0d2922822a4939c3acbf",
+          "center": [
+            52000,
+            118000
+          ],
+          "frame_index": 0,
+          "score_pm": 330,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0000:22311e5cb185"
+    },
+    {
+      "cache_key": "f5ad5dfc3c0eb55dc0f5ee0a1dff30c329e785829e5f5fcc769931f165deb2fe",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d",
+        "1": "missing-frame-key",
+        "2": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5",
+        "3": "missing-frame-key",
+        "4": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "5": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "6": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "7": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d"
+      },
+      "eviction_count": 6,
+      "frame_count": 6,
+      "frame_end": 7,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            13,
+            99,
+            23,
+            108
+          ],
+          "candidate_key": "3ae1ada44488a9d62aa48a10813a5df1a400582372f6c6c72588a1c0dc6c9936",
+          "center": [
+            18000,
+            103500
+          ],
+          "frame_index": 0,
+          "score_pm": 192,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            16,
+            99,
+            27,
+            109
+          ],
+          "candidate_key": "b38b470a5f5f44832b2a315d947bc3cc7650811ede65426a3dc872df15a17d7f",
+          "center": [
+            21500,
+            104000
+          ],
+          "frame_index": 2,
+          "score_pm": 214,
+          "velocity": [
+            1750,
+            250
+          ]
+        },
+        {
+          "box": [
+            14,
+            100,
+            26,
+            108
+          ],
+          "candidate_key": "319faa861c8abc1440e606b2bc6e51bb6ad60d73e44c880e1be12357cc00e6b3",
+          "center": [
+            20000,
+            104000
+          ],
+          "frame_index": 4,
+          "score_pm": 236,
+          "velocity": [
+            -750,
+            0
+          ]
+        },
+        {
+          "box": [
+            17,
+            100,
+            27,
+            108
+          ],
+          "candidate_key": "4232eed8f7c65442ecbc12ddb899ebe6d623dd0cb71f88ab2aa0a4f615dd1518",
+          "center": [
+            22000,
+            104000
+          ],
+          "frame_index": 5,
+          "score_pm": 247,
+          "velocity": [
+            2000,
+            0
+          ]
+        },
+        {
+          "box": [
+            13,
+            99,
+            23,
+            108
+          ],
+          "candidate_key": "d1529b00c6dc948f6248eb4afe0393180e194247bd8e76386c68e22a60ddc3ab",
+          "center": [
+            18000,
+            103500
+          ],
+          "frame_index": 6,
+          "score_pm": 258,
+          "velocity": [
+            -4000,
+            -500
+          ]
+        },
+        {
+          "box": [
+            14,
+            99,
+            25,
+            108
+          ],
+          "candidate_key": "5973a0c697ffa50c6a1535f25d34459516766850ea7f777bdd14dd1db26f326c",
+          "center": [
+            19500,
+            103500
+          ],
+          "frame_index": 7,
+          "score_pm": 269,
+          "velocity": [
+            1500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": true,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0000:66fcf40a9d08"
+    },
+    {
+      "cache_key": "b924bee9758bf76411ecd701d6442a3960b7e6bc88aafb37cfd38344a308557b",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d",
+        "1": "missing-frame-key",
+        "2": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5",
+        "3": "missing-frame-key",
+        "4": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "5": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "6": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "7": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d"
+      },
+      "eviction_count": 4,
+      "frame_count": 6,
+      "frame_end": 7,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            29,
+            106,
+            40,
+            116
+          ],
+          "candidate_key": "1017df073fddc13e0641aa114fd82caf9be9b5c10a1077e1433cf97b90ae2b71",
+          "center": [
+            34500,
+            111000
+          ],
+          "frame_index": 0,
+          "score_pm": 221,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            33,
+            107,
+            45,
+            115
+          ],
+          "candidate_key": "087a6683b318039a5f422e9a46e5b6af082742755222c88f58619db3f07b915c",
+          "center": [
+            39000,
+            111000
+          ],
+          "frame_index": 2,
+          "score_pm": 243,
+          "velocity": [
+            2250,
+            0
+          ]
+        },
+        {
+          "box": [
+            32,
+            106,
+            42,
+            115
+          ],
+          "candidate_key": "3131cabe8c20d056edd906ef19d6784e462e93289343a2abff3d5a6306dc2805",
+          "center": [
+            37000,
+            110500
+          ],
+          "frame_index": 4,
+          "score_pm": 265,
+          "velocity": [
+            -1000,
+            -250
+          ]
+        },
+        {
+          "box": [
+            33,
+            106,
+            44,
+            115
+          ],
+          "candidate_key": "b6fd3967e2a3e66178fc46f21e3a6c4bd9c471295bdf10b10ea0b70189176c5c",
+          "center": [
+            38500,
+            110500
+          ],
+          "frame_index": 5,
+          "score_pm": 276,
+          "velocity": [
+            1500,
+            0
+          ]
+        },
+        {
+          "box": [
+            29,
+            106,
+            40,
+            116
+          ],
+          "candidate_key": "a96f1292033e6ab601a3231bec092c96ef2e755168c95afe0f8e96f75f5f2e4a",
+          "center": [
+            34500,
+            111000
+          ],
+          "frame_index": 6,
+          "score_pm": 287,
+          "velocity": [
+            -4000,
+            500
+          ]
+        },
+        {
+          "box": [
+            31,
+            106,
+            43,
+            116
+          ],
+          "candidate_key": "152c9385e90075c11499caa4a7ded1efe74d9e3b3ce79ed01e75e382933a7432",
+          "center": [
+            37000,
+            111000
+          ],
+          "frame_index": 7,
+          "score_pm": 298,
+          "velocity": [
+            2500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": true,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0000:f29492473485"
+    },
+    {
+      "cache_key": "168093a4604f33da58fdaa4f3a8aa429a4d5c88b1dbc4bb1ef52158d68492b3e",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "0": "4c51bc6e560199073b1c3d37b1d6a7aca73dbf711df905b598552b5fab92650d"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 0,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            35,
+            77,
+            82,
+            101
+          ],
+          "candidate_key": "975f451495493faebce97b594da0d08ef46bfc34807c2902167cfcebd1ccd8eb",
+          "center": [
+            58500,
+            89000
+          ],
+          "frame_index": 0,
+          "score_pm": 834,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C02:F0000:5955e3b37c6a"
+    },
+    {
+      "cache_key": "b79439211d05b7795daabe4502441dd00bdf76b95eeecdb31f3130e952fee27d",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "2": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 2,
+      "frame_start": 2,
+      "frames": [
+        {
+          "box": [
+            45,
+            30,
+            76,
+            71
+          ],
+          "candidate_key": "0ce4d48e71aebc5ccc806c49ba91afa3a1a8a8d48bc73ff2b3720ff567db68e6",
+          "center": [
+            60500,
+            50500
+          ],
+          "frame_index": 2,
+          "score_pm": 855,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0002:0619109032ff"
+    },
+    {
+      "cache_key": "1d1a39c83adefac35d87154546106b5a700901bb4677fb2f9714612075519ba0",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "2": "8b4416972d0fa0114b094c6388190686a3d1376f16e0f9defa9210c098c1d7d5"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 2,
+      "frame_start": 2,
+      "frames": [
+        {
+          "box": [
+            57,
+            74,
+            102,
+            99
+          ],
+          "candidate_key": "9eac2303605e3cb561bfa96ff7adc893da2035ea2fe57c15325f4baf8f99dae8",
+          "center": [
+            79500,
+            86500
+          ],
+          "frame_index": 2,
+          "score_pm": 896,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C02:F0002:1c0dfda44bb0"
+    },
+    {
+      "cache_key": "ab1c86849e09b72b46cadb5b3fb57c23f5da8cda71b95c04a36e9e8f31820a2a",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "4": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "5": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "6": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f"
+      },
+      "eviction_count": 0,
+      "frame_count": 3,
+      "frame_end": 6,
+      "frame_start": 4,
+      "frames": [
+        {
+          "box": [
+            73,
+            30,
+            102,
+            72
+          ],
+          "candidate_key": "daba5ef53fb12a6f099e12c81b033162e9abe129a653fc79a6eefc5836f88d46",
+          "center": [
+            87500,
+            51000
+          ],
+          "frame_index": 4,
+          "score_pm": 917,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            83,
+            24,
+            113,
+            66
+          ],
+          "candidate_key": "9e9e461b15684bbe70b446507f9e71185e458b969ac46757f8bc7cee64d756ef",
+          "center": [
+            98000,
+            45000
+          ],
+          "frame_index": 5,
+          "score_pm": 948,
+          "velocity": [
+            10500,
+            -6000
+          ]
+        },
+        {
+          "box": [
+            94,
+            22,
+            124,
+            65
+          ],
+          "candidate_key": "2d348df5bcfc20a72f9f09aeb25303af1fc5e6adc20db729026f9b74058aab33",
+          "center": [
+            109000,
+            43500
+          ],
+          "frame_index": 6,
+          "score_pm": 979,
+          "velocity": [
+            11000,
+            -1500
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0004:1514a98d56dc"
+    },
+    {
+      "cache_key": "c612d5d25aa0593565a0b5da8b44f280fbfda51892c0d4d1852cdeaacad8eae6",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "4": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "5": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "6": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "7": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d"
+      },
+      "eviction_count": 0,
+      "frame_count": 4,
+      "frame_end": 7,
+      "frame_start": 4,
+      "frames": [
+        {
+          "box": [
+            48,
+            113,
+            59,
+            123
+          ],
+          "candidate_key": "2f3796c62f1657abca8026a8de98272a47fba2abf739c4d5580d8934fdb8fec2",
+          "center": [
+            53500,
+            118000
+          ],
+          "frame_index": 4,
+          "score_pm": 330,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            50,
+            113,
+            62,
+            123
+          ],
+          "candidate_key": "a52bff1c90c426a6977420820b034c37e81bd97fd1d3809d709e324242e6457e",
+          "center": [
+            56000,
+            118000
+          ],
+          "frame_index": 5,
+          "score_pm": 330,
+          "velocity": [
+            2500,
+            0
+          ]
+        },
+        {
+          "box": [
+            46,
+            114,
+            58,
+            122
+          ],
+          "candidate_key": "b3daddfab853a13650b5f238370e99ca79781864e5aba4d54db311975e472e1a",
+          "center": [
+            52000,
+            118000
+          ],
+          "frame_index": 6,
+          "score_pm": 330,
+          "velocity": [
+            -4000,
+            0
+          ]
+        },
+        {
+          "box": [
+            49,
+            114,
+            59,
+            122
+          ],
+          "candidate_key": "783c6a1931e1c99abcc8856aa4e9dd0cbb60bc7a3953ae4d3821b368da99b6e6",
+          "center": [
+            54000,
+            118000
+          ],
+          "frame_index": 7,
+          "score_pm": 330,
+          "velocity": [
+            2000,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0004:51dc7241240d"
+    },
+    {
+      "cache_key": "86e76d5f6fc0a2c2eed92fa0b3e801bb5be55867be294bc9e81c9fdae6d58ca1",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "4": "978aff5e58eee04e40a51840a237d526228423757cc386d9c488d4a337cc01ab",
+        "5": "633d6d603ce44818a931c3c092cc1fa02792abfe77dbfa6861cbb17f82c440af",
+        "6": "76adb01fef6db8accbf197cb7d34ab07fa07b30930052441892d5c87a84cbb2f",
+        "7": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d"
+      },
+      "eviction_count": 0,
+      "frame_count": 4,
+      "frame_end": 7,
+      "frame_start": 4,
+      "frames": [
+        {
+          "box": [
+            77,
+            69,
+            123,
+            95
+          ],
+          "candidate_key": "0997826387b02ee7e565d832a7ec8334e25c3df4e27f966efa3acc372c146519",
+          "center": [
+            100000,
+            82000
+          ],
+          "frame_index": 4,
+          "score_pm": 958,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            85,
+            69,
+            132,
+            95
+          ],
+          "candidate_key": "7842c84d1860ae267942851e2116ccc0367e09ed8738ac4d9d1e6587b4f562d1",
+          "center": [
+            108500,
+            82000
+          ],
+          "frame_index": 5,
+          "score_pm": 718,
+          "velocity": [
+            8500,
+            0
+          ]
+        },
+        {
+          "box": [
+            93,
+            68,
+            140,
+            92
+          ],
+          "candidate_key": "290e4b51e8ae9c814f6c386cef57e0382df8e305d397c3aea8cae2b3f1f09096",
+          "center": [
+            116500,
+            80000
+          ],
+          "frame_index": 6,
+          "score_pm": 749,
+          "velocity": [
+            8000,
+            -2000
+          ]
+        },
+        {
+          "box": [
+            107,
+            70,
+            152,
+            94
+          ],
+          "candidate_key": "53dedb8614bd48e8b6a433678502cd59cba8bb43a5f45948de935541c99f00ab",
+          "center": [
+            129500,
+            82000
+          ],
+          "frame_index": 7,
+          "score_pm": 780,
+          "velocity": [
+            13000,
+            2000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C02:F0004:668ed07734b8"
+    },
+    {
+      "cache_key": "959f95d7cf59e2284dd0d8000e7e036ce69bd199acc3573dae72ed14a8f5fe48",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "7": "ec6d9e3b1e0e48fdd9da439e02af9c20c55f0546f69ffa0f4822667905605b6d"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 7,
+      "frame_start": 7,
+      "frames": [
+        {
+          "box": [
+            110,
+            20,
+            141,
+            63
+          ],
+          "candidate_key": "e077e8fad4244b5cab853796ff7330669176aca10d5a9b625ef8450eb78cdbd1",
+          "center": [
+            125500,
+            41500
+          ],
+          "frame_index": 7,
+          "score_pm": 739,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "alpha_seq",
+      "track_id": "alpha_seq:C01:F0007:497b664192ea"
+    },
+    {
+      "cache_key": "c22bcc4e398b2a1daa5150a7984aa995d4595d07d31600b80c5af37d8dbb34b5",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "1": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+        "2": "missing-frame-key",
+        "3": "missing-frame-key",
+        "4": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+        "5": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "6": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a"
+      },
+      "eviction_count": 0,
+      "frame_count": 4,
+      "frame_end": 6,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            47,
+            114,
+            57,
+            122
+          ],
+          "candidate_key": "16edd19e3722a25778921509327256f2c716bc289fe140af430b9c52519261ad",
+          "center": [
+            52000,
+            118000
+          ],
+          "frame_index": 0,
+          "score_pm": 330,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            49,
+            113,
+            59,
+            122
+          ],
+          "candidate_key": "f94d65501d7b5528beb7d7af1bfdc8fbeba90e404cf7a9f1896082c4e586f9bb",
+          "center": [
+            54000,
+            117500
+          ],
+          "frame_index": 1,
+          "score_pm": 330,
+          "velocity": [
+            2000,
+            -500
+          ]
+        },
+        {
+          "box": [
+            50,
+            114,
+            62,
+            122
+          ],
+          "candidate_key": "2393e5dffce136188daef9d1c841fc52dc778c02107300a235ce7281b38683b2",
+          "center": [
+            56000,
+            118000
+          ],
+          "frame_index": 5,
+          "score_pm": 330,
+          "velocity": [
+            2000,
+            0
+          ]
+        },
+        {
+          "box": [
+            47,
+            114,
+            57,
+            122
+          ],
+          "candidate_key": "566bcf0f0062ddf7f1801be0ea191a9b0f90df5296c5383a50a38554f27c9802",
+          "center": [
+            52000,
+            118000
+          ],
+          "frame_index": 6,
+          "score_pm": 330,
+          "velocity": [
+            -4000,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C01:F0000:08ccb8993d13"
+    },
+    {
+      "cache_key": "68f64154098adfe725f8266b28f686371fdff2de292ccaf84efbff578e5701b8",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "1": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+        "2": "missing-frame-key",
+        "3": "missing-frame-key",
+        "4": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+        "5": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "6": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a"
+      },
+      "eviction_count": 0,
+      "frame_count": 4,
+      "frame_end": 6,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            29,
+            106,
+            41,
+            116
+          ],
+          "candidate_key": "11c1f65525de768e9bd9a3bac252b7b398ea25f5b32b0702601573b2c77a86d3",
+          "center": [
+            35000,
+            111000
+          ],
+          "frame_index": 0,
+          "score_pm": 234,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            31,
+            107,
+            43,
+            115
+          ],
+          "candidate_key": "d429b8dbdc1f4a9a7cac9ce9d557c6f63b89e9de10e2b24c9c7c43af52706f83",
+          "center": [
+            37000,
+            111000
+          ],
+          "frame_index": 1,
+          "score_pm": 245,
+          "velocity": [
+            2000,
+            0
+          ]
+        },
+        {
+          "box": [
+            33,
+            106,
+            44,
+            116
+          ],
+          "candidate_key": "2e123abd158ffe7bb772267567d0b4be4eaa25317eb68ba06c20a1ab6e69b67a",
+          "center": [
+            38500,
+            111000
+          ],
+          "frame_index": 5,
+          "score_pm": 289,
+          "velocity": [
+            2000,
+            500
+          ]
+        },
+        {
+          "box": [
+            29,
+            106,
+            41,
+            116
+          ],
+          "candidate_key": "8b01cefcb53532d7ccb6f39d0d2f0e4561ff7ca6d7da7e5dc8e489af062abb23",
+          "center": [
+            35000,
+            111000
+          ],
+          "frame_index": 6,
+          "score_pm": 300,
+          "velocity": [
+            -3500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C01:F0000:1c66c212846f"
+    },
+    {
+      "cache_key": "c9ce3889d0b9219fb90c39e105a9c886d52e7ff977bf2daba196d0893644ed64",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "1": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb",
+        "2": "missing-frame-key",
+        "3": "missing-frame-key",
+        "4": "fbd18b149305f09276546643ecb43a36d579b3696f705be777eec1fbbd5edf9c",
+        "5": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "6": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a"
+      },
+      "eviction_count": 4,
+      "frame_count": 4,
+      "frame_end": 6,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            12,
+            99,
+            23,
+            108
+          ],
+          "candidate_key": "7f53896dc4763a336af76104b01eb190137e02bbea586efb8a368ebe73e379f8",
+          "center": [
+            17500,
+            103500
+          ],
+          "frame_index": 0,
+          "score_pm": 205,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            14,
+            99,
+            25,
+            109
+          ],
+          "candidate_key": "35d962e6deadc53ce1c1ea175d92354aaf60c39e832a098f648bdb86dca0f76e",
+          "center": [
+            19500,
+            104000
+          ],
+          "frame_index": 1,
+          "score_pm": 216,
+          "velocity": [
+            2000,
+            500
+          ]
+        },
+        {
+          "box": [
+            17,
+            99,
+            27,
+            108
+          ],
+          "candidate_key": "2d455a55f4c5877ab62a0ecae06b85bc3adc8666235639636da57543abd221ee",
+          "center": [
+            22000,
+            103500
+          ],
+          "frame_index": 5,
+          "score_pm": 260,
+          "velocity": [
+            2000,
+            -500
+          ]
+        },
+        {
+          "box": [
+            12,
+            99,
+            23,
+            108
+          ],
+          "candidate_key": "03e0ce74469393fa814b64820be9f5ad446ca7507d8ad1b052e7ee8bff950d02",
+          "center": [
+            17500,
+            103500
+          ],
+          "frame_index": 6,
+          "score_pm": 271,
+          "velocity": [
+            -4500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": true,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C01:F0000:1ce7ec83030d"
+    },
+    {
+      "cache_key": "3cbe629c735053216cc418e6904b4c6ac31102af6a6c6832c51828dff85590df",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "1": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 1,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            28,
+            27,
+            59,
+            70
+          ],
+          "candidate_key": "ef9b2fb07e1384a5142158388acc7af7c3fa3dc620b9dce7d5489b91fbcb2603",
+          "center": [
+            43500,
+            48500
+          ],
+          "frame_index": 0,
+          "score_pm": 890,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            39,
+            29,
+            70,
+            70
+          ],
+          "candidate_key": "01ff90cbae3bddc5c10358c29e4add839f8600802aba65502cdbf177e049e68d",
+          "center": [
+            54500,
+            49500
+          ],
+          "frame_index": 1,
+          "score_pm": 921,
+          "velocity": [
+            11000,
+            1000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C01:F0000:92e842ef2870"
+    },
+    {
+      "cache_key": "3fe1d49e3ac53fb35fc36d4019fa594371456fb41c8c45b1570ba9e724b31dc1",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "0": "32f4c36b3e9de21f2ae2b4f33322f3e5013871a4ee8ef57165591983702c2c6a",
+        "1": "e97fcee9c48390654a85a316f5fbd597f54094141050a2cf72e96d66c7d539eb"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 1,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            44,
+            77,
+            89,
+            101
+          ],
+          "candidate_key": "bd331ad9e482c160d0912a0116ddfefc17139cafd6e8f9f5d10229daf18a70a0",
+          "center": [
+            66500,
+            89000
+          ],
+          "frame_index": 0,
+          "score_pm": 931,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            52,
+            75,
+            97,
+            100
+          ],
+          "candidate_key": "1d029c67ca67cc1c7c3ca49cac57cdbbcb8b396a6fded04e00097d7aaad7f3c7",
+          "center": [
+            74500,
+            87500
+          ],
+          "frame_index": 1,
+          "score_pm": 962,
+          "velocity": [
+            8000,
+            -1500
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C02:F0000:9860571a70bc"
+    },
+    {
+      "cache_key": "fbfd3d88c5629e3b81e8d31bac02a5bc1017233513f9b354543524c4dabf3686",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "5": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "6": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 6,
+      "frame_start": 5,
+      "frames": [
+        {
+          "box": [
+            93,
+            24,
+            123,
+            67
+          ],
+          "candidate_key": "c2a8f2080102add405ffbfc9e394b9a28315c85d02f9b67140d615faf204bd6c",
+          "center": [
+            108000,
+            45500
+          ],
+          "frame_index": 5,
+          "score_pm": 774,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            104,
+            21,
+            135,
+            64
+          ],
+          "candidate_key": "300fac0b0e15bb6a2a9b89f70ad0cd0968b60455646bb515534f5adbbb881ded",
+          "center": [
+            119500,
+            42500
+          ],
+          "frame_index": 6,
+          "score_pm": 805,
+          "velocity": [
+            11500,
+            -3000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C01:F0005:128508fd0995"
+    },
+    {
+      "cache_key": "d9b96710ddf8b9be5aac03abd0182e8ba2e14f43ccecd8658570109d3edef643",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "5": "952853f6cbe0b0affd53298761308b1430b77da26263b0b960a50feaa37b6505",
+        "6": "496a11e778759648a98d249c5ad1c821922e298ae63d994c2c975faf6365269a"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 6,
+      "frame_start": 5,
+      "frames": [
+        {
+          "box": [
+            93,
+            68,
+            140,
+            92
+          ],
+          "candidate_key": "36737a3c7a5600d2a9905b125e2e6f9d9e0eac96679789a8829729ccc58e0638",
+          "center": [
+            116500,
+            80000
+          ],
+          "frame_index": 5,
+          "score_pm": 815,
+          "velocity": [
+            13000,
+            -2000
+          ]
+        },
+        {
+          "box": [
+            102,
+            70,
+            147,
+            94
+          ],
+          "candidate_key": "5a595c9a9594bcd4a5406068c1d23d202593da82aa956897a3ab125eb1b86b20",
+          "center": [
+            124500,
+            82000
+          ],
+          "frame_index": 6,
+          "score_pm": 846,
+          "velocity": [
+            8000,
+            2000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "beta_seq",
+      "track_id": "beta_seq:C02:F0004:4f5bdea9a42e"
+    },
+    {
+      "cache_key": "61736d5afcedd9ca5028f71cf6a6e11b2014a63eef69a9b68034f791eb5a02eb",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "1": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+        "2": "missing-frame-key",
+        "3": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+        "4": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "5": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e"
+      },
+      "eviction_count": 2,
+      "frame_count": 4,
+      "frame_end": 5,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            29,
+            107,
+            41,
+            115
+          ],
+          "candidate_key": "94c44f54b3bbb764f9cc898dfcd197e59d6449530eb70fcc7f1690da9bde94c8",
+          "center": [
+            35000,
+            111000
+          ],
+          "frame_index": 0,
+          "score_pm": 247,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            32,
+            107,
+            42,
+            115
+          ],
+          "candidate_key": "4666c565751dc2fcb846d0ef77e0bc097bc734b241a67f77ada1ee647a8aba53",
+          "center": [
+            37000,
+            111000
+          ],
+          "frame_index": 1,
+          "score_pm": 258,
+          "velocity": [
+            2000,
+            0
+          ]
+        },
+        {
+          "box": [
+            31,
+            106,
+            42,
+            116
+          ],
+          "candidate_key": "aa8c8afc0eafd03c0cfb5316d511468015054e89db59791d9087e9ab507b46cd",
+          "center": [
+            36500,
+            111000
+          ],
+          "frame_index": 4,
+          "score_pm": 291,
+          "velocity": [
+            -167,
+            0
+          ]
+        },
+        {
+          "box": [
+            33,
+            106,
+            45,
+            116
+          ],
+          "candidate_key": "a3fe8c7dbcaac6f7c2ca0fbdeb3ed936237cb20aee7be71277a5998023d8ecfb",
+          "center": [
+            39000,
+            111000
+          ],
+          "frame_index": 5,
+          "score_pm": 302,
+          "velocity": [
+            2500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": true,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0000:96a4b3b58a84"
+    },
+    {
+      "cache_key": "1d558a615db72a400e9c9c1826aeeefb79de52585b56642fb45a0d25333e5c07",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "1": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 1,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            38,
+            28,
+            69,
+            69
+          ],
+          "candidate_key": "5d97a4b5b40151f87043e92a4c65d6e6c05b6fb79487b370932922431e255db0",
+          "center": [
+            53500,
+            48500
+          ],
+          "frame_index": 0,
+          "score_pm": 716,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            50,
+            31,
+            79,
+            72
+          ],
+          "candidate_key": "b48e7d2e5c3de47c584a389b54b24a5f52f37d4c347027d63b1699625c5071da",
+          "center": [
+            64500,
+            51500
+          ],
+          "frame_index": 1,
+          "score_pm": 747,
+          "velocity": [
+            11000,
+            3000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0000:ea2bbf6632a1"
+    },
+    {
+      "cache_key": "54235fc90b91b7fb607d249e0d24d8e21fac4e14508922a132b9f7b841b26488",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "1": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+        "2": "missing-frame-key",
+        "3": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+        "4": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "5": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e"
+      },
+      "eviction_count": 4,
+      "frame_count": 4,
+      "frame_end": 5,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            12,
+            99,
+            23,
+            109
+          ],
+          "candidate_key": "a03a35f4e07950bdaedaa5195688ebd721652781b0cbd4ed0f33c5512b3d248d",
+          "center": [
+            17500,
+            104000
+          ],
+          "frame_index": 0,
+          "score_pm": 218,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            14,
+            99,
+            26,
+            109
+          ],
+          "candidate_key": "dab5638030d5e6575c6cfa2c71cc63dae82c6d149ee912abd6a430717ad02b2b",
+          "center": [
+            20000,
+            104000
+          ],
+          "frame_index": 1,
+          "score_pm": 229,
+          "velocity": [
+            2500,
+            0
+          ]
+        },
+        {
+          "box": [
+            15,
+            99,
+            25,
+            108
+          ],
+          "candidate_key": "892a435a0f6d40c67460f96b4fbfa53438c5d37c58534cd00c9783f7519911e3",
+          "center": [
+            20000,
+            103500
+          ],
+          "frame_index": 4,
+          "score_pm": 262,
+          "velocity": [
+            0,
+            -167
+          ]
+        },
+        {
+          "box": [
+            16,
+            99,
+            27,
+            108
+          ],
+          "candidate_key": "8283f3a679576c7319be1a06a706225f839c0ef21fae17759e916fe9397e6684",
+          "center": [
+            21500,
+            103500
+          ],
+          "frame_index": 5,
+          "score_pm": 273,
+          "velocity": [
+            1500,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": true,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0000:ebe752126e41"
+    },
+    {
+      "cache_key": "4b74a6e1d829e40276c01782e48a97cccefd62b3d47499bcbf0dc64f972c533a",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "0": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "1": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a",
+        "2": "missing-frame-key",
+        "3": "94dfbd58a7dda65acab194175f64e47d9441348be4d96ee41c04d7f85ef68c6a",
+        "4": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "5": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e"
+      },
+      "eviction_count": 0,
+      "frame_count": 4,
+      "frame_end": 5,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            47,
+            113,
+            57,
+            122
+          ],
+          "candidate_key": "280b26297e6527e903f47f8f9835721b26e58d5def87ddb559f412f32f1e0f01",
+          "center": [
+            52000,
+            117500
+          ],
+          "frame_index": 0,
+          "score_pm": 330,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            48,
+            113,
+            59,
+            122
+          ],
+          "candidate_key": "b4ef3da932bc10ddc4a6c52749c32367fd0052207630802116645a7bc70f6491",
+          "center": [
+            53500,
+            117500
+          ],
+          "frame_index": 1,
+          "score_pm": 330,
+          "velocity": [
+            1500,
+            0
+          ]
+        },
+        {
+          "box": [
+            48,
+            114,
+            60,
+            122
+          ],
+          "candidate_key": "3a66e2dc7433ef8a00d8bd5d69447ec1d894652dc8ca6f90bfc3137ad1f7f6b1",
+          "center": [
+            54000,
+            118000
+          ],
+          "frame_index": 4,
+          "score_pm": 330,
+          "velocity": [
+            167,
+            167
+          ]
+        },
+        {
+          "box": [
+            51,
+            114,
+            61,
+            122
+          ],
+          "candidate_key": "c8cc12005b9aea2ed958df6e5facce42f4c79379338fa2b6718762a1fbe4d827",
+          "center": [
+            56000,
+            118000
+          ],
+          "frame_index": 5,
+          "score_pm": 330,
+          "velocity": [
+            2000,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0000:f2c29856db03"
+    },
+    {
+      "cache_key": "d5547fe0d1d3a5e222e224a4cdcca7ae19e6cd036845cdec1f798c0ce623cc64",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "0": "8836a6076d75832812f4897591d7817029c89efe4138c85a5f28d1640c09a390",
+        "1": "75fdca9e14a123a98286aeeff5449910b9bf0b36fa7aba22fb121a937114f78a"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 1,
+      "frame_start": 0,
+      "frames": [
+        {
+          "box": [
+            52,
+            76,
+            97,
+            101
+          ],
+          "candidate_key": "cc696aff4d1e758a64943f10240c96fdace63daa42afe12a6865381d38241b42",
+          "center": [
+            74500,
+            88500
+          ],
+          "frame_index": 0,
+          "score_pm": 757,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            59,
+            72,
+            105,
+            97
+          ],
+          "candidate_key": "7a641b3a40dd8f66f030b0ed748f294701e0a463fdd85cfaf204b3fef0c9633d",
+          "center": [
+            82000,
+            84500
+          ],
+          "frame_index": 1,
+          "score_pm": 788,
+          "velocity": [
+            7500,
+            -4000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C02:F0000:10268735038a"
+    },
+    {
+      "cache_key": "bbc4f67fb893bc8c1a83469777da0a1e4b10290d1a7be618b32b28196d429ab4",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "4": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 4,
+      "frame_start": 4,
+      "frames": [
+        {
+          "box": [
+            87,
+            24,
+            117,
+            67
+          ],
+          "candidate_key": "450a6037d6177cd37c82ac6ecd98e53bcfab18d2f927c4cfcfb3c6124618f575",
+          "center": [
+            102000,
+            45500
+          ],
+          "frame_index": 4,
+          "score_pm": 840,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0004:6b0a962806f6"
+    },
+    {
+      "cache_key": "f8f108846790f003d08f6418e1f1a6cbf78c46ab416b30aebfd9400f633dbd10",
+      "class_code": 2,
+      "class_name": "vehicle",
+      "dependency_frame_keys": {
+        "4": "3949a823bcd9b33feddced5dfc40957f16814998d5339145b5fb0667ca3d3333",
+        "5": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e"
+      },
+      "eviction_count": 0,
+      "frame_count": 2,
+      "frame_end": 5,
+      "frame_start": 4,
+      "frames": [
+        {
+          "box": [
+            88,
+            68,
+            135,
+            92
+          ],
+          "candidate_key": "332b21b35e5d4fa998f891bf60496d50c9557fd48b4cde28d509681c0d16615c",
+          "center": [
+            111500,
+            80000
+          ],
+          "frame_index": 4,
+          "score_pm": 881,
+          "velocity": [
+            0,
+            0
+          ]
+        },
+        {
+          "box": [
+            102,
+            69,
+            147,
+            93
+          ],
+          "candidate_key": "adea7bbe918a91fafdc58951925440a06bf312ff30bcc41005b75dc74946cf8f",
+          "center": [
+            124500,
+            81000
+          ],
+          "frame_index": 5,
+          "score_pm": 912,
+          "velocity": [
+            13000,
+            1000
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C02:F0004:1986ae95052c"
+    },
+    {
+      "cache_key": "9e7dc3a9b3254e47d4ed60656dc51ef04c3ec337617fce5ca975df48038b95d3",
+      "class_code": 1,
+      "class_name": "pedestrian",
+      "dependency_frame_keys": {
+        "5": "124c8cd7dfd3262f8513d7ce0fa82b680f33944d7c9d093ef4dbae672afaf65e"
+      },
+      "eviction_count": 0,
+      "frame_count": 1,
+      "frame_end": 5,
+      "frame_start": 5,
+      "frames": [
+        {
+          "box": [
+            103,
+            22,
+            134,
+            65
+          ],
+          "candidate_key": "2ceab557c662779aae0db18838fe89625eb7ffb1f82de11b54dec0499ae34e43",
+          "center": [
+            118500,
+            43500
+          ],
+          "frame_index": 5,
+          "score_pm": 871,
+          "velocity": [
+            0,
+            0
+          ]
+        }
+      ],
+      "reentered_pool": false,
+      "reused": false,
+      "series_name": "gamma_seq",
+      "track_id": "gamma_seq:C01:F0005:8562bce5c1f9"
+    }
+  ]
+}

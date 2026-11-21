@@ -1,0 +1,877 @@
+{
+  "artifacts": {
+    "baseline_report": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/baseline_multi/validation_report.json",
+    "injected_report": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/injected_out/validation_report.json",
+    "recovery_report": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/recovery/crash_out/validation_report.json",
+    "validation_report": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_report.json",
+    "validation_summary": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_summary.md",
+    "work_dir": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work"
+  },
+  "checks": {
+    "concurrency_state_equivalence": {
+      "details": {
+        "differing_sections": [],
+        "equal": true
+      },
+      "passed": true
+    },
+    "conversion_class_mapping_restored": {
+      "details": {
+        "v1_to_v2": {
+          "complete": true,
+          "expected": 99,
+          "mismatches": [],
+          "restored": 99
+        },
+        "v2_to_v1": {
+          "complete": true,
+          "expected": 99,
+          "mismatches": [],
+          "restored": 99
+        }
+      },
+      "passed": true
+    },
+    "conversion_v1_to_v2_exact": {
+      "details": {
+        "max_coordinate_deviation": 0.0,
+        "max_score_deviation": 0.0
+      },
+      "passed": true
+    },
+    "conversion_v2_to_v1_residual_captured": {
+      "details": {
+        "coordinate_histogram": {
+          "0.000": 64,
+          "0.200": 132,
+          "0.300": 135,
+          "0.400": 65
+        },
+        "max_coordinate_deviation": 0.4000000000000057,
+        "max_score_deviation": 0.0002999999999999947,
+        "score_histogram": {
+          "0.000100": 33,
+          "0.000200": 32,
+          "0.000300": 34
+        },
+        "sidecar_entries": 99,
+        "sidecar_exists": true
+      },
+      "passed": true
+    },
+    "edit_sequence_invalidation_semantics": {
+      "details": {
+        "candidate_replace_is_frame_local": true,
+        "capacity_change_invalidates_detection_and_tracks": true,
+        "final_local_edit_reuses_unaffected_tracks": true,
+        "image_replace_is_frame_local": true,
+        "iou_change_reuses_frames_but_recomputes_tracks": true,
+        "version_switch_invalidates_all_frames": true
+      },
+      "passed": true
+    },
+    "failure_order_stable": {
+      "details": null,
+      "passed": true
+    },
+    "forced_termination_and_snapshot_recovery": {
+      "details": {
+        "crash_exit_code": 75,
+        "crash_stderr": "SIMULATED_TERMINATION after matching; recovery version=4",
+        "final_snapshot": {
+          "final_manifest": {
+            "complete_stages": [
+              "detection",
+              "matching",
+              "serialization"
+            ],
+            "config_hash": "7dfd92cba98f67ee52e06f3b36df2c3be2c76c0dba0de8f9bd789dfe3c774ad8",
+            "created_unix_ms": 1795297005195,
+            "extra": {
+              "active_version": "v1",
+              "series_count": 3,
+              "workers": 2
+            },
+            "format_fingerprints": {
+              "active": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+              "active_version": "v1",
+              "v1": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+              "v2": "27c8a54240aeab5919d3669f3fbfde3acd84ce4973e84278b237b2e1a02284d1"
+            },
+            "global_version": 9,
+            "input_fingerprint": "9e3367076e499ce2fd43d232d0b6049d27eadcaaadbc4bf0e4409e7e9791abf1",
+            "manifest_version": 1,
+            "parent_version": 8,
+            "partial": false,
+            "sidecar_metadata_hash": "b57ec1e3395eea5d7b1bd5dc21ec3d230dfc6e988eb9699cb348bc549bd58902",
+            "snapshot_commit_interval": 2,
+            "stages": {
+              "detection": {
+                "bytes": 64145,
+                "partial": false,
+                "path": "stages/detection.json",
+                "sha256": "0eb6358a52649b934f7256f6866a392d7bc6ba3d64b8dbafc4de91bfeee30f41",
+                "stage_version": 9
+              },
+              "matching": {
+                "bytes": 62780,
+                "partial": false,
+                "path": "stages/matching.json",
+                "sha256": "4849e8a7b937cab6e05ca1480af9db454743a637b3e07bac19490d110d01b56f",
+                "stage_version": 9
+              },
+              "serialization": {
+                "bytes": 232723,
+                "partial": false,
+                "path": "stages/serialization.json",
+                "sha256": "fd1b9e0803817406b6ce9e513cc3f9a41794c433847bf038cf3cc9101aeba1bb",
+                "stage_version": 9
+              }
+            },
+            "version_id": "000000000009"
+          },
+          "recovered_from_version": 4,
+          "recovery_point_version": 9,
+          "root": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/recovery/snapshots"
+        },
+        "ignored_temporary_directory": ".tmp-ignored-partial",
+        "recovery_at_start": {
+          "available_stages": [
+            "detection",
+            "matching"
+          ],
+          "config_hash": "7dfd92cba98f67ee52e06f3b36df2c3be2c76c0dba0de8f9bd789dfe3c774ad8",
+          "format_fingerprints": {
+            "active": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+            "active_version": "v1",
+            "v1": "b4ff4f7e3f4cd8757bfe46e7bc02cd901480aa617cc08c1340fe2cfc272eba12",
+            "v2": "27c8a54240aeab5919d3669f3fbfde3acd84ce4973e84278b237b2e1a02284d1"
+          },
+          "ignored_temporary_directories": [
+            ".tmp-ignored-partial"
+          ],
+          "recovered": true,
+          "recovery_point_version": 4,
+          "sidecar_metadata_hash": "b57ec1e3395eea5d7b1bd5dc21ec3d230dfc6e988eb9699cb348bc549bd58902",
+          "version_id": "000000000004"
+        },
+        "report_existed_after_termination": false,
+        "restart_exit_code": 0
+      },
+      "passed": true
+    },
+    "incremental_does_not_reuse_affected_tracks": {
+      "details": {
+        "recomputed_tracks": 5,
+        "reused_tracks": 27
+      },
+      "passed": true
+    },
+    "incremental_ledger_projection": {
+      "details": {
+        "final_incremental_reused_frames": 20,
+        "final_incremental_reused_tracks": 27,
+        "note": "Operational reused/recomputed labels intentionally differ; final cache-key dependency projections must match.",
+        "projection_equal": true
+      },
+      "passed": true
+    },
+    "incremental_state_equivalence": {
+      "details": {
+        "differing_sections": [],
+        "equal": true
+      },
+      "passed": true
+    },
+    "injection_all_items_hit_with_business_codes": {
+      "details": {
+        "configured": 7,
+        "failures": [
+          {
+            "details": {
+              "line_number": 7,
+              "missing_fields": [
+                "class_code"
+              ]
+            },
+            "error_code": "E_FIELD_TRUNCATED",
+            "exception_type": "BusinessError",
+            "frame_index": 1,
+            "injection_id": "INJ-002",
+            "message": "v1 line 7 is missing required fields: ['class_code']",
+            "series_name": "alpha_seq",
+            "stage": "parsing_v1"
+          },
+          {
+            "details": {
+              "class_code": 99
+            },
+            "error_code": "E_CLASS_UNKNOWN",
+            "exception_type": "BusinessError",
+            "frame_index": 3,
+            "injection_id": "INJ-005",
+            "message": "class code 99 is not present in class_map",
+            "series_name": "alpha_seq",
+            "stage": "parsing_v1"
+          },
+          {
+            "details": {},
+            "error_code": "E_CLASS_UNKNOWN",
+            "exception_type": "BusinessError",
+            "frame_index": 3,
+            "injection_id": null,
+            "message": "class code 99 cannot be mapped for v1->v2",
+            "series_name": "alpha_seq",
+            "stage": "serialization"
+          },
+          {
+            "details": {},
+            "error_code": "E_IMAGE_INVALID",
+            "exception_type": "OSError",
+            "frame_index": 2,
+            "injection_id": "INJ-001",
+            "message": "PNG validation failed: Truncated File Read",
+            "series_name": "beta_seq",
+            "stage": "detection"
+          },
+          {
+            "details": {},
+            "error_code": "E_NON_FINITE",
+            "exception_type": "BusinessError",
+            "frame_index": 3,
+            "injection_id": "INJ-004",
+            "message": "non-finite fusion weight color=nan",
+            "series_name": "beta_seq",
+            "stage": "detection"
+          },
+          {
+            "details": {
+              "injection_type": "serialization_forced_error"
+            },
+            "error_code": "E_SERIALIZE_INVALID",
+            "exception_type": "InjectedFailure",
+            "frame_index": 4,
+            "injection_id": "INJ-007",
+            "message": "injected runtime failure for serialization_forced_error",
+            "series_name": "beta_seq",
+            "stage": "serialization"
+          },
+          {
+            "details": {
+              "box": [
+                61.0,
+                31.0,
+                260.0,
+                220.0
+              ],
+              "image_size": [
+                192,
+                128
+              ]
+            },
+            "error_code": "E_COORD_INVALID",
+            "exception_type": "BusinessError",
+            "frame_index": 2,
+            "injection_id": "INJ-003",
+            "message": "candidate coordinates are non-monotonic or outside the image",
+            "series_name": "gamma_seq",
+            "stage": "parsing_v1"
+          },
+          {
+            "details": {
+              "injection_type": "matching_forced_error"
+            },
+            "error_code": "E_MATCH_INVALID",
+            "exception_type": "InjectedFailure",
+            "frame_index": 3,
+            "injection_id": "INJ-006",
+            "message": "injected runtime failure for matching_forced_error",
+            "series_name": "gamma_seq",
+            "stage": "matching"
+          }
+        ],
+        "hits": [
+          {
+            "configured_stage": "detection",
+            "expected_code": "E_IMAGE_INVALID",
+            "frame_index": 2,
+            "hit": true,
+            "id": "INJ-001",
+            "observed_error_code": "E_IMAGE_INVALID",
+            "observed_stage": "detection",
+            "series_name": "beta_seq",
+            "type": "truncated_png"
+          },
+          {
+            "configured_stage": "parsing_v1",
+            "expected_code": "E_FIELD_TRUNCATED",
+            "frame_index": 1,
+            "hit": true,
+            "id": "INJ-002",
+            "observed_error_code": "E_FIELD_TRUNCATED",
+            "observed_stage": "parsing_v1",
+            "series_name": "alpha_seq",
+            "type": "v1_field_missing"
+          },
+          {
+            "configured_stage": "parsing",
+            "expected_code": "E_COORD_INVALID",
+            "frame_index": 2,
+            "hit": true,
+            "id": "INJ-003",
+            "observed_error_code": "E_COORD_INVALID",
+            "observed_stage": "parsing_v1",
+            "series_name": "gamma_seq",
+            "type": "coordinate_out_of_bounds"
+          },
+          {
+            "configured_stage": "detection",
+            "expected_code": "E_NON_FINITE",
+            "frame_index": 3,
+            "hit": true,
+            "id": "INJ-004",
+            "observed_error_code": "E_NON_FINITE",
+            "observed_stage": "detection",
+            "series_name": "beta_seq",
+            "type": "non_finite_weight"
+          },
+          {
+            "configured_stage": "parsing",
+            "expected_code": "E_CLASS_UNKNOWN",
+            "frame_index": 3,
+            "hit": true,
+            "id": "INJ-005",
+            "observed_error_code": "E_CLASS_UNKNOWN",
+            "observed_stage": "parsing_v1",
+            "series_name": "alpha_seq",
+            "type": "class_code_not_in_map"
+          },
+          {
+            "configured_stage": "matching",
+            "expected_code": "E_MATCH_INVALID",
+            "frame_index": 3,
+            "hit": true,
+            "id": "INJ-006",
+            "observed_error_code": "E_MATCH_INVALID",
+            "observed_stage": "matching",
+            "series_name": "gamma_seq",
+            "type": "matching_forced_error"
+          },
+          {
+            "configured_stage": "serialization",
+            "expected_code": "E_SERIALIZE_INVALID",
+            "frame_index": 4,
+            "hit": true,
+            "id": "INJ-007",
+            "observed_error_code": "E_SERIALIZE_INVALID",
+            "observed_stage": "serialization",
+            "series_name": "beta_seq",
+            "type": "serialization_forced_error"
+          }
+        ]
+      },
+      "passed": true
+    },
+    "injection_continues_other_frames": {
+      "details": {
+        "candidate_count": 69,
+        "failure_count": 8,
+        "frame_count": 16,
+        "injection_count": 7,
+        "injection_hit_count": 7,
+        "recomputed_frame_count": 16,
+        "recomputed_track_count": 26,
+        "reused_frame_count": 0,
+        "reused_track_count": 0,
+        "series_count": 3,
+        "successful_frame_count": 14,
+        "track_count": 26
+      },
+      "passed": true
+    },
+    "injection_failed_frames_excluded_from_tracks": {
+      "details": {
+        "failed_frames": [
+          [
+            "alpha_seq",
+            1
+          ],
+          [
+            "alpha_seq",
+            3
+          ],
+          [
+            "beta_seq",
+            2
+          ],
+          [
+            "beta_seq",
+            3
+          ],
+          [
+            "beta_seq",
+            4
+          ],
+          [
+            "gamma_seq",
+            2
+          ],
+          [
+            "gamma_seq",
+            3
+          ]
+        ],
+        "leak": false
+      },
+      "passed": true
+    },
+    "pool_reentry_observed": {
+      "details": {
+        "reentered_tracks": 7
+      },
+      "passed": true
+    },
+    "recovered_state_matches_full_run": {
+      "details": {
+        "state": {
+          "differing_sections": [],
+          "equal": true
+        }
+      },
+      "passed": true
+    },
+    "score_residual_histogram_nonzero": {
+      "details": {
+        "0.000100": 33,
+        "0.000200": 32,
+        "0.000300": 34
+      },
+      "passed": true
+    },
+    "unchanged_run_uses_cache": {
+      "details": {
+        "reused_frames": 21,
+        "reused_tracks": 22,
+        "state": {
+          "differing_sections": [],
+          "equal": true
+        }
+      },
+      "passed": true
+    },
+    "version_mismatch_isolation": {
+      "details": {
+        "failed_frame_in_track": false,
+        "failures": [
+          {
+            "details": {
+              "class_code": 2,
+              "mapped_name": "vehicle",
+              "seen_name": "wrong_class"
+            },
+            "error_code": "E_VERSION_MISMATCH",
+            "exception_type": "BusinessError",
+            "frame_index": 2,
+            "injection_id": null,
+            "message": "class code 2 maps to 'vehicle', not 'wrong_class'",
+            "series_name": "alpha_seq",
+            "stage": "parsing_v2"
+          }
+        ]
+      },
+      "passed": true
+    }
+  },
+  "dataset": {
+    "candidate_count": 99,
+    "frame_count": 21,
+    "path": "/home/zsl/feedback/uidfc5909d3-default-93/data/sample",
+    "seed": 20261122,
+    "series_count": 3
+  },
+  "generated_unix_ms": 1795297005276,
+  "results": {
+    "baseline": {
+      "multi_thread": {
+        "candidate_count": 99,
+        "failure_count": 0,
+        "frame_count": 21,
+        "injection_count": 0,
+        "injection_hit_count": 0,
+        "recomputed_frame_count": 21,
+        "recomputed_track_count": 22,
+        "reused_frame_count": 0,
+        "reused_track_count": 0,
+        "series_count": 3,
+        "successful_frame_count": 21,
+        "track_count": 22
+      },
+      "single_thread": {
+        "candidate_count": 99,
+        "failure_count": 0,
+        "frame_count": 21,
+        "injection_count": 0,
+        "injection_hit_count": 0,
+        "recomputed_frame_count": 21,
+        "recomputed_track_count": 22,
+        "reused_frame_count": 0,
+        "reused_track_count": 0,
+        "series_count": 3,
+        "successful_frame_count": 21,
+        "track_count": 22
+      }
+    },
+    "conversion": {
+      "class_mapping_complete": true,
+      "sidecar_metadata_hash": "5cce91c11d0118efc237adb8c2d35448b2e657f72583e95f4ec709aaa5646e6a",
+      "sidecar_path": "/home/zsl/feedback/uidfc5909d3-default-93/reports/validation_work/baseline_multi/conversion/candidates.v2_to_v1.sidecar.json",
+      "v1_to_v2_max_coordinate_deviation": 0.0,
+      "v1_to_v2_max_score_deviation": 0.0,
+      "v2_to_v1_coordinate_histogram": {
+        "0.000": 64,
+        "0.200": 132,
+        "0.300": 135,
+        "0.400": 65
+      },
+      "v2_to_v1_histogram_buckets": 4,
+      "v2_to_v1_max_coordinate_deviation": 0.4000000000000057,
+      "v2_to_v1_max_score_deviation": 0.0002999999999999947,
+      "v2_to_v1_score_histogram": {
+        "0.000100": 33,
+        "0.000200": 32,
+        "0.000300": 34
+      }
+    },
+    "incremental": {
+      "final_full": {
+        "candidate_count": 99,
+        "failure_count": 0,
+        "frame_count": 21,
+        "injection_count": 0,
+        "injection_hit_count": 0,
+        "recomputed_frame_count": 21,
+        "recomputed_track_count": 32,
+        "reused_frame_count": 0,
+        "reused_track_count": 0,
+        "series_count": 3,
+        "successful_frame_count": 21,
+        "track_count": 32
+      },
+      "final_incremental": {
+        "candidate_count": 99,
+        "failure_count": 0,
+        "frame_count": 21,
+        "injection_count": 0,
+        "injection_hit_count": 0,
+        "recomputed_frame_count": 1,
+        "recomputed_track_count": 5,
+        "reused_frame_count": 20,
+        "reused_track_count": 27,
+        "series_count": 3,
+        "successful_frame_count": 21,
+        "track_count": 32
+      },
+      "steps": [
+        {
+          "id": "EDIT-001",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 21,
+            "recomputed_track_count": 22,
+            "reused_frame_count": 0,
+            "reused_track_count": 0,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 22
+          },
+          "type": "switch_version"
+        },
+        {
+          "id": "EDIT-002",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 1,
+            "recomputed_track_count": 5,
+            "reused_frame_count": 20,
+            "reused_track_count": 17,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 22
+          },
+          "type": "replace_frame_candidates"
+        },
+        {
+          "id": "EDIT-003",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 1,
+            "recomputed_track_count": 5,
+            "reused_frame_count": 20,
+            "reused_track_count": 17,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 22
+          },
+          "type": "replace_image"
+        },
+        {
+          "id": "EDIT-004",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 0,
+            "recomputed_track_count": 32,
+            "reused_frame_count": 21,
+            "reused_track_count": 0,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 32
+          },
+          "type": "set_iou_threshold"
+        },
+        {
+          "id": "EDIT-005",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 21,
+            "recomputed_track_count": 32,
+            "reused_frame_count": 0,
+            "reused_track_count": 0,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 32
+          },
+          "type": "set_pool_capacity"
+        },
+        {
+          "id": "EDIT-006",
+          "summary": {
+            "candidate_count": 99,
+            "failure_count": 0,
+            "frame_count": 21,
+            "injection_count": 0,
+            "injection_hit_count": 0,
+            "recomputed_frame_count": 1,
+            "recomputed_track_count": 5,
+            "reused_frame_count": 20,
+            "reused_track_count": 27,
+            "series_count": 3,
+            "successful_frame_count": 21,
+            "track_count": 32
+          },
+          "type": "replace_frame_candidates"
+        }
+      ]
+    },
+    "injection": {
+      "application_log": [
+        {
+          "applied": true,
+          "id": "INJ-001",
+          "image": "images/beta_seq/frame_0002.png",
+          "injected_bytes": 17084,
+          "original_bytes": 51254,
+          "type": "truncated_png"
+        },
+        {
+          "applied": true,
+          "box": [
+            0,
+            0,
+            260,
+            220
+          ],
+          "id": "INJ-003",
+          "type": "coordinate_out_of_bounds"
+        },
+        {
+          "applied": true,
+          "fusion_weights": {
+            "color": "NaN",
+            "edge": 0.42
+          },
+          "id": "INJ-004",
+          "type": "non_finite_weight"
+        },
+        {
+          "applied": true,
+          "class_code": 99,
+          "class_name": "ghost",
+          "id": "INJ-005",
+          "type": "class_code_not_in_map"
+        },
+        {
+          "applied": true,
+          "id": "INJ-006",
+          "runtime_only": true,
+          "type": "matching_forced_error"
+        },
+        {
+          "applied": true,
+          "id": "INJ-007",
+          "runtime_only": true,
+          "type": "serialization_forced_error"
+        },
+        {
+          "applied": true,
+          "file": "candidates_v1.txt",
+          "id": "INJ-002",
+          "missing_mask": "C-------",
+          "type": "v1_field_missing"
+        }
+      ],
+      "configured_count": 7,
+      "failed_frames": [
+        [
+          "alpha_seq",
+          1
+        ],
+        [
+          "alpha_seq",
+          3
+        ],
+        [
+          "beta_seq",
+          2
+        ],
+        [
+          "beta_seq",
+          3
+        ],
+        [
+          "beta_seq",
+          4
+        ],
+        [
+          "gamma_seq",
+          2
+        ],
+        [
+          "gamma_seq",
+          3
+        ]
+      ],
+      "failure_count": 8,
+      "hit_count": 7,
+      "hits": [
+        {
+          "configured_stage": "detection",
+          "expected_code": "E_IMAGE_INVALID",
+          "frame_index": 2,
+          "hit": true,
+          "id": "INJ-001",
+          "observed_error_code": "E_IMAGE_INVALID",
+          "observed_stage": "detection",
+          "series_name": "beta_seq",
+          "type": "truncated_png"
+        },
+        {
+          "configured_stage": "parsing_v1",
+          "expected_code": "E_FIELD_TRUNCATED",
+          "frame_index": 1,
+          "hit": true,
+          "id": "INJ-002",
+          "observed_error_code": "E_FIELD_TRUNCATED",
+          "observed_stage": "parsing_v1",
+          "series_name": "alpha_seq",
+          "type": "v1_field_missing"
+        },
+        {
+          "configured_stage": "parsing",
+          "expected_code": "E_COORD_INVALID",
+          "frame_index": 2,
+          "hit": true,
+          "id": "INJ-003",
+          "observed_error_code": "E_COORD_INVALID",
+          "observed_stage": "parsing_v1",
+          "series_name": "gamma_seq",
+          "type": "coordinate_out_of_bounds"
+        },
+        {
+          "configured_stage": "detection",
+          "expected_code": "E_NON_FINITE",
+          "frame_index": 3,
+          "hit": true,
+          "id": "INJ-004",
+          "observed_error_code": "E_NON_FINITE",
+          "observed_stage": "detection",
+          "series_name": "beta_seq",
+          "type": "non_finite_weight"
+        },
+        {
+          "configured_stage": "parsing",
+          "expected_code": "E_CLASS_UNKNOWN",
+          "frame_index": 3,
+          "hit": true,
+          "id": "INJ-005",
+          "observed_error_code": "E_CLASS_UNKNOWN",
+          "observed_stage": "parsing_v1",
+          "series_name": "alpha_seq",
+          "type": "class_code_not_in_map"
+        },
+        {
+          "configured_stage": "matching",
+          "expected_code": "E_MATCH_INVALID",
+          "frame_index": 3,
+          "hit": true,
+          "id": "INJ-006",
+          "observed_error_code": "E_MATCH_INVALID",
+          "observed_stage": "matching",
+          "series_name": "gamma_seq",
+          "type": "matching_forced_error"
+        },
+        {
+          "configured_stage": "serialization",
+          "expected_code": "E_SERIALIZE_INVALID",
+          "frame_index": 4,
+          "hit": true,
+          "id": "INJ-007",
+          "observed_error_code": "E_SERIALIZE_INVALID",
+          "observed_stage": "serialization",
+          "series_name": "beta_seq",
+          "type": "serialization_forced_error"
+        }
+      ]
+    },
+    "snapshot_recovery": {
+      "available_stages_at_start": [
+        "detection",
+        "matching"
+      ],
+      "crash_exit_code": 75,
+      "ignored_temporary_directories": [
+        ".tmp-ignored-partial"
+      ],
+      "recovered_from_version": 4,
+      "recovery_point_version": 9,
+      "report_existed_after_termination": false,
+      "restart_exit_code": 0
+    }
+  },
+  "schema_version": "candidate-exchange-validation-v1",
+  "summary": {
+    "all_checks_passed": true,
+    "failed_checks": 0,
+    "passed_checks": 18,
+    "total_checks": 18
+  }
+}

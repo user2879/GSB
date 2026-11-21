@@ -1,0 +1,61 @@
+{
+  "injections": [
+    {
+      "expected_code": "E_IMAGE_INVALID",
+      "frame_index": 2,
+      "id": "INJ-001",
+      "series_name": "beta_seq",
+      "stage": "detection",
+      "type": "truncated_png"
+    },
+    {
+      "expected_code": "E_FIELD_TRUNCATED",
+      "frame_index": 1,
+      "id": "INJ-002",
+      "series_name": "alpha_seq",
+      "stage": "parsing_v1",
+      "type": "v1_field_missing"
+    },
+    {
+      "expected_code": "E_COORD_INVALID",
+      "frame_index": 2,
+      "id": "INJ-003",
+      "series_name": "gamma_seq",
+      "stage": "parsing",
+      "type": "coordinate_out_of_bounds"
+    },
+    {
+      "expected_code": "E_NON_FINITE",
+      "frame_index": 3,
+      "id": "INJ-004",
+      "series_name": "beta_seq",
+      "stage": "detection",
+      "type": "non_finite_weight"
+    },
+    {
+      "expected_code": "E_CLASS_UNKNOWN",
+      "frame_index": 3,
+      "id": "INJ-005",
+      "series_name": "alpha_seq",
+      "stage": "parsing",
+      "type": "class_code_not_in_map"
+    },
+    {
+      "expected_code": "E_MATCH_INVALID",
+      "frame_index": 3,
+      "id": "INJ-006",
+      "series_name": "gamma_seq",
+      "stage": "matching",
+      "type": "matching_forced_error"
+    },
+    {
+      "expected_code": "E_SERIALIZE_INVALID",
+      "frame_index": 4,
+      "id": "INJ-007",
+      "series_name": "beta_seq",
+      "stage": "serialization",
+      "type": "serialization_forced_error"
+    }
+  ],
+  "schema": "candidate-exchange-injections-v1"
+}
