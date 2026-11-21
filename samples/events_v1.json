@@ -1,0 +1,121 @@
+{
+  "alignment": {
+    "basis_version": "monotonic-offset-v1",
+    "offset_to_frame_ms": 1000
+  },
+  "normalization_defaults": {
+    "link_id": null,
+    "reorder_depth": 0,
+    "retransmit": false,
+    "time_window_ms": null
+  },
+  "records": [
+    {
+      "event_seq": 3,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 5,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 6,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "loss_count": 2
+    },
+    {
+      "event_seq": 9,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 23,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "loss_count": 2
+    },
+    {
+      "event_seq": 25,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 27,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 44,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5002,
+        "protocol": "udp",
+        "src_ip": "10.10.0.3",
+        "src_port": 42000
+      },
+      "loss_count": 1
+    },
+    {
+      "event_seq": 46,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5002,
+        "protocol": "udp",
+        "src_ip": "10.10.0.3",
+        "src_port": 42000
+      },
+      "loss_count": 1
+    }
+  ],
+  "schema": "loss-events",
+  "source_id": "events-v1-local",
+  "time_basis": {
+    "clock": "collector_monotonic_ms",
+    "epoch": "collector-boot-3",
+    "unit": "ms"
+  },
+  "version": "v1"
+}

@@ -1,0 +1,179 @@
+{
+  "alignment": {
+    "basis_version": "monotonic-offset-v1",
+    "offset_to_frame_ms": 1000
+  },
+  "normalization_defaults": {},
+  "records": [
+    {
+      "event_seq": 3,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "link_id": "link-A",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 35,
+        "start_ms": 15
+      }
+    },
+    {
+      "event_seq": 5,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "link_id": "link-A",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": true,
+      "time_window_ms": {
+        "end_ms": 50,
+        "start_ms": 40
+      }
+    },
+    {
+      "event_seq": 6,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "link_id": "link-A",
+      "loss_count": 2,
+      "reorder_depth": 1,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 70,
+        "start_ms": 60
+      }
+    },
+    {
+      "event_seq": 9,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5000,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.1",
+        "src_port": 40000
+      },
+      "link_id": "link-A",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 110,
+        "start_ms": 100
+      }
+    },
+    {
+      "event_seq": 23,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "link_id": "link-B",
+      "loss_count": 2,
+      "reorder_depth": 2,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 245,
+        "start_ms": 225
+      }
+    },
+    {
+      "event_seq": 25,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "link_id": "link-B",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 265,
+        "start_ms": 255
+      }
+    },
+    {
+      "event_seq": 27,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5001,
+        "protocol": "tcp",
+        "src_ip": "10.10.0.2",
+        "src_port": 41000
+      },
+      "link_id": "link-B",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 285,
+        "start_ms": 275
+      }
+    },
+    {
+      "event_seq": 44,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5002,
+        "protocol": "udp",
+        "src_ip": "10.10.0.3",
+        "src_port": 42000
+      },
+      "link_id": "link-C",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 455,
+        "start_ms": 445
+      }
+    },
+    {
+      "event_seq": 46,
+      "five_tuple": {
+        "dst_ip": "10.20.0.1",
+        "dst_port": 5002,
+        "protocol": "udp",
+        "src_ip": "10.10.0.3",
+        "src_port": 42000
+      },
+      "link_id": "link-C",
+      "loss_count": 1,
+      "reorder_depth": 0,
+      "retransmit": false,
+      "time_window_ms": {
+        "end_ms": 475,
+        "start_ms": 465
+      }
+    }
+  ],
+  "schema": "loss-events",
+  "source_id": "events-v3-local",
+  "time_basis": {
+    "clock": "collector_monotonic_ms",
+    "epoch": "collector-boot-3",
+    "unit": "ms"
+  },
+  "version": "v3"
+}
