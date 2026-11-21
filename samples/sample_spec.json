@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "sources": [
+    {
+      "source_id": "main-src",
+      "seed": 20261122,
+      "event_count": 420,
+      "out_of_order_ratio_bp": 2500,
+      "partition_keys": ["p0", "p1"],
+      "base_time_ms": 1700000000000,
+      "time_step_ms": 37,
+      "measure_min": -5000,
+      "measure_max": 5000,
+      "reorder_delay_events": 180
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "main-rule",
+      "width_ms": 1000,
+      "lateness_ms": 700,
+      "partition_keys": ["p0", "p1"],
+      "aggregation_functions": ["COUNT", "SUM", "MEAN"]
+    }
+  ],
+  "session": {
+    "fixed_scale": 1000,
+    "lateness_budget_count": 2,
+    "lateness_budget_amount": 5000000,
+    "dominant_threshold_bp": 6000,
+    "order_backward_limit_ms": 86400000
+  }
+}

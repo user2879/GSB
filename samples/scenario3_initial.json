@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "sources": [
+    {
+      "source_id": "evolving-src",
+      "seed": 303,
+      "event_count": 140,
+      "out_of_order_ratio_bp": 1800,
+      "partition_keys": ["p0", "p1"],
+      "base_time_ms": 1700000000000,
+      "time_step_ms": 60,
+      "measure_min": -100,
+      "measure_max": 100,
+      "reorder_delay_events": 40
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "evolving-rule",
+      "width_ms": 400,
+      "lateness_ms": 80,
+      "partition_keys": ["p0", "p1"],
+      "aggregation_functions": ["COUNT", "SUM", "MEAN"]
+    }
+  ],
+  "session": {
+    "fixed_scale": 10,
+    "lateness_budget_count": 3,
+    "lateness_budget_amount": 5000,
+    "dominant_threshold_bp": 6000,
+    "order_backward_limit_ms": 86400000
+  }
+}
