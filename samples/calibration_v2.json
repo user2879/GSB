@@ -1,0 +1,46 @@
+{
+  "schema_version": "qcal-calibration/2.0",
+  "exchange_version": "v2",
+  "layers": [
+    {
+      "layer": "layer.00",
+      "scale": 0.007563522,
+      "zero_point": -1,
+      "bit_width": 8,
+      "scheme": "symmetric",
+      "rounding_mode": "nearest_even",
+      "precision_label": "fp16-ref",
+      "per_channel": false
+    },
+    {
+      "layer": "layer.01",
+      "scale": 0.008177156,
+      "zero_point": 0,
+      "bit_width": 8,
+      "scheme": "asymmetric",
+      "rounding_mode": "nearest_away",
+      "precision_label": "int8-per-channel",
+      "per_channel": true
+    },
+    {
+      "layer": "layer.02",
+      "scale": 0.015708587,
+      "zero_point": 2,
+      "bit_width": 4,
+      "scheme": "asymmetric",
+      "rounding_mode": "nearest_even",
+      "precision_label": "int4-group",
+      "per_channel": false
+    },
+    {
+      "layer": "layer.03",
+      "scale": 0.007528604,
+      "zero_point": 0,
+      "bit_width": 8,
+      "scheme": "symmetric",
+      "rounding_mode": "floor",
+      "precision_label": "int8-outlier",
+      "per_channel": false
+    }
+  ]
+}

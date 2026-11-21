@@ -1,0 +1,89 @@
+{
+  "schema_version": "qcal-config/1.0",
+  "seed": 20261121,
+  "exchange_version": "v1",
+  "calibration": {
+    "quantile_lower": 0.02,
+    "quantile_upper": 0.98,
+    "interpolation": "linear",
+    "tie_break": "lower_index",
+    "scheme": "asymmetric",
+    "per_channel": false,
+    "group_size": 0
+  },
+  "fixed_point": {
+    "fraction_bits": 10,
+    "rounding_mode": "nearest_even",
+    "saturation": "saturate"
+  },
+  "distillation": {
+    "temperature": 1.5,
+    "soft_label_weight": 0.35
+  },
+  "scheduler": {
+    "workers": 4,
+    "quant_points_budget": 0
+  },
+  "snapshot": {
+    "commit_every_stages": 1
+  },
+  "full_precision_layers": [
+    "layer.00"
+  ],
+  "layers": {
+    "layer.00": {
+      "bit_width": 8,
+      "group_size": 0,
+      "group_size_candidates": [
+        0,
+        4,
+        8
+      ],
+      "scheme": "asymmetric",
+      "per_channel": false
+    },
+    "layer.01": {
+      "bit_width": 8,
+      "group_size": 0,
+      "group_size_candidates": [
+        0,
+        4,
+        8
+      ],
+      "scheme": "asymmetric",
+      "per_channel": false
+    },
+    "layer.02": {
+      "bit_width": 4,
+      "group_size": 0,
+      "group_size_candidates": [
+        0,
+        4,
+        8
+      ],
+      "scheme": "asymmetric",
+      "per_channel": false
+    },
+    "layer.03": {
+      "bit_width": 8,
+      "group_size": 0,
+      "group_size_candidates": [
+        0,
+        4,
+        8
+      ],
+      "scheme": "asymmetric",
+      "per_channel": false
+    }
+  },
+  "bit_width_candidates": [
+    4,
+    8
+  ],
+  "fixed_point_fraction_bits_candidates": [
+    6,
+    8,
+    10,
+    12
+  ]
+}

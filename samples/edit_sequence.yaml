@@ -1,0 +1,48 @@
+{
+  "schema_version": "qcal-edit-sequence/1.0",
+  "steps": [
+    {
+      "id": "edit-01",
+      "set": {
+        "exchange_version": "v2"
+      }
+    },
+    {
+      "id": "edit-02",
+      "layer_set": {
+        "layer.02": {
+          "bit_width": 8
+        }
+      }
+    },
+    {
+      "id": "edit-03",
+      "layer_set": {
+        "layer.03": {
+          "group_size": 4
+        }
+      }
+    },
+    {
+      "id": "edit-04",
+      "set": {
+        "fixed_point.rounding_mode": "nearest_away"
+      }
+    },
+    {
+      "id": "edit-05",
+      "replace_weight": {
+        "layer": "layer.01",
+        "seed": 20266122,
+        "scale": 0.29,
+        "content_version": "replacement-01"
+      }
+    },
+    {
+      "id": "edit-06",
+      "set": {
+        "distillation.temperature": 2.0
+      }
+    }
+  ]
+}

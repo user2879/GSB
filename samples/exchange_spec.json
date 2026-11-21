@@ -1,0 +1,33 @@
+{
+  "schema_version": "qcal-exchange-spec/1.0",
+  "seed": 20261121,
+  "versions": {
+    "v1": {
+      "encoding": "fixed_width_text",
+      "field_widths": {
+        "layer": 20,
+        "scale_thousandths": 8,
+        "zero_point": 8,
+        "bit_width": 4
+      },
+      "scale_semantics": "integer_thousandths"
+    },
+    "v2": {
+      "encoding": "json",
+      "scale_semantics": "binary_float64",
+      "named_fields": [
+        "scheme",
+        "rounding_mode",
+        "precision_label",
+        "per_channel"
+      ]
+    }
+  },
+  "lossy_v2_to_v1": [
+    "binary_float_scale",
+    "rounding_mode",
+    "precision_label",
+    "per_channel"
+  ],
+  "sidecar_required_for_reverse": true
+}

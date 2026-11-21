@@ -1,0 +1,35 @@
+{
+  "schema_version": "qcal-injections/1.0",
+  "injections": [
+    {
+      "id": "INJ-001",
+      "type": "non_finite_weight",
+      "layer": "layer.01",
+      "index": [
+        0,
+        0
+      ],
+      "value": "nan",
+      "expected_code": "E_WEIGHT_NONFINITE"
+    },
+    {
+      "id": "INJ-002",
+      "type": "zero_scale",
+      "layer": "layer.02",
+      "expected_code": "E_CALIB_PARSE"
+    },
+    {
+      "id": "INJ-003",
+      "type": "zero_point_out_of_range",
+      "layer": "layer.03",
+      "value": 999,
+      "expected_code": "E_CALIB_PARSE"
+    },
+    {
+      "id": "INJ-004",
+      "type": "sidecar_missing",
+      "layer": "layer.00",
+      "expected_code": "E_SIDECAR_MISSING"
+    }
+  ]
+}
