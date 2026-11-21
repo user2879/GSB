@@ -1,0 +1,51 @@
+concurrency: 2
+denoise_steps: 4
+embedding_dim: 8
+guidance_scale: 1.25
+guidance_tables:
+  high:
+  - 0.337252
+  - 0.818228
+  - 1.035664
+  - 0.160899
+  low:
+  - 0.484211
+  - 1.306722
+  - 0.703356
+  - 0.254181
+img2img_replace_steps: 2
+latent_channels: 4
+noise_tables:
+  high:
+  - 0.108048
+  - 0.947588
+  - 0.221535
+  - 0.941907
+  low:
+  - 0.326301
+  - 0.165213
+  - 0.079138
+  - 0.516201
+patch_tolerance: 0.01
+seed: 7001
+seed_max: 100000
+seed_min: 1
+snapshot_interval: 2
+tiers:
+- height: 9
+  id: low
+  width: 12
+- height: 15
+  id: high
+  width: 20
+vocab:
+- mountain
+- river
+- forest
+- sunset
+- mist
+- stone
+- bird
+- valley
+- cloud
+- snow

@@ -1,0 +1,339 @@
+{
+  "batches": [
+    {
+      "edits": [
+        {
+          "op": "replace_prompt_tokens",
+          "prompt_id": "p_alpha",
+          "tokens": [
+            "mountain",
+            "snow",
+            "cloud"
+          ]
+        }
+      ],
+      "id": "b01_token_replace",
+      "note": "single batch: prompt edit invalidates encoding + downstream"
+    },
+    {
+      "edits": [
+        {
+          "op": "set_seed",
+          "seed": 8123
+        },
+        {
+          "guidance_scale": 1.75,
+          "op": "set_guidance_scale"
+        }
+      ],
+      "id": "b02_seed_and_guidance"
+    },
+    {
+      "edits": [
+        {
+          "init_image": "images/init_b.png",
+          "op": "replace_init_image",
+          "prompt_id": "p_beta"
+        }
+      ],
+      "id": "b03_init_image_swap"
+    },
+    {
+      "edits": [
+        {
+          "op": "add_patch",
+          "patch": {
+            "height": 2,
+            "step": 2,
+            "values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "width": 2,
+            "x": 3,
+            "y": 2
+          },
+          "prompt_id": "p_gamma"
+        }
+      ],
+      "id": "b04_patch_add"
+    },
+    {
+      "edits": [
+        {
+          "op": "add_patch",
+          "patch": {
+            "height": 2,
+            "step": 1,
+            "values": [
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ],
+            "width": 2,
+            "x": 1,
+            "y": 1
+          },
+          "prompt_id": "p_delta"
+        }
+      ],
+      "id": "b04b_patch_seed",
+      "note": "seed a real patch so the next identical-write patch is a no-op"
+    },
+    {
+      "edits": [
+        {
+          "op": "add_patch",
+          "patch": {
+            "height": 2,
+            "step": 1,
+            "values": [
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005,
+              0.3005
+            ],
+            "width": 2,
+            "x": 1,
+            "y": 1
+          },
+          "prompt_id": "p_delta"
+        }
+      ],
+      "id": "b05_patch_noop",
+      "note": "sub-tolerance rewrite (0.0005 < 0.01) must be a no-op"
+    },
+    {
+      "edits": [
+        {
+          "guidance": [
+            0.5,
+            0.6,
+            0.7,
+            0.8
+          ],
+          "height": 21,
+          "id": "ultra",
+          "noise": [
+            0.11,
+            0.22,
+            0.33,
+            0.44
+          ],
+          "op": "add_tier",
+          "width": 28
+        }
+      ],
+      "id": "b06_tier_add"
+    },
+    {
+      "edits": [
+        {
+          "id": "ultra",
+          "op": "remove_tier"
+        }
+      ],
+      "id": "b07_tier_remove"
+    },
+    {
+      "edits": [
+        {
+          "denoise_steps": 3,
+          "op": "set_denoise_steps"
+        }
+      ],
+      "id": "b08_steps_change",
+      "note": "tables truncated to new step count"
+    },
+    {
+      "edits": [
+        {
+          "denoise_steps": 4,
+          "op": "set_denoise_steps"
+        }
+      ],
+      "id": "b09_steps_restore",
+      "note": "previously cached tail nodes may hit again"
+    },
+    {
+      "edits": [
+        {
+          "op": "remove_patch",
+          "prompt_id": "p_gamma",
+          "region": {
+            "height": 3,
+            "width": 2,
+            "x": 1,
+            "y": 1
+          },
+          "step": 1
+        }
+      ],
+      "id": "b10_patch_remove"
+    },
+    {
+      "edits": [
+        {
+          "op": "replace_prompt_tokens",
+          "prompt_id": "p_alpha",
+          "tokens": [
+            "mountain",
+            "dragon"
+          ]
+        }
+      ],
+      "expected_failure_code": "E_TOKEN_OUT_OF_VOCAB",
+      "id": "b11_bad_token",
+      "note": "invalid batch rolled back, state preserved"
+    },
+    {
+      "edits": [
+        {
+          "op": "add_patch",
+          "patch": {
+            "height": 4,
+            "step": 0,
+            "values": [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+            ],
+            "width": 4,
+            "x": 100,
+            "y": 100
+          },
+          "prompt_id": "p_gamma"
+        }
+      ],
+      "expected_failure_code": "E_PATCH_OUT_OF_RANGE",
+      "id": "b12_patch_out_of_range",
+      "note": "out-of-range patch rejected, prior state retained"
+    },
+    {
+      "edits": [
+        {
+          "op": "set_seed",
+          "seed": 99999999
+        }
+      ],
+      "expected_failure_code": "E_CONFIG_INVALID",
+      "id": "b13_bad_seed"
+    },
+    {
+      "edits": [
+        {
+          "guidance_scale": 1.1,
+          "op": "set_guidance_scale"
+        },
+        {
+          "init_image": "images/init_a.png",
+          "op": "replace_init_image",
+          "prompt_id": "p_beta"
+        }
+      ],
+      "id": "b14_final_tweak",
+      "note": "final batch used for full-vs-incremental pixel comparison"
+    }
+  ],
+  "description": "deterministic multi-batch edit plan"
+}
