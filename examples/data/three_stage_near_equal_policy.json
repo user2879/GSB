@@ -1,0 +1,37 @@
+{
+  "edges": [
+    {
+      "downstream": "core",
+      "upstream": "edge"
+    },
+    {
+      "downstream": "tail",
+      "upstream": "core"
+    }
+  ],
+  "max_committed_rate_kbps": 1000000,
+  "policy_version": "three-stage-near-equal-v1",
+  "shapers": [
+    {
+      "burst_bytes": 3000,
+      "committed_rate_kbps": 2001,
+      "match_dst_port_prefix": 530,
+      "queue_limit_packets": 8,
+      "shaper_id": "edge"
+    },
+    {
+      "burst_bytes": 3000,
+      "committed_rate_kbps": 1201,
+      "match_dst_port_prefix": 530,
+      "queue_limit_packets": 8,
+      "shaper_id": "core"
+    },
+    {
+      "burst_bytes": 3000,
+      "committed_rate_kbps": 601,
+      "match_dst_port_prefix": 530,
+      "queue_limit_packets": 8,
+      "shaper_id": "tail"
+    }
+  ]
+}
