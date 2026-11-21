@@ -1,0 +1,14 @@
+{
+  "description": "仲裁规则：来源类型偏置 -> 格式版本降序 -> 来源标识升序；目标口径仅接受 v2 及以上格式版本的记录。",
+  "rule_version": "arb-v1",
+  "target_profile": {
+    "allowed_source_types": [
+      "capacity_claim",
+      "rate_claim",
+      "derived_claim"
+    ],
+    "min_format_version": 2,
+    "profile_id": "claims_v2_plus",
+    "profile_version": 2
+  }
+}

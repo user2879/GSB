@@ -1,0 +1,590 @@
+{
+  "sources": [
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 3328,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 13631488
+      },
+      "format_version": 2,
+      "source_id": "vol-01-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 13635584
+      },
+      "format_version": 1,
+      "source_id": "vol-01-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 616,
+        "ops_per_second": 308,
+        "scale_factor": 1
+      },
+      "format_version": 2,
+      "source_id": "vol-01-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 308
+      },
+      "format_version": 1,
+      "source_id": "vol-01-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 4,
+      "fields": {
+        "base_source_id": "vol-01-cap2",
+        "coefficient": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 0
+      },
+      "format_version": 1,
+      "source_id": "vol-01-der1",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 14684160
+      },
+      "format_version": 1,
+      "source_id": "vol-02-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 492,
+        "ops_per_second": 246,
+        "scale_factor": 3
+      },
+      "format_version": 2,
+      "source_id": "vol-02-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-02-cap1",
+        "coefficient": 1,
+        "divisor": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 8192,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-02-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 3328,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 13631488
+      },
+      "format_version": 2,
+      "source_id": "vol-03-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 68
+      },
+      "format_version": 1,
+      "source_id": "vol-03-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-03-rate1",
+        "coefficient": 2,
+        "divisor": 1,
+        "metric": "ops_per_second",
+        "offset": 0,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-03-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 1024,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 4194304
+      },
+      "format_version": 2,
+      "source_id": "vol-04-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 4198400
+      },
+      "format_version": 1,
+      "source_id": "vol-04-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 742,
+        "ops_per_second": 371,
+        "scale_factor": 2
+      },
+      "format_version": 2,
+      "source_id": "vol-04-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 371
+      },
+      "format_version": 1,
+      "source_id": "vol-04-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 4,
+      "fields": {
+        "base_source_id": "vol-04-cap2",
+        "coefficient": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 0
+      },
+      "format_version": 1,
+      "source_id": "vol-04-der1",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 16781312
+      },
+      "format_version": 1,
+      "source_id": "vol-05-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 116,
+        "ops_per_second": 58,
+        "scale_factor": 1
+      },
+      "format_version": 2,
+      "source_id": "vol-05-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-05-cap1",
+        "coefficient": 1,
+        "divisor": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 8192,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-05-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 2560,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 10485760
+      },
+      "format_version": 2,
+      "source_id": "vol-06-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 304
+      },
+      "format_version": 1,
+      "source_id": "vol-06-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-06-rate1",
+        "coefficient": 2,
+        "divisor": 1,
+        "metric": "ops_per_second",
+        "offset": 0,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-06-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 3840,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 15728640
+      },
+      "format_version": 2,
+      "source_id": "vol-07-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 15732736
+      },
+      "format_version": 1,
+      "source_id": "vol-07-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 604,
+        "ops_per_second": 302,
+        "scale_factor": 1
+      },
+      "format_version": 2,
+      "source_id": "vol-07-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 302
+      },
+      "format_version": 1,
+      "source_id": "vol-07-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 4,
+      "fields": {
+        "base_source_id": "vol-07-cap2",
+        "coefficient": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 0
+      },
+      "format_version": 1,
+      "source_id": "vol-07-der1",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 14684160
+      },
+      "format_version": 1,
+      "source_id": "vol-08-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 470,
+        "ops_per_second": 235,
+        "scale_factor": 2
+      },
+      "format_version": 2,
+      "source_id": "vol-08-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-08-cap1",
+        "coefficient": 1,
+        "divisor": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 8192,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-08-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 2560,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 10485760
+      },
+      "format_version": 2,
+      "source_id": "vol-09-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 320
+      },
+      "format_version": 1,
+      "source_id": "vol-09-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-09-rate1",
+        "coefficient": 2,
+        "divisor": 1,
+        "metric": "ops_per_second",
+        "offset": 0,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-09-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 2048,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 8388608
+      },
+      "format_version": 2,
+      "source_id": "vol-10-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 8392704
+      },
+      "format_version": 1,
+      "source_id": "vol-10-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 628,
+        "ops_per_second": 314,
+        "scale_factor": 2
+      },
+      "format_version": 2,
+      "source_id": "vol-10-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 314
+      },
+      "format_version": 1,
+      "source_id": "vol-10-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 4,
+      "fields": {
+        "base_source_id": "vol-10-cap2",
+        "coefficient": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 0
+      },
+      "format_version": 1,
+      "source_id": "vol-10-der1",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "capacity_limit_bytes": 8392704
+      },
+      "format_version": 1,
+      "source_id": "vol-11-cap1",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "burst_bucket_capacity": 444,
+        "ops_per_second": 222,
+        "scale_factor": 1
+      },
+      "format_version": 2,
+      "source_id": "vol-11-rate2",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-11-cap1",
+        "coefficient": 1,
+        "divisor": 1,
+        "metric": "capacity_limit_bytes",
+        "offset": 8192,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-11-der2",
+      "source_type": "derived_claim"
+    },
+    {
+      "field_count": 3,
+      "fields": {
+        "block_count": 2560,
+        "block_size_bytes": 4096,
+        "capacity_limit_bytes": 10485760
+      },
+      "format_version": 2,
+      "source_id": "vol-12-cap2",
+      "source_type": "capacity_claim"
+    },
+    {
+      "field_count": 1,
+      "fields": {
+        "ops_per_second": 315
+      },
+      "format_version": 1,
+      "source_id": "vol-12-rate1",
+      "source_type": "rate_claim"
+    },
+    {
+      "field_count": 6,
+      "fields": {
+        "base_source_id": "vol-12-rate1",
+        "coefficient": 2,
+        "divisor": 1,
+        "metric": "ops_per_second",
+        "offset": 0,
+        "rounding": "floor"
+      },
+      "format_version": 2,
+      "source_id": "vol-12-der2",
+      "source_type": "derived_claim"
+    }
+  ],
+  "volumes": [
+    {
+      "sources": [
+        "vol-01-cap1",
+        "vol-01-cap2",
+        "vol-01-der1",
+        "vol-01-rate1",
+        "vol-01-rate2"
+      ],
+      "volume_id": "vol-01"
+    },
+    {
+      "sources": [
+        "vol-02-cap1",
+        "vol-02-der2",
+        "vol-02-rate2"
+      ],
+      "volume_id": "vol-02"
+    },
+    {
+      "sources": [
+        "vol-03-cap2",
+        "vol-03-der2",
+        "vol-03-rate1"
+      ],
+      "volume_id": "vol-03"
+    },
+    {
+      "sources": [
+        "vol-04-cap1",
+        "vol-04-cap2",
+        "vol-04-der1",
+        "vol-04-rate1",
+        "vol-04-rate2"
+      ],
+      "volume_id": "vol-04"
+    },
+    {
+      "sources": [
+        "vol-05-cap1",
+        "vol-05-der2",
+        "vol-05-rate2"
+      ],
+      "volume_id": "vol-05"
+    },
+    {
+      "sources": [
+        "vol-06-cap2",
+        "vol-06-der2",
+        "vol-06-rate1"
+      ],
+      "volume_id": "vol-06"
+    },
+    {
+      "sources": [
+        "vol-07-cap1",
+        "vol-07-cap2",
+        "vol-07-der1",
+        "vol-07-rate1",
+        "vol-07-rate2"
+      ],
+      "volume_id": "vol-07"
+    },
+    {
+      "sources": [
+        "vol-08-cap1",
+        "vol-08-der2",
+        "vol-08-rate2"
+      ],
+      "volume_id": "vol-08"
+    },
+    {
+      "sources": [
+        "vol-09-cap2",
+        "vol-09-der2",
+        "vol-09-rate1"
+      ],
+      "volume_id": "vol-09"
+    },
+    {
+      "sources": [
+        "vol-10-cap1",
+        "vol-10-cap2",
+        "vol-10-der1",
+        "vol-10-rate1",
+        "vol-10-rate2"
+      ],
+      "volume_id": "vol-10"
+    },
+    {
+      "sources": [
+        "vol-11-cap1",
+        "vol-11-der2",
+        "vol-11-rate2"
+      ],
+      "volume_id": "vol-11"
+    },
+    {
+      "sources": [
+        "vol-12-cap2",
+        "vol-12-der2",
+        "vol-12-rate1"
+      ],
+      "volume_id": "vol-12"
+    }
+  ]
+}
