@@ -1,0 +1,24 @@
+{
+  "spec_version": "v1",
+  "global_concurrency": 4,
+  "topics": {
+    "orders": {
+      "visibility_timeout_ms": 400,
+      "max_deliveries": 3,
+      "backoff_ms": [120, 240, 480],
+      "concurrency": 2
+    },
+    "billing": {
+      "visibility_timeout_ms": 300,
+      "max_deliveries": 2,
+      "backoff_ms": [150, 300],
+      "concurrency": 1
+    },
+    "notifications": {
+      "visibility_timeout_ms": 500,
+      "max_deliveries": 4,
+      "backoff_ms": [100, 200, 300, 400],
+      "concurrency": 3
+    }
+  }
+}
