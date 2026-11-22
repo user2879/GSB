@@ -1,0 +1,9 @@
+{"seed_id":"seed-classify-intent","task_type":"classify","template_variant_id":"classify.intent","instruction_template":"判断指令“{topic}”的目标类别，并给出判断依据。","slots":["topic"],"reference_answer":"类别：{topic}；依据：关键词与上下文一致。"}
+{"seed_id":"seed-classify-risk","task_type":"classify","template_variant_id":"classify.risk","instruction_template":"识别“{topic}”中的主要风险，输出风险等级与处理建议。","slots":["topic"],"reference_answer":"风险等级：中；建议对“{topic}”执行双人复核。"}
+{"seed_id":"seed-summarize-concise","task_type":"summarize","template_variant_id":"summarize.concise","instruction_template":"用一句话概括“{topic}”并点出关键风险。","slots":["topic"],"reference_answer":"“{topic}”需要简明概括并标注关键风险。"}
+{"seed_id":"seed-summarize-bullets","task_type":"summarize","template_variant_id":"summarize.bullets","instruction_template":"将“{topic}”概括为两条要点，每条不超过十五字。","slots":["topic"],"reference_answer":"要点一：说明主题；要点二：提示风险。"}
+{"seed_id":"seed-rewrite-polite","task_type":"rewrite","template_variant_id":"rewrite.polite","instruction_template":"将“{topic}”改写为礼貌、明确的中文请求。","slots":["topic"],"reference_answer":"请围绕“{topic}”给出清晰、可执行的答复。"}
+{"seed_id":"seed-rewrite-short","task_type":"rewrite","template_variant_id":"rewrite.short","instruction_template":"把“{topic}”压缩为不超过二十字的短句。","slots":["topic"],"reference_answer":"请简要处理“{topic}”。"}
+{"seed_id":"seed-extract-fields","task_type":"extract","template_variant_id":"extract.fields","instruction_template":"从“{topic}”中抽取主体、动作与约束三个字段。","slots":["topic"],"reference_answer":"主体：执行人；动作：复核；约束：最小权限。"}
+{"seed_id":"seed-extract-risk","task_type":"extract","template_variant_id":"extract.risk","instruction_template":"列出“{topic}”中的实体与风险线索。","slots":["topic"],"reference_answer":"实体：{topic}；线索：异常访问与权限变化。"}
+

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "batches": [
+    {
+      "batch_id": "b01-target-classify",
+      "operations": [
+        {"op": "set_target", "task_type": "classify", "target_count": 4}
+      ]
+    },
+    {
+      "batch_id": "b02-classify-template-weights",
+      "operations": [
+        {
+          "op": "set_template_weights",
+          "task_type": "classify",
+          "template_weights": {"classify.intent": 2.0, "classify.risk": 1.0}
+        }
+      ]
+    },
+    {
+      "batch_id": "b03-replace-rewrite-template",
+      "operations": [
+        {
+          "op": "replace_template",
+          "task_type": "rewrite",
+          "variant_id": "rewrite.short",
+          "instruction_template": "请把“{topic}”压缩成不超过二十字的明确短句。",
+          "reference_answer": "请用二十字以内说明“{topic}”。",
+          "slots": ["topic"]
+        }
+      ]
+    },
+    {
+      "batch_id": "b04-remove-summarize-edge",
+      "operations": [
+        {"op": "remove_slot_source", "task_type": "summarize", "source": "edge"}
+      ]
+    },
+    {
+      "batch_id": "b05-score-weight-and-target",
+      "operations": [
+        {"op": "set_score_weight", "dimension": "clarity", "weight": 0.38},
+        {"op": "set_score_weight", "dimension": "length", "weight": 0.08},
+        {"op": "set_target", "task_type": "summarize", "target_count": 7}
+      ]
+    },
+    {
+      "batch_id": "b06-delete-classify",
+      "operations": [
+        {"op": "delete_task", "task_type": "classify"}
+      ]
+    },
+    {
+      "batch_id": "b07-add-extract-task",
+      "operations": [
+        {
+          "op": "add_task",
+          "task_type": "extract",
+          "target_count": 3,
+          "template_weights": {"extract.fields": 1.0, "extract.risk": 1.0},
+          "slot_source_weights": {"core": 1.0, "support": 1.0},
+          "task_quota": 4
+        }
+      ]
+    },
+    {
+      "batch_id": "b08-final-summarize-target",
+      "operations": [
+        {"op": "set_target", "task_type": "summarize", "target_count": 7}
+      ]
+    }
+  ]
+}
+

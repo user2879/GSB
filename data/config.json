@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task_types": {
+    "classify": {
+      "target_count": 5,
+      "template_weights": {"classify.intent": 1.0, "classify.risk": 1.0},
+      "slot_source_weights": {"core": 3.0, "support": 2.0, "edge": 1.0}
+    },
+    "rewrite": {
+      "target_count": 5,
+      "template_weights": {"rewrite.polite": 1.0, "rewrite.short": 1.0},
+      "slot_source_weights": {"core": 2.0, "support": 2.0, "edge": 1.0}
+    },
+    "summarize": {
+      "target_count": 6,
+      "template_weights": {"summarize.concise": 3.0, "summarize.bullets": 1.0},
+      "slot_source_weights": {"core": 3.0, "support": 1.0, "edge": 1.0}
+    }
+  },
+  "task_quotas": {
+    "classify": 6,
+    "rewrite": 6,
+    "summarize": 7
+  },
+  "near_duplicate_threshold": 0.65,
+  "fixed_decimal_places": 3,
+  "quantization_step": 0.01,
+  "max_concurrency": 4,
+  "global_score_budget": 90,
+  "per_batch_generation_points": 25,
+  "snapshot_commit_interval_batches": 2
+}
