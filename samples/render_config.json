@@ -1,0 +1,72 @@
+{
+  "allowed_fixed_point_bits": [
+    8,
+    10,
+    12,
+    14
+  ],
+  "allowed_quantization_levels": [
+    "q1",
+    "q2",
+    "q4"
+  ],
+  "chunk_rows": 8,
+  "condition_seed": 4421,
+  "embedding_dim": 32,
+  "fixed_point_bits": 12,
+  "frame_count": 6,
+  "frame_resolution": {
+    "height": 32,
+    "width": 40
+  },
+  "guidance": 2.8,
+  "initial_image": {
+    "dtype": "float32",
+    "path": "initial_latent.npz",
+    "shape": [
+      3,
+      8,
+      8
+    ]
+  },
+  "initial_skip_steps": 4,
+  "interaction_latency_budget_ms": 8,
+  "latent_shape": [
+    3,
+    8,
+    8
+  ],
+  "name": "local-deterministic-fixedvideo-demo",
+  "noise_table": {
+    "path": "noise_tables/nt-v1.npz",
+    "shape": [
+      24,
+      8,
+      3,
+      8,
+      8
+    ],
+    "version": "nt-v1"
+  },
+  "noise_table_versions": [
+    "nt-v1",
+    "nt-v2"
+  ],
+  "output_gain": 2,
+  "projection_seed": 9917,
+  "prompt": "amber forest river drift",
+  "quantization_level": "q2",
+  "recompute_tile_budget": 8,
+  "schema_version": 1,
+  "seed": 20261123,
+  "seed_range": [
+    0,
+    4294967295
+  ],
+  "snapshot_interval_commands": 3,
+  "steps": 18,
+  "vocabulary": {
+    "path": "vocabulary.txt"
+  },
+  "worker_count": 4
+}

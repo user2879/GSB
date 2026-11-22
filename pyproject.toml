@@ -1,0 +1,11 @@
+[project]
+name = "fixedvideo"
+version = "1.0.0"
+description = "Deterministic local text/image-to-video multi-stage renderer"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "Pillow>=9.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
