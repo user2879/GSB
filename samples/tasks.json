@@ -1,0 +1,92 @@
+{
+  "shards": [
+    {
+      "deps": [
+        "T1#0"
+      ],
+      "index": 0,
+      "task_id": "T4"
+    },
+    {
+      "deps": [
+        "T4#0",
+        "T1#1"
+      ],
+      "index": 1,
+      "task_id": "T4"
+    },
+    {
+      "deps": [
+        "T1#0"
+      ],
+      "index": 1,
+      "task_id": "T1"
+    },
+    {
+      "deps": [
+        "T1#1"
+      ],
+      "index": 2,
+      "task_id": "T1"
+    }
+  ],
+  "tasks": [
+    {
+      "deps": [],
+      "duration_ms": 100,
+      "gpu_need": 2,
+      "memory_budget_mib": 24576,
+      "memory_per_gpu_mib": 4096,
+      "priority": 5,
+      "shard_count": 3,
+      "submit_time_ms": 0,
+      "task_id": "T1"
+    },
+    {
+      "deps": [],
+      "duration_ms": 80,
+      "gpu_need": 2,
+      "memory_budget_mib": 16384,
+      "memory_per_gpu_mib": 2048,
+      "priority": 2,
+      "shard_count": 4,
+      "submit_time_ms": 0,
+      "task_id": "T2"
+    },
+    {
+      "deps": [],
+      "duration_ms": 120,
+      "gpu_need": 4,
+      "memory_budget_mib": 32768,
+      "memory_per_gpu_mib": 4096,
+      "priority": 9,
+      "shard_count": 2,
+      "submit_time_ms": 50,
+      "task_id": "T3"
+    },
+    {
+      "deps": [
+        "T1"
+      ],
+      "duration_ms": 60,
+      "gpu_need": 1,
+      "memory_budget_mib": 4096,
+      "memory_per_gpu_mib": 1024,
+      "priority": 3,
+      "shard_count": 2,
+      "submit_time_ms": 70,
+      "task_id": "T4"
+    },
+    {
+      "deps": [],
+      "duration_ms": 50,
+      "gpu_need": 1,
+      "memory_budget_mib": 4096,
+      "memory_per_gpu_mib": 2048,
+      "priority": 1,
+      "shard_count": 2,
+      "submit_time_ms": 90,
+      "task_id": "T5"
+    }
+  ]
+}
