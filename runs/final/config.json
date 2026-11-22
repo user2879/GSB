@@ -1,0 +1,62 @@
+{
+  "tensors": [
+    {
+      "name": "weights_a",
+      "shape": [
+        48,
+        12
+      ],
+      "column_axis": 1
+    },
+    {
+      "name": "weights_b",
+      "shape": [
+        6,
+        8,
+        8
+      ],
+      "column_axis": 2
+    }
+  ],
+  "quantile_lo_permille": 20,
+  "quantile_hi_permille": 980,
+  "scheme": "asymmetric",
+  "quant_bits_candidates": [
+    4,
+    8
+  ],
+  "quant_bits": 8,
+  "frac_bits": 8,
+  "saturation": "clamp",
+  "abs_tol": 0.5,
+  "rel_tol": 0.25,
+  "groups": {
+    "weights_a": [
+      0,
+      1,
+      2,
+      0,
+      1,
+      2,
+      0,
+      1,
+      2,
+      0,
+      1,
+      2
+    ],
+    "weights_b": [
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      1,
+      0
+    ]
+  },
+  "group_oor_limit": 0.35,
+  "max_workers": 4,
+  "element_budget": 100000
+}

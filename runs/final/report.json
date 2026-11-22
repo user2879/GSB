@@ -1,0 +1,561 @@
+{
+  "batches": [
+    {
+      "batch": 0,
+      "events": [
+        {
+          "column": 3,
+          "op": "replace_column",
+          "tensor": "weights_a"
+        },
+        {
+          "hi": 995,
+          "lo": 5,
+          "op": "set_quantile"
+        }
+      ],
+      "global_version": 2
+    },
+    {
+      "batch": 1,
+      "events": [
+        {
+          "bits": 4,
+          "op": "set_quant_bits"
+        },
+        {
+          "bits": 6,
+          "op": "set_frac_bits"
+        }
+      ],
+      "global_version": 3
+    },
+    {
+      "batch": 2,
+      "events": [
+        {
+          "op": "set_saturation",
+          "strategy": "mask"
+        },
+        {
+          "op": "set_groups",
+          "tensor": "weights_a"
+        },
+        {
+          "column": 5,
+          "op": "replace_column",
+          "tensor": "weights_b"
+        }
+      ],
+      "global_version": 4
+    },
+    {
+      "batch": 3,
+      "events": [
+        {
+          "bits": 8,
+          "op": "set_quant_bits"
+        },
+        {
+          "op": "set_saturation",
+          "strategy": "clamp"
+        },
+        {
+          "op": "set_tolerances"
+        }
+      ],
+      "global_version": 5
+    }
+  ],
+  "bitwidth_comparisons": [
+    {
+      "batch": 1,
+      "new": {
+        "clipped_count": 30,
+        "frac_bits": 6,
+        "quant_bits": 4
+      },
+      "old": {
+        "clipped_count": 38,
+        "frac_bits": 8,
+        "quant_bits": 8
+      },
+      "tensor": "weights_a"
+    },
+    {
+      "batch": 1,
+      "new": {
+        "clipped_count": 25,
+        "frac_bits": 6,
+        "quant_bits": 4
+      },
+      "old": {
+        "clipped_count": 25,
+        "frac_bits": 8,
+        "quant_bits": 8
+      },
+      "tensor": "weights_b"
+    },
+    {
+      "batch": 3,
+      "new": {
+        "clipped_count": 30,
+        "frac_bits": 6,
+        "quant_bits": 8
+      },
+      "old": {
+        "clipped_count": 30,
+        "frac_bits": 6,
+        "quant_bits": 4
+      },
+      "tensor": "weights_a"
+    },
+    {
+      "batch": 3,
+      "new": {
+        "clipped_count": 24,
+        "frac_bits": 6,
+        "quant_bits": 8
+      },
+      "old": {
+        "clipped_count": 26,
+        "frac_bits": 6,
+        "quant_bits": 4
+      },
+      "tensor": "weights_b"
+    }
+  ],
+  "columns": {
+    "weights_a:0": {
+      "clipped_count": 6,
+      "dominant_source": null,
+      "max_abs_err": 2.1455745375,
+      "max_rel_err": 0.18699936585296867,
+      "oor_count": 0,
+      "scale": 0.05177806088548627,
+      "valid_count": 48,
+      "zero_point": 71
+    },
+    "weights_a:1": {
+      "clipped_count": 1,
+      "dominant_source": "saturation",
+      "max_abs_err": 2.7692074274999996,
+      "max_rel_err": 0.2578895889834724,
+      "oor_count": 1,
+      "scale": 0.031870488692566666,
+      "valid_count": 48,
+      "zero_point": 127
+    },
+    "weights_a:10": {
+      "clipped_count": 0,
+      "dominant_source": null,
+      "max_abs_err": 0.02256691310000003,
+      "max_rel_err": 0.16960273806503876,
+      "oor_count": 0,
+      "scale": 0.04346503236196864,
+      "valid_count": 47,
+      "zero_point": -29
+    },
+    "weights_a:11": {
+      "clipped_count": 0,
+      "dominant_source": null,
+      "max_abs_err": 0.035429606400000146,
+      "max_rel_err": 0.10557985793438224,
+      "oor_count": 0,
+      "scale": 0.0572827074022098,
+      "valid_count": 48,
+      "zero_point": -25
+    },
+    "weights_a:2": {
+      "clipped_count": 0,
+      "dominant_source": null,
+      "max_abs_err": 0.06889311900000017,
+      "max_rel_err": 0.2851710155787998,
+      "oor_count": 0,
+      "scale": 0.11981639066863532,
+      "valid_count": 47,
+      "zero_point": 16
+    },
+    "weights_a:3": {
+      "clipped_count": 2,
+      "dominant_source": null,
+      "max_abs_err": 1.1279137883072572,
+      "max_rel_err": 0.2165092771299413,
+      "oor_count": 0,
+      "scale": 0.08443077479829919,
+      "valid_count": 48,
+      "zero_point": -5
+    },
+    "weights_a:4": {
+      "clipped_count": 1,
+      "dominant_source": null,
+      "max_abs_err": 1.3169794343000003,
+      "max_rel_err": 0.15261400694291474,
+      "oor_count": 0,
+      "scale": 0.0416514158395353,
+      "valid_count": 48,
+      "zero_point": 28
+    },
+    "weights_a:5": {
+      "clipped_count": 10,
+      "dominant_source": "saturation",
+      "max_abs_err": 2.1850218309000002,
+      "max_rel_err": 0.21519311909792307,
+      "oor_count": 1,
+      "scale": 0.027846219239539224,
+      "valid_count": 48,
+      "zero_point": -128
+    },
+    "weights_a:6": {
+      "clipped_count": 1,
+      "dominant_source": null,
+      "max_abs_err": 1.2095367897999996,
+      "max_rel_err": 1.0,
+      "oor_count": 0,
+      "scale": 0.042033322328815736,
+      "valid_count": 45,
+      "zero_point": -101
+    },
+    "weights_a:7": {
+      "clipped_count": 4,
+      "dominant_source": "saturation",
+      "max_abs_err": 2.2948417737,
+      "max_rel_err": 0.33014119916855555,
+      "oor_count": 1,
+      "scale": 0.035261702022847154,
+      "valid_count": 47,
+      "zero_point": -22
+    },
+    "weights_a:8": {
+      "clipped_count": 3,
+      "dominant_source": "saturation",
+      "max_abs_err": 3.3382051637999997,
+      "max_rel_err": 0.283482400193074,
+      "oor_count": 1,
+      "scale": 0.05238990824966473,
+      "valid_count": 48,
+      "zero_point": -53
+    },
+    "weights_a:9": {
+      "clipped_count": 2,
+      "dominant_source": null,
+      "max_abs_err": 1.1116384650000004,
+      "max_rel_err": 1.0,
+      "oor_count": 0,
+      "scale": 0.050667782709639224,
+      "valid_count": 48,
+      "zero_point": 6
+    },
+    "weights_b:0": {
+      "clipped_count": 2,
+      "dominant_source": null,
+      "max_abs_err": 0.4444837530000001,
+      "max_rel_err": 0.1003607876857481,
+      "oor_count": 0,
+      "scale": 0.011192374631727453,
+      "valid_count": 48,
+      "zero_point": -128
+    },
+    "weights_b:1": {
+      "clipped_count": 2,
+      "dominant_source": null,
+      "max_abs_err": 1.5096861204999996,
+      "max_rel_err": 0.27322928086438336,
+      "oor_count": 0,
+      "scale": 0.15488993398837061,
+      "valid_count": 48,
+      "zero_point": 23
+    },
+    "weights_b:2": {
+      "clipped_count": 7,
+      "dominant_source": "saturation",
+      "max_abs_err": 0.9069495025999998,
+      "max_rel_err": 0.43051951167731006,
+      "oor_count": 1,
+      "scale": 0.020059664734005882,
+      "valid_count": 48,
+      "zero_point": 40
+    },
+    "weights_b:3": {
+      "clipped_count": 3,
+      "dominant_source": null,
+      "max_abs_err": 1.9400027111,
+      "max_rel_err": 0.29521897899502486,
+      "oor_count": 0,
+      "scale": 0.08590639767815689,
+      "valid_count": 47,
+      "zero_point": -18
+    },
+    "weights_b:4": {
+      "clipped_count": 2,
+      "dominant_source": "saturation",
+      "max_abs_err": 2.4152491656000006,
+      "max_rel_err": 0.9868343139446809,
+      "oor_count": 1,
+      "scale": 0.03361891791965295,
+      "valid_count": 48,
+      "zero_point": 90
+    },
+    "weights_b:5": {
+      "clipped_count": 3,
+      "dominant_source": null,
+      "max_abs_err": 3.2704291928437677,
+      "max_rel_err": 1.0,
+      "oor_count": 0,
+      "scale": 0.17669068970389537,
+      "valid_count": 48,
+      "zero_point": 25
+    },
+    "weights_b:6": {
+      "clipped_count": 2,
+      "dominant_source": null,
+      "max_abs_err": 1.8005884733999995,
+      "max_rel_err": 0.17915254197955247,
+      "oor_count": 0,
+      "scale": 0.052217214118399996,
+      "valid_count": 48,
+      "zero_point": 48
+    },
+    "weights_b:7": {
+      "clipped_count": 3,
+      "dominant_source": null,
+      "max_abs_err": 2.059887636799999,
+      "max_rel_err": 0.2609770939462308,
+      "oor_count": 0,
+      "scale": 0.0637039446027549,
+      "valid_count": 46,
+      "zero_point": 50
+    }
+  },
+  "config_hash": "8ce2f29a7d13382cd7d558689b43287b25209bbd2befebd2340988283a70d433",
+  "failures": [],
+  "format_version": 1,
+  "global_version": 5,
+  "groups": {
+    "weights_a": {
+      "exceedances": [],
+      "groups": [
+        {
+          "columns": [
+            0,
+            2,
+            7,
+            10
+          ],
+          "conclusion": "group=0 cols=4 max_rel_err=0.330141 sat_ratio=0.0529 oor_ratio=0.0053 dominant=saturation(1.00) within_limit",
+          "dominant_share": 1.0,
+          "dominant_source": "saturation",
+          "exceeds_limit": false,
+          "group": 0,
+          "max_rel_err": 0.33014119916855555,
+          "oor_ratio": 0.005291005291005291,
+          "saturation_ratio": 0.05291005291005291
+        },
+        {
+          "columns": [
+            1,
+            3,
+            6,
+            9
+          ],
+          "conclusion": "group=1 cols=4 max_rel_err=1 sat_ratio=0.0317 oor_ratio=0.0053 dominant=saturation(1.00) within_limit",
+          "dominant_share": 1.0,
+          "dominant_source": "saturation",
+          "exceeds_limit": false,
+          "group": 1,
+          "max_rel_err": 1.0,
+          "oor_ratio": 0.005291005291005291,
+          "saturation_ratio": 0.031746031746031744
+        },
+        {
+          "columns": [
+            4,
+            5,
+            8,
+            11
+          ],
+          "conclusion": "group=2 cols=4 max_rel_err=0.283482 sat_ratio=0.0729 oor_ratio=0.0104 dominant=saturation(1.00) within_limit",
+          "dominant_share": 1.0,
+          "dominant_source": "saturation",
+          "exceeds_limit": false,
+          "group": 2,
+          "max_rel_err": 0.283482400193074,
+          "oor_ratio": 0.010416666666666666,
+          "saturation_ratio": 0.07291666666666667
+        }
+      ],
+      "quant_bits": 8,
+      "tensor": "weights_a"
+    },
+    "weights_b": {
+      "exceedances": [],
+      "groups": [
+        {
+          "columns": [
+            0,
+            1,
+            7
+          ],
+          "conclusion": "group=0 cols=3 max_rel_err=0.273229 sat_ratio=0.0493 oor_ratio=0.0000 dominant=none(0.00) within_limit",
+          "dominant_share": 0.0,
+          "dominant_source": null,
+          "exceeds_limit": false,
+          "group": 0,
+          "max_rel_err": 0.27322928086438336,
+          "oor_ratio": 0.0,
+          "saturation_ratio": 0.04929577464788732
+        },
+        {
+          "columns": [
+            2,
+            3,
+            6
+          ],
+          "conclusion": "group=1 cols=3 max_rel_err=0.43052 sat_ratio=0.0839 oor_ratio=0.0070 dominant=saturation(1.00) within_limit",
+          "dominant_share": 1.0,
+          "dominant_source": "saturation",
+          "exceeds_limit": false,
+          "group": 1,
+          "max_rel_err": 0.43051951167731006,
+          "oor_ratio": 0.006993006993006993,
+          "saturation_ratio": 0.08391608391608392
+        },
+        {
+          "columns": [
+            4,
+            5
+          ],
+          "conclusion": "group=2 cols=2 max_rel_err=1 sat_ratio=0.0521 oor_ratio=0.0104 dominant=saturation(1.00) within_limit",
+          "dominant_share": 1.0,
+          "dominant_source": "saturation",
+          "exceeds_limit": false,
+          "group": 2,
+          "max_rel_err": 1.0,
+          "oor_ratio": 0.010416666666666666,
+          "saturation_ratio": 0.052083333333333336
+        }
+      ],
+      "quant_bits": 8,
+      "tensor": "weights_b"
+    }
+  },
+  "rebuild_verification": {
+    "consistent": true,
+    "diff_fields": []
+  },
+  "recovery_actions": [],
+  "schedule": {
+    "budget_log": [],
+    "budget_spent": 0,
+    "stage_stats": {
+      "calib": {
+        "recomputed": [],
+        "reused": [
+          "weights_a:0",
+          "weights_a:1",
+          "weights_a:10",
+          "weights_a:11",
+          "weights_a:2",
+          "weights_a:3",
+          "weights_a:4",
+          "weights_a:5",
+          "weights_a:6",
+          "weights_a:7",
+          "weights_a:8",
+          "weights_a:9",
+          "weights_b:0",
+          "weights_b:1",
+          "weights_b:2",
+          "weights_b:3",
+          "weights_b:4",
+          "weights_b:5",
+          "weights_b:6",
+          "weights_b:7"
+        ]
+      },
+      "dequant": {
+        "recomputed": [
+          "weights_a:0",
+          "weights_a:1",
+          "weights_a:10",
+          "weights_a:11",
+          "weights_a:2",
+          "weights_a:3",
+          "weights_a:4",
+          "weights_a:5",
+          "weights_a:6",
+          "weights_a:7",
+          "weights_a:8",
+          "weights_a:9",
+          "weights_b:0",
+          "weights_b:1",
+          "weights_b:2",
+          "weights_b:3",
+          "weights_b:4",
+          "weights_b:5",
+          "weights_b:6",
+          "weights_b:7"
+        ],
+        "reused": []
+      },
+      "quant": {
+        "recomputed": [
+          "weights_a:0",
+          "weights_a:1",
+          "weights_a:10",
+          "weights_a:11",
+          "weights_a:2",
+          "weights_a:3",
+          "weights_a:4",
+          "weights_a:5",
+          "weights_a:6",
+          "weights_a:7",
+          "weights_a:8",
+          "weights_a:9",
+          "weights_b:0",
+          "weights_b:1",
+          "weights_b:2",
+          "weights_b:3",
+          "weights_b:4",
+          "weights_b:5",
+          "weights_b:6",
+          "weights_b:7"
+        ],
+        "reused": []
+      },
+      "scale": {
+        "recomputed": [
+          "weights_a:0",
+          "weights_a:1",
+          "weights_a:10",
+          "weights_a:11",
+          "weights_a:2",
+          "weights_a:3",
+          "weights_a:4",
+          "weights_a:5",
+          "weights_a:6",
+          "weights_a:7",
+          "weights_a:8",
+          "weights_a:9",
+          "weights_b:0",
+          "weights_b:1",
+          "weights_b:2",
+          "weights_b:3",
+          "weights_b:4",
+          "weights_b:5",
+          "weights_b:6",
+          "weights_b:7"
+        ],
+        "reused": []
+      },
+      "stratify": {
+        "recomputed": [
+          "weights_a:groups",
+          "weights_b:groups"
+        ],
+        "reused": []
+      }
+    }
+  },
+  "version_change": "config_changed"
+}

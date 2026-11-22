@@ -1,0 +1,82 @@
+{
+  "batches": [
+    {
+      "ops": [
+        {
+          "op": "replace_column",
+          "tensor": "weights_a",
+          "column": 3,
+          "seed": 777,
+          "scale": 5.0
+        },
+        {
+          "op": "set_quantile",
+          "lo_permille": 5,
+          "hi_permille": 995
+        }
+      ]
+    },
+    {
+      "ops": [
+        {
+          "op": "set_quant_bits",
+          "bits": 4
+        },
+        {
+          "op": "set_frac_bits",
+          "bits": 6
+        }
+      ]
+    },
+    {
+      "ops": [
+        {
+          "op": "set_saturation",
+          "strategy": "mask"
+        },
+        {
+          "op": "set_groups",
+          "tensor": "weights_a",
+          "labels": [
+            0,
+            1,
+            0,
+            1,
+            2,
+            2,
+            1,
+            0,
+            2,
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "op": "replace_column",
+          "tensor": "weights_b",
+          "column": 5,
+          "seed": 4242,
+          "scale": 9.0
+        }
+      ]
+    },
+    {
+      "ops": [
+        {
+          "op": "set_quant_bits",
+          "bits": 8
+        },
+        {
+          "op": "set_saturation",
+          "strategy": "clamp"
+        },
+        {
+          "op": "set_tolerances",
+          "abs_tol": 0.4,
+          "rel_tol": 0.2
+        }
+      ]
+    }
+  ]
+}
