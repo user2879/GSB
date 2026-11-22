@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "snapshots": [
+    {
+      "seq": 1,
+      "parent_seq": null,
+      "hosts": {
+        "edge-a": {
+          "expected": {
+            "cpu_quota": 120000,
+            "memory_pages": 70000,
+            "processes": 600
+          },
+          "tolerance_bps": {
+            "cpu_quota": 1000,
+            "memory_pages": 800,
+            "processes": 1000
+          }
+        },
+        "edge-b": {
+          "expected": {
+            "cpu_quota": 90000,
+            "memory_pages": 70000,
+            "processes": 550
+          },
+          "tolerance_bps": {
+            "cpu_quota": 1000,
+            "memory_pages": 1000,
+            "processes": 1000
+          }
+        },
+        "edge-c": {
+          "expected": {
+            "cpu_quota": 50000,
+            "memory_pages": 40000,
+            "processes": 350
+          },
+          "tolerance_bps": {
+            "cpu_quota": 1000,
+            "memory_pages": 1000,
+            "processes": 1000
+          }
+        }
+      }
+    },
+    {
+      "seq": 2,
+      "parent_seq": 1,
+      "hosts": {
+        "edge-a": {
+          "expected": {
+            "cpu_quota": 99000,
+            "memory_pages": 64000,
+            "processes": 512
+          },
+          "tolerance_bps": {
+            "cpu_quota": 100,
+            "memory_pages": 600,
+            "processes": 800
+          }
+        },
+        "edge-b": {
+          "expected": {
+            "cpu_quota": 80000,
+            "memory_pages": 66000,
+            "processes": 540
+          },
+          "tolerance_bps": {
+            "cpu_quota": 100,
+            "memory_pages": 800,
+            "processes": 1000
+          }
+        },
+        "edge-c": {
+          "expected": {
+            "cpu_quota": 48000,
+            "memory_pages": 40000,
+            "processes": 350
+          },
+          "tolerance_bps": {
+            "cpu_quota": 800,
+            "memory_pages": 1000,
+            "processes": 1000
+          }
+        }
+      }
+    },
+    {
+      "seq": 3,
+      "parent_seq": 2,
+      "hosts": {
+        "edge-a": {
+          "expected": {
+            "cpu_quota": 110000,
+            "memory_pages": 66000,
+            "processes": 540
+          },
+          "tolerance_bps": {
+            "cpu_quota": 500,
+            "memory_pages": 700,
+            "processes": 900
+          }
+        },
+        "edge-b": {
+          "expected": {
+            "cpu_quota": 84000,
+            "memory_pages": 67000,
+            "processes": 545
+          },
+          "tolerance_bps": {
+            "cpu_quota": 500,
+            "memory_pages": 900,
+            "processes": 1000
+          }
+        },
+        "edge-c": {
+          "expected": {
+            "cpu_quota": 49000,
+            "memory_pages": 40500,
+            "processes": 355
+          },
+          "tolerance_bps": {
+            "cpu_quota": 900,
+            "memory_pages": 1000,
+            "processes": 1000
+          }
+        }
+      }
+    }
+  ]
+}

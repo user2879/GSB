@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "criteria": {
+    "schema_version": 1,
+    "global_concurrency": 3,
+    "per_agent_concurrency": 1,
+    "min_sources": 2,
+    "scale_exp": 3,
+    "socket_timeout_ms": 2000,
+    "handshake_timeout_ms": 5000,
+    "max_retries": 2,
+    "retry_backoff_ms": 25,
+    "boundary_rule": "tolerance_floor"
+  },
+  "agents": [
+    {
+      "agent_id": "agent-alpha",
+      "host": "127.0.0.1",
+      "port": 39411,
+      "seed": 101,
+      "aggregation": {
+        "kind": "median",
+        "window": 7,
+        "version": "median-v1"
+      },
+      "hosts": [
+        "edge-a",
+        "edge-b"
+      ],
+      "metrics": [
+        "cpu_quota",
+        "memory_pages",
+        "processes"
+      ],
+      "per_agent_concurrency": 1,
+      "profiles": {
+        "edge-a": {
+          "cpu_quota": {
+            "base": 106000,
+            "spread": 1200
+          },
+          "memory_pages": {
+            "base": 62200,
+            "spread": 700
+          },
+          "processes": {
+            "base": 508,
+            "spread": 8
+          }
+        },
+        "edge-b": {
+          "cpu_quota": {
+            "base": 80500,
+            "spread": 900
+          },
+          "memory_pages": {
+            "base": 64800,
+            "spread": 700
+          },
+          "processes": {
+            "base": 531,
+            "spread": 7
+          }
+        }
+      }
+    },
+    {
+      "agent_id": "agent-bravo",
+      "host": "127.0.0.1",
+      "port": 39412,
+      "seed": 202,
+      "aggregation": {
+        "kind": "mean_floor",
+        "window": 9,
+        "version": "mean-v2"
+      },
+      "hosts": [
+        "edge-a",
+        "edge-b",
+        "edge-c"
+      ],
+      "metrics": [
+        "cpu_quota",
+        "memory_pages",
+        "processes"
+      ],
+      "per_agent_concurrency": 1,
+      "profiles": {
+        "edge-a": {
+          "cpu_quota": {
+            "base": 108500,
+            "spread": 1200
+          },
+          "memory_pages": {
+            "base": 62900,
+            "spread": 650
+          },
+          "processes": {
+            "base": 511,
+            "spread": 7
+          }
+        },
+        "edge-b": {
+          "cpu_quota": {
+            "base": 81000,
+            "spread": 900
+          },
+          "memory_pages": {
+            "base": 65100,
+            "spread": 600
+          },
+          "processes": {
+            "base": 536,
+            "spread": 6
+          }
+        },
+        "edge-c": {
+          "cpu_quota": {
+            "base": 46800,
+            "spread": 700
+          },
+          "memory_pages": {
+            "base": 39200,
+            "spread": 500
+          },
+          "processes": {
+            "base": 338,
+            "spread": 5
+          }
+        }
+      }
+    },
+    {
+      "agent_id": "agent-delta",
+      "host": "127.0.0.1",
+      "port": 39414,
+      "seed": 404,
+      "aggregation": {
+        "kind": "median",
+        "window": 5,
+        "version": "median-v1"
+      },
+      "hosts": [
+        "edge-a",
+        "edge-c"
+      ],
+      "metrics": [
+        "cpu_quota",
+        "memory_pages",
+        "processes"
+      ],
+      "per_agent_concurrency": 1,
+      "profiles": {
+        "edge-a": {
+          "cpu_quota": {
+            "base": 107200,
+            "spread": 1000
+          },
+          "memory_pages": {
+            "base": 62600,
+            "spread": 600
+          },
+          "processes": {
+            "base": 509,
+            "spread": 6
+          }
+        },
+        "edge-c": {
+          "cpu_quota": {
+            "base": 47200,
+            "spread": 650
+          },
+          "memory_pages": {
+            "base": 39700,
+            "spread": 450
+          },
+          "processes": {
+            "base": 341,
+            "spread": 5
+          }
+        }
+      }
+    }
+  ]
+}
