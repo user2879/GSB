@@ -20,3 +20,31 @@
 
 验收：
 用本地样本与注入配置验证加载校验、定点融合结论、编辑序列下增量与全量逐字段一致及快照恢复，输出诊断报告。
+
+---
+
+## 实现交付（本地确定性多模态证据管线）
+
+本仓库已按上述任务实现完整管线，源码位于 `mm_pipeline/`，验收脚本位于
+`scripts/`，测试位于 `tests/`，技术细节见 `docs/TECHNICAL_DESIGN.md`。
+
+快速开始：
+
+```bash
+pip install -r requirements.txt
+python -m scripts.generate_samples --out samples/base --count 6
+python -m mm_pipeline.pipeline \
+  --samples samples/base --config samples/flow_config.yaml \
+  --work-dir work/run --report work/run/report.json --reset
+python -m scripts.run_validation \
+  --samples samples/base --config samples/flow_config.yaml \
+  --workspace work/acceptance --out work/acceptance_report.json
+python -m unittest discover -s tests -t .
+```
+
+- 业务码：`E_CONFIG_INVALID / E_IMAGE_FORMAT / E_ASSERTION_SCHEMA /
+  E_RELATION_REF / E_SNAPSHOT_STALE / E_INJECTION_HIT`（见 `mm_pipeline/errors.py`）。
+- 注入配置示例：`configs/injections.yaml`。
+- 全流程在定点整数域运算，特征指纹仅由输入内容与语义参数决定；
+  增量运行与空白全量重建的逐区域类别、定点置信度、贡献分解顺序、
+  边界清单、ledger 顺序与失败清单逐字段一致。

@@ -1,0 +1,30 @@
+injections:
+  - injection_id: INJ-001
+    injection_type: truncate_image
+    sample_id: sample_001
+    target_file: image.png
+    params:
+      keep_bytes: 24
+  - injection_id: INJ-002
+    injection_type: missing_assertion_field
+    sample_id: sample_002
+    target_file: assertions.json
+    params:
+      assertion_index: 0
+      field: value
+  - injection_id: INJ-003
+    injection_type: dangling_relation_region
+    sample_id: sample_003
+    target_file: relations.json
+    params:
+      relation_index: 0
+      bad_region: 9999
+  - injection_id: INJ-004
+    injection_type: nonfinite_fusion_param
+    params:
+      field: fusion_temperature
+      value: .nan
+  - injection_id: INJ-005
+    injection_type: threshold_out_of_range
+    params:
+      threshold: 1.7
