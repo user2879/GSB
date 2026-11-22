@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "strategy": "rolling",
+  "items": {
+    "base_rate": {
+      "derived": false,
+      "value": 1.25,
+      "targets": [
+        "node_a",
+        "node_b",
+        "node_c"
+      ],
+      "work_repeat": 2
+    },
+    "noise_floor": {
+      "derived": false,
+      "value": 0.4,
+      "targets": [
+        "node_a",
+        "node_b"
+      ],
+      "work_repeat": 1
+    },
+    "spare_knob": {
+      "derived": false,
+      "value": 7.0,
+      "targets": [
+        "node_a"
+      ],
+      "work_repeat": 1
+    },
+    "throughput": {
+      "derived": true,
+      "coeffs": {
+        "base_rate": 2.0
+      },
+      "const": 0.5,
+      "targets": [
+        "node_a",
+        "node_b",
+        "node_c"
+      ],
+      "work_repeat": 2
+    },
+    "weighted_mix": {
+      "derived": true,
+      "coeffs": {
+        "base_rate": 1.0,
+        "noise_floor": -1.0
+      },
+      "const": 0.0,
+      "targets": [
+        "node_a",
+        "node_b"
+      ],
+      "work_repeat": 1
+    },
+    "score": {
+      "derived": true,
+      "coeffs": {
+        "throughput": 1.5,
+        "weighted_mix": 0.5
+      },
+      "const": 0.1,
+      "targets": [
+        "node_a",
+        "node_b",
+        "node_c"
+      ],
+      "work_repeat": 3
+    }
+  }
+}
