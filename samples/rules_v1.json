@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "global_concurrency": 16,
+  "services": [
+    {
+      "service_id": "orders",
+      "concurrency_quota": 8,
+      "instances": [
+        {
+          "instance_id": "orders-a",
+          "host": "127.0.0.1",
+          "port": 19001,
+          "weight": 60,
+          "failure_threshold": 3,
+          "cooldown_ms": 800,
+          "half_open_probes": 1,
+          "upstream": {
+            "process_ms": 12,
+            "error_permyriad": 1000,
+            "slow_permyriad": 1500,
+            "slow_extra_ms": 80
+          }
+        },
+        {
+          "instance_id": "orders-b",
+          "host": "127.0.0.1",
+          "port": 19002,
+          "weight": 40,
+          "failure_threshold": 3,
+          "cooldown_ms": 800,
+          "half_open_probes": 1,
+          "upstream": {
+            "process_ms": 10,
+            "error_permyriad": 500,
+            "slow_permyriad": 1000,
+            "slow_extra_ms": 70
+          }
+        },
+        {
+          "instance_id": "orders-c",
+          "host": "127.0.0.1",
+          "port": 19003,
+          "weight": 0,
+          "failure_threshold": 2,
+          "cooldown_ms": 500,
+          "half_open_probes": 1,
+          "upstream": {
+            "process_ms": 8,
+            "error_permyriad": 0,
+            "slow_permyriad": 0,
+            "slow_extra_ms": 0
+          }
+        }
+      ]
+    },
+    {
+      "service_id": "payments",
+      "concurrency_quota": 4,
+      "instances": [
+        {
+          "instance_id": "payments-a",
+          "host": "127.0.0.1",
+          "port": 19101,
+          "weight": 50,
+          "failure_threshold": 2,
+          "cooldown_ms": 400,
+          "half_open_probes": 2,
+          "upstream": {
+            "process_ms": 15,
+            "error_permyriad": 4000,
+            "slow_permyriad": 1000,
+            "slow_extra_ms": 60
+          }
+        },
+        {
+          "instance_id": "payments-b",
+          "host": "127.0.0.1",
+          "port": 19102,
+          "weight": 50,
+          "failure_threshold": 2,
+          "cooldown_ms": 400,
+          "half_open_probes": 2,
+          "upstream": {
+            "process_ms": 15,
+            "error_permyriad": 4000,
+            "slow_permyriad": 1000,
+            "slow_extra_ms": 60
+          }
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "route_id": "orders-api",
+      "prefix": "/orders",
+      "target_service": "orders",
+      "attempt_timeout_ms": 300,
+      "retries": 2,
+      "window_minutes": 1,
+      "budget_permyriad": 2000,
+      "min_samples": 5,
+      "slow_threshold_ms": 60
+    },
+    {
+      "route_id": "payments-api",
+      "prefix": "/pay",
+      "target_service": "payments",
+      "attempt_timeout_ms": 250,
+      "retries": 1,
+      "window_minutes": 1,
+      "budget_permyriad": 3000,
+      "min_samples": 4,
+      "slow_threshold_ms": 50
+    }
+  ]
+}
