@@ -1,0 +1,36 @@
+{
+  "format_version": 1,
+  "injections": [
+    {
+      "id": "quota-overflow",
+      "code": "E_QUOTA",
+      "description": "Add one basis point to the first tenant so total quota_bp exceeds 10000.",
+      "target": "declaration",
+      "mutation": {
+        "op": "quota_overflow",
+        "index": 0,
+        "delta": 1
+      }
+    },
+    {
+      "id": "reserve-overflow",
+      "code": "E_RESERVE",
+      "description": "Raise one tenant reserve above cluster_total_units.",
+      "target": "declaration",
+      "mutation": {
+        "op": "reserve_overflow",
+        "index": 0,
+        "delta": 1
+      }
+    },
+    {
+      "id": "snapshot-digest-mismatch",
+      "code": "E_SNAPSHOT",
+      "description": "Load a snapshot while forcing a content_digest mismatch.",
+      "target": "snapshot",
+      "mutation": {
+        "op": "snapshot_digest_mismatch"
+      }
+    }
+  ]
+}

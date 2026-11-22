@@ -1,0 +1,81 @@
+{
+  "cluster_total_units": 120,
+  "tenants": [
+    {
+      "tenant_id": "tenant-alpha",
+      "quota_bp": 5000,
+      "reserve_units": 10,
+      "priority": 10
+    },
+    {
+      "tenant_id": "tenant-beta",
+      "quota_bp": 3000,
+      "reserve_units": 8,
+      "priority": 20
+    },
+    {
+      "tenant_id": "tenant-gamma",
+      "quota_bp": 2000,
+      "reserve_units": 5,
+      "priority": 30
+    }
+  ],
+  "workloads": [
+    {
+      "workload_id": "wl-alpha-core",
+      "tenant_id": "tenant-alpha",
+      "requested_replicas": 2,
+      "units_per_replica": 8,
+      "preemptible": false,
+      "startup_order": 10
+    },
+    {
+      "workload_id": "wl-alpha-batch",
+      "tenant_id": "tenant-alpha",
+      "requested_replicas": 2,
+      "units_per_replica": 7,
+      "preemptible": true,
+      "startup_order": 20
+    },
+    {
+      "workload_id": "wl-beta-core",
+      "tenant_id": "tenant-beta",
+      "requested_replicas": 2,
+      "units_per_replica": 7,
+      "preemptible": false,
+      "startup_order": 30
+    },
+    {
+      "workload_id": "wl-beta-batch-a",
+      "tenant_id": "tenant-beta",
+      "requested_replicas": 1,
+      "units_per_replica": 6,
+      "preemptible": true,
+      "startup_order": 40
+    },
+    {
+      "workload_id": "wl-beta-batch-b",
+      "tenant_id": "tenant-beta",
+      "requested_replicas": 1,
+      "units_per_replica": 6,
+      "preemptible": true,
+      "startup_order": 50
+    },
+    {
+      "workload_id": "wl-gamma-core",
+      "tenant_id": "tenant-gamma",
+      "requested_replicas": 1,
+      "units_per_replica": 6,
+      "preemptible": false,
+      "startup_order": 60
+    },
+    {
+      "workload_id": "wl-gamma-batch",
+      "tenant_id": "tenant-gamma",
+      "requested_replicas": 3,
+      "units_per_replica": 5,
+      "preemptible": true,
+      "startup_order": 70
+    }
+  ]
+}
