@@ -1,0 +1,55 @@
+{
+  "completed_entity_count": 7,
+  "consumed_points_by_batch": {
+    "0": 224
+  },
+  "entity_count": 8,
+  "failure_codes": [
+    "E_CONFIG_INVALID"
+  ],
+  "failure_count": 1,
+  "injection_hits": [
+    {
+      "entity_id": "E006",
+      "evidence": {
+        "cache_blocks": 0,
+        "single_block_size": 1
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "injection_id": "INJ-004-CACHE-BUDGET-ZERO",
+      "observed_code": "E_CONFIG_INVALID",
+      "stage": "cache",
+      "type": "cache_budget_lt_block"
+    }
+  ],
+  "pending": [],
+  "report_path": "/home/zsl/feedback/uidfc5909d3-default-135/results/acceptance/injection-cache_budget_zero-report.json",
+  "run": {
+    "base_input_hash": "2b0541cb63ff51fa2f54e9fff43e13c3d137755a586f61d035d7d4a3c1f8c824",
+    "clock_source": "monotonic_ns",
+    "config_hash": "0ad75e725320377a434307d1d3ff507c26b5f096e2e2e3ef2573c65f9dab66e5",
+    "entity_shards": {
+      "E001": 3,
+      "E002": 3,
+      "E003": 2,
+      "E004": 0,
+      "E005": 2,
+      "E006": 2,
+      "E007": 1,
+      "E008": 3
+    },
+    "fresh_after_uncommitted": false,
+    "global_version": 1,
+    "max_observed_concurrency": 3,
+    "max_workers": 4,
+    "plan_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "resume_requested": false,
+    "resumed": false,
+    "resumed_from_generation": null,
+    "snapshot_every_batches": 1,
+    "snapshot_generation": 1,
+    "snapshot_root": "/home/zsl/feedback/uidfc5909d3-default-135/results/acceptance/snap-injection-cache_budget_zero",
+    "uncommitted_temporary_generations": []
+  },
+  "status": "completed_with_failures"
+}

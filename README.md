@@ -1,22 +1,214 @@
-当前是空白工作区，需要从零构建一个面向离线特征回填的领域数据编辑与操作应用，业务目标是在有限算力配额与租约约束下，对本地确定性样本完成分批特征回填，并保证任意中断后断点续跑与从空白全量回填逐字段一致。输入为一个本地样本目录：一份样本行 JSONL（行标识、实体 ID、时间戳毫秒、数值特征与可选的缺失标记）；一份特征计算定义 JSON（声明每个特征所依赖的原始字段、窗口毫秒长度、聚合方式与依赖的上游特征名）；一份回填配置 YAML（分批行数、实体分片数、单批特征计算点数配额、单实体租约到期毫秒、租约续期间隔、线程池并发数、快照提交间隔批次、缓存驻留块数与租约生效的单调时钟来源）。另有一份回填计划 JSON，每批可包含样本追加、单行修正与窗口参数调整。核心难点是配额扣减、租约持有与快照提交三者相互牵制：租约过期必须真实释放实体且被其他工作单元接管，不得以固定睡眠伪装过期；中断后仅可依据已整体替换的快照恢复，半成品批次不得计入结果。
+# 确定性离线特征回填应用
 
-任务环境与准备：
-安装 Python 3.11 与 NumPy、PyYAML，锁定在本地虚拟环境，不引入外部服务或真实模型依赖。
-在空白工作区创建输入目录，按固定种子程序生成样本 JSONL、特征定义、回填配置与回填计划，全部为本地确定性数据。
-准备独立注入清单与启动说明，使每类非法输入与租约、配额故障可被单独触发，且不修改源码。
-确认 Windows 下临时目录可整体替换，租约时钟来源、并发数与快照提交间隔可由配置覆盖以便复现实验。
+这是一个只依赖本地文件和 Python 进程的领域数据编辑与回填应用。它在有限单批点数配额、实体租约、LRU 驻留预算和原子快照约束下，对确定性 JSONL 样本执行增量特征回填，并保证从已提交快照断点续跑的结果与最终样本集合的一次性全量回填逐字段一致。
 
-业务要求：
-1. 实现样本、特征定义、回填配置与计划加载校验层：逐行解析样本 JSONL，校验行标识唯一、实体 ID 非空、时间戳非负且同实体严格递增、数值特征为有限数或缺失标记；校验特征定义引用的原始字段与上游特征存在且无环、窗口毫秒为正整数、配额与租约到期毫秒为正；非法项分别输出 E_ROW_INVALID、E_FEATURE_DAG_INVALID、E_CONFIG_INVALID 并进入失败清单。
-2. 实现按依赖拓扑序的确定性窗口特征计算：对每个实体在每个时间戳按窗口毫秒计算计数、求和、均值与最近值，窗口包含边界且只读取不晚于该时间戳的行；缺失值按该实体在该窗口已见样本的固定规则跳过并记录跳过明细；全部累加顺序固定为实体 ID 升序、时间戳升序，同一输入与配置多次运行的特征值必须逐字段一致。
-3. 实现实体分片与租约签发、续期、过期回收机制：按实体分片数把实体映射到分片，工作单元需先取得实体租约才能计算该实体；租约以配置的单调时钟来源记录签发与到期时刻，续期仅可在到期前进行，超过到期时刻未续期的租约必须被判定过期并回收给其他工作单元，回收须记录原持有者、回收时刻与依据的时钟读数；同一实体同时只能有一个有效租约，冲突申请输出 E_LEASE_CONFLICT 并等待回收而非直接覆盖。
-4. 实现单批特征计算点数配额与缓存驻留双重约束下的调度：调度器按实体 ID 稳定顺序为就绪实体分配单批点数配额，累计点数不得超出配额；特征值以块为单位驻留，驻留块数受缓存驻留预算约束，超出时按最近最少使用淘汰、同访问序号按块键字典序决断，被淘汰块再次引用必须真实重新计算且结果与首次计算一致；配额耗尽时未处理实体保留待办并以 E_BATCH_QUOTA_EXHAUSTED 标记。
-5. 实现基于内容指纹的精确失效判定：为样本切片、窗口特征、每实体特征汇总与缓存块计算由上游内容指纹、参数指纹与租约版本派生的缓存键，并记录每个特征结果引用的行集合与上游特征；样本追加只使该实体新增时间戳及其下游失效，单行修正使该行所在窗口及其下游失效，窗口参数调整使全部实体失效；复用与重算清单须与实际执行集合一致。
-6. 保证任意计划序列后增量回填与从空白全量回填逐字段一致：从任意初始状态施加包含样本追加、单行修正、窗口参数调整与批次切回滚的编辑序列，每次运行得到的逐实体特征值、跳过明细、失效复用清单、待办队列与失败清单顺序，必须与按相同最终样本集合和配置一次性全量回填的结果完全相同，不得因分批边界不同而出现差异。
-7. 实现阶段化快照整体替换与真实中断后的恢复判定：将加载校验、窗口特征、实体汇总划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、已完成批次与实体列表、已消耗配额与租约版本；启动时以版本号、配置哈希与租约版本多重比对判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并拒绝在半成品状态上续跑；强制终止后的恢复只能依赖已完整替换的快照，不得假设一定存在退出报告。
-8. 实现并发执行与串行结果一致性，并支持异常注入隔离：使用线程池并发处理实体，最大并发数取自配置且不得超过，每个实体任务携带由实体 ID 与阶段名派生的稳定排序键，无论线程调度顺序、并发度、租约回收时机与配额耗尽时机如何，最终实体输出顺序、特征值、配额扣减序列与失败清单顺序须与单线程按实体 ID 顺序执行一致；按注入清单对指定实体指定阶段施加真实输入故障（非有限特征值、时间戳倒序、租约到期毫秒为零、缓存驻留预算小于单块），注入项编号写入报告以证明命中并映射对应业务码。
+## 交付内容
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+| 路径 | 说明 |
+| --- | --- |
+| `feature_backfill/` | 校验、窗口计算、内容指纹、租约、LRU 缓存、调度、快照和 CLI 实现 |
+| `data/default/` | 固定种子生成的基准样本、特征定义、YAML 配置和 7 批计划 |
+| `data/final/` | 计划执行后的最终样本与最终窗口参数，用于全量一致性基线 |
+| `data/illegal/` | 可单独触发的坏行、坏 DAG、坏配置和坏计划夹具 |
+| `injections/` | 四类运行时故障的独立注入清单及组合清单 |
+| `tests/` | 28 项单元与端到端测试 |
+| `results/acceptance/` | 实际运行报告、快照和 `summary.json` 验收摘要 |
+| `docs/ARCHITECTURE.md` | 配额、租约、缓存、失效与快照设计 |
+| `docs/INJECTIONS.md` | 非法输入、注入清单和单独触发方法 |
+| `docs/VALIDATION_RESULTS.md` | 本机实际验证结果 |
 
-验收：
-用本地样本验证租约过期回收、配额调度、断点续跑与全量回填一致及异常隔离，附运行结果。
+## 环境
+
+要求 Python 3.11，依赖仅 NumPy 与 PyYAML，锁定在项目内 `.venv`：
+
+```bash
+python3.11 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.lock
+```
+
+如果系统 Python 缺少 `ensurepip`，可用官方引导脚本：
+
+```bash
+python3.11 -m venv --without-pip .venv
+curl -fsSL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py
+.venv/bin/python /tmp/get-pip.py
+.venv/bin/python -m pip install -r requirements.lock
+```
+
+当前锁定版本：`numpy==2.2.6`、`PyYAML==6.0.2`。应用运行时不访问网络、不使用 Docker、不连接外部服务。
+
+重新生成全部确定性夹具：
+
+```bash
+.venv/bin/python scripts/generate_fixtures.py
+```
+
+生成器使用 NumPy PCG64 固定种子 `20261123`。
+
+## 快速开始
+
+校验默认输入：
+
+```bash
+.venv/bin/python -m feature_backfill validate \
+  --samples data/default/samples.jsonl \
+  --features data/default/features.json \
+  --config data/default/config.yaml \
+  --plan data/default/plan.json
+```
+
+执行 7 批增量计划：
+
+```bash
+.venv/bin/python -m feature_backfill run \
+  --samples data/default/samples.jsonl \
+  --features data/default/features.json \
+  --config data/default/config.yaml \
+  --plan data/default/plan.json \
+  --snapshot-dir results/my-run/snapshots \
+  --report results/my-run/report.json
+```
+
+对最终样本与最终窗口参数执行空计划全量回填：
+
+```bash
+.venv/bin/python -m feature_backfill run \
+  --samples data/final/samples.jsonl \
+  --features data/final/features.json \
+  --config data/final/config.yaml \
+  --plan data/final/plan.json \
+  --snapshot-dir results/my-final/snapshots \
+  --report results/my-final/report.json
+
+.venv/bin/python -m feature_backfill compare \
+  results/my-run/report.json results/my-final/report.json
+```
+
+`compare` 比较逐字段结果、实体汇总、跳过明细、待办队列、失败清单和租约版本。加入 `--execution` 还会比较实体分配顺序、任务排序键、配额扣减序列和完成批次。
+
+## 一键验收
+
+```bash
+./scripts/run_acceptance.sh
+```
+
+脚本覆盖：合法/非法输入、真实租约过期、增量与全量一致、并行与串行一致、低配额待办、四类故障注入、真实 `os._exit(137)` 中断后续跑，以及 28 项测试。机器可读摘要：
+
+```text
+results/acceptance/summary.json
+```
+
+当前实测状态为 `passed`，摘要见 `docs/VALIDATION_RESULTS.md`。
+
+## 输入格式
+
+### 样本 JSONL
+
+每行一个对象：
+
+```json
+{"row_id":"R-E001-001","entity_id":"E001","timestamp_ms":100,"amount":12.5,"qty":2,"score":0.31}
+```
+
+- `row_id` 全局唯一；`entity_id` 非空；`timestamp_ms` 非负整数；同一实体按文件顺序严格递增。
+- 数值必须有限；`null`、配置的 `missing_marker`（默认 `__MISSING__`）或 `missing_fields` 中列出的字段表示缺失。
+- 缺失值按窗口内固定规则跳过，并写入 `skips` 明细。
+
+### 特征定义 JSON
+
+```json
+{
+  "raw_fields": ["amount", "qty", "score"],
+  "features": [
+    {
+      "name": "amount_sum_5000",
+      "source_field": "amount",
+      "window_ms": 5000,
+      "aggregation": "sum",
+      "depends_on": []
+    },
+    {
+      "name": "amount_chain_5000",
+      "source_feature": "amount_mean_5000",
+      "window_ms": 5000,
+      "aggregation": "mean",
+      "depends_on": ["amount_mean_5000"]
+    }
+  ]
+}
+```
+
+每个特征必须且只能声明 `source_field` 或 `source_feature`；`depends_on` 必须引用存在特征，引用图必须无环。支持 `count`、`sum`、`mean`、`latest`。
+
+### 配置 YAML
+
+```yaml
+batch_rows: 1000
+entity_shards: 4
+batch_point_quota: 100000
+lease_ttl_ms: 500
+lease_renew_interval_ms: 100
+thread_pool_concurrency: 4
+snapshot_every_batches: 1
+cache_resident_blocks: 16
+clock_source: monotonic_ns
+missing_marker: __MISSING__
+lease_wait_timeout_ms: 5000
+```
+
+`clock_source` 只接受单调时钟来源：`monotonic_ns`、`process_monotonic`、`perf_counter_ns` 或 `performance_counter`。租约过期从不读取墙钟。
+
+### 计划 JSON
+
+计划由严格升序的批次组成，每批 `operations` 可为 `append`、`correct`、`window_adjust`、`rollback`。默认计划包含追加、单行修正、窗口调整、先追加后回滚到第 2 批，以及回滚后再次追加。
+
+## 业务语义
+
+- 窗口对目标时间戳闭区间 `[timestamp_ms - window_ms, timestamp_ms]` 生效，只读取不晚于目标行的样本。
+- 累加使用 `math.fsum`，输出固定按实体 ID、时间戳、行 ID、特征名排序。
+- 实体按 SHA-256 映射分片；单批按实体 ID 稳定排序分配整实体点数，累计不超 `batch_point_quota` 与 `batch_rows`。
+- 租约通过配置的单调时钟记录签发与到期。冲突记录 `E_LEASE_CONFLICT` 并在条件变量上等待回收；续期只允许在到期点之前。
+- 缓存块键由源行内容/上游块指纹、特征参数指纹和稳定租约版本派生。LRU 淘汰按访问序号，同序号以块键字典序兜底。
+- 追加只新增该实体的新目标行块；单行修正只删除命中窗口及其依赖闭包；窗口调整令全部实体重新调度，并只失效被调特征及下游。
+- 快照使用不可变代际目录，所有阶段文件写完后才原子替换 `CURRENT` 指针。未发布临时代不会被恢复逻辑读取。
+
+详细设计见 `docs/ARCHITECTURE.md`。
+
+## 退出码与报告
+
+| 退出码 | 含义 |
+| --- | --- |
+| `0` | 完成且无失败 |
+| `1` | `validate`/`compare` 发现非法项或不等价 |
+| `2` | 配置、DAG、计划或快照兼容性拒绝运行 |
+| `3` | 运行完成但存在失败实体或配额待办 |
+| `137` | 仅崩溃测试钩子主动调用的 `os._exit(137)` |
+
+完整报告包含 `results`、`summaries`、`skips`、`pending`、`failures`、`quota_allocations`、`quota_events`、`lease_events`、`lease_versions`、`invalidation_manifest`、缓存物理事件、复用/重算块清单和注入命中。
+
+## 断点续跑
+
+```bash
+.venv/bin/python -m feature_backfill run ... --resume
+```
+
+恢复前同时校验：`CURRENT` 指针、清单自哈希、`state.json` 哈希、三个阶段的哈希、全局版本号、配置哈希、计划哈希、基础输入哈希、当前数据集/特征指纹、逐实体租约版本、已完成批次、待办队列和完成实体集合。任一不一致输出 `E_SNAPSHOT_STALE` 并拒绝在半成品上续跑。
+
+崩溃测试钩子：
+
+```bash
+.venv/bin/python -m feature_backfill run ... --crash-before-commit-batch 3
+```
+
+它会在第 3 批窗口阶段写入未发布临时代后终止；下一次 `--resume` 只能看到第 2 批的完整提交。
+
+## Windows 与临时目录
+
+实现不对“替换已有非空目录”作平台相关假设。每个快照代先在根目录下的 `.tmp-*` 中完整落盘并 `fsync`，再重命名为 `generations/gen-N`，最后用 `os.replace` 原子替换小文件 `CURRENT`。这等价于整体替换，但规避 Windows 上非空目录替换的限制；崩溃遗留的 `.tmp-*` 永远没有指针，不会参与恢复。当前实测环境为 WSL2 Linux；该策略同时适用于 Windows 文件系统语义。
+
+## 已知边界
+
+- 低配额运行可能以退出码 `3` 结束并保留 `pending`；后续批次或再次续跑才会消费剩余实体。这是配额约束下的设计行为，不是静默完成。
+- 缓存物理命中/淘汰轨迹属于执行审计。领域等价比较锁定结果、跳过、汇总、待办、失败与租约版本；缓存块指纹本身也只由上游内容、参数和租约版本决定。
+- 本应用不实现分布式租约服务；租约是进程内线程安全实体所有权，进程终止后由已提交快照和重新签发恢复。

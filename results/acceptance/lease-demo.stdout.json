@@ -1,0 +1,77 @@
+{
+  "conflict_observed": true,
+  "contender": {
+    "entity_id": "E-LEASE-DEMO",
+    "expires_ns": 44487519878005,
+    "issued_ns": 44487459878005,
+    "owner": "worker-B",
+    "renewal_count": 0,
+    "renewal_readings_ns": [],
+    "shard": 0,
+    "token": "5ab58015a1fa484b8b9c71edb93f6014",
+    "version": "demo-v1"
+  },
+  "elapsed_ms": 61.403,
+  "events": [
+    {
+      "clock_source": "monotonic_ns",
+      "entity_id": "E-LEASE-DEMO",
+      "event": "lease_granted",
+      "expires_ns": 44487458583105,
+      "issued_ns": 44487398583105,
+      "owner": "worker-A",
+      "shard": 0,
+      "token": "b8ae58f62b9d49bbba58b16e93b9df35",
+      "version": "demo-v1"
+    },
+    {
+      "action": "wait_for_reclaim",
+      "clock_reading_ns": 44487399016173,
+      "clock_source": "monotonic_ns",
+      "code": "E_LEASE_CONFLICT",
+      "entity_id": "E-LEASE-DEMO",
+      "event": "lease_conflict",
+      "expires_ns": 44487458583105,
+      "holder": "worker-A",
+      "requester": "worker-B",
+      "shard": 0
+    },
+    {
+      "basis": "monotonic_deadline_reached",
+      "clock_source": "monotonic_ns",
+      "entity_id": "E-LEASE-DEMO",
+      "event": "lease_reclaimed",
+      "expires_ns": 44487458583105,
+      "previous_owner": "worker-A",
+      "previous_token": "b8ae58f62b9d49bbba58b16e93b9df35",
+      "previous_version": "demo-v1",
+      "reason": "expired_before_conflict_acquire",
+      "reclaimed_at_ns": 44487459878005,
+      "requester": "worker-B",
+      "shard": 0
+    },
+    {
+      "clock_source": "monotonic_ns",
+      "entity_id": "E-LEASE-DEMO",
+      "event": "lease_granted",
+      "expires_ns": 44487519878005,
+      "issued_ns": 44487459878005,
+      "owner": "worker-B",
+      "shard": 0,
+      "token": "5ab58015a1fa484b8b9c71edb93f6014",
+      "version": "demo-v1"
+    }
+  ],
+  "first_lease": {
+    "entity_id": "E-LEASE-DEMO",
+    "expires_ns": 44487458583105,
+    "issued_ns": 44487398583105,
+    "owner": "worker-A",
+    "renewal_count": 0,
+    "renewal_readings_ns": [],
+    "shard": 0,
+    "token": "b8ae58f62b9d49bbba58b16e93b9df35",
+    "version": "demo-v1"
+  },
+  "status": "reclaimed"
+}

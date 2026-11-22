@@ -1,0 +1,33 @@
+{
+  "config_hash": "feab7b0e940017ecc5ebbaef1f9fc7dfeb9653055c0f93a18b009734625ed11e",
+  "dataset_fingerprint": "b5cd36a17f375a1b24d4f93095ee2e3bc86798e2de53a482d691381298ac1ad5",
+  "entity_count": 2,
+  "failures": [
+    {
+      "code": "E_ROW_INVALID",
+      "details": {
+        "line": 6,
+        "previous_timestamp_ms": 200,
+        "timestamp_ms": 0
+      },
+      "entity_id": "E002",
+      "message": "timestamps must be strictly increasing within an entity",
+      "row_id": "R-BAD-ORDER",
+      "stage": "load_validation"
+    }
+  ],
+  "feature_fingerprint": "4c314258222871f8378a7bad68dd2e917f587ddcad4b6205a92f5dfb4ab1be70",
+  "feature_order": [
+    "amount_count_5000",
+    "amount_latest_5000",
+    "amount_mean_5000",
+    "amount_chain_5000",
+    "amount_sum_5000",
+    "qty_sum_5000",
+    "score_mean_5000"
+  ],
+  "injection_count": 0,
+  "plan_hash": "a99c72f0279edb937ad2296947c35263ca1363a24fa3d729bbfcc86fd51b7056",
+  "row_count": 5,
+  "status": "invalid"
+}

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deterministic-feature-backfill"
+version = "0.1.0"
+description = "Deterministic offline feature backfill with quota, leases and atomic snapshots"
+requires-python = ">=3.11,<3.12"
+dependencies = ["numpy==2.2.6", "PyYAML==6.0.2"]
+
+[project.scripts]
+feature-backfill = "feature_backfill.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["feature_backfill*"]

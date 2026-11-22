@@ -1,0 +1,35 @@
+{
+  "injections": [
+    {
+      "entity_id": "E003",
+      "expected_code": "E_ROW_INVALID",
+      "field": "amount",
+      "id": "INJ-001-NONFINITE",
+      "row_id": "R-E003-002",
+      "stage": "window_features",
+      "type": "nonfinite_value"
+    },
+    {
+      "entity_id": "E004",
+      "expected_code": "E_ROW_INVALID",
+      "id": "INJ-002-TIMESTAMP-REVERSAL",
+      "row_id": "R-E004-002",
+      "stage": "window_features",
+      "type": "timestamp_reversal"
+    },
+    {
+      "entity_id": "E005",
+      "expected_code": "E_CONFIG_INVALID",
+      "id": "INJ-003-LEASE-TTL-ZERO",
+      "stage": "lease",
+      "type": "lease_ttl_zero"
+    },
+    {
+      "entity_id": "E006",
+      "expected_code": "E_CONFIG_INVALID",
+      "id": "INJ-004-CACHE-BUDGET-ZERO",
+      "stage": "cache",
+      "type": "cache_budget_lt_block"
+    }
+  ]
+}

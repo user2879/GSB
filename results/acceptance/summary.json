@@ -1,0 +1,308 @@
+{
+  "checks": {
+    "concurrency_limit": true,
+    "crash": true,
+    "incremental_vs_full": true,
+    "injections": true,
+    "lease_demo": true,
+    "parallel_vs_serial": true,
+    "quota": true,
+    "resume": true,
+    "unit_tests": true,
+    "validation": true
+  },
+  "concurrency": {
+    "parallel": {
+      "max_observed_concurrency": 4,
+      "max_workers": 4
+    },
+    "serial": {
+      "max_observed_concurrency": 1,
+      "max_workers": 1
+    }
+  },
+  "incremental_counts": {
+    "entities": 9,
+    "results": 259,
+    "skips": 51,
+    "snapshot_generation": 7,
+    "summaries": 63
+  },
+  "incremental_vs_full": {
+    "equal": true,
+    "left_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064",
+    "mismatches": [],
+    "right_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064"
+  },
+  "injections": {
+    "cache_budget_zero": {
+      "expected_code": "E_CONFIG_INVALID",
+      "expected_injection_id": "INJ-004-CACHE-BUDGET-ZERO",
+      "failure_codes": [
+        "E_CONFIG_INVALID"
+      ],
+      "hit": {
+        "entity_id": "E006",
+        "evidence": {
+          "cache_blocks": 0,
+          "single_block_size": 1
+        },
+        "expected_code": "E_CONFIG_INVALID",
+        "injection_id": "INJ-004-CACHE-BUDGET-ZERO",
+        "observed_code": "E_CONFIG_INVALID",
+        "stage": "cache",
+        "type": "cache_budget_lt_block"
+      },
+      "hit_count": 1,
+      "passed": true,
+      "pending": []
+    },
+    "lease_ttl_zero": {
+      "expected_code": "E_CONFIG_INVALID",
+      "expected_injection_id": "INJ-003-LEASE-TTL-ZERO",
+      "failure_codes": [
+        "E_CONFIG_INVALID"
+      ],
+      "hit": {
+        "entity_id": "E005",
+        "evidence": {
+          "clock_source_checked": true,
+          "lease_ttl_ms": 0
+        },
+        "expected_code": "E_CONFIG_INVALID",
+        "injection_id": "INJ-003-LEASE-TTL-ZERO",
+        "observed_code": "E_CONFIG_INVALID",
+        "stage": "lease",
+        "type": "lease_ttl_zero"
+      },
+      "hit_count": 1,
+      "passed": true,
+      "pending": []
+    },
+    "nonfinite": {
+      "expected_code": "E_ROW_INVALID",
+      "expected_injection_id": "INJ-001-NONFINITE",
+      "failure_codes": [
+        "E_ROW_INVALID"
+      ],
+      "hit": {
+        "entity_id": "E003",
+        "evidence": {
+          "field": "amount",
+          "injected_value": "NaN",
+          "row_id": "R-E003-002",
+          "validator": "parse_row_record"
+        },
+        "expected_code": "E_ROW_INVALID",
+        "injection_id": "INJ-001-NONFINITE",
+        "observed_code": "E_ROW_INVALID",
+        "stage": "window_features",
+        "type": "nonfinite_value"
+      },
+      "hit_count": 1,
+      "passed": true,
+      "pending": []
+    },
+    "timestamp_reversal": {
+      "expected_code": "E_ROW_INVALID",
+      "expected_injection_id": "INJ-002-TIMESTAMP-REVERSAL",
+      "failure_codes": [
+        "E_ROW_INVALID"
+      ],
+      "hit": {
+        "entity_id": "E004",
+        "evidence": {
+          "mutated_timestamp_ms": 3000,
+          "row_id": "R-E004-002",
+          "validator": "validate_entity_sequences"
+        },
+        "expected_code": "E_ROW_INVALID",
+        "injection_id": "INJ-002-TIMESTAMP-REVERSAL",
+        "observed_code": "E_ROW_INVALID",
+        "stage": "window_features",
+        "type": "timestamp_reversal"
+      },
+      "hit_count": 1,
+      "passed": true,
+      "pending": []
+    }
+  },
+  "lease_demo": {
+    "conflict_observed": true,
+    "elapsed_ms": 61.403,
+    "events": [
+      "lease_granted",
+      "lease_conflict",
+      "lease_reclaimed",
+      "lease_granted"
+    ],
+    "reclaim": {
+      "basis": "monotonic_deadline_reached",
+      "clock_source": "monotonic_ns",
+      "entity_id": "E-LEASE-DEMO",
+      "event": "lease_reclaimed",
+      "expires_ns": 44487458583105,
+      "previous_owner": "worker-A",
+      "previous_token": "b8ae58f62b9d49bbba58b16e93b9df35",
+      "previous_version": "demo-v1",
+      "reason": "expired_before_conflict_acquire",
+      "reclaimed_at_ns": 44487459878005,
+      "requester": "worker-B",
+      "shard": 0
+    },
+    "status": "reclaimed"
+  },
+  "parallel_vs_serial": {
+    "equal": true,
+    "execution_equal": true,
+    "left_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064",
+    "mismatches": [],
+    "right_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064"
+  },
+  "quota": {
+    "consumed_points_by_batch": {
+      "1": 42,
+      "2": 35,
+      "3": 42,
+      "4": 35,
+      "5": 42,
+      "6": 35,
+      "7": 42
+    },
+    "failure_codes": [
+      "E_BATCH_QUOTA_EXHAUSTED"
+    ],
+    "pending": [
+      "E002",
+      "E003",
+      "E004",
+      "E005",
+      "E006",
+      "E007",
+      "E008",
+      "E009"
+    ],
+    "status": "partial"
+  },
+  "resume": {
+    "resumed": true,
+    "resumed_from_generation": 2,
+    "status": "completed",
+    "uncommitted_temporaries": 1
+  },
+  "resume_vs_incremental": {
+    "equal": true,
+    "left_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064",
+    "mismatches": [],
+    "right_sha256": "ac76e6f82f43fe10a20007f96eff2fc0b990694e3369178e50ae07de86439064"
+  },
+  "status": "passed",
+  "unit_tests_exit_code": 0,
+  "validation": {
+    "validate-bad_config_lease_ttl": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_CONFIG_INVALID",
+          "stage": "config"
+        }
+      ],
+      "passed": true
+    },
+    "validate-bad_config_quota": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_CONFIG_INVALID",
+          "stage": "config"
+        }
+      ],
+      "passed": true
+    },
+    "validate-bad_dag": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_FEATURE_DAG_INVALID",
+          "stage": "feature_dag"
+        }
+      ],
+      "passed": true
+    },
+    "validate-bad_plan": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_PLAN_INVALID",
+          "stage": "plan"
+        }
+      ],
+      "passed": true
+    },
+    "validate-duplicate_row": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_ROW_INVALID",
+          "stage": "load_validation"
+        }
+      ],
+      "passed": true
+    },
+    "validate-missing_raw_field": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_FEATURE_DAG_INVALID",
+          "stage": "feature_dag"
+        }
+      ],
+      "passed": true
+    },
+    "validate-missing_upstream": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_FEATURE_DAG_INVALID",
+          "stage": "feature_dag"
+        }
+      ],
+      "passed": true
+    },
+    "validate-nonfinite_row": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_ROW_INVALID",
+          "stage": "load_validation"
+        }
+      ],
+      "passed": true
+    },
+    "validate-timestamp_reversal": {
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "failures": [
+        {
+          "code": "E_ROW_INVALID",
+          "stage": "load_validation"
+        }
+      ],
+      "passed": true
+    },
+    "validate-valid": {
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "failures": [],
+      "passed": true
+    }
+  }
+}

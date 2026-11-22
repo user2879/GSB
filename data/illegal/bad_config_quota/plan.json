@@ -1,0 +1,138 @@
+{
+  "batches": [
+    {
+      "batch_id": 1,
+      "operations": [
+        {
+          "op": "append",
+          "rows": [
+            {
+              "amount": 57.761,
+              "entity_id": "E001",
+              "qty": 2,
+              "row_id": "R-E001-005",
+              "score": 0.12579,
+              "timestamp_ms": 6000
+            },
+            {
+              "amount": 22.613,
+              "entity_id": "E001",
+              "qty": 9,
+              "row_id": "R-E001-006",
+              "score": 0.57488,
+              "timestamp_ms": 7000
+            },
+            {
+              "amount": 45.431,
+              "entity_id": "E002",
+              "qty": 2,
+              "row_id": "R-E002-005",
+              "score": 0.41897,
+              "timestamp_ms": 5400
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "batch_id": 2,
+      "operations": [
+        {
+          "changes": {
+            "amount": 42.75
+          },
+          "op": "correct",
+          "row_id": "R-E003-002"
+        }
+      ]
+    },
+    {
+      "batch_id": 3,
+      "operations": [
+        {
+          "feature": "amount_sum_5000",
+          "op": "window_adjust",
+          "window_ms": 9000
+        }
+      ]
+    },
+    {
+      "batch_id": 4,
+      "operations": [
+        {
+          "op": "append",
+          "rows": [
+            {
+              "amount": 45.192,
+              "entity_id": "E009",
+              "qty": 8,
+              "row_id": "R-E009-discarded-001",
+              "score": 0.66373,
+              "timestamp_ms": 1000
+            },
+            {
+              "amount": "__MISSING__",
+              "entity_id": "E009",
+              "qty": 4,
+              "row_id": "R-E009-discarded-002",
+              "score": 0.46188,
+              "timestamp_ms": 2200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "batch_id": 5,
+      "operations": [
+        {
+          "op": "rollback",
+          "to_batch": 2
+        }
+      ]
+    },
+    {
+      "batch_id": 6,
+      "operations": [
+        {
+          "op": "append",
+          "rows": [
+            {
+              "amount": "__MISSING__",
+              "entity_id": "E009",
+              "qty": 9,
+              "row_id": "R-E009-001",
+              "score": 0.02012,
+              "timestamp_ms": 1000
+            },
+            {
+              "amount": 51.387,
+              "entity_id": "E009",
+              "qty": 9,
+              "row_id": "R-E009-002",
+              "score": 0.82694,
+              "timestamp_ms": 2200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "batch_id": 7,
+      "operations": [
+        {
+          "changes": {
+            "score": 0.777
+          },
+          "op": "correct",
+          "row_id": "R-E001-001"
+        },
+        {
+          "feature": "score_mean_5000",
+          "op": "window_adjust",
+          "window_ms": 12000
+        }
+      ]
+    }
+  ]
+}

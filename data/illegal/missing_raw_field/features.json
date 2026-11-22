@@ -1,0 +1,67 @@
+{
+  "features": [
+    {
+      "aggregation": "count",
+      "depends_on": [],
+      "name": "amount_count_5000",
+      "source_field": "amount",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "sum",
+      "depends_on": [],
+      "name": "amount_sum_5000",
+      "source_field": "amount",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "mean",
+      "depends_on": [],
+      "name": "amount_mean_5000",
+      "source_field": "amount",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "latest",
+      "depends_on": [],
+      "name": "amount_latest_5000",
+      "source_field": "amount",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "sum",
+      "depends_on": [],
+      "name": "qty_sum_5000",
+      "source_field": "qty",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "mean",
+      "depends_on": [],
+      "name": "score_mean_5000",
+      "source_field": "score",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "mean",
+      "depends_on": [
+        "amount_mean_5000"
+      ],
+      "name": "amount_chain_5000",
+      "source_feature": "amount_mean_5000",
+      "window_ms": 5000
+    },
+    {
+      "aggregation": "sum",
+      "depends_on": [],
+      "name": "broken_field",
+      "source_field": "not_a_column",
+      "window_ms": 5000
+    }
+  ],
+  "raw_fields": [
+    "amount",
+    "qty",
+    "score"
+  ]
+}
