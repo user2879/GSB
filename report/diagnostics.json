@@ -1,0 +1,3629 @@
+{
+  "artifacts": {
+    "cross_version_preview": "/home/zsl/feedback/uidfc5909d3-default-134/report/cross_version_preview.png",
+    "diagnostics_json": "/home/zsl/feedback/uidfc5909d3-default-134/report/diagnostics.json",
+    "output_dir": "/home/zsl/feedback/uidfc5909d3-default-134/outputs/incremental",
+    "preview": "/home/zsl/feedback/uidfc5909d3-default-134/report/preview.png",
+    "report_dir": "/home/zsl/feedback/uidfc5909d3-default-134/report",
+    "state_dir": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental"
+  },
+  "boundary_samples": [
+    {
+      "causes": [
+        "coordinate_integerization",
+        "strength_permille_truncation",
+        "dropped_rotation_or_feather"
+      ],
+      "code": "E_BOUNDARY_SENSITIVE",
+      "coordinate_max_abs_delta": "0.4",
+      "local_pixel_max_delta": 139,
+      "region_key": "scene_alpha.png#001",
+      "style_abs_delta": "0.0005"
+    },
+    {
+      "causes": [
+        "dropped_rotation_or_feather"
+      ],
+      "code": "E_BOUNDARY_SENSITIVE",
+      "coordinate_max_abs_delta": "0",
+      "local_pixel_max_delta": 104,
+      "region_key": "scene_alpha.png#002",
+      "style_abs_delta": "0"
+    },
+    {
+      "causes": [
+        "coordinate_integerization",
+        "strength_permille_truncation",
+        "dropped_rotation_or_feather"
+      ],
+      "code": "E_BOUNDARY_SENSITIVE",
+      "coordinate_max_abs_delta": "0.5",
+      "local_pixel_max_delta": 203,
+      "region_key": "scene_beta.png#001",
+      "style_abs_delta": "0.0004"
+    },
+    {
+      "causes": [
+        "coordinate_integerization",
+        "dropped_rotation_or_feather"
+      ],
+      "code": "E_BOUNDARY_SENSITIVE",
+      "coordinate_max_abs_delta": "0.5",
+      "local_pixel_max_delta": 20,
+      "region_key": "scene_beta.png#002",
+      "style_abs_delta": "0"
+    },
+    {
+      "causes": [
+        "strength_permille_truncation",
+        "dropped_rotation_or_feather"
+      ],
+      "code": "E_BOUNDARY_SENSITIVE",
+      "coordinate_max_abs_delta": "0",
+      "local_pixel_max_delta": 132,
+      "region_key": "scene_gamma.png#001",
+      "style_abs_delta": "0.0004"
+    }
+  ],
+  "budget_pending_events": [
+    {
+      "action": "pending",
+      "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-009-V1",
+      "priority": "new",
+      "region_key": "scene_gamma.png#001",
+      "remaining_after": 8182,
+      "remaining_before": 8182,
+      "required_pixels": 8448,
+      "seq": 5,
+      "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+    },
+    {
+      "action": "pending",
+      "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-009-V1",
+      "priority": "new",
+      "region_key": "scene_gamma.png#002",
+      "remaining_after": 8182,
+      "remaining_before": 8182,
+      "required_pixels": 3136,
+      "seq": 6,
+      "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+    },
+    {
+      "action": "pending",
+      "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "priority": "new",
+      "region_key": "scene_beta.png#001",
+      "remaining_after": 3947,
+      "remaining_before": 3947,
+      "required_pixels": 12544,
+      "seq": 3,
+      "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+    },
+    {
+      "action": "pending",
+      "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "priority": "new",
+      "region_key": "scene_gamma.png#001",
+      "remaining_after": 3947,
+      "remaining_before": 3947,
+      "required_pixels": 21904,
+      "seq": 4,
+      "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+    },
+    {
+      "action": "pending",
+      "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "priority": "pending",
+      "region_key": "scene_gamma.png#001",
+      "remaining_after": 12456,
+      "remaining_before": 12456,
+      "required_pixels": 21904,
+      "seq": 2,
+      "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+    }
+  ],
+  "budget_sequences": [
+    {
+      "command_id": "CMD-001-V2",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#001",
+          "remaining_after": 110396,
+          "remaining_before": 120000,
+          "required_pixels": 9604,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#002",
+          "remaining_after": 105640,
+          "remaining_before": 110396,
+          "required_pixels": 4756,
+          "seq": 2,
+          "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 92415,
+          "remaining_before": 105640,
+          "required_pixels": 13225,
+          "seq": 3,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#002",
+          "remaining_after": 88663,
+          "remaining_before": 92415,
+          "required_pixels": 3752,
+          "seq": 4,
+          "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 68499,
+          "remaining_before": 88663,
+          "required_pixels": 20164,
+          "seq": 5,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_gamma.png#002",
+          "remaining_after": 65363,
+          "remaining_before": 68499,
+          "required_pixels": 3136,
+          "seq": 6,
+          "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-002-QUANT",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#001",
+          "remaining_after": 110396,
+          "remaining_before": 120000,
+          "required_pixels": 9604,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#002",
+          "remaining_after": 105640,
+          "remaining_before": 110396,
+          "required_pixels": 4756,
+          "seq": 2,
+          "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 92415,
+          "remaining_before": 105640,
+          "required_pixels": 13225,
+          "seq": 3,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#002",
+          "remaining_after": 88663,
+          "remaining_before": 92415,
+          "required_pixels": 3752,
+          "seq": 4,
+          "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 68499,
+          "remaining_before": 88663,
+          "required_pixels": 20164,
+          "seq": 5,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_gamma.png#002",
+          "remaining_after": 65363,
+          "remaining_before": 68499,
+          "required_pixels": 3136,
+          "seq": 6,
+          "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-003-STYLE",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#001",
+          "remaining_after": 110396,
+          "remaining_before": 120000,
+          "required_pixels": 9604,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-004-RECT",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 107456,
+          "remaining_before": 120000,
+          "required_pixels": 12544,
+          "seq": 1,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-005-REPAIR",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 107456,
+          "remaining_before": 120000,
+          "required_pixels": 12544,
+          "seq": 1,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-006-FEATHER",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 98096,
+          "remaining_before": 120000,
+          "required_pixels": 21904,
+          "seq": 1,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-007-ROTATE",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#002",
+          "remaining_after": 108551,
+          "remaining_before": 120000,
+          "required_pixels": 11449,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-009-V1",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#001",
+          "remaining_after": 21184,
+          "remaining_before": 25000,
+          "required_pixels": 3816,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#002",
+          "remaining_after": 16428,
+          "remaining_before": 21184,
+          "required_pixels": 4756,
+          "seq": 2,
+          "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 11692,
+          "remaining_before": 16428,
+          "required_pixels": 4736,
+          "seq": 3,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_beta.png#002",
+          "remaining_after": 8182,
+          "remaining_before": 11692,
+          "required_pixels": 3510,
+          "seq": 4,
+          "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "pending",
+          "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+          "priority": "new",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 8182,
+          "remaining_before": 8182,
+          "required_pixels": 8448,
+          "seq": 5,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "pending",
+          "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+          "priority": "new",
+          "region_key": "scene_gamma.png#002",
+          "remaining_after": 8182,
+          "remaining_before": 8182,
+          "required_pixels": 3136,
+          "seq": 6,
+          "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-009-V1",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "pending",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 16552,
+          "remaining_before": 25000,
+          "required_pixels": 8448,
+          "seq": 1,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "pending",
+          "region_key": "scene_gamma.png#002",
+          "remaining_after": 13416,
+          "remaining_before": 16552,
+          "required_pixels": 3136,
+          "seq": 2,
+          "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-011-QUANT16",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#001",
+          "remaining_after": 15396,
+          "remaining_before": 25000,
+          "required_pixels": 9604,
+          "seq": 1,
+          "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "new",
+          "region_key": "scene_alpha.png#002",
+          "remaining_after": 3947,
+          "remaining_before": 15396,
+          "required_pixels": 11449,
+          "seq": 2,
+          "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "pending",
+          "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+          "priority": "new",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 3947,
+          "remaining_before": 3947,
+          "required_pixels": 12544,
+          "seq": 3,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "pending",
+          "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+          "priority": "new",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 3947,
+          "remaining_before": 3947,
+          "required_pixels": 21904,
+          "seq": 4,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-011-QUANT16",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "pending",
+          "region_key": "scene_beta.png#001",
+          "remaining_after": 12456,
+          "remaining_before": 25000,
+          "required_pixels": 12544,
+          "seq": 1,
+          "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+        },
+        {
+          "action": "pending",
+          "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+          "priority": "pending",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 12456,
+          "remaining_before": 12456,
+          "required_pixels": 21904,
+          "seq": 2,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    },
+    {
+      "command_id": "CMD-011-QUANT16",
+      "entries": [
+        {
+          "action": "accepted",
+          "business_code": null,
+          "priority": "pending",
+          "region_key": "scene_gamma.png#001",
+          "remaining_after": 3096,
+          "remaining_before": 25000,
+          "required_pixels": 21904,
+          "seq": 1,
+          "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+        }
+      ]
+    }
+  ],
+  "business_codes": [
+    "E_BOUNDARY_SENSITIVE",
+    "E_RECOMPUTE_BUDGET_PENDING"
+  ],
+  "command_trajectory": [
+    {
+      "batches": [
+        {
+          "affected_pixels": 41951,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#001",
+              "remaining_after": 110396,
+              "remaining_before": 120000,
+              "required_pixels": 9604,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#002",
+              "remaining_after": 105640,
+              "remaining_before": 110396,
+              "required_pixels": 4756,
+              "seq": 2,
+              "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 92415,
+              "remaining_before": 105640,
+              "required_pixels": 13225,
+              "seq": 3,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#002",
+              "remaining_after": 88663,
+              "remaining_before": 92415,
+              "required_pixels": 3752,
+              "seq": 4,
+              "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 68499,
+              "remaining_before": 88663,
+              "required_pixels": 20164,
+              "seq": 5,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_gamma.png#002",
+              "remaining_after": 65363,
+              "remaining_before": 68499,
+              "required_pixels": 3136,
+              "seq": 6,
+              "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "031f134f4484d9c1b30f3489f3e7675a73b0a6e7bb57057aab6b2dde4648bad2",
+          "max_active_tasks": 4,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ],
+          "reused_regions": []
+        }
+      ],
+      "command_id": "CMD-001-V2",
+      "exchange_fingerprint": "4fcd7284af60702445d0b7c21a600fd4ae26082061480c1b9a557f4ab1f5009a",
+      "exchange_version": 2,
+      "op": "set_exchange_version",
+      "snapshot": null,
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "incremental_reused": [],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 41951,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#001",
+              "remaining_after": 110396,
+              "remaining_before": 120000,
+              "required_pixels": 9604,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#002",
+              "remaining_after": 105640,
+              "remaining_before": 110396,
+              "required_pixels": 4756,
+              "seq": 2,
+              "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 92415,
+              "remaining_before": 105640,
+              "required_pixels": 13225,
+              "seq": 3,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#002",
+              "remaining_after": 88663,
+              "remaining_before": 92415,
+              "required_pixels": 3752,
+              "seq": 4,
+              "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 68499,
+              "remaining_before": 88663,
+              "required_pixels": 20164,
+              "seq": 5,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_gamma.png#002",
+              "remaining_after": 65363,
+              "remaining_before": 68499,
+              "required_pixels": 3136,
+              "seq": 6,
+              "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "2a7592abb8bf469216355df945c41e23bbad1e39b4e402e3387a237d7d36011a",
+          "max_active_tasks": 4,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ],
+          "reused_regions": []
+        }
+      ],
+      "command_id": "CMD-002-QUANT",
+      "exchange_fingerprint": "4fcd7284af60702445d0b7c21a600fd4ae26082061480c1b9a557f4ab1f5009a",
+      "exchange_version": 2,
+      "op": "set_config",
+      "snapshot": {
+        "global_version": 1,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000001",
+        "snapshot_id": "snap-000001"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "incremental_reused": [],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 41951,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#001",
+              "remaining_after": 110396,
+              "remaining_before": 120000,
+              "required_pixels": 9604,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "a78ae26a4827bab9ed3d8e875b42fdb022a31eb7d3154ca8c2405f9c1c881dde",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_alpha.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-003-STYLE",
+      "exchange_fingerprint": "b08235ca11f571c87d059965e4df626f66fd02d237e11e24a82953670f1c450c",
+      "exchange_version": 2,
+      "op": "update_region",
+      "snapshot": null,
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_alpha.png#001"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 41487,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 107456,
+              "remaining_before": 120000,
+              "required_pixels": 12544,
+              "seq": 1,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "7463a9101d0191f97ccd07f96f1c49a4c740e1c1b332fd480d262bde40c471d8",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_beta.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-004-RECT",
+      "exchange_fingerprint": "e1dc61bcf7297e8cd34324ae2f30f12a07f7322f929671e1e9c7ce6b6b925093",
+      "exchange_version": 2,
+      "op": "update_region",
+      "snapshot": {
+        "global_version": 2,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000002",
+        "snapshot_id": "snap-000002"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_beta.png#001"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 41487,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 107456,
+              "remaining_before": 120000,
+              "required_pixels": 12544,
+              "seq": 1,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "ce05cf95e49f57ffdf23aa4168a259202029299e2b273d247b886d82ad578226",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_beta.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-005-REPAIR",
+      "exchange_fingerprint": "dc9d3c38cab86da5245c6cb464869b74470bc2ba0c5c6b9fd515664702bef214",
+      "exchange_version": 2,
+      "op": "update_region",
+      "snapshot": null,
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_beta.png#001"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 42537,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 98096,
+              "remaining_before": 120000,
+              "required_pixels": 21904,
+              "seq": 1,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "2a187c9f834783082321e171090f165a06308973fbd23add015a583b7a43bca9",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_gamma.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-006-FEATHER",
+      "exchange_fingerprint": "84027ab14dcfd4b484efddc73889d0c9eb55fd03f95d90092455324ace0a64c7",
+      "exchange_version": 2,
+      "op": "update_region",
+      "snapshot": {
+        "global_version": 3,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000003",
+        "snapshot_id": "snap-000003"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_gamma.png#001"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 45205,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#002",
+              "remaining_after": 108551,
+              "remaining_before": 120000,
+              "required_pixels": 11449,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "00d03d9bc5a2dfcd92b785b5c150cdc16a83b86b317f7b0fdafb1f1882ca2d26",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_alpha.png#002"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-007-ROTATE",
+      "exchange_fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763",
+      "exchange_version": 2,
+      "op": "update_region",
+      "snapshot": null,
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_alpha.png#002"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 45205,
+          "budget_log": [],
+          "content_fingerprint": "00d03d9bc5a2dfcd92b785b5c150cdc16a83b86b317f7b0fdafb1f1882ca2d26",
+          "max_active_tasks": 0,
+          "pending_queue": [],
+          "recomputed_regions": [],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-008-BUDGET",
+      "exchange_fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763",
+      "exchange_version": 2,
+      "op": "set_config",
+      "snapshot": {
+        "global_version": 4,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000004",
+        "snapshot_id": "snap-000004"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 14794,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#001",
+              "remaining_after": 21184,
+              "remaining_before": 25000,
+              "required_pixels": 3816,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#002",
+              "remaining_after": 16428,
+              "remaining_before": 21184,
+              "required_pixels": 4756,
+              "seq": 2,
+              "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 11692,
+              "remaining_before": 16428,
+              "required_pixels": 4736,
+              "seq": 3,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_beta.png#002",
+              "remaining_after": 8182,
+              "remaining_before": 11692,
+              "required_pixels": 3510,
+              "seq": 4,
+              "sort_key": "scene_beta.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "pending",
+              "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+              "priority": "new",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 8182,
+              "remaining_before": 8182,
+              "required_pixels": 8448,
+              "seq": 5,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "pending",
+              "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+              "priority": "new",
+              "region_key": "scene_gamma.png#002",
+              "remaining_after": 8182,
+              "remaining_before": 8182,
+              "required_pixels": 3136,
+              "seq": 6,
+              "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "a72160a2e9bea591bb803dd27e2746e766170d15588e10588079d7fb76aa1337",
+          "max_active_tasks": 4,
+          "pending_queue": [
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ],
+          "recomputed_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002"
+          ],
+          "reused_regions": []
+        },
+        {
+          "affected_pixels": 25226,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "pending",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 16552,
+              "remaining_before": 25000,
+              "required_pixels": 8448,
+              "seq": 1,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "pending",
+              "region_key": "scene_gamma.png#002",
+              "remaining_after": 13416,
+              "remaining_before": 16552,
+              "required_pixels": 3136,
+              "seq": 2,
+              "sort_key": "scene_gamma.png|000002|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "b2b4349a2f269cf9905d9359ab3ff7a3f91b1f11c19908297cbf337fec0417a3",
+          "max_active_tasks": 2,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-009-V1",
+      "exchange_fingerprint": "e96d3ff3e33b99ff25a2e847148f6e3b12983e37e66f39a287fbe2ae342ec1b1",
+      "exchange_version": 1,
+      "op": "set_exchange_version",
+      "snapshot": null,
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "reference_recomputed": [
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 45205,
+          "budget_log": [],
+          "content_fingerprint": "00d03d9bc5a2dfcd92b785b5c150cdc16a83b86b317f7b0fdafb1f1882ca2d26",
+          "max_active_tasks": 0,
+          "pending_queue": [],
+          "recomputed_regions": [],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#001",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-010-V2",
+      "exchange_fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763",
+      "exchange_version": 2,
+      "op": "set_exchange_version",
+      "snapshot": {
+        "global_version": 5,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000005",
+        "snapshot_id": "snap-000005"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#001",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    },
+    {
+      "batches": [
+        {
+          "affected_pixels": 19264,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#001",
+              "remaining_after": 15396,
+              "remaining_before": 25000,
+              "required_pixels": 9604,
+              "seq": 1,
+              "sort_key": "scene_alpha.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "new",
+              "region_key": "scene_alpha.png#002",
+              "remaining_after": 3947,
+              "remaining_before": 15396,
+              "required_pixels": 11449,
+              "seq": 2,
+              "sort_key": "scene_alpha.png|000002|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "pending",
+              "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+              "priority": "new",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 3947,
+              "remaining_before": 3947,
+              "required_pixels": 12544,
+              "seq": 3,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "pending",
+              "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+              "priority": "new",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 3947,
+              "remaining_before": 3947,
+              "required_pixels": 21904,
+              "seq": 4,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "d09faf144cf15df29e98efa8f86e7b45c3b64a8ffa381c6e7a8d0acfaa59619f",
+          "max_active_tasks": 2,
+          "pending_queue": [
+            "scene_beta.png#001",
+            "scene_gamma.png#001"
+          ],
+          "recomputed_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002"
+          ],
+          "reused_regions": [
+            "scene_beta.png#002",
+            "scene_gamma.png#002"
+          ]
+        },
+        {
+          "affected_pixels": 27785,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "pending",
+              "region_key": "scene_beta.png#001",
+              "remaining_after": 12456,
+              "remaining_before": 25000,
+              "required_pixels": 12544,
+              "seq": 1,
+              "sort_key": "scene_beta.png|000001|mask+repair+attribute+style+compose"
+            },
+            {
+              "action": "pending",
+              "business_code": "E_RECOMPUTE_BUDGET_PENDING",
+              "priority": "pending",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 12456,
+              "remaining_before": 12456,
+              "required_pixels": 21904,
+              "seq": 2,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "ecb07ab26fde4a002da2bc097e9d3f09e454f6d9ba6f3c400e3c9d9797ce7508",
+          "max_active_tasks": 1,
+          "pending_queue": [
+            "scene_gamma.png#001"
+          ],
+          "recomputed_regions": [
+            "scene_beta.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#002",
+            "scene_gamma.png#002"
+          ]
+        },
+        {
+          "affected_pixels": 45205,
+          "budget_log": [
+            {
+              "action": "accepted",
+              "business_code": null,
+              "priority": "pending",
+              "region_key": "scene_gamma.png#001",
+              "remaining_after": 3096,
+              "remaining_before": 25000,
+              "required_pixels": 21904,
+              "seq": 1,
+              "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose"
+            }
+          ],
+          "content_fingerprint": "52b2cd48b9b9b4c3904f0b6cce209469a19f6d9749da1d904556b84c861f6310",
+          "max_active_tasks": 1,
+          "pending_queue": [],
+          "recomputed_regions": [
+            "scene_gamma.png#001"
+          ],
+          "reused_regions": [
+            "scene_alpha.png#001",
+            "scene_alpha.png#002",
+            "scene_beta.png#001",
+            "scene_beta.png#002",
+            "scene_gamma.png#002"
+          ]
+        }
+      ],
+      "command_id": "CMD-011-QUANT16",
+      "exchange_fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763",
+      "exchange_version": 2,
+      "op": "set_config",
+      "snapshot": {
+        "global_version": 6,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000006",
+        "snapshot_id": "snap-000006"
+      },
+      "verification": {
+        "content_fingerprint_equal": true,
+        "incremental_recomputed": [
+          "scene_gamma.png#001"
+        ],
+        "incremental_reused": [
+          "scene_alpha.png#001",
+          "scene_alpha.png#002",
+          "scene_beta.png#001",
+          "scene_beta.png#002",
+          "scene_gamma.png#002"
+        ],
+        "pending_queue_equal": true,
+        "pixel_stats": {
+          "scene_alpha.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_beta.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          },
+          "scene_gamma.png": {
+            "available": true,
+            "changed_pixels": 0,
+            "fingerprint_equal": true,
+            "max_channel_delta": 0,
+            "mean_channel_delta": 0.0,
+            "within_tolerance": true
+          }
+        },
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "reference_recomputed": [
+          "scene_gamma.png#002"
+        ],
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    }
+  ],
+  "config": {
+    "coordinate_tolerance": 0.25,
+    "feather_radius_max": 8.0,
+    "fixed_fraction_bits": 12,
+    "image_size": [
+      256,
+      256
+    ],
+    "pixel_difference_tolerance": 0,
+    "recompute_region_budget": 25000,
+    "repair_neighborhood_radius": 2,
+    "rounding": "half_up",
+    "schema_version": 1,
+    "snapshot_commit_interval_commands": 2,
+    "style_quantization_levels": 16,
+    "thread_pool_workers": 4
+  },
+  "config_hash": "84accd34847874b01b1b9b0b3a03f98b7fc5380ebba7d06e1fa8850a37321c13",
+  "cross_version": {
+    "boundary_business_codes": [
+      "E_BOUNDARY_SENSITIVE"
+    ],
+    "boundary_samples": [
+      {
+        "causes": [
+          "coordinate_integerization",
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "code": "E_BOUNDARY_SENSITIVE",
+        "coordinate_max_abs_delta": "0.4",
+        "local_pixel_max_delta": 139,
+        "region_key": "scene_alpha.png#001",
+        "style_abs_delta": "0.0005"
+      },
+      {
+        "causes": [
+          "dropped_rotation_or_feather"
+        ],
+        "code": "E_BOUNDARY_SENSITIVE",
+        "coordinate_max_abs_delta": "0",
+        "local_pixel_max_delta": 104,
+        "region_key": "scene_alpha.png#002",
+        "style_abs_delta": "0"
+      },
+      {
+        "causes": [
+          "coordinate_integerization",
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "code": "E_BOUNDARY_SENSITIVE",
+        "coordinate_max_abs_delta": "0.5",
+        "local_pixel_max_delta": 203,
+        "region_key": "scene_beta.png#001",
+        "style_abs_delta": "0.0004"
+      },
+      {
+        "causes": [
+          "coordinate_integerization",
+          "dropped_rotation_or_feather"
+        ],
+        "code": "E_BOUNDARY_SENSITIVE",
+        "coordinate_max_abs_delta": "0.5",
+        "local_pixel_max_delta": 20,
+        "region_key": "scene_beta.png#002",
+        "style_abs_delta": "0"
+      },
+      {
+        "causes": [
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "code": "E_BOUNDARY_SENSITIVE",
+        "coordinate_max_abs_delta": "0",
+        "local_pixel_max_delta": 132,
+        "region_key": "scene_gamma.png#001",
+        "style_abs_delta": "0.0004"
+      }
+    ],
+    "coordinate_deviation_histogram_aggregate": {
+      "(0,0.25]": 5,
+      "(0.25,0.5]": 4,
+      "(0.5,1]": 0,
+      "0": 15,
+      ">1": 0
+    },
+    "downgrade_info": {
+      "hit_regions": 6,
+      "rotation_feather_loss_regions": 5
+    },
+    "output_directories": {
+      "v1": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/cross_version_diagnostics/v1/outputs",
+      "v2": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/cross_version_diagnostics/v2/outputs"
+    },
+    "pixel_diff": {
+      "scene_alpha.png": {
+        "changed_pixels": 8564,
+        "max_channel_delta": 139,
+        "mean_channel_delta": 1.366903,
+        "within_tolerance": false
+      },
+      "scene_beta.png": {
+        "changed_pixels": 7494,
+        "max_channel_delta": 203,
+        "mean_channel_delta": 1.828695,
+        "within_tolerance": false
+      },
+      "scene_gamma.png": {
+        "changed_pixels": 13989,
+        "max_channel_delta": 132,
+        "mean_channel_delta": 3.575211,
+        "within_tolerance": false
+      }
+    },
+    "regions": [
+      {
+        "boundary_sensitive": true,
+        "causes": [
+          "coordinate_integerization",
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "coordinate_abs_delta": {
+          "h": "0.2",
+          "w": "0",
+          "x": "0.4",
+          "y": "0.4"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 1,
+          "(0.25,0.5]": 2,
+          "(0.5,1]": 0,
+          "0": 1,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0.4",
+        "feather_v1": "0",
+        "feather_v2": "3.25",
+        "local_changed_pixels": 3071,
+        "local_pixel_max_delta": 139,
+        "region_key": "scene_alpha.png#001",
+        "repair_mapping_restored": true,
+        "repair_v1": "mean",
+        "repair_v2": "mean",
+        "rotation_v1": "0",
+        "rotation_v2": "6.5",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0.0005"
+      },
+      {
+        "boundary_sensitive": true,
+        "causes": [
+          "dropped_rotation_or_feather"
+        ],
+        "coordinate_abs_delta": {
+          "h": "0",
+          "w": "0",
+          "x": "0",
+          "y": "0"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 0,
+          "(0.25,0.5]": 0,
+          "(0.5,1]": 0,
+          "0": 4,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0",
+        "feather_v1": "0",
+        "feather_v2": "2",
+        "local_changed_pixels": 3545,
+        "local_pixel_max_delta": 104,
+        "region_key": "scene_alpha.png#002",
+        "repair_mapping_restored": true,
+        "repair_v1": "edge_extend",
+        "repair_v2": "edge_extend",
+        "rotation_v1": "0",
+        "rotation_v2": "8",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0"
+      },
+      {
+        "boundary_sensitive": true,
+        "causes": [
+          "coordinate_integerization",
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "coordinate_abs_delta": {
+          "h": "0",
+          "w": "0",
+          "x": "0.5",
+          "y": "0.25"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 1,
+          "(0.25,0.5]": 1,
+          "(0.5,1]": 0,
+          "0": 2,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0.5",
+        "feather_v1": "0",
+        "feather_v2": "5",
+        "local_changed_pixels": 4382,
+        "local_pixel_max_delta": 203,
+        "region_key": "scene_beta.png#001",
+        "repair_mapping_restored": true,
+        "repair_v1": "edge_extend",
+        "repair_v2": "edge_extend",
+        "rotation_v1": "0",
+        "rotation_v2": "-12.5",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0.0004"
+      },
+      {
+        "boundary_sensitive": true,
+        "causes": [
+          "coordinate_integerization",
+          "dropped_rotation_or_feather"
+        ],
+        "coordinate_abs_delta": {
+          "h": "0.25",
+          "w": "0.5",
+          "x": "0.25",
+          "y": "0.25"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 3,
+          "(0.25,0.5]": 1,
+          "(0.5,1]": 0,
+          "0": 0,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0.5",
+        "feather_v1": "0",
+        "feather_v2": "1.5",
+        "local_changed_pixels": 1209,
+        "local_pixel_max_delta": 20,
+        "region_key": "scene_beta.png#002",
+        "repair_mapping_restored": true,
+        "repair_v1": "mean",
+        "repair_v2": "mean",
+        "rotation_v1": "0",
+        "rotation_v2": "0",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0"
+      },
+      {
+        "boundary_sensitive": true,
+        "causes": [
+          "strength_permille_truncation",
+          "dropped_rotation_or_feather"
+        ],
+        "coordinate_abs_delta": {
+          "h": "0",
+          "w": "0",
+          "x": "0",
+          "y": "0"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 0,
+          "(0.25,0.5]": 0,
+          "(0.5,1]": 0,
+          "0": 4,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0",
+        "feather_v1": "0",
+        "feather_v2": "6.5",
+        "local_changed_pixels": 7858,
+        "local_pixel_max_delta": 132,
+        "region_key": "scene_gamma.png#001",
+        "repair_mapping_restored": true,
+        "repair_v1": "edge_extend",
+        "repair_v2": "edge_extend",
+        "rotation_v1": "0",
+        "rotation_v2": "21.75",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0.0004"
+      },
+      {
+        "boundary_sensitive": false,
+        "causes": [],
+        "coordinate_abs_delta": {
+          "h": "0",
+          "w": "0",
+          "x": "0",
+          "y": "0"
+        },
+        "coordinate_histogram": {
+          "(0,0.25]": 0,
+          "(0.25,0.5]": 0,
+          "(0.5,1]": 0,
+          "0": 4,
+          ">1": 0
+        },
+        "coordinate_max_abs_delta": "0",
+        "feather_v1": "0",
+        "feather_v2": "0",
+        "local_changed_pixels": 0,
+        "local_pixel_max_delta": 0,
+        "region_key": "scene_gamma.png#002",
+        "repair_mapping_restored": true,
+        "repair_v1": "mean",
+        "repair_v2": "mean",
+        "rotation_v1": "0",
+        "rotation_v2": "0",
+        "sidecar_restore_equal": true,
+        "style_abs_delta": "0"
+      }
+    ],
+    "rendered_content_fingerprints": {
+      "v1": "83646cb9199d38bd081d56d2b7666e76954198fb1f58d73ed7a2af593b3fa7e2",
+      "v2": "52b2cd48b9b9b4c3904f0b6cce209469a19f6d9749da1d904556b84c861f6310"
+    },
+    "rendered_stage_summaries": {
+      "v1": {
+        "attribute": {
+          "scene_alpha.png#001": "f969ef0eddf1c4bd0dd359fd76daaa507e4b9661479027aa136cdcd399b36513",
+          "scene_alpha.png#002": "599b373cfd87059d88daa9634a34995e8dac44154b207e8350ad00aa02149ad8",
+          "scene_beta.png#001": "52cf8eee78cf324f4b51a2dfb7fd4746a998ad37587716811a888df06c25476a",
+          "scene_beta.png#002": "fcca07d730f19ae1bd39b8c870c3db8e9280c89fb06e4ccd141c93a545b92851",
+          "scene_gamma.png#001": "35abc335de3bf5ad89973becc06850ff294f849d0d059869c52a50f43318d59e",
+          "scene_gamma.png#002": "f99e69d0e9dadb71c78d6707dc3e8716e44936e5005cc3167e2bba0c5ca5d2c7"
+        },
+        "compose": {
+          "scene_alpha.png#001": "7b3c36cf19e67931f78a35beaf325d6fb142d0cc67e21a2291ff250abae73039",
+          "scene_alpha.png#002": "20e45036daa1d23df5d238987c42ed105e37d7ab15e8e514d6a263d898b9205a",
+          "scene_beta.png#001": "36c954e4d2cab9c2964766a5fbd4575ced9e785dc5ec4c96ed82c2ff99b9ef39",
+          "scene_beta.png#002": "9d407a382b4dbfad7a97418f791a927e38f8e2fe7e8bf4e7bd1286cea00dede2",
+          "scene_gamma.png#001": "cef4e84261167137c0750fe05934eb5a6fbffbaf4f15333c094fbe1222a3a17b",
+          "scene_gamma.png#002": "2dac4337948c73b35e9ee617293191a5978a23373d42b39efdf6616d8e77e16c"
+        },
+        "mask": {
+          "scene_alpha.png#001": "4cc03a3ec6c784ebefa16ca58cccae8ef6fc2b879a0946f6531812efc5032288",
+          "scene_alpha.png#002": "7ab15236beb15437c1a8e7c0d520598f1fda372b2f081c608017e67a99014134",
+          "scene_beta.png#001": "33b660d4f4f2526f7ccd2e97959a9811b971da30121d95273412ff0e6b0754ce",
+          "scene_beta.png#002": "298a9d3ef5f195bde7bf00bc6cef2589a69fbc2037f7142bf630572e4e7d47f7",
+          "scene_gamma.png#001": "f39834c72e2069febffa3f77b133d7eb32727db2446c0f70cf53f67141ed1501",
+          "scene_gamma.png#002": "8284bbfe6bedfb593ade1375be0c4448d2904089666bcb63536ce44d3d293fff"
+        },
+        "parse": {
+          "scene_alpha.png#001": "9bd5b3469437729143eb8883722a970d957745a28b9cac83e41ec1b4ef3ba006",
+          "scene_alpha.png#002": "e8272ebe8ee23540465411a66acee59ed21f5730f6612e7b029f65d759279b21",
+          "scene_beta.png#001": "399fb357d88c01a3a6e4f228e559a169e45e7fae284f28ad6d0badb3e083f724",
+          "scene_beta.png#002": "2a5eead240547d7d8f296a7d77603a220835b98af87b4ec9c5492a8c3c6f6458",
+          "scene_gamma.png#001": "e9b82b58c60ac0a4728eb4e53cc8eb3c0b7d3cd7a7d6e30d7da764cc4b67dcb5",
+          "scene_gamma.png#002": "3111105bf3cda00e63a8ea56cd9a5abd390a3f491248061192c17df8694e97de"
+        },
+        "repair": {
+          "scene_alpha.png#001": "f2a4ac1ff788bd18242c65ab6805e9ec0416fb22394ad8eafae56ad0e3a9ad19",
+          "scene_alpha.png#002": "cfe4ca93678164caf42f6c96e8d280e34da73a83f466c6c05c67a3f67345f4ea",
+          "scene_beta.png#001": "22b6b57bf2425c254242bbe9e5699e5a75ace753865df067e2780dcf416f012c",
+          "scene_beta.png#002": "3f870d0ad20147881bf18ff2fee791ab01b1a2b41ea9562e0413635c42865710",
+          "scene_gamma.png#001": "51772db29e54217012e06afe671cb58287645ca01891122e16e321bbc5dea216",
+          "scene_gamma.png#002": "a00ca2134b399e24a8f2c7aae20f3c537bdb4f86dbe0654c78c48dd06e4f654d"
+        },
+        "style": {
+          "scene_alpha.png#001": "d3f00fceeca4f3ad6a5a2f836337cc44211ca93d5208181d70d6934afba45823",
+          "scene_alpha.png#002": "4d5faefb1f48f0a9894b1a88810171577881cca1f6f75f0d07df5bf4a26a75bd",
+          "scene_beta.png#001": "8b24b8e5462dcfd4f047ce0df7249a383579fae529a48a6b082747d0e9de9cd9",
+          "scene_beta.png#002": "9a1cf173d4fc1031be8da9d4b0b4fbda1fb7e0f5383d691f4a85c7d20236020d",
+          "scene_gamma.png#001": "650de0bbd801cb45460abb625494b7a2376b105e2c93758e602213afaf7503cd",
+          "scene_gamma.png#002": "65e2d9b725fabb3ca276ad887f06a9b504121a7f39707db642ee9cc106eafdd8"
+        }
+      },
+      "v2": {
+        "attribute": {
+          "scene_alpha.png#001": "39495fa7881f5767b4dbc89a02ad669fad532056e6bc35d23a2a60181d233a86",
+          "scene_alpha.png#002": "6317e8bd9b2b35b1651a7ad218d51a627ca8cc66eb4b341bc01474dc7654a746",
+          "scene_beta.png#001": "4f4b1a741352ee14123305caf5ab004fade2689e2a8c56de423e554e2cffbda0",
+          "scene_beta.png#002": "f0eb13ad0cdcedc00d8640daa8fb3eb0cea2dfd16fcbc7a37b94e009759ba4b1",
+          "scene_gamma.png#001": "f2bc9ee03f9b5246c77f1011f3332d8436703fb750d7b944fde02d4b3c3f7b99",
+          "scene_gamma.png#002": "f99e69d0e9dadb71c78d6707dc3e8716e44936e5005cc3167e2bba0c5ca5d2c7"
+        },
+        "compose": {
+          "scene_alpha.png#001": "43f90f11ff0c8b1d22f321efbe9de2d9c84d792fb4ab801d87d91722b82e8cc0",
+          "scene_alpha.png#002": "f4bf5f1cb01f965e77a693e4534311976a37ae7d23bb6dc23c8e9b29ebfc94e4",
+          "scene_beta.png#001": "30bf40d00b23415f6c71193d6301a6f2802baa1725e067d3c08fc5ed3f046082",
+          "scene_beta.png#002": "261706760e34deb88ea04dc0761b5e84e9b2fbf867532de93f36eb1189c8c595",
+          "scene_gamma.png#001": "aab9ccea0fb4ff09bf48a221145d4f077b713fb1923b9e824795d46ba81f20e3",
+          "scene_gamma.png#002": "2dac4337948c73b35e9ee617293191a5978a23373d42b39efdf6616d8e77e16c"
+        },
+        "mask": {
+          "scene_alpha.png#001": "3c531d2974d07e75d340cc7644938749731f3e8734332c3aa78c7f0624e9fe71",
+          "scene_alpha.png#002": "729fd4595a2feb99ea60ef3faf696054886c8c69ebdd87c1ae0c5f12c6d62b42",
+          "scene_beta.png#001": "879c59b623b833f0b644788b49cc4921065c4459b8aea3264a3ba9190cff051f",
+          "scene_beta.png#002": "6aa67c88dd0483448bdf26f62c58a59418f67860643460677f5223138001a902",
+          "scene_gamma.png#001": "97d59d73e479025fa124ce308a9d6643ae0a767fdc35862fa54b7c6697293e45",
+          "scene_gamma.png#002": "8284bbfe6bedfb593ade1375be0c4448d2904089666bcb63536ce44d3d293fff"
+        },
+        "parse": {
+          "scene_alpha.png#001": "c8105f84b399b0a6dec35ada0b5c63b1c6bb783c802387528454208c39a47428",
+          "scene_alpha.png#002": "dd75faf1538fc540bf613553ed11856b049817ccf744fa06aff0f00a53553a6f",
+          "scene_beta.png#001": "4d19f9682b3ff0a657724f433926f40d57d976c4f3f1e79fd49a270a1d5d594f",
+          "scene_beta.png#002": "8dbef7cc997d2ddc63b3f5a9ca48fae74ce283679d6ac757963284adaee54208",
+          "scene_gamma.png#001": "459b32cca2960480914bd03b4ca76ca805d6d9870a0b037c395478c61dc3e349",
+          "scene_gamma.png#002": "e0338f492e4215d00465fd32ed58c11c0ff9fe94125373b4b14a3b3dd651e4b2"
+        },
+        "repair": {
+          "scene_alpha.png#001": "8789b20440d415cd1025948594447c2e149288ce141a6a4e3664eff8f56f9327",
+          "scene_alpha.png#002": "fcbfcf9e7b0cc5dd86abb1406c25ff217da4868fba4dea96822ac4581cb52a16",
+          "scene_beta.png#001": "505349552e7d3defbe51d0143e143b10cebd98c7d7ecf3fb950f06b5fe76d43e",
+          "scene_beta.png#002": "2246ac8f42a975da67d033e716f8f063709e87946f057939dec2fa76729d1edb",
+          "scene_gamma.png#001": "678bf3784e614ce76149b8c8d835f8250790f592812a4207d7c9d2ac73817469",
+          "scene_gamma.png#002": "a00ca2134b399e24a8f2c7aae20f3c537bdb4f86dbe0654c78c48dd06e4f654d"
+        },
+        "style": {
+          "scene_alpha.png#001": "e079b5353dcdddee4123ce391218ffc745ee12fde1383888e6142655e194bd0e",
+          "scene_alpha.png#002": "b10793346c703827a58f5884601780b13624deb358286768c347b9ed40bc4688",
+          "scene_beta.png#001": "6dd6655a1cd1bb5ad94d63ce5278924be50f78307e17a59bda821dbb529cf1ba",
+          "scene_beta.png#002": "a62ac9ecbd63d468abb37f4064cdc33c1f42151a6e36a3fdd6e5a1f0441f1ade",
+          "scene_gamma.png#001": "4d3042b3ec12aa69f126dbca6684642f40667332bedeca683181c85d2b8eec7f",
+          "scene_gamma.png#002": "65e2d9b725fabb3ca276ad887f06a9b504121a7f39707db642ee9cc106eafdd8"
+        }
+      }
+    },
+    "repair_mapping": {
+      "all_restored": true,
+      "matches": 6,
+      "total": 6
+    },
+    "restored_records_field_equal": 6,
+    "restored_records_total": 6,
+    "schema": "image-edit-cross-version-diagnostics/v1",
+    "sidecar_hash": "f6534aec72ccbad9a387eb35cafc1aab755d2308e6e9535051941d222c36f00e",
+    "sidecar_record_count": 6,
+    "sidecar_restore_hits": 6,
+    "sidecar_restore_misses": 0,
+    "style_strength_max_abs_delta": "0.0005",
+    "v1_exchange_fingerprint": "e96d3ff3e33b99ff25a2e847148f6e3b12983e37e66f39a287fbe2ae342ec1b1",
+    "v2_exchange_fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763"
+  },
+  "environment": {
+    "container": false,
+    "gpu": false,
+    "numpy": "1.26.4",
+    "offline": true,
+    "pillow": "11.0.0",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1",
+    "system": "Linux"
+  },
+  "equivalence": {
+    "all_commands_semantic_equal": true,
+    "per_command": [
+      {
+        "command_id": "CMD-001-V2",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-002-QUANT",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-003-STYLE",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-004-RECT",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-005-REPAIR",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-006-FEATHER",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-007-ROTATE",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-008-BUDGET",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-009-V1",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": true,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-010-V2",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      },
+      {
+        "command_id": "CMD-011-QUANT16",
+        "content_fingerprint_equal": true,
+        "pending_queue_equal": true,
+        "pixels_equal": true,
+        "raw_reuse_lists_equal": false,
+        "semantic_equivalence": true,
+        "stage_summaries_equal": true
+      }
+    ]
+  },
+  "exchange": {
+    "final_version": 2,
+    "fingerprint": "011750b45a731fc44bdee786faa3e5e83251e74d6e842a56c3a00c84e9a67763",
+    "sidecar_hash": "ad54ced365330c8710bbb714b8e10d1c004f55ab43f465bba8d5b153901f406f"
+  },
+  "failures": [
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-009-V1",
+      "injection_id": null,
+      "message": "pixel budget pending: required=8448, remaining=8182",
+      "region_key": "scene_gamma.png#001",
+      "source": "CMD-009-V1",
+      "stage": "schedule"
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-009-V1",
+      "injection_id": null,
+      "message": "pixel budget pending: required=3136, remaining=8182",
+      "region_key": "scene_gamma.png#002",
+      "source": "CMD-009-V1",
+      "stage": "schedule"
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "injection_id": null,
+      "message": "pixel budget pending: required=12544, remaining=3947",
+      "region_key": "scene_beta.png#001",
+      "source": "CMD-011-QUANT16",
+      "stage": "schedule"
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "injection_id": null,
+      "message": "pixel budget pending: required=21904, remaining=3947",
+      "region_key": "scene_gamma.png#001",
+      "source": "CMD-011-QUANT16",
+      "stage": "schedule"
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "command_id": "CMD-011-QUANT16",
+      "injection_id": null,
+      "message": "pixel budget pending: required=21904, remaining=12456",
+      "region_key": "scene_gamma.png#001",
+      "source": "CMD-011-QUANT16",
+      "stage": "schedule"
+    }
+  ],
+  "final_region_trajectory": [
+    {
+      "affected_pixels": 5708,
+      "budget_cost": 9604,
+      "content_fingerprint": "6e2ececca9559e80b7862a82d009491704f5baa83e504353b238dc4ccdfe6fb0",
+      "image": "scene_alpha.png",
+      "region_index": 1,
+      "region_key": "scene_alpha.png#001",
+      "sort_key": "scene_alpha.png|000001|pipeline",
+      "stages": [
+        {
+          "cache_key": "bf1bed66a7103808268189b086b640c7dc8dcbc40494b6905696fab493bc758b",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "c8105f84b399b0a6dec35ada0b5c63b1c6bb783c802387528454208c39a47428",
+          "upstream": []
+        },
+        {
+          "cache_key": "1186973fe33b1e035223a2172a977cfbcb6105ba4584379a73f2d85cd730faa7",
+          "image_block": null,
+          "stage": "mask",
+          "status": "reused",
+          "summary": "3c531d2974d07e75d340cc7644938749731f3e8734332c3aa78c7f0624e9fe71",
+          "upstream": [
+            "bf1bed66a7103808268189b086b640c7dc8dcbc40494b6905696fab493bc758b"
+          ]
+        },
+        {
+          "cache_key": "b6f27839baef77e20eb8dfbee5d4147ab552d4c13d7f24fb545ddf69578a3274",
+          "image_block": null,
+          "stage": "repair",
+          "status": "reused",
+          "summary": "8789b20440d415cd1025948594447c2e149288ce141a6a4e3664eff8f56f9327",
+          "upstream": [
+            "1186973fe33b1e035223a2172a977cfbcb6105ba4584379a73f2d85cd730faa7"
+          ]
+        },
+        {
+          "cache_key": "a96b568813b2e0f2c999655062a8f85cd166cd1534d2ec6bc4591cc4a5e442a0",
+          "image_block": null,
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "39495fa7881f5767b4dbc89a02ad669fad532056e6bc35d23a2a60181d233a86",
+          "upstream": [
+            "b6f27839baef77e20eb8dfbee5d4147ab552d4c13d7f24fb545ddf69578a3274"
+          ]
+        },
+        {
+          "cache_key": "f74e92d4fd244a16f5c23f716a13d61aa8113ad02b6bb1fe3771266b6f83fc71",
+          "image_block": null,
+          "stage": "style",
+          "status": "reused",
+          "summary": "e079b5353dcdddee4123ce391218ffc745ee12fde1383888e6142655e194bd0e",
+          "upstream": [
+            "a96b568813b2e0f2c999655062a8f85cd166cd1534d2ec6bc4591cc4a5e442a0"
+          ]
+        },
+        {
+          "cache_key": "c57a22f8cdfc744d4163425aeb9528cef38711958fcf9a992916a7dd59be4d91",
+          "image_block": null,
+          "stage": "compose",
+          "status": "reused",
+          "summary": "43f90f11ff0c8b1d22f321efbe9de2d9c84d792fb4ab801d87d91722b82e8cc0",
+          "upstream": [
+            "f74e92d4fd244a16f5c23f716a13d61aa8113ad02b6bb1fe3771266b6f83fc71",
+            "1186973fe33b1e035223a2172a977cfbcb6105ba4584379a73f2d85cd730faa7"
+          ]
+        }
+      ],
+      "status": "reused"
+    },
+    {
+      "affected_pixels": 6880,
+      "budget_cost": 11449,
+      "content_fingerprint": "71c1caa26254f847c409aea3981b2bd8fc15dc36cfa0f532a814bf5943565b2e",
+      "image": "scene_alpha.png",
+      "region_index": 2,
+      "region_key": "scene_alpha.png#002",
+      "sort_key": "scene_alpha.png|000002|pipeline",
+      "stages": [
+        {
+          "cache_key": "e81733ed5143561d5e89d48d1683a6f6e1e0d6ed453d0468c93a34df9d5a83e3",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "dd75faf1538fc540bf613553ed11856b049817ccf744fa06aff0f00a53553a6f",
+          "upstream": []
+        },
+        {
+          "cache_key": "3d1f8bf7e874ced0cf3ae3c678afc4c69b1a1bfdb1dd9843497409a4ad5949d6",
+          "image_block": null,
+          "stage": "mask",
+          "status": "reused",
+          "summary": "729fd4595a2feb99ea60ef3faf696054886c8c69ebdd87c1ae0c5f12c6d62b42",
+          "upstream": [
+            "e81733ed5143561d5e89d48d1683a6f6e1e0d6ed453d0468c93a34df9d5a83e3"
+          ]
+        },
+        {
+          "cache_key": "d40a36f1b0c3021c349fc80045c1d92921f02bdbe003a3a8a7be229025c7efc1",
+          "image_block": null,
+          "stage": "repair",
+          "status": "reused",
+          "summary": "fcbfcf9e7b0cc5dd86abb1406c25ff217da4868fba4dea96822ac4581cb52a16",
+          "upstream": [
+            "3d1f8bf7e874ced0cf3ae3c678afc4c69b1a1bfdb1dd9843497409a4ad5949d6"
+          ]
+        },
+        {
+          "cache_key": "216cf02f3cf5af1459284b6cb9b5ac1d870e76765d9d4f581caf46a36ea78123",
+          "image_block": null,
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "6317e8bd9b2b35b1651a7ad218d51a627ca8cc66eb4b341bc01474dc7654a746",
+          "upstream": [
+            "d40a36f1b0c3021c349fc80045c1d92921f02bdbe003a3a8a7be229025c7efc1"
+          ]
+        },
+        {
+          "cache_key": "e1ca06d37e3bf20e5a13913566bc6ae2675f2083e7b65231c8a1da129c659469",
+          "image_block": null,
+          "stage": "style",
+          "status": "reused",
+          "summary": "b10793346c703827a58f5884601780b13624deb358286768c347b9ed40bc4688",
+          "upstream": [
+            "216cf02f3cf5af1459284b6cb9b5ac1d870e76765d9d4f581caf46a36ea78123"
+          ]
+        },
+        {
+          "cache_key": "1098fa79b012486a974640d81191596348cc758a5568851cac74a4f2c18e4db1",
+          "image_block": null,
+          "stage": "compose",
+          "status": "reused",
+          "summary": "f4bf5f1cb01f965e77a693e4534311976a37ae7d23bb6dc23c8e9b29ebfc94e4",
+          "upstream": [
+            "e1ca06d37e3bf20e5a13913566bc6ae2675f2083e7b65231c8a1da129c659469",
+            "3d1f8bf7e874ced0cf3ae3c678afc4c69b1a1bfdb1dd9843497409a4ad5949d6"
+          ]
+        }
+      ],
+      "status": "reused"
+    },
+    {
+      "affected_pixels": 8521,
+      "budget_cost": 12544,
+      "content_fingerprint": "9661cd742b9cb1ec7ede2ef56c4c9f00edd82f4dd7c82f55b49e26802fc93df3",
+      "image": "scene_beta.png",
+      "region_index": 1,
+      "region_key": "scene_beta.png#001",
+      "sort_key": "scene_beta.png|000001|pipeline",
+      "stages": [
+        {
+          "cache_key": "29349847cc29ae2462e4860b89fc82e5c678567ef8b7a6ed96dc112850998cfa",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "4d19f9682b3ff0a657724f433926f40d57d976c4f3f1e79fd49a270a1d5d594f",
+          "upstream": []
+        },
+        {
+          "cache_key": "801a734d31f0e63c4e27338eca1c8ac487da7e12515c5d6c01d635ddc297ad4f",
+          "image_block": null,
+          "stage": "mask",
+          "status": "reused",
+          "summary": "879c59b623b833f0b644788b49cc4921065c4459b8aea3264a3ba9190cff051f",
+          "upstream": [
+            "29349847cc29ae2462e4860b89fc82e5c678567ef8b7a6ed96dc112850998cfa"
+          ]
+        },
+        {
+          "cache_key": "5c24d79d9dfe6f141c875e6b8e3bc3a0da3725f3e6da256051f08a494c667d07",
+          "image_block": null,
+          "stage": "repair",
+          "status": "reused",
+          "summary": "505349552e7d3defbe51d0143e143b10cebd98c7d7ecf3fb950f06b5fe76d43e",
+          "upstream": [
+            "801a734d31f0e63c4e27338eca1c8ac487da7e12515c5d6c01d635ddc297ad4f"
+          ]
+        },
+        {
+          "cache_key": "4c0cdac1989b9134ea1d351fe9769c8475487aedf431bb192fdc4276acbeebe2",
+          "image_block": null,
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "4f4b1a741352ee14123305caf5ab004fade2689e2a8c56de423e554e2cffbda0",
+          "upstream": [
+            "5c24d79d9dfe6f141c875e6b8e3bc3a0da3725f3e6da256051f08a494c667d07"
+          ]
+        },
+        {
+          "cache_key": "a94b131c1fe98dd4202610f2bb171b03fa8d22a83bb87dcdad5c1a51232ebd13",
+          "image_block": null,
+          "stage": "style",
+          "status": "reused",
+          "summary": "6dd6655a1cd1bb5ad94d63ce5278924be50f78307e17a59bda821dbb529cf1ba",
+          "upstream": [
+            "4c0cdac1989b9134ea1d351fe9769c8475487aedf431bb192fdc4276acbeebe2"
+          ]
+        },
+        {
+          "cache_key": "2137bf1ae5108f0f3fc2df824831e36d515f04dce2f41e007843f30d7ab44514",
+          "image_block": null,
+          "stage": "compose",
+          "status": "reused",
+          "summary": "30bf40d00b23415f6c71193d6301a6f2802baa1725e067d3c08fc5ed3f046082",
+          "upstream": [
+            "a94b131c1fe98dd4202610f2bb171b03fa8d22a83bb87dcdad5c1a51232ebd13",
+            "801a734d31f0e63c4e27338eca1c8ac487da7e12515c5d6c01d635ddc297ad4f"
+          ]
+        }
+      ],
+      "status": "reused"
+    },
+    {
+      "affected_pixels": 3972,
+      "budget_cost": 3752,
+      "content_fingerprint": "3a6d9851241ed93c1a90a9fd3d3b91b57c972dd2408a9d83e71bce24428eefad",
+      "image": "scene_beta.png",
+      "region_index": 2,
+      "region_key": "scene_beta.png#002",
+      "sort_key": "scene_beta.png|000002|pipeline",
+      "stages": [
+        {
+          "cache_key": "6105f4b932ea0ba0a25cd753acb12c683932994235b2de84a6a5641933721e04",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "8dbef7cc997d2ddc63b3f5a9ca48fae74ce283679d6ac757963284adaee54208",
+          "upstream": []
+        },
+        {
+          "cache_key": "93aec6cf1e948a8ffb9e4555f1e1b61472b3c998eb214708cdc3bef2038e8418",
+          "image_block": null,
+          "stage": "mask",
+          "status": "reused",
+          "summary": "6aa67c88dd0483448bdf26f62c58a59418f67860643460677f5223138001a902",
+          "upstream": [
+            "6105f4b932ea0ba0a25cd753acb12c683932994235b2de84a6a5641933721e04"
+          ]
+        },
+        {
+          "cache_key": "3f89e0682d9f78ec3872154cea6b7e8044c5a592a40cbabcec0d95260cc96104",
+          "image_block": null,
+          "stage": "repair",
+          "status": "reused",
+          "summary": "2246ac8f42a975da67d033e716f8f063709e87946f057939dec2fa76729d1edb",
+          "upstream": [
+            "93aec6cf1e948a8ffb9e4555f1e1b61472b3c998eb214708cdc3bef2038e8418"
+          ]
+        },
+        {
+          "cache_key": "cd118d5ab3910aba846e566c9586f717c656feafd557cb613e5a669f47117fda",
+          "image_block": null,
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "f0eb13ad0cdcedc00d8640daa8fb3eb0cea2dfd16fcbc7a37b94e009759ba4b1",
+          "upstream": [
+            "3f89e0682d9f78ec3872154cea6b7e8044c5a592a40cbabcec0d95260cc96104"
+          ]
+        },
+        {
+          "cache_key": "fa456bd9ad204fd21355a9b74184dd16312b2047c19e2812573243b47a23a26b",
+          "image_block": null,
+          "stage": "style",
+          "status": "reused",
+          "summary": "a62ac9ecbd63d468abb37f4064cdc33c1f42151a6e36a3fdd6e5a1f0441f1ade",
+          "upstream": [
+            "cd118d5ab3910aba846e566c9586f717c656feafd557cb613e5a669f47117fda"
+          ]
+        },
+        {
+          "cache_key": "cc349d22a53c13867c446224cabb8c753b0c5094b5dd43ee34942a90e03aee2c",
+          "image_block": null,
+          "stage": "compose",
+          "status": "reused",
+          "summary": "261706760e34deb88ea04dc0761b5e84e9b2fbf867532de93f36eb1189c8c595",
+          "upstream": [
+            "fa456bd9ad204fd21355a9b74184dd16312b2047c19e2812573243b47a23a26b",
+            "93aec6cf1e948a8ffb9e4555f1e1b61472b3c998eb214708cdc3bef2038e8418"
+          ]
+        }
+      ],
+      "status": "reused"
+    },
+    {
+      "affected_pixels": 17420,
+      "budget_cost": 21904,
+      "content_fingerprint": "a2fbe40157235b53360dab1ec604855b8bf77344f19f581eda6f4f085a8e7966",
+      "image": "scene_gamma.png",
+      "region_index": 1,
+      "region_key": "scene_gamma.png#001",
+      "sort_key": "scene_gamma.png|000001|mask+repair+attribute+style+compose",
+      "stages": [
+        {
+          "cache_key": "b37ebfad31b981d228fcc6d3541a000dfa528078d78f87a97d81966c0069c893",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "459b32cca2960480914bd03b4ca76ca805d6d9870a0b037c395478c61dc3e349",
+          "upstream": []
+        },
+        {
+          "cache_key": "09ccc709fe31390c7a8492382f11c9c290cad828f8330e77bdcf843061710d2e",
+          "image_block": [
+            37,
+            41,
+            171,
+            171
+          ],
+          "stage": "mask",
+          "status": "reused",
+          "summary": "97d59d73e479025fa124ce308a9d6643ae0a767fdc35862fa54b7c6697293e45",
+          "upstream": [
+            "b37ebfad31b981d228fcc6d3541a000dfa528078d78f87a97d81966c0069c893"
+          ]
+        },
+        {
+          "cache_key": "181e17ef30685ddf975834a29e60f990d49fd95a740c0e4d9c8bc7da5e8add50",
+          "image_block": [
+            34,
+            38,
+            174,
+            174
+          ],
+          "stage": "repair",
+          "status": "reused",
+          "summary": "678bf3784e614ce76149b8c8d835f8250790f592812a4207d7c9d2ac73817469",
+          "upstream": [
+            "09ccc709fe31390c7a8492382f11c9c290cad828f8330e77bdcf843061710d2e"
+          ]
+        },
+        {
+          "cache_key": "adb530d3fea794eb5932e45ecc3200eab05919a1b778b2e9d67ce64b21be6092",
+          "image_block": [
+            34,
+            38,
+            174,
+            174
+          ],
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "f2bc9ee03f9b5246c77f1011f3332d8436703fb750d7b944fde02d4b3c3f7b99",
+          "upstream": [
+            "181e17ef30685ddf975834a29e60f990d49fd95a740c0e4d9c8bc7da5e8add50"
+          ]
+        },
+        {
+          "cache_key": "bd7b18e2e408f3db85a30903a676a7b3f44d8f209c4514a232c32f4089c1a3d6",
+          "image_block": [
+            34,
+            38,
+            174,
+            174
+          ],
+          "stage": "style",
+          "status": "computed",
+          "summary": "4d3042b3ec12aa69f126dbca6684642f40667332bedeca683181c85d2b8eec7f",
+          "upstream": [
+            "adb530d3fea794eb5932e45ecc3200eab05919a1b778b2e9d67ce64b21be6092"
+          ]
+        },
+        {
+          "cache_key": "1fa1c092ee2bc7cc4f8f9102b47f1ececce1adb3320e22aa35c70203818718c8",
+          "image_block": [
+            34,
+            38,
+            174,
+            174
+          ],
+          "stage": "compose",
+          "status": "computed",
+          "summary": "aab9ccea0fb4ff09bf48a221145d4f077b713fb1923b9e824795d46ba81f20e3",
+          "upstream": [
+            "bd7b18e2e408f3db85a30903a676a7b3f44d8f209c4514a232c32f4089c1a3d6",
+            "09ccc709fe31390c7a8492382f11c9c290cad828f8330e77bdcf843061710d2e"
+          ]
+        }
+      ],
+      "status": "computed"
+    },
+    {
+      "affected_pixels": 2704,
+      "budget_cost": 3136,
+      "content_fingerprint": "169549c85c3f95527bc2d20b9b8368b9be40c9795b2fc657a9ebb41e5b1c083d",
+      "image": "scene_gamma.png",
+      "region_index": 2,
+      "region_key": "scene_gamma.png#002",
+      "sort_key": "scene_gamma.png|000002|pipeline",
+      "stages": [
+        {
+          "cache_key": "0f6b6c887587089b2d664f41819c4d004f1f9595ce13fb930ef3204be9f2b79f",
+          "image_block": null,
+          "stage": "parse",
+          "status": "reused",
+          "summary": "e0338f492e4215d00465fd32ed58c11c0ff9fe94125373b4b14a3b3dd651e4b2",
+          "upstream": []
+        },
+        {
+          "cache_key": "302e5f56fb805dd09daaf42f2ceb014a8b107f028f314084e04fd7ce2b713e2d",
+          "image_block": null,
+          "stage": "mask",
+          "status": "reused",
+          "summary": "8284bbfe6bedfb593ade1375be0c4448d2904089666bcb63536ce44d3d293fff",
+          "upstream": [
+            "0f6b6c887587089b2d664f41819c4d004f1f9595ce13fb930ef3204be9f2b79f"
+          ]
+        },
+        {
+          "cache_key": "f37c90434d971708b42e4b37161c5d447063da0836ba856bc3cc756f2852ba4b",
+          "image_block": null,
+          "stage": "repair",
+          "status": "reused",
+          "summary": "a00ca2134b399e24a8f2c7aae20f3c537bdb4f86dbe0654c78c48dd06e4f654d",
+          "upstream": [
+            "302e5f56fb805dd09daaf42f2ceb014a8b107f028f314084e04fd7ce2b713e2d"
+          ]
+        },
+        {
+          "cache_key": "4642c7767ee1704e3c31c0c727be0a078415df317e3a7feae46c203e90f5b4fb",
+          "image_block": null,
+          "stage": "attribute",
+          "status": "reused",
+          "summary": "f99e69d0e9dadb71c78d6707dc3e8716e44936e5005cc3167e2bba0c5ca5d2c7",
+          "upstream": [
+            "f37c90434d971708b42e4b37161c5d447063da0836ba856bc3cc756f2852ba4b"
+          ]
+        },
+        {
+          "cache_key": "5d638f4437ff49073f7146b6eb8fc6cb710dc5d9f6962111556703c12f116f54",
+          "image_block": null,
+          "stage": "style",
+          "status": "reused",
+          "summary": "65e2d9b725fabb3ca276ad887f06a9b504121a7f39707db642ee9cc106eafdd8",
+          "upstream": [
+            "4642c7767ee1704e3c31c0c727be0a078415df317e3a7feae46c203e90f5b4fb"
+          ]
+        },
+        {
+          "cache_key": "349c0578f4e30412f7440ef1ea3a26119df6c3fb2b03b33e4a62e5246f06bbb5",
+          "image_block": null,
+          "stage": "compose",
+          "status": "reused",
+          "summary": "2dac4337948c73b35e9ee617293191a5978a23373d42b39efdf6616d8e77e16c",
+          "upstream": [
+            "5d638f4437ff49073f7146b6eb8fc6cb710dc5d9f6962111556703c12f116f54",
+            "302e5f56fb805dd09daaf42f2ceb014a8b107f028f314084e04fd7ce2b713e2d"
+          ]
+        }
+      ],
+      "status": "reused"
+    }
+  ],
+  "final_stage_metadata": {
+    "scene_alpha.png#001": {
+      "attribute": {
+        "active_pixels": 5708,
+        "crop": [
+          7,
+          10,
+          98,
+          84
+        ],
+        "target_attribute": "warm"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 5708,
+        "composition": "source_over_region_tile",
+        "crop": [
+          7,
+          10,
+          98,
+          84
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 5708,
+        "coord_bits": 8,
+        "cos_q": 1041836,
+        "crop": [
+          10,
+          13,
+          95,
+          81
+        ],
+        "feather_radius": "3.25",
+        "mode": "rotated_feathered",
+        "rotation_millideg": 6500,
+        "sin_q": 118702,
+        "trig_bits": 20
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "3.25",
+          "image": "scene_alpha.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "48.8",
+            "w": "68",
+            "x": "18.6",
+            "y": "22.4"
+          },
+          "region_index": 1,
+          "repair_method": "mean",
+          "rotation_deg": "6.5",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 613,
+          "style_strength": "0.6125",
+          "target_attribute": "warm"
+        }
+      },
+      "repair": {
+        "filled_pixels": 3321,
+        "iterations": 13,
+        "method": "mean",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 5708,
+        "crop": [
+          7,
+          10,
+          98,
+          84
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4152,
+          4068,
+          4053
+        ],
+        "mix_fixed": 2458,
+        "offsets": [
+          -4,
+          3,
+          5
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 9,
+        "rounding": "half_up",
+        "style_strength": "0.6125",
+        "style_strength_fixed": 2509
+      }
+    },
+    "scene_alpha.png#002": {
+      "attribute": {
+        "active_pixels": 6880,
+        "crop": [
+          101,
+          15,
+          201,
+          95
+        ],
+        "target_attribute": "cool"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 6880,
+        "composition": "source_over_region_tile",
+        "crop": [
+          101,
+          15,
+          201,
+          95
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 6880,
+        "coord_bits": 8,
+        "cos_q": 1038371,
+        "crop": [
+          104,
+          18,
+          198,
+          92
+        ],
+        "feather_radius": "2",
+        "mode": "rotated_feathered",
+        "rotation_millideg": 8000,
+        "sin_q": 145934,
+        "trig_bits": 20
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "2",
+          "image": "scene_alpha.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "54",
+            "w": "78",
+            "x": "112",
+            "y": "28"
+          },
+          "region_index": 2,
+          "repair_method": "edge_extend",
+          "rotation_deg": "8",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 250,
+          "style_strength": "0.25",
+          "target_attribute": "cool"
+        }
+      },
+      "repair": {
+        "filled_pixels": 4212,
+        "iterations": 14,
+        "method": "edge_extend",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 6880,
+        "crop": [
+          101,
+          15,
+          201,
+          95
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4040,
+          4136,
+          4070
+        ],
+        "mix_fixed": 1092,
+        "offsets": [
+          -2,
+          2,
+          -3
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 4,
+        "rounding": "half_up",
+        "style_strength": "0.25",
+        "style_strength_fixed": 1024
+      }
+    },
+    "scene_beta.png#001": {
+      "attribute": {
+        "active_pixels": 8521,
+        "crop": [
+          17,
+          43,
+          112,
+          145
+        ],
+        "target_attribute": "vivid"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 8521,
+        "composition": "source_over_region_tile",
+        "crop": [
+          17,
+          43,
+          112,
+          145
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 8521,
+        "coord_bits": 8,
+        "cos_q": 1023721,
+        "crop": [
+          20,
+          46,
+          109,
+          142
+        ],
+        "feather_radius": "5",
+        "mode": "rotated_feathered",
+        "rotation_millideg": -12500,
+        "sin_q": -226953,
+        "trig_bits": 20
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "5",
+          "image": "scene_beta.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "70",
+            "w": "60",
+            "x": "34.5",
+            "y": "59.25"
+          },
+          "region_index": 1,
+          "repair_method": "edge_extend",
+          "rotation_deg": "-12.5",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 812,
+          "style_strength": "0.8124",
+          "target_attribute": "vivid"
+        }
+      },
+      "repair": {
+        "filled_pixels": 4203,
+        "iterations": 16,
+        "method": "edge_extend",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 8521,
+        "crop": [
+          17,
+          43,
+          112,
+          145
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4056,
+          4109,
+          4172
+        ],
+        "mix_fixed": 3277,
+        "offsets": [
+          2,
+          -2,
+          1
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 12,
+        "rounding": "half_up",
+        "style_strength": "0.8124",
+        "style_strength_fixed": 3328
+      }
+    },
+    "scene_beta.png#002": {
+      "attribute": {
+        "active_pixels": 3972,
+        "crop": [
+          143,
+          136,
+          218,
+          200
+        ],
+        "target_attribute": "mono"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 3972,
+        "composition": "source_over_region_tile",
+        "crop": [
+          143,
+          136,
+          218,
+          200
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 3972,
+        "coord_bits": 8,
+        "cos_q": 1048576,
+        "crop": [
+          146,
+          139,
+          215,
+          197
+        ],
+        "feather_radius": "1.5",
+        "mode": "rotated_feathered",
+        "rotation_millideg": 0,
+        "sin_q": 0,
+        "trig_bits": 20
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "1.5",
+          "image": "scene_beta.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "50.25",
+            "w": "60.5",
+            "x": "150.25",
+            "y": "142.75"
+          },
+          "region_index": 2,
+          "repair_method": "mean",
+          "rotation_deg": "0",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 127,
+          "style_strength": "0.127",
+          "target_attribute": "mono"
+        }
+      },
+      "repair": {
+        "filled_pixels": 3050,
+        "iterations": 13,
+        "method": "mean",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 3972,
+        "crop": [
+          143,
+          136,
+          218,
+          200
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4104,
+          4143,
+          4044
+        ],
+        "mix_fixed": 546,
+        "offsets": [
+          -3,
+          3,
+          -4
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 2,
+        "rounding": "half_up",
+        "style_strength": "0.127",
+        "style_strength_fixed": 520
+      }
+    },
+    "scene_gamma.png#001": {
+      "attribute": {
+        "active_pixels": 17420,
+        "crop": [
+          34,
+          38,
+          174,
+          174
+        ],
+        "target_attribute": "cool"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 17420,
+        "composition": "source_over_region_tile",
+        "crop": [
+          34,
+          38,
+          174,
+          174
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 17420,
+        "coord_bits": 8,
+        "cos_q": 973927,
+        "crop": [
+          37,
+          41,
+          171,
+          171
+        ],
+        "feather_radius": "6.5",
+        "mode": "rotated_feathered",
+        "rotation_millideg": 21750,
+        "sin_q": 388558,
+        "trig_bits": 20
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "6.5",
+          "image": "scene_gamma.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "84",
+            "w": "92",
+            "x": "58",
+            "y": "64"
+          },
+          "region_index": 1,
+          "repair_method": "edge_extend",
+          "rotation_deg": "21.75",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 667,
+          "style_strength": "0.6666",
+          "target_attribute": "cool"
+        }
+      },
+      "repair": {
+        "filled_pixels": 7730,
+        "iterations": 23,
+        "method": "edge_extend",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 17420,
+        "crop": [
+          34,
+          38,
+          174,
+          174
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4120,
+          4116,
+          4147
+        ],
+        "mix_fixed": 2731,
+        "offsets": [
+          1,
+          -1,
+          0
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 10,
+        "rounding": "half_up",
+        "style_strength": "0.6666",
+        "style_strength_fixed": 2730
+      }
+    },
+    "scene_gamma.png#002": {
+      "attribute": {
+        "active_pixels": 2704,
+        "crop": [
+          173,
+          15,
+          231,
+          73
+        ],
+        "target_attribute": "warm"
+      },
+      "compose": {
+        "alpha_max": 255,
+        "alpha_nonzero": 2704,
+        "composition": "source_over_region_tile",
+        "crop": [
+          173,
+          15,
+          231,
+          73
+        ],
+        "rounding": "half_up_integer"
+      },
+      "mask": {
+        "affected_pixels": 2704,
+        "crop": [
+          176,
+          18,
+          228,
+          70
+        ],
+        "feather_radius": "0",
+        "mode": "axis_aligned",
+        "rotation_millideg": 0
+      },
+      "parse": {
+        "canonical_region": {
+          "exchange_version": 2,
+          "feather_radius": "0",
+          "image": "scene_gamma.png",
+          "precision_label": "manifest:logical",
+          "rect": {
+            "h": "52",
+            "w": "52",
+            "x": "176",
+            "y": "18"
+          },
+          "region_index": 2,
+          "repair_method": "mean",
+          "rotation_deg": "0",
+          "sidecar_applied": false,
+          "source_format": "v2_json",
+          "style_permille": 500,
+          "style_strength": "0.5",
+          "target_attribute": "warm"
+        }
+      },
+      "repair": {
+        "filled_pixels": 2704,
+        "iterations": 13,
+        "method": "mean",
+        "outside_in": true,
+        "radius": 2,
+        "rounding": "half_up_integer"
+      },
+      "style": {
+        "active_pixels": 2704,
+        "crop": [
+          173,
+          15,
+          231,
+          73
+        ],
+        "fixed_fraction_bits": 12,
+        "gains_fixed": [
+          4048,
+          4123,
+          4121
+        ],
+        "mix_fixed": 2185,
+        "offsets": [
+          0,
+          0,
+          -1
+        ],
+        "quantization_levels": 16,
+        "quantized_level": 8,
+        "rounding": "half_up",
+        "style_strength": "0.5",
+        "style_strength_fixed": 2048
+      }
+    }
+  },
+  "final_stage_summaries": {
+    "attribute": {
+      "scene_alpha.png#001": "39495fa7881f5767b4dbc89a02ad669fad532056e6bc35d23a2a60181d233a86",
+      "scene_alpha.png#002": "6317e8bd9b2b35b1651a7ad218d51a627ca8cc66eb4b341bc01474dc7654a746",
+      "scene_beta.png#001": "4f4b1a741352ee14123305caf5ab004fade2689e2a8c56de423e554e2cffbda0",
+      "scene_beta.png#002": "f0eb13ad0cdcedc00d8640daa8fb3eb0cea2dfd16fcbc7a37b94e009759ba4b1",
+      "scene_gamma.png#001": "f2bc9ee03f9b5246c77f1011f3332d8436703fb750d7b944fde02d4b3c3f7b99",
+      "scene_gamma.png#002": "f99e69d0e9dadb71c78d6707dc3e8716e44936e5005cc3167e2bba0c5ca5d2c7"
+    },
+    "compose": {
+      "scene_alpha.png#001": "43f90f11ff0c8b1d22f321efbe9de2d9c84d792fb4ab801d87d91722b82e8cc0",
+      "scene_alpha.png#002": "f4bf5f1cb01f965e77a693e4534311976a37ae7d23bb6dc23c8e9b29ebfc94e4",
+      "scene_beta.png#001": "30bf40d00b23415f6c71193d6301a6f2802baa1725e067d3c08fc5ed3f046082",
+      "scene_beta.png#002": "261706760e34deb88ea04dc0761b5e84e9b2fbf867532de93f36eb1189c8c595",
+      "scene_gamma.png#001": "aab9ccea0fb4ff09bf48a221145d4f077b713fb1923b9e824795d46ba81f20e3",
+      "scene_gamma.png#002": "2dac4337948c73b35e9ee617293191a5978a23373d42b39efdf6616d8e77e16c"
+    },
+    "mask": {
+      "scene_alpha.png#001": "3c531d2974d07e75d340cc7644938749731f3e8734332c3aa78c7f0624e9fe71",
+      "scene_alpha.png#002": "729fd4595a2feb99ea60ef3faf696054886c8c69ebdd87c1ae0c5f12c6d62b42",
+      "scene_beta.png#001": "879c59b623b833f0b644788b49cc4921065c4459b8aea3264a3ba9190cff051f",
+      "scene_beta.png#002": "6aa67c88dd0483448bdf26f62c58a59418f67860643460677f5223138001a902",
+      "scene_gamma.png#001": "97d59d73e479025fa124ce308a9d6643ae0a767fdc35862fa54b7c6697293e45",
+      "scene_gamma.png#002": "8284bbfe6bedfb593ade1375be0c4448d2904089666bcb63536ce44d3d293fff"
+    },
+    "parse": {
+      "scene_alpha.png#001": "c8105f84b399b0a6dec35ada0b5c63b1c6bb783c802387528454208c39a47428",
+      "scene_alpha.png#002": "dd75faf1538fc540bf613553ed11856b049817ccf744fa06aff0f00a53553a6f",
+      "scene_beta.png#001": "4d19f9682b3ff0a657724f433926f40d57d976c4f3f1e79fd49a270a1d5d594f",
+      "scene_beta.png#002": "8dbef7cc997d2ddc63b3f5a9ca48fae74ce283679d6ac757963284adaee54208",
+      "scene_gamma.png#001": "459b32cca2960480914bd03b4ca76ca805d6d9870a0b037c395478c61dc3e349",
+      "scene_gamma.png#002": "e0338f492e4215d00465fd32ed58c11c0ff9fe94125373b4b14a3b3dd651e4b2"
+    },
+    "repair": {
+      "scene_alpha.png#001": "8789b20440d415cd1025948594447c2e149288ce141a6a4e3664eff8f56f9327",
+      "scene_alpha.png#002": "fcbfcf9e7b0cc5dd86abb1406c25ff217da4868fba4dea96822ac4581cb52a16",
+      "scene_beta.png#001": "505349552e7d3defbe51d0143e143b10cebd98c7d7ecf3fb950f06b5fe76d43e",
+      "scene_beta.png#002": "2246ac8f42a975da67d033e716f8f063709e87946f057939dec2fa76729d1edb",
+      "scene_gamma.png#001": "678bf3784e614ce76149b8c8d835f8250790f592812a4207d7c9d2ac73817469",
+      "scene_gamma.png#002": "a00ca2134b399e24a8f2c7aae20f3c537bdb4f86dbe0654c78c48dd06e4f654d"
+    },
+    "style": {
+      "scene_alpha.png#001": "e079b5353dcdddee4123ce391218ffc745ee12fde1383888e6142655e194bd0e",
+      "scene_alpha.png#002": "b10793346c703827a58f5884601780b13624deb358286768c347b9ed40bc4688",
+      "scene_beta.png#001": "6dd6655a1cd1bb5ad94d63ce5278924be50f78307e17a59bda821dbb529cf1ba",
+      "scene_beta.png#002": "a62ac9ecbd63d468abb37f4064cdc33c1f42151a6e36a3fdd6e5a1f0441f1ade",
+      "scene_gamma.png#001": "4d3042b3ec12aa69f126dbca6684642f40667332bedeca683181c85d2b8eec7f",
+      "scene_gamma.png#002": "65e2d9b725fabb3ca276ad887f06a9b504121a7f39707db642ee9cc106eafdd8"
+    }
+  },
+  "injection_hits": [
+    {
+      "expected_code": "E_FIELD_TRUNCATED",
+      "failure_count": 1,
+      "hit": true,
+      "injection_id": "INJ-V1-TRUNCATED",
+      "observed_codes": [
+        "E_FIELD_TRUNCATED"
+      ],
+      "source": "injection_config",
+      "valid_region_count": 0
+    },
+    {
+      "expected_code": "E_STRUCTURE_INVALID",
+      "failure_count": 1,
+      "hit": true,
+      "injection_id": "INJ-V2-STRUCTURE",
+      "observed_codes": [
+        "E_STRUCTURE_INVALID"
+      ],
+      "source": "injection_config",
+      "valid_region_count": 5
+    },
+    {
+      "expected_code": "E_REGION_OUT_OF_RANGE",
+      "failure_count": 1,
+      "hit": true,
+      "injection_id": "INJ-V2-OUT-OF-RANGE",
+      "observed_codes": [
+        "E_REGION_OUT_OF_RANGE"
+      ],
+      "source": "injection_config",
+      "valid_region_count": 5
+    },
+    {
+      "expected_code": "E_REGION_OUT_OF_RANGE",
+      "failure_count": 1,
+      "hit": true,
+      "injection_id": "INJ-V1-UNKNOWN-REGION",
+      "observed_codes": [
+        "E_REGION_OUT_OF_RANGE"
+      ],
+      "source": "injection_config",
+      "valid_region_count": 5
+    }
+  ],
+  "pending_queue": [],
+  "render_config_hash": "ffbbbc2ef68ed03e148e86a3a384329ed2216fde9b0cbe6a05d1464ef1454405",
+  "resume": {
+    "reasons": [
+      "no_previous_snapshot"
+    ],
+    "status": "cold_start"
+  },
+  "run_summary": {
+    "affected_pixels": 45205,
+    "command_count": 11,
+    "final_batch_active_tasks": 1,
+    "final_content_fingerprint": "52b2cd48b9b9b4c3904f0b6cce209469a19f6d9749da1d904556b84c861f6310",
+    "final_image_fingerprints": {
+      "scene_alpha.png": "d1ea4ccadced01f2268fa52e8dd4fbb5d8bc56be36a2a476d71951089aa52b2b",
+      "scene_beta.png": "3e37339cb3c907e542c3365138b8c2b292c9f4702c0e073156bdcd412e40bbf5",
+      "scene_gamma.png": "af601d59b67774fbc852a2b8dc122e3ed83fdcd0740677663864f576ede5b321"
+    },
+    "max_active_tasks": 4,
+    "pending_queue": [],
+    "recomputed_regions": [
+      "scene_gamma.png#001"
+    ],
+    "reused_regions": [
+      "scene_alpha.png#001",
+      "scene_alpha.png#002",
+      "scene_beta.png#001",
+      "scene_beta.png#002",
+      "scene_gamma.png#002"
+    ],
+    "sidecar_restore_hits": 6,
+    "sidecar_restore_misses": 0,
+    "worker_limit": 4
+  },
+  "sample": {
+    "image_count": 3,
+    "images": [
+      "scene_alpha.png",
+      "scene_beta.png",
+      "scene_gamma.png"
+    ],
+    "region_count": 6,
+    "sample_dir": "/home/zsl/feedback/uidfc5909d3-default-134/samples"
+  },
+  "schema": "image-edit-workbench-diagnostics/v1",
+  "snapshots": {
+    "commit_interval_commands": 2,
+    "history": [
+      {
+        "global_version": 1,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000001",
+        "snapshot_id": "snap-000001"
+      },
+      {
+        "global_version": 2,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000002",
+        "snapshot_id": "snap-000002"
+      },
+      {
+        "global_version": 3,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000003",
+        "snapshot_id": "snap-000003"
+      },
+      {
+        "global_version": 4,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000004",
+        "snapshot_id": "snap-000004"
+      },
+      {
+        "global_version": 5,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000005",
+        "snapshot_id": "snap-000005"
+      },
+      {
+        "global_version": 6,
+        "path": "/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000006",
+        "snapshot_id": "snap-000006"
+      }
+    ],
+    "latest_pointer": {
+      "snapshot": "snap-000006"
+    }
+  }
+}

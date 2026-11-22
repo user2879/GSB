@@ -1,22 +1,139 @@
-当前为空白工作区，需从零构建一个面向本地确定性样本的生成式图像编辑领域可视化与诊断工作台，核心解决编辑指令与编辑结果在两种交换版本之间流转时的互操作、精度损失与增量失效判定问题。输入为本地样本目录：若干由固定种子程序生成的 PNG 图像（固定分辨率，画面含几何图元、颜色块与噪声）、一份编辑指令清单（区域矩形、目标属性、风格强度、修补方式）以及同一批编辑结果的两种交换文件：v1 为定宽字段纯文本（图名、整数区域坐标、整数风格强度千分比、整数修补码、缺失位填充），v2 为 JSON（浮点坐标与风格强度、命名属性与修补方式、精度标签、v1 无法表达的局部旋转与羽化半径）。另提供一份编辑与交换配置 JSON（区域坐标容差、风格映射量化档位与定点小数位宽、修补邻域半径、羽化半径上限、重算区域预算、线程池并发数、快照提交间隔命令数）。工作台需按阶段完成指令解析、区域掩码生成、修复填充、属性替换、风格映射与结果合成，并在版本切换与单区域编辑时只重算受影响区域，同时输出跨版本一致性诊断报告。
+# 本地确定性生成式图像编辑互操作工作台
 
-任务环境与准备：
-安装 Python 3.11 及以上版本，并准备 NumPy 与 Pillow 的本地可用安装（离线 wheel 或本地缓存均可）。
-在空白工作区创建项目目录与本地样本目录，用固定种子脚本生成 PNG 图像、编辑指令清单、v1 定宽交换文件与 v2 JSON 交换文件及配置。
-确认运行环境为 Windows，任务执行不依赖网络、外部账号、容器或 GPU。
-准备独立注入配置与命令序列文件，用于验证异常链路与增量一致性，无需修改源码制造失败。
+这是一个完全离线、无 GPU、无容器依赖的 Python 3.11+ 工作台，用固定种子样本验证编辑指令与编辑结果在 **v1 定宽文本** 与 **v2 JSON** 两种交换版本之间的互操作、精度损失、区域级增量失效和逐像素一致性。
 
-业务要求：
-1. 实现 v1 定宽文本行与 v2 JSON 两版本编辑结果的解析器并统一为中间表示：v1 按字段宽度解析出图名、整数区域坐标、千分比风格强度、整数修补码与缺失位填充，v2 解析出浮点坐标、浮点风格强度、命名属性与修补方式、精度标签以及局部旋转与羽化半径；统一表示须校验区域矩形落在图像范围内、图名与指令清单对应、字段宽度或 JSON 结构完整，不合法时分别输出 E_FIELD_TRUNCATED、E_STRUCTURE_INVALID 与 E_REGION_OUT_OF_RANGE 业务码并进入失败清单。
-2. 实现两版本双向转换与降级信息旁路：v1 升 v2 时整数坐标与千分比风格强度按精确换算转为浮点并生成精度标签、整数修补码按码表映射为命名修补方式；v2 降 v1 时浮点坐标按四舍五入还原整数、浮点强度还原千分比，并把截断残差、精度标签、局部旋转角与羽化半径写入旁路元数据文件；降级后再升版必须能从旁路元数据还原出与直接升版逐字段一致的结果，旁路元数据哈希须纳入快照清单。
-3. 实现基于统一表示的编辑渲染管线：按指令区域矩形生成整数像素掩码，以由外向内逐层推进的邻域加权均值完成修复填充，按目标属性在掩码区域内做确定性重着色，再按风格强度经量化档位查表完成风格映射并合成 PNG 字节；全部计算使用定点整数并在产物元数据中记录量化档位、定点小数位宽与舍入方式，同一输入与配置多次运行必须得到逐像素一致的图像。
-4. 实现基于内容指纹的区域级精确失效判定：为指令解析、掩码生成、修复填充、属性替换、风格映射与合成各阶段产物计算由上游内容指纹、参数指纹与交换版本号派生的缓存键，并记录每个区域结果引用的上游产物与图像块；切换交换版本、修改风格强度、修补方式或替换单区域指令后，仅使受影响区域及其下游失效并纳入重算集合，未失效区域必须直接复用持久化产物且不得重新计算。
-5. 实现单批重算像素点数预算与待办保留：调度器维护单批剩余重算像素点数预算，按图名与区域序号稳定顺序在已失效区域间分配配额，预算不足时未重算区域保留在待办队列并以 E_RECOMPUTE_BUDGET_PENDING 业务码标记，下次运行优先处理待办；预算扣减序列与待办清单须逐个记录序号，切换量化档位或羽化半径时必须真实改变内部定点整数与输出像素而非仅改显示。
-6. 保证任意编辑命令序列后增量运行与从空白全量重建逐像素一致：从任意初始状态执行包含交换版本切换、区域矩形修改、风格强度调整、修补方式切换、量化档位变更与局部旋转或羽化半径修改的命令序列，每条命令后增量运行得到的最终 PNG 像素、各阶段中间摘要、内容指纹、失效复用清单与待办队列顺序，必须与按相同最终指令与配置一次性全量运行的结果完全相同。
-7. 实现跨版本一致性校验与边界诊断：对同一逻辑结果分别以 v1 与 v2 序列化再反序列化后重新参与渲染，输出逐区域坐标偏差直方图、风格强度最大偏差、修补码与命名方式还原情况以及降级信息命中情况；当某区域在相邻两版本下判定或像素差异超容差时，须区分偏差源于坐标整数化、强度千分比截断还是被丢弃的旋转与羽化信息，并记录 E_BOUNDARY_SENSITIVE 业务码。
-8. 实现并发渲染与串行结果一致性，并实现阶段化快照整体替换、恢复判定与诊断报告：使用线程池并发执行区域修复与风格映射，最大并发数取自配置且不得超过，每个区域任务携带由图名、区域序号与阶段名派生的稳定排序键；各阶段产物先写临时目录再整体替换提交，清单记录全局版本号、配置哈希、交换版本指纹、旁路元数据哈希与已完成区域列表，启动时比对版本变化判定续跑，最终输出 JSON 诊断报告含轨迹式区域清单、跨版本偏差统计、边界样本、失败清单与注入项命中编号。
+核心能力：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- v1 定宽字段 / v2 JSON 解析，统一为可校验的中间表示。
+- v2→v1 降级旁路元数据，附带坐标残差、强度残差、精度标签、旋转与羽化；v1→v2 可恢复为与降级前逐字段一致。
+- 全整数定点渲染：旋转矩形掩码、羽化 alpha、由外向内邻域填洞、属性重着色、量化档位 LUT、PNG 合成。
+- 六阶段内容寻址缓存：`parse → mask → repair → attribute → style → compose`。
+- 区域级精确失效、阶段级复用、单批像素预算、稳定顺序待办队列。
+- 线程池并发渲染，并与串行结果逐像素一致。
+- 临时工作目录整体提交、原子 `CURRENT` 指针、快照恢复与续跑。
+- v1/v2 跨版本偏差直方图、边界归因、`E_BOUNDARY_SENSITIVE` 诊断。
+- 独立注入文件和命令序列，不需要修改源码制造异常。
+- 静态 HTML + PNG 可视化报告，无外部前端资源。
 
-验收：
-使用本地样本验证双版本互转、区域级增量重算与跨版本逐像素一致性及异常隔离，并输出诊断报告。
+## 快速开始
+
+### Linux / WSL
+
+```bash
+python3 --version                    # 需要 >= 3.11
+python3 -m pip install --no-index --no-build-isolation -e . --no-deps   # NumPy/Pillow 由本地环境或 wheelhouse 提供
+export PYTHONPATH=src
+python3 scripts/generate_samples.py                  # 可选：样例已随仓库生成
+python3 -m pytest -q
+python3 -m image_edit_workbench validate-injections --root .
+python3 -m image_edit_workbench run \
+  --root . \
+  --commands scenarios/incremental_sequence.jsonl \
+  --reset-state
+```
+
+打开 `report/index.html` 即可查看离线可视化报告；机器可读报告在 `report/diagnostics.json`。
+
+### Windows PowerShell
+
+```powershell
+py -3.11 --version
+py -3.11 -m pip install --no-index --no-build-isolation --find-links .\wheelhouse -e . --no-deps
+$env:PYTHONPATH = "src"
+py -3.11 scripts\generate_samples.py
+py -3.11 -m pytest -q
+py -3.11 -m image_edit_workbench validate-injections --root .
+py -3.11 -m image_edit_workbench run --root . --commands scenarios\incremental_sequence.jsonl --reset-state
+```
+
+也可以直接运行：
+
+```powershell
+.\scripts\run_windows.ps1
+```
+
+所有路径、原子替换、硬链接降级复制和线程池逻辑均兼容 Windows。当前容器实际执行环境是 WSL2/Ubuntu；本仓库无法声称“已在 Windows 本机执行”，详见 `docs/VERIFICATION.md`。
+
+## 目录
+
+```text
+src/image_edit_workbench/   工作台实现
+  codec_v1.py               v1 定宽编解码
+  codec_v2.py               v2 JSON 编解码
+  convert.py                双向转换、降级残差、旁路恢复
+  renderer.py               整数掩码、填洞、属性、风格、合成
+  pipeline.py               阶段缓存、预算调度、线程池、图像合成
+  snapshot.py               不可变快照与原子 CURRENT 指针
+  runner.py                 命令状态机、冷/热等价执行、续跑
+  diagnostics.py            跨版本诊断、注入校验
+  reporting.py              JSON/HTML/PNG 报告
+samples/                    固定种子 PNG、清单、v1/v2 交换文件、旁路
+config/default.json         渲染与调度配置
+injections/                 独立异常样本与用例清单
+scenarios/                  增量、预算、异常命令序列
+tests/                      14 项自动化测试
+report/                     已生成的最终诊断与可视化报告
+docs/                       格式、架构与实测记录
+```
+
+## 命令入口
+
+```text
+python -m image_edit_workbench generate-samples
+python -m image_edit_workbench validate-injections
+python -m image_edit_workbench convert --from-version 2 --to-version 1 ...
+python -m image_edit_workbench convert --from-version 1 --to-version 2 --sidecar-in ...
+python -m image_edit_workbench run --commands scenarios/incremental_sequence.jsonl --reset-state
+python -m image_edit_workbench run --resume          # 从快照情景状态继续，优先处理 pending
+```
+
+`run --batch` 每次只执行一个预算批次；`--no-verify-each-command` 可跳过逐命令冷启动对照以缩短试运行时间。
+
+## 数据流
+
+1. 固定种子生成 3 张 `256x256` PNG、6 条编辑指令、v1 定宽交换文件、v2 JSON 交换文件和降级旁路。
+2. 解析交换文件并用清单校验图名、区域序号、图像边界和字段完整性。
+3. 为每个区域计算六阶段缓存键；命中时直接加载持久化数组，不执行对应像素算法。
+4. 调度器在 `recompute_region_budget` 内按稳定顺序分配区域；预算不足的区域进入 pending，并记录 `E_RECOMPUTE_BUDGET_PENDING`。
+5. 线程池并发执行受影响区域，结果按稳定键排序后合成图像。
+6. 命令序列按 `snapshot_commit_interval_commands` 提交不可变快照；清单记录配置哈希、交换版本指纹、旁路哈希和已完成区域。
+7. 每条命令都与同状态冷启动全量结果比较像素指纹、阶段摘要、内容指纹和 pending 顺序。
+8. 最终报告同时执行 v1/v2 独立渲染、偏差直方图、边界归因和注入用例校验。
+
+## 关键语义
+
+- **定点渲染**：像素与风格混合使用 `int64`；坐标/三角/羽化使用整数缩放；舍入固定为 `half_up`。浮点只参与三角常数初始化。
+- **内容指纹**：阶段键由上游摘要、参数指纹和交换版本派生；调度配置（线程数、预算、快照间隔）不进入渲染内容指纹。
+- **真实像素变化**：量化档位、定点小数位宽、旋转和羽化都会改变缓存键、阶段数组与输出像素。
+- **快照**：阶段文件先写入 `.work`，完成清单后整体重命名为新快照，再原子替换 `CURRENT.json`。
+- **续跑**：快照内保存 `scenario_state`；`--resume` 恢复区域、配置、交换版本和 pending 队列，下一批优先处理旧待办。
+- **失败隔离**：单条 v1 截断、单条 v2 结构缺失或单区域越界只进入失败清单，其他合法区域继续渲染。
+
+详细格式与缓存公式见 `docs/FORMATS.md`。
+
+## 已实测结果
+
+本次最终验收命令：
+
+```bash
+PYTHONPATH=src python3 -m pytest -q
+PYTHONPATH=src python3 -m image_edit_workbench run --root . \
+  --commands scenarios/incremental_sequence.jsonl --reset-state
+```
+
+- 自动化测试：`14 passed`。
+- 11 条命令全部满足：最终 PNG 像素、各阶段摘要、内容指纹、pending 顺序与冷启动全量结果一致。
+- 最终内容指纹：`52b2cd48b9b9b4c3904f0b6cce209469a19f6d9749da1d904556b84c861f6310`。
+- 最终 pending 队列为空；全过程最大并发任务数 4，配置上限 4。
+- v1/v2 旁路恢复：6/6 命中、6/6 字段一致；修补方式映射 6/6 恢复。
+- 风格强度最大偏差：`0.0005`；5 个区域被归因为边界敏感并记录 `E_BOUNDARY_SENSITIVE`。
+- 4 个独立注入用例全部命中预期业务码。
+- 快照提交 6 次，提交间隔 2 条命令。
+
+异常命令序列的独立报告在 `report/abnormal/index.html`，其中 `INJ-MIXED-V1` 命中 1 条截断错误，同时 6 个合法区域继续渲染并与冷启动全量结果一致。完整证据见 `report/diagnostics.json`、`report/index.html` 和 `docs/VERIFICATION.md`。
+
+## 能力边界
+
+“全量冷启动”的原始 `reused_regions` / `recomputed_regions` 执行日志与增量运行**从定义上不可能相同**：增量运行会真实复用，冷启动必须重新计算。报告保留 `raw_reuse_lists_equal` 明确展示这一差异；验收等价性以像素、阶段摘要、内容指纹、待办顺序和归一化语义为准，不伪造成两个不同执行策略的原始日志相同。
+
+跨版本渲染本来就可能不同：v1 无法表达浮点坐标、千分比以外强度和旋转/羽化。工作台不会把这种信息损失隐藏为“相同”，而是通过旁路、偏差直方图和边界归因显式呈现。

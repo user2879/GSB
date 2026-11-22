@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Image Edit Workbench Diagnostics</title>
+<style>
+:root { color-scheme: dark; --bg:#171b21; --panel:#222933; --line:#384250; --ink:#e8edf4; --muted:#9eabbb; --ok:#78d59a; --bad:#ff8b8b; --accent:#8bc8ff; }
+body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+main { max-width:1500px; margin:0 auto; padding:28px; }
+h1,h2,h3 { font-weight:650; letter-spacing:.01em; }
+h1 { margin:0 0 8px; } h2 { margin-top:36px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+.muted { color:var(--muted); } .ok { color:var(--ok); } .bad { color:var(--bad); }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:22px 0; }
+.card,.image-card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; }
+.card b { display:block; color:var(--muted); font-size:12px; margin-bottom:6px; }
+table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); }
+th,td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+code { color:var(--accent); }
+.image-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+figure { margin:0; } figure img { width:100%; image-rendering:pixelated; border:1px solid var(--line); border-radius:6px; }
+figcaption { color:var(--muted); margin-top:5px; }
+.wide img { max-width:100%; border:1px solid var(--line); border-radius:8px; }
+a { color:var(--accent); }
+</style>
+</head>
+<body><main>
+<h1>Deterministic Image Edit Interop Workbench</h1>
+<p class='muted'>Offline v1/v2 exchange diagnostics, fixed-point rendering, region-level incremental reuse, snapshot recovery, and cross-version boundary attribution.</p>
+<div class='cards'>
+<div class='card'><b>Final content fingerprint</b><code>52b2cd48b9b9b4c3904f0b6cce209469a19f6d9749da1d904556b84c861f6310</code></div>
+<div class='card'><b>Semantic equivalence</b><span class='ok'>True</span></div>
+<div class='card'><b>Recomputed / reused (last command)</b>1 / 5</div>
+<div class='card'><b>Pending queue</b>0</div>
+<div class='card'><b>Max active tasks / limit</b>4 / 4</div>
+<div class='card'><b>Sidecar restore hits</b>6</div>
+<div class='card'><b>Style max deviation</b>0.0005</div>
+<div class='card'><b>Boundary samples</b>5</div>
+</div>
+<h2>Visual Review</h2>
+<div class='wide'><img src='preview.png' alt='source and output preview'></div>
+<p><a href='diagnostics.json'>diagnostics.json</a> · <a href='cross_version_preview.png'>cross-version diff preview</a></p>
+<div class='wide'><img src='cross_version_preview.png' alt='cross version preview'></div>
+<section class='image-card'><h3>scene_alpha.png</h3><div class='image-grid'><figure><img src='assets/source/scene_alpha.png'><figcaption>source</figcaption></figure><figure><img src='assets/output/scene_alpha.png'><figcaption>incremental output</figcaption></figure><figure><img src='assets/cross_v2/scene_alpha.png'><figcaption>v2 render</figcaption></figure><figure><img src='assets/cross_v1/scene_alpha.png'><figcaption>v1 degraded render</figcaption></figure></div></section><section class='image-card'><h3>scene_beta.png</h3><div class='image-grid'><figure><img src='assets/source/scene_beta.png'><figcaption>source</figcaption></figure><figure><img src='assets/output/scene_beta.png'><figcaption>incremental output</figcaption></figure><figure><img src='assets/cross_v2/scene_beta.png'><figcaption>v2 render</figcaption></figure><figure><img src='assets/cross_v1/scene_beta.png'><figcaption>v1 degraded render</figcaption></figure></div></section><section class='image-card'><h3>scene_gamma.png</h3><div class='image-grid'><figure><img src='assets/source/scene_gamma.png'><figcaption>source</figcaption></figure><figure><img src='assets/output/scene_gamma.png'><figcaption>incremental output</figcaption></figure><figure><img src='assets/cross_v2/scene_gamma.png'><figcaption>v2 render</figcaption></figure><figure><img src='assets/cross_v1/scene_gamma.png'><figcaption>v1 degraded render</figcaption></figure></div></section>
+<h2>Command Trajectory</h2>
+<table><thead><tr><th>Command</th><th>Op</th><th>Version</th><th>Incremental = Full</th><th>Snapshot</th></tr></thead><tbody><tr><td><code>CMD-001-V2</code></td><td>set_exchange_version</td><td>2</td><td class='ok'>True</td><td>None</td></tr><tr><td><code>CMD-002-QUANT</code></td><td>set_config</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 1, &#x27;snapshot_id&#x27;: &#x27;snap-000001&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000001&#x27;}</td></tr><tr><td><code>CMD-003-STYLE</code></td><td>update_region</td><td>2</td><td class='ok'>True</td><td>None</td></tr><tr><td><code>CMD-004-RECT</code></td><td>update_region</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 2, &#x27;snapshot_id&#x27;: &#x27;snap-000002&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000002&#x27;}</td></tr><tr><td><code>CMD-005-REPAIR</code></td><td>update_region</td><td>2</td><td class='ok'>True</td><td>None</td></tr><tr><td><code>CMD-006-FEATHER</code></td><td>update_region</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 3, &#x27;snapshot_id&#x27;: &#x27;snap-000003&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000003&#x27;}</td></tr><tr><td><code>CMD-007-ROTATE</code></td><td>update_region</td><td>2</td><td class='ok'>True</td><td>None</td></tr><tr><td><code>CMD-008-BUDGET</code></td><td>set_config</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 4, &#x27;snapshot_id&#x27;: &#x27;snap-000004&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000004&#x27;}</td></tr><tr><td><code>CMD-009-V1</code></td><td>set_exchange_version</td><td>1</td><td class='ok'>True</td><td>None</td></tr><tr><td><code>CMD-010-V2</code></td><td>set_exchange_version</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 5, &#x27;snapshot_id&#x27;: &#x27;snap-000005&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000005&#x27;}</td></tr><tr><td><code>CMD-011-QUANT16</code></td><td>set_config</td><td>2</td><td class='ok'>True</td><td>{&#x27;global_version&#x27;: 6, &#x27;snapshot_id&#x27;: &#x27;snap-000006&#x27;, &#x27;path&#x27;: &#x27;/home/zsl/feedback/uidfc5909d3-default-134/state/incremental/snapshots/snap-000006&#x27;}</td></tr></tbody></table>
+<h2>Final Region Trace</h2>
+<table><thead><tr><th>Region</th><th>Status</th><th>Affected px</th><th>Stages</th><th>Content fp</th></tr></thead><tbody><tr><td><code>scene_alpha.png#001</code></td><td>reused</td><td>5708</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:reused, compose:reused</td><td><code>6e2ececca9559e80</code></td></tr><tr><td><code>scene_alpha.png#002</code></td><td>reused</td><td>6880</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:reused, compose:reused</td><td><code>71c1caa26254f847</code></td></tr><tr><td><code>scene_beta.png#001</code></td><td>reused</td><td>8521</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:reused, compose:reused</td><td><code>9661cd742b9cb1ec</code></td></tr><tr><td><code>scene_beta.png#002</code></td><td>reused</td><td>3972</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:reused, compose:reused</td><td><code>3a6d9851241ed93c</code></td></tr><tr><td><code>scene_gamma.png#001</code></td><td>computed</td><td>17420</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:computed, compose:computed</td><td><code>a2fbe40157235b53</code></td></tr><tr><td><code>scene_gamma.png#002</code></td><td>reused</td><td>2704</td><td>parse:reused, mask:reused, repair:reused, attribute:reused, style:reused, compose:reused</td><td><code>169549c85c3f9552</code></td></tr></tbody></table>
+<h2>Cross-Version Regions</h2>
+<table><thead><tr><th>Region</th><th>Coord Δ max</th><th>Style Δ</th><th>Local pixel Δ</th><th>Attribution</th><th>Boundary sensitive</th></tr></thead><tbody><tr><td><code>scene_alpha.png#001</code></td><td>0.4</td><td>0.0005</td><td>139</td><td>coordinate_integerization, strength_permille_truncation, dropped_rotation_or_feather</td><td class='bad'>True</td></tr><tr><td><code>scene_alpha.png#002</code></td><td>0</td><td>0</td><td>104</td><td>dropped_rotation_or_feather</td><td class='bad'>True</td></tr><tr><td><code>scene_beta.png#001</code></td><td>0.5</td><td>0.0004</td><td>203</td><td>coordinate_integerization, strength_permille_truncation, dropped_rotation_or_feather</td><td class='bad'>True</td></tr><tr><td><code>scene_beta.png#002</code></td><td>0.5</td><td>0</td><td>20</td><td>coordinate_integerization, dropped_rotation_or_feather</td><td class='bad'>True</td></tr><tr><td><code>scene_gamma.png#001</code></td><td>0</td><td>0.0004</td><td>132</td><td>strength_permille_truncation, dropped_rotation_or_feather</td><td class='bad'>True</td></tr><tr><td><code>scene_gamma.png#002</code></td><td>0</td><td>0</td><td>0</td><td>-</td><td class='ok'>False</td></tr></tbody></table>
+<h2>Failures</h2>
+<table><thead><tr><th>Code</th><th>Command</th><th>Region</th><th>Message</th></tr></thead><tbody><tr><td><code>E_RECOMPUTE_BUDGET_PENDING</code></td><td>CMD-009-V1</td><td>scene_gamma.png#001</td><td>pixel budget pending: required=8448, remaining=8182</td></tr><tr><td><code>E_RECOMPUTE_BUDGET_PENDING</code></td><td>CMD-009-V1</td><td>scene_gamma.png#002</td><td>pixel budget pending: required=3136, remaining=8182</td></tr><tr><td><code>E_RECOMPUTE_BUDGET_PENDING</code></td><td>CMD-011-QUANT16</td><td>scene_beta.png#001</td><td>pixel budget pending: required=12544, remaining=3947</td></tr><tr><td><code>E_RECOMPUTE_BUDGET_PENDING</code></td><td>CMD-011-QUANT16</td><td>scene_gamma.png#001</td><td>pixel budget pending: required=21904, remaining=3947</td></tr><tr><td><code>E_RECOMPUTE_BUDGET_PENDING</code></td><td>CMD-011-QUANT16</td><td>scene_gamma.png#001</td><td>pixel budget pending: required=21904, remaining=12456</td></tr></tbody></table>
+<h2>Injection Hits</h2>
+<table><thead><tr><th>Injection ID</th><th>Source</th><th>Expected code</th><th>Hit</th></tr></thead><tbody><tr><td><code>INJ-V1-TRUNCATED</code></td><td>injection_config</td><td>E_FIELD_TRUNCATED</td><td class='ok'>True</td></tr><tr><td><code>INJ-V2-STRUCTURE</code></td><td>injection_config</td><td>E_STRUCTURE_INVALID</td><td class='ok'>True</td></tr><tr><td><code>INJ-V2-OUT-OF-RANGE</code></td><td>injection_config</td><td>E_REGION_OUT_OF_RANGE</td><td class='ok'>True</td></tr><tr><td><code>INJ-V1-UNKNOWN-REGION</code></td><td>injection_config</td><td>E_REGION_OUT_OF_RANGE</td><td class='ok'>True</td></tr></tbody></table>
+<h2>Environment</h2>
+<p class='muted'>{&quot;container&quot;: false, &quot;gpu&quot;: false, &quot;numpy&quot;: &quot;1.26.4&quot;, &quot;offline&quot;: true, &quot;pillow&quot;: &quot;11.0.0&quot;, &quot;platform&quot;: &quot;Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35&quot;, &quot;python&quot;: &quot;3.11.0rc1&quot;, &quot;system&quot;: &quot;Linux&quot;}</p>
+</main></body></html>
