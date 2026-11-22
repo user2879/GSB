@@ -1,0 +1,16 @@
+name: deterministic-workbench
+dim: 6
+quant_level: 16
+fractional_bits: 8
+accumulator_headroom_bits: 4
+concurrency: 3
+point_budget: 12
+rounding: HALF_UP
+agg_modes:
+- SUM
+- MEAN
+tolerance: 0.02
+top_k: 3
+alternate_gear:
+  quant_level: 12
+  fractional_bits: 4
