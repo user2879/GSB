@@ -1,0 +1,236 @@
+{
+  "checks": {
+    "attribution_repeatable": {
+      "details": {
+        "metric_conflicts": 22,
+        "not_migratable_queries": 12
+      },
+      "passed": true
+    },
+    "injection_empty": {
+      "details": {
+        "business_code": "E_EMPTY",
+        "code": "E_EMPTY",
+        "details": {
+          "injection": "empty",
+          "merged_query_count": 8
+        },
+        "log_file": "/tmp/slowdiag-acceptance-wsugwlwc/logs/slowdiag.jsonl",
+        "message": "an injected parameter emptied the merged query set",
+        "status": "error"
+      },
+      "passed": true
+    },
+    "injection_format": {
+      "details": {
+        "business_code": "E_FORMAT",
+        "code": "E_FORMAT",
+        "log_file": "/tmp/slowdiag-acceptance-wsugwlwc/logs/slowdiag.jsonl",
+        "message": "field conflict: p95_ms does not belong to version 2",
+        "path": "$.body.p95_ms",
+        "row_no": 1,
+        "source_id": "app-prod",
+        "status": "error"
+      },
+      "passed": true
+    },
+    "injection_source": {
+      "details": {
+        "business_code": "E_SOURCE",
+        "code": "E_SOURCE",
+        "log_file": "/tmp/slowdiag-acceptance-wsugwlwc/logs/slowdiag.jsonl",
+        "message": "unsupported source type; expected one of app_log_summary, db_exec_stats, slow_log_excerpt",
+        "path": "sources[0].type",
+        "source_id": "app-prod",
+        "status": "error"
+      },
+      "passed": true
+    },
+    "invalidation_plan_monotonic": {
+      "details": {
+        "current": 2,
+        "previous": 1
+      },
+      "passed": true
+    },
+    "invalidation_scope": {
+      "details": {
+        "affected_queries": [
+          "q001",
+          "q002",
+          "q003",
+          "q004",
+          "q005",
+          "q006"
+        ],
+        "changed_sources": [
+          "slow-canary"
+        ]
+      },
+      "passed": true
+    },
+    "merge_order_independent": {
+      "details": {
+        "queries": 8
+      },
+      "passed": true
+    },
+    "plan_version_initial": {
+      "details": {
+        "plan_version": 1
+      },
+      "passed": true
+    },
+    "repeatable_generation": {
+      "details": {
+        "clock": "perf_counter_ns",
+        "elapsed_monotonic_ms": 35,
+        "first": {
+          "app-prod": "1e94ffbb149bab01aafb6d33c1eb527c2de852751739672ab3afe54796cd7548",
+          "db-prod": "fe51336644ec902b6cba5ba1cfdbb4aa92ce800618fbf2fb0f7c6a308b92bb73",
+          "slow-canary": "9189653dbe39356eec191171d2040eb0f72dc5c92147d2b1f9e394d14e921f81",
+          "slow-prod": "6805a8b65862273ac8ea583e26c94c16c622d63159a91a08144793735a4f1b0c"
+        },
+        "repeatable": true,
+        "second": {
+          "app-prod": "1e94ffbb149bab01aafb6d33c1eb527c2de852751739672ab3afe54796cd7548",
+          "db-prod": "fe51336644ec902b6cba5ba1cfdbb4aa92ce800618fbf2fb0f7c6a308b92bb73",
+          "slow-canary": "9189653dbe39356eec191171d2040eb0f72dc5c92147d2b1f9e394d14e921f81",
+          "slow-prod": "6805a8b65862273ac8ea583e26c94c16c622d63159a91a08144793735a4f1b0c"
+        }
+      },
+      "passed": true
+    },
+    "snapshot_replay_detection": {
+      "details": {
+        "code": "E_REPLAY",
+        "details": {
+          "actual": 12103,
+          "expected": 12104,
+          "plan_version": 2,
+          "replacement_mode": "whole_view",
+          "snapshot": "/tmp/slowdiag-acceptance-wsugwlwc/snapshots/tampered.json",
+          "snapshot_diff_count": 1,
+          "snapshot_diffs": [
+            {
+              "actual": "c69b72b1c23d3ff0724b11b8d8a769d19d463f396cded87fb7f91b675aab6841",
+              "expected": "4756af75345107ba89d276507546f60751aeb7f4e47c98c4eacd4b31b4dc844c",
+              "path": "content_sha256"
+            }
+          ],
+          "status": "restored",
+          "view_sha256": "96fce028918f605ab0744c2b1e9ccc8c4613483fe20abeff5671d527bf21295b"
+        },
+        "field": "adopted.value",
+        "message": "snapshot replay differs from the recorded conclusions",
+        "metric": "scanned_rows",
+        "query_id": "q003"
+      },
+      "passed": true
+    },
+    "snapshot_restore": {
+      "details": {
+        "plan_version": 2,
+        "snapshot": "/tmp/slowdiag-acceptance-wsugwlwc/snapshots/acceptance-snapshot.json",
+        "snapshot_diff_count": 0,
+        "snapshot_diffs": [],
+        "status": "restored",
+        "view_sha256": "ac9031514829c209b39a1441ce4f660a28b493d774d7dad914271494d9fe2d4a"
+      },
+      "passed": true
+    },
+    "unaffected_bytes_stable": {
+      "details": [
+        {
+          "after_sha256": "43385bb629887151083db7df89172fbec66f993697ff97973e462657745d26ee",
+          "before_sha256": "43385bb629887151083db7df89172fbec66f993697ff97973e462657745d26ee",
+          "byte_identical": true,
+          "query_id": "q007"
+        },
+        {
+          "after_sha256": "90150e3e04d88b86953525af33db789773f5e187d195336ffd6c2e39f0abea77",
+          "before_sha256": "90150e3e04d88b86953525af33db789773f5e187d195336ffd6c2e39f0abea77",
+          "byte_identical": true,
+          "query_id": "q008"
+        }
+      ],
+      "passed": true
+    }
+  },
+  "passed": true,
+  "summary": {
+    "attribution_counts": {
+      "metric_conflicts": 22,
+      "not_migratable_queries": 12
+    },
+    "generated_sources": [
+      {
+        "content_sha256": "1e94ffbb149bab01aafb6d33c1eb527c2de852751739672ab3afe54796cd7548",
+        "elapsed_semantics": "p95",
+        "format_versions": [
+          1,
+          2
+        ],
+        "sample_period_ms": 100,
+        "sample_rows": 24,
+        "scan_semantics": "estimated",
+        "source_id": "app-prod",
+        "type": "app_log_summary"
+      },
+      {
+        "content_sha256": "fe51336644ec902b6cba5ba1cfdbb4aa92ce800618fbf2fb0f7c6a308b92bb73",
+        "elapsed_semantics": "p95",
+        "format_versions": [
+          1,
+          2
+        ],
+        "sample_period_ms": 250,
+        "sample_rows": 24,
+        "scan_semantics": "exact",
+        "source_id": "db-prod",
+        "type": "db_exec_stats"
+      },
+      {
+        "content_sha256": "9189653dbe39356eec191171d2040eb0f72dc5c92147d2b1f9e394d14e921f81",
+        "elapsed_semantics": "max",
+        "format_versions": [
+          1
+        ],
+        "sample_period_ms": 1000,
+        "sample_rows": 6,
+        "scan_semantics": "sampled",
+        "source_id": "slow-canary",
+        "type": "slow_log_excerpt"
+      },
+      {
+        "content_sha256": "6805a8b65862273ac8ea583e26c94c16c622d63159a91a08144793735a4f1b0c",
+        "elapsed_semantics": "max",
+        "format_versions": [
+          1,
+          2
+        ],
+        "sample_period_ms": 500,
+        "sample_rows": 24,
+        "scan_semantics": "exact",
+        "source_id": "slow-prod",
+        "type": "slow_log_excerpt"
+      }
+    ],
+    "injection_codes": {
+      "empty": "E_EMPTY",
+      "format": "E_FORMAT",
+      "source": "E_SOURCE"
+    },
+    "migration_counts": {
+      "insufficient": 48,
+      "migratable": 36,
+      "not_migratable": 12
+    },
+    "slow_queries": [
+      "q002",
+      "q003",
+      "q005",
+      "q006"
+    ]
+  }
+}

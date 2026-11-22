@@ -1,0 +1,72 @@
+{
+  "attribution_counts": {
+    "metric_conflicts": 22,
+    "not_migratable_queries": 12
+  },
+  "business_code": "OK",
+  "invalidation": {
+    "affected_queries": [],
+    "changed_sources": [],
+    "replacement_mode": "whole_view",
+    "stale_query_count": 0,
+    "unaffected_byte_identical": true
+  },
+  "migration_counts": {
+    "insufficient": 48,
+    "migratable": 36,
+    "not_migratable": 12
+  },
+  "plan_version": 1,
+  "query_count": 8,
+  "schema": "slowdiag.view/1",
+  "slow_queries": [
+    "q002",
+    "q003",
+    "q005",
+    "q006"
+  ],
+  "slow_query_count": 4,
+  "sources": [
+    {
+      "content_sha256": "1e94ffbb149bab01aafb6d33c1eb527c2de852751739672ab3afe54796cd7548",
+      "format_versions": [
+        1,
+        2
+      ],
+      "sample_period_ms": 100,
+      "source_id": "app-prod",
+      "source_type": "app_log_summary"
+    },
+    {
+      "content_sha256": "fe51336644ec902b6cba5ba1cfdbb4aa92ce800618fbf2fb0f7c6a308b92bb73",
+      "format_versions": [
+        1,
+        2
+      ],
+      "sample_period_ms": 250,
+      "source_id": "db-prod",
+      "source_type": "db_exec_stats"
+    },
+    {
+      "content_sha256": "9189653dbe39356eec191171d2040eb0f72dc5c92147d2b1f9e394d14e921f81",
+      "format_versions": [
+        1
+      ],
+      "sample_period_ms": 1000,
+      "source_id": "slow-canary",
+      "source_type": "slow_log_excerpt"
+    },
+    {
+      "content_sha256": "6805a8b65862273ac8ea583e26c94c16c622d63159a91a08144793735a4f1b0c",
+      "format_versions": [
+        1,
+        2
+      ],
+      "sample_period_ms": 500,
+      "source_id": "slow-prod",
+      "source_type": "slow_log_excerpt"
+    }
+  ],
+  "status": "current_view",
+  "view_sha256": "cd4a4bd0bb8870f722416a4077a85bda97a1f01fa4eefdf4e072c8c167a115ea"
+}

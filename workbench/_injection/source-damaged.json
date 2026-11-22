@@ -1,0 +1,61 @@
+{
+  "schema": "slowdiag.sources/v1",
+  "dataset": {
+    "query_count": 8,
+    "seed": 20261122,
+    "slow_thresholds": {
+      "elapsed_ms": 250,
+      "scanned_rows": 12000,
+      "rule": "either"
+    }
+  },
+  "migration": {
+    "replay_count": 3,
+    "reducer": "median",
+    "trim_percent": 20,
+    "min_evidence": 2,
+    "value_tolerance_pct": 18
+  },
+  "sources": [
+    {
+      "id": "app-prod",
+      "type": "injected_unknown_source_type",
+      "format_version": 2,
+      "sample_rows": 24,
+      "sample_period_ms": 100,
+      "elapsed_semantics": "p95",
+      "scan_semantics": "estimated",
+      "data_path": "sources/app-prod/records.sqlite3"
+    },
+    {
+      "id": "db-prod",
+      "type": "db_exec_stats",
+      "format_version": 2,
+      "sample_rows": 24,
+      "sample_period_ms": 250,
+      "elapsed_semantics": "p95",
+      "scan_semantics": "exact",
+      "data_path": "sources/db-prod/records.sqlite3"
+    },
+    {
+      "id": "slow-prod",
+      "type": "slow_log_excerpt",
+      "format_version": 2,
+      "sample_rows": 24,
+      "sample_period_ms": 500,
+      "elapsed_semantics": "max",
+      "scan_semantics": "exact",
+      "data_path": "sources/slow-prod/records.sqlite3"
+    },
+    {
+      "id": "slow-canary",
+      "type": "slow_log_excerpt",
+      "format_version": 1,
+      "sample_rows": 6,
+      "sample_period_ms": 1000,
+      "elapsed_semantics": "max",
+      "scan_semantics": "sampled",
+      "data_path": "sources/slow-canary/records.sqlite3"
+    }
+  ]
+}
