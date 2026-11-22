@@ -1,0 +1,283 @@
+{
+ "batch": 2,
+ "run_key": "259e5c5bcf7e61bf87b91da568273ca2faa1468570eea1e893b24f9b155c9c12",
+ "config": {
+  "seed": 7,
+  "learning_rate": 0.2,
+  "epochs": 6,
+  "batch_size": 8,
+  "max_concurrency": 3,
+  "contribution_shift_threshold": 0.02,
+  "closure_rel_tol": 1e-09
+ },
+ "config_hash": "1200f968e930ea4e472766096496e75ae4317fbb2bf1aa340dd0d057ec75a9fa",
+ "base_layers": [
+  {
+   "name": "layer1",
+   "version": 2,
+   "checksum": "e6433176580cfba2b63f73921d0d38c153812ef346999bb9c73b2e7100078643"
+  },
+  {
+   "name": "layer2",
+   "version": 2,
+   "checksum": "d5076b422426309b35345b17e947d68b6d97e4d91e11a697ab08de1000f7557d"
+  },
+  {
+   "name": "layer3",
+   "version": 1,
+   "checksum": "a28655d02d28c37d6971addbc558f999bfa1ffd54b1b35fa287ef912e69f72a9"
+  }
+ ],
+ "base_fingerprint": "7a4384ea0b97b7d2985e5f446d01044d6b1f5abe1e171efdd188b2492533985b",
+ "tasks_fingerprint": "78aea47cb37001780f6ee3f699a9b7b8b3a859a5f29c75c5bbdaf14b218eaa76",
+ "features_fingerprint": "69ec777377a7f18c66beb595c8c167ec979fd95d9017f701239a750e05360aa6",
+ "tasks": [
+  {
+   "task": "task_alpha",
+   "sort_key": [
+    "task_alpha",
+    [
+     "layer1",
+     "layer3"
+    ]
+   ],
+   "decision": "reuse",
+   "invalidation": {
+    "reason": "base_shift",
+    "compared": [
+     {
+      "layer": "layer1",
+      "previous": 0.9904383365675471,
+      "current": 0.9987096232686166,
+      "shift": 0.008271286701069469
+     },
+     {
+      "layer": "layer2",
+      "previous": 0.004708929117130728,
+      "current": 0.0006293170324582879,
+      "shift": 0.00407961208467244
+     },
+     {
+      "layer": "layer3",
+      "previous": 0.004852734315322244,
+      "current": 0.0006610596989251621,
+      "shift": 0.004191674616397082
+     }
+    ],
+    "max_shift": 0.008271286701069469,
+    "threshold": 0.02
+   },
+   "adapter": {
+    "type": "linear",
+    "rank": 1,
+    "scale": 1.0,
+    "param_checksum": "cced286341f0d828642e692f044737b5fe9a314428fe4a08687d4956d3ca0bd2",
+    "base_layer_versions": {
+     "layer1": 1,
+     "layer2": 1,
+     "layer3": 1
+    }
+   },
+   "train": null,
+   "metrics": {
+    "accuracy": 0.3333333333333333,
+    "macro_f1": 0.2545454545454546
+   },
+   "contribution_shares": {
+    "layer1": 1.267831136821853,
+    "layer2": 0.0007988986088585518,
+    "layer3": 0.0008391949472283982
+   },
+   "closure": {
+    "loss": 1.2694692303779402,
+    "share_sum": 1.26946923037794,
+    "rel_err": 1.7491137210070485e-16
+   }
+  },
+  {
+   "task": "task_beta",
+   "sort_key": [
+    "task_beta",
+    [
+     "layer3"
+    ]
+   ],
+   "decision": "retrain",
+   "invalidation": {
+    "reason": "content_changed",
+    "compared": null,
+    "max_shift": null,
+    "threshold": null
+   },
+   "adapter": {
+    "type": "lowrank",
+    "rank": 3,
+    "scale": 1.5,
+    "param_checksum": "8ab1b6518a672784935459551b7f81cdfdb81b804332eb0e7eb338249de45d98",
+    "base_layer_versions": {
+     "layer1": 2,
+     "layer2": 2,
+     "layer3": 1
+    }
+   },
+   "train": {
+    "epoch_losses": [
+     0.60103943858312,
+     0.39934171935918106,
+     0.2899617447961364,
+     0.22442721108325048,
+     0.18170714944223623,
+     0.1519955553431586
+    ],
+    "cost": 144,
+    "budget": 100000
+   },
+   "metrics": {
+    "accuracy": 1.0,
+    "macro_f1": 0.5
+   },
+   "contribution_shares": {
+    "layer1": 0.024959226093163908,
+    "layer2": 0.04300484712090511,
+    "layer3": 0.06846172486931679
+   },
+   "closure": {
+    "loss": 0.1364257980833858,
+    "share_sum": 0.1364257980833858,
+    "rel_err": 0.0
+   }
+  },
+  {
+   "task": "task_delta",
+   "sort_key": [
+    "task_delta",
+    [
+     "layer2"
+    ]
+   ],
+   "decision": "new",
+   "invalidation": null,
+   "adapter": {
+    "type": "lowrank",
+    "rank": 2,
+    "scale": 0.8,
+    "param_checksum": "82c7cd71da6de844bdb9765dccf142d5225c087b83bd65e650aef338ee6c9eee",
+    "base_layer_versions": {
+     "layer1": 2,
+     "layer2": 2,
+     "layer3": 1
+    }
+   },
+   "train": {
+    "epoch_losses": [
+     0.6172038770441305,
+     0.4503260961086879,
+     0.3579453469863853,
+     0.30281806049183574,
+     0.26751113002427007,
+     0.24351339381635825
+    ],
+    "cost": 132,
+    "budget": 100000
+   },
+   "metrics": {
+    "accuracy": 1.0,
+    "macro_f1": 0.5
+   },
+   "contribution_shares": {
+    "layer1": 0.04475253628737892,
+    "layer2": 0.1918414397584035,
+    "layer3": -0.0
+   },
+   "closure": {
+    "loss": 0.23659397604578244,
+    "share_sum": 0.23659397604578242,
+    "rel_err": 1.173131120221676e-16
+   }
+  },
+  {
+   "task": "task_gamma",
+   "sort_key": [
+    "task_gamma",
+    [
+     "layer2",
+     "layer3"
+    ]
+   ],
+   "decision": "pending",
+   "invalidation": {
+    "reason": "base_shift",
+    "compared": [
+     {
+      "layer": "layer1",
+      "previous": 0.12783351478233043,
+      "current": 0.08194811972276973,
+      "shift": 0.0458853950595607
+     },
+     {
+      "layer": "layer2",
+      "previous": 0.48658123793741737,
+      "current": 0.37659496113608554,
+      "shift": 0.10998627680133183
+     },
+     {
+      "layer": "layer3",
+      "previous": 0.3855852472802522,
+      "current": 0.5414569191411448,
+      "shift": 0.15587167186089262
+     }
+    ],
+    "max_shift": 0.15587167186089262,
+    "threshold": 0.02
+   },
+   "adapter": {
+    "type": "linear",
+    "rank": 1,
+    "scale": 1.0,
+    "param_checksum": "8a1250b12833031b956e482f820cedbb7d8e898d5109e2cecbc56d8b13a3736b",
+    "base_layer_versions": {
+     "layer1": 1,
+     "layer2": 2,
+     "layer3": 1
+    }
+   },
+   "train": null,
+   "metrics": null,
+   "contribution_shares": {
+    "layer1": 0.0964033966026428,
+    "layer2": 0.44302460532076554,
+    "layer3": 0.6369674654622405
+   },
+   "closure": {
+    "loss": 1.1763954673856487,
+    "share_sum": 1.1763954673856487,
+    "rel_err": 0.0
+   },
+   "pending": {
+    "task": "task_gamma",
+    "reason": "retrain",
+    "required": 144,
+    "budget": 50,
+    "code": "E_RETRAIN_BUDGET_PENDING"
+   }
+  }
+ ],
+ "summary": {
+  "new": [
+   "task_delta"
+  ],
+  "retrained": [
+   "task_beta"
+  ],
+  "reused": [
+   "task_alpha"
+  ],
+  "pending": [
+   "task_gamma"
+  ],
+  "removed": []
+ },
+ "codes": [
+  "E_RETRAIN_BUDGET_PENDING"
+ ]
+}
