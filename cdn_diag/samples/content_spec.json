@@ -1,0 +1,41 @@
+{
+  "spec_version": 1,
+  "contents": [
+    {
+      "path": "/app.js",
+      "ttl_ms": 30000,
+      "etag": "v1-app",
+      "body_base64": "QVBQLVYx"
+    },
+    {
+      "path": "/index.html",
+      "ttl_ms": 30000,
+      "etag": "v1-index",
+      "body_base64": "SU5ERVgtVjE="
+    },
+    {
+      "path": "/page/app",
+      "ttl_ms": 20000,
+      "derived_from": [
+        "/app.js",
+        "/page/home"
+      ],
+      "combine": "concat"
+    },
+    {
+      "path": "/page/home",
+      "ttl_ms": 20000,
+      "derived_from": [
+        "/index.html",
+        "/style.css"
+      ],
+      "combine": "concat"
+    },
+    {
+      "path": "/style.css",
+      "ttl_ms": 30000,
+      "etag": "v1-style",
+      "body_base64": "U1RZTEUtVjE="
+    }
+  ]
+}

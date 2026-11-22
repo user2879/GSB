@@ -1,0 +1,38 @@
+{
+  "policy_version": 1,
+  "cache_key_fields": [
+    "node_id",
+    "path"
+  ],
+  "nodes": [
+    {
+      "node_id": "edge-a",
+      "capacity": 3,
+      "eviction": "lru"
+    },
+    {
+      "node_id": "edge-b",
+      "capacity": 3,
+      "eviction": "fifo"
+    },
+    {
+      "node_id": "edge-c",
+      "capacity": 2,
+      "eviction": "lru"
+    }
+  ],
+  "scheduler": {
+    "global_inflight": 2,
+    "per_node_inflight": 1,
+    "pull_timeout_ms": 2000,
+    "max_retries": 2
+  },
+  "lease": {
+    "ttl_ms": 1500
+  },
+  "handshake_timeout_ms": 3000,
+  "port_range": [
+    49152,
+    49252
+  ]
+}

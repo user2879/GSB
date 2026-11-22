@@ -1,0 +1,101 @@
+内容源与 3 个边缘节点已启动并完成握手
+===== 场景一：冷启动填充 =====
+[batch 1] edge-a /index.html -> miss source=miss_fetch etag=v1-index ttl_left=30000ms evictions=0
+[batch 1] edge-a /style.css -> miss source=miss_fetch etag=v1-style ttl_left=30000ms evictions=0
+[batch 1] edge-a /page/home -> miss source=miss_fetch etag=Ddbfe9123f53aa87e ttl_left=20000ms evictions=0
+[batch 1] edge-b /index.html -> miss source=miss_fetch etag=v1-index ttl_left=30000ms evictions=0
+[batch 1] edge-b /app.js -> miss source=miss_fetch etag=v1-app ttl_left=30000ms evictions=0
+[batch 1] edge-b /page/app -> miss source=miss_fetch etag=De5180570fe103ce1 ttl_left=20000ms evictions=0
+[batch 1] edge-c /index.html -> miss source=miss_fetch etag=v1-index ttl_left=30000ms evictions=0
+[batch 1] edge-c /style.css -> miss source=miss_fetch etag=v1-style ttl_left=30000ms evictions=0
+[batch 2] edge-a /index.html -> hit source=miss_fetch etag=v1-index ttl_left=29000ms evictions=0
+[batch 2] edge-a /page/home -> hit source=miss_fetch etag=Ddbfe9123f53aa87e ttl_left=19100ms evictions=0
+[batch 2] edge-b /app.js -> hit source=miss_fetch etag=v1-app ttl_left=29200ms evictions=0
+[batch 2] edge-c /app.js -> miss source=miss_fetch etag=v1-app ttl_left=30000ms evictions=1
+[batch 2] edge-c /index.html -> hit source=miss_fetch etag=v1-index ttl_left=29200ms evictions=0
+[batch 2] edge-c /page/app -> miss source=miss_fetch etag=De5180570fe103ce1 ttl_left=20000ms evictions=1
+[batch 3] edge-a /index.html -> expired source=revalidated etag=v1-index ttl_left=30000ms evictions=1
+[batch 3] edge-a /style.css -> expired source=revalidated etag=v1-style ttl_left=30000ms evictions=1
+[batch 3] edge-b /index.html -> expired source=revalidated etag=v1-index ttl_left=30000ms evictions=1
+===== 场景二：内容版本演进触发派生失效 =====
+trigger=/style.css affected=/style.css node=edge-a present=True entry_version=2->3
+trigger=/style.css affected=/style.css node=edge-b present=False entry_version=None->None
+trigger=/style.css affected=/style.css node=edge-c present=False entry_version=None->None
+trigger=/style.css affected=/page/home node=edge-a present=True entry_version=1->2
+trigger=/style.css affected=/page/home node=edge-b present=False entry_version=None->None
+trigger=/style.css affected=/page/home node=edge-c present=False entry_version=None->None
+trigger=/style.css affected=/page/app node=edge-a present=False entry_version=None->None
+trigger=/style.css affected=/page/app node=edge-b present=True entry_version=1->2
+trigger=/style.css affected=/page/app node=edge-c present=True entry_version=1->2
+===== 场景三：快照保存与恢复重放 =====
+快照已保存: /home/zsl/feedback/uidfc5909d3-default-143/cdn_diag/ledger/snapshot.db
+全部节点已强制终止（模拟崩溃）
+恢复完成 full_replace=False diff={'added': [], 'removed': [], 'changed': []}
+节点已依据账本持久化条目重启恢复
+重放校验: verdict=OK compared_fields=112
+
+===== CDN 边缘缓存一致性诊断报告 =====
+format_version: 1
+policy_version: 1
+content_digest: 868f114b4e46ce97eeab2be685a41adfc68390a17a3f542471171f3c21283fab
+
+---- 请求结果（按账本顺序） ----
+batch  node     path                 result   source         etag                 ttl_left_ms
+1      edge-a   /index.html          miss     miss_fetch     v1-index             30000
+1      edge-a   /style.css           miss     miss_fetch     v1-style             30000
+1      edge-a   /page/home           miss     miss_fetch     Ddbfe9123f53aa87e    20000
+1      edge-b   /index.html          miss     miss_fetch     v1-index             30000
+1      edge-b   /app.js              miss     miss_fetch     v1-app               30000
+1      edge-b   /page/app            miss     miss_fetch     De5180570fe103ce1    20000
+1      edge-c   /index.html          miss     miss_fetch     v1-index             30000
+1      edge-c   /style.css           miss     miss_fetch     v1-style             30000
+2      edge-a   /index.html          hit      miss_fetch     v1-index             29000
+2      edge-a   /page/home           hit      miss_fetch     Ddbfe9123f53aa87e    19100
+2      edge-b   /app.js              hit      miss_fetch     v1-app               29200
+2      edge-c   /app.js              miss     miss_fetch     v1-app               30000
+2      edge-c   /index.html          hit      miss_fetch     v1-index             29200
+2      edge-c   /page/app            miss     miss_fetch     De5180570fe103ce1    20000
+3      edge-a   /index.html          expired  revalidated    v1-index             30000
+3      edge-a   /style.css           expired  revalidated    v1-style             30000
+3      edge-b   /index.html          expired  revalidated    v1-index             30000
+
+---- 逐出事件 ----
+batch=2 node=edge-c key=edge-c|/style.css reason=capacity
+batch=2 node=edge-c key=edge-c|/app.js reason=capacity
+batch=3 node=edge-a key=edge-a|/index.html reason=expired
+batch=3 node=edge-a key=edge-a|/style.css reason=expired
+batch=3 node=edge-b key=edge-b|/index.html reason=expired
+
+---- 拉取调度尝试 ----
+task=1 node=edge-a path=/index.html lease_version=1 attempt=1 outcome=ok wait_ms=0
+task=2 node=edge-a path=/style.css lease_version=1 attempt=1 outcome=ok wait_ms=21
+task=3 node=edge-a path=/page/home lease_version=1 attempt=1 outcome=ok wait_ms=36
+task=4 node=edge-b path=/index.html lease_version=1 attempt=1 outcome=ok wait_ms=37
+task=5 node=edge-b path=/app.js lease_version=1 attempt=1 outcome=ok wait_ms=57
+task=6 node=edge-b path=/page/app lease_version=1 attempt=1 outcome=ok wait_ms=76
+task=7 node=edge-c path=/index.html lease_version=1 attempt=1 outcome=ok wait_ms=75
+task=8 node=edge-c path=/style.css lease_version=1 attempt=1 outcome=ok wait_ms=106
+task=9 node=edge-c path=/app.js lease_version=1 attempt=1 outcome=ok wait_ms=0
+task=10 node=edge-c path=/page/app lease_version=1 attempt=1 outcome=ok wait_ms=17
+task=11 node=edge-a path=/index.html lease_version=1 attempt=1 outcome=ok wait_ms=0
+task=12 node=edge-a path=/style.css lease_version=1 attempt=1 outcome=ok wait_ms=17
+task=13 node=edge-b path=/index.html lease_version=1 attempt=1 outcome=ok wait_ms=18
+
+---- 派生失效传播轨迹 ----
+trigger=/style.css affected=/style.css node=edge-a present=True entry_version=2->3 etag=v2-style
+trigger=/style.css affected=/style.css node=edge-b present=False entry_version=None->None etag=v2-style
+trigger=/style.css affected=/style.css node=edge-c present=False entry_version=None->None etag=v2-style
+trigger=/style.css affected=/page/home node=edge-a present=True entry_version=1->2 etag=D5ab6812e04ebe655
+trigger=/style.css affected=/page/home node=edge-b present=False entry_version=None->None etag=D5ab6812e04ebe655
+trigger=/style.css affected=/page/home node=edge-c present=False entry_version=None->None etag=D5ab6812e04ebe655
+trigger=/style.css affected=/page/app node=edge-a present=False entry_version=None->None etag=Df6304f4979fb177d
+trigger=/style.css affected=/page/app node=edge-b present=True entry_version=1->2 etag=Df6304f4979fb177d
+trigger=/style.css affected=/page/app node=edge-c present=True entry_version=1->2 etag=Df6304f4979fb177d
+
+---- 租约冲突裁决 ----
+(无)
+
+---- 节点统计（numpy） ----
+edge-a: requests=7 hits=2 hit_rate=0.286 evictions=2
+edge-b: requests=5 hits=1 hit_rate=0.200 evictions=1
+edge-c: requests=5 hits=1 hit_rate=0.200 evictions=2
