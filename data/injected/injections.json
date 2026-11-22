@@ -1,0 +1,45 @@
+{
+  "version": "fault-suite-v1",
+  "items": [
+    {
+      "injection_id": "I01",
+      "kind": "non_finite_intent_weight",
+      "config_path": "I01_non_finite_weight_config.json",
+      "rules_path": "../base/normalization_rules.json",
+      "queries_path": "../base/queries.jsonl",
+      "expected_codes": [
+        "E_CONFIG_INVALID"
+      ]
+    },
+    {
+      "injection_id": "I02",
+      "kind": "duplicate_entity_dictionary_entry",
+      "config_path": "I02_duplicate_entity_config.json",
+      "rules_path": "../base/normalization_rules.json",
+      "queries_path": "../base/queries.jsonl",
+      "expected_codes": [
+        "E_CONFIG_INVALID"
+      ]
+    },
+    {
+      "injection_id": "I03",
+      "kind": "session_turn_gap",
+      "config_path": "../base/intent_config.json",
+      "rules_path": "../base/normalization_rules.json",
+      "queries_path": "I03_turn_gap_queries.jsonl",
+      "expected_codes": [
+        "E_QUERY_INVALID"
+      ]
+    },
+    {
+      "injection_id": "I04",
+      "kind": "out_of_vocabulary_term",
+      "config_path": "../base/intent_config.json",
+      "rules_path": "../base/normalization_rules.json",
+      "queries_path": "I04_oov_queries.jsonl",
+      "expected_codes": [
+        "E_QUERY_INVALID"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": "rules-v1",
+  "normalization_rules": [
+    {
+      "id": "width_fold",
+      "kind": "width_fold",
+      "enabled": true,
+      "revision": 1
+    },
+    {
+      "id": "case_fold",
+      "kind": "case_fold",
+      "enabled": true,
+      "revision": 1
+    },
+    {
+      "id": "whitespace_collapse",
+      "kind": "whitespace_collapse",
+      "enabled": true,
+      "revision": 1
+    },
+    {
+      "id": "token_split",
+      "kind": "token_split",
+      "enabled": true,
+      "revision": 1
+    }
+  ],
+  "rewrite_rules": [
+    {
+      "id": "rw_product",
+      "intent": "product_search",
+      "priority": 10,
+      "revision": 1,
+      "template": "搜索并推荐 {entity:product} {entity:category}，优先展示正品与旗舰店"
+    },
+    {
+      "id": "rw_browsing",
+      "intent": "browsing",
+      "priority": 10,
+      "revision": 1,
+      "template": "浏览“{normalized_query}”相关的新款与优惠商品"
+    },
+    {
+      "id": "rw_comparison",
+      "intent": "comparison",
+      "priority": 10,
+      "revision": 1,
+      "template": "对比 {entity:product} 的规格、价格与口碑，输出差异表"
+    },
+    {
+      "id": "rw_scenario",
+      "intent": "scenario_recommendation",
+      "priority": 10,
+      "revision": 1,
+      "template": "围绕 {entity:scenario} 场景推荐 {entity:category}，兼顾 {entity:audience}"
+    },
+    {
+      "id": "rw_support",
+      "intent": "support",
+      "priority": 10,
+      "revision": 1,
+      "template": "进入售后支持：“{normalized_query}”；关联订单、{entity:service} 与处理时效"
+    }
+  ]
+}

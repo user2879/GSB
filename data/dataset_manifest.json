@@ -1,0 +1,43 @@
+{
+  "seed": 20261123,
+  "dependency": "numpy (runtime classifier only)",
+  "network_required": false,
+  "base_files": {
+    "queries.jsonl": {
+      "sha256": "ee8b886c97bd5943c98aa9d50c7c3102a7a154f929460d9c12c677bb86314a6b"
+    },
+    "intent_config.json": {
+      "sha256": "ec6afc03f53d2d63d23998c21d412708a2806379f2607377d8fbb7ee8cdb7a8a"
+    },
+    "normalization_rules.json": {
+      "sha256": "6c415b9ea7dd0ee0881e9db2ea4d448ba383ce8029a7a5aaca09284db7e47c2d"
+    },
+    "commands.json": {
+      "sha256": "bdb9862c0f97020741b927861c837d99daaaece489ad4c6df825768285ee949d"
+    }
+  },
+  "fault_files": {
+    "injections.json": {
+      "sha256": "af2b2446b17451d61a5069bd0ffb52692790e82b1b09f9b8d150b2ba8c8bd7ea"
+    },
+    "I01_non_finite_weight_config.json": {
+      "sha256": "2fc2df32a00276eaefeb3ee6b83dfb1e592632bf52ee1081a49bf45ffc68b863"
+    },
+    "I02_duplicate_entity_config.json": {
+      "sha256": "375e3b270f9322a494476cd52eb2c5be4abfffaf96b424033dc36e912a0c2ad2"
+    },
+    "I03_turn_gap_queries.jsonl": {
+      "sha256": "9b8ac1b17f20b1c3b82e025fe4788162d279ddd33aa4c0813686398d94a3186b"
+    },
+    "I04_oov_queries.jsonl": {
+      "sha256": "31681895df96a60919e31b5a8c8464a937e843ee7829439eb1ba138f5f0cff41"
+    }
+  },
+  "counts": {
+    "queries": 16,
+    "commands": 8,
+    "injections": 4
+  },
+  "rng_usage": "fixed-seed Fisher-Yates shuffle of vocabulary and JSONL query order; semantic labels/terms are fixed",
+  "non_finite_encoding": "I01 uses Python JSON Infinity; the loader rejects it as non-finite"
+}

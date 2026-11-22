@@ -1,0 +1,458 @@
+{
+  "version": "intent-config-v1",
+  "vocabulary": [
+    "相机",
+    "镜头",
+    "退货",
+    "好",
+    "发票",
+    "对比",
+    "旗舰店",
+    "快充",
+    "充电器",
+    "iPhone",
+    "电脑",
+    "游戏",
+    "新款",
+    "数据线",
+    "跑步",
+    "WH-1000XM5",
+    "女士",
+    "耳机",
+    "降噪",
+    "申请",
+    "便宜",
+    "黑色",
+    "旅行",
+    "Type-C",
+    "客厅",
+    "乐高",
+    "通勤",
+    "20W",
+    "连衣裙",
+    "鞋",
+    "索尼",
+    "AirPods",
+    "积木",
+    "手机",
+    "联想",
+    "怎么",
+    "笔记本",
+    "运动",
+    "壳",
+    "ＵＳＢ",
+    "男士",
+    "夏季",
+    "USB",
+    "保护套",
+    "哪个",
+    "15",
+    "办公",
+    " 无线  耳机 ",
+    "红色",
+    "正品",
+    "Apple",
+    "儿童",
+    "轻薄",
+    "蓝牙",
+    "无线",
+    "保修",
+    "Pro",
+    "区别",
+    "玩具",
+    "佳能"
+  ],
+  "intent_categories": [
+    {
+      "name": "product_search",
+      "weight": 1.0,
+      "features": [
+        {
+          "term": "手机",
+          "weight": 1.6
+        },
+        {
+          "term": "耳机",
+          "weight": 1.5
+        },
+        {
+          "term": "壳",
+          "weight": 1.1
+        },
+        {
+          "term": "连衣裙",
+          "weight": 1.4
+        },
+        {
+          "term": "笔记本",
+          "weight": 1.7
+        },
+        {
+          "term": "积木",
+          "weight": 1.4
+        },
+        {
+          "term": "相机",
+          "weight": 1.4
+        },
+        {
+          "term": "充电器",
+          "weight": 1.3
+        },
+        {
+          "term": "数据线",
+          "weight": 1.2
+        },
+        {
+          "term": "鞋",
+          "weight": 1.2
+        },
+        {
+          "term": "镜头",
+          "weight": 1.2
+        },
+        {
+          "term": "AirPods",
+          "weight": 1.5
+        },
+        {
+          "term": "索尼",
+          "weight": 1.1
+        }
+      ]
+    },
+    {
+      "name": "browsing",
+      "weight": 0.9,
+      "features": [
+        {
+          "term": "新款",
+          "weight": 1.1
+        },
+        {
+          "term": "便宜",
+          "weight": 0.9
+        },
+        {
+          "term": "正品",
+          "weight": 0.8
+        },
+        {
+          "term": "旗舰店",
+          "weight": 0.7
+        }
+      ]
+    },
+    {
+      "name": "comparison",
+      "weight": Infinity,
+      "features": [
+        {
+          "term": "对比",
+          "weight": 1.8
+        },
+        {
+          "term": "哪个",
+          "weight": 1.3
+        },
+        {
+          "term": "区别",
+          "weight": 1.4
+        }
+      ]
+    },
+    {
+      "name": "scenario_recommendation",
+      "weight": 1.05,
+      "features": [
+        {
+          "term": "通勤",
+          "weight": 1.2
+        },
+        {
+          "term": "旅行",
+          "weight": 1.1
+        },
+        {
+          "term": "办公",
+          "weight": 1.0
+        },
+        {
+          "term": "客厅",
+          "weight": 0.9
+        },
+        {
+          "term": "夏季",
+          "weight": 1.0
+        },
+        {
+          "term": "女士",
+          "weight": 0.7
+        },
+        {
+          "term": "儿童",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "support",
+      "weight": 0.95,
+      "features": [
+        {
+          "term": "退货",
+          "weight": 2.0
+        },
+        {
+          "term": "保修",
+          "weight": 1.7
+        },
+        {
+          "term": "发票",
+          "weight": 1.8
+        },
+        {
+          "term": "申请",
+          "weight": 0.8
+        },
+        {
+          "term": "怎么",
+          "weight": 0.6
+        }
+      ]
+    }
+  ],
+  "entity_types": [
+    "attribute",
+    "audience",
+    "brand",
+    "category",
+    "channel",
+    "color",
+    "product",
+    "scenario",
+    "service",
+    "spec",
+    "usage"
+  ],
+  "entities": [
+    {
+      "entry_id": "e_apple_iphone15",
+      "term": "Apple iPhone 15",
+      "entity_type": "product",
+      "priority": 110
+    },
+    {
+      "entry_id": "e_iphone15",
+      "term": "iPhone 15",
+      "entity_type": "product",
+      "priority": 100
+    },
+    {
+      "entry_id": "e_iphone15_new",
+      "term": "iPhone 15 新款",
+      "entity_type": "product",
+      "priority": 115
+    },
+    {
+      "entry_id": "e_phone_case",
+      "term": "手机 壳",
+      "entity_type": "category",
+      "priority": 90
+    },
+    {
+      "entry_id": "e_phone_cover",
+      "term": "保护套",
+      "entity_type": "category",
+      "priority": 70
+    },
+    {
+      "entry_id": "e_apple",
+      "term": "Apple",
+      "entity_type": "brand",
+      "priority": 70
+    },
+    {
+      "entry_id": "e_usb_c",
+      "term": "USB Type-C",
+      "entity_type": "spec",
+      "priority": 95
+    },
+    {
+      "entry_id": "e_fast_charge_cable",
+      "term": "快充 数据线",
+      "entity_type": "category",
+      "priority": 85
+    },
+    {
+      "entry_id": "e_wireless_headphones",
+      "term": "无线 蓝牙 耳机",
+      "entity_type": "product",
+      "priority": 105
+    },
+    {
+      "entry_id": "e_wireless_earphones",
+      "term": "无线 耳机",
+      "entity_type": "category",
+      "priority": 80
+    },
+    {
+      "entry_id": "e_wireless_basic",
+      "term": "无线",
+      "entity_type": "attribute",
+      "priority": 40
+    },
+    {
+      "entry_id": "e_noise_cancel",
+      "term": "降噪",
+      "entity_type": "attribute",
+      "priority": 60
+    },
+    {
+      "entry_id": "e_commute",
+      "term": "通勤",
+      "entity_type": "scenario",
+      "priority": 50
+    },
+    {
+      "entry_id": "e_running_shoes",
+      "term": "跑步 鞋",
+      "entity_type": "category",
+      "priority": 88
+    },
+    {
+      "entry_id": "e_women",
+      "term": "女士",
+      "entity_type": "audience",
+      "priority": 40
+    },
+    {
+      "entry_id": "e_lenovo_laptop",
+      "term": "联想 笔记本",
+      "entity_type": "product",
+      "priority": 102
+    },
+    {
+      "entry_id": "e_gaming_laptop",
+      "term": "游戏 笔记本",
+      "entity_type": "product",
+      "priority": 95
+    },
+    {
+      "entry_id": "e_red_dress",
+      "term": "红色 夏季 连衣裙",
+      "entity_type": "product",
+      "priority": 108
+    },
+    {
+      "entry_id": "e_summer",
+      "term": "夏季",
+      "entity_type": "scenario",
+      "priority": 50
+    },
+    {
+      "entry_id": "e_flagship",
+      "term": "旗舰店",
+      "entity_type": "channel",
+      "priority": 55
+    },
+    {
+      "entry_id": "e_invoice",
+      "term": "发票",
+      "entity_type": "service",
+      "priority": 70
+    },
+    {
+      "entry_id": "e_warranty",
+      "term": "保修",
+      "entity_type": "service",
+      "priority": 70
+    },
+    {
+      "entry_id": "e_return",
+      "term": "退货",
+      "entity_type": "service",
+      "priority": 75
+    },
+    {
+      "entry_id": "e_cheap",
+      "term": "便宜",
+      "entity_type": "attribute",
+      "priority": 45
+    },
+    {
+      "entry_id": "e_authentic",
+      "term": "正品",
+      "entity_type": "attribute",
+      "priority": 45
+    },
+    {
+      "entry_id": "e_sony_xm5",
+      "term": "索尼 WH-1000XM5",
+      "entity_type": "product",
+      "priority": 106
+    },
+    {
+      "entry_id": "e_canon_camera",
+      "term": "佳能 相机",
+      "entity_type": "product",
+      "priority": 104
+    },
+    {
+      "entry_id": "e_travel_lens",
+      "term": "旅行 镜头",
+      "entity_type": "category",
+      "priority": 82
+    },
+    {
+      "entry_id": "e_lego_bricks",
+      "term": "乐高 积木",
+      "entity_type": "product",
+      "priority": 101
+    },
+    {
+      "entry_id": "e_kids",
+      "term": "儿童",
+      "entity_type": "audience",
+      "priority": 40
+    },
+    {
+      "entry_id": "e_living_room",
+      "term": "客厅",
+      "entity_type": "scenario",
+      "priority": 50
+    },
+    {
+      "entry_id": "e_airpods_pro",
+      "term": "AirPods Pro",
+      "entity_type": "product",
+      "priority": 107
+    },
+    {
+      "entry_id": "e_office",
+      "term": "办公",
+      "entity_type": "scenario",
+      "priority": 50
+    },
+    {
+      "entry_id": "e_light_office",
+      "term": "轻薄 办公",
+      "entity_type": "usage",
+      "priority": 65
+    }
+  ],
+  "normalization": {
+    "rule_ids": [
+      "width_fold",
+      "case_fold",
+      "whitespace_collapse",
+      "token_split"
+    ]
+  },
+  "intent_scoring": {
+    "position_decay": 0.12,
+    "decimal_places": 6,
+    "quantum": "0.000001"
+  },
+  "max_workers": 4
+}

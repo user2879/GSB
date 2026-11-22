@@ -1,0 +1,89 @@
+{
+  "version": "commands-v1",
+  "commands": [
+    {
+      "command_id": "cmd001",
+      "type": "add_query",
+      "query": {
+        "query_id": "q017",
+        "terms": [
+          "AirPods",
+          "Pro",
+          "无线",
+          "耳机",
+          "通勤"
+        ],
+        "session_id": "s9",
+        "turn": 1,
+        "intent_label": "product_search"
+      }
+    },
+    {
+      "command_id": "cmd002",
+      "type": "remove_query",
+      "query_id": "q006"
+    },
+    {
+      "command_id": "cmd003",
+      "type": "update_normalization_rule",
+      "rule_id": "case_fold",
+      "patch": {
+        "enabled": false
+      }
+    },
+    {
+      "command_id": "cmd004",
+      "type": "update_intent_weights",
+      "weights": {
+        "product_search": 1.35,
+        "support": 1.0
+      }
+    },
+    {
+      "command_id": "cmd005",
+      "type": "replace_entity_dictionary_entry",
+      "entry_id": "e_iphone15",
+      "entry": {
+        "entry_id": "e_iphone15",
+        "term": "iPhone 15",
+        "entity_type": "product",
+        "priority": 120
+      }
+    },
+    {
+      "command_id": "cmd006",
+      "type": "replace_entity_dictionary_entry",
+      "entry_id": "e_airpods_pro",
+      "entry": {
+        "entry_id": "e_airpods_pro",
+        "term": "AirPods Pro 2",
+        "entity_type": "product",
+        "priority": 107
+      }
+    },
+    {
+      "command_id": "cmd007",
+      "type": "add_query",
+      "query": {
+        "query_id": "q018",
+        "terms": [
+          "索尼",
+          "降噪",
+          "耳机",
+          "办公"
+        ],
+        "session_id": "s9",
+        "turn": 2,
+        "intent_label": "product_search"
+      }
+    },
+    {
+      "command_id": "cmd008",
+      "type": "update_normalization_rule",
+      "rule_id": "whitespace_collapse",
+      "patch": {
+        "enabled": false
+      }
+    }
+  ]
+}
