@@ -1,0 +1,46 @@
+{
+ "global_memory_budget_units": 6,
+ "max_workers": 4,
+ "tasks": [
+  {
+   "aggregation": "none",
+   "batch_max_rows": 64,
+   "block_id": "blk-a1",
+   "expression": "qty * price - 10",
+   "quota": 2,
+   "task_id": "t1"
+  },
+  {
+   "aggregation": "sum",
+   "batch_max_rows": 48,
+   "block_id": "blk-b1",
+   "expression": "if(amount > 500 and rate < 0.5, amount * rate, amount / 2)",
+   "quota": 2,
+   "task_id": "t2"
+  },
+  {
+   "aggregation": "avg",
+   "batch_max_rows": 64,
+   "block_id": "blk-c1",
+   "expression": "(amount + 7) * rate / 3",
+   "quota": 3,
+   "task_id": "t3"
+  },
+  {
+   "aggregation": "none",
+   "batch_max_rows": 32,
+   "block_id": "blk-c2",
+   "expression": "k * v + k / (v - 1.5)",
+   "quota": 1,
+   "task_id": "t4"
+  },
+  {
+   "aggregation": "count",
+   "batch_max_rows": 40,
+   "block_id": "blk-b2",
+   "expression": "qty * price >= 100 or not (qty < 5)",
+   "quota": 2,
+   "task_id": "t5"
+  }
+ ]
+}
