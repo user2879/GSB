@@ -1,21 +1,241 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的列式页分组聚合组件，交付数据处理管线与结果验证工具。系统以本地文件模拟一组列式页：每页含固定行数、若干列的整数或浮点定长数据与空值位图，页按整数页标识唯一、按扫描序列顺序参与聚合。核心业务问题是数据规模变化下的算法取舍：在声明的整数页缓存槽位预算下，系统须按显式规则在“槽位驻留增量聚合路径”与“超预算页重扫聚合路径”之间选择并逐页推进，前者用有限槽位驻留页并记录命中与置换，后者对超预算页直接重扫且不驻留；两条路径对同一输入必须产出逐字节一致的分组聚合结果与置换序列。系统还须对每次聚合产出逐组估计值及其量化误差上界，使结论在页规模与槽位预算变化时仍可判定。所有状态持久化到本地 SQLite 账本，进程被强制终止后只能依据已完整提交的记录恢复。
+# PageAgg
 
-任务环境与准备：
-安装 Python 3.11 及以上版本，Tkinter 为随 Python 附带的标准库；用 pip 安装 numpy，并确认 python -c "import numpy, sqlite3, tkinter" 可用。
-在工作区准备确定性页样本生成脚本与本地页数据文件（含整数列、浮点列与空值位图），生成页目录与内容摘要；不访问网络与外部数据集。
-确认工作区可写、SQLite 可创建数据库文件，并准备好命令行参数注入路径用于异常验证。
+Deterministic columnar-page grouped aggregation for a local Windows environment. The project models fixed-size local pages, executes two explicit aggregation routes under an integer cache-slot budget, persists every committed batch to SQLite, verifies replay consistency, and includes a Tkinter dashboard.
 
-业务要求：
-1. 实现列式页数据文件与页目录声明的加载及强校验：每个页含整数页标识、固定行数、列定义（整数列、浮点列与空值位图）；校验页标识唯一、行数与列长度一致、空值位图长度与行数相等、浮点列值为有限数、页目录引用的页文件存在且内容摘要可计算，任一不合法须以 E_PAGE 整体拒绝加载并列出首个违规页标识与字段。
-2. 实现受整数页缓存槽位预算约束的驻留路径：按扫描序列为每页申请槽位，槽位不足时按显式置换规则选择被置换页并输出置换事件（被置换页标识、占用该槽位的页标识、事件序号）；同一页在驻留期内被再次访问须计为命中而不重复扫描；相同输入与预算多次运行必须得到逐字节一致的置换序列与命中计数，槽位预算为零须以 E_BUDGET 拒绝启动并给出最小可行槽位数。
-3. 实现超预算页重扫路径与逐页代价记账：对未获槽位的页直接在数据文件上重扫并参与聚合，重扫须记录页标识、事件序号与重扫原因，不得把重扫页计入驻留集合与命中计数；相同输入与预算下重扫页集合须与驻留路径的置换集合自洽，冲突须以 E_ROUTE 报告首个不自洽页标识。
-4. 实现依据页数、单页行数、溢出比例阈值与槽位预算在两条路径间切换的确定性规则：须输出选择理由、关键规模参数与未触发判定时的边界值；当页数与槽位预算的比值落在显式边界附近时须按稳定决胜规则选定一条路径并标注该选择受边界影响；同一输入无论预置路径为何，最终聚合结果与逐组估计值必须一致。
-5. 实现两条路径下的分组聚合与逐组定点估计及误差上界：按分组键对每页执行计数、求和与均值的整数定点累加，累加顺序须与页扫描序列绑定而不依赖实际驻留或重扫时机，均值须显式声明截断方向与溢出饱和规则；须给出单页量化误差、逐组聚合误差上界及其随参与页数增长的中间项，两条路径的逐组估计值与误差上界须逐字节一致。
-6. 实现页数或分页参数演进后的失效传播与聚合结论整体替换：当页目录、单页行数、分组键或槽位预算被修改后方案版本号单调递增，须沿页目录与分组键的引用关系推导受影响页集合与受影响分组，并按稳定顺序输出受影响集合与每步传播依据；未受影响分组的估计值与误差界必须逐字节保持不变且可逐项校验，当前结论视图须整体替换而非增量合并，替换时须稳定列出新增、移除与变化的分组键。
-7. 实现账本持久化、会话快照的版本识别整体替换与强制终止后的恢复：每完成一个页批次须在同一 SQLite 事务中写入该批页结局、置换与重扫事件、逐组聚合中间状态、定点口径版本与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时须比较快照方案版本与页目录内容摘要同当前磁盘状态，不一致须整体替换聚合状态与事件账本而非增量合并；进程被强制终止后重启只能依据已完整提交的批次恢复，未提交批次须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告。
-8. 实现恢复后的一致性重放校验、异常注入与结果验证工具：恢复后按账本记录的方案版本与扫描游标继续推进同一序列，将每页结局、置换与重扫事件、逐组估计值与误差界同账本逐项比较，差异须定位到首个不一致的页标识、事件序号与字段并以 E_REPLAY 报告；支持以命令行参数分别注入页目录截断、空值位图错位、槽位预算为零三类异常，分别以 E_PAGE、E_NULLMAP、E_BUDGET 报告并写入结构化日志；验证工具独立读取账本校验置换、重扫与聚合三者自洽，并附带确定性样本与 Tkinter 界面展示页结局、槽位占用、逐组估计与误差界热力、路径选择理由、账本版本与异常业务码。
+No container runtime, network service, or external dataset is required at runtime.
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## Environment
 
-验收：
-用本地样本验证双路径聚合与估计逐字节一致、快照整体替换恢复及三类异常业务码，附运行结果。
+Required:
+
+- Python 3.11 or later
+- `numpy`
+- Standard-library `sqlite3` and `tkinter`
+
+Windows quick start:
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -c "import numpy, sqlite3, tkinter; print(numpy.__version__, sqlite3.sqlite_version, tkinter.TkVersion)"
+```
+
+Run tests and the complete acceptance suite:
+
+```powershell
+python -m pytest -q
+python scripts/acceptance.py
+```
+
+The acceptance run writes:
+
+- `artifacts/acceptance_report.json`
+- `artifacts/VALIDATION.md`
+- `artifacts/acceptance/` (databases, samples, fault copies, raw CLI responses)
+
+## Quick Commands
+
+Generate the deterministic sample:
+
+```powershell
+python -m pageagg generate --out data/sample --force
+```
+
+Run resident aggregation and persist a ledger snapshot:
+
+```powershell
+python -m pageagg aggregate `
+  --catalog data/sample/catalog.json `
+  --db artifacts/resident.db `
+  --budget 4 `
+  --route resident
+```
+
+Force the rescan route and compare byte-level outputs:
+
+```powershell
+python -m pageagg compare-routes `
+  --catalog data/sample/catalog.json `
+  --budget 4 `
+  --out-dir artifacts/results/compare
+```
+
+Replay committed batches and independently validate the ledger:
+
+```powershell
+python -m pageagg replay --db artifacts/resident.db
+python -m pageagg validate --db artifacts/resident.db
+```
+
+Open the Tkinter dashboard:
+
+```powershell
+python -m pageagg ui --db artifacts/resident.db
+```
+
+## Sample Dataset
+
+The generator writes eight pages with 24 rows each. Columns are:
+
+- `group_id`: integer, never null, used as the group key
+- `value_int`: integer with deterministic nulls
+- `value_float`: finite float64 with deterministic nulls
+- `flag`: integer with deterministic nulls
+
+The 12-access scan sequence is:
+
+```text
+[1, 2, 3, 1, 4, 2, 3, 5, 6, 1, 7, 8]
+```
+
+With slot budget 4, LRU produces 3 cache hits, 9 physical scans, and 5 evictions. The route score is `375000 ppm`, inside the declared boundary window `[350000, 450000]`; the stable tie rule keeps `RESIDENT`.
+
+## Page Format
+
+Each `.cpg` page is a deterministic little-endian binary columnar file:
+
+```text
+magic "CPAGE001" | u8 version | i64 page_id | u32 rows | u16 ncols
+for each column:
+  u16 name_len | utf-8 name | u8 type
+  rows * 8 bytes values (int64 or float64)
+  rows bytes null bitmap (each byte exactly 0 or 1)
+  u32 CRC32 of the null bitmap
+```
+
+`catalog.json` declares the shared column schema, fixed rows per page, group key, batch size, route thresholds, scan sequence, page paths, row counts, and SHA-256 of each complete page file. `dataset_manifest.json` records the catalog digest and page digests.
+
+Validation rejects the entire load at the first violating page:
+
+- duplicate or malformed page IDs
+- missing/unreadable/trailing page content
+- page header/catalog row or column mismatch
+- non-finite float values
+- group-key nulls
+- page content digest mismatch
+- scan references to undeclared pages
+- unsafe page paths outside the catalog directory
+
+Business codes:
+
+| Code | Meaning | Exit |
+|---|---|---:|
+| `E_PAGE` | catalog/page/layout/digest failure | 10 |
+| `E_NULLMAP` | null bitmap length, byte, or CRC failure; category is still `E_PAGE` | 11 |
+| `E_BUDGET` | slot budget `< 1`; includes minimum feasible slots | 12 |
+| `E_ROUTE` | resident/rescan/eviction plan conflict | 13 |
+| `E_REPLAY` | ledger replay or first-field mismatch | 14 |
+
+Every business error is appended as one JSON object per line to `artifacts/logs/business.jsonl` unless `--log-path` is supplied.
+
+## Route Semantics
+
+### Resident route
+
+The route uses a deterministic LRU slot plan. On a miss with a full cache, the victim is selected by `(last_access_seq, page_id)`, with `page_id` as the stable tie-breaker. Each eviction records event sequence, victim page ID, incoming page ID, slot, and access sequence.
+
+A repeated access while the page remains resident is a cache hit and does not reread the page file.
+
+### Rescan route
+
+The rescan route never retains a physical resident page and always reports zero cache hits. Every scan access reads the page file and emits a rescan event with page ID, event sequence, and an explicit reason.
+
+Both routes share the same canonical LRU slot plan. The resident route realizes it physically; the rescan route emits the identical eviction-event bytes as a shadow plan for cross-route consistency checks. Rescan page outcomes are labeled with `occupancy_kind = "shadow_plan"`, while resident outcomes use `"actual"`. This makes the required eviction sequence byte-identical without counting any rescan page as resident or as a hit.
+
+### Route rule
+
+All values are integers; no floating-point decision is used.
+
+```text
+overflow_pages      = max(0, distinct_pages - budget)
+overflow_ratio_ppm  = overflow_pages * 1_000_000 // distinct_pages
+pressure_ppm        = overflow_ratio_ppm * rows_per_page // rows_reference
+
+if pressure_ppm > threshold_ppm: RESCAN
+else: RESIDENT
+```
+
+At exact equality, the stable tie rule selects `RESIDENT`. The output includes the reason, all key scale parameters, the threshold, lower/upper boundary, delta, and whether the decision sits inside the declared boundary margin.
+
+## Fixed-Point Aggregation
+
+Rules are versioned as `fixed-s64-scale1e6-trunc-toward-zero-v1`:
+
+- Scale: `1_000_000` fixed-point units per unit of data.
+- Integer values: exact after scaling.
+- Float values: truncated toward zero at the scale boundary.
+- Per-value float quantization error: strictly less than one fixed-point unit.
+- Sum: sticky signed-64-bit saturation.
+- Mean: integer division truncated toward zero.
+- Accumulation order: the declared page scan sequence, independent of cache hit/rescan timing.
+
+Each group and numeric column reports row count, non-null value count, null count, scaled sum/decimal sum, scaled mean/decimal mean, saturation status, per-page quantization terms in scan order, sum error bound, mean error bound, and explicit truncation/saturation/error-growth rules.
+
+`mean_error_bound_units = ceil(float_values / value_count) + 1`. No binary float is serialized into the result view. Canonical JSON bytes and SHA-256 digests are used for byte-level comparison.
+
+## Evolution and Whole-View Replacement
+
+`aggregate` compares the active snapshot configuration with current disk state. A changed catalog digest, row count, group key, route, batch size, or budget creates a new monotonic plan version and deletes the old snapshot's aggregate/event state in the replacement transaction, then persists the new view from the beginning.
+
+`evolve` additionally reports stable propagation steps, affected pages/groups, route-only affected pages/groups, added/removed/changed/byte-unchanged/unaffected groups, and old/new per-group digests for unaffected groups.
+
+An unaffected group whose bytes change is treated as a propagation defect and reported as `E_REPLAY`.
+
+```powershell
+python -m pageagg evolve `
+  --db artifacts/resident.db `
+  --catalog data/sample/catalog.json `
+  --budget 2
+```
+
+## SQLite Ledger and Crash Recovery
+
+The ledger has an integer format version (`1`) and a SHA-256 content digest over all ledger state. Each batch commit is one SQLite transaction containing page outcomes, eviction/rescan events, cumulative per-group fixed-point state, fixed-point version, progress cursor, and batch/state digests.
+
+Before each batch transaction, a separate committed `STARTED` attempt row is written. The batch data and `COMMITTED` status then commit atomically. If the process is killed inside the transaction, SQLite rolls back the data and the next open marks the leftover attempt `UNKNOWN`. Recovery trusts only committed batches and returns `forced_exit_report: null`, `forced_exit_report_available: false`, and `unknown_batches_require_rerun: true`.
+
+The test hook `--crash-during-batch N` uses `os._exit(137)` inside the named uncommitted transaction. A subsequent `aggregate` verifies the committed prefix, resumes at the committed cursor, and completes remaining batches.
+
+## Dashboard
+
+`python -m pageagg ui --db ...` displays page outcomes, actual/shadow slot occupancy, group sums/means and a quantization-error heatmap, route decision details, evictions/rescans, ledger format/version/status/cursor/content digest, and the latest structured business error code.
+
+## Repository Layout
+
+```text
+pageagg/
+  catalog.py        catalog + page validation
+  page_format.py    binary page reader/writer
+  planner.py        LRU slot plan and route decision
+  fixedpoint.py     fixed-point estimates and error bounds
+  engine.py         resident/rescan execution and batching
+  ledger.py         SQLite schema, batch commits, replacement
+  replay.py         first-difference replay and validator
+  service.py        aggregate/resume/evolve orchestration
+  ui.py             Tkinter dashboard
+  cli.py            command-line interface
+scripts/
+  acceptance.py     one-command end-to-end evidence run
+tests/              22 automated tests
+data/sample/        deterministic local sample
+artifacts/          generated verification evidence (not required source)
+```
+
+See `docs/DESIGN.md` for invariants, transaction boundaries, and replay rules.
+
+## Verified Results
+
+Last local run in this workspace:
+
+- `python -m pytest -q`: **22 passed**
+- `python scripts/acceptance.py`: **12/12 checks passed**
+- Resident/rescan canonical result SHA-256: `888a8c2187e5d5af03c5b7cc0efc719f27b5b2b389e96f48ca9d4b542de300db`
+- Shared eviction sequence digest: `79d80c4663ff74135c12d5f0f0a82669b6b073ccb32381f716845bb2a8ec3b91`
+- Resident: 3 cache hits, 9 physical scans, 5 evictions
+- Rescan: 0 cache hits, 12 physical scans, 12 rescan events
+- Snapshot evolution: plan version `1 -> 2`, whole replacement, unaffected group digests unchanged
+- Forced exit: exit code `137`, recovered cursor `3`, unknown batch recorded, resume verified, validator passed
+- Anomaly codes: `E_PAGE`, `E_NULLMAP`, `E_BUDGET`
+
+Exact evidence is in `artifacts/acceptance_report.json` and `artifacts/VALIDATION.md`.
