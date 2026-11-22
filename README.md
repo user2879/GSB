@@ -19,3 +19,50 @@
 
 验收：
 用本地事件流样本验证增量重放与全量结果一致、预算调度可续跑及快照恢复判定。
+
+---
+
+## 交付实现
+
+本仓库已按上述要求交付本地确定性管线实现 `dialog_state_pipeline/`、
+固定种子样本生成器、36 个 pytest 用例与端到端验收脚本。
+
+### 快速开始
+
+```bash
+python -m pip install numpy pytest pyyaml
+python -m dialog_state_pipeline.cli gen-samples --out samples
+python run_demo.py        # 增量/全量等价、预算续跑、快照恢复三大场景
+python -m pytest -q       # 37 passed
+```
+
+### 目录索引
+
+- `dialog_state_pipeline/`：加载校验、槽位合并、状态机、哈希链缓存、
+  并发预算调度、原子快照、故障注入、诊断报告
+- `samples/`：固定种子事件流（含追加/替换/删除）、FSM YAML、管线配置、
+  独立注入配置、全量对照配置
+- `tests/`：按 8 项业务要求组织的测试套件
+- `run_demo.py`：验收场景脚本，产物输出到 `out/`
+- `docs/TECHNICAL_DESIGN.md`：架构与关键算法
+- `docs/VERIFICATION.md`：实际验证记录与验收点对照
+
+### 关键命令
+
+```bash
+# 增量运行（复用快照缓存）
+python -m dialog_state_pipeline.cli run --events samples/events.jsonl \
+  --fsm samples/fsm.yaml --config samples/pipeline_config.json \
+  --report out/report.json
+# 从空白全量重放（独立对照配置，独立快照目录）
+python -m dialog_state_pipeline.cli run --events samples/events.jsonl \
+  --fsm samples/fsm.yaml --config samples/full_replay_config.json \
+  --report out/full.json --mode full --reset
+# 故障注入
+python -m dialog_state_pipeline.cli run --events samples/events.jsonl \
+  --fsm samples/fsm.yaml --config samples/pipeline_config.json \
+  --injection samples/injection_config.json --report out/injected.json --reset
+# 模拟中断后恢复（紧预算 + 预算续期）
+python -m dialog_state_pipeline.cli run ... --stop-after-stage advance
+python -m dialog_state_pipeline.cli run ... --refill-budget
+```

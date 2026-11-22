@@ -1,0 +1,58 @@
+initial_state: greeting
+slot_types:
+  city:
+    enum:
+    - beijing
+    - shanghai
+    - hangzhou
+    - shenzhen
+    max_length: 16
+    type: string
+  score:
+    max: 100
+    min: 0
+    type: int
+  temperature:
+    max: 50.0
+    min: -50.0
+    type: float
+slots:
+  city:
+    strategy: overwrite
+    type: city
+  comfort:
+    strategy: weighted
+    type: temperature
+  member_tier:
+    strategy: reject
+    type: string
+  visit_count:
+    strategy: larger
+    type: int
+states:
+- greeting
+- collecting
+- confirming
+- closed
+transitions:
+- action: start
+  from: greeting
+  id: R1
+  to: collecting
+- action: provide
+  from: collecting
+  id: R2
+  to: collecting
+- action: confirm
+  from: collecting
+  id: R3
+  to: confirming
+- action: confirm
+  from: confirming
+  id: R4
+  to: closed
+- action: revise
+  from: confirming
+  id: R5
+  to: collecting
+version: 1
