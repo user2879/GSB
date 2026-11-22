@@ -1,3 +1,50 @@
+# 文档快照代际迁移与读视图诊断组件
+
+面向本地 Windows 环境的纯标准库（`sqlite3` + `tkinter`）组件，核心业务是
+“快照代际迁移”：在本地 JSON 中声明代际链与迁移规则，将键空间切分为有序片段
+持久化到 SQLite，支持继承复用/重写/废弃、双维游标稳定扫描、引用计数安全清理、
+快照整体替换与异常注入重放。
+
+## 快速开始（Windows）
+
+```bat
+scripts\validate_chain.bat
+scripts\run_demo.bat
+scripts\run_tests.bat
+scripts\migrate.bat
+scripts\launch_ui.bat
+```
+
+跨平台等价命令：
+
+```bash
+python -m snapshot_migration.cli validate --chain samples/snapshot_chain.json
+python -m snapshot_migration.cli demo --chain samples/snapshot_chain.json --out artifacts/demo_output.txt
+python -m unittest discover -s tests
+```
+
+## 目录结构
+
+- `snapshot_migration/`：领域模型、强校验、片段算法、SQLite 持久层、迁移引擎、
+  读视图游标、恢复重放、异常注入、Tkinter 界面与 CLI。
+- `samples/snapshot_chain.json`：确定性四代样本（继承/重写/废弃/新增、拆分与合并）；
+  `samples/build_sample.py` 为其生成器。
+- `tests/`：29 个 `unittest` 用例。
+- `scripts/`：Windows 一键批处理。
+- `docs/ARCHITECTURE.md`：架构、边界规则、错误码与恢复语义。
+- `docs/VALIDATION.md`：实际验证结果。
+- `artifacts/demo_output.txt`：六场景稳定演示输出。
+
+## 错误码
+
+`E_CHAIN`（链非法，整体拒绝无半加载）、`E_BOUND`（片段边界/主键数）、
+`E_INHERIT`（继承来源缺失）、`E_CLEAN`（清理账本/指针冲突）、
+`E_CURSOR`（游标失效）。所有错误均携带代际、片段、字段等定位上下文。
+
+---
+
+## 原始任务说明
+
 当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向本地 Windows 环境的文档快照迁移与读视图诊断组件，交付领域数据编辑与操作应用。与在集合上维护分段范围索引不同，本组件以“快照代际迁移”为核心业务：用户在本地 JSON 文件中声明一条快照代际链，每个代际含代际标识、整数代际序号、父代际引用、键空间快照描述（若干键区间与每区间内有序的主键列表）与迁移规则（哪些键区间从父代际继承、哪些被重写、哪些被废弃）。组件须把每个代际的键空间切分为有序区间片段并持久化到本地 SQLite，片段记录区间下界与上界、主键数、片段摘要与代际归属；迁移时须把继承区间与原片段做碎片合并或拆分，使新代际的片段集合满足区间互不重叠、上界与下界相接处一致、主键有序三项约束。读视图在指定代际上按主键区间与键区间做双维游标扫描，须在迁移并发推进时保持单一代际的稳定视图。
 
 真实复杂度不来自代码量，而来自几处耦合：片段合并既有上界也有下限（过小需归并、过大需拆分），而拆分会改变主键在片段中的位置序号进而影响双维游标的分页锚点；代际迁移是增量继承，但废弃区间的清理必须与仍在引用父代际的读视图共存，因此需要代际引用计数与提交顺序的明确规则；快照整体替换要求可凭代际链对比识别哪些片段是新生成、哪些是继承复用，而强制终止恢复只能依据已提交片段与代际指针重建。

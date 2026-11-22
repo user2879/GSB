@@ -1,0 +1,312 @@
+{
+  "title": "deterministic-snapshot-chain",
+  "limits": {
+    "lower": 3,
+    "upper": 5
+  },
+  "generations": [
+    {
+      "generation_id": "G0",
+      "seq": 0,
+      "parent_id": null,
+      "ranges": [
+        {
+          "range_id": "R1",
+          "lower": "k0000",
+          "upper": "k0100",
+          "keys": [
+            "k0000000",
+            "k0000001",
+            "k0000002",
+            "k0000003",
+            "k0000004",
+            "k0000005"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R2",
+          "lower": "k0100",
+          "upper": "k0200",
+          "keys": [
+            "k0100000",
+            "k0100001",
+            "k0100002",
+            "k0100003",
+            "k0100004"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R3",
+          "lower": "k0200",
+          "upper": "k0300",
+          "keys": [
+            "k0200000",
+            "k0200001",
+            "k0200002",
+            "k0200003"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R4",
+          "lower": "k0300",
+          "upper": "k0400",
+          "keys": [
+            "k0300000",
+            "k0300001",
+            "k0300002"
+          ],
+          "tombstone": false
+        }
+      ],
+      "rules": [
+        {
+          "range_id": "R1",
+          "action": "new"
+        },
+        {
+          "range_id": "R2",
+          "action": "new"
+        },
+        {
+          "range_id": "R3",
+          "action": "new"
+        },
+        {
+          "range_id": "R4",
+          "action": "new"
+        }
+      ]
+    },
+    {
+      "generation_id": "G1",
+      "seq": 1,
+      "parent_id": "G0",
+      "ranges": [
+        {
+          "range_id": "R1",
+          "lower": "k0000",
+          "upper": "k0100",
+          "keys": [
+            "k0000000",
+            "k0000001",
+            "k0000002",
+            "k0000003",
+            "k0000004",
+            "k0000005"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R2",
+          "lower": "k0100",
+          "upper": "k0200",
+          "keys": [],
+          "tombstone": true
+        },
+        {
+          "range_id": "R3",
+          "lower": "k0200",
+          "upper": "k0300",
+          "keys": [
+            "k0200010",
+            "k0200011",
+            "k0200012",
+            "k0200013",
+            "k0200014"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R4",
+          "lower": "k0300",
+          "upper": "k0400",
+          "keys": [
+            "k0300020",
+            "k0300021",
+            "k0300022",
+            "k0300023",
+            "k0300024",
+            "k0300025",
+            "k0300026",
+            "k0300027"
+          ],
+          "tombstone": false
+        }
+      ],
+      "rules": [
+        {
+          "range_id": "R1",
+          "action": "inherit"
+        },
+        {
+          "range_id": "R2",
+          "action": "discard"
+        },
+        {
+          "range_id": "R3",
+          "action": "rewrite"
+        },
+        {
+          "range_id": "R4",
+          "action": "new"
+        }
+      ]
+    },
+    {
+      "generation_id": "G2",
+      "seq": 2,
+      "parent_id": "G1",
+      "ranges": [
+        {
+          "range_id": "R1",
+          "lower": "k0000",
+          "upper": "k0100",
+          "keys": [
+            "k0000000",
+            "k0000001",
+            "k0000002",
+            "k0000003",
+            "k0000004",
+            "k0000005"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R2",
+          "lower": "k0100",
+          "upper": "k0200",
+          "keys": [],
+          "tombstone": true
+        },
+        {
+          "range_id": "R3",
+          "lower": "k0200",
+          "upper": "k0300",
+          "keys": [
+            "k0200010",
+            "k0200011",
+            "k0200012",
+            "k0200013",
+            "k0200014"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R4",
+          "lower": "k0300",
+          "upper": "k0400",
+          "keys": [
+            "k0300020",
+            "k0300021",
+            "k0300022",
+            "k0300023",
+            "k0300024",
+            "k0300025",
+            "k0300026",
+            "k0300027"
+          ],
+          "tombstone": false
+        }
+      ],
+      "rules": [
+        {
+          "range_id": "R1",
+          "action": "inherit"
+        },
+        {
+          "range_id": "R2",
+          "action": "discard"
+        },
+        {
+          "range_id": "R3",
+          "action": "inherit"
+        },
+        {
+          "range_id": "R4",
+          "action": "inherit"
+        }
+      ]
+    },
+    {
+      "generation_id": "G3",
+      "seq": 3,
+      "parent_id": "G2",
+      "ranges": [
+        {
+          "range_id": "R1",
+          "lower": "k0000",
+          "upper": "k0100",
+          "keys": [
+            "k0000000",
+            "k0000001",
+            "k0000002",
+            "k0000003",
+            "k0000004",
+            "k0000005"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R2",
+          "lower": "k0100",
+          "upper": "k0200",
+          "keys": [],
+          "tombstone": true
+        },
+        {
+          "range_id": "R3",
+          "lower": "k0200",
+          "upper": "k0300",
+          "keys": [
+            "k0200010",
+            "k0200011",
+            "k0200012",
+            "k0200013",
+            "k0200014"
+          ],
+          "tombstone": false
+        },
+        {
+          "range_id": "R4",
+          "lower": "k0300",
+          "upper": "k0400",
+          "keys": [
+            "k0300040",
+            "k0300041",
+            "k0300042",
+            "k0300043",
+            "k0300044",
+            "k0300045",
+            "k0300046",
+            "k0300047",
+            "k0300048",
+            "k0300049",
+            "k0300050"
+          ],
+          "tombstone": false
+        }
+      ],
+      "rules": [
+        {
+          "range_id": "R1",
+          "action": "inherit"
+        },
+        {
+          "range_id": "R2",
+          "action": "discard"
+        },
+        {
+          "range_id": "R3",
+          "action": "inherit"
+        },
+        {
+          "range_id": "R4",
+          "action": "rewrite"
+        }
+      ]
+    }
+  ]
+}
