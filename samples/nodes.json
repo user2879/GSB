@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "node-a",
+      "labels": {
+        "kubernetes.io/hostname": "node-a",
+        "zone": "z1",
+        "disktype": "ssd",
+        "tier": "frontend"
+      },
+      "cpu": 16,
+      "memory": 32,
+      "taints": []
+    },
+    {
+      "name": "node-b",
+      "labels": {
+        "kubernetes.io/hostname": "node-b",
+        "zone": "z1",
+        "disktype": "hdd",
+        "tier": "backend"
+      },
+      "cpu": 16,
+      "memory": 32,
+      "taints": []
+    },
+    {
+      "name": "node-c",
+      "labels": {
+        "kubernetes.io/hostname": "node-c",
+        "zone": "z2",
+        "disktype": "ssd",
+        "tier": "backend"
+      },
+      "cpu": 8,
+      "memory": 16,
+      "taints": [
+        {
+          "key": "dedicated",
+          "value": "gpu",
+          "effect": "NoSchedule"
+        }
+      ]
+    },
+    {
+      "name": "node-d",
+      "labels": {
+        "kubernetes.io/hostname": "node-d",
+        "zone": "z2",
+        "disktype": "ssd",
+        "tier": "frontend"
+      },
+      "cpu": 8,
+      "memory": 16,
+      "taints": []
+    }
+  ]
+}

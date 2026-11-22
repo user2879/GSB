@@ -1,0 +1,240 @@
+{
+  "pods": [
+    {
+      "pod_id": "web-1",
+      "cpu_request": 4,
+      "memory_request": 8,
+      "labels": {
+        "app": "web",
+        "tier": "frontend"
+      },
+      "node_affinity": {
+        "required": [
+          {
+            "key": "tier",
+            "operator": "In",
+            "values": [
+              "frontend"
+            ]
+          }
+        ],
+        "preferred": [
+          {
+            "weight": 70,
+            "requirement": {
+              "key": "disktype",
+              "operator": "In",
+              "values": [
+                "ssd"
+              ]
+            }
+          }
+        ]
+      },
+      "pod_anti_affinity": {
+        "required": [],
+        "preferred": [
+          {
+            "weight": 50,
+            "requirement": {
+              "key": "app",
+              "operator": "In",
+              "values": [
+                "web"
+              ]
+            }
+          }
+        ],
+        "preferred_topology_key": "kubernetes.io/hostname"
+      },
+      "tolerations": []
+    },
+    {
+      "pod_id": "web-2",
+      "cpu_request": 4,
+      "memory_request": 8,
+      "labels": {
+        "app": "web",
+        "tier": "frontend"
+      },
+      "node_affinity": {
+        "required": [
+          {
+            "key": "tier",
+            "operator": "In",
+            "values": [
+              "frontend"
+            ]
+          }
+        ],
+        "preferred": [
+          {
+            "weight": 70,
+            "requirement": {
+              "key": "disktype",
+              "operator": "In",
+              "values": [
+                "ssd"
+              ]
+            }
+          }
+        ]
+      },
+      "pod_anti_affinity": {
+        "required": [
+          {
+            "key": "app",
+            "operator": "In",
+            "values": [
+              "web"
+            ]
+          }
+        ],
+        "required_topology_key": "kubernetes.io/hostname",
+        "preferred": []
+      },
+      "tolerations": []
+    },
+    {
+      "pod_id": "api-1",
+      "cpu_request": 2,
+      "memory_request": 4,
+      "labels": {
+        "app": "api",
+        "tier": "backend"
+      },
+      "node_affinity": {
+        "required": [
+          {
+            "key": "tier",
+            "operator": "In",
+            "values": [
+              "backend"
+            ]
+          }
+        ],
+        "preferred": [
+          {
+            "weight": 60,
+            "requirement": {
+              "key": "zone",
+              "operator": "In",
+              "values": [
+                "z1"
+              ]
+            }
+          }
+        ]
+      },
+      "pod_anti_affinity": {
+        "required": [],
+        "preferred": []
+      },
+      "tolerations": []
+    },
+    {
+      "pod_id": "gpu-job-1",
+      "cpu_request": 6,
+      "memory_request": 12,
+      "labels": {
+        "app": "train",
+        "tier": "backend"
+      },
+      "node_affinity": {
+        "required": [
+          {
+            "key": "dedicated",
+            "operator": "DoesNotExist"
+          }
+        ],
+        "preferred": []
+      },
+      "pod_anti_affinity": {
+        "required": [],
+        "preferred": []
+      },
+      "tolerations": [
+        {
+          "key": "dedicated",
+          "operator": "Equal",
+          "value": "gpu",
+          "effect": "NoSchedule"
+        }
+      ]
+    },
+    {
+      "pod_id": "batch-1",
+      "cpu_request": 7,
+      "memory_request": 14,
+      "labels": {
+        "app": "batch"
+      },
+      "node_affinity": {
+        "required": [],
+        "preferred": [
+          {
+            "weight": 40,
+            "requirement": {
+              "key": "zone",
+              "operator": "In",
+              "values": [
+                "z2"
+              ]
+            }
+          }
+        ]
+      },
+      "pod_anti_affinity": {
+        "required": [],
+        "preferred": []
+      },
+      "tolerations": []
+    },
+    {
+      "pod_id": "web-3",
+      "cpu_request": 5,
+      "memory_request": 10,
+      "labels": {
+        "app": "web",
+        "tier": "frontend"
+      },
+      "node_affinity": {
+        "required": [
+          {
+            "key": "tier",
+            "operator": "In",
+            "values": [
+              "frontend"
+            ]
+          }
+        ],
+        "preferred": [
+          {
+            "weight": 30,
+            "requirement": {
+              "key": "disktype",
+              "operator": "In",
+              "values": [
+                "hdd"
+              ]
+            }
+          }
+        ]
+      },
+      "pod_anti_affinity": {
+        "required": [
+          {
+            "key": "app",
+            "operator": "In",
+            "values": [
+              "web"
+            ]
+          }
+        ],
+        "required_topology_key": "kubernetes.io/hostname",
+        "preferred": []
+      },
+      "tolerations": []
+    }
+  ]
+}
