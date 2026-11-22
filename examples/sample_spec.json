@@ -1,0 +1,232 @@
+{
+  "spec_version": 1,
+  "name": "local-orders-diagnostic",
+  "seed": 20261123,
+  "stats": {
+    "version": "stats-v1",
+    "row_threshold": 5000,
+    "sample_size": 2048,
+    "confidence": 0.95,
+    "histogram_buckets": 16,
+    "value_count_limit": 4096,
+    "page_rows": 100,
+    "random_seed": 20261123
+  },
+  "cost_weights": {
+    "rows": 1,
+    "comparisons": 1,
+    "lookups": 4,
+    "io_pages": 2
+  },
+  "search": {
+    "exhaustive_max_candidates": 6,
+    "oracle_max_candidates": 12
+  },
+  "execution": {
+    "warmup_runs": 1,
+    "repetitions": 2
+  },
+  "bias": {
+    "threshold": 1.75
+  },
+  "tables": [
+    {
+      "name": "customers",
+      "row_count": 20000,
+      "columns": [
+        {
+          "name": "id",
+          "type": "integer",
+          "selectivity_hint": 0.00005,
+          "generator": {"kind": "unique_int", "start": 1}
+        },
+        {
+          "name": "region",
+          "type": "integer",
+          "selectivity_hint": 0.125,
+          "generator": {
+            "kind": "categorical",
+            "values": [1, 2, 3, 4, 5, 6, 7, 8],
+            "weights": [0.26, 0.18, 0.14, 0.11, 0.09, 0.08, 0.07, 0.07]
+          }
+        },
+        {
+          "name": "segment",
+          "type": "integer",
+          "selectivity_hint": 0.25,
+          "generator": {
+            "kind": "categorical",
+            "values": [1, 2, 3, 4],
+            "weights": [0.4, 0.3, 0.2, 0.1]
+          }
+        },
+        {
+          "name": "score",
+          "type": "real",
+          "selectivity_hint": 0.1,
+          "generator": {"kind": "uniform_float", "min": 0, "max": 100, "decimals": 3}
+        }
+      ],
+      "candidate_indexes": [
+        {"name": "idx_customers_id_region", "columns": ["id", "region"]},
+        {"name": "idx_customers_region", "columns": ["region"]},
+        {"name": "idx_customers_region_segment_id", "columns": ["region", "segment", "id"]}
+      ]
+    },
+    {
+      "name": "products",
+      "row_count": 350,
+      "columns": [
+        {
+          "name": "id",
+          "type": "integer",
+          "selectivity_hint": 0.002857142857,
+          "generator": {"kind": "unique_int", "start": 1}
+        },
+        {
+          "name": "category",
+          "type": "integer",
+          "selectivity_hint": 0.05,
+          "generator": {
+            "kind": "categorical",
+            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+          }
+        },
+        {
+          "name": "price",
+          "type": "real",
+          "selectivity_hint": 0.2,
+          "generator": {"kind": "uniform_float", "min": 1, "max": 500, "decimals": 2}
+        },
+        {
+          "name": "stock",
+          "type": "integer",
+          "selectivity_hint": 0.001,
+          "generator": {"kind": "uniform_int", "min": 0, "max": 1000}
+        }
+      ],
+      "candidate_indexes": [
+        {"name": "idx_products_id_category", "columns": ["id", "category"]},
+        {"name": "idx_products_category", "columns": ["category"]},
+        {"name": "idx_products_category_price_id", "columns": ["category", "price", "id"]}
+      ]
+    },
+    {
+      "name": "orders",
+      "row_count": 120000,
+      "columns": [
+        {
+          "name": "id",
+          "type": "integer",
+          "selectivity_hint": 0.000008333333,
+          "generator": {"kind": "unique_int", "start": 1}
+        },
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "selectivity_hint": 0.1,
+          "generator": {"kind": "foreign_key", "table": "customers", "column": "id"}
+        },
+        {
+          "name": "product_id",
+          "type": "integer",
+          "selectivity_hint": 0.001,
+          "generator": {"kind": "foreign_key", "table": "products", "column": "id"}
+        },
+        {
+          "name": "status",
+          "type": "integer",
+          "selectivity_hint": 0.166667,
+          "generator": {
+            "kind": "categorical",
+            "values": [0, 1, 2, 3, 4, 5],
+            "weights": [0.18, 0.18, 0.22, 0.15, 0.15, 0.12]
+          }
+        },
+        {
+          "name": "amount",
+          "type": "real",
+          "selectivity_hint": 0.1,
+          "generator": {"kind": "uniform_float", "min": 0, "max": 100, "decimals": 2}
+        },
+        {
+          "name": "created_bucket",
+          "type": "integer",
+          "selectivity_hint": 0.001,
+          "generator": {"kind": "uniform_int", "min": 0, "max": 999}
+        }
+      ],
+      "candidate_indexes": [
+        {"name": "idx_orders_status", "columns": ["status"]},
+        {"name": "idx_orders_status_customer", "columns": ["status", "customer_id"]},
+        {"name": "idx_orders_status_customer_amount_id", "columns": ["status", "customer_id", "amount", "id"]},
+        {"name": "idx_orders_customer", "columns": ["customer_id"]},
+        {"name": "idx_orders_product", "columns": ["product_id"]}
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "Q_status_region",
+      "tables": ["orders", "customers"],
+      "filters": [
+        {"table": "orders", "column": "status", "op": "eq", "value": 2},
+        {"table": "customers", "column": "region", "op": "eq", "value": 3}
+      ],
+      "joins": [
+        {"left_table": "orders", "left_column": "customer_id", "right_table": "customers", "right_column": "id"}
+      ],
+      "select": [
+        {"table": "orders", "column": "id"},
+        {"table": "orders", "column": "amount"},
+        {"table": "customers", "column": "id"}
+      ]
+    },
+    {
+      "id": "Q_product_category",
+      "tables": ["orders", "products"],
+      "filters": [
+        {"table": "orders", "column": "status", "op": "eq", "value": 1},
+        {"table": "products", "column": "category", "op": "eq", "value": 7}
+      ],
+      "joins": [
+        {"left_table": "orders", "left_column": "product_id", "right_table": "products", "right_column": "id"}
+      ],
+      "select": [
+        {"table": "orders", "column": "id"},
+        {"table": "orders", "column": "amount"},
+        {"table": "products", "column": "id"}
+      ]
+    },
+    {
+      "id": "Q_amount_range",
+      "tables": ["orders", "customers"],
+      "filters": [
+        {"table": "orders", "column": "amount", "op": "ge", "value": 90},
+        {"table": "customers", "column": "segment", "op": "eq", "value": 2}
+      ],
+      "joins": [
+        {"left_table": "orders", "left_column": "customer_id", "right_table": "customers", "right_column": "id"}
+      ],
+      "select": [
+        {"table": "orders", "column": "id"},
+        {"table": "orders", "column": "amount"},
+        {"table": "customers", "column": "id"}
+      ]
+    },
+    {
+      "id": "Q_customers_range",
+      "tables": ["customers"],
+      "filters": [
+        {"table": "customers", "column": "region", "op": "eq", "value": 1},
+        {"table": "customers", "column": "score", "op": "between", "value": [20, 30]}
+      ],
+      "joins": [],
+      "select": [
+        {"table": "customers", "column": "id"},
+        {"table": "customers", "column": "score"},
+        {"table": "customers", "column": "region"}
+      ]
+    }
+  ]
+}
