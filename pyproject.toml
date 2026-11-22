@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "txnmsg-ledger"
+version = "1.0.0"
+description = "Sequential and transactional message ledger with SQLite recovery and snapshots"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+txnmsg = "txnmsg.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["txnmsg*"]

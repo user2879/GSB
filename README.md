@@ -1,24 +1,194 @@
-当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的顺序与事务消息领域组件。用户在本地 JSON 文件中声明若干消息队列分区（分区标识、整数分区版本号、整数全局顺序位点上限），并提交带单调递增事务序号的事务消息批次：每个事务含事务标识、目标分区、整数本地事务版本号、若干按分区位点严格递增的消息项与整数提交时刻毫秒；每个事务可能经历 prepared、committing、committed 以及因本地事务判定失败产生的 aborted 状态，且同一分区内的消息只能按位点顺序对消费者可见。组件须把事务状态事件与逐条消息可见性记录持久化到本地 SQLite，按分区位点维护连续可消费前缀，并能在一组事务状态演进后判定每个分区的可消费位点前缀与整体账本结论。
+# 顺序与事务消息账本（Windows 本地版）
 
-核心业务是状态演进与恢复一致性：进程可能在写入事务状态事件与更新分区位点前缀之间被强制终止，重启后只能依据已完整提交的持久化记录恢复，未完成工作须标记为未知并要求重跑；同时账本存在格式版本与内容摘要，重新打开快照时版本或摘要不一致必须整体替换状态而非增量合并。
+这是一个只依赖 Python 标准库的本地事务消息领域组件。它从 JSON 加载分区与事务批次，把事务状态事件和逐条消息可见性记录写入 SQLite，并按分区位点推导连续可消费前缀。实现重点不是消息传输，而是 **状态推进、强杀恢复、快照整体替换和可验证的恢复结论**。
 
-任务环境与准备：
-确认 Windows 本地已安装 Python 3.10 或以上，并可在命令行调用 python；无需第三方网络依赖
-准备一个空白工作目录作为工作区，所有样本、账本与快照文件都在该目录内生成
-工作区内放置确定性样本事务批次 JSON 与分区声明 JSON，由演示脚本首先生成，不依赖外部下载
-运行演示脚本前清空历史账本与快照，确保每次从同一初始状态开始
+## 环境与快速开始
 
-业务要求：
-1. 实现分区声明与事务消息批次的加载和强校验：从本地 JSON 读取分区（分区标识唯一、分区版本号与顺序位点上限为非负整数）与事务批次（事务标识唯一、目标分区存在、本地事务版本号为正整数、消息位点在分区内严格递增且不超上限、提交时刻为非负整数）；任一不合法须以 E_SPEC 整体拒绝并指明首个非法事务标识与字段
-2. 实现事务状态事件与逐条消息可见性记录的 SQLite 编解码与原子写入：每条状态事件含事务标识、状态、单调事件序号、所用本地事务版本号与分区归属，每条可见性记录含事务标识、分区标识、位点、消息摘要与生效事件序号；单次状态迁移及其引发的可见性记录须在同一事务中写入，写入后逐条校验长度字段自洽与摘要匹配，损坏记录须以 E_REC 报告记录序号与字段
-3. 实现 prepared、committing、committed、aborted 状态机与按分区位点的连续可消费前缀推导：某分区可消费前缀为从位点起点起连续且其所属事务均已 committed 的最大位点，中间存在未提交或已中止事务须截断；每次状态演进后须输出受影响分区的可消费前缀、被截断位点及截断原因，同一事件序列在任意回放顺序或批边界下必须得到逐字节一致的前缀结论
-4. 实现进程被强制终止后的恢复与未知状态标注：重启后只能依据 SQLite 中已完整提交的事件与可见性记录恢复状态机与可消费前缀，处于 committing 且未提交完成的事务须标记为未知并要求重跑，且未知事务位点不得计入可消费前缀；恢复报告须列出未知事务标识、分区及被悬置的位点区间，不得声称能生成强制终止时刻的退出报告
-5. 实现账本的版本识别与快照整体替换恢复：账本携带整数格式版本与内容摘要，快照持久化分区集合版本、事务集合版本、事件游标、各分区可消费前缀与摘要；重新打开快照时须比较快照版本与内容摘要同当前磁盘状态，不一致须整体替换事务状态、可见性记录与前缀结论而非增量合并，旧账本保留为只读备份并以稳定顺序列出新增、删除与版本变化项
-6. 实现恢复后的一致性重放校验：从快照恢复后按账本记录的事件游标重新推演同一事务序列，将每个事务最终状态、每分区可消费前缀、未知位点区间与被截断位点同账本逐项比较，差异须定位到首个不一致的事件序号、事务标识与字段并以 E_REPLAY 报明依据；因强制终止导致的未知事务须单列而不计入复现失败
-7. 实现异常注入与业务码链路：支持以命令行参数分别注入事务批次文件损坏、同一分区消息位点重复与账本内容摘要不符三类异常，分别以 E_SPEC、E_ORDER、E_SNAPSHOT 报告并写入包含时间、事件序号、分区与业务码的结构化日志；异常注入仅改变输入文件或启动参数，不得通过修改源码制造失败
-8. 提供 Tkinter 诊断界面与可集成的包接口及可重复演示：界面展示各分区事务状态分布、可消费前缀与被截断位点、未知事务标记、账本格式版本与快照列表，渲染顺序稳定且刷新不改变账本内容；以包形式暴露加载、状态推进、前缀查询、快照保存恢复与重放校验接口，附带确定性样本与演示脚本顺序执行正常提交、中途强制终止、恢复与重放校验
+要求 Windows 本地 Python 3.10 或更高版本。运行时不访问网络，也不需要第三方包。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```powershell
+cd <项目目录>
+python --version
+python -m unittest discover -s tests -v
+python demo.py --workdir demo_workspace
+python -m txnmsg view --workdir demo_workspace
+python -m txnmsg ui --workdir demo_workspace
+```
 
-验收：
-使用本地样本验证事务状态推进、可消费前缀推导、强制终止后恢复与快照整体替换及异常业务码，附运行结果。
+演示脚本每次开始都会清空 `ledger.sqlite`、快照、备份、日志和样本目录，因此重复运行得到同一事件序列与同一前缀结论。所有样本、账本、快照和日志都写入 `--workdir` 指定的目录。
+
+若当前 Python 没有可加载的 Tk 运行库，`ui` 不会篡改账本，而是输出稳定只读诊断 JSON 作为降级结果。Windows 官方 Python 安装通常自带 Tk，可直接打开诊断窗口。
+
+## 输入格式
+
+分区声明：
+
+```json
+{
+  "format_version": 1,
+  "partitions": [
+    {"partition_id": "orders", "partition_version": 3, "max_position": 20},
+    {"partition_id": "payments", "partition_version": 1, "max_position": 10}
+  ]
+}
+```
+
+事务批次：
+
+```json
+{
+  "format_version": 1,
+  "transactions": [
+    {
+      "transaction_id": "tx-order-001",
+      "txn_seq": 1,
+      "partition_id": "orders",
+      "local_txn_version": 1,
+      "commit_time_ms": 1700000000001,
+      "messages": [
+        {"position": 0, "payload": {"order_id": "A-100", "amount": 10}},
+        {"position": 1, "payload": {"order_id": "A-101", "amount": 11}}
+      ]
+    }
+  ]
+}
+```
+
+约束：
+
+- 分区标识唯一；分区版本号与 `max_position` 必须是非负整数。
+- `transaction_id` 唯一；`txn_seq` 为正整数，并在批次顺序及已加载账本中严格递增。
+- 目标分区必须存在；`local_txn_version` 为正整数；`commit_time_ms` 为非负整数。
+- 同一事务内位点严格递增；整个分区内不同事务也不得复用位点，否则为 `E_ORDER`。
+- 位点从 `0` 开始，允许范围是 `0..max_position`。可消费前缀为包含式最大位点；没有可消费消息时为 `-1`。
+- 消息载荷可以是任意可规范化 JSON 值。可选提供 `message_digest`，若提供则必须与 SHA-256 摘要一致。
+
+任一批次不合法会在写入账本前整体拒绝：`E_SPEC` 指向首个非法事务标识和字段；同一分区重复位点使用 `E_ORDER`。
+
+## 状态与可消费前缀
+
+允许迁移：
+
+```text
+未开始 -> prepared -> committing -> committed
+                    \-> aborted
+          prepared -----------------> aborted
+```
+
+首次事件必须是 `prepared`。每次推进分配连续的全局 `event_seq`；事件记录包含事务标识、状态、本地事务版本号和分区。`committed` 事件与全部消息可见性记录在同一 SQLite 事务中写入。
+
+前缀推导规则：
+
+- 从位点 `0` 开始检查；中间缺失位点以 `missing` 截断。
+- 任一 `prepared`、`committing` 或 `aborted` 事务都会阻断后续可见性。
+- `committing` 在重启后作为未知事务单列，其位点区间不得计入前缀。
+- 结论使用规范化 JSON 和稳定排序；同一事件序列不因批量推进边界或回放时的输入行顺序而改变字节结果。
+
+## 包接口
+
+```python
+from txnmsg import (
+    Ledger,
+    create_snapshot,
+    load_and_validate,
+    replay_verify,
+    restore_snapshot,
+)
+
+partitions, transactions = load_and_validate("partitions.json", "transactions.json")
+
+with Ledger("ledger.sqlite") as ledger:
+    ledger.initialise_partitions(partitions)
+    ledger.ingest(transactions)
+    ledger.advance_state("tx-order-001", "prepared")
+    ledger.advance_state("tx-order-001", "committing")
+    ledger.advance_state("tx-order-001", "committed")
+    prefixes = ledger.query_prefixes()
+    conclusion = ledger.conclusion()
+
+    snapshot = create_snapshot(ledger, "snapshots/snapshot-0001.json")
+    restore = restore_snapshot(ledger, snapshot.path)
+    replay = replay_verify(ledger, snapshot.path)
+```
+
+`Ledger` 暴露事务、事件、可见性、前缀、恢复报告和整体结论；`create_snapshot`、`restore_snapshot`、`replay_verify` 以及只读 `build_diagnostics` 都可作为库接口集成。
+
+## 命令行
+
+```powershell
+python -m txnmsg demo --workdir demo_workspace
+python -m txnmsg view --workdir demo_workspace --json
+python -m txnmsg ui --workdir demo_workspace
+python -m txnmsg validate --partitions parts.json --transactions batch.json
+python -m txnmsg snapshot --workdir demo_workspace
+python -m txnmsg restore --workdir demo_workspace --snapshot snapshots/snapshot-0001.json
+python -m txnmsg replay --workdir demo_workspace --snapshot snapshots/snapshot-0001.json
+```
+
+异常注入只创建输入文件或复制并篡改账本，不改生产源码。先运行过一次 `demo` 以生成样本：
+
+```powershell
+python -m txnmsg inject --workdir demo_workspace --kind corrupt-batch
+python -m txnmsg inject --workdir demo_workspace --kind duplicate-position
+python -m txnmsg inject --workdir demo_workspace --kind ledger-digest
+python -m txnmsg inject --workdir demo_workspace --kind snapshot-digest
+```
+
+业务码与退出码：
+
+| 业务码 | 退出码 | 含义 |
+|---|---:|---|
+| `E_SPEC` | 2 | 输入契约、状态迁移或格式非法 |
+| `E_REC` | 3 | SQLite 记录长度、摘要、字段或原子状态不一致 |
+| `E_ORDER` | 4 | 同一分区位点重复或顺序冲突 |
+| `E_SNAPSHOT` | 5 | 账本/快照格式版本、内容摘要或完整性不一致 |
+| `E_REPLAY` | 6 | 恢复后重放与快照/物化结论不一致 |
+
+所有业务错误都会追加到 `<workdir>/logs/business.jsonl`，每条包含 UTC 时间、业务码、事件序号、分区、事务、字段和细节。
+
+## 强杀恢复与快照
+
+状态事件和可见性记录在 SQLite 单事务内原子提交；分区前缀是单独刷新的一致性缓存。因此存在真实的“事件已提交、前缀缓存尚未更新”窗口。强制终止后：
+
+1. 打开账本时先校验记录长度、摘要、事件连续性、状态迁移和账本内容摘要。
+2. 从已完整提交的事件与消息重建状态机、前缀和未知事务，不信任旧前缀缓存。
+3. 最新状态为 `committing` 的事务写入未知标记，报告分区和悬置位点区间，并要求重跑。
+4. 恢复报告明确 `exit_report_available: false`，不伪造强杀瞬间的退出报告。
+
+快照包含整数格式版本、分区集合版本、事务集合版本、事件游标、全部事件/可见性/事务目录、各分区前缀和双层摘要。恢复时先验证快照自身内容摘要和其中账本摘要，再把旧账本备份为只读 SQLite，最后在一个 SQLite 事务中整体删除并替换状态，绝不增量合并。差异按稳定顺序列出新增、删除、版本变化和事务最终状态变化。
+
+`replay_verify` 从事件序号 1 重放至游标，比较每个事务最终状态、每分区前缀、截断位点和未知事务。首个差异定位到事件序号、事务标识和字段并报 `E_REPLAY`；未知事务单列且不计入复现失败。
+
+更细的持久化不变量与崩溃窗口说明见 [docs/DESIGN.md](docs/DESIGN.md)。
+
+## 实际验证结果
+
+验证环境：Python 3.11，SQLite 内置模块，无第三方依赖；当前容器的 Python 缺少 `libtk8.6.so`，因此 Tk 窗口本身未在该容器显示，诊断模型和只读刷新路径已验证，Windows 自带 Tk 的 Python 可直接运行。
+
+```text
+python -m unittest discover -s tests -v
+Ran 28 tests
+OK
+```
+
+`python demo.py --workdir demo_workspace` 的结果为 `PASS`，关键证据：
+
+- 正常提交后 `orders` 前缀推进；中止事务使后续位点保持不可消费。
+- 两次真实子进程以退出码 `74` 强杀，均在事件提交后、前缀缓存刷新前终止。
+- 第一次恢复修复陈旧前缀；第二次将 `tx-order-003` 标为未知，悬置区间为 `[4,5]`，报告不提供退出报告。
+- 未知事务重跑后前缀恢复推进；最终快照事件游标为 `17`，重放 17 个事件为 `PASS`。
+- 快照后继续提交 `tx-pay-003` 使摘要和版本变化；恢复快照后该事务被整体删除、游标回到 17，旧账本备份权限为只读。
+- 三类注入分别得到 `E_SPEC`、`E_ORDER`、`E_SNAPSHOT`，结构化日志包含 `timestamp`、`code`、`event_seq`、`partition_id`。
+- 重复构建诊断视图不会改变账本摘要或渲染顺序。
+
+完整机器可读结果位于 `demo_workspace/demo-summary.json`；验收摘要另见 [artifacts/verification-results.json](artifacts/verification-results.json)。
+
+## 目录
+
+```text
+txnmsg/          领域包、SQLite 账本、快照、重放、诊断、Tk UI、CLI
+tests/           28 个标准库 unittest 用例
+demo.py          确定性演示入口
+docs/DESIGN.md   持久化与一致性设计说明
+artifacts/       实际运行与验收记录
+```
