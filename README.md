@@ -1,22 +1,70 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向本地 Windows 环境的配置分发结果验证与差异回归分析平台，交付数据处理管线与结果验证工具。平台管理一组本地模拟组件节点（每个节点为独立子进程，通过 127.0.0.1 回环 TCP 的 JSON 行协议通信），节点接收配置切片后对固定随机种子生成的确定性样本执行分组聚合，回传聚合摘要、所用配置版本与整数毫秒耗时。用户以本地 JSON 录入两版配置清单（基线版与候选版），每版含若干数值型配置项、目标节点集合、分发策略与派生关系，并附节点注册表与确定性样本生成参数。平台须计算两版之间的配置差异与派生链影响范围，分别向节点分发两版配置并采集聚合结果，比较两侧结果判定回归，且所有差异结论必须可被独立复核并支持中断恢复。
+# 配置分发结果验证与差异回归分析平台
 
-任务环境与准备：
-安装 Python 3.11 或以上，并确保 SQLite3 与 Tkinter 随标准库可用。
-安装 NumPy（建议 1.26 或以上），用于确定性样本的分组聚合计算。
-准备本地 JSON 两版配置清单、节点注册表与确定性样本生成参数，以及本仓库附带的本地模拟节点脚本。
-在 Windows 本地运行节点子进程，绑定 127.0.0.1 高位端口，确保端口未被占用；不依赖任何线上服务或容器环境。
+本地（Windows 优先，跨平台可跑）配置分发验证平台：管理一组以独立子进程运行、
+通过 `127.0.0.1` 回环 TCP JSON Lines 协议通信的模拟节点，对两版配置（基线/候选）
+做差异度量、定点误差界分析、真实采集、回归判定、派生链归因，并提供 SQLite 账本、
+强制终止恢复与重放校验。不使用 Docker，不访问任何线上服务。
 
-业务要求：
-1. 实现两版配置清单与节点注册表的加载与强校验：从本地 JSON 读取基线版与候选版各自的版本号、配置项键值、目标节点集合、分发策略与派生关系；校验两版版本号各自单调递增、键合法、数值类型受支持、目标节点在注册表中存在、派生引用目标存在且两版派生图均无环；任一不合法须以 E_MANIFEST 整体拒绝加载并稳定列出违规项与依据。
-2. 实现两版配置清单之间差异度量与派生链级影响范围推导：对每个配置项判定新增、删除、取值变更、目标节点变更或派生系数变更类型，沿派生依赖图推导每个变更项在候选版中的全部下游配置项，按稳定拓扑序输出逐项影响链与受影响节点集合；未发生变更的配置项及其下游不得出现在影响链中，差异度量结果不得依赖字典或哈希遍历顺序。
-3. 实现统一精度口径下的整数定点量化与逐项差异误差界：以会话参数指定的缩放因子（10 的整数幂）把两版配置项数值与派生系数统一量化为定点整数，所有乘加以整数完成并显式声明截断方向与溢出饱和规则；对每个变更项给出单值量化误差、沿派生链的累计误差上界以及两版差异是否落在误差界内的判定，判定须输出所用误差界各分量。
-4. 实现基线结果与候选结果的真实采集与逐项差异判定：以 Windows 子进程按注册表启动节点，分别对基线版与候选版在同一批确定性样本上执行分组聚合采集聚合摘要与耗时；逐配置项、逐节点比较两侧聚合摘要与耗时，差异超出声明容差须以 E_REGRESSION 标记并记录两版摘要、差值、容差与首个差异分组键；节点未回执或连接失败不得被计为无差异，须单独归类并参与判定。
-5. 实现超出预算差异的派生链级归因：对每个 E_REGRESSION 项沿影响链回溯至触发变更项，输出归因路径、各层差异贡献占比与主导层级，并用显式阈值规则区分直接取值差异、派生系数放大与节点执行离散三类成因；归因结论不得依赖节点回执到达顺序，同一输入多次运行须得到逐字节一致的归因结果。
-6. 实现受全局并发上限与每节点并发配额约束的并行采集调度及重试隔离：在双重约束下并行向各节点采集两版结果，任一时刻运行采集数与单节点运行数不得超限，配额耗尽时任务排队并记录等待开始与结束的单调时钟毫秒；单次采集须有真实套接字超时，超时后按声明策略重试且重试不得改变单次采集语义，重试次数耗尽须以 E_EXHAUST 标记。
-7. 实现回归账本与会话快照的版本识别整体替换恢复：每完成一个采集批次须在同一 SQLite 事务中写入批次内两版差异结论、归因结论、定点误差界与进度游标，账本携带整数格式版本与内容摘要；会话快照持久化两版清单版本、缩放因子口径版本、已采集结果摘要与账本游标并携带内容摘要；重新打开快照时版本或摘要与当前声明不一致须整体替换而不做增量合并，并稳定列出替换项。
-8. 实现强制终止后的恢复与回归结论重放校验：进程被强制终止后重启只能依据已完整提交的批次恢复，处于未提交采集中的配置项须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告；恢复后按账本记录的版本与缩放因子重新执行差异度量、影响推导与采集判定，将差异结论与归因结论同账本逐项比较，差异须定位到首个不一致的配置项键、节点与字段并以 E_REPLAY 报明依据。
+## 环境要求
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Python ≥ 3.11（SQLite3、Tkinter 随标准库；Tkinter 仅 GUI 需要，缺失不影响管线）
+- NumPy ≥ 1.26：`pip install -r requirements.txt`
 
-验收：
-使用本地样本验证两版配置差异、派生影响链与回归判定，并检查中断恢复与重放校验结果。
+## 目录
+
+- `config_regression/` 平台源码（模块职责见 `docs/DESIGN.md`）
+- `samples/` 本地样本：注册表、会话参数、两版清单（覆盖新增/删除/取值/目标/系数变更）
+- `tests/` pytest 测试（29 个，含真实子进程 TCP、故障注入、恢复与重放）
+- `docs/DESIGN.md` 技术说明与定点/并发/恢复口径
+- `artifacts/` 运行产物（报告 JSON、SQLite 账本）
+
+## 快速开始
+
+```bash
+python -m config_regression.cli validate \
+  --baseline samples/baseline_manifest.json \
+  --candidate samples/candidate_manifest.json \
+  --registry samples/registry.json --session samples/session.json
+
+python -m config_regression.cli diff \
+  --baseline samples/baseline_manifest.json --candidate samples/candidate_manifest.json \
+  --registry samples/registry.json --session samples/session.json \
+  --output artifacts/diff_report.json
+
+python -m config_regression.cli run \
+  --baseline samples/baseline_manifest.json --candidate samples/candidate_manifest.json \
+  --registry samples/registry.json --session samples/session.json \
+  --database artifacts/session.db --output artifacts/run_report.json
+
+python -m config_regression.cli recover \
+  --baseline samples/baseline_manifest.json --candidate samples/candidate_manifest.json \
+  --registry samples/registry.json --session samples/session.json \
+  --database artifacts/session.db --output artifacts/recover_report.json
+```
+
+退出码：`0` 无回归；`1` 检出 E_REGRESSION/no_receipt；`2` 平台错误（E_MANIFEST 等）；
+`3` GUI 不可用。
+
+## 错误码
+
+- `E_MANIFEST` 清单/注册表强校验整体拒绝（稳定列出全部违规项与依据）
+- `E_REGRESSION` 摘要或耗时超容差、目标分发变化
+- `E_EXHAUST` 真实 socket 超时/连接失败在声明重试次数内未恢复
+- `E_REPLAY` 恢复重放与账本结论不一致（定位到首个 node.key.field）
+- `E_SNAPSHOT` 快照版本/摘要不匹配触发整体替换
+
+## 测试
+
+```bash
+python -m pytest tests/
+```
+
+覆盖：清单强校验与环检测、顺序无关差异与影响链、整数定点误差界、真实节点 TCP 采集
+与确定性、双重并发上限与排队时钟、重试语义与 E_EXHAUST、回归判定与 no_receipt、
+逐字节归因确定性、快照整体替换、强制终止 unknown 恢复、E_REPLAY 定位。
+
+## 确定性与可复核
+
+所有结论经规范化 JSON（键排序、无空白）+ SHA-256 摘要持久化；差异、误差界、
+findings、归因在同输入下逐字节一致（仅采集时钟字段随单调时钟变化，不进入结论摘要）。
+节点聚合算法在 `config_regression/sampling.py`，平台与节点共用，可独立复核。

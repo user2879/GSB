@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "config-regression-platform"
+version = "1.0.0"
+description = "Local configuration distribution validation and diff regression analysis platform"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+cfgreg = "config_regression.cli:main"
+
+[tool.setuptools]
+packages = ["config_regression"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

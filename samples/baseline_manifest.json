@@ -1,0 +1,34 @@
+{
+  "manifest_id": "pricing-baseline",
+  "version": 3,
+  "predecessor_version": 2,
+  "items": [
+    {"key": "base_rate", "value": 1.25,
+     "targets": ["node-a", "node-b"], "strategy": "full_mesh",
+     "derived_from": []},
+    {"key": "stable_factor", "value": 0.5,
+     "targets": ["node-a", "node-b", "node-c"], "strategy": "canary",
+     "derived_from": []},
+    {"key": "discount", "value": 0.2,
+     "targets": ["node-b"], "strategy": "staged",
+     "derived_from": []},
+    {"key": "adjusted_rate", "value": 1.05,
+     "targets": ["node-a", "node-b"], "strategy": "full_mesh",
+     "derived_from": [
+       {"key": "base_rate", "coefficient": 1.0},
+       {"key": "discount", "coefficient": -1.0}
+     ]},
+    {"key": "region_load", "value": 0.75,
+     "targets": ["node-c"], "strategy": "full_mesh",
+     "derived_from": []},
+    {"key": "composite_load", "value": 0.7875,
+     "targets": ["node-a", "node-c"], "strategy": "full_mesh",
+     "derived_from": [
+       {"key": "adjusted_rate", "coefficient": 0.5},
+       {"key": "region_load", "coefficient": 0.35}
+     ]},
+    {"key": "legacy_toggle", "value": 3.0,
+     "targets": ["node-b"], "strategy": "full_mesh",
+     "derived_from": []}
+  ]
+}

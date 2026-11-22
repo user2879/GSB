@@ -1,0 +1,36 @@
+{
+  "manifest_id": "pricing-candidate",
+  "version": 4,
+  "predecessor_version": 3,
+  "items": [
+    {"key": "base_rate", "value": 1.55,
+     "targets": ["node-a", "node-b"], "strategy": "full_mesh",
+     "derived_from": []},
+    {"key": "stable_factor", "value": 0.5,
+     "targets": ["node-a", "node-b", "node-c"], "strategy": "canary",
+     "derived_from": []},
+    {"key": "discount", "value": 0.2,
+     "targets": ["node-b", "node-c"], "strategy": "staged",
+     "derived_from": []},
+    {"key": "adjusted_rate", "value": 1.35,
+     "targets": ["node-a", "node-b"], "strategy": "full_mesh",
+     "derived_from": [
+       {"key": "base_rate", "coefficient": 1.0},
+       {"key": "discount", "coefficient": -1.0}
+     ]},
+    {"key": "region_load", "value": 0.75,
+     "targets": ["node-c"], "strategy": "full_mesh",
+     "derived_from": []},
+    {"key": "composite_load", "value": 1.185,
+     "targets": ["node-a", "node-c"], "strategy": "full_mesh",
+     "derived_from": [
+       {"key": "adjusted_rate", "coefficient": 0.8},
+       {"key": "region_load", "coefficient": 0.35}
+     ]},
+    {"key": "fresh_gate", "value": 2.0,
+     "targets": ["node-a"], "strategy": "canary",
+     "derived_from": [
+       {"key": "base_rate", "coefficient": 0.25}
+     ]}
+  ]
+}
