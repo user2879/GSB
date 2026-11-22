@@ -1,0 +1,644 @@
+{
+  "budget_verification": {
+    "codes": [
+      "E_BUDGET_PENDING",
+      "E_BUDGET_PENDING",
+      "E_BUDGET_PENDING",
+      "E_BUDGET_PENDING"
+    ],
+    "deductions_monotonic": true,
+    "ledger_entries": 2,
+    "ok": true,
+    "partial_shards": [
+      "shard-a"
+    ],
+    "pending_queue": [
+      {
+        "pending_document_ids": [
+          "doc-0033"
+        ],
+        "pending_documents": 1,
+        "pending_tokens": 11,
+        "reason": "E_BUDGET_PENDING",
+        "shard": "shard-a"
+      },
+      {
+        "pending_document_ids": [
+          "doc-0002",
+          "doc-0006",
+          "doc-0010",
+          "doc-0014",
+          "doc-0018",
+          "doc-0022",
+          "doc-0026",
+          "doc-0030",
+          "doc-0034"
+        ],
+        "pending_documents": 9,
+        "pending_tokens": 138,
+        "reason": "E_BUDGET_PENDING",
+        "shard": "shard-b"
+      },
+      {
+        "pending_document_ids": [
+          "doc-0003",
+          "doc-0007",
+          "doc-0011",
+          "doc-0015",
+          "doc-0019",
+          "doc-0023",
+          "doc-0027",
+          "doc-0031",
+          "doc-0035"
+        ],
+        "pending_documents": 9,
+        "pending_tokens": 142,
+        "reason": "E_BUDGET_PENDING",
+        "shard": "shard-c"
+      },
+      {
+        "pending_document_ids": [
+          "doc-0004",
+          "doc-0008",
+          "doc-0012",
+          "doc-0016",
+          "doc-0020",
+          "doc-0024",
+          "doc-0028",
+          "doc-0032",
+          "doc-0036"
+        ],
+        "pending_documents": 9,
+        "pending_tokens": 129,
+        "reason": "E_BUDGET_PENDING",
+        "shard": "shard-d"
+      }
+    ],
+    "pending_shards": [
+      "shard-a",
+      "shard-b",
+      "shard-c",
+      "shard-d"
+    ],
+    "remaining_token_budget": 10
+  },
+  "final": {
+    "all_decode_checksums_ok": true,
+    "all_queries_have_checksums": true,
+    "all_two_tier_bytes_differ": true,
+    "block_count": 40,
+    "budget_ledger_entries": 12,
+    "canonical_digest": "72d4738a6861fa86713771274ce7f15a842c21a906dc9153001a8460c90c6b61",
+    "completed_shards": [
+      "shard-a",
+      "shard-b",
+      "shard-c",
+      "shard-d"
+    ],
+    "concurrency": {
+      "build": {
+        "blocks": 40,
+        "build": {
+          "active": 0,
+          "max_observed": 3
+        },
+        "concurrency_quota": 4,
+        "shards": 4,
+        "thread_pool_size": 3
+      },
+      "compression": {
+        "cache_metrics": {
+          "block_hits": 40,
+          "block_lookups": 40,
+          "encoding_calls": 0,
+          "encoding_hits": 80,
+          "encoding_lookups": 80,
+          "norm_hits": 36,
+          "norm_lookups": 36,
+          "query_hits": 0,
+          "query_lookups": 0
+        },
+        "compression": {
+          "active": 0,
+          "max_observed": 3
+        },
+        "encodings": 80,
+        "fresh_encodings": 0,
+        "reused_encodings": 80
+      },
+      "query": {
+        "cache_metrics": {
+          "block_hits": 40,
+          "block_lookups": 40,
+          "encoding_calls": 0,
+          "encoding_hits": 160,
+          "encoding_lookups": 160,
+          "norm_hits": 36,
+          "norm_lookups": 36,
+          "query_hits": 12,
+          "query_lookups": 12
+        },
+        "fresh_queries": 0,
+        "queries": 12,
+        "query": {
+          "active": 0,
+          "max_observed": 3
+        },
+        "reused_queries": 12
+      }
+    },
+    "query_count": 12,
+    "report_path": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/reports/latest.json",
+    "selected_tiers_present": [
+      1,
+      2
+    ]
+  },
+  "notes": [
+    "Canonical comparison covers blocks, block fingerprints, both encoded byte lengths, decoded checksums, query result order, referenced blocks, budget ledger, compression decisions and stable failures.",
+    "Reuse provenance is intentionally excluded because a clean full rebuild has an empty cache while an incremental run reuses persisted artifacts."
+  ],
+  "ok": true,
+  "resume_verification": {
+    "comparison": {
+      "equivalent": true,
+      "first_difference": null,
+      "full_digest": "e350c02fd7b03874548fbf891567bcf18453f7c86a5f6df8c197142468b236c1",
+      "incremental_digest": "e350c02fd7b03874548fbf891567bcf18453f7c86a5f6df8c197142468b236c1",
+      "provenance_excluded": [
+        "reuse ledger",
+        "stage reuse",
+        "run metadata",
+        "timings",
+        "checkpoint events"
+      ]
+    },
+    "interrupted_exit_code": 0,
+    "interrupted_status": "interrupted",
+    "ledger_entries_at_stop": 1,
+    "ok": true,
+    "resumed": {
+      "available": true,
+      "reason": "resumed",
+      "resumed": true
+    }
+  },
+  "schema": 1,
+  "seed": 20261123,
+  "steps": [
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "e350c02fd7b03874548fbf891567bcf18453f7c86a5f6df8c197142468b236c1",
+        "incremental_digest": "e350c02fd7b03874548fbf891567bcf18453f7c86a5f6df8c197142468b236c1",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "action": "none"
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-initial/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000001",
+      "reuse": {
+        "block_reuse_ratio": "0.000000",
+        "invalidated_blocks": 0,
+        "invalidated_queries": 0,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 32,
+        "recomputed_queries": 12,
+        "reused_blocks": 0,
+        "reused_queries": 0
+      },
+      "step": "initial",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "block_count": 32,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": "auto",
+        "consumed_token_budget": 545,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 655,
+        "selected_tier_counts": {
+          "1": 29,
+          "2": 3
+        },
+        "total_positions": 545,
+        "total_postings": 457
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "38b23a7d37de04cf908fd03d9e649f798c94491538300deb04243630c7e4a2b0",
+        "incremental_digest": "38b23a7d37de04cf908fd03d9e649f798c94491538300deb04243630c7e4a2b0",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "doc_id": "doc-0002"
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-update/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000002",
+      "reuse": {
+        "block_reuse_ratio": "0.750000",
+        "invalidated_blocks": 8,
+        "invalidated_queries": 12,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 8,
+        "recomputed_queries": 12,
+        "reused_blocks": 24,
+        "reused_queries": 0
+      },
+      "step": "single-document-correction",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-b"
+        ],
+        "block_count": 32,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": "auto",
+        "consumed_token_budget": 534,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 666,
+        "selected_tier_counts": {
+          "1": 29,
+          "2": 3
+        },
+        "total_positions": 534,
+        "total_postings": 447
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "c5582df19e95c4675315a78d4065f794727556d46b96250ac65c4909df61e664",
+        "incremental_digest": "c5582df19e95c4675315a78d4065f794727556d46b96250ac65c4909df61e664",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "doc_id": "doc-9001"
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-append/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000003",
+      "reuse": {
+        "block_reuse_ratio": "0.843750",
+        "invalidated_blocks": 5,
+        "invalidated_queries": 11,
+        "query_reuse_ratio": "0.083333",
+        "recomputed_blocks": 5,
+        "recomputed_queries": 11,
+        "reused_blocks": 27,
+        "reused_queries": 1
+      },
+      "step": "shard-append",
+      "summary": {
+        "accepted_documents": 37,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-c"
+        ],
+        "block_count": 32,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": "auto",
+        "consumed_token_budget": 540,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 660,
+        "selected_tier_counts": {
+          "1": 29,
+          "2": 3
+        },
+        "total_positions": 540,
+        "total_postings": 453
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "3cc49ff159f78ddd7c13b82d6bfc1b3e50bd60d0a5fbc00628e1d9080cccbe1d",
+        "incremental_digest": "3cc49ff159f78ddd7c13b82d6bfc1b3e50bd60d0a5fbc00628e1d9080cccbe1d",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "doc_id": "doc-0007"
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-delete/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000004",
+      "reuse": {
+        "block_reuse_ratio": "0.812500",
+        "invalidated_blocks": 6,
+        "invalidated_queries": 12,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 6,
+        "recomputed_queries": 12,
+        "reused_blocks": 26,
+        "reused_queries": 0
+      },
+      "step": "document-delete",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-c"
+        ],
+        "block_count": 32,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": "auto",
+        "consumed_token_budget": 527,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 673,
+        "selected_tier_counts": {
+          "1": 29,
+          "2": 3
+        },
+        "total_positions": 527,
+        "total_postings": 440
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "c869bdec2aacecdbcf7068f4efafe59c2e68820a114e47f4dbf063dbd3907ee9",
+        "incremental_digest": "c869bdec2aacecdbcf7068f4efafe59c2e68820a114e47f4dbf063dbd3907ee9",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "compression_tier": 2
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-tier/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000005",
+      "reuse": {
+        "block_reuse_ratio": "1.000000",
+        "invalidated_blocks": 0,
+        "invalidated_queries": 12,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 0,
+        "recomputed_queries": 12,
+        "reused_blocks": 32,
+        "reused_queries": 0
+      },
+      "step": "compression-tier-switch",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "block_count": 32,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": 2,
+        "consumed_token_budget": 527,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 673,
+        "selected_tier_counts": {
+          "2": 32
+        },
+        "total_positions": 527,
+        "total_postings": 440
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "e968e1e1b3646ae85b8719ffa271f122456fdc7f926fa1b668a54e25daa98054",
+        "incremental_digest": "e968e1e1b3646ae85b8719ffa271f122456fdc7f926fa1b668a54e25daa98054",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "chunk_size": 4
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-chunk/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000006",
+      "reuse": {
+        "block_reuse_ratio": "0.000000",
+        "invalidated_blocks": 32,
+        "invalidated_queries": 12,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 40,
+        "recomputed_queries": 12,
+        "reused_blocks": 0,
+        "reused_queries": 0
+      },
+      "step": "chunk-size-change",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "block_count": 40,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": 2,
+        "consumed_token_budget": 527,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 673,
+        "selected_tier_counts": {
+          "2": 40
+        },
+        "total_positions": 527,
+        "total_postings": 440
+      }
+    },
+    {
+      "comparison": {
+        "equivalent": true,
+        "first_difference": null,
+        "full_digest": "72d4738a6861fa86713771274ce7f15a842c21a906dc9153001a8460c90c6b61",
+        "incremental_digest": "72d4738a6861fa86713771274ce7f15a842c21a906dc9153001a8460c90c6b61",
+        "provenance_excluded": [
+          "reuse ledger",
+          "stage reuse",
+          "run metadata",
+          "timings",
+          "checkpoint events"
+        ]
+      },
+      "details": {
+        "compression_tier": "auto",
+        "global_token_budget": 1800,
+        "per_shard_token_quota": 650
+      },
+      "failures": [],
+      "full_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/full-state-budget/snapshots/v00000001",
+      "incremental_snapshot": "/home/zsl/feedback/uidfc5909d3-default-139/.iidx/verification/incremental-state/snapshots/v00000007",
+      "reuse": {
+        "block_reuse_ratio": "1.000000",
+        "invalidated_blocks": 0,
+        "invalidated_queries": 12,
+        "query_reuse_ratio": "0.000000",
+        "recomputed_blocks": 0,
+        "recomputed_queries": 12,
+        "reused_blocks": 40,
+        "reused_queries": 0
+      },
+      "step": "budget-and-tier-policy-change",
+      "summary": {
+        "accepted_documents": 36,
+        "accepted_queries": 12,
+        "affected_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "block_count": 40,
+        "completed_shards": [
+          "shard-a",
+          "shard-b",
+          "shard-c",
+          "shard-d"
+        ],
+        "compression_tier": "auto",
+        "consumed_token_budget": 527,
+        "partial_shards": [],
+        "pending_queue": [],
+        "pending_shards": [],
+        "query_count": 12,
+        "quota_exhausted_queue": [],
+        "quota_exhausted_shards": [],
+        "remaining_token_budget": 1273,
+        "selected_tier_counts": {
+          "1": 37,
+          "2": 3
+        },
+        "total_positions": 527,
+        "total_postings": 440
+      }
+    }
+  ],
+  "validation_verification": {
+    "accepted_documents": 36,
+    "accepted_queries": 12,
+    "codes": [
+      "E_CONFIG_SWITCH_POINTS_NOT_INCREASING",
+      "E_CONFIG_CONCURRENCY_EXCEEDS_QUOTA",
+      "E_DOCUMENT_TERM_OUT_OF_VOCAB",
+      "E_DOCUMENT_ID_DUPLICATE",
+      "E_QUERY_VERSION_UNSUPPORTED",
+      "E_QUERY_ID_DUPLICATE"
+    ],
+    "failure_count": 6,
+    "ok": true
+  },
+  "verification": "incremental-vs-clean-full-rebuild"
+}

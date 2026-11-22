@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iidx-deterministic"
+version = "1.0.0"
+description = "Deterministic local inverted-index builder, compression-tier scheduler and interactive diagnostics app"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23"]
+
+[project.scripts]
+iidx = "iidx.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["iidx*"]
