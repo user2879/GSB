@@ -1,0 +1,23 @@
+"""Stable business codes used by the workbench and reports."""
+
+E_SOURCE_UNKNOWN = "E_SOURCE_UNKNOWN"
+E_DUP_DOC_ID = "E_DUP_DOC_ID"
+E_ENCODING_INVALID = "E_ENCODING_INVALID"
+E_CONFIG_INVALID = "E_CONFIG_INVALID"
+E_SOURCE_QUOTA_EXCEEDED = "E_SOURCE_QUOTA_EXCEEDED"
+E_GLOBAL_BUDGET_EXHAUSTED = "E_GLOBAL_BUDGET_EXHAUSTED"
+E_SNAPSHOT_STALE = "E_SNAPSHOT_STALE"
+E_SAMPLE_FAILED = "E_SAMPLE_FAILED"
+E_MINHASH_FAILED = "E_MINHASH_FAILED"
+E_INJECTION_MISSING = "E_INJECTION_MISSING"
+
+STAGE_RANK = {
+    "config": 0,
+    "load_validate": 1,
+    "sample": 2,
+    "minhash": 3,
+    "dedup": 4,
+    "write": 5,
+    "snapshot": 6,
+}
+
