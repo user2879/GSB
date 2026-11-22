@@ -1,0 +1,529 @@
+{
+  "description": "高变更块比例：1KiB x 128 blocks，超过 70% 变更",
+  "manifest_format": "m3",
+  "rollback_target": "churn-base",
+  "rollback_threshold": 0.25,
+  "schema_version": 1,
+  "snapshot_plan": [
+    "churn-base",
+    "churn-mid",
+    "churn-tail"
+  ],
+  "steps": [
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": null,
+      "snapshot_id": "churn-base"
+    },
+    {
+      "action": "write",
+      "block": 0,
+      "fill_hex": "c0"
+    },
+    {
+      "action": "write",
+      "block": 3,
+      "fill_hex": "c3"
+    },
+    {
+      "action": "write",
+      "block": 6,
+      "fill_hex": "c6"
+    },
+    {
+      "action": "write",
+      "block": 9,
+      "fill_hex": "c9"
+    },
+    {
+      "action": "write",
+      "block": 12,
+      "fill_hex": "cc"
+    },
+    {
+      "action": "write",
+      "block": 15,
+      "fill_hex": "cf"
+    },
+    {
+      "action": "write",
+      "block": 18,
+      "fill_hex": "d2"
+    },
+    {
+      "action": "write",
+      "block": 21,
+      "fill_hex": "d5"
+    },
+    {
+      "action": "write",
+      "block": 24,
+      "fill_hex": "d8"
+    },
+    {
+      "action": "write",
+      "block": 27,
+      "fill_hex": "db"
+    },
+    {
+      "action": "write",
+      "block": 30,
+      "fill_hex": "de"
+    },
+    {
+      "action": "write",
+      "block": 33,
+      "fill_hex": "e1"
+    },
+    {
+      "action": "write",
+      "block": 36,
+      "fill_hex": "e4"
+    },
+    {
+      "action": "write",
+      "block": 39,
+      "fill_hex": "e7"
+    },
+    {
+      "action": "write",
+      "block": 42,
+      "fill_hex": "c2"
+    },
+    {
+      "action": "write",
+      "block": 45,
+      "fill_hex": "c5"
+    },
+    {
+      "action": "write",
+      "block": 48,
+      "fill_hex": "c8"
+    },
+    {
+      "action": "write",
+      "block": 51,
+      "fill_hex": "cb"
+    },
+    {
+      "action": "write",
+      "block": 54,
+      "fill_hex": "ce"
+    },
+    {
+      "action": "write",
+      "block": 57,
+      "fill_hex": "d1"
+    },
+    {
+      "action": "write",
+      "block": 60,
+      "fill_hex": "d4"
+    },
+    {
+      "action": "write",
+      "block": 63,
+      "fill_hex": "d7"
+    },
+    {
+      "action": "write",
+      "block": 66,
+      "fill_hex": "da"
+    },
+    {
+      "action": "write",
+      "block": 69,
+      "fill_hex": "dd"
+    },
+    {
+      "action": "write",
+      "block": 72,
+      "fill_hex": "e0"
+    },
+    {
+      "action": "write",
+      "block": 75,
+      "fill_hex": "e3"
+    },
+    {
+      "action": "write",
+      "block": 78,
+      "fill_hex": "e6"
+    },
+    {
+      "action": "write",
+      "block": 81,
+      "fill_hex": "c1"
+    },
+    {
+      "action": "write",
+      "block": 84,
+      "fill_hex": "c4"
+    },
+    {
+      "action": "write",
+      "block": 87,
+      "fill_hex": "c7"
+    },
+    {
+      "action": "write",
+      "block": 90,
+      "fill_hex": "ca"
+    },
+    {
+      "action": "write",
+      "block": 93,
+      "fill_hex": "cd"
+    },
+    {
+      "action": "write",
+      "block": 96,
+      "fill_hex": "d0"
+    },
+    {
+      "action": "write",
+      "block": 99,
+      "fill_hex": "d3"
+    },
+    {
+      "action": "write",
+      "block": 102,
+      "fill_hex": "d6"
+    },
+    {
+      "action": "write",
+      "block": 105,
+      "fill_hex": "d9"
+    },
+    {
+      "action": "write",
+      "block": 108,
+      "fill_hex": "dc"
+    },
+    {
+      "action": "write",
+      "block": 111,
+      "fill_hex": "df"
+    },
+    {
+      "action": "write",
+      "block": 114,
+      "fill_hex": "e2"
+    },
+    {
+      "action": "write",
+      "block": 117,
+      "fill_hex": "e5"
+    },
+    {
+      "action": "write",
+      "block": 120,
+      "fill_hex": "c0"
+    },
+    {
+      "action": "write",
+      "block": 123,
+      "fill_hex": "c3"
+    },
+    {
+      "action": "write",
+      "block": 126,
+      "fill_hex": "c6"
+    },
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": "churn-base",
+      "snapshot_id": "churn-mid"
+    },
+    {
+      "action": "write",
+      "block": 1,
+      "fill_hex": "21"
+    },
+    {
+      "action": "write",
+      "block": 4,
+      "fill_hex": "24"
+    },
+    {
+      "action": "write",
+      "block": 7,
+      "fill_hex": "27"
+    },
+    {
+      "action": "write",
+      "block": 10,
+      "fill_hex": "2a"
+    },
+    {
+      "action": "write",
+      "block": 13,
+      "fill_hex": "2d"
+    },
+    {
+      "action": "write",
+      "block": 16,
+      "fill_hex": "30"
+    },
+    {
+      "action": "write",
+      "block": 19,
+      "fill_hex": "33"
+    },
+    {
+      "action": "write",
+      "block": 22,
+      "fill_hex": "36"
+    },
+    {
+      "action": "write",
+      "block": 25,
+      "fill_hex": "39"
+    },
+    {
+      "action": "write",
+      "block": 28,
+      "fill_hex": "3c"
+    },
+    {
+      "action": "write",
+      "block": 31,
+      "fill_hex": "3f"
+    },
+    {
+      "action": "write",
+      "block": 34,
+      "fill_hex": "42"
+    },
+    {
+      "action": "write",
+      "block": 37,
+      "fill_hex": "45"
+    },
+    {
+      "action": "write",
+      "block": 40,
+      "fill_hex": "48"
+    },
+    {
+      "action": "write",
+      "block": 43,
+      "fill_hex": "4b"
+    },
+    {
+      "action": "write",
+      "block": 46,
+      "fill_hex": "4e"
+    },
+    {
+      "action": "write",
+      "block": 49,
+      "fill_hex": "51"
+    },
+    {
+      "action": "write",
+      "block": 52,
+      "fill_hex": "54"
+    },
+    {
+      "action": "write",
+      "block": 55,
+      "fill_hex": "57"
+    },
+    {
+      "action": "write",
+      "block": 58,
+      "fill_hex": "5a"
+    },
+    {
+      "action": "write",
+      "block": 61,
+      "fill_hex": "5d"
+    },
+    {
+      "action": "write",
+      "block": 64,
+      "fill_hex": "60"
+    },
+    {
+      "action": "write",
+      "block": 67,
+      "fill_hex": "63"
+    },
+    {
+      "action": "write",
+      "block": 70,
+      "fill_hex": "66"
+    },
+    {
+      "action": "write",
+      "block": 73,
+      "fill_hex": "69"
+    },
+    {
+      "action": "write",
+      "block": 76,
+      "fill_hex": "6c"
+    },
+    {
+      "action": "write",
+      "block": 79,
+      "fill_hex": "6f"
+    },
+    {
+      "action": "write",
+      "block": 82,
+      "fill_hex": "22"
+    },
+    {
+      "action": "write",
+      "block": 85,
+      "fill_hex": "25"
+    },
+    {
+      "action": "write",
+      "block": 88,
+      "fill_hex": "28"
+    },
+    {
+      "action": "write",
+      "block": 91,
+      "fill_hex": "2b"
+    },
+    {
+      "action": "write",
+      "block": 94,
+      "fill_hex": "2e"
+    },
+    {
+      "action": "write",
+      "block": 97,
+      "fill_hex": "31"
+    },
+    {
+      "action": "write",
+      "block": 100,
+      "fill_hex": "34"
+    },
+    {
+      "action": "write",
+      "block": 103,
+      "fill_hex": "37"
+    },
+    {
+      "action": "write",
+      "block": 106,
+      "fill_hex": "3a"
+    },
+    {
+      "action": "write",
+      "block": 109,
+      "fill_hex": "3d"
+    },
+    {
+      "action": "write",
+      "block": 112,
+      "fill_hex": "40"
+    },
+    {
+      "action": "write",
+      "block": 115,
+      "fill_hex": "43"
+    },
+    {
+      "action": "write",
+      "block": 118,
+      "fill_hex": "46"
+    },
+    {
+      "action": "write",
+      "block": 121,
+      "fill_hex": "49"
+    },
+    {
+      "action": "write",
+      "block": 124,
+      "fill_hex": "4c"
+    },
+    {
+      "action": "write",
+      "block": 127,
+      "fill_hex": "4f"
+    },
+    {
+      "action": "write",
+      "block": 2,
+      "fill_hex": "22"
+    },
+    {
+      "action": "write",
+      "block": 7,
+      "fill_hex": "27"
+    },
+    {
+      "action": "write",
+      "block": 12,
+      "fill_hex": "2c"
+    },
+    {
+      "action": "write",
+      "block": 17,
+      "fill_hex": "31"
+    },
+    {
+      "action": "write",
+      "block": 22,
+      "fill_hex": "36"
+    },
+    {
+      "action": "write",
+      "block": 27,
+      "fill_hex": "3b"
+    },
+    {
+      "action": "write",
+      "block": 32,
+      "fill_hex": "40"
+    },
+    {
+      "action": "write",
+      "block": 37,
+      "fill_hex": "45"
+    },
+    {
+      "action": "write",
+      "block": 42,
+      "fill_hex": "4a"
+    },
+    {
+      "action": "write",
+      "block": 47,
+      "fill_hex": "4f"
+    },
+    {
+      "action": "write",
+      "block": 52,
+      "fill_hex": "54"
+    },
+    {
+      "action": "write",
+      "block": 57,
+      "fill_hex": "59"
+    },
+    {
+      "action": "write",
+      "block": 62,
+      "fill_hex": "5e"
+    },
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": "churn-mid",
+      "snapshot_id": "churn-tail"
+    }
+  ],
+  "volume": {
+    "block_count": 128,
+    "block_size": 1024,
+    "image": "volume.bin"
+  }
+}

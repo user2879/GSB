@@ -1,0 +1,43 @@
+{
+  "samples": {
+    "high_churn": {
+      "block_count": 128,
+      "block_size": 1024,
+      "description": "高变更块比例：1KiB x 128 blocks，超过 70% 变更",
+      "manifest_digest": "sha256:f1e815351509468a68d7aad558f51c6a17aec9610f4be786e185dcded8a60d2d",
+      "rollback_target": "churn-base",
+      "session_root": "/home/zsl/feedback/uidfc5909d3-default-157/samples/generated/high_churn",
+      "snapshot_count": 3,
+      "spec_path": "/home/zsl/feedback/uidfc5909d3-default-157/samples/high_churn.session.json",
+      "state_version": 102,
+      "steps_executed": 102,
+      "volume_size": 131072
+    },
+    "large": {
+      "block_count": 1024,
+      "block_size": 4096,
+      "description": "大卷：4KiB x 1024 blocks，低变更比例与长链",
+      "manifest_digest": "sha256:d7e57c4a97b12a8dbce89c7cb3b8cb39f26d7c47b70a104afb7ef63b627e09ec",
+      "rollback_target": "large-mid",
+      "session_root": "/home/zsl/feedback/uidfc5909d3-default-157/samples/generated/large",
+      "snapshot_count": 3,
+      "spec_path": "/home/zsl/feedback/uidfc5909d3-default-157/samples/large.session.json",
+      "state_version": 55,
+      "steps_executed": 55,
+      "volume_size": 4194304
+    },
+    "small": {
+      "block_count": 16,
+      "block_size": 512,
+      "description": "小卷：512B x 16 blocks，三快照与链式写时复制",
+      "manifest_digest": "sha256:b13ade5a6e37590c36da617b9ff82d2e217b1f9c478e7bc203653ecbd1c629d5",
+      "rollback_target": "checkpoint-a",
+      "session_root": "/home/zsl/feedback/uidfc5909d3-default-157/samples/generated/small",
+      "snapshot_count": 3,
+      "spec_path": "/home/zsl/feedback/uidfc5909d3-default-157/samples/small.session.json",
+      "state_version": 13,
+      "steps_executed": 13,
+      "volume_size": 8192
+    }
+  }
+}

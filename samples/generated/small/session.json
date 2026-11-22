@@ -1,0 +1,85 @@
+{
+  "manifest_format": "m3",
+  "rollback_target": "checkpoint-a",
+  "rollback_threshold": 0.5,
+  "schema_version": 1,
+  "session_id": "session-817ac462c969",
+  "snapshot_plan": [
+    "baseline",
+    "checkpoint-a",
+    "checkpoint-b"
+  ],
+  "steps": [
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": null,
+      "snapshot_id": "baseline"
+    },
+    {
+      "action": "write",
+      "block": 0,
+      "fill_hex": "11"
+    },
+    {
+      "action": "write",
+      "block": 3,
+      "fill_hex": "22"
+    },
+    {
+      "action": "write",
+      "block": 7,
+      "fill_hex": "33"
+    },
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": "baseline",
+      "snapshot_id": "checkpoint-a"
+    },
+    {
+      "action": "write",
+      "block": 1,
+      "fill_hex": "44"
+    },
+    {
+      "action": "write",
+      "block": 3,
+      "fill_hex": "55"
+    },
+    {
+      "action": "write",
+      "block": 9,
+      "fill_hex": "66"
+    },
+    {
+      "action": "write",
+      "block": 10,
+      "fill_hex": "77"
+    },
+    {
+      "action": "write",
+      "block": 15,
+      "fill_hex": "88"
+    },
+    {
+      "action": "snapshot",
+      "parent_snapshot_id": "checkpoint-a",
+      "snapshot_id": "checkpoint-b"
+    },
+    {
+      "action": "write",
+      "block": 0,
+      "fill_hex": "99"
+    },
+    {
+      "action": "write",
+      "block": 8,
+      "fill_hex": "aa"
+    }
+  ],
+  "volume": {
+    "block_count": 16,
+    "block_size": 512,
+    "image": "volume.bin"
+  },
+  "writes": []
+}
