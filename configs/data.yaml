@@ -1,0 +1,69 @@
+name: deterministic_credit_panel
+rows: 240
+seed: 20261123
+split:
+  train_fraction: 0.72
+  validation_fraction: 0.28
+target:
+  name: approved
+  kind: binary
+  latent_weights: [1.30, -0.90]
+  noise_scale: 1.00
+  offset: 0.10
+columns:
+  - name: income
+    kind: numeric
+    latent_weights: [1.00, 0.10]
+    noise_scale: 0.60
+    mean: 52.0
+    scale: 13.0
+    missing_rate: 0.03
+  - name: tenure
+    kind: numeric
+    latent_weights: [0.20, 1.10]
+    noise_scale: 0.70
+    mean: 6.0
+    scale: 2.5
+    missing_rate: 0.05
+  - name: utilization
+    kind: numeric
+    latent_weights: [-0.80, 0.40]
+    noise_scale: 0.80
+    mean: 0.35
+    scale: 0.18
+    missing_rate: 0.08
+  - name: bureau_score
+    kind: numeric
+    latent_weights: [1.10, -0.40]
+    noise_scale: 0.50
+    mean: 680.0
+    scale: 55.0
+    missing_rate: 0.02
+  - name: region
+    kind: categorical
+    latent_weights: [0.30, 0.80]
+    noise_scale: 0.30
+    categories: [north, south, east, west]
+    drop_first: true
+    missing_rate: 0.02
+  - name: channel
+    kind: categorical
+    latent_weights: [0.70, -0.50]
+    noise_scale: 0.25
+    categories: [partner, direct, online]
+    drop_first: true
+    missing_rate: 0.04
+  - name: income_copy
+    kind: redundant
+    source: income
+    multiplier: 1.0
+    offset: 0.0
+    noise_scale: 0.0
+    missing_rate: 0.0
+  - name: tenure_scaled
+    kind: redundant
+    source: tenure
+    multiplier: 12.0
+    offset: -20.0
+    noise_scale: 0.0
+    missing_rate: 0.0

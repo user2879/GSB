@@ -1,0 +1,35 @@
+name: regularization_lab_v2
+seed: 20261123
+exchange_version: v2
+data: data.yaml
+conversion_tolerance: 0.001
+training:
+  epochs: 55
+  learning_rate: 0.055
+  batch_size: 16
+  tolerance: 1.0e-12
+  l1_zero_subgradient: 0.0
+  snapshot_every_batches: 12
+budget:
+  global_epochs: 500
+  per_model_epochs: 120
+runtime:
+  max_concurrency: 3
+  concurrency_limit: 8
+snapshot:
+  strict_resume: false
+  keep_generations: 4
+models:
+  - name: ridge_core
+    scheme: l2
+    penalty: 0.12
+    features: [income, tenure, utilization, bureau_score, region, channel]
+  - name: lasso_compact
+    scheme: l1
+    penalty: 0.025
+    features: [income, tenure, bureau_score, region]
+  - name: elastic_balanced
+    scheme: elastic_net
+    penalty: 0.040
+    mix: 0.55
+    features: [income, tenure, utilization, bureau_score, region, channel, income_copy, tenure_scaled]

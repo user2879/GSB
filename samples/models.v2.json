@@ -1,0 +1,42 @@
+{
+  "schema_version": "v2",
+  "precision_policy": "IEEE-754 float64; precision_label is preserved per model",
+  "models": [
+    {
+      "name": "sample_ridge",
+      "scheme": "l2",
+      "coefficients": [0.42175, -0.1834, 0.0],
+      "feature_indices": [0, 1, 2],
+      "feature_names": ["income", "tenure", "utilization"],
+      "intercept": 0.3129,
+      "penalty": 0.1,
+      "mix": null,
+      "convergence_status": "converged",
+      "precision_label": "float64-v2-sample"
+    },
+    {
+      "name": "sample_lasso",
+      "scheme": "l1",
+      "coefficients": [0.3012, 0.0, -0.0777],
+      "feature_indices": [0, 1, 2],
+      "feature_names": ["income", "tenure", "utilization"],
+      "intercept": -0.0455,
+      "penalty": 0.025,
+      "mix": null,
+      "convergence_status": "max_epochs",
+      "precision_label": "float64-v2-sample"
+    },
+    {
+      "name": "sample_elastic",
+      "scheme": "elastic_net",
+      "coefficients": [0.2755, -0.11825, 0.05225],
+      "feature_indices": [0, 1, 2],
+      "feature_names": ["income", "tenure", "utilization"],
+      "intercept": 0.125,
+      "penalty": 0.04,
+      "mix": 0.55,
+      "convergence_status": "converged",
+      "precision_label": "float64-v2-sample"
+    }
+  ]
+}
