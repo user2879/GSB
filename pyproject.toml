@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "faultdiag"
+version = "1.0.0"
+description = "本地故障域隔离与恢复诊断组件(回环 TCP JSON 行协议 + SQLite 账本)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+demo = ["numpy"]
+
+[tool.setuptools]
+packages = ["faultdiag"]
