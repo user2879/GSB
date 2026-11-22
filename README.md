@@ -1,22 +1,158 @@
-当前是空白工作区，需要从零构建一个面向本地 Windows 环境的多集群配置分发领域数据编辑与操作应用，聚焦云原生场景下的并行调度与资源预算。用户在 Tkinter 界面或本地 JSON 清单中编辑若干集群（集群标识、127.0.0.1 回环端口、节点列表与每集群整数并发配额）与若干配置分发任务（任务标识、引用的配置键集合、目标集群列表、整数分片数与每分片整数资源单位需求）。系统须把任务编译为按集群与分片组织分发计划，在全局资源单位预算、每集群并发配额与每任务并发上限三重约束下并行下发到本地回环模拟节点，节点按配置修订对固定种子数值样本执行分组聚合并回传摘要与整数毫秒耗时。核心难点在于：配置修订演进后旧分片轨迹与统计须整体作废而非增量修补，并行调度须在三重预算同时生效时保持可判定，且恢复后的重放校验须能定位首个不一致分片。
+# ConfigDist：多集群配置分发工作台
 
-任务环境与准备：
-确认 Windows 上可用 Python 3.11 及以上版本，并能在命令行调用 python 与 pip。
-准备本地虚拟环境并在其中安装 NumPy 与 Tkinter（Tkinter 随标准 Python 安装包提供，无需额外网络依赖）。
-无需外部账号、线上站点或容器环境；所有集群端口使用 127.0.0.1 回环高位端口，运行前确认目标端口未被占用。
-在空白工作区中创建项目目录，数据、账本与快照文件均写入该目录及其子目录。
+面向本地 Windows 环境的确定性多集群配置分发应用。它把集群、配置修订链和分发任务编译为稳定计划，在全局资源预算、集群并发配额、任务并发上限三重约束下，通过真实回环 TCP 子进程并行下发，并将权威结果保存在 SQLite 账本与内容摘要快照中。
 
-业务要求：
-1. 实现集群、配置修订链与分发任务清单的加载、界面编辑与强校验：校验集群标识与任务标识唯一、端口为 127.0.0.1 回环字面量且全局不重复、修订版本号单调递增且父修订引用存在无环、分片数与资源单位为非负整数、配置键集合非空；任一不合法须以 E_SPEC 整体拒绝并列出首个违规字段与位置。
-2. 实现确定性集群模拟节点的本地编排：以 Windows 子进程按集群在声明端口启动节点，通过 JSON 行协议接收分片下发，按该集群当前修订对固定整数种子生成的数值样本执行分组聚合并回传聚合摘要与单调时钟毫秒耗时；端口占用与握手超时须分别以 E_PORT、E_HANDSHAKE 报告，不得以人为延迟冒充实连接失败。
-3. 实现按集群与分片组织的分发计划编译，并输出每个分片的稳定标识、引用配置键集合、资源单位需求与来源修订版本；编译产物的序列化顺序不得依赖字典或哈希遍历顺序，同一清单在任意编辑顺序下须得到逐字节一致的分发计划摘要与分片标识序列。
-4. 实现受三重预算约束的并行下发调度：任一时刻运行分片占用的资源单位之和不得超出全局预算、单集群运行分片数不得超出其并发配额、单任务运行分片数不得超出任务并发上限；预算或配额不足时分片排队并记录等待开始与结束的单调时钟毫秒，调度轨迹须逐分片给出结局与峰值占用。
-5. 实现配置修订演进后的整体替换与陈旧结论防护：修订或目标集群变化后修订版本号单调递增，旧版本下已产生的分片轨迹、聚合摘要与预算统计须整体标记为陈旧且不得参与当前展示与汇总，新一轮下发须整体替换结论视图而非逐分片修补，替换时须稳定列出受影响分片集合与替换依据。
-6. 实现聚合摘要与账本的权威重算一致性校验：界面从账本缓存快速展示各集群各任务的分片进度与聚合摘要，权威重算命令须按账本逐分片重放下发并以 NumPy 在本地重算聚合摘要；任一缓存摘要与权威重算不一致须以 E_PREVIEW 定位到首个不一致的集群、任务与分片，并同时比较扫描行数与字节摘要。
-7. 实现账本持久化与强制终止后的恢复：每完成一个分片须在同一 SQLite 事务中写入分片标识、结局、资源单位占用、聚合摘要与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的分片记录恢复，运行中未提交分片须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告。
-8. 实现会话快照的版本识别、整体替换恢复与恢复后重放校验：快照持久化集群集合版本、修订链版本、预算参数版本、分片轨迹与聚合摘要并携带内容摘要，重开时版本或摘要不一致须整体替换而非增量合并；恢复后按快照记录重新下发已完成分片，差异须定位到首个不一致的分片标识与字段并以 E_REPLAY 报明依据，另支持注入修订链成环、快照摘要不符两类异常分别以 E_CYCLE、E_SNAPSHOT 报告。
+不依赖 Docker、外部账号或线上服务。节点只绑定 `127.0.0.1` 声明端口。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 功能覆盖
 
-验收：
-使用本地样本验证分发计划编译、三重预算调度、版本整体替换与恢复重放一致性，附运行输出。
+- 强校验集群、任务、端口、修订链、分片数和资源单位；首错返回 `E_SPEC`，修订环单独返回 `E_CYCLE`。
+- 确定性计划编译：规划顺序、配置键和序列化均规范化，输入数组换序仍得到逐字节一致的 `plan_digest`。
+- 每集群一个真实 Python 子进程；JSON 行协议；固定整数种子 + NumPy 分组聚合；回传整数毫秒耗时。
+- 三重预算并行调度；无法满足约束的分片得到可判定的 `E_BUDGET`，不会永久挂起。
+- 新 generation 整体替换：旧分片轨迹、摘要和预算结论统一标记为陈旧，当前视图只读取当前 generation。
+- 账本逐分片单事务提交；每片记录结局、资源占用、聚合摘要和进度游标；账本带整数格式版本与内容摘要。
+- 强制终止恢复只承认完整提交的分片；其余分片标记 `unknown` 并要求重跑，不伪造退出报告。
+- 权威重算同时执行本地 NumPy 重算和回环节点重放，缓存不一致以 `E_PREVIEW` 定位首片。
+- 快照整体替换恢复和恢复后重放；首个差异以 `E_REPLAY` 给出分片与字段；摘要错误为 `E_SNAPSHOT`。
+- Tkinter 工作台提供 JSON 清单编辑、计划预览、运行、权威重算、账本、陈旧审计、快照恢复和重放。
+
+## Windows 准备
+
+要求 Python 3.11 或更高版本。官方 Windows Python 安装包通常已包含 Tcl/Tk；安装时保留 `tcl/tk and IDLE` 组件即可。
+
+```bat
+py -3.11 --version
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -c "import tkinter, numpy; print('tk', tkinter.TkVersion, 'numpy', numpy.__version__)"
+```
+
+如需确认样本端口未被占用：
+
+```powershell
+Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
+  Where-Object { $_.LocalPort -in 43101,43102,43103 }
+```
+
+应用本身也会在启动子进程前探测端口。活跃监听返回 `E_PORT`，节点已监听但未完成 JSON 握手返回 `E_HANDSHAKE`。
+
+## 快速开始
+
+```bat
+python -m configdist validate --spec sample/spec.json
+python -m configdist plan --spec sample/spec.json --out artifacts/sample-plan.json
+python -m configdist run --spec sample/spec.json --ledger artifacts/ledger.sqlite3 --snapshot artifacts/session.snapshot.json
+python -m configdist preview --ledger artifacts/ledger.sqlite3
+python -m configdist verify --ledger artifacts/ledger.sqlite3
+python -m configdist replay --snapshot artifacts/session.snapshot.json
+python -m configdist gui --spec sample/spec.json
+```
+
+完整一站式验收：
+
+```bat
+run_demo.bat
+```
+
+或：
+
+```bat
+python -m unittest discover -v
+python -m configdist demo --out artifacts/demo/acceptance.txt
+```
+
+## 清单格式
+
+完整样本见 `sample/spec.json`。核心结构：
+
+```json
+{
+  "format_version": 1,
+  "simulation_seed": 20261122,
+  "clusters": [
+    {"id": "edge-a", "host": "127.0.0.1", "port": 43101,
+     "nodes": ["a-node-1", "a-node-2"], "concurrency": 2}
+  ],
+  "revisions": [
+    {"cluster_id": "edge-a", "version": 1, "parent": null,
+     "config": {"mode": "boot", "region": "east", "policy": "strict"}}
+  ],
+  "tasks": [
+    {"id": "deploy-core", "config_keys": ["mode", "region"],
+     "target_clusters": ["edge-a"], "shards": 4,
+     "resource_units": 2, "max_parallel": 3}
+  ],
+  "budgets": {"global_resource_units": 7, "default_task_parallel": 2},
+  "versions": {"clusters": 1, "revisions": 1, "budgets": 1}
+}
+```
+
+约束：
+
+- 集群标识、任务标识分别全局唯一，且匹配 `[A-Za-z0-9][A-Za-z0-9._-]{0,63}`。
+- `host` 必须字面量 `127.0.0.1`；端口必须是 `1..65535` 整数且全局唯一。
+- 每个集群至少一个修订；版本号在集群内唯一并递增；父版本必须存在、更小且无环。
+- 任务配置键非空且不能重复；每个目标集群的当前修订必须包含全部键。
+- `shards`、`resource_units`、`concurrency`、`max_parallel`、预算均为非负整数。
+
+## 常用命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `validate` | 只校验并显示计划摘要 |
+| `plan` | 写出规范化计划 JSON |
+| `run` | 启动节点、整体替换 generation、调度、逐片提交账本 |
+| `preview` | 从账本缓存读取当前 generation 进度与摘要 |
+| `verify` | 本地 NumPy 重算，并默认通过回环节点逐片重放 |
+| `snapshot` / `restore` | 保存 / 识别并整体恢复快照 |
+| `replay` | 恢复后重新下发已完成分片，首差报 `E_REPLAY` |
+| `recover` | 强制终止后只恢复完整提交记录 |
+| `gui` | 启动 Tkinter 工作台 |
+| `demo` | 执行计划、三重预算、替换、重放完整验收 |
+
+`run --crash-after-commits N` 是强制终止验收钩子：提交 `N` 个分片后调用 `os._exit(17)`。正常运行不要使用。
+
+## 错误码
+
+| 错误码 | 含义 |
+| --- | --- |
+| `E_SPEC` | 清单结构或字段违反首错规则 |
+| `E_CYCLE` | 修订链父引用成环 |
+| `E_PORT` | 回环端口被活跃监听占用，或节点无法绑定 |
+| `E_HANDSHAKE` | 已建立连接但 JSON 握手/回传超时或失败 |
+| `E_BUDGET` | 分片永久无法满足三重预算，明确标记为 blocked |
+| `E_PREVIEW` | 账本缓存与本地 NumPy 权威摘要不一致 |
+| `E_LEDGER` | 账本格式版本或内容摘要错误 |
+| `E_RECOVERY` | 没有可恢复运行 |
+| `E_REPLAY` | 恢复重放出现首个分片字段差异 |
+| `E_SNAPSHOT` | 快照格式或内容摘要不一致 |
+| `E_TK` | 当前 Python 无法导入 Tkinter |
+
+## 已验证结果
+
+本仓库已在当前 Linux/WSL 环境用真实回环子进程验证；Tkinter 代码在目标 Windows 上使用标准库，当前容器未安装 Tk，因此未执行窗口自动化。验证记录：
+
+- 测试：`artifacts/test-results.txt`，10 项测试全部通过。
+- 验收演示：`artifacts/demo/acceptance.txt`。
+- 样本计划：`artifacts/sample-plan.json`。
+
+样本关键结果：
+
+- 18 个分片全部完成。
+- 峰值：全局 `7/7` 资源单位，集群并发 `edge-a=2/2`、`edge-b=1/1`、`edge-c=2/2`，任务并发 `deploy-core=3/3`、`audit-policy=2/2`。
+- 权威重算：18/18；回环节点重放 18/18；快照恢复重放 18/18。
+- 修订从 `edge-a v2 -> v3` 且 `deploy-core` 移除 `edge-b` 后，旧 18 片全部陈旧，新 generation 14 片完成，双路权威重算 14/14。
+
+## 目录
+
+```text
+configdist/        领域、校验、规划、节点、调度、账本、快照、GUI、CLI
+tests/             验收测试
+sample/spec.json   本地确定性样本
+artifacts/         计划、测试记录、验收输出；运行数据在子目录
+```
+
+工程细节和协议见 `TECHNICAL_DESIGN.md`。

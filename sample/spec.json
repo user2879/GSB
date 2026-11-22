@@ -1,0 +1,80 @@
+{
+  "format_version": 1,
+  "simulation_seed": 20261122,
+  "clusters": [
+    {
+      "id": "edge-a",
+      "host": "127.0.0.1",
+      "port": 43101,
+      "nodes": ["a-node-1", "a-node-2"],
+      "concurrency": 2
+    },
+    {
+      "id": "edge-b",
+      "host": "127.0.0.1",
+      "port": 43102,
+      "nodes": ["b-node-1"],
+      "concurrency": 1
+    },
+    {
+      "id": "edge-c",
+      "host": "127.0.0.1",
+      "port": 43103,
+      "nodes": ["c-node-1", "c-node-2"],
+      "concurrency": 2
+    }
+  ],
+  "revisions": [
+    {
+      "cluster_id": "edge-a",
+      "version": 1,
+      "parent": null,
+      "config": {"mode": "boot", "region": "east", "policy": "strict"}
+    },
+    {
+      "cluster_id": "edge-a",
+      "version": 2,
+      "parent": 1,
+      "config": {"mode": "steady", "region": "east", "policy": "strict"}
+    },
+    {
+      "cluster_id": "edge-b",
+      "version": 1,
+      "parent": null,
+      "config": {"mode": "steady", "region": "west", "policy": "balanced"}
+    },
+    {
+      "cluster_id": "edge-c",
+      "version": 1,
+      "parent": null,
+      "config": {"mode": "steady", "region": "north", "policy": "strict"}
+    }
+  ],
+  "tasks": [
+    {
+      "id": "deploy-core",
+      "config_keys": ["mode", "region"],
+      "target_clusters": ["edge-a", "edge-b", "edge-c"],
+      "shards": 4,
+      "resource_units": 2,
+      "max_parallel": 3
+    },
+    {
+      "id": "audit-policy",
+      "config_keys": ["policy"],
+      "target_clusters": ["edge-a", "edge-c"],
+      "shards": 3,
+      "resource_units": 1,
+      "max_parallel": 2
+    }
+  ],
+  "budgets": {
+    "global_resource_units": 7,
+    "default_task_parallel": 2
+  },
+  "versions": {
+    "clusters": 1,
+    "revisions": 2,
+    "budgets": 1
+  }
+}
