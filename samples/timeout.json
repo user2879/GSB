@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "row_keys": ["slow:A", "slow:B"],
+  "dependency_edges": [
+    {"from": "slow:A", "to": "slow:B", "kind": "reference"}
+  ],
+  "initial_versions": {
+    "slow:A": {"value": 0, "version": 0, "status": "committed"},
+    "slow:B": {"value": 0, "version": 0, "status": "committed"}
+  },
+  "transactions": [
+    {"id": "SLOW", "start_seq": 1, "isolation": "read_committed"},
+    {"id": "TIMEOUT", "start_seq": 2, "isolation": "read_committed"}
+  ],
+  "operations_file": "timeout.ndjson"
+}

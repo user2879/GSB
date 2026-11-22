@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "row_keys": [
+    "range:00",
+    "range:01",
+    "range:02",
+    "range:03",
+    "range:04",
+    "range:05",
+    "range:06",
+    "range:07",
+    "range:08",
+    "range:09",
+    "range:10",
+    "range:11",
+    "range:12",
+    "range:13",
+    "range:14",
+    "range:15"
+  ],
+  "dependency_edges": [
+    {
+      "from": "range:00",
+      "to": "range:01",
+      "kind": "reference"
+    },
+    {
+      "from": "range:01",
+      "to": "range:02",
+      "kind": "reference"
+    },
+    {
+      "from": "range:02",
+      "to": "range:03",
+      "kind": "reference"
+    },
+    {
+      "from": "range:03",
+      "to": "range:04",
+      "kind": "reference"
+    },
+    {
+      "from": "range:04",
+      "to": "range:05",
+      "kind": "reference"
+    },
+    {
+      "from": "range:05",
+      "to": "range:06",
+      "kind": "reference"
+    },
+    {
+      "from": "range:06",
+      "to": "range:07",
+      "kind": "reference"
+    },
+    {
+      "from": "range:07",
+      "to": "range:08",
+      "kind": "reference"
+    },
+    {
+      "from": "range:08",
+      "to": "range:09",
+      "kind": "reference"
+    },
+    {
+      "from": "range:09",
+      "to": "range:10",
+      "kind": "reference"
+    },
+    {
+      "from": "range:10",
+      "to": "range:11",
+      "kind": "reference"
+    },
+    {
+      "from": "range:11",
+      "to": "range:12",
+      "kind": "reference"
+    }
+  ],
+  "initial_versions": {
+    "range:00": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:01": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:02": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:03": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:04": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:05": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:06": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:07": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:08": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:09": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:10": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:11": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:12": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:13": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:14": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    },
+    "range:15": {
+      "value": 0,
+      "version": 0,
+      "status": "committed"
+    }
+  },
+  "transactions": [
+    {
+      "id": "TX01",
+      "start_seq": 1,
+      "isolation": "serializable",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:00"
+        },
+        {
+          "seq": 2,
+          "kind": "read",
+          "row": "range:01"
+        },
+        {
+          "seq": 3,
+          "kind": "read",
+          "row": "range:02"
+        }
+      ]
+    },
+    {
+      "id": "TX02",
+      "start_seq": 2,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:03"
+        }
+      ]
+    },
+    {
+      "id": "TX03",
+      "start_seq": 3,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:04"
+        }
+      ]
+    },
+    {
+      "id": "TX04",
+      "start_seq": 4,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:05"
+        }
+      ]
+    },
+    {
+      "id": "TX05",
+      "start_seq": 5,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:06"
+        }
+      ]
+    },
+    {
+      "id": "TX06",
+      "start_seq": 6,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:07"
+        }
+      ]
+    },
+    {
+      "id": "TX07",
+      "start_seq": 7,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:08"
+        }
+      ]
+    },
+    {
+      "id": "TX08",
+      "start_seq": 8,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:09"
+        }
+      ]
+    },
+    {
+      "id": "TX09",
+      "start_seq": 9,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:10"
+        }
+      ]
+    },
+    {
+      "id": "TX10",
+      "start_seq": 10,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:11"
+        }
+      ]
+    },
+    {
+      "id": "TX11",
+      "start_seq": 11,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:12"
+        }
+      ]
+    },
+    {
+      "id": "TX12",
+      "start_seq": 12,
+      "isolation": "read_committed",
+      "operations": [
+        {
+          "seq": 1,
+          "kind": "read",
+          "row": "range:13"
+        }
+      ]
+    }
+  ]
+}

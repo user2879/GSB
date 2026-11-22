@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "row_keys": ["acct:A", "acct:B", "acct:C", "acct:D"],
+  "dependency_edges": [
+    {"from": "acct:A", "to": "acct:B", "kind": "reference"},
+    {"from": "acct:B", "to": "acct:C", "kind": "reference"},
+    {"from": "acct:C", "to": "acct:D", "kind": "reference"}
+  ],
+  "initial_versions": {
+    "acct:A": {"value": 0, "version": 0, "status": "committed"},
+    "acct:B": {"value": 0, "version": 0, "status": "committed"},
+    "acct:C": {"value": 0, "version": 0, "status": "committed"},
+    "acct:D": {"value": 0, "version": 0, "status": "committed"}
+  },
+  "transactions": [
+    {"id": "RC1", "start_seq": 1, "isolation": "read_committed"},
+    {"id": "RR1", "start_seq": 2, "isolation": "repeatable_read"},
+    {"id": "W1", "start_seq": 3, "isolation": "read_committed"},
+    {"id": "RU1", "start_seq": 4, "isolation": "read_uncommitted"},
+    {"id": "SER1", "start_seq": 5, "isolation": "serializable"}
+  ],
+  "operations_file": "all_isolation.ndjson"
+}

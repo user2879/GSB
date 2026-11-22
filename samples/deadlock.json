@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "row_keys": ["row:A", "row:B", "row:C"],
+  "dependency_edges": [
+    {"from": "row:A", "to": "row:B", "kind": "reference"},
+    {"from": "row:B", "to": "row:C", "kind": "reference"}
+  ],
+  "initial_versions": {
+    "row:A": {"value": 0, "version": 0, "status": "committed"},
+    "row:B": {"value": 0, "version": 0, "status": "committed"},
+    "row:C": {"value": 0, "version": 0, "status": "committed"}
+  },
+  "transactions": [
+    {"id": "TX1", "start_seq": 1, "isolation": "read_committed"},
+    {"id": "TX2", "start_seq": 2, "isolation": "read_committed"},
+    {"id": "TX3", "start_seq": 3, "isolation": "read_committed"}
+  ],
+  "operations_file": "deadlock.ndjson"
+}

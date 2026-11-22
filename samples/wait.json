@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "row_keys": ["lock:A", "lock:B", "lock:C"],
+  "dependency_edges": [
+    {"from": "lock:A", "to": "lock:B", "kind": "reference"},
+    {"from": "lock:B", "to": "lock:C", "kind": "reference"}
+  ],
+  "initial_versions": {
+    "lock:A": {"value": 0, "version": 0, "status": "committed"},
+    "lock:B": {"value": 0, "version": 0, "status": "committed"},
+    "lock:C": {"value": 0, "version": 0, "status": "committed"}
+  },
+  "transactions": [
+    {"id": "HOLDER", "start_seq": 1, "isolation": "read_committed"},
+    {"id": "WAITER", "start_seq": 2, "isolation": "read_committed"}
+  ],
+  "operations_file": "wait.ndjson"
+}
