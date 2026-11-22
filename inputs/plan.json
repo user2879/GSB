@@ -1,0 +1,114 @@
+{
+  "batches": [
+    {
+      "actions": [
+        {
+          "op": "update",
+          "row_id": "r0003",
+          "values": {
+            "score": 7.75
+          }
+        },
+        {
+          "op": "append",
+          "row": {
+            "age": 52.0,
+            "group_id": "g_sensor",
+            "income": 132.0,
+            "latency": 2.4,
+            "load": 83.0,
+            "pressure": 108.25,
+            "ratio": 0.22,
+            "row_id": "r0025",
+            "score": -2.25,
+            "temp": 41.5
+          }
+        },
+        {
+          "op": "delete",
+          "row_id": "r0011"
+        }
+      ],
+      "batch_id": "b01_correct_append_delete"
+    },
+    {
+      "actions": [
+        {
+          "group_id": "g_ratio",
+          "op": "regroup",
+          "row_id": "r0005"
+        }
+      ],
+      "batch_id": "b02_row_regroup"
+    },
+    {
+      "actions": [
+        {
+          "op": "update",
+          "row_id": "r0016",
+          "values": {
+            "income": 190.5
+          }
+        },
+        {
+          "op": "delete",
+          "row_id": "r0021"
+        },
+        {
+          "op": "append",
+          "row": {
+            "age": 44.0,
+            "group_id": "g_numeric",
+            "row_id": "r0026"
+          }
+        }
+      ],
+      "batch_id": "b03_small_corrections"
+    },
+    {
+      "actions": [
+        {
+          "column_groups": {
+            "g_numeric": [
+              "age",
+              "income"
+            ],
+            "g_ratio": [
+              "ratio",
+              "load",
+              "latency"
+            ],
+            "g_sensor": [
+              "temp",
+              "pressure",
+              "score"
+            ]
+          },
+          "op": "repartition_columns"
+        }
+      ],
+      "batch_id": "b04_column_repartition"
+    },
+    {
+      "actions": [
+        {
+          "op": "update",
+          "row_id": "r0010",
+          "values": {
+            "load": 58.0
+          }
+        },
+        {
+          "op": "append",
+          "row": {
+            "group_id": "g_ratio",
+            "ratio": 1.9,
+            "row_id": "r0027"
+          }
+        }
+      ],
+      "batch_id": "b05_post_repartition_edit"
+    }
+  ],
+  "schema_version": 1
+}

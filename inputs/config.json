@@ -1,0 +1,58 @@
+{
+  "clipping_strategy": "saturate",
+  "column_axis": 1,
+  "column_groups": {
+    "g_numeric": [
+      "age",
+      "income",
+      "score"
+    ],
+    "g_ratio": [
+      "ratio",
+      "load"
+    ],
+    "g_sensor": [
+      "temp",
+      "pressure",
+      "latency"
+    ]
+  },
+  "element_budget_per_batch": 48,
+  "group_id_field": "group_id",
+  "interpolation": "linear",
+  "missing_value_markers": [
+    null,
+    "__MISSING__"
+  ],
+  "quantile_permille": {
+    "lower": 50,
+    "upper": 950
+  },
+  "quantization": {
+    "bit_width_candidates": [
+      4,
+      6,
+      8
+    ],
+    "fractional_bits": 3,
+    "gear": 2
+  },
+  "row_id_field": "row_id",
+  "schema_version": 1,
+  "scheme": "asymmetric",
+  "table_name": "synthetic_feature_table",
+  "tensor_dimensions": [
+    24,
+    8
+  ],
+  "thread_pool_size": 3,
+  "tie_break": "lower",
+  "tolerance": {
+    "absolute": 0.08,
+    "comparison": "either",
+    "outlier_ratio_limit": 0.2,
+    "relative": 0.06,
+    "tie_epsilon": 1e-09,
+    "zero_relative_branch": "absolute_only"
+  }
+}
