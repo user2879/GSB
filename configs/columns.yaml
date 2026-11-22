@@ -1,0 +1,35 @@
+seed: 20261123
+rows: 120
+
+columns:
+  - name: region
+    type: category
+    values: [east, north, south, west]
+    missing_rate: 0.015
+  - name: device
+    type: category
+    values: [ios, android, web]
+    missing_rate: 0.010
+  - name: channel
+    type: category
+    values: [organic, paid, partner]
+    missing_rate: 0.020
+  - name: tier
+    type: category
+    values: [bronze, silver, gold]
+    missing_rate: 0.010
+  - name: tenure
+    type: numeric
+    min: 0.0
+    max: 60.0
+    missing_rate: 0.010
+  - name: spend
+    type: numeric
+    min: 10.0
+    max: 900.0
+    missing_rate: 0.015
+  - name: score
+    type: numeric
+    min: -2.0
+    max: 2.0
+    missing_rate: 0.020

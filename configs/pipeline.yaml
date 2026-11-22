@@ -1,0 +1,55 @@
+schema_version: 1
+seed: 20261123
+data_config: configs/columns.yaml
+
+paths:
+  sample: data/sample.json
+  sample_manifest: data/sample_manifest.json
+  overrides: data/overrides
+  cache: cache
+  report: reports/diagnostic_report.json
+
+crossing:
+  order: 2
+  whitelist: [region, device, channel, tier]
+  cardinality_budget: 8
+  overflow_strategy: hash_bucket
+  hash_buckets: 6
+  hash_seed: 4177
+
+standardization:
+  method: zscore
+  epsilon: 1.0e-12
+
+reduction:
+  pca:
+    dimensions: 4
+  random_projection:
+    dimensions: 5
+    seed_salt: rp-2026
+  variance:
+    dimensions: 4
+
+precision:
+  tiers: [single, double]
+  stage_tolerance: 1.0e-7
+  quantization:
+    tier: fine
+    profiles:
+      lossless:
+        enabled: false
+        fractional_bits: 0
+      fine:
+        enabled: true
+        fractional_bits: 12
+      coarse:
+        enabled: true
+        fractional_bits: 5
+
+metrics:
+  decision_threshold: 0.0
+  target_column: target
+
+runtime:
+  max_workers: 4
+  temp_dir: .tmp
