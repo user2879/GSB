@@ -1,0 +1,63 @@
+{
+  "zone_version": 1,
+  "origin": "example.test",
+  "soa": {
+    "mname": "ns1.example.test",
+    "rname": "hostmaster.example.test",
+    "serial": 2024010101,
+    "refresh": 7200,
+    "retry": 3600,
+    "expire": 1209600,
+    "minimum": 60
+  },
+  "records": [
+    {
+      "name": "ns1.example.test",
+      "qtype": 1,
+      "rclass": 1,
+      "ttl": 3600,
+      "value": "10.0.0.2",
+      "rdata_hex": "0a000002"
+    },
+    {
+      "name": "www.example.test",
+      "qtype": 5,
+      "rclass": 1,
+      "ttl": 300,
+      "value": "edge.example.test",
+      "rdata_hex": ""
+    },
+    {
+      "name": "edge.example.test",
+      "qtype": 1,
+      "rclass": 1,
+      "ttl": 300,
+      "value": "10.0.0.5",
+      "rdata_hex": "0a000005"
+    },
+    {
+      "name": "edge.example.test",
+      "qtype": 1,
+      "rclass": 1,
+      "ttl": 300,
+      "value": "10.0.0.6",
+      "rdata_hex": "0a000006"
+    },
+    {
+      "name": "mx.example.test",
+      "qtype": 2,
+      "rclass": 1,
+      "ttl": 600,
+      "value": "ns1.example.test",
+      "rdata_hex": ""
+    },
+    {
+      "name": "forward.example.test",
+      "qtype": 1,
+      "rclass": 1,
+      "ttl": 240,
+      "value": "10.0.2.20",
+      "rdata_hex": "0a000214"
+    }
+  ]
+}
