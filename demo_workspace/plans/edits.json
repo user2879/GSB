@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "seed": 202604,
+  "batches": [
+    {
+      "batch_id": "b001-append-correct",
+      "operations": [
+        {
+          "type": "append_samples",
+          "samples": [
+            {
+              "id": "S0025",
+              "age": 52.828,
+              "income": 49.525,
+              "region": "east",
+              "channel": "store",
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0026",
+              "age": 71.172,
+              "income": 146.398,
+              "region": "west",
+              "channel": "web",
+              "label": 1,
+              "split": "validation"
+            },
+            {
+              "id": "S0027",
+              "age": null,
+              "income": 122.531,
+              "region": "north",
+              "channel": "partner",
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0028",
+              "age": 39.873,
+              "income": 46.677,
+              "region": "south",
+              "channel": "store",
+              "label": 0,
+              "split": "train"
+            },
+            {
+              "id": "S0029",
+              "age": 24.032,
+              "income": 131.522,
+              "region": "east",
+              "channel": "web",
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0030",
+              "age": 26.09,
+              "income": 20.145,
+              "region": "west",
+              "channel": "partner",
+              "label": 0,
+              "split": "train"
+            },
+            {
+              "id": "S0031",
+              "age": 30.567,
+              "income": 78.516,
+              "region": "north",
+              "channel": "store",
+              "label": 0,
+              "split": "validation"
+            },
+            {
+              "id": "S0032",
+              "age": 71.368,
+              "income": 103.428,
+              "region": "south",
+              "channel": "web",
+              "label": 1,
+              "split": "train"
+            }
+          ]
+        },
+        {
+          "type": "correct_sample",
+          "sample_id": "S0007",
+          "patch": {
+            "age": 41.5,
+            "channel": "partner"
+          }
+        }
+      ]
+    },
+    {
+      "batch_id": "b002-feature-bins",
+      "operations": [
+        {
+          "type": "update_feature_params",
+          "patch": {
+            "bins": 6
+          }
+        }
+      ]
+    },
+    {
+      "batch_id": "b003-model-hyperparams",
+      "operations": [
+        {
+          "type": "append_samples",
+          "samples": [
+            {
+              "id": "S0033",
+              "age": 57.9,
+              "income": 73.418,
+              "region": "east",
+              "channel": "partner",
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0034",
+              "age": 42.778,
+              "income": 144.163,
+              "region": "west",
+              "channel": "store",
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0035",
+              "age": 51.736,
+              "income": 92.412,
+              "region": "north",
+              "channel": null,
+              "label": 1,
+              "split": "train"
+            },
+            {
+              "id": "S0036",
+              "age": 59.448,
+              "income": 95.791,
+              "region": "south",
+              "channel": "partner",
+              "label": 1,
+              "split": "validation"
+            }
+          ]
+        },
+        {
+          "type": "update_model_hyperparams",
+          "patch": {
+            "selected_candidate": "regularized",
+            "learning_rate": 0.08,
+            "batch_size": 5
+          }
+        }
+      ]
+    },
+    {
+      "batch_id": "b004-quantization-and-label",
+      "operations": [
+        {
+          "type": "update_quantization",
+          "patch": {
+            "fractional_bits": 10,
+            "scale_level": 8
+          }
+        },
+        {
+          "type": "correct_sample",
+          "sample_id": "S0012",
+          "patch": {
+            "label": 0
+          }
+        }
+      ]
+    }
+  ]
+}

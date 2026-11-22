@@ -1,0 +1,46 @@
+schema_version: 1
+data:
+  id_field: id
+  label_field: label
+  split_field: split
+  numeric_columns:
+  - age
+  - income
+  categorical_columns:
+  - region
+  - channel
+  categorical_domains:
+    region:
+    - east
+    - west
+    - north
+    - south
+    channel:
+    - web
+    - store
+    - partner
+features:
+  bins: 6
+training:
+  selected_candidate: regularized
+  candidates:
+  - id: balanced
+    initial_weight_scale: 0.05
+    initial_bias: 0.0
+    l2: 0.001
+  - id: regularized
+    initial_weight_scale: 0.02
+    initial_bias: 0.0
+    l2: 0.01
+  batch_size: 5
+  learning_rate: 0.08
+  epochs: 4
+quantization:
+  fractional_bits: 10
+  scale_level: 8
+concurrency:
+  max_workers: 4
+  max_workers_limit: 8
+  batch_budget: 128
+snapshot:
+  commit_interval_batches: 1
