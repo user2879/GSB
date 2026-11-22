@@ -1,0 +1,90 @@
+{
+  "conclusions": [
+    {
+      "message_id": "archive:1",
+      "source_formats": ["v3"],
+      "source_groups": ["analytics"],
+      "verdict": "exactly_once"
+    },
+    {
+      "message_id": "audit:1",
+      "source_formats": ["v1", "v2"],
+      "source_groups": ["billing", "legacy"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "audit:2",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "orders:1",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "orders:2",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_most_once"
+    },
+    {
+      "message_id": "orders:3",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "orders:4",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "payments:1",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "payments:2",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    },
+    {
+      "message_id": "payments:3",
+      "source_formats": ["v1", "v2", "v3"],
+      "source_groups": ["analytics", "billing", "legacy", "warehouse"],
+      "verdict": "at_least_once"
+    }
+  ],
+  "conclusions_digest": "bf4f78a1471bfb37f9caa008a856d29097ccd73f332a474cd068192000891dd4",
+  "conflict_counts": {
+    "ACK_WITH_UNCOVERED_RANGE": 2,
+    "DUP_IDEMPOTENCY_ACROSS_GROUPS": 1,
+    "SEMANTIC_MARKER_MISMATCH": 1
+  },
+  "conflicts_digest": "bfa791a66fedf41868590a519050804a513303eaca2c095e872a71a24bb71d96",
+  "description": "Deterministic expected summary for samples/records.jsonl and samples/session.json",
+  "expected_conflict_types": [
+    "ACK_WITH_UNCOVERED_RANGE",
+    "DUP_IDEMPOTENCY_ACROSS_GROUPS",
+    "SEMANTIC_MARKER_MISMATCH"
+  ],
+  "expected_error_affected_pair": ["orders", "payments"],
+  "format_counts": {"v1": 9, "v2": 9, "v3": 16},
+  "group_conclusions_digest": "b8eb6744b7c26f92fae972023e94ba6c0e8982ebf9e1639712dc4336e44d67e9",
+  "model_digest": "33d913b9cf79307a56f6306b6d59ba398c08180c47587f0e7e55b7d230133728",
+  "record_count": 34,
+  "scale_factor": 1000000,
+  "schema_version": 1,
+  "verdict_counts": {
+    "at_least_once": 8,
+    "at_most_once": 1,
+    "exactly_once": 1
+  }
+}
+

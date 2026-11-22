@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "session": {
+    "scale_power": 6,
+    "truncation": "floor_toward_negative_infinity"
+  },
+  "paths": {
+    "ledger": "state/ledger.sqlite3",
+    "snapshots": "snapshots",
+    "backup": "backup",
+    "out": "out-evolved",
+    "logs": "logs/structured.jsonl"
+  },
+  "topics": [
+    {
+      "name": "archive",
+      "message_seq_rule": {"start": 1, "end": 1, "step": 1, "id_template": "{topic}:{seq}"},
+      "delivery_time_ms": 1700000000000,
+      "confirmation_policy": {
+        "exactly_once_requires_ack": true,
+        "exactly_once_requires_idempotency": true,
+        "exactly_once_requires_complete_range": true,
+        "allow_ack_with_uncovered_range": false,
+        "max_allowed_retries": 3,
+        "semantic_marker_authoritative": false
+      }
+    },
+    {
+      "name": "audit",
+      "message_seq_rule": {"start": 1, "end": 2, "step": 1, "id_template": "{topic}:{seq}"},
+      "delivery_time_ms": 1700000100000,
+      "confirmation_policy": {
+        "exactly_once_requires_ack": true,
+        "exactly_once_requires_idempotency": true,
+        "exactly_once_requires_complete_range": true,
+        "allow_ack_with_uncovered_range": false,
+        "max_allowed_retries": 3,
+        "semantic_marker_authoritative": false
+      }
+    },
+    {
+      "name": "orders",
+      "message_seq_rule": {"start": 1, "end": 4, "step": 1, "id_template": "{topic}:{seq}"},
+      "delivery_time_ms": 1700000200000,
+      "confirmation_policy": {
+        "exactly_once_requires_ack": true,
+        "exactly_once_requires_idempotency": true,
+        "exactly_once_requires_complete_range": false,
+        "allow_ack_with_uncovered_range": false,
+        "max_allowed_retries": 3,
+        "semantic_marker_authoritative": false
+      }
+    },
+    {
+      "name": "payments",
+      "message_seq_rule": {"start": 1, "end": 3, "step": 1, "id_template": "{topic}:{seq}"},
+      "delivery_time_ms": 1700000300000,
+      "confirmation_policy": {
+        "exactly_once_requires_ack": true,
+        "exactly_once_requires_idempotency": true,
+        "exactly_once_requires_complete_range": true,
+        "allow_ack_with_uncovered_range": false,
+        "max_allowed_retries": 3,
+        "semantic_marker_authoritative": false
+      }
+    }
+  ],
+  "consumer_groups": [
+    {"name": "legacy", "format_version": "v1"},
+    {"name": "billing", "format_version": "v2"},
+    {"name": "analytics", "format_version": "v3"},
+    {"name": "warehouse", "format_version": "v3"},
+    {"name": "shadow", "format_version": "v3"}
+  ]
+}
+
