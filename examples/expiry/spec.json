@@ -1,0 +1,64 @@
+{
+  "session": {
+    "domain_set_version": 1,
+    "scale_factor": 10000,
+    "global_concurrency": 3,
+    "per_holder_concurrency": 2,
+    "retry_backoff_ms": [
+      10,
+      25,
+      50
+    ]
+  },
+  "domains": [
+    {
+      "domain_id": "locks-alpha",
+      "capacity": 1,
+      "lease_duration_ms": 400,
+      "renew_interval_ms": 120,
+      "queue_limit": 2,
+      "version": 1
+    },
+    {
+      "domain_id": "locks-beta",
+      "capacity": 2,
+      "lease_duration_ms": 500,
+      "renew_interval_ms": 150,
+      "queue_limit": 2,
+      "version": 1
+    }
+  ],
+  "holders": [
+    {
+      "holder_id": "svc-order",
+      "priority": 10,
+      "target_domains": [
+        "locks-alpha",
+        "locks-beta"
+      ]
+    },
+    {
+      "holder_id": "svc-pay",
+      "priority": 20,
+      "target_domains": [
+        "locks-alpha",
+        "locks-beta"
+      ]
+    },
+    {
+      "holder_id": "svc-inventory",
+      "priority": 5,
+      "target_domains": [
+        "locks-alpha"
+      ]
+    },
+    {
+      "holder_id": "svc-notify",
+      "priority": 15,
+      "target_domains": [
+        "locks-beta",
+        "locks-alpha"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "distlock-lease-middleware"
+version = "1.0.0"
+description = "Local loopback distributed-lock and lease middleware with per-domain arbiter subprocesses, quota-bounded scheduling, SQLite ledger and whole-state snapshots"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<2.0"]
+license = { text = "Proprietary" }
+authors = [{ name = "DistLock Middleware" }]
+
+[project.scripts]
+distlock = "distlock.runner:main"
+
+[tool.setuptools]
+packages = ["distlock", "distlock.arbiter"]
+
+[tool.setuptools.package-data]
+distlock = ["py.typed"]
