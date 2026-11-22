@@ -1,0 +1,43 @@
+{
+  "channels": {
+    "collaborative": {
+      "normalization": "zscore",
+      "weight": 0.35
+    },
+    "hotness": {
+      "normalization": "minmax",
+      "weight": 0.15
+    },
+    "lexical": {
+      "normalization": "minmax",
+      "weight": 0.5
+    }
+  },
+  "concurrency": 4,
+  "feature_dim": 4,
+  "feature_weights": [
+    0.25,
+    -0.15,
+    0.1,
+    0.05
+  ],
+  "frac_bits_choices": [
+    6,
+    10,
+    14
+  ],
+  "fusion_temperature": 1.0,
+  "gears": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "recompute_budget": 24,
+  "score_clip": [
+    -4.0,
+    4.0
+  ],
+  "snapshot_commit_interval_batches": 2,
+  "tolerance": 1e-06
+}
