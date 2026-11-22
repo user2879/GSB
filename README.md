@@ -1,22 +1,199 @@
-在空白工作区从零构建一个面向中文依存句法分析的本地确定性工作台，用于在反复编辑句子与解析模型参数时维护解析状态，并在中断后从持久化快照恢复出一致结果。输入为一个本地样本目录：句子样本 JSONL（每行含句 ID、以空格分隔的词与词性标记，词序列由固定种子从受控词表生成）、一份转移依存解析模型参数 JSON（移进、左归约、右归约、结束四类动作权重，词与词性特征哈希表，特征维度与哈希桶数）、一份解析配置 JSON（解析模式为贪心或穷举、动作约束规则、定点小数位宽与量化档位、线程池并发数、单批解析点数预算、快照提交间隔句数）。工作台需按移进-归约转移体系完成句法解析，并在交互命令修改句子、模型权重或配置后仅重算受影响的句子，未受影响句子必须直接复用缓存结果。核心难点是解析状态由转移栈、已生成依存弧集合与动作序列三部分耦合而成，部分编辑会改变可行动作集合，从而改变后续所有转移，增量失效判定必须精确到转移步级别，同时保证任意编辑序列后增量运行与从空白全量重建逐字段一致。
+# 中文依存句法分析确定性工作台
 
-任务环境与准备：
-确认 Windows 环境已安装 Python 3.10 及以上版本与 NumPy，并可在命令行直接运行 python 与 pip。
-在空白工作区创建项目目录，准备受控词表与句子样本生成脚本，样本与模型参数均由固定种子确定性生成，无需外部下载。
-准备本地样本目录结构：句子样本 JSONL、模型参数 JSON、解析配置 JSON 与可选的注入配置，所有文件均为 UTF-8 编码。
-确认磁盘可写临时目录，用于阶段快照的临时写入与整体替换。
+这是一个不依赖外部服务的本地工作台，用移进-归约（arc-standard）转移体系解析中文词/词性序列。它同时提供：
 
-业务要求：
-1. 实现句子样本、模型参数与解析配置的加载校验层：逐行解析句子 JSONL，校验句 ID 唯一、词序列非空、词与词性标记数量一致且均落在受控词表与词性集合内；解析模型参数并校验特征维度与哈希桶数为正整数、动作权重为有限数、四类动作权重齐全；解析配置并校验解析模式在枚举内、定点小数位宽与量化档位在允许范围内、并发数不超过上限、单批解析点数预算为正整数；不合规句输出 E_SENT_INVALID 并进入失败清单，不参与后续解析。
-2. 实现移进-归约转移体系的确定性解析核心：以初始空栈开始按动作序列推进，每步依据栈顶状态、待处理词位置、依存度上限与动作约束规则计算可行动作集合，再以特征哈希查表得分的加权和在定点整数域比较动作得分，同分按动作编码升序决断；每步输出转移栈快照、所选动作、该步得分与可行动作集合，违反约束的动作不得进入可行动作集合并记录被排除原因；同一句子与参数下多次运行的逐动作序列必须完全一致。
-3. 实现贪心与穷举两种解析模式的统一转移状态：贪心模式每步选取得分最高的动作，穷举模式在最大转移步数内枚举全部可行路径并取总得分最高者，路径得分并列时按动作编码序列字典序决断；两种模式须共用同一可行动作集合计算与同一转移栈快照结构，穷举模式须输出被剪枝的部分路径及其剪枝依据；切换模式时必须真实改变所选动作序列与转移步数，并输出两模式结果差异摘要。
-4. 实现基于内容指纹与可行动作集的转移步级精确失效判定：为句子加载、每步转移、依存弧集合与最终解析树各阶段产物计算由句子内容指纹、该步可行动作集指纹、模型参数指纹与位宽档位派生的缓存键，并记录每步引用的一步产物；当编辑句子词性或修改某动作权重时，定位首个可行动作集或动作得分发生变化的转移步，仅使该步及其之后各步失效并重算，失效首步之前的转移步必须直接复用且不得重新计算，复用与重算清单须逐句逐完整记录。
-5. 保证任意编辑序列后增量运行与从空白全量重建逐字段一致：施加包含句子替换、句子增删、单步动作约束规则修改、动作权重调整与解析模式切换的编辑序列，每次运行得到的逐句动作序列、各步得分与可行动作集合摘要、依存弧集合与排序、最终解析树结构、复用与重算清单以及失败清单顺序，必须与按相同最终句子集合与参数一次性全量运行的结果逐字段完全相同。
-6. 实现阶段化快照整体替换与强制终止后的恢复判定：将句子加载校验、逐句解析、依存弧汇总与解析树输划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、模型参数哈希、配置哈希、已完成句子列表、逐句已完成转移步游标与各阶段产物版本；启动时以版本号与参数哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并重新初始化，一致时从句子级与转移步级游标继续，并保证恢复后结果与未中断运行一致。
-7. 实现并发执行与串行执行逐字段一致：使用线程池并发执行句子解析与转移步计算，最大并发数取自配置且不得超过；每个句子任务与转移步任务携带由句 ID、转移步序号与阶段名派生的稳定排序键，无论线程调度顺序、并发度与异常发生顺序如何，最终句子输出顺序、各自转移步结果顺序、依存弧排序、复用与重算清单顺序及失败清单顺序，均须与单线程按句 ID 升序、句内按转移步序号升序执行的结果完全一致。
-8. 实现单批解析点数预算约束下的调度、异常注入隔离与可复现诊断报告输出：调度器维护单批剩余解析点数预算并按句 ID 稳定顺序消耗，超预算句子保留待办队列并以 E_PARSE_BUDGET_PENDING 业务码标记未完成句，下一批优先处理待办；以独立注入配置对指定句子指定阶段施加真实输入故障（空词序列、词性标记未在哈希表声明、动作权重非有限数、最大转移步数为零），注入项编号写入报告以证明命中并映射到对应业务码；每次完整运行生成 JSON 报告，含逐句动作序列长度、依存弧数量、参考树对比指标、边界同分步清单、预算消耗明细、快照版本号与各阶段耗时。
+- 贪心与穷举两种解析模式；
+- 基于句子、转移状态和模型依赖的步骤级增量缓存；
+- 可原子提交、可在句子和转移步游标处续跑的版本化快照；
+- 线程池并发、稳定排序、批解析点数预算；
+- 可复现的四类故障注入与 JSON 诊断报告。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+样例、模型和配置全部由固定种子生成，不需要下载语料。开发验证环境为 Python 3.11.0rc1、NumPy 1.26.4；运行代码只使用 Python 标准库。
 
-验收：
-使用本地样本验证增量解析、并发一致性与快照恢复，输出可复现诊断报告。
+## 快速开始
+
+```bash
+python -m depworkbench generate --out samples --seed 20261123 --count 10
+python -m depworkbench validate --samples samples
+python -m depworkbench run --samples samples \
+  --snapshot-dir .depworkbench-snapshots \
+  --report artifacts/report.json
+```
+
+Windows 下可将 `python` 换成 `py -3`。所有输入输出均为 UTF-8。
+
+生成后的样本目录包括：
+
+```text
+samples/
+  vocabulary.json      # 受控词表与词性集合
+  sentences.jsonl      # 每行一个句子
+  model.json           # 四类动作权重、特征哈希、维度与桶数
+  config.json          # 模式、约束、定点量化、并发、预算、快照间隔
+  injections.json      # 基线默认无注入
+  injections_demo.json # 四类故障注入演示
+  generation.json      # 种子和生成元数据
+```
+
+## 输入格式
+
+句子行支持空格分隔串或数组，例如：
+
+```json
+{"sentence_id":"S001","words":"我们 喜欢 数据","pos_tags":"r v n","gold_heads":[1, -1, 1],"gold_relations":["R","ROOT","R"]}
+```
+
+模型核心字段：
+
+```json
+{
+  "feature_dim": 2,
+  "num_buckets": 128,
+  "action_weights": {
+    "SHIFT": [0.25, -0.5],
+    "LEFT_ARC": [0.1, 0.2],
+    "RIGHT_ARC": [-0.3, 0.4],
+    "FINISH": [0.0, 0.0]
+  },
+  "feature_hashes": {"p:n": 12, "a:SHIFT|bias": 31},
+  "vocabulary": ["数据", "我们"],
+  "pos_tags": ["n", "r", "v"]
+}
+```
+
+每个动作权重数组长度为 `feature_dim`。特征桶为 `bucket`，实际权重下标是 `bucket % feature_dim`。分数先按
+`10^fixed_point_decimals / quantization_level` 量化到有符号整数域，再逐特征求和比较。
+
+配置核心字段：
+
+```json
+{
+  "mode": "greedy",
+  "max_dependency_distance": 7,
+  "max_transition_steps": 40,
+  "max_threads": 4,
+  "batch_parse_point_budget": 80,
+  "snapshot_commit_interval_sentences": 2,
+  "fixed_point_decimals": 3,
+  "quantization_level": 1,
+  "constraints": {
+    "max_arc_distance": 6,
+    "max_stack_size": 9,
+    "max_dependents_per_head": 5,
+    "forbid_left_dependent_pos": [],
+    "forbid_right_dependent_pos": [],
+    "finish_requires_single_root": true
+  },
+  "max_exhaustive_nodes": 250000,
+  "max_pruned_records": 200
+}
+```
+
+约束规则支持：
+
+- `max_arc_distance`、`max_stack_size`、`max_dependents_per_head`；
+- `forbid_left_dependent_pos`、`forbid_right_dependent_pos`；
+- `finish_requires_single_root`。
+
+## 解析与缓存语义
+
+动作编码固定为 `SHIFT=0`、`LEFT_ARC=1`、`RIGHT_ARC=2`、`FINISH=3`。贪心每步按 `(-score, action_code)` 选择动作，因此同分时编码小者胜出。穷举在最大转移步数内搜索，以总得分最高、动作编码序列字典序最小为准，并记录支配状态、最大步数和节点上限等剪枝依据。
+
+每个转移步骤保存：
+
+- 完整栈/缓冲区前后快照、可行动作与分数、排除动作及原因；
+- `feasible_action_fingerprint`；
+- 句子可见内容、局部模型参数、量化档位和前一转移步键派生的 `cache_key`；
+- 引用到的词位、特征桶、权重单元和约束指纹。
+
+贪心增量编辑只使首个输入依赖实际变化的转移步及其后继失效。例如只改未处理词性时，前面的动作和分数可原样复用；显示快照会从当前句子刷新，但不会重做转移计算。
+
+穷举模式的目标是全局最优，未来未选分支上的权重也可能改变更早的最优前缀。为保证“增量结果等于空白全量重建”，穷举缓存使用句子级搜索环境指纹：解析相关模型、句子或约束一旦变化，就重搜该句；环境未变时全部步骤直接复用。这个保守边界是全局最优语义的必要条件，详见 [docs/DESIGN.md](docs/DESIGN.md)。
+
+## 交互编辑与增量运行
+
+```bash
+python -m depworkbench repl --samples samples \
+  --snapshot-dir .depworkbench-snapshots \
+  --report artifacts/report.json
+```
+
+REPL 示例：
+
+```text
+run greedy
+replace S001 我们 检查 数据 | r v n
+weight LEFT_ARC 4 0.625
+constraint forbid_left_dependent_pos ["d"]
+mode exhaustive
+run
+quit
+```
+
+程序化接口：
+
+```python
+from depworkbench import Workbench
+
+wb = Workbench("samples", snapshot_dir=".snapshots")
+first = wb.run(fresh=True)
+wb.replace_sentence("S001", ["我们", "检查", "数据"], ["r", "v", "n"])
+incremental = wb.run()
+full = Workbench("samples", snapshot_dir=".full").run(fresh=True)
+assert incremental["semantic_digest"] == full["semantic_digest"]
+```
+
+## 调度、并发与预算
+
+- 解析点数单位是词数；句子成本为 `max(1, len(words))`。
+- 每批按“上一批待办优先、同组按句 ID 升序”选择；放不下的句子写入 `E_PARSE_BUDGET_PENDING` 并留给下一批。
+- 线程池大小取自 `max_threads`，上限 32。
+- 所有句子和转移步骤都有稳定任务键；最终句子、步骤、弧、树、失败和预算清单均按稳定键排序。
+- 并发度、预算、快照间隔不会进入解析产物键。
+
+## 快照与恢复
+
+快照目录结构：
+
+```text
+snapshot-root/
+  CURRENT                    # 原子替换的当前版本指针
+  versions/v000001/
+    manifest.json            # 版本、模型/配置/语料哈希、已完成句、步骤游标、阶段版本
+    load.json
+    parse.json
+    arcs.json
+    trees.json
+```
+
+每个版本先写入临时目录，再整体替换为不可变版本目录，最后原子替换 `CURRENT`。`run --resume` 在版本、模型、配置或语料不一致时输出 `E_SNAPSHOT_STALE`、丢弃当前指针并重新初始化；普通编辑运行则把旧快照作为增量缓存基线。中断后既可从句子完成集继续，也可从保存的部分转移步骤继续。
+
+## 故障注入
+
+`injections_demo.json` 覆盖四种真实输入故障：
+
+| 编号 | 故障 | 业务码 |
+|---|---|---|
+| `INJ-001` | 空词序列 | `E_SENT_INVALID` |
+| `INJ-002` | 词性未在哈希表声明 | `E_FEATURE_UNDECLARED` |
+| `INJ-003` | 动作权重非有限数 | `E_MODEL_INVALID` |
+| `INJ-004` | 最大转移步数为零 | `E_CONFIG_INVALID` |
+
+故障只影响命中句子；注入项编号、命中状态和业务码写入报告。
+
+## 验证与产物
+
+```bash
+python -m unittest discover -s tests -v
+python -m depworkbench verify --samples samples --out artifacts --seed 20261123
+```
+
+验收脚本默认清理临时工作快照，仅保留 JSON 证据。主要产物：
+
+- `artifacts/demo_report.json`：基线完整诊断报告；
+- `artifacts/verification_report.json`：逐项验收结果；
+- `artifacts/edit_sequence.json`：替换、增删、约束、权重、模式切换序列；
+- `artifacts/injection_report.json`、`budget_report.json`、`resume_report.json`、`resume_manifest.json`、`stale_report.json`；
+- `artifacts/final_incremental_report.json`：编辑序列后的最终增量报告。
+
+实际验证结果记录见 [docs/DESIGN.md](docs/DESIGN.md#实际验证结果)。

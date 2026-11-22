@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "depworkbench"
+version = "0.1.0"
+description = "Deterministic local workbench for Chinese transition-based dependency parsing"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23"]
+
+[project.scripts]
+depworkbench = "depworkbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["depworkbench*"]
+
