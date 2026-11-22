@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "session": {
+    "scale": 1000000,
+    "global_concurrency": 4,
+    "attempt_timeout_ms": 150,
+    "retry_backoff_ms": [4, 12],
+    "breaker": {
+      "failure_threshold": 2,
+      "cooldown_ms": 180,
+      "half_open_probes": 1
+    }
+  },
+  "services": [
+    {
+      "id": "checkout",
+      "quota": 2,
+      "instances": [
+        {
+          "id": "checkout-a",
+          "host": "127.0.0.1",
+          "port": 47321,
+          "weight": 3,
+          "seed": 101,
+          "behavior": {
+            "fast_ms": 5,
+            "slow_ms": 60,
+            "success_percent": 85,
+            "slow_percent": 10,
+            "error_percent": 5,
+            "rules": [
+              {"request_prefix": "crash-slow", "outcome": "success", "latency_class": "slow"}
+            ]
+          }
+        },
+        {
+          "id": "checkout-b",
+          "host": "127.0.0.1",
+          "port": 47322,
+          "weight": 1,
+          "seed": 202,
+          "behavior": {
+            "fast_ms": 6,
+            "slow_ms": 45,
+            "success_percent": 90,
+            "slow_percent": 8,
+            "error_percent": 2,
+            "rules": [
+              {"request_prefix": "crash-slow", "outcome": "success", "latency_class": "slow"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "search",
+      "quota": 2,
+      "instances": [
+        {
+          "id": "search-a",
+          "host": "127.0.0.1",
+          "port": 47323,
+          "weight": 1,
+          "seed": 303,
+          "behavior": {
+            "fast_ms": 4,
+            "slow_ms": 35,
+            "success_percent": 100,
+            "slow_percent": 0,
+            "error_percent": 0,
+            "rules": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "fragile",
+      "quota": 1,
+      "instances": [
+        {
+          "id": "fragile-a",
+          "host": "127.0.0.1",
+          "port": 47324,
+          "weight": 1,
+          "seed": 404,
+          "behavior": {
+            "fast_ms": 5,
+            "slow_ms": 90,
+            "success_percent": 100,
+            "slow_percent": 0,
+            "error_percent": 0,
+            "rules": [
+              {"request_prefix": "cb-fail", "outcome": "error", "latency_class": "fast"},
+              {"request_prefix": "cb-ok", "outcome": "success", "latency_class": "fast"}
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "route_revisions": [
+    {
+      "revision": 1,
+      "description": "balanced baseline",
+      "rules": [
+        {
+          "service": "checkout",
+          "weights": {"checkout-a": 3, "checkout-b": 1}
+        },
+        {"service": "search", "weights": {"search-a": 1}},
+        {"service": "fragile", "weights": {"fragile-a": 1}}
+      ]
+    },
+    {
+      "revision": 2,
+      "description": "shift checkout traffic to b",
+      "rules": [
+        {
+          "service": "checkout",
+          "weights": {"checkout-a": 1, "checkout-b": 3}
+        },
+        {"service": "search", "weights": {"search-a": 1}},
+        {"service": "fragile", "weights": {"fragile-a": 1}}
+      ]
+    }
+  ]
+}
