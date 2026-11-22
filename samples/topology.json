@@ -1,0 +1,97 @@
+{
+  "topology_version": "topo-demo-v1",
+  "session_params": {
+    "scale_exponent": 2,
+    "global_concurrency": 3,
+    "window_size": 5,
+    "limited_threshold": 80,
+    "unavailable_threshold": 40,
+    "socket_timeout_ms": 250,
+    "max_retries": 0
+  },
+  "domains": [
+    {
+      "domain_id": "dom-edge",
+      "in_flight_quota": 2
+    },
+    {
+      "domain_id": "dom-core",
+      "in_flight_quota": 2
+    },
+    {
+      "domain_id": "dom-data",
+      "in_flight_quota": 1
+    }
+  ],
+  "services": [
+    {
+      "service_id": "svc-gateway",
+      "domain_id": "dom-edge",
+      "host": "127.0.0.1",
+      "port": 19001,
+      "degrade_strategy": "cache_copy",
+      "capacity_limit": 100,
+      "seed": 32
+    },
+    {
+      "service_id": "svc-bff",
+      "domain_id": "dom-edge",
+      "host": "127.0.0.1",
+      "port": 19002,
+      "degrade_strategy": "default_value",
+      "capacity_limit": 60,
+      "seed": 32
+    },
+    {
+      "service_id": "svc-order",
+      "domain_id": "dom-core",
+      "host": "127.0.0.1",
+      "port": 19003,
+      "degrade_strategy": "discard",
+      "capacity_limit": 40,
+      "seed": 32
+    },
+    {
+      "service_id": "svc-inventory",
+      "domain_id": "dom-core",
+      "host": "127.0.0.1",
+      "port": 19004,
+      "degrade_strategy": "cache_copy",
+      "capacity_limit": 30,
+      "seed": 32
+    },
+    {
+      "service_id": "svc-db",
+      "domain_id": "dom-data",
+      "host": "127.0.0.1",
+      "port": 19005,
+      "degrade_strategy": "default_value",
+      "capacity_limit": 20,
+      "seed": 32
+    }
+  ],
+  "edges": [
+    {
+      "upstream": "svc-gateway",
+      "downstream": "svc-bff",
+      "propagation_mode": "forced"
+    },
+    {
+      "upstream": "svc-bff",
+      "downstream": "svc-order",
+      "propagation_mode": "threshold",
+      "threshold": 90
+    },
+    {
+      "upstream": "svc-bff",
+      "downstream": "svc-inventory",
+      "propagation_mode": "threshold",
+      "threshold": 70
+    },
+    {
+      "upstream": "svc-order",
+      "downstream": "svc-db",
+      "propagation_mode": "forced"
+    }
+  ]
+}

@@ -1,3 +1,39 @@
+# 服务降级传播与故障域收敛诊断组件（degprop）
+
+面向 Windows 本地环境的可集成领域组件：以真实 127.0.0.1 回环连接驱动确定性
+模拟服务，沿服务依赖拓扑传播降级决策，并在故障域边界收敛为唯一可复核方案；
+所有比例型指标使用整数定点并给出量化误差上界，账本以 SQLite 持久化并支持
+快照整体替换与恢复重放校验。
+
+## 快速开始
+
+```bash
+pip install -r requirements.txt
+python -m unittest discover -s tests     # 28 个测试
+bash scripts/demo.sh                     # Windows 运行 scripts\demo.bat
+```
+
+## 模块与文档
+
+- 设计与定点误差推导：`docs/DESIGN.md`
+- 实际验证结果：`docs/VERIFICATION.md`
+- 领域包：`degprop/`；确定性样本：`samples/`；演示与独立模拟服务：`scripts/`
+
+## 命令行
+
+```bash
+python -m degprop --mode validate-only
+python -m degprop --inject cycle|capacity|snapshot|replay
+python -m degprop --mode resume          # 恢复后重放校验
+python -m degprop --gui                  # 可选 Tkinter 窗口（无显示自动降级）
+```
+
+业务码：`E_TOPO / E_CYCLE / E_CAPACITY / E_SNAPSHOT / E_REPLAY`，成功为 `E_OK`。
+
+---
+
+# 附：原始任务说明
+
 当前是空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的服务降级传播与故障域收敛诊断组件，交付可集成的领域组件与完整示例。与按请求逐个限流或按连续失败计数开合熔断不同，本组件的核心业务问题是“降级决策如何沿服务依赖拓扑向下游传播，并在故障域边界收敛为唯一可复核的降级方案”。用户在本地 JSON 文件中声明服务拓扑：每个服务含服务标识、所属故障域标识、127.0.0.1 回环端口（由本组件附带的确定性模拟服务脚本提供，可按固定整数种子规则产生成功、固定处理毫秒、连接拒绝与慢响应四类结局）、降级策略（丢弃、返回缓存副本、折叠为默认值）与整数降级容量上限；服务间声明调用依赖边与降级传播模式（强制传播或按阈值传播）。NDJSON 事件流给出按到达序排列的依赖调用事件（事件序号、毫秒到达时刻、上游服务标识、下游服务标识、客户端键）。组件须以真实回环连接驱动模拟服务采集结局，判定每个服务的可用状态，再沿依赖拓扑推导降级传播路径与故障域级收敛方案；所有比例型指标须以整数定点表示并给出量化误差上界。
 
 任务环境与准备：
