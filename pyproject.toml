@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qcolumn-diag"
+version = "1.0.0"
+description = "Per-column quantile calibration, saturation and error-attribution diagnostics"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<2.0"]
+
+[tool.setuptools.packages.find]
+include = ["qcolumn_diag*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

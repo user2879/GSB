@@ -1,0 +1,73 @@
+{
+  "commands": {
+    "compare": "python -m qcolumn_diag compare --left reports/diagnostic_report.json --right reports/diagnostic_report_full.json --output reports/compare_incremental_full.json",
+    "demo": "python -m qcolumn_diag run --config examples/config.json --sample examples/sample.json --state-dir runtime --report reports/diagnostic_report.json",
+    "full_rebuild": "python -m qcolumn_diag run --config examples/config.json --sample examples/sample.json --state-dir runtime_full --report reports/diagnostic_report_full.json --full-rebuild",
+    "reuse": "python -m qcolumn_diag run --config examples/config.json --sample examples/sample.json --state-dir runtime --report reports/diagnostic_report_reuse.json",
+    "test": "python -m pytest -q"
+  },
+  "demo": {
+    "attribution_share_error_max": 1.1102230246251565e-16,
+    "attribution_share_sum_within_tolerance": true,
+    "columns_completed": 20,
+    "deterministic_result_hash": "5dcd6e55a5904216b3d9a984b7cd253c72c7d6594199db202557762f1129a0b4",
+    "element_count": 184,
+    "failures_by_code": {
+      "E_SCALE_ZERO": 2
+    },
+    "first_run_recomputed_columns": 20,
+    "float64_reference": {
+      "abs_error_max_abs_delta": 0.0,
+      "checked_columns": 20,
+      "code_mismatch_count": 0,
+      "dequant_max_abs_delta": 0.0,
+      "failed_columns": 0,
+      "passed": true,
+      "passed_columns": 20,
+      "quantile_max_abs_delta": 4.440892098500626e-16,
+      "scale_max_abs_delta": 0.0,
+      "tolerance_branch_mismatch_count": 0
+    },
+    "full_rebuild_columns": 20,
+    "missing_elements": 7,
+    "over_tolerance_elements": 52,
+    "reuse_run_recomputed_columns": 0,
+    "reuse_run_reused_columns": 20,
+    "run_version": "90a8a601b4d5ac1dbc193ec5e6985653090b7c2f797b1010df2b325e598ffc34",
+    "saturated_elements": 30,
+    "sensitivity_violations": 7,
+    "timings_ms": {
+      "calibration_worker_ms": 2.647973,
+      "column_worker_sum_ms": 179.837957,
+      "quant_params_worker_ms": 0.477449,
+      "requantize_errors_worker_ms": 175.956667,
+      "scheduler_and_execution_ms": 62.809331,
+      "sensitivity_and_report_ms": 21.035681,
+      "snapshot_ms": 26.036096,
+      "total_ms": 118.781202,
+      "validation_ms": 1.89818
+    }
+  },
+  "determinism": {
+    "all_equal": true,
+    "comparison_files": [
+      "reports/compare_reuse.json",
+      "reports/compare_incremental_full.json"
+    ],
+    "first_run_hash": "5dcd6e55a5904216b3d9a984b7cd253c72c7d6594199db202557762f1129a0b4",
+    "full_rebuild_hash": "5dcd6e55a5904216b3d9a984b7cd253c72c7d6594199db202557762f1129a0b4",
+    "reuse_run_hash": "5dcd6e55a5904216b3d9a984b7cd253c72c7d6594199db202557762f1129a0b4"
+  },
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "Linux",
+    "python": "3.11.0rc1"
+  },
+  "generated_at_local": "2026-11-23T01:10:13+08:00",
+  "schema_version": "1.0",
+  "tests": {
+    "failed": 0,
+    "output_file": "reports/pytest.txt",
+    "passed": 24
+  }
+}

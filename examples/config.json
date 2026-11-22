@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "config_id": "column-calibration-workbench-demo",
+  "interpolation": "linear",
+  "tie_break": "stable_ascending_first_occurrence",
+  "scale_quantization": "round_half_away_from_zero",
+  "allowed_bit_widths": [4, 6, 8],
+  "max_workers": 4,
+  "calibration_element_budget": 96,
+  "snapshot_commit_interval_batches": 2,
+  "tensors": [
+    {
+      "tensor_id": "activation_tile",
+      "shape": [10, 12],
+      "column_axis": 1,
+      "quantile_lower_permille": 50,
+      "quantile_upper_permille": 950,
+      "scheme": "asymmetric",
+      "bit_width_candidates": [4, 8],
+      "active_bit_width": 8,
+      "fractional_bits": 6,
+      "saturation_strategy": "saturate",
+      "zero_scale_policy": "clamp_to_min_scale",
+      "tolerance": 0.03,
+      "group_over_tolerance_limit": 0.3,
+      "column_groups": [
+        {"group_id": "negative_tail", "columns": [0, 1, 2, 3]},
+        {"group_id": "center", "columns": [4, 5, 6, 7]},
+        {"group_id": "extremes", "columns": [8, 9, 10, 11]}
+      ]
+    },
+    {
+      "tensor_id": "weight_rows",
+      "shape": [8, 8],
+      "column_axis": 1,
+      "quantile_lower_permille": 100,
+      "quantile_upper_permille": 900,
+      "scheme": "symmetric",
+      "bit_width_candidates": [4, 6],
+      "active_bit_width": 6,
+      "fractional_bits": 5,
+      "saturation_strategy": "saturate",
+      "zero_scale_policy": "clamp_to_min_scale",
+      "tolerance": 0.02,
+      "group_over_tolerance_limit": 0.25,
+      "column_groups": [
+        {"group_id": "left", "columns": [0, 1, 2, 3]},
+        {"group_id": "right", "columns": [4, 5, 6, 7]}
+      ]
+    }
+  ]
+}
