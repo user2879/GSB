@@ -1,0 +1,89 @@
+{
+  "fixed_point_scale": 1000,
+  "global_replica_budget": -1,
+  "incremental_threshold_minutes": 30,
+  "latency_budget_ms": 50,
+  "services": [
+    {
+      "concurrency_per_replica": 8,
+      "concurrency_quota": 14,
+      "latency_ms": 120,
+      "max_replicas": 16,
+      "min_replicas": 2,
+      "requests": [
+        1200,
+        1217,
+        1234,
+        1251,
+        1268,
+        1285,
+        2202,
+        2219
+      ],
+      "scale_down_threshold": 2500,
+      "scale_up_threshold": 7500,
+      "service_id": "svc-embedding"
+    },
+    {
+      "concurrency_per_replica": 4,
+      "concurrency_quota": 10,
+      "latency_ms": 60,
+      "max_replicas": 12,
+      "min_replicas": 1,
+      "requests": [
+        200,
+        209,
+        236,
+        281,
+        344,
+        425,
+        524,
+        641
+      ],
+      "scale_down_threshold": 3000,
+      "scale_up_threshold": 8000,
+      "service_id": "svc-ranker"
+    },
+    {
+      "concurrency_per_replica": 16,
+      "concurrency_quota": 18,
+      "latency_ms": 25,
+      "max_replicas": 20,
+      "min_replicas": 1,
+      "requests": [
+        300,
+        311,
+        322,
+        2733,
+        344,
+        355,
+        366,
+        377
+      ],
+      "scale_down_threshold": 3500,
+      "scale_up_threshold": 8500,
+      "service_id": "svc-router"
+    },
+    {
+      "concurrency_per_replica": 32,
+      "concurrency_quota": 6,
+      "latency_ms": 10,
+      "max_replicas": 6,
+      "min_replicas": 1,
+      "requests": [
+        40,
+        55,
+        70,
+        85,
+        40,
+        55,
+        70,
+        85
+      ],
+      "scale_down_threshold": 2000,
+      "scale_up_threshold": 9000,
+      "service_id": "svc-cache"
+    }
+  ],
+  "window_size": 8
+}
