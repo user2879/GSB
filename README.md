@@ -1,21 +1,61 @@
-当前是空白工作区，没有现存项目、代码或数据附件。需要从零构建一个面向 Windows 本地环境的键值存储索引分片与过期位点诊断组件，交付可集成的 Python 包、Tkinter 诊断界面与完整可重复示例。系统以本地 SQLite 维护键空间快照链与索引分片元数据，以本地文件持久化确定性样本数据：用户以本地 JSON 声明键空间分片方式（按整数高字节区间或稳定哈希分桶）、每个分片的键值样本（由固定整数种子生成）、索引规则（对值做前缀索引或区间索引）与过期策略租约（整数毫秒过期时长、续约间隔毫秒与每分片最大在途续约数）。核心业务是：键的写入、过期与租约续约会使分片索引状态演进，系统须在分片快照回放后把索引位点与租约过期位点收敛为唯一可复核结论，并支持强制终止后的恢复与重放校验。
+# kvdiag — 键值索引分片与过期位点诊断组件
 
-任务环境与准备：
-准备 Windows 本地工作区，安装 Python 3.10 及以上版本，并确认标准库 sqlite3、tkinter、threading 与 subprocess 可用。
-在项目中放置确定性样本生成脚本，以固定整数种子产出分片键值样本与索引规则声明，样本与声明均为本地文件，不依赖网络或外部账号。
-准备本地 JSON 示例声明与预期异常注入参数清单，用于演示加载校验、快照回放、租约续约与收敛判定流程；所有路径使用工作区内相对路径。
+面向 Windows 本地环境（Python 3.10+，仅标准库）的键值存储索引分片与过期
+位点诊断组件：本地 SQLite 维护键空间快照链与索引分片元数据，本地 JSON
+声明分片方式、确定性样本、索引规则与过期租约，支持快照回放、租约续约、
+收敛判定、强制终止恢复与异常注入。
 
-业务要求：
-1. 实现键空间声明、分片样本、索引规则与过期租约的本地 JSON 加载及强校验：校验分片标识唯一、分片区间首尾相接且不重叠、样本键在分片区间内、索引规则引用的列存在、过期时长为正整数且续约间隔小于过期时长、每分片最大在途续约数为非负整数；任一不合法须以 E_SPEC 拒绝并列出首个非法分片标识与字段，且不得部分载入。
-2. 实现按键前缀索引与区间索引的确定性构建与持久化：索引条目含分片标识、键稳定摘要、索引位点与索引版本号，写入本地 SQLite 并校验键摘要与分片区间相容；同一分片样本在不同加载顺序下必须得到逐字节一致的索引条目集合与位点编号，索引位点不得依赖字典或哈希遍历顺序。
-3. 实现分片快照链的创建与回放：快照记录分片标识、父快照引用、索引位点区间、租约过期位点与内容摘要，父引用须存在且无环；回放时从指定快照沿链逐分片重建索引位点，回放结果须与不经过快照直接从样本重建逐字节一致，链上缺失分片须以 E_CHAIN 报告断链快照与分片标识。
-4. 实现租约签发、续约与过期回收：每次续约须凭租约版本号做乐观校验，版本不符以 E_LEASE 拒绝；过期须以本地单调时钟真实计时判定，同一分片在途续约数不得超出声明上限，超限申请须排队并记录等待开始与结束的单调时钟毫秒；过期回收须同时释放索引位点占用的租约并把过期位点推进到稳定值。
-5. 实现分片快照回放后索引位点与租约过期位点的收敛判定：对每个分片比较回放得到的索引位点与当前租约过期位点，当二者之差落在声明的整数容差内时判定收敛并输出判定依据，超出容差须以 E_DIVERGE 报告分片标识、两侧位点与差值；收敛结论须与分片遍历顺序及续约处理顺序无关。
-6. 实现受全局并发上限与每分片并发配额约束的并行回放与续约调度：任一时刻运行中的回放任务数与单分片运行任务数不得超限，配额耗尽时任务排队并记录等待开始与结束时刻；调度须真实投射到工作线程池，且不得绕过配额继续推进。
-7. 实现账本持久化、会话快照的版本识别整体替换恢复与恢复后重放校验：每完成一个分片批次须在同一 SQLite 事务中写入该批索引位点、租约状态、收敛结论与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时比较快照版本与内容摘要同磁盘状态，不一致须整体替换索引条目、租约集合与结论而非增量合并并稳定列出差异项；强制终止后重启只能依据已完整提交的批次恢复，未提交批次中的分片须标记为未知并要求重跑。
-8. 实现异常注入链路与结构化日志：支持以命令行参数分别注入分片样本损坏、租约版本号倒退、账本内容摘要不符三类异常，分别以 E_SPEC、E_LEASE、E_SNAPSHOT 业务码报告并写入含单调时间、分片标识与业务码的结构化日志；注入仅改变输入文件或参数，不得修改源码制造验收失败。
+## 环境准备（Windows 本地）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+1. 安装 Python 3.10 及以上（python.org 安装包自带 tkinter）。
+2. 确认标准库可用：`python -c "import sqlite3, tkinter, threading, subprocess"`。
+3. 无需网络与外部账号；不使用 Docker。
 
-验收：
-本地样本验证索引构建、快照回放与租约位点收敛，并检查恢复重放与异常业务码。
+## 快速开始
+
+```bat
+REM 生成确定性示例树（声明 + 样本 + 续约计划 + 注入清单）
+python -m kvdiag gen-samples --out examples --seed 42
+
+REM 运行流水线：加载校验 -> 索引构建 -> 租约续约 -> 过期回收 -> 快照链 -> 收敛判定 -> 事务提交
+python -m kvdiag run --spec examples\keyspace.json --db artifacts\kvdiag.sqlite --renewals examples\renewals.json --session-out artifacts\session_snapshot.json
+
+REM 快照回放校验（与不经过快照的直接重建逐字节一致）
+python -m kvdiag replay --spec examples\keyspace.json --db artifacts\kvdiag.sqlite
+
+REM 恢复：版本/摘要识别整体替换 + 未知分片重跑
+python -m kvdiag recover --spec examples\keyspace.json --db artifacts\kvdiag.sqlite --session artifacts\session_snapshot.json --rerun-unknown
+
+REM Tkinter 诊断界面
+python -m kvdiag ui --spec examples\keyspace.json --db artifacts\kvdiag.sqlite
+```
+
+## 异常注入（仅修改输入文件，不改源码）
+
+```bat
+python -m kvdiag inject sample-corrupt --spec examples\keyspace.json --shard shard-1   REM -> E_SPEC
+python -m kvdiag inject lease-version-regression --renewals examples\renewals.json     REM -> E_LEASE
+python -m kvdiag inject ledger-digest-mismatch --session artifacts\session_snapshot.json REM -> E_SNAPSHOT
+```
+
+## 强制终止恢复演示
+
+```bat
+python -m kvdiag run --spec examples\keyspace.json --db artifacts\crash.sqlite --renewals examples\renewals.json --session-out artifacts\crash_session.json --crash-before-batch 2
+REM 退出码 3：批次 2 未提交。重启恢复：
+python -m kvdiag recover --spec examples\keyspace.json --db artifacts\crash.sqlite --session artifacts\crash_session.json --renewals examples\renewals.json --rerun-unknown
+```
+
+## 测试
+
+```bat
+python -m pytest tests -q
+```
+
+## 目录结构
+
+- `kvdiag/` 可集成 Python 包（spec/index/snapshots/leases/converge/scheduler/ledger/recovery/inject/ui/cli）
+- `scripts/gen_samples.py` 确定性样本生成脚本
+- `examples/` 本地 JSON 示例声明、样本、续约计划与异常注入清单
+- `tests/` 35 项单元与端到端测试
+- `docs/TECHNICAL.md` 技术说明与验证记录；`docs/TASK.md` 原始任务书

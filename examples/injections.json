@@ -1,0 +1,26 @@
+{
+  "injections": [
+    {
+      "args": {
+        "shard_id": "shard-1"
+      },
+      "expects": "E_SPEC",
+      "name": "sample-corrupt",
+      "target": "samples/shard-1.json"
+    },
+    {
+      "args": {
+        "lease_ordinal": 0
+      },
+      "expects": "E_LEASE",
+      "name": "lease-version-regression",
+      "target": "renewals.json"
+    },
+    {
+      "args": {},
+      "expects": "E_SNAPSHOT",
+      "name": "ledger-digest-mismatch",
+      "target": "session_snapshot.json"
+    }
+  ]
+}

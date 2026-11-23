@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kvdiag"
+version = "1.0.0"
+description = "Key-value index shard and lease-expiry diagnostics (local SQLite + Tkinter)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+kvdiag = "kvdiag.cli:main"
+
+[tool.setuptools]
+packages = ["kvdiag"]

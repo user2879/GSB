@@ -1,0 +1,111 @@
+{
+  "format_version": 1,
+  "mode": "high_byte",
+  "seed": 42,
+  "shards": [
+    {
+      "index_rules": [
+        {
+          "column": "value",
+          "kind": "prefix",
+          "prefix_len": 2
+        },
+        {
+          "column": "score",
+          "kind": "range",
+          "width": 10
+        }
+      ],
+      "lease": {
+        "max_inflight_renewals": 2,
+        "renew_interval_ms": 100,
+        "ttl_ms": 300
+      },
+      "range": [
+        0,
+        16383
+      ],
+      "sample_file": "samples/shard-0.json",
+      "shard_id": "shard-0",
+      "tolerance": 0
+    },
+    {
+      "index_rules": [
+        {
+          "column": "value",
+          "kind": "prefix",
+          "prefix_len": 2
+        },
+        {
+          "column": "score",
+          "kind": "range",
+          "width": 10
+        }
+      ],
+      "lease": {
+        "max_inflight_renewals": 2,
+        "renew_interval_ms": 100,
+        "ttl_ms": 300
+      },
+      "range": [
+        16384,
+        32767
+      ],
+      "sample_file": "samples/shard-1.json",
+      "shard_id": "shard-1",
+      "tolerance": 0
+    },
+    {
+      "index_rules": [
+        {
+          "column": "value",
+          "kind": "prefix",
+          "prefix_len": 2
+        },
+        {
+          "column": "score",
+          "kind": "range",
+          "width": 10
+        }
+      ],
+      "lease": {
+        "max_inflight_renewals": 2,
+        "renew_interval_ms": 100,
+        "ttl_ms": 300
+      },
+      "range": [
+        32768,
+        49151
+      ],
+      "sample_file": "samples/shard-2.json",
+      "shard_id": "shard-2",
+      "tolerance": 0
+    },
+    {
+      "index_rules": [
+        {
+          "column": "value",
+          "kind": "prefix",
+          "prefix_len": 2
+        },
+        {
+          "column": "score",
+          "kind": "range",
+          "width": 10
+        }
+      ],
+      "lease": {
+        "max_inflight_renewals": 2,
+        "renew_interval_ms": 100,
+        "ttl_ms": 300
+      },
+      "range": [
+        49152,
+        65535
+      ],
+      "sample_file": "samples/shard-3.json",
+      "shard_id": "shard-3",
+      "tolerance": 0
+    }
+  ]
+}
