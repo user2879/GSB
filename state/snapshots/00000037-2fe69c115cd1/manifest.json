@@ -1,0 +1,144 @@
+{
+  "atomic_commit": "staging-dir-then-pointer-replace",
+  "command_cursor": 9,
+  "completed_samples": [
+    "s0001",
+    "s0002",
+    "s0003",
+    "s0004",
+    "s0005",
+    "s0006",
+    "s0007",
+    "s0008",
+    "s0009",
+    "s0010",
+    "s0011",
+    "s0012",
+    "s0013",
+    "s0014",
+    "s0015",
+    "s0016",
+    "s0017",
+    "s0018",
+    "s0019",
+    "s0020",
+    "s0021",
+    "s0022",
+    "s0023",
+    "s0024",
+    "s0025",
+    "s0026",
+    "s0027",
+    "s0028",
+    "s0029",
+    "s0030",
+    "s0031",
+    "s0032",
+    "s0033",
+    "s0034",
+    "s0035",
+    "s0036",
+    "s0037",
+    "s0038",
+    "s0039",
+    "s0040",
+    "s0041",
+    "s0042",
+    "s0043",
+    "s0044",
+    "s0045",
+    "s0046",
+    "s0047",
+    "s0048"
+  ],
+  "completed_schemes": [
+    "ntk"
+  ],
+  "config": {
+    "base_frequency": 10000.0,
+    "dimension": 32,
+    "dimension_block_size": 8,
+    "extrapolation_target_length": 256,
+    "fixed_decimal_bits": 6,
+    "fixed_decimal_widths": [
+      6,
+      8,
+      10,
+      12,
+      14
+    ],
+    "point_budget": 5000,
+    "precision_level": "fp32",
+    "precision_levels": [
+      "fp16",
+      "fp32",
+      "fp64"
+    ],
+    "quantization_level": "fine",
+    "quantization_levels": [
+      "fine",
+      "balanced",
+      "coarse"
+    ],
+    "sample_quota": 32,
+    "scale_factor": 2.0,
+    "scheme": "ntk",
+    "scheme_candidates": [
+      "rope",
+      "linear",
+      "ntk"
+    ],
+    "snapshot_interval": 12,
+    "thread_pool_size": 4,
+    "tolerance_candidates": {
+      "attention_weight": [
+        0.0001,
+        0.0005,
+        0.002,
+        0.01
+      ],
+      "dot_score": [
+        0.0005,
+        0.002,
+        0.01,
+        0.05
+      ],
+      "position_vector": [
+        0.0001,
+        0.0005,
+        0.002,
+        0.01
+      ]
+    },
+    "tolerances": {
+      "attention_weight": 0.0005,
+      "dot_score": 0.002,
+      "position_vector": 0.0005
+    },
+    "train_context_length": 64
+  },
+  "config_fixed_decimal_bits": 6,
+  "config_hash": "abb6dedfa5a4309f65a03ab774626bbb60e7bb26dcc89d2fbef80aae01017461",
+  "config_precision_level": "fp32",
+  "config_quantization_level": "fine",
+  "config_scheme": "ntk",
+  "consumed_budget": 2565,
+  "last_run_consumed_points": 0,
+  "pending_samples": [],
+  "resume_cursor": null,
+  "sample_content_hash": "46ebdbfb862e23a50998bc69c1019a4b70602e56c13da864de1984bbe7f08fd3",
+  "schema_version": 1,
+  "snapshot_version": 37,
+  "stage_counts": {
+    "error_tracking": 48,
+    "loading": 48,
+    "position_encoding": 48,
+    "scoring": 48
+  },
+  "stages": [
+    "loading",
+    "position_encoding",
+    "scoring",
+    "error_tracking"
+  ]
+}

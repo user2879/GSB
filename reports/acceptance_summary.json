@@ -1,0 +1,134 @@
+{
+  "acceptance_version": "2026-11-24-local-v1",
+  "artifacts": [
+    "reports/diagnostic_report.json",
+    "reports/visual_summary.json",
+    "reports/summary.svg",
+    "reports/dashboard.html",
+    "reports/acceptance_summary.json",
+    "state/run_trace.json",
+    "state/CURRENT",
+    "state/snapshots/"
+  ],
+  "automated_tests": {
+    "command": "python -m unittest discover -s tests -v",
+    "coverage_highlights": [
+      "three encoding schemes reproducible and numerically distinct",
+      "fixed-point ascending accumulation with per-dimension prefixes",
+      "empty layer null markers",
+      "progressive first-exceeded stage",
+      "quantization-only downstream invalidation",
+      "global budget and per-sample quota pending cursor",
+      "exact snapshot resume after partial budget execution",
+      "snapshot version/config-hash classification",
+      "incremental versus cold rebuild report equality",
+      "all four report artifacts"
+    ],
+    "result": "OK",
+    "tests_run": 15
+  },
+  "budget_probe": {
+    "command_stream": "samples/budget_commands.jsonl",
+    "final_resume_run": {
+      "completed_samples": 7,
+      "consumed_points": 29,
+      "pending_samples": 0,
+      "resume_cursor": null
+    },
+    "first_budget_run": {
+      "completed_samples": 1,
+      "consumed_points": 4,
+      "pending_samples": 6,
+      "resume_cursor": "s0002"
+    },
+    "pending_code": "E_POINT_BUDGET_PENDING",
+    "quota_probe": {
+      "completed_samples": 2,
+      "consumed_points": 0,
+      "pending_samples": 5,
+      "sample_quota": 3
+    },
+    "sample_file": "samples/budget_attention_samples.jsonl",
+    "second_budget_run": {
+      "completed_samples": 2,
+      "consumed_points": 5,
+      "pending_samples": 5,
+      "resume_cursor": "s0003"
+    },
+    "snapshot": {
+      "atomic_commit": "staging-dir-then-pointer-replace",
+      "consumed_budget": 38,
+      "snapshot_version": 4,
+      "stage_entry_counts": 7
+    }
+  },
+  "environment": {
+    "external_service_required": false,
+    "gpu_required": false,
+    "numpy": "1.26.4",
+    "python": "3.11.0rc1"
+  },
+  "exact_resume_check": {
+    "final_run_consumed_points": 0,
+    "final_run_recomputed_stages": {
+      "error_tracking": 0,
+      "position_encoding": 0,
+      "scoring": 0
+    },
+    "final_run_reused_stages": {
+      "error_tracking": 48,
+      "position_encoding": 48,
+      "scoring": 48
+    },
+    "report_id_after_second_run": "fac5eb3c439002e9c51869f25206e785ebf59dc3223f697e3a2daf6e334a4cd4",
+    "report_id_equal": true,
+    "resume_state": "exact_resume",
+    "snapshot_id": "00000037-2fe69c115cd1"
+  },
+  "main_run": {
+    "completed_samples": 48,
+    "first_exceeded_stage_counts": {
+      "attention_weight": 0,
+      "dot_score": 0,
+      "none": 5,
+      "position_encoding": 43
+    },
+    "fixed_decimal_bits": 6,
+    "flip_attribution_counts": {
+      "normalization_denominator": 672,
+      "position_encoding_angle": 7820,
+      "quantization_rounding": 116
+    },
+    "flip_attribution_total": 8608,
+    "flip_cases_truncated": 8364,
+    "over_tolerance_sample_count": 43,
+    "pending_samples": 0,
+    "precision_level": "fp32",
+    "quantization_level": "fine",
+    "report_id": "fac5eb3c439002e9c51869f25206e785ebf59dc3223f697e3a2daf6e334a4cd4",
+    "representative_flip_cases": 244,
+    "scheme": "ntk",
+    "sensitivity_variants": 135,
+    "valid_samples": 48
+  },
+  "validation_probe": {
+    "command_codes": [
+      "E_CONFIG_DIMENSION_EVEN",
+      "E_COMMAND_NAME",
+      "E_COMMAND_JSON",
+      "E_COMMAND_PARAM"
+    ],
+    "exit_code_with_invalid_items": 2,
+    "invalid_samples": 8,
+    "sample_codes": [
+      "E_SAMPLE_ID_DUPLICATE",
+      "E_SAMPLE_QUERY_POSITION",
+      "E_SAMPLE_KEY_POSITION",
+      "E_SAMPLE_FEATURE_LENGTH",
+      "E_SAMPLE_QUERY_VECTOR",
+      "E_SAMPLE_JSON"
+    ],
+    "valid_commands_retained": 1,
+    "valid_samples_retained": 2
+  }
+}

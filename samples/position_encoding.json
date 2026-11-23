@@ -1,0 +1,63 @@
+{
+  "scheme": "rope",
+  "base_frequency": 10000.0,
+  "train_context_length": 64,
+  "extrapolation_target_length": 256,
+  "dimension": 32,
+  "scale_factor": 2.0,
+  "precision_level": "fp32",
+  "precision_levels": [
+    "fp16",
+    "fp32",
+    "fp64"
+  ],
+  "dimension_block_size": 8,
+  "fixed_decimal_bits": 10,
+  "fixed_decimal_widths": [
+    6,
+    8,
+    10,
+    12,
+    14
+  ],
+  "quantization_level": "balanced",
+  "quantization_levels": [
+    "fine",
+    "balanced",
+    "coarse"
+  ],
+  "tolerances": {
+    "position_vector": 0.0005,
+    "dot_score": 0.002,
+    "attention_weight": 0.0005
+  },
+  "tolerance_candidates": {
+    "position_vector": [
+      0.0001,
+      0.0005,
+      0.002,
+      0.01
+    ],
+    "dot_score": [
+      0.0005,
+      0.002,
+      0.01,
+      0.05
+    ],
+    "attention_weight": [
+      0.0001,
+      0.0005,
+      0.002,
+      0.01
+    ]
+  },
+  "scheme_candidates": [
+    "rope",
+    "linear",
+    "ntk"
+  ],
+  "thread_pool_size": 4,
+  "point_budget": 5000,
+  "sample_quota": 32,
+  "snapshot_interval": 12
+}
