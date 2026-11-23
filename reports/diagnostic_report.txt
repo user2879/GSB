@@ -1,0 +1,13 @@
+MVRB 验收诊断摘要
+========================================
+[跨版本] v2无损=True 旁路精确还原=True 最大得分偏差=0.0
+[增量等价] True 复用=28 重算=1
+[预算] 待办=[3, 4, 5] 峰值并发=3
+[快照] stale=True
+[并发一致] True
+[异常注入]
+  INJ-001 truncated_png -> E_TRUNCATED_PNG observed=True
+  INJ-002 missing_camera -> E_MISSING_CAMERA observed=True
+  INJ-003 disparity_overflow -> E_DISPARITY_OUT_OF_RANGE observed=True
+  INJ-004 zero_voxel_size -> E_VOXEL_ZERO_SIZE observed=True
+  INJ-005 non_finite_feature -> E_NON_FINITE observed=True

@@ -1,22 +1,161 @@
-从无到有搭建时，需要构建一个面向本地确定性样本的多视图三维几何重建工作台，用于在反复编辑视图、相机参数与重建配置的过程中诊断重建结果的跨版本互操作与增量失效边界。输入为一个本地样本目录：若干由固定种子程序生成的 PNG 多视图图像（固定分辨率，画面含可检测几何图元与纹理标记，每视图附相机内参与外参及视图序号），一份重建配置 JSON（特征检测阈值、匹配最小内点数、三角化最小视差、深度图分辨率与量化档位、点云合并体素尺寸、定点小数位宽、线程池并发数、全局重建点数预算），以及同一批重建结果的两种交换文件：v1 为定宽文本行，按固定字段宽度记录视图序号、整数像素特征坐标、千分比匹配得分与整数体素坐标；v2 为 JSON，记录浮点坐标、命名匹配度量、命名舍入模式与精度标签。工作台需完成特征提取、跨视图匹配、三角化、深度图融合与体素级点云合并，并把结果在两种交换版本之间双向转换，同时保证任意视图或参数编辑后只重算真正受影响的阶段与点云块。
+# 多视图三维几何重建工作台（MVRB）
 
-任务环境与准备：
-安装 Python 3.11（Windows 官方安装包），并确认命令行可调用 python --version。
-安装依赖：pip install numpy pillow（版本以 pip 解析到的 Windows 兼容 wheel 为准）。
-准备本地样本目录：在工作区自写固定种子生成脚本，生成多视图 PNG 图像、相机参数 JSON 与 v1/v2 两版本重建结果交换文件；生成脚本与样本均不依赖网络、真实账号或外部数据集。
-确认工作区可写入临时目录与快照清单目录，并准备作为异常注入输入的损坏样本副本（截断 PNG、缺相机参数、视差越界、非有限特征、体素尺寸为零）。
+面向**本地确定性样本**的多视图三维几何重建工作台，用于在反复编辑视图、相机参数与重建
+配置时，诊断重建结果的**跨版本互操作**与**增量失效边界**。仅依赖 `numpy` 与 `pillow`，
+不使用容器、不访问网络或外部数据集。
 
-业务要求：
-1. 实现 v1 定宽文本行与 v2 JSON 两版本重建结果交换文件的解析器并统一为中间表示：v1 按字段宽度解析出视图序号、整数像素特征坐标、千分比匹配得分与整数体素坐标，v2 解析出浮点坐标、命名匹配度量、命名舍入模式与精度标签；统一表示须校验视图序号唯一、坐标落在图像范围内、匹配得分在 0 至 1000 之间、体素坐标可被体素尺寸整除，字段错位或宽度不足输出 E_FIELD_TRUNCATED 并进入失败清单。
-2. 实现两版本双向转换与降级信息旁路：v1 升 v2 时整数坐标与千分比匹配得分按精确换算转为浮点并生成精度标签、整数度量码按码表映射为命名度量；v2 降 v1 时浮点坐标四舍五入还原整数、得分还原千分比，并把截断残差、精度标签、命名度量与命名舍入模式写入旁路元数据文件；旁路元数据须可再参与升版还原，且还原后的中间表示与原始 v2 逐字段一致。
-3. 实现基于统一表示的重建管线与基于内容指纹的精确失效判定：按顺序完成特征提取、跨视图匹配、三角化、深度图融合与体素级点云合并，为每视图特征、匹配结果、深度图与全局点云计算由上游内容指纹与参数指纹派生的缓存键；替换某视图图像、修改相机参数或调整阈值时，仅使引用该视图或参数的阶段及其下游失效，未失效阶段必须直接复用缓存值且不得重新计算。
-4. 保证任意编辑序列后增量运行与从空白全量重建逐字段一致：从任意初始状态施加包含视图替换、视图增删、相机参数修改、阈值与体素尺寸调整的编辑序列，每次运行得到的逐视图特征点坐标、匹配对顺序、三维点坐标、深度图摘要、点云代表点序列、失效与复用清单以及失败清单顺序，必须与按相同最终视图集合和配置一次性全量运行的结果完全相同。
-5. 实现全局重建点数预算与单视图配额约束下的并行调度器：多视图通过线程池并发处理，最大并发数取自配置且不得超过；调度器按视图序号稳定顺序分配单视图配额并维护全局剩余点数预算，某视图累计重建点数超出配额即中止该视图并记 E_VIEW_BUDGET_EXHAUSTED，全局预算耗尽时对未完成视图输出 E_POINT_BUDGET_EXHAUSTED 并保留待办队列，下一批优先续跑待办。
-6. 实现跨版本一致性校验与边界诊断：对同一逻辑结果分别以 v1 与 v2 序列化再反序列化后重新参与重建，输出逐视图坐标偏差直方图、匹配得分最大偏差、度量码与命名度量还原情况以及降级信息命中情况；当某视图在相邻两版本下特征点数量或三维点坐标判定不一致时，须区分其源于坐标换算舍入、度量码映射还是旁路元数据未命中，并输出对应原因码。
-7. 实现阶段化快照整体替换与恢复判定：将加载校验、特征提取与匹配、三角化、深度图与点云合并划分为阶段，各阶段产物先写入临时目录再整体替换提交；清单记录全局版本号、配置哈希、相机参数哈希、交换版本指纹、已完成视图列表与各阶段产物版本，提交前须识别版本变化而非逐文件覆盖；启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_STALE 并从受影响阶段重新计算。
-8. 实现并发执行与串行执行逐字段一致，并实现异常注入隔离与诊断报告输出：每个视图任务与匹配任务携带由视图序号、视图对标识与阶段名派生的稳定排序键，无论线程调度顺序、并发度与预算耗尽时机如何，最终视图输出顺序、匹配对顺序、点云代表点顺序与失败清单顺序须与单线程按视图序号执行一致；以独立注入配置对指定视图指定阶段施加真实输入故障（截断 PNG 字节、相机参数缺失、视差越界、特征描述含非有限数、体素尺寸为零），注入项编号写入报告以证明命中并映射到对应业务码。
+## 1. 环境准备
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+### Windows（任务指定环境）
+1. 安装 Python 3.11：从 https://www.python.org/downloads/windows/ 下载官方安装包，
+   安装时勾选 **Add python.exe to PATH**。
+2. 打开 PowerShell 或 CMD 确认：
+   ```
+   python --version    # Python 3.11.x
+   ```
+3. 安装依赖（版本以 pip 解析到的 Windows 兼容 wheel 为准）：
+   ```
+   python -m pip install -r requirements.txt
+   ```
 
-验收：
-使用本地确定性多视图样本验证双版本交换往返、增量失效边界、预算调度与恢复判定，并输出含异常注入命中的诊断报告。
+### Linux / macOS（本次实际验证环境）
+```
+python3 --version            # Python 3.11.0rc1（实测）
+python3 -m pip install numpy pillow
+```
+代码仅使用标准库 + numpy + Pillow，路径处理全部基于 `os.path`，Windows/Linux 行为一致。
+
+## 2. 目录结构
+
+```
+mvrb/                      工作台核心包
+  errors.py                业务错误码、异常与稳定排序失败清单
+  utils.py                 稳定哈希、定点换算(ROUND_HALF_UP)、原子 JSON I/O
+  config.py / camera.py    重建配置 / 相机内外参与投影
+  ir.py                    统一中间表示(IR)与范围/整除/非有限校验
+  exchange_v1.py           v1 定宽文本行解析与序列化
+  exchange_v2.py           v2 JSON 解析与序列化
+  metrics.py               整数度量码 <-> 命名度量 码表
+  convert.py               v1<->v2 双向转换与降级旁路(sidecar)
+  synthetic.py             固定种子场景/相机/PNG 渲染
+  features.py              阈值化 + 连通域特征提取与描述子
+  match.py                 跨视图 NCC 匹配，千分比得分
+  triangulate.py           DLT 三角化与最小视差校验
+  depth.py / voxel.py      深度图量化融合 / 体素级点云合并
+  cache.py                 内容指纹缓存（命中即复用，绝不重算）
+  scheduler.py             全局预算 + 单视图配额并行调度器
+  pipeline.py              五阶段编排与精确失效判定
+  snapshot.py              阶段化快照整体替换与 E_SNAPSHOT_STALE 判定
+  inject.py                五类真实输入故障注入
+  diagnostics.py           跨版本一致性校验与原因码诊断
+  workbench.py / cli.py    门面编排 / 命令行入口
+scripts/
+  generate_sample.py       固定种子样本生成（PNG/相机/配置/v1/v2）
+  run_demo.py              端到端验收演示与诊断报告
+tests/                     23 个 unittest 用例
+samples/demo/              生成的确定性样本
+reports/                   诊断报告 JSON 与文本摘要
+```
+
+## 3. 快速开始
+
+```
+# 生成确定性样本（6 视图、16 个几何图元）
+python scripts/generate_sample.py --out samples/demo
+
+# 一键验收：双版本往返 / 增量失效 / 预算 / 快照 / 并发一致 / 异常注入
+python scripts/run_demo.py
+
+# 运行全部测试
+python -m unittest discover -s tests -v
+
+# 命令行
+python -m mvrb.cli run --sample samples/demo --work work/w --report reports/r.json
+python -m mvrb.cli convert v2-to-v1 --input samples/demo/result_v2.json \
+    --output work/v1.txt --sidecar work/v1.sidecar.json
+python -m mvrb.cli convert v1-to-v2 --input work/v1.txt \
+    --output work/v2.json --sidecar work/v1.sidecar.json
+python -m mvrb.cli diagnose --input samples/demo/result_v2.json --output work/diag.json
+```
+
+## 4. 关键设计与业务要求映射
+
+### 4.1 双版本交换与统一 IR（要求 1、2）
+- **v1 定宽文本**：`F|/M|/V|` 三类记录，字段零填充、固定宽度；解析时逐行核对总宽度与
+  标签，宽度不足或字段错位输出 `E_FIELD_TRUNCATED` 并进入失败清单，不中断其它行。
+- **统一 IR 校验**：视图/特征唯一性、坐标落在图像范围内、得分 `[0,1000]`、体素代表点
+  可被 `voxel_size` 整除（含定点量化半 LSB 容差）、非有限数 `E_NON_FINITE`。
+- **v1→v2**：整数坐标/千分比精确换算为浮点并打精度标签；度量码按 `metrics.py` 码表
+  映射命名度量，非法码报 `E_UNKNOWN_METRIC`。
+- **v2→v1**：浮点 `ROUND_HALF_UP` 还原整数；截断残差、精度标签、命名度量、舍入模式写入
+  `*.sidecar.json`。带旁路再次升版后与原始 v2 **逐字段一致**（测试
+  `test_v1_v2_roundtrip_with_sidecar_exact` 断言）。
+
+### 4.2 内容指纹与精确失效（要求 3、4）
+- 缓存键 = `阶段名 | 上游内容指纹 | 该阶段实际参数指纹`。参数指纹按阶段拆分
+  （特征只依赖 `feature_threshold`、体素只依赖 `voxel_size/fixed_point_bits` 等），
+  因此修改体素尺寸不会重算特征。
+- 仅噪声变化（图像字节变化但质心不变）只令特征/匹配失效；真正的坐标变化才会向下传播到
+  三角化、深度与体素。命中缓存直接读盘复用，不调用任何重算函数。
+- 任意编辑序列后的增量结果与“相同最终视图集合+配置”的空白全量重建**逐字段一致**
+  （`test_full_rebuild_equals_incremental_edit_sequence`）。
+
+### 4.3 预算并行调度（要求 5、8）
+- 预算切分在提交线程池**之前**按视图序号稳定完成，故并发度、线程完成次序、预算耗尽时机
+  都不影响最终顺序；输出顺序统一按稳定排序键回归。
+- 单视图超配额 → `E_VIEW_BUDGET_EXHAUSTED`；全局预算耗尽 → 未完成视图记
+  `E_POINT_BUDGET_EXHAUSTED` 并保留 `todo_queue`，下一批 `resume()` 优先续跑待办。
+- `max_workers` 取自配置且实测峰值并发不超过该值；`force_serial=True` 走单线程路径，
+  两者结果逐字段一致（`test_serial_equals_parallel_field_by_field`）。
+
+### 4.4 跨版本诊断（要求 6）
+输出逐视图坐标偏差直方图、匹配得分最大偏差、度量码还原情况、旁路命中数；当相邻两版本
+特征数量或三维点不一致时，区分原因码：
+- `R_COORD_ROUNDING` 坐标换算舍入
+- `R_METRIC_MAPPING` 度量码映射问题
+- `R_SIDECAR_MISS` 旁路元数据未命中
+
+### 4.5 阶段化快照（要求 7）
+阶段划分为 `load / features_match / triangulate / depth_voxel`，产物先写
+`snapshot/tmp/<stage>` 再 `os.replace` 整体替换。清单记录全局版本号、配置哈希、相机
+哈希、交换版本指纹、已完成视图与各阶段产物版本；提交前比对阶段版本，相同则
+`unchanged` 而非逐文件覆盖。启动时哈希不一致输出 `E_SNAPSHOT_STALE` 并从受影响阶段
+重算（配置变化从 `features_match` 起，相机/交换变化从 `load` 起）。
+
+### 4.6 异常注入（要求 8）
+独立注入配置对指定视图/阶段施加**真实输入故障**，注入项编号（`INJ-00x`）写入报告：
+
+| 注入故障 | 真实手法 | 业务码 |
+| --- | --- | --- |
+| truncated_png | 截断 PNG 字节 | `E_TRUNCATED_PNG` |
+| missing_camera | 从 cameras.json 删除视图 | `E_MISSING_CAMERA` |
+| disparity_overflow | 抬高最小视差至不可满足 | `E_DISPARITY_OUT_OF_RANGE` |
+| non_finite_feature | 交换文件写入 NaN 特征 | `E_NON_FINITE` |
+| zero_voxel_size | 配置体素尺寸置 0 | `E_VOXEL_ZERO_SIZE` |
+
+## 5. 实测验证结果
+
+环境：Python 3.11.0rc1、numpy 1.26.4、Pillow 11.0.0（Linux 实测，代码跨平台）。
+
+- `python -m unittest discover -s tests`：**23 passed**。
+- `python scripts/run_demo.py`：
+  - v2 无损往返 `True`，带旁路精确还原 `True`，匹配得分最大偏差 `0.0`，
+    旁路命中 `96/80/16`（feature/match/voxel）。
+  - 图像编辑失效 `depth/features/match/triangulate/voxel`；仅改阈值只失效 `features`；
+    仅改体素只失效 `voxel`；增量与空白全量逐字段一致 `True`。
+  - 全局预算 30 时待办队列 `[3,4,5]`、峰值并发 `3`，正确产生
+    `E_POINT_BUDGET_EXHAUSTED`。
+  - 快照首跑全 `replaced`、二跑全 `unchanged`、配置变更后 `stale=True` 并从
+    `features_match` 重算。
+  - 串行/并行逐字段一致 `True`。
+  - 五类异常注入全部 `observed=True`，注入编号与业务码一一对应。
+- 完整报告：`reports/diagnostic_report.json` 与 `reports/diagnostic_report.txt`。
+
+## 6. 确定性与可复现说明
+
+- 样本生成使用固定种子 `numpy.random.default_rng(seed)`；所有集合输出前按
+  `(视图序号, 特征/配对/体素键)` 规范化排序。
+- 浮点落盘统一精度（三角化 6 位小数、定点 `2^fixed_point_bits` 量化、
+  `ROUND_HALF_UP`），JSON 采用排序键规范化序列化后再哈希，保证跨进程缓存键稳定。
+- 失败清单条目携带由 `阶段|视图|对标识|错误码` 派生的稳定排序键，输出顺序与线程
+  调度无关。

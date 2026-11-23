@@ -1,0 +1,35 @@
+{
+  "injections": [
+    {
+      "fault": "truncated_png",
+      "id": "INJ-001",
+      "keep_bytes": 24,
+      "stage": "features",
+      "view": 1
+    },
+    {
+      "fault": "missing_camera",
+      "id": "INJ-002",
+      "stage": "load",
+      "view": 2
+    },
+    {
+      "fault": "disparity_overflow",
+      "forced_min_disparity": 1000000000.0,
+      "id": "INJ-003",
+      "stage": "triangulate",
+      "view": 0
+    },
+    {
+      "fault": "zero_voxel_size",
+      "id": "INJ-004",
+      "stage": "voxel"
+    },
+    {
+      "fault": "non_finite_feature",
+      "id": "INJ-005",
+      "stage": "validate",
+      "view": 0
+    }
+  ]
+}
