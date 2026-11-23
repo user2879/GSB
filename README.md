@@ -20,3 +20,42 @@ Windows 10 或 11，安装 Python 3.11 并确保 python 与 pip 可在命令行�
 
 验收：
 用本地告警样本验证三版本归一、降噪聚合、根因关联与定点误差界，并复核恢复重放一致。
+
+---
+
+# 交付说明（实现部分）
+
+本仓库已从零实现面向 Windows 本地环境的告警降噪与根因关联数据处理管线，纯 Python 标准库
+（`sqlite3`/`threading`/`json`/`hashlib`）实现核心算法，`numpy` 仅用于确定性样本生成。
+
+## 目录
+
+- `alert_pipeline/`：管线实现（错误码、三版本编解码、图拓扑、规则强校验、降噪聚合、
+  根因关联、双配额调度、定点统计、SQLite 账本、恢复重放、演进替换、样本生成、结构化日志）。
+- `tests/`：25 个 `unittest` 用例，覆盖 8 项业务要求与 4 类错误码。
+- `run_demo.py`：正常运行 / 强制终止恢复 / 版本演进 / 三类异常注入的端到端演示。
+- `generate_samples.py`：按整数种子生成确定性 JSON/NDJSON 样本与注入样本。
+- `docs/TECHNICAL_NOTES.md`：算法规则、误差界推导、需求追溯矩阵与复现步骤。
+- `samples/`：生成的本地样本（`alerts.ndjson`、`service_graph.json`、
+  `root_cause_rules.json`、`seeds.json`、`injected/`）。
+- `artifacts/demo_work/`：演示产生的 SQLite 账本、JSONL 日志与运行报告。
+
+## Windows 复现
+
+```bat
+py -3.11 -m pip install -r requirements.txt
+py -3.11 generate_samples.py --seed 20261124 --out samples
+py -3.11 run_demo.py
+py -3.11 -m unittest discover -s tests -v
+```
+
+## 已验证结果
+
+- 单元测试 25/25 通过；同种子重复生成样本逐字节一致。
+- 三版本（v1/v2/v3）归一在任意行序下逐字节一致，补齐字段均可回溯到 `FILL_RULES`。
+- 降噪闭区间窗口边界、整数抑制计数、跨批次开放窗口状态恢复均有测试覆盖。
+- 根因候选按 `(层级, 方向, 拓扑秩, 服务)` 稳定排序，与图节点插入顺序无关。
+- 定点统计采用 `S=10^4` floor 截断，误差界拆量化/窗口/层级三段并标注主导段，
+  不可区分指纹按稳定决胜排序并打标。
+- 强制终止留下 `UNKNOWN` 批次，重启仅信任 COMMITTED 记录并重放校验（`E_REPLAY`）；
+  依赖成环 `E_SPEC`、负静默窗口 `E_FIELD`、账本摘要不符 `E_SNAPSHOT` 均按要求报告。

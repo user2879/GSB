@@ -1,0 +1,43 @@
+{
+  "graph_version": 1,
+  "services": [
+    {
+      "depends_on": [
+        "svc-inventory"
+      ],
+      "service_id": "svc-auth"
+    },
+    {
+      "depends_on": [
+        "svc-auth",
+        "svc-order"
+      ],
+      "service_id": "svc-gateway"
+    },
+    {
+      "depends_on": [
+        "svc-inventory",
+        "svc-payment"
+      ],
+      "service_id": "svc-order"
+    },
+    {
+      "depends_on": [
+        "svc-inventory"
+      ],
+      "service_id": "svc-payment"
+    },
+    {
+      "depends_on": [
+        "svc-gateway"
+      ],
+      "service_id": "svc-inventory"
+    },
+    {
+      "depends_on": [
+        "svc-order"
+      ],
+      "service_id": "svc-notify"
+    }
+  ]
+}

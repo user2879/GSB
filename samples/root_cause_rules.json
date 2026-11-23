@@ -1,0 +1,32 @@
+{
+  "declared_version": 1,
+  "default_silence_window_ms": 1000,
+  "root_cause_rules": [
+    {
+      "include_downstream": false,
+      "include_upstream": true,
+      "match_service": "*",
+      "max_layer": 3,
+      "rule_id": "rc-upstream-all"
+    },
+    {
+      "include_downstream": true,
+      "include_upstream": true,
+      "match_service": "svc-gateway",
+      "max_layer": 2,
+      "rule_id": "rc-gateway-both"
+    }
+  ],
+  "rule_version": 1,
+  "schema_version": 3,
+  "silence_overrides": {
+    "by_fingerprint": {
+      "fp_000000000001": 500,
+      "fp_000000000002": 5000
+    },
+    "by_service": {
+      "svc-payment": 2000
+    }
+  },
+  "window_version": 1
+}
