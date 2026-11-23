@@ -1,0 +1,74 @@
+{
+  "global_resource_budget": 4,
+  "clusters": [
+    {
+      "id": "alpha",
+      "host": "127.0.0.1",
+      "port": 43101,
+      "nodes": [
+        "alpha-1",
+        "alpha-2"
+      ],
+      "concurrency": 2,
+      "seed": 101
+    },
+    {
+      "id": "beta",
+      "host": "127.0.0.1",
+      "port": 43102,
+      "nodes": [
+        "beta-1"
+      ],
+      "concurrency": 1,
+      "seed": 202
+    }
+  ],
+  "tasks": [
+    {
+      "id": "rollout",
+      "config_keys": [
+        "capacity",
+        "scaled"
+      ],
+      "target_clusters": [
+        "alpha",
+        "beta"
+      ],
+      "shards": 4,
+      "resource_units": 1,
+      "concurrency_limit": 2
+    },
+    {
+      "id": "audit",
+      "config_keys": [
+        "threshold"
+      ],
+      "target_clusters": [
+        "alpha"
+      ],
+      "shards": 2,
+      "resource_units": 1,
+      "concurrency_limit": 1
+    }
+  ],
+  "revisions": [
+    {
+      "version": 1,
+      "parent": null,
+      "values": {
+        "capacity": 10,
+        "threshold": 3,
+        "unused": 1
+      },
+      "derived": {
+        "scaled": {
+          "op": "sum",
+          "inputs": [
+            "capacity",
+            "threshold"
+          ]
+        }
+      }
+    }
+  ]
+}

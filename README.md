@@ -1,22 +1,144 @@
-在全新工作区中，需要从零构建一个面向 Windows 本地环境的多集群配置分发状态演进与恢复一致性验证管线。用户在本地 JSON 文件中声明一组集群（集群标识、127.0.0.1 回环端口、节点列表、整数并发配额）与一组配置分发任务（任务标识、引用的配置键集合、目标集群列表、整数分片数、每分片整数资源单位需求），并提交带单调递增版本号的配置修订链，每个修订引用父修订并携带若干配置键的整数取值与派生关系。系统须为每个集群在回环端口启动确定性模拟服务，按修订与分片组织分发，在全局资源预算、每集群配额与每任务并发上限约束下并行推进，并把每批分发的结局、聚合摘要、预算消耗与进度游标持久化到本地 SQLite，支持版本演进后的整体替换与强制终止后的恢复重放。
+# 本地多集群配置分发状态演进与恢复一致性验证管线
 
-任务环境与准备：
-安装 Python 3.11 或更高版本，使用标准库 sqlite3、socket、subprocess、threading、tkinter 与 time，无第三方必需依赖。
-在本地执行 python -m pip install numpy 安装 NumPy 用于分组聚合与样本计算，版本以可复现的本地 wheel 为准。
-确认 Windows 回环端口 1 至 65535 可绑定，样本 JSON 与 NDJSON 由题目附带脚本生成并放在工作区本地目录。
-Tkinter 随 Python 官方 Windows 安装包提供，若不可用仅保留命令行路径也可运行核心功能。
+这是一个只面向本机回环网络的确定性分发管线。它从 JSON 清单读取集群、任务和配置修订链，为每个集群启动独立模拟服务子进程，在全局资源、集群配额和任务并发三重约束下并行推进分片，并将结局、聚合摘要、资源消耗和游标写入 SQLite。修订演进时只重算失效子集；旧世代整体失效；强制终止后只接受完整提交的记录，并通过真实模拟服务重放校验摘要。
 
-业务要求：
-1. 实现集群、配置修订链与分发任务的加载及强校验：从本地 JSON 读取集群标识、127.0.0.1 回环端口、节点列表与整数并发配额，读取任务标识、引用的配置键集合、目标集群列表、整数分片数与每分片资源单位需求，校验标识唯一、端口为回环字面量且全局不重复、修订版本号单调递增且父修订引用存在无环、分片数与资源单位为非负整数，非法输入以 E_MANIFEST 报告并定位到首个违规字段。
-2. 实现确定性集群模拟服务的本地编排：以 Windows 子进程方式为每个集群在声明端口启动模拟服务，通过 JSON 行协议接收分发请求，按该集群当前修订的配置键取值对固定整数种子生成的数值样本用 NumPy 执行分组聚合，回传聚合摘要与单调时钟毫秒耗时；端口占用、握手超时与回执字段缺失分别以 E_PORT、E_HANDSHAKE、E_REPLY 报告，握手须有真实套接字超时。
-3. 实现按集群、修订与分片组织的分发计划编译：输出每个分片的稳定标识、引用配置键集合、资源单位需求与来源修订版本；编译产物的序列化顺序不得依赖字典或哈希遍历顺序，同一清单在任意编辑顺序下须得到逐字节一致的编译摘要，摘要差异须以 E_DIVERGE 定位到首个不一致分片。
-4. 实现受全局资源预算、每集群并发配额与每任务并发上限三重约束的并行下发调度：任一时刻运行分片占用的资源单位之和不得超出全局预算，单集群运行分片数不得超出其并发配额，单任务运行分片数不得超出任务并发上限；预算或配额不足时分片排队并记录等待开始与结束的单调时钟毫秒，调度须真实投射到工作线程池且不得绕过预算。
-5. 实现修订演进后的失效传播与仅失效子集重算：当配置键取值、目标集群或分片参数变化后修订版本号单调递增，须沿修订链与集群任务引用关系推导全部直接与间接失效分片，按修订版本升序与稳定分片序输出失效集合与每步传播依据；仅对失效集合重新编译下发，未失效分片的编译摘要、聚合摘要与所用修订版本必须逐字节保持不变且可逐项校验。
-6. 实现配置修订演进后的整体替换与陈旧结论防护：修订版本号递增后，旧版本下已产生的分片轨迹、聚合摘要、预算统计与失效轨迹须整体标记为陈旧且不得参与当前展示与汇总；当前视图须以整体替换方式重建而非增量合并，替换时须稳定列出新增、删除与摘要变化的分片，替换后的分片集合与修订链须自洽。
-7. 实现账本持久化与强制终止后的恢复：每完成一个分片须在同一 SQLite 事务中写入分片标识、结局、资源单位占用、聚合摘要、所用修订版本与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的记录恢复，处于运行中且未提交的分片须标记为未知并要求重跑，不得声称能生成退出报告。
-8. 实现会话快照的版本识别与恢复后一致性重放校验：快照持久化集群集合版本、修订链版本、预算参数版本、分片轨迹、聚合摘要与账本游标并携带内容摘要，重新打开时版本或摘要不一致须整体替换而非增量合并；恢复后按账本记录的修订版本重新在模拟服务上重算剩余分片的聚合摘要，与账本逐项比较，差异须定位到首个不一致的分片标识与字段并以 E_REPLAY 报明依据。
+## 环境与启动
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Python 3.11+
+- NumPy（唯一第三方依赖，用于分组聚合与确定性样本）
+- 标准库：`sqlite3`、`socket`、`subprocess`、`threading`、`tkinter`、`time` 等
+- 不使用 Docker 或其他容器
 
-验收：
-使用本地样本验证分发计划、三重预算调度、失效传播、快照整体替换与强制终止恢复重放的正确性与业务码。
+```powershell
+python -m pip install -r requirements.txt
+python scripts/generate_samples.py --output-dir samples
+python -m config_pipeline validate samples/manifest.json
+python -m config_pipeline run samples/manifest.json --db artifacts/demo.db
+```
+
+Windows 下模拟服务通过 `python -m config_pipeline.mock_service` 子进程启动，并设置 `CREATE_NO_WINDOW`/`SO_EXCLUSIVEADDRUSE`（可用时）。服务会监听父进程 PID，父进程被强杀后自动退出并释放端口。端口 1–1023 在 Windows 上通常需要管理员权限。
+
+## 清单格式
+
+规范字段如下；也兼容列出的常见别名。
+
+```json
+{
+  "global_resource_budget": 4,
+  "clusters": [
+    {
+      "id": "alpha",
+      "host": "127.0.0.1",
+      "port": 43101,
+      "nodes": ["alpha-1", "alpha-2"],
+      "concurrency": 2,
+      "seed": 101
+    }
+  ],
+  "tasks": [
+    {
+      "id": "rollout",
+      "config_keys": ["capacity", "scaled"],
+      "target_clusters": ["alpha"],
+      "shards": 4,
+      "resource_units": 1,
+      "concurrency_limit": 2
+    }
+  ],
+  "revisions": [
+    {
+      "version": 1,
+      "parent": null,
+      "values": {"capacity": 10, "threshold": 3},
+      "derived": {
+        "scaled": {"op": "sum", "inputs": ["capacity", "threshold"]}
+      }
+    },
+    {
+      "version": 2,
+      "parent": 1,
+      "values": {"capacity": 14}
+    }
+  ]
+}
+```
+
+字段规则：
+
+- 集群：`id`、`host`、`port`、`nodes`、`concurrency`，可选 `seed`。`host` 缺省为 `127.0.0.1`，显式提供时必须是该字面量；端口必须为 1–65535 的整数且全局唯一；集群标识和节点内标识唯一；并发配额必须为正整数。
+- 任务：`id`、`config_keys`、`target_clusters`、`shards`、`resource_units`，可选 `concurrency_limit`。分片数和每分片资源单位为非负整数；任务并发上限缺省为 `max(1, shards)`；目标集群必须存在。
+- 修订：`version`、`parent`、`values`、`derived`。数组内版本严格递增，首修订父版本为 `null`，后续父修订必须更早存在，因此不可能成环。`values` 是相对父修订的增量并继承未覆盖值；`derived` 可继承或覆盖派生规则。支持 `sum`、`min`、`max`、`product`、`sub`；派生图必须无环且所有输入可解析。
+- 任一每分片资源单位不得超过全局预算，否则该分片永远不可能被调度，按 `E_MANIFEST` 拒绝。
+- 常用别名：`resource_budget`/`global_budget`/`budget`、`loopback_port`、`targets`/`target_cluster_ids`、`shard_count`、`resources_per_shard`、`task_concurrency`/`max_concurrency`、`parent_version`、`config_values`、`operation`/`from` 等。
+- JSON 重复对象键也会被拒绝。所有错误定位到首个违规字段，例如 `clusters[1].port` 或 `tasks[0].resource_units`。
+
+## CLI
+
+```text
+python -m config_pipeline validate MANIFEST
+python -m config_pipeline compile MANIFEST [--output PLAN.json]
+python -m config_pipeline run MANIFEST --db STATE.db [--snapshot SNAPSHOT.json]
+python -m config_pipeline recover MANIFEST --db STATE.db [--snapshot SNAPSHOT.json]
+python -m config_pipeline evolve OLD.json NEW.json --db STATE.db
+python -m config_pipeline replay MANIFEST --db STATE.db
+python -m config_pipeline diff OLD.json NEW.json
+python -m config_pipeline compare LEFT.json RIGHT.json
+python -m config_pipeline status --db STATE.db
+python -m config_pipeline ui --db STATE.db
+```
+
+`--snapshot` 省略时默认写为 `STATE.db.snapshot.json`。`ui` 是只读 Tkinter 查看器；Tk 不可用时 CLI 核心功能不受影响。
+
+`run` 可续跑；`recover` 会先标记未知分片，再重放当前已提交分片并继续剩余工作；`evolve` 只重算失效集合并整体替换当前视图。`--verify-replay` 可在 `run`/`evolve` 时额外重放校验。
+
+测试专用强制终止注入：
+
+```text
+python -m config_pipeline run MANIFEST --db STATE.db --crash-after-completed 1
+```
+
+该参数在提交 N 个分片后，让下一分片保持运行中并直接 `exit(137)`，不输出退出报告。它用于验证恢复路径，不属于正常业务参数。
+
+## 业务码与退出码
+
+| 业务码 | 含义 | CLI 退出码 |
+| --- | --- | --- |
+| `E_MANIFEST` | 清单/修订/任务/端口等静态校验失败，含首个字段路径 | 2 |
+| `E_PORT` | 声明回环端口无法绑定或已被占用 | 3 |
+| `E_HANDSHAKE` | 真实套接字握手超时/子进程提前异常退出 | 4 |
+| `E_REPLY` | JSONL 回执字段缺失、类型错误、集合摘要不一致或分发失败 | 5 |
+| `E_DIVERGE` | 编译计划在稳定分片/字段处不一致 | 6 |
+| `E_REPLAY` | 账本/快照完整性或恢复重放摘要不一致，含首个分片与字段 | 7 |
+
+失败时 stdout 输出单个 JSON 对象：`{"ok":false,"code":"E_...","field":...}`。成功输出相应计划、状态或执行报告。
+
+## 核心不变量
+
+- **稳定计划**：集群按 ID、任务按 ID、键集合与目标集合排序；分片 ID 与计划序列化不依赖 JSON 对象或哈希遍历顺序。同一清单仅编辑字典/集合顺序会得到逐字节相同计划。
+- **三重调度**：分片在提交给真实 `ThreadPoolExecutor` 前，先在主调度线程原子预占全局资源、集群运行数和任务运行数；工作线程结束后才释放。因此线程池排队也不能绕过预算。排队、开始、结束使用单调时钟毫秒。
+- **选择性失效**：从修订链逐版本比较，沿 `配置键 -> 派生键 -> 任务引用 -> 目标集群 -> 分片` 传播，并附带可读依据。未失效分片保持原编译摘要、聚合摘要与来源修订；失效分片使用新修订重编译。
+- **整体替换**：每次运行创建新世代，旧快照、视图、预算统计和失效轨迹全部设为 `is_stale=1`。当前视图只从唯一 current snapshot 读取，不做增量拼接。替换差异按稳定分片 ID 列出新增、删除和变化字段。
+- **原子账本**：一个分片完成时，同一 SQLite 事务写入账本行、结局、资源单位、聚合摘要、修订版本、编译摘要和单调递增进度游标，同时更新账本内容摘要与 `inflight` 状态。强制终止只能看到完整前缀。
+- **未知即重跑**：运行前先提交 `inflight=running`。重启时所有仍为 running 的尝试改为 unknown，不允许据此生成成功结论，并且对应分片必须重跑。
+- **快照可验证**：快照保存集群集合、修订链、预算参数的内容版本摘要，以及分片轨迹、聚合摘要和账本游标。格式版本、版本摘要、内容摘要、账本游标或快照文件任一不一致时，整体重建当前视图。
+- **重放校验**：恢复时按账本中的来源修订重新调用真实模拟服务，比较聚合摘要。差异按稳定分片顺序定位首个分片及嵌套字段，并以 `E_REPLAY` 说明依据。
+
+更详细的表结构、状态机和模块边界见 [docs/DESIGN.md](docs/DESIGN.md)。实际执行结果见 [docs/VERIFICATION.md](docs/VERIFICATION.md)。
+
+## 测试
+
+```text
+python -m unittest discover -v
+```
+
+当前工作区实际运行：32 项测试全部通过。覆盖清单首个字段错误、计划字节稳定性与 `E_DIVERGE`、三重预算、端口冲突 `E_PORT`、缺失回执 `E_REPLY`、派生失效传播、快照整体替换、真实子进程强制退出恢复和 `E_REPLAY`。
+
+## 目录
+
+```text
+config_pipeline/       核心包（校验、编译、调度、模拟服务、SQLite、会话、CLI、Tk）
+tests/                 标准库 unittest 测试
+scripts/generate_samples.py  本地样本与 NDJSON 生成器
+samples/               已生成的示例清单与请求
+docs/                  设计与验证记录
+```
