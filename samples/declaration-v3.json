@@ -1,0 +1,32 @@
+{
+  "format_version": 3,
+  "workloads": [
+    {
+      "name": "api-gateway",
+      "replicas": 3,
+      "image": "registry.local/gateway:1.27.0",
+      "resource_limit": 1536,
+      "probe_ms": 500,
+      "labels": {"app": "gateway", "env": "prod"},
+      "parent_ref": null
+    },
+    {
+      "name": "worker",
+      "replicas": 2,
+      "image": "registry.local/worker:3.2.1",
+      "resource_limit": 2048,
+      "probe_ms": 750,
+      "labels": {"app": "worker", "env": "prod"},
+      "parent_ref": "api-gateway"
+    },
+    {
+      "name": "cache",
+      "replicas": 1,
+      "image": "registry.local/cache:7.4",
+      "resource_limit": 512,
+      "probe_ms": 1000,
+      "labels": {"app": "cache", "env": "prod"},
+      "parent_ref": "api-gateway"
+    }
+  ]
+}

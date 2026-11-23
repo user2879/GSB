@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "declarative-drift-diagnostic"
+version = "0.1.0"
+description = "Deterministic declarative configuration drift diagnostics for a local Windows workspace"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+drift-diag = "drift_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["drift_diag*"]
