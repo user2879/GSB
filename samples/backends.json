@@ -1,0 +1,44 @@
+{
+  "backends": [
+    {
+      "backend_id": "b-stable-a",
+      "host": "127.0.0.1",
+      "port": 18101,
+      "model_dim": 8,
+      "hidden_dim": 16,
+      "seed": 101,
+      "quant_profile": "int8",
+      "format_version": "v1"
+    },
+    {
+      "backend_id": "b-gray-a",
+      "host": "127.0.0.1",
+      "port": 18102,
+      "model_dim": 8,
+      "hidden_dim": 16,
+      "seed": 202,
+      "quant_profile": "fp16",
+      "format_version": "v3"
+    },
+    {
+      "backend_id": "b-stable-b",
+      "host": "127.0.0.1",
+      "port": 18103,
+      "model_dim": 4,
+      "hidden_dim": 8,
+      "seed": 303,
+      "quant_profile": "int4",
+      "format_version": "v2"
+    },
+    {
+      "backend_id": "b-gray-b",
+      "host": "127.0.0.1",
+      "port": 18104,
+      "model_dim": 4,
+      "hidden_dim": 8,
+      "seed": 404,
+      "quant_profile": "int8",
+      "format_version": "v2"
+    }
+  ]
+}
