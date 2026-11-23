@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gateway-diag"
+version = "0.1.0"
+description = "Deterministic loopback inference gateway routing diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3"]
+
+[project.scripts]
+gateway-diag = "gateway_diag.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gateway_diag*"]

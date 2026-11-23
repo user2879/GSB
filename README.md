@@ -1,21 +1,170 @@
-项目从零开始，需要构建一个面向 Windows 本地环境的推理网关路由诊断组件，交付可交互的领域数据编辑与操作应用。用户在本地 JSON 文件中声明一组推理后端（后端标识、127.0.0.1 回环端口、整数模型维度、整数隐藏层维度、整数随机种子、参数量化口径）与一组路由规则（规则标识、请求前缀、稳定版与灰度版目标后端、灰度权重万分比、批大小、规则版本号），并给出 NDJSON 请求流（请求序号、客户端键、输入向量、到达时刻毫秒）。系统须以子进程方式在回环端口启动确定性推理后端，按客户端键的稳定哈希与灰度权重将请求分流至稳定版或灰度版，并在 NumPy 上完成前向推理；同时须在全局并发上限与每后端并发配额约束下并行推进批次，维护逐请求命中账本。核心业务问题是：界面快速视图的即时决策结论与账本权威重算结果必须在去向、批归属、输出摘要与耗时统计上逐字节一致，且该一致性在规则版本演进与进程被强制终止后仍可复核。
+# 推理网关路由诊断台
 
-任务环境与准备：
-安装 Python 3.11 或 3.12（Windows 本地安装包），确保 python 命令可用并创建独立虚拟环境。
-在虚拟环境中执行 pip install numpy，用于前向推理与确定性参数构造。
-确认 Windows 防火墙允许 127.0.0.1 回环高位端口监听与连接，无需外部网络。
+这是一个面向 Windows 本地环境的确定性推理网关路由诊断组件。它以本地 JSON/NDJSON 为领域数据，以真实 `127.0.0.1` 子进程为推理后端，提供按客户端键稳定分流的灰度路由、NumPy 前向推理、配额调度、SQLite 权威账本、快速视图/权威重算逐字节校验，以及强制终止后的恢复重放。
 
-业务要求：
-1. 实现后端、路由规则与请求流的本地 JSON 加载及强校验：校验后端标识与规则标识唯一、端口为 127.0.0.1 回环字面量且全局不重复、模型维度与隐藏层维度为正整数、随机种子为整数、量化口径属于受支持集合、灰度权重万分比在 0 至 10000 之间、批大小为正整数、每个规则的目标后端存在；任一不合法须以 E_SPEC 拒绝并指明首个非法条目与字段。
-2. 实现确定性模型参数与请求样本的构造：以声明种子、维度与量化口径按显式规则生成各后端参数矩阵并计算参数摘要，相同声明多次运行必须得到逐位一致的参数摘要；参数摘要须绑定后端标识、模型维度与量化口径版本，当后端维度或口径变化时摘要必须变化并可定位变化来源。
-3. 实现基于稳定哈希的灰度分流与逐请求命中账本：按客户端键与规则标识稳定哈希映射到 0 至 10000 整数分桶后与当前灰度权重万分比比较决定稳定版或灰度版去向，同一客户端键在同一规则与同一权重下必须始终得到同一去向；账本逐请求记录规则标识、去向、分桶值、权重版本与批次归属，且结果不得依赖字典或哈希遍历顺序。
-4. 实现推理后端的本地子进程编排与真实回环通信：以 Windows 子进程方式按声明端口启动后端，通过 JSON 行协议接收批请求并在 NumPy 上完成前向推理，回执含后端标识、参数摘要、批内请求序号集合与输出摘要；端口占用、握手超时与回执字段缺失须分别以 E_PORT、E_HANDSHAKE、E_RECEIPT 报告并定位到后端标识与端口。
-5. 实现受全局并发上限与每后端并发配额双重约束的并行批次调度：任一时刻运行批次数与单后端运行批次数不得超限，配额耗尽时批次排队并记录等待开始与结束的单调时钟毫秒；调度须真实投射到工作线程池，且不得绕过配额继续执行，单批执行须真实调用本地后端并校验回执与请求序号集合一致。
-6. 实现界面快速视图与权威重算的分离路径及逐字节一致性判定：界面查询从账本缓存在一次读取内给出即时去向、批归属与输出摘要，不得触发全量重算；权威重算命令须按账本逐请求重放分流与推理并重算统计，任一缓存项与权威重算在去向、批归属、输出摘要或耗时统计上不一致须以 E_PREVIEW 定位到首个不一致的请求序号与字段。
-7. 实现规则版本或后端集合演进后的陈旧结论防护与整体替换：规则或后端被修改后版本号单调递增，旧版本下的命中账本、批归属、输出摘要与统计须整体标记为陈旧且不得参与当前展示与汇总；当前视图须整体替换而非增量合并，替换时须稳定列出新增、删除与版本变更的条目。
-8. 实现账本持久化、强制终止后的恢复与恢复后一致性重放校验：每完成一个批次须在同一 SQLite 事务中写入批次记录、回执摘要、配额消耗与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交记录恢复，未提交批次须标记为未知并要求重跑；恢复后按账本记录重新执行分流与推理，与账本逐项比较并以 E_REPLAY 定位首个不一致的请求序号、后端与字段。
+## 交付内容
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- `gateway_diag/`：Python 包，包含数据校验、参数构造、路由、子进程协议、调度、账本、恢复、CLI 和 Tkinter 操作台。
+- `examples/`：可直接运行的后端/规则规格与 NDJSON 请求样例。
+- `tests/`：39 项自动化验收测试，覆盖真实回环子进程、并发配额、逐字节一致性、版本替换、强制终止恢复与异常码。
+- `docs/TECHNICAL.md`：算法、事务、协议和一致性设计说明。
 
-验收：
-使用本地样本与真实回环后端验证分流一致、权威重算一致、恢复重放及异常码。
+## 环境准备（Windows）
+
+要求 Windows 10/11，Python 3.11 或 3.12，并且 `python` 命令位于 `PATH`。
+
+```powershell
+cd <项目目录>
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+python -m unittest discover -s tests -v
+```
+
+也可在项目根目录直接以 `python -m gateway_diag ...` 运行，不要求先安装包；安装后可使用 `gateway-diag ...` 入口。
+
+应用只连接 `127.0.0.1`，不访问外部网络。若 Windows 首次弹出防火墙提示，允许专用网络上的 Python 进程监听/连接回环高位端口即可。所有后端主机字段必须严格为字面量 `127.0.0.1`。
+
+## 领域数据
+
+### 规格 JSON
+
+```json
+{
+  "revision": 1,
+  "limits": {
+    "global_concurrency": 2,
+    "backend_concurrency": {
+      "stable-a": 1,
+      "canary-b": 1
+    }
+  },
+  "backends": [
+    {
+      "id": "stable-a",
+      "host": "127.0.0.1",
+      "port": 43171,
+      "model_dim": 4,
+      "hidden_dim": 3,
+      "seed": 17,
+      "quantization": "int8"
+    },
+    {
+      "id": "canary-b",
+      "host": "127.0.0.1",
+      "port": 43172,
+      "model_dim": 4,
+      "hidden_dim": 5,
+      "seed": 29,
+      "quantization": "int4"
+    }
+  ],
+  "rules": [
+    {
+      "id": "alpha",
+      "prefix": "alpha:",
+      "stable_backend": "stable-a",
+      "canary_backend": "canary-b",
+      "canary_weight_bp": 3000,
+      "batch_size": 2,
+      "version": 1
+    }
+  ]
+}
+```
+
+约束：
+
+- `revision` 是规格整体版本，修改任意后端或规则时必须严格递增。
+- `backends[].id` 与 `rules[].id` 分别唯一；全部端口在规格内唯一且范围为 `1..65535`。
+- `host` 必须为 `127.0.0.1`；缺省时也取该值。
+- `model_dim`、`hidden_dim`、`batch_size`、规则 `version` 为正整数；`seed` 为整数；布尔值不会被当作整数。
+- `quantization` 仅支持 `fp32`、`int8`、`int4`。
+- `canary_weight_bp` 为 `0..10000` 的整数。
+- 每条规则的两个目标后端必须存在。
+- `limits.global_concurrency`、`limits.default_backend_concurrency` 与每个后端配额均为正整数。缺省全局/单后端并发均为 `1`。
+- 修改同一规则内容时，该规则 `version` 必须严格递增；新增/删除条目及后端内容变化通过规格 `revision` 递增表达。
+
+### 请求 NDJSON
+
+```json
+{"request_id":1,"client_key":"alpha:customer-001","input":[0.1,-0.2,0.3,0.4],"arrival_ms":1000}
+```
+
+- `request_id` 为唯一正整数；`client_key` 为非空字符串；`input` 为长度等于实际路由后端 `model_dim` 的有限数值数组；`arrival_ms` 为不小于 0 的整数。
+- 规则选择：可选请求字段 `prefix`、`request_prefix`、`path` 或 `rule_id` 用于匹配。否则将 `client_key` 当作待匹配文本，选择最长匹配的规则前缀。只有一条规则且无匹配时，将其作为该规则的显式回退。
+- 请求按 `(arrival_ms, request_id)` 排序，因此文件行顺序和字典遍历顺序不影响结果。
+
+## 运行
+
+```powershell
+python -m gateway_diag validate --spec examples\sample_spec.json --requests examples\sample_requests.ndjson
+python -m gateway_diag run --spec examples\sample_spec.json --requests examples\sample_requests.ndjson --db artifacts\ledger.sqlite3 --report artifacts\run.json
+python -m gateway_diag preview --db artifacts\ledger.sqlite3
+python -m gateway_diag preview --db artifacts\ledger.sqlite3 --request-id 1
+python -m gateway_diag verify --mode both --spec examples\sample_spec.json --requests examples\sample_requests.ndjson --db artifacts\ledger.sqlite3
+python -m gateway_diag recover --spec examples\sample_spec.json --requests examples\sample_requests.ndjson --db artifacts\ledger.sqlite3
+python -m gateway_diag versions --db artifacts\ledger.sqlite3
+python -m gateway_diag gui --spec examples\sample_spec.json --requests examples\sample_requests.ndjson --db artifacts\ledger.sqlite3
+```
+
+安装后也可使用 `gateway-diag ...`。样例端口 `43171/43172` 被占用时会按规格返回 `E_PORT`，请改用本机空闲高位端口。
+
+### 交互操作台
+
+`gui` 子命令打开 Tkinter 桌面应用，包含：
+
+- 规格 JSON 编辑、保存与强校验。
+- 后端/规则结构化表格，支持新增、双击编辑、删除；结构化修改会自动递增规格 revision，规则内容修改还会自动递增规则 version。
+- NDJSON 请求流编辑器，保存前执行完整校验。
+- 执行/续跑、快速视图、权威与重放校验、恢复、版本历史和日志面板。
+- 快速视图单次读取缓存后立即展示去向、分桶、权重版本、批归属、输出摘要和批次耗时；双击可查看详情。
+
+## 一致性模型
+
+- 稳定分桶：`SHA-256("gateway-route-v1\0" + rule_id + "\0" + client_key)`，取前 8 字节按大端整数解释后 `mod 10000`，得到 `0..9999`；当 `bucket < canary_weight_bp` 时去灰度版，否则去稳定版。权重 `0` 全稳定，权重 `10000` 全灰度。
+- 批次归属：按 `(rule_id, backend_id)` 分组，以 `(arrival_ms, request_id)` 稳定排序，再按规则 `batch_size` 切块。批次 ID 由 revision、规则/后端摘要和组内序号确定。
+- 参数：以 SHA-256 计数器流生成浮点矩阵，按 `fp32`、对称 `int8` 或对称 `int4` 量化；参数摘要绑定后端标识、维度、种子和量化口径版本。
+- 权威重算会重新执行分流、批次规划和真实推理，输出摘要必须与账本一致。单调时钟耗时是已提交的不可变观测事实，权威统计从账本耗时事实重算并再次逐字节比较，不把无法复现的新一次墙钟耗时误当成同一事实。
+- 快速视图与权威视图都以规范 JSON 序列化字节比较；首个差异报告为 `E_PREVIEW`，包含请求序号与字段。
+
+## 持久化与恢复
+
+- SQLite 开启 WAL、`synchronous=FULL`、`foreign_keys=ON`。
+- 每完成一个批次，批次记录、请求账本、回执摘要、参数摘要、配额消耗、进度游标和账本内容摘要在一个 `BEGIN IMMEDIATE` 事务中提交。
+- 重启后，规划中缺失的批次写入 `recovery_unknowns`，状态为 `UNKNOWN`，报告 `needs_rerun=true`；重跑成功后在批次提交事务中改为 `RESOLVED`。
+- `recover` 只跳过完整提交的批次，重跑缺失批次，然后从真实后端重新执行分流与推理，与账本逐项比较；首个差异报告 `E_REPLAY`，包含请求序号、后端和字段。
+- 新规格 revision 激活时，旧 revision 的批次与请求账本整体标记 `stale=1`，不计入当前快速视图和汇总。当前视图整体替换，并持久化稳定的新增/删除/版本变更清单。
+
+## 错误码
+
+| 错误码 | 含义 | CLI 退出码 |
+|---|---|---:|
+| `E_SPEC` | 规格/请求首个非法条目或字段 | 2 |
+| `E_PORT` | 后端端口占用 | 3 |
+| `E_HANDSHAKE` | 启动就绪行或 TCP 握手超时/不匹配 | 4 |
+| `E_RECEIPT` | 回执缺失、字段非法或批内序号不匹配 | 5 |
+| `E_PREVIEW` | 快速视图与权威重算不一致 | 6 |
+| `E_REPLAY` | 恢复重放与账本不一致 | 7 |
+| `E_SCHEDULER` | 调度器无法满足配额 | 8 |
+| `E_LEDGER` | 账本事务/内容摘要异常 | 9 |
+| `E_UI` | Tkinter/Tk 显示环境不可用（补充错误码） | 1 |
+
+错误 JSON 同时给出可用的 `entry`、`field`、`request_id`、`backend_id`、`port`、`batch_id` 定位信息。
+
+## 本次实际验证
+
+执行环境：Linux/WSL2，Python `3.11.0rc1`，NumPy `1.26.4`；Windows 专属启动参数与 `SO_EXCLUSIVEADDRUSE` 分支已实现，但当前容器没有 Windows 实机，Windows 分支仍需在目标机执行同一测试命令复核。
+
+```text
+python -m unittest discover -s tests -v
+Ran 39 tests in 31.144s
+OK
+```
+
+已验证：真实回环握手/推理、同端口重启、端口占用 `E_PORT`、握手缺失 `E_HANDSHAKE`、回执缺字段 `E_RECEIPT`、稳定分桶、参数跨进程逐位一致、真实线程池并发上限与单后端配额、快速视图/权威视图规范字节一致、`E_PREVIEW` 字段定位、`E_REPLAY` 字段定位、revision 整体替换与陈旧隔离，以及运行进程在至少一个批次提交后被 `SIGKILL`、重启标记 `UNKNOWN`、重跑缺失批次并成功重放。
+
+运行目录中的样例端口可能处于系统 `TIME_WAIT` 或被占用；测试全部使用动态空闲端口，因此不受固定样例端口影响。
+
+更详细的逐项实跑记录见 `docs/VERIFICATION.md`。
