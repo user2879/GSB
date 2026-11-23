@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deterministic-rerank-lab"
+version = "1.0.0"
+description = "Local deterministic search reranking and reranking experiment bench"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4", "PyYAML==6.0.2"]
+
+[project.scripts]
+rerank-lab = "rerank_lab.cli:main"
+
+[tool.setuptools]
+packages = ["rerank_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

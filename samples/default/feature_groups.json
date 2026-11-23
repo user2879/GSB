@@ -1,0 +1,47 @@
+{
+  "feature_order": [
+    "recall.bm25",
+    "recall.ann",
+    "dense.0",
+    "dense.1",
+    "dense.2",
+    "dense.3",
+    "sparse.brand",
+    "sparse.color"
+  ],
+  "groups": [
+    {
+      "conflict": true,
+      "features": [
+        "recall.bm25",
+        "recall.ann"
+      ],
+      "name": "recall"
+    },
+    {
+      "conflict": false,
+      "features": [
+        "dense.0",
+        "dense.1",
+        "dense.2",
+        "dense.3"
+      ],
+      "name": "dense"
+    },
+    {
+      "conflict": true,
+      "features": [
+        "sparse.brand",
+        "sparse.color"
+      ],
+      "name": "sparse"
+    }
+  ],
+  "similarity_features": [
+    "dense.0",
+    "dense.1",
+    "dense.2",
+    "dense.3"
+  ],
+  "similarity_threshold": 0.8
+}
