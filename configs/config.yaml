@@ -1,0 +1,25 @@
+window:
+  size: 8
+  stride: 4
+  context_overlap: 2
+weights:
+  vegetation: 1.0
+  water: 1.2
+  texture: 0.8
+  slope: 0.6
+fixed_point:
+  fractional_bits: 12
+  quantization_gear: NORMAL
+global_pixel_budget: 100000
+tile_pixel_quota: 1000
+fusion_batch_limit: 32
+max_workers: 4
+min_component_pixels: 3
+allowed_bandsets:
+  - BS_V1
+  - BS_V2
+fusion_strategy_version: FV1
+manifest_path: samples\\manifest.json
+snapshot_dir: workspace\\snapshot
+report_dir: reports
+sample_root: samples

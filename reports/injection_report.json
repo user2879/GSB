@@ -1,0 +1,199 @@
+{
+  "summary": {
+    "total": 6,
+    "hit": 6,
+    "passed": 6
+  },
+  "injections": [
+    {
+      "injection_id": "INJ01",
+      "kind": "truncated_band",
+      "tile_id": "t01",
+      "expected_code": "E_BAND_TRUNCATED",
+      "hit": true,
+      "observed_codes": [
+        "E_BAND_TRUNCATED",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP"
+      ],
+      "other_tiles_still_classified": [
+        "t00",
+        "t02",
+        "t10",
+        "t11",
+        "t12",
+        "t20",
+        "t21",
+        "t22"
+      ],
+      "status": "passed"
+    },
+    {
+      "injection_id": "INJ02",
+      "kind": "missing_band",
+      "tile_id": "t10",
+      "expected_code": "E_BAND_COUNT_MISMATCH",
+      "hit": true,
+      "observed_codes": [
+        "E_BAND_COUNT_MISMATCH",
+        "E_BAND_MISSING",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP"
+      ],
+      "other_tiles_still_classified": [
+        "t00",
+        "t01",
+        "t02",
+        "t11",
+        "t12",
+        "t20",
+        "t21",
+        "t22"
+      ],
+      "status": "passed"
+    },
+    {
+      "injection_id": "INJ03",
+      "kind": "dangling_neighbor",
+      "tile_id": "t22",
+      "expected_code": "E_ADJ_DANGLING",
+      "hit": true,
+      "observed_codes": [
+        "E_ADJ_DANGLING",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP"
+      ],
+      "other_tiles_still_classified": [
+        "t00",
+        "t01",
+        "t02",
+        "t10",
+        "t11",
+        "t12",
+        "t20",
+        "t21",
+        "t22"
+      ],
+      "status": "passed"
+    },
+    {
+      "injection_id": "INJ04",
+      "kind": "non_finite_weight",
+      "tile_id": "",
+      "expected_code": "E_WEIGHT_INVALID",
+      "hit": true,
+      "observed_codes": [
+        "E_WEIGHT_INVALID"
+      ],
+      "other_tiles_still_classified": [],
+      "status": "passed",
+      "error": "[E_WEIGHT_INVALID] weight vegetation must be non-negative finite, got nan"
+    },
+    {
+      "injection_id": "INJ05",
+      "kind": "window_not_divisible",
+      "tile_id": "",
+      "expected_code": "E_WINDOW_NOT_DIVISIBLE",
+      "hit": true,
+      "observed_codes": [
+        "E_SNAPSHOT_STALE",
+        "E_WINDOW_NOT_DIVISIBLE"
+      ],
+      "other_tiles_still_classified": [
+        "t00",
+        "t01",
+        "t02",
+        "t10",
+        "t11",
+        "t12",
+        "t20",
+        "t21",
+        "t22"
+      ],
+      "status": "passed"
+    },
+    {
+      "injection_id": "INJ06",
+      "kind": "resolution_mismatch",
+      "tile_id": "t12",
+      "expected_code": "E_RESOLUTION_MISMATCH",
+      "hit": true,
+      "observed_codes": [
+        "E_RESOLUTION_MISMATCH",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP",
+        "E_BOUNDARY_FLIP"
+      ],
+      "other_tiles_still_classified": [
+        "t00",
+        "t01",
+        "t02",
+        "t10",
+        "t11",
+        "t20",
+        "t21",
+        "t22"
+      ],
+      "status": "passed"
+    }
+  ]
+}
