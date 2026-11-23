@@ -1,0 +1,27 @@
+{
+  "session": {
+    "scale_exp": 3,
+    "groups": 8,
+    "global_concurrency": 2,
+    "node_concurrency": 1,
+    "dispatch_timeout_ms": 800,
+    "backoff_ms": [50, 100, 200]
+  },
+  "items": [
+    {"key": "alpha", "value": 1.5, "version": 1, "expire_ms": 5000},
+    {"key": "beta", "value": 0, "version": 2, "expire_ms": 5000,
+     "derived_from": "alpha", "derived_coeff": 2.5},
+    {"key": "gamma", "value": 3.25, "version": 3, "expire_ms": 5000},
+    {"key": "delta", "value": 0, "version": 4, "expire_ms": 5000,
+     "derived_from": "beta", "derived_coeff": 0.5},
+    {"key": "epsilon", "value": 7, "version": 5, "expire_ms": 5000}
+  ],
+  "nodes": [
+    {"id": "n1", "host": "127.0.0.1", "port": 23101,
+     "subscribes": ["alpha", "beta", "delta"], "seed": 11, "sample_size": 400},
+    {"id": "n2", "host": "127.0.0.1", "port": 23102,
+     "subscribes": ["beta", "delta", "gamma"], "seed": 22, "sample_size": 300},
+    {"id": "n3", "host": "127.0.0.1", "port": 23103,
+     "subscribes": ["gamma", "epsilon"], "seed": 33, "sample_size": 200}
+  ]
+}
