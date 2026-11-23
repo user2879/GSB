@@ -1,0 +1,39 @@
+{
+  "injections": [
+    {
+      "injection_id": "INJ-NONFINITE-01",
+      "round": 3,
+      "stage": "evidence",
+      "type": "nonfinite_sample",
+      "payload": {
+        "value": "nan"
+      }
+    },
+    {
+      "injection_id": "INJ-DIM-01",
+      "round": 5,
+      "stage": "evidence",
+      "type": "evidence_dim_mismatch",
+      "payload": {
+        "expected_dim": 2,
+        "force_fail": true
+      }
+    },
+    {
+      "injection_id": "INJ-ZEROGAIN-01",
+      "round": 7,
+      "stage": "calibration",
+      "type": "zero_gain",
+      "payload": {}
+    },
+    {
+      "injection_id": "INJ-REPLACE-01",
+      "round": 9,
+      "stage": "calibration",
+      "type": "replace_round_out_of_range",
+      "payload": {
+        "target_round": 999
+      }
+    }
+  ]
+}
