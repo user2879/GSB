@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "audio": {
+    "sample_rate": 16000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "segmentation": {
+    "frame_length_ms": 25.0,
+    "frame_shift_ms": 10.0,
+    "start_threshold_dbfs": -30.0,
+    "continue_threshold_dbfs": -42.0,
+    "energy_floor_dbfs": -70.0,
+    "min_segment_ms": 80.0,
+    "min_gap_ms": 50.0
+  },
+  "features": {
+    "f0_min_hz": 70.0,
+    "f0_max_hz": 400.0,
+    "voicing_threshold": 0.28,
+    "valid_frame_dbfs": -48.0,
+    "formant_count": 3,
+    "formant_min_hz": 250.0,
+    "formant_max_hz": 3800.0,
+    "formant_smoothing_bins": 5,
+    "lpc_order": 18,
+    "lpc_preemphasis": 0.0,
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "quantile_interpolation": "linear",
+    "syllable_min_hz": 1.5,
+    "syllable_max_hz": 8.0
+  },
+  "quantization": {
+    "dimensions": [
+      {
+        "name": "f0_mean",
+        "source": "f0_mean_hz",
+        "candidate_tiers": [
+          4,
+          6,
+          8,
+          10
+        ],
+        "max_step": 2.0
+      },
+      {
+        "name": "f0_std",
+        "source": "f0_std_hz",
+        "candidate_tiers": [
+          4,
+          6,
+          8
+        ],
+        "max_step": 1.0
+      },
+      {
+        "name": "f1_mean",
+        "source": "f1_mean_hz",
+        "candidate_tiers": [
+          4,
+          6,
+          8
+        ],
+        "max_step": 10.0
+      },
+      {
+        "name": "f2_mean",
+        "source": "f2_mean_hz",
+        "candidate_tiers": [
+          4,
+          6,
+          8
+        ],
+        "max_step": 12.0
+      },
+      {
+        "name": "f3_mean",
+        "source": "f3_mean_hz",
+        "candidate_tiers": [
+          4,
+          6,
+          8
+        ],
+        "max_step": 15.0
+      },
+      {
+        "name": "speech_rate",
+        "source": "speech_rate_sps",
+        "candidate_tiers": [
+          4,
+          6,
+          8
+        ],
+        "max_step": 0.25
+      }
+    ],
+    "minimum_range": 1e-09,
+    "tie_break": "lowest_bits_then_source_name"
+  },
+  "assignment": {
+    "metric": "rbf",
+    "rbf_gamma": 8.0,
+    "similarity_threshold": 0.92,
+    "tie_break": "speaker_id_lexicographic",
+    "annotation_policy": "record_conflict_keep_prediction"
+  },
+  "aggregation": {
+    "fixed_scale": 1000000000,
+    "rounding": "half_away_from_zero"
+  },
+  "runtime": {
+    "first_response_budget_ms": 1,
+    "first_response_scheduling_tolerance_ms": 20.0,
+    "max_workers": 4,
+    "snapshot_after_each_command": true,
+    "snapshot_keep": 5
+  },
+  "snapshot": {
+    "schema_version": 1
+  },
+  "engine": {
+    "schema_version": 1
+  }
+}

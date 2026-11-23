@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>说话人音色分析诊断工作台</title>
+<style>
+:root { color-scheme: dark; --bg:#0b1020; --panel:#121a31; --panel2:#17213d; --ink:#e8eefc; --muted:#91a1c7; --line:#273556; --accent:#67e8f9; --good:#34d399; --warn:#fbbf24; --bad:#fb7185; }
+* { box-sizing:border-box; }
+body { margin:0; background:radial-gradient(circle at 20% -10%,#172554 0,#0b1020 38%,#070b16 100%); color:var(--ink); font:14px/1.5 Inter,Segoe UI,system-ui,sans-serif; }
+main { max-width:1480px; margin:0 auto; padding:32px; }
+h1,h2,h3 { margin:0 0 12px; }
+h1 { font-size:28px; letter-spacing:-.02em; }
+h2 { font-size:19px; margin-top:28px; }
+p { margin:6px 0; }
+.muted, small { color:var(--muted); }
+.hero { display:flex; justify-content:space-between; gap:24px; align-items:flex-end; border-bottom:1px solid var(--line); padding-bottom:18px; }
+.cards { display:grid; grid-template-columns:repeat(5,minmax(130px,1fr)); gap:12px; margin:22px 0; }
+.card,.speaker-card,.panel { background:linear-gradient(160deg,var(--panel),var(--panel2)); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 12px 32px #0004; }
+.card span { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.card strong { display:block; font-size:28px; margin-top:4px; }
+.speakers { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; }
+.speaker-card h3 { color:var(--accent); }
+.tag { display:inline-block; background:#24345e; border-radius:999px; padding:2px 9px; margin:2px 5px 2px 0; font-size:12px; }
+.tag.warn { background:#4a3211; color:var(--warn); }
+.vector-row { display:grid; grid-template-columns:110px 1fr 92px; gap:8px; align-items:center; margin:7px 0; }
+.vector-row b { font-variant-numeric:tabular-nums; text-align:right; font-weight:500; }
+.bar { display:block; height:8px; background:#0a1020; border-radius:999px; overflow:hidden; border:1px solid #26365c; }
+.bar i { display:block; height:100%; background:linear-gradient(90deg,#22d3ee,#818cf8); }
+table { width:100%; border-collapse:collapse; background:#0f172c; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+th,td { text-align:left; vertical-align:top; padding:9px 10px; border-bottom:1px solid var(--line); }
+th { color:#b9c8ea; background:#16203a; font-size:12px; letter-spacing:.04em; text-transform:uppercase; position:sticky; top:0; }
+tr:hover td { background:#131d36; }
+code { color:#a5f3fc; font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace; word-break:break-all; }
+.alert { background:#3d2510; color:#fde68a; border:1px solid #7c4a13; padding:12px 14px; border-radius:12px; margin:12px 0; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.toolbar { display:flex; gap:10px; align-items:center; margin:18px 0 8px; }
+input { width:min(460px,100%); background:#0e1730; color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+.scroll { overflow:auto; max-height:650px; border-radius:14px; }
+@media (max-width:900px) { .cards { grid-template-columns:repeat(2,1fr); } .grid2 { grid-template-columns:1fr; } main { padding:18px; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div>
+      <div class="muted">LOCAL DETERMINISTIC ANALYSIS · 1</div>
+      <h1>说话人音色分析诊断工作台</h1>
+      <p class="muted">命令游标 7 · 全局版本 7 · 配置 6499bb58cedd3f8390…</p>
+    </div>
+    <div><code>canonical 1dd38129044c26d93bc7b7fd…</code></div>
+  </section>
+  
+  <section class="cards">
+    <div class="card"><span>已完成段</span><strong>12</strong></div>
+    <div class="card"><span>说话人</span><strong>5</strong></div>
+    <div class="card"><span>向量维度</span><strong>6</strong></div>
+    <div class="card"><span>复用产物</span><strong>37</strong></div>
+    <div class="card"><span>冲突 / 失败</span><strong>1 / 0</strong></div>
+  </section>
+
+  <h2>说话人级向量</h2>
+  <section class="speakers"><article class="speaker-card"><h3>spk_alpha</h3><p><span class="tag">2 segments</span><span class="tag">97 frame weight</span></p><div class="vector"><div class="vector-row"><span>f0_mean</span><span class="bar"><i style="width:6.48%"></i></span><b>0.064755</b></div><div class="vector-row"><span>f0_std</span><span class="bar"><i style="width:53.38%"></i></span><b>0.533827</b></div><div class="vector-row"><span>f1_mean</span><span class="bar"><i style="width:66.52%"></i></span><b>0.665190</b></div><div class="vector-row"><span>f2_mean</span><span class="bar"><i style="width:4.13%"></i></span><b>0.041318</b></div><div class="vector-row"><span>f3_mean</span><span class="bar"><i style="width:29.36%"></i></span><b>0.293573</b></div><div class="vector-row"><span>speech_rate</span><span class="bar"><i style="width:21.42%"></i></span><b>0.214240</b></div></div><small>voice_alpha.wav / voice_alpha.wav::seg_00001920_00010480 (w=52), voice_mixed.wav / voice_mixed.wav::seg_00001920_00009360 (w=45)</small><p><code>6304d14d4893e33137fb908c…</code></p></article><article class="speaker-card"><h3>spk_alpha#voice_alpha_wav#2</h3><p><span class="tag">2 segments</span><span class="tag">102 frame weight</span></p><div class="vector"><div class="vector-row"><span>f0_mean</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f0_std</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f1_mean</span><span class="bar"><i style="width:64.14%"></i></span><b>0.641391</b></div><div class="vector-row"><span>f2_mean</span><span class="bar"><i style="width:0.78%"></i></span><b>0.007812</b></div><div class="vector-row"><span>f3_mean</span><span class="bar"><i style="width:22.66%"></i></span><b>0.226562</b></div><div class="vector-row"><span>speech_rate</span><span class="bar"><i style="width:21.26%"></i></span><b>0.212623</b></div></div><small>voice_alpha.wav / voice_alpha.wav::seg_00012640_00020240 (w=46), voice_alpha.wav / voice_alpha.wav::seg_00022560_00031760 (w=56)</small><p><code>7c1675a7d476d3bf92a4c81e…</code></p></article><article class="speaker-card"><h3>spk_alpha#voice_mixed_wav#2</h3><p><span class="tag">1 segments</span><span class="tag">50 frame weight</span><span class="tag warn">degenerate</span></p><div class="vector"><div class="vector-row"><span>f0_mean</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f0_std</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f1_mean</span><span class="bar"><i style="width:63.28%"></i></span><b>0.632812</b></div><div class="vector-row"><span>f2_mean</span><span class="bar"><i style="width:0.78%"></i></span><b>0.007812</b></div><div class="vector-row"><span>f3_mean</span><span class="bar"><i style="width:22.66%"></i></span><b>0.226562</b></div><div class="vector-row"><span>speech_rate</span><span class="bar"><i style="width:15.62%"></i></span><b>0.156250</b></div></div><small>voice_mixed.wav / voice_mixed.wav::seg_00021760_00030000 (w=50)</small><p><code>41c90de31e69459df0c491a1…</code></p></article><article class="speaker-card"><h3>spk_beta</h3><p><span class="tag">4 segments</span><span class="tag">189 frame weight</span></p><div class="vector"><div class="vector-row"><span>f0_mean</span><span class="bar"><i style="width:96.88%"></i></span><b>0.968750</b></div><div class="vector-row"><span>f0_std</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f1_mean</span><span class="bar"><i style="width:0.78%"></i></span><b>0.007812</b></div><div class="vector-row"><span>f2_mean</span><span class="bar"><i style="width:99.22%"></i></span><b>0.992188</b></div><div class="vector-row"><span>f3_mean</span><span class="bar"><i style="width:94.09%"></i></span><b>0.940931</b></div><div class="vector-row"><span>speech_rate</span><span class="bar"><i style="width:87.29%"></i></span><b>0.872851</b></div></div><small>voice_beta.wav / voice_beta.wav::seg_00001920_00009200 (w=44), voice_beta.wav / voice_beta.wav::seg_00011360_00019360 (w=48), voice_beta.wav / voice_beta.wav::seg_00019360_00029840 (w=50), voice_mixed.wav / voice_mixed.wav::seg_00011680_00019440 (w=47)</small><p><code>1c924cf0993f88eb306af0fb…</code></p></article><article class="speaker-card"><h3>spk_gamma</h3><p><span class="tag">3 segments</span><span class="tag">146 frame weight</span></p><div class="vector"><div class="vector-row"><span>f0_mean</span><span class="bar"><i style="width:40.62%"></i></span><b>0.406250</b></div><div class="vector-row"><span>f0_std</span><span class="bar"><i style="width:3.12%"></i></span><b>0.031250</b></div><div class="vector-row"><span>f1_mean</span><span class="bar"><i style="width:98.74%"></i></span><b>0.987372</b></div><div class="vector-row"><span>f2_mean</span><span class="bar"><i style="width:37.80%"></i></span><b>0.377997</b></div><div class="vector-row"><span>f3_mean</span><span class="bar"><i style="width:1.32%"></i></span><b>0.013164</b></div><div class="vector-row"><span>speech_rate</span><span class="bar"><i style="width:6.98%"></i></span><b>0.069777</b></div></div><small>voice_gamma.wav / voice_gamma.wav::seg_00001920_00010160 (w=50), voice_gamma.wav / voice_gamma.wav::seg_00012320_00019760 (w=45), voice_gamma.wav / voice_gamma.wav::seg_00022080_00030480 (w=51)</small><p><code>e9968930b6675280a0c63e81…</code></p></article></section>
+
+  <h2>逐维自适应量化</h2>
+  <div class="scroll"><table><thead><tr><th>维度</th><th>来源</th><th>动态范围</th><th>位宽/档位</th><th>步长</th><th>选择模式</th></tr></thead><tbody><tr><td>f0_mean</td><td>f0_mean_hz</td><td>117.997901635 … 212.042472523</td><td>4 bits / 16 levels</td><td>6.269638059199999</td><td>forced</td></tr><tr><td>f0_std</td><td>f0_std_hz</td><td>0.007140643 … 4.002128794</td><td>4 bits / 16 levels</td><td>0.2663325434</td><td>auto_dynamic_range</td></tr><tr><td>f1_mean</td><td>f1_mean_hz</td><td>491.828868771 … 845.391457963</td><td>6 bits / 64 levels</td><td>5.612104590349206</td><td>auto_dynamic_range</td></tr><tr><td>f2_mean</td><td>f2_mean_hz</td><td>1264.414950133 … 1748.634556404</td><td>6 bits / 64 levels</td><td>7.686025496365079</td><td>auto_dynamic_range</td></tr><tr><td>f3_mean</td><td>f3_mean_hz</td><td>2366.964325663 … 2643.493108738</td><td>6 bits / 64 levels</td><td>4.389345763095236</td><td>auto_dynamic_range</td></tr><tr><td>speech_rate</td><td>speech_rate_sps</td><td>3.515625000 … 6.250000000</td><td>4 bits / 16 levels</td><td>0.182291666666667</td><td>auto_dynamic_range</td></tr></tbody></table></div>
+
+  <h2>段级诊断</h2>
+  <div class="toolbar"><input id="segment-search" placeholder="过滤文件、段、说话人、特征…"></div>
+  <div class="scroll"><table id="segments"><thead><tr><th>#</th><th>文件 / 段</th><th>采样范围</th><th>标注</th><th>有效帧</th><th>量化（整数 / 档位 / 步长 / 残差）</th><th>归属</th><th>缓存键</th></tr></thead><tbody><tr><td>0</td><td><strong>voice_alpha.wav</strong><br><small>voice_alpha.wav::seg_00001920_00010480</small></td><td>1920–10480<br><small>8560 samples</small></td><td>spk_alpha</td><td>52 frames<br><small>F0 121.922974204 Hz · rate 3.90625/s</small></td><td>f0_mean: 1 / 4b step 6.269638059199999 residual -2.3445654902<br>f0_std: 15 / 4b step 0.2663325434 residual 0.0<br>f1_mean: 43 / 6b step 5.612104590349206 residual 2.524330776984<br>f2_mean: 4 / 6b step 7.686025496365079 residual -3.20360635246<br>f3_mean: 22 / 6b step 4.389345763095236 residual -0.293505048095<br>speech_rate: 2 / 4b step 0.182291666666667 residual 0.026041666667</td><td><strong>spk_alpha</strong><br><small>sim None · file_start</small></td><td><code>759684f5be0fcd1b…</code><br><code>d06e82b405ab7453…</code></td></tr><tr><td>1</td><td><strong>voice_alpha.wav</strong><br><small>voice_alpha.wav::seg_00012640_00020240</small></td><td>12640–20240<br><small>7600 samples</small></td><td>spk_alpha</td><td>46 frames<br><small>F0 117.99885175 Hz · rate 4.296875/s</small></td><td>f0_mean: 0 / 4b step 6.269638059199999 residual 0.000950115<br>f0_std: 0 / 4b step 0.2663325434 residual 0.008291263<br>f1_mean: 40 / 6b step 5.612104590349206 residual 2.049152152032<br>f2_mean: 0 / 6b step 7.686025496365079 residual 0.0<br>f3_mean: 14 / 6b step 4.389345763095236 residual 1.046217052667<br>speech_rate: 4 / 4b step 0.182291666666667 residual 0.052083333333</td><td><strong>spk_alpha#voice_alpha_wav#2</strong><br><small>sim 0.293203603 · start_new_speaker</small></td><td><code>05ff8f5b2397fda5…</code><br><code>93ec9e459b76a5ae…</code></td></tr><tr><td>2</td><td><strong>voice_alpha.wav</strong><br><small>voice_alpha.wav::seg_00022560_00031760</small></td><td>22560–31760<br><small>9200 samples</small></td><td>spk_alpha</td><td>56 frames<br><small>F0 117.998663841 Hz · rate 3.90625/s</small></td><td>f0_mean: 0 / 4b step 6.269638059199999 residual 0.000762206<br>f0_std: 0 / 4b step 0.2663325434 residual 0.004216858<br>f1_mean: 41 / 6b step 5.612104590349206 residual -2.801554703317<br>f2_mean: 0 / 6b step 7.686025496365079 residual 1.546681941<br>f3_mean: 14 / 6b step 4.389345763095236 residual -1.191601439334<br>speech_rate: 2 / 4b step 0.182291666666667 residual 0.026041666667</td><td><strong>spk_alpha#voice_alpha_wav#2</strong><br><small>sim 0.979063424 · join_previous_speaker</small></td><td><code>46babbf9bc5ab15a…</code><br><code>5ea033a4bf9c032c…</code></td></tr><tr><td>3</td><td><strong>voice_beta.wav</strong><br><small>voice_beta.wav::seg_00001920_00009200</small></td><td>1920–9200<br><small>7280 samples</small></td><td>spk_beta</td><td>44 frames<br><small>F0 212.038752731 Hz · rate 6.25/s</small></td><td>f0_mean: 15 / 4b step 6.269638059199999 residual -0.003719792<br>f0_std: 0 / 4b step 0.2663325434 residual 0.031081242<br>f1_mean: 0 / 6b step 5.612104590349206 residual 0.951199632<br>f2_mean: 63 / 6b step 7.686025496365079 residual -0.148709307<br>f3_mean: 60 / 6b step 4.389345763095236 residual -1.477662132715<br>speech_rate: 15 / 4b step 0.182291666666667 residual 0.0</td><td><strong>spk_beta</strong><br><small>sim None · file_start</small></td><td><code>d8eaccde6c06492a…</code><br><code>a85ec86a97c7034d…</code></td></tr><tr><td>4</td><td><strong>voice_beta.wav</strong><br><small>voice_beta.wav::seg_00011360_00019360</small></td><td>11360–19360<br><small>8000 samples</small></td><td>spk_beta</td><td>48 frames<br><small>F0 212.03268949 Hz · rate 5.859375/s</small></td><td>f0_mean: 15 / 4b step 6.269638059199999 residual -0.009783033<br>f0_std: 0 / 4b step 0.2663325434 residual 0.013384586<br>f1_mean: 0 / 6b step 5.612104590349206 residual 0.0<br>f2_mean: 63 / 6b step 7.686025496365079 residual 0.0<br>f3_mean: 63 / 6b step 4.389345763095236 residual 0.0<br>speech_rate: 13 / 4b step 0.182291666666667 residual -0.026041666667</td><td><strong>spk_beta</strong><br><small>sim 0.976517097 · join_previous_speaker</small></td><td><code>5bab7715f2c4f9be…</code><br><code>70aacd09fb7e2559…</code></td></tr><tr><td>5</td><td><strong>voice_beta.wav</strong><br><small>voice_beta.wav::seg_00019360_00029840</small></td><td>19360–29840<br><small>10480 samples</small></td><td>spk_beta</td><td>50 frames<br><small>F0 212.042472523 Hz · rate 5.859375/s</small></td><td>f0_mean: 15 / 4b step 6.269638059199999 residual 0.0<br>f0_std: 0 / 4b step 0.2663325434 residual 0.037015102<br>f1_mean: 0 / 6b step 5.612104590349206 residual 1.552587463<br>f2_mean: 63 / 6b step 7.686025496365079 residual -0.989601097<br>f3_mean: 57 / 6b step 4.389345763095236 residual 1.911360646571<br>speech_rate: 13 / 4b step 0.182291666666667 residual -0.026041666667</td><td><strong>spk_beta</strong><br><small>sim 0.988349647 · join_previous_speaker</small></td><td><code>fa781159ca333087…</code><br><code>ff0e5bbca72e26d6…</code></td></tr><tr><td>6</td><td><strong>voice_gamma.wav</strong><br><small>voice_gamma.wav::seg_00001920_00010160</small></td><td>1920–10160<br><small>8240 samples</small></td><td>spk_gamma</td><td>50 frames<br><small>F0 158.032509844 Hz · rate 3.515625/s</small></td><td>f0_mean: 6 / 4b step 6.269638059199999 residual 2.4167798538<br>f0_std: 0 / 4b step 0.2663325434 residual 0.001570227<br>f1_mean: 63 / 6b step 5.612104590349206 residual 0.0<br>f2_mean: 24 / 6b step 7.686025496365079 residual -2.287774818762<br>f3_mean: 1 / 6b step 4.389345763095236 residual 1.320682482904<br>speech_rate: 0 / 4b step 0.182291666666667 residual 0.0</td><td><strong>spk_gamma</strong><br><small>sim None · file_start</small></td><td><code>58d6984525ff59bb…</code><br><code>564c99597206557e…</code></td></tr><tr><td>7</td><td><strong>voice_gamma.wav</strong><br><small>voice_gamma.wav::seg_00012320_00019760</small></td><td>12320–19760<br><small>7440 samples</small></td><td>spk_gamma</td><td>45 frames<br><small>F0 158.033896331 Hz · rate 3.90625/s</small></td><td>f0_mean: 6 / 4b step 6.269638059199999 residual 2.4181663408<br>f0_std: 0 / 4b step 0.2663325434 residual 0.006480048<br>f1_mean: 62 / 6b step 5.612104590349206 residual 1.816455685349<br>f2_mean: 23 / 6b step 7.686025496365079 residual 2.447949332603<br>f3_mean: 0 / 6b step 4.389345763095236 residual 0.0<br>speech_rate: 2 / 4b step 0.182291666666667 residual 0.026041666667</td><td><strong>spk_gamma</strong><br><small>sim 0.97842622 · join_previous_speaker</small></td><td><code>24e4bb418f4bfaf2…</code><br><code>9995191713e20845…</code></td></tr><tr><td>8</td><td><strong>voice_gamma.wav</strong><br><small>voice_gamma.wav::seg_00022080_00030480</small></td><td>22080–30480<br><small>8400 samples</small></td><td>spk_gamma</td><td>51 frames<br><small>F0 158.03232851 Hz · rate 3.515625/s</small></td><td>f0_mean: 6 / 4b step 6.269638059199999 residual 2.4165985198<br>f0_std: 0 / 4b step 0.2663325434 residual 0.006787418<br>f1_mean: 63 / 6b step 5.612104590349206 residual -0.197788959<br>f2_mean: 24 / 6b step 7.686025496365079 residual -1.269683459762<br>f3_mean: 0 / 6b step 4.389345763095236 residual 1.32087402<br>speech_rate: 0 / 4b step 0.182291666666667 residual 0.0</td><td><strong>spk_gamma</strong><br><small>sim 0.97874477 · join_previous_speaker</small></td><td><code>762473af7d20032b…</code><br><code>f0bb251e66b028d8…</code></td></tr><tr><td>9</td><td><strong>voice_mixed.wav</strong><br><small>voice_mixed.wav::seg_00001920_00009360</small></td><td>1920–9360<br><small>7440 samples</small></td><td>spk_alpha</td><td>45 frames<br><small>F0 117.997901635 Hz · rate 4.296875/s</small></td><td>f0_mean: 0 / 4b step 6.269638059199999 residual 0.0<br>f0_std: 0 / 4b step 0.2663325434 residual 0.000360181<br>f1_mean: 41 / 6b step 5.612104590349206 residual -1.569198564318<br>f2_mean: 0 / 6b step 7.686025496365079 residual 2.006257483<br>f3_mean: 14 / 6b step 4.389345763095236 residual 1.037907859667<br>speech_rate: 4 / 4b step 0.182291666666667 residual 0.052083333333</td><td><strong>spk_alpha</strong><br><small>sim None · file_start</small></td><td><code>e58917ebc4d37871…</code><br><code>6064f9eb4df2db07…</code></td></tr><tr><td>10</td><td><strong>voice_mixed.wav</strong><br><small>voice_mixed.wav::seg_00011680_00019440</small></td><td>11680–19440<br><small>7760 samples</small></td><td>spk_beta</td><td>47 frames<br><small>F0 212.032709497 Hz · rate 5.859375/s</small></td><td>f0_mean: 15 / 4b step 6.269638059199999 residual -0.009763026<br>f0_std: 0 / 4b step 0.2663325434 residual 0.0107291<br>f1_mean: 0 / 6b step 5.612104590349206 residual 0.973538289<br>f2_mean: 63 / 6b step 7.686025496365079 residual -0.697025968<br>f3_mean: 59 / 6b step 4.389345763095236 residual -1.775531614619<br>speech_rate: 13 / 4b step 0.182291666666667 residual -0.026041666667</td><td><strong>spk_beta</strong><br><small>sim 0.016703744 · start_new_speaker</small></td><td><code>387efa8a03bed3af…</code><br><code>7f2fd78462a09de1…</code></td></tr><tr><td>11</td><td><strong>voice_mixed.wav</strong><br><small>voice_mixed.wav::seg_00021760_00030000</small></td><td>21760–30000<br><small>8240 samples</small></td><td>spk_alpha</td><td>50 frames<br><small>F0 117.998061646 Hz · rate 3.90625/s</small></td><td>f0_mean: 0 / 4b step 6.269638059199999 residual 0.000160011<br>f0_std: 0 / 4b step 0.2663325434 residual 0.0<br>f1_mean: 40 / 6b step 5.612104590349206 residual 0.674236705032<br>f2_mean: 0 / 6b step 7.686025496365079 residual 0.095390157<br>f3_mean: 14 / 6b step 4.389345763095236 residual 1.047840207666<br>speech_rate: 2 / 4b step 0.182291666666667 residual 0.026041666667</td><td><strong>spk_alpha#voice_mixed_wav#2</strong><br><small>sim 0.013924735 · start_new_speaker</small></td><td><code>2c2d4a46e89b23c7…</code><br><code>fb653b20daa1bff8…</code></td></tr></tbody></table></div>
+
+  <section class="grid2">
+    <div>
+      <h2>归属冲突</h2>
+      <div class="scroll"><table><thead><tr><th>文件</th><th>前段</th><th>当前段</th><th>相似度</th><th>预测同人</th><th>标注同人</th><th>处理</th></tr></thead><tbody><tr><td>voice_alpha.wav</td><td>voice_alpha.wav::seg_00001920_00010480</td><td>voice_alpha.wav::seg_00012640_00020240</td><td>0.293203603</td><td>False</td><td>True</td><td>keep_prediction_record_conflict</td></tr></tbody></table></div>
+    </div>
+    <div>
+      <h2>失败清单</h2>
+      <div class="scroll"><table><thead><tr><th>错误</th><th>文件</th><th>阶段</th><th>信息</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <h2>增量与并发诊断</h2>
+  <section class="panel">
+    <p>失效 0 · 重算 0 · 复用 37 · 强制重建 False</p>
+    <p class="muted">受影响段：—</p>
+    <p class="muted">线程峰值 0 / 上限 4 · 稳定排序 True</p>
+    <pre><code>{
+  &quot;feature&quot;: [],
+  &quot;description&quot;: [],
+  &quot;assignment&quot;: [],
+  &quot;aggregation&quot;: []
+}</code></pre>
+  </section>
+</main>
+
+    <script>
+    const search = document.getElementById('segment-search');
+    if (search) {
+      search.addEventListener('input', () => {
+        const needle = search.value.toLowerCase();
+        document.querySelectorAll('#segments tbody tr').forEach(row => {
+          row.style.display = row.innerText.toLowerCase().includes(needle) ? '' : 'none';
+        });
+      });
+    }
+    </script>
+    
+</body>
+</html>
