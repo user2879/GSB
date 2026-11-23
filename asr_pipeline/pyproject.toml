@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asr-parallel-pipeline"
+version = "1.0.0"
+description = "Deterministic parallel ASR shard decoding with global point-budget scheduling"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+asr-pipeline = "asr_pipeline.cli:main"
+
+[tool.setuptools]
+packages = ["asr_pipeline"]
