@@ -1,23 +1,193 @@
-在全新工作区中，需要从零构建一个面向 Windows 本地环境的缓存段容量证明与读视图收敛诊断组件，交付可集成的 Python 包与可重复演示。系统管理的对象是缓存段：用户在本地 JSON 文件中声明若干缓存段（段标识、整数段容量字节、按内容种子确定性生成的若干缓存条目、条目字节数），并声明一份读视图清单，每个读视图由若干段的快照条目集合与整数视图版本号构成。系统以本地 SQLite 维护段元数据与容量证明，以本地目录持久化条目内容文件。核心业务不是仲裁锁或租约持有权，而是：每个缓存段在写入与删除条目后必须维护一份可被独立复核的容量证明，证明其已用字节数与剩余容量之和等于声明容量，且每个条目内容的确定性摘要与目录中实际文件一致；当读视图引用的段快照与段当前状态不一致时，视图须整体重建并以稳定顺序列出差异。进程被强制终止后，容量证明与部分写状态必须可恢复，并区分已提交条目与未知条目。
+# Cacheproof
 
-任务环境与准备：
-确认 Windows 本地已安装 Python 3.11 或以上，并执行 python --version 校验。
-在同工作区创建虚拟环境：python -m venv .venv，随后 .venv\Scripts\activate 激活。
-依赖使用 Python 标准库的 sqlite3 与 tkinter，无需额外安装；Tkinter 缺失时需在 Python 安装向导中勾选 tcl/tk 组件。
-准备本地确定性样本：一份段与读视图声明 JSON，均放在工作区 samples 目录，条目字节数之和不超过段容量。
-确认工作区可写，SQLite 账本文件、条目内容目录、快照文件与日志目录均在项目目录内创建，并在启动前指定不使用系统保留路径。
+面向 Windows 本地环境的缓存段容量证明与读视图收敛诊断组件。它不处理锁、租约或分布式仲裁，只处理三件事：
 
-业务要求：
-1. 实现缓存段声明、条目内容种子与读视图清单的加载及强校验：从本地 JSON 读取段标识、段容量字节、条目集合（条目键、条目字节数、内容种子）与读视图（视图标识、引用段集合、视图版本号）；校验段标识与条目键在段内唯一、段容量为正整数、条目字节数之和不超过段容量、视图版本号单调递增且引用的段存在，任一不合法须以 E_SPEC 整体拒绝并指明首个非法段标识与字段。
-2. 实现条目内容文件与确定性摘要的持久化：按内容种子为每个条目生成固定字节内容并写入以内容摘要命名的本地文件，摘要须由条目键、字节数与内容按显式可复现规则推导，相同声明多次生成必须得到逐位一致的文件与摘要；写入须先落临时文件、校验摘要后再原子替换，重复生成同一条目不得产生重复文件或改变摘要。
-3. 实现段容量证明的构建与逐条复核：为每个段输出证明结构，含已用字节数、剩余字节数、条目数与逐条目摘要清单，并校验已用字节数与剩余字节数之和恰好等于声明容量、逐条目摘要与目录中实际文件摘要逐字节一致；证明须携带段集合版本与内容摘要，同一段在任何加载顺序下必须得到逐字节一致的证明。
-4. 实现带真实单调时钟计时与容量不足判定的写入与删除：写入条目时若剩余容量不足须以 E_CAPACITY 拒绝并列出所需字节与当前余量，不改变证明；删除条目须真实移除内容文件并在同一 SQLite 事务中更新证明的已用字节数与条目数；容量判定与证明更新不得依赖字典或文件系统枚举顺序，同一操作序列必须得到一致的容量证明与业务码。
-5. 实现读视图与段当前状态不一致时的整体重建与差异稳定列出：当视图引用的任一段的快照条目集合摘要或其视图版本号与段当前证明不符时，视图须以整体替换方式重建而非逐条修补，并稳定列出新增条目、删除条目与摘要变化的条目；重建期间其他读视图查询必须继续可用且不得观察到半重建状态。
-6. 实现容量证明账本与强制终止后的未知条目标注：每次写入与删除须在同一 SQLite 事务中写入条目摘要、已用字节数、段集合版本与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交记录恢复容量证明，处于写入中且事务未完成或文件已落盘但账本未提交的条目须标注为未知并列出其条目键与观测到的文件摘要，不得声称能生成强制终止时的退出报告。
-7. 实现会话快照的版本识别与恢复后重放校验：快照持久化段集合版本、视图版本集合、逐段容量证明与已完成操作游标并携带内容摘要；重新打开快照时须比较快照版本与内容摘要同磁盘当前状态，不一致须整体替换容量证明与视图状态而非增量合并，并稳定列出差异；恢复后按账本记录的游标重放剩余写入与删除操作，将逐段已用字节数、条目摘要清单、视图重建结果与业务码同账本逐项比较，差异须定位到首个不一致的段标识、条目键与字段并以 E_REPLAY 报明依据。
-8. 提供 Tkinter 诊断界面、结构化异常注入与可重复演示：界面展示各段容量、已用与剩余字节、逐条目摘要校验结论、容量证明内容摘要、读视图重建差异、未知条目列表、当前段集合版本与账本批次，渲染顺序稳定且刷新不改变账本内容；支持以命令行参数分别注入条目内容文件被截断、段容量被改小于已用字节、账本内容摘要不符三类异常，分别以 E_INTEGRITY、E_CAPACITY、E_SNAPSHOT 报告并写入含单调时间与操作序号的 JSON 日志，注入仅改变输入文件或参数。
+- 缓存段每次写入/删除后，都保留一份可以独立复核的容量证明。
+- 读视图与段当前状态不一致时，整行原子替换并给出稳定差异。
+- 进程被强杀后，只从已提交账本恢复；未完成条目标为未知，不伪造退出报告。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+实现只依赖 Python 标准库：`sqlite3`、`json`、`hashlib`、`tkinter` 等。
 
-验收：
-使用本地确定性样本验证容量证明复核、视图整体重建、强制终止后未知条目标注与异常业务码一致可复现。
+## Windows 环境
+
+在 PowerShell 或 CMD 中执行：
+
+```bat
+python --version
+python -m venv .venv
+.venv\Scripts\activate
+python --version
+python -c "import sqlite3, tkinter; print(sqlite3.sqlite_version, tkinter.TkVersion)"
+```
+
+要求 Python 3.11 或更高版本，无需 `pip install`。若第二个检查在导入 `tkinter` 时失败，请重新运行 Python 安装程序并勾选 `tcl/tk and IDLE` 组件。
+
+所有运行产物都限制在指定工作区内：SQLite 账本、内容文件、会话快照、日志、临时文件均位于项目目录下的工作区目录。程序拒绝文件系统根目录、Windows 系统保留目录和 Windows 保留文件名。默认工作区是 `.cacheproof`，演示默认使用 `demo-workspace`。
+
+## 快速开始
+
+```bat
+python -m cacheproof init --workspace .cacheproof --spec samples\cache_spec.json
+python -m cacheproof verify --workspace .cacheproof
+python -m cacheproof show --workspace .cacheproof
+python -m cacheproof put --workspace .cacheproof --segment seg-alpha --key alpha/new --size 32 --seed alpha-new-v1
+python -m cacheproof view --workspace .cacheproof --view-id view-orders
+python -m cacheproof snapshot save --workspace .cacheproof
+python -m cacheproof snapshot restore --workspace .cacheproof
+python -m cacheproof ui --workspace .cacheproof
+```
+
+完整可重复演示：
+
+```bat
+python -m cacheproof demo --workspace demo-workspace --reset --report artifacts\validation-results.json
+```
+
+演示依次执行初始化、容量拒绝、写入/删除、视图整体重建、快照重放、子进程强杀恢复、三类异常注入。除真实单调时钟和随机操作 ID 外，容量证明、视图差异与业务码可由相同操作序列复现。
+
+## 声明格式
+
+`samples/cache_spec.json` 同时包含段声明与读视图清单：
+
+```json
+{
+  "format_version": 1,
+  "segments": [
+    {
+      "segment_id": "seg-alpha",
+      "capacity_bytes": 256,
+      "entries": [
+        {"key": "alpha/a", "size_bytes": 48, "content_seed": "alpha-a-v1"}
+      ]
+    }
+  ],
+  "views": [
+    {
+      "view_id": "view-orders",
+      "version": 1,
+      "segments": [
+        {"segment_id": "seg-alpha", "entries": ["alpha/a"]}
+      ]
+    }
+  ]
+}
+```
+
+视图快照条目可写成键字符串，也可写成 `{"key": "...", "digest": "sha256:..."}`。同一个 `view_id` 若在清单中出现多次，`version` 必须严格递增；系统初始化时取最高版本。视图可以故意携带过期摘要，用来演示整体重建。任何字段不合法都整体拒绝，返回 `E_SPEC`，并尽可能给出首个违规 `segment_id`、`entry_key` 与 `field`。
+
+## 容量证明与摘要规则
+
+内容生成完全确定：
+
+```text
+block(n) = SHA256("CACHEPROOF-CONTENT-v1\0" || len(seed_utf8)_u64be || seed_utf8 || n_u64be)
+content   = (block(0) || block(1) || ...)[:size_bytes]
+```
+
+条目摘要：
+
+```text
+entry_digest = "sha256:" + SHA256(
+  "CACHEPROOF-ENTRY-v1\0" ||
+  canonical_json({"key": key, "size_bytes": size_bytes}) ||
+  "\0" || content
+).hexdigest()
+```
+
+其中 canonical JSON 为 UTF-8、对象键排序、无多余空白、无结尾换行。内容文件路径为：
+
+```text
+entries/<base64url(segment_id)>/<base64url(entry_key)>/<digest_hex>.bin
+```
+
+证明包含 `capacity_bytes`、`used_bytes`、`remaining_bytes`、`entry_count`、`segment_set_version`、`segment_version`、按 UTF-8 键序排列的条目摘要清单和 `content_digest`。复核时会重新读取目录内容，不只信任 SQLite 中的证明文本。
+
+## 事务与恢复语义
+
+写入采用三阶段：
+
+1. 单独提交 `prepared` 意图记录（操作 ID、目标路径、期望摘要）。
+2. 写临时文件，校验大小与摘要，`fsync` 后原子替换到内容目录。
+3. 在一个 SQLite 事务中写条目、更新段证明、段集合版本、完成游标、操作状态和账本内容摘要。
+
+删除先登记 prepared，再在同一证明事务中删除条目并更新容量，提交后移除旧内容文件。若进程在文件替换后、证明事务提交前被强杀，重启只恢复已提交状态，并把 prepared 操作标为 `unknown`，列出条目键、期望摘要和实际观测摘要。未知文件不参与容量证明，因此证明仍可独立通过；它们也不会被冒充为已提交条目。
+
+系统绝不生成“强杀进程退出报告”。恢复报告的字段明确为 `exit_report_available: false`，依据是已提交 SQLite 行和文件系统观测。
+
+## 读视图收敛
+
+视图查询会按稳定顺序比较每个引用段的 `segment_version` 与条目摘要集合。任一不一致即以单条 SQLite 行原子替换视图快照，而不是逐条修补。差异稳定列出：
+
+- `added`
+- `deleted`
+- `digest_changed`
+- 段版本变化
+
+SQLite 使用 WAL；重建事务未提交时，其他连接仍读取旧快照，不会观察到半重建状态。Tkinter 刷新只读，不调用重建、恢复或快照保存，因此刷新不改变账本批次或内容摘要。
+
+## 会话快照与重放
+
+`snapshots/session.json` 包含段集合版本、账本批次、完成游标、最后操作序号、逐段证明、视图快照与未知条目，并带整体内容摘要。恢复时：
+
+1. 校验快照内容摘要与格式版本。
+2. 比较快照与当前账本；一致则不做修改。
+3. 不一致时，先整体重建过期视图，再按账本操作序号重放快照之后的写入、删除与容量拒绝。
+4. 将重放出的段已用字节、条目摘要、视图结果和业务码与账本逐项比较。
+5. 全部一致则原子整体替换快照文件，并稳定列出差异；首个不一致返回 `E_REPLAY`，定位到段、条目键和字段。
+
+## 业务码
+
+| 业务码 | 退出码 | 含义 |
+|---|---:|---|
+| `OK` | 0 | 成功 |
+| `E_SPEC` | 2 | 声明或参数非法 |
+| `E_CAPACITY` | 3 | 容量不足或容量被改小于已用字节 |
+| `E_INTEGRITY` | 4 | 内容文件/证明复核失败 |
+| `E_SNAPSHOT` | 5 | 账本、视图或会话快照摘要不符 |
+| `E_REPLAY` | 6 | 快照重放与账本不一致 |
+| `E_TK_UNAVAILABLE` | 7 | Tkinter/tcl-tk 不可用 |
+| `E_IO` | 8 | 文件系统错误 |
+| `E_NOT_FOUND` | 9 | 工作区、段、条目或视图不存在 |
+
+## 异常注入
+
+以下命令只改变输入文件或校验参数，并返回对应业务码；结构化 JSON 日志位于工作区 `logs/events.jsonl`，每条包含单调纳秒时间、事件序号和操作序号。
+
+```bat
+python -m cacheproof diagnose --workspace .cacheproof --inject truncate --json
+python -m cacheproof diagnose --workspace .cacheproof --inject capacity --json
+python -m cacheproof diagnose --workspace .cacheproof --inject ledger-digest --json
+```
+
+预期依次为 `E_INTEGRITY`、`E_CAPACITY`、`E_SNAPSHOT`。`truncate` 会截断一个已提交内容文件；`capacity` 仅改变复核参数；`ledger-digest` 修改 SQLite 账本中的摘要字段。请只在演示工作区注入。
+
+## Python API
+
+```python
+from cacheproof import CacheProofStore, load_spec
+
+spec = load_spec("samples/cache_spec.json")
+with CacheProofStore("workspace", spec=spec, create=True) as store:
+    report = store.verify_all()
+    store.put_entry("seg-alpha", "alpha/c", 40, "alpha-c-v1")
+    view = store.get_view("view-orders")
+    store.save_snapshot()
+    restored = store.restore_snapshot()
+```
+
+## 测试与文档
+
+```bat
+python -m unittest discover -s tests -v
+python scripts\run_validation.py
+```
+
+- 技术设计：`docs/TECHNICAL.md`
+- 实际验证记录：`docs/VALIDATION.md`
+- 验证产物：`artifacts/validation-results.json`
+
+## 边界
+
+- 写入协调使用单进程 `RLock` 加 SQLite `BEGIN IMMEDIATE`；跨进程并发读取安全，跨进程并发写入由 SQLite 串行化，但不提供分布式租约。
+- 未知条目会保留审计记录；当前版本不会自动“清除未知”。
+- 不使用 Docker、网络服务或系统保留路径。

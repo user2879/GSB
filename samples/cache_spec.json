@@ -1,0 +1,85 @@
+{
+  "format_version": 1,
+  "segments": [
+    {
+      "segment_id": "seg-alpha",
+      "capacity_bytes": 256,
+      "entries": [
+        {
+          "key": "alpha/a",
+          "size_bytes": 48,
+          "content_seed": "alpha-a-v1"
+        },
+        {
+          "key": "alpha/b",
+          "size_bytes": 64,
+          "content_seed": "alpha-b-v1"
+        }
+      ]
+    },
+    {
+      "segment_id": "seg-beta",
+      "capacity_bytes": 320,
+      "entries": [
+        {
+          "key": "beta/x",
+          "size_bytes": 96,
+          "content_seed": "beta-x-v1"
+        },
+        {
+          "key": "beta/y",
+          "size_bytes": 32,
+          "content_seed": "beta-y-v1"
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "view_id": "view-orders",
+      "version": 1,
+      "segments": [
+        {
+          "segment_id": "seg-alpha",
+          "entries": [
+            "alpha/a",
+            "alpha/b"
+          ]
+        },
+        {
+          "segment_id": "seg-beta",
+          "entries": [
+            "beta/x",
+            "beta/y"
+          ]
+        }
+      ]
+    },
+    {
+      "view_id": "view-audit",
+      "version": 2,
+      "segments": [
+        {
+          "segment_id": "seg-alpha",
+          "entries": [
+            {
+              "key": "alpha/a",
+              "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            {
+              "key": "alpha/b",
+              "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+            }
+          ]
+        },
+        {
+          "segment_id": "seg-beta",
+          "entries": [
+            "beta/y",
+            "beta/legacy"
+          ]
+        }
+      ]
+    }
+  ]
+}
