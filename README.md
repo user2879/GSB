@@ -1,21 +1,193 @@
-在空白工作区从零构建一个面向图像修复与风格迁移的本地确定性多分辨率修复金字塔诊断工作台，业务目标是在交互式调参下诊断修复结果在不同分辨率层级之间的依赖失效与误差传播。与单分辨率逐层邻域填充不同，本任务的核心是把缺损区域按分辨率金字塔逐层修复：最粗层先以确定性扩散规则生成低频底色，逐层向上以低频引导约束本层填充，风格迁移在每一层以不同强度的风格映射施加，最终合成必须保证任意层级参数被编辑后只重算该层及其上层受影响瓦片。输入为一个本地样本目录：程序生成的 PNG 图像（固定分辨率，含由种子确定的矩形缺损区域、多尺度纹理与噪声）、一张风格参考图、一份修复与风格迁移配置 JSON（金字塔层数与逐层下采样因子、逐层修复迭代层数、低频引导强度、逐层风格映射量化档位与分通道权重、瓦片边长与瓦片行号切分方式、掩码像素保留策略、定点小数位宽、线程池并发数、单批重算瓦片预算、快照提交间隔命令数），以及一份编辑命令流 JSON（命令可修改掩码矩形、单层修复迭代层数、逐层引导强度、某层风格权重与某层量化档位）。核心难点是跨瓦片与跨层级的依赖失效：一次对粗层的编辑只应使该层及其上层覆盖该编辑区域的瓦片失效，未受影响瓦片必须直接复用持久化产物，且任意命令序列后的增量结果必须与全量金字塔重建逐像素一致。
+# 确定性多分辨率修复金字塔诊断工作台
 
-任务环境与准备：
-安装 Python 3.10 及以上版本，并确保 numpy、Pillow、PyYAML 可用。
-在空白工作区创建项目目录，无需网络与外部服务，所有样本由本地脚本按固定种子生成。
-准备一份修复与风格迁移配置 JSON、一份编辑命令流 JSON、若干张程序生成 PNG 图像与一张风格参考图作为初始样本。
+本项目在本地实现一个面向图像修复与逐层风格迁移的诊断工作台。它把源图构造成分辨率金字塔，从最粗层开始做确定性扩散修复，再用上一层上采样结果作为本层低频引导，并在每层执行量化查表风格映射，最后按层权重合成。
 
-业务要求：
-1. 实现样本、配置与命令流加载校验层：读取配置 JSON、命令流 JSON 与图像目录，校验 PNG 容器头与分辨率一致性、金字塔层数为正整数、逐层下采样因子单调不减且乘积与底图尺寸相容、瓦片边长能整除各层尺寸、掩码矩形在各层覆盖范围内、定点小数位宽与逐层量化档位合法；非法配置输出 E_CONFIG_INVALID，非法命令输出 E_COMMAND_INVALID 并跳过该命令继续执行后续命令。
-2. 实现多分辨率金字塔构建与上采样规则：按逐层下采样因子对底图做块均值下采样与确定性上采样，上采样插值规则与并列值的决断规则固定并写入产物元数据；每一层产物须携带由图像内容指纹、层序号与下采样因子派生的层指纹，同一输入与配置下多次运行必须得到逐层逐像素一致的金字塔。
-3. 实现逐层确定性修复填充内核：最粗层以由外向内的扩散加权均值填充，其余层以本层初始像素与上采样得到的低频引导按引导强度加权得到填充值，权重为距离平方反比；全部计算使用定点整数并按定点小数位宽保留，掩码像素保留策略须逐层记录实际保留像素集合，同一层同一参数多次运行须逐像素一致。
-4. 实现逐层风格映射与跨层合成：每层按该层分通道权重与量化档位构建映射表做查表映射，量化档位切换须真实改变映射表条目与输出像素；合成时逐层权重由配置给出且须记录每层贡献分解，掩码内外像素取源层还是映射结果按保留策略决断并记录决断依据。
-5. 实现跨层跨瓦片依赖指纹与精确失效判定：为每层每瓦片产物计算由本层输入指纹、低频引导指纹、参数指纹与量化档位派生的缓存键，并记录每个瓦片结果引用的下层瓦片集合；当某层参数或某区域被编辑时，仅使该层覆盖编辑区域的瓦片及其上层对应瓦片失效并纳入重算集合，未失效瓦片直接复用持久化产物且不得重新计算，复用与重算清单须写入诊断报告。
-6. 实现单批重算瓦片预算与跨命令待办保留：调度器维护单批剩余重算瓦片预算，按层序号升序与瓦片行号稳定顺序在已失效瓦片间分配配额，配额耗尽时未重算瓦片保留待办并以 E_TILE_BUDGET_PENDING 标记，后续命令须优先处理待办瓦片；账本记录每瓦片消耗量与扣减序列，使受限条件下各层复用与重建范围可审计。
-7. 保证任意命令序列后增量金字塔重建与全量重建逐像素一致：从任意初始状态执行包含掩码矩形修改、单层迭代层数调整、逐层引导强度变更、某层风格权重与量化档位切换的命令序列，每条命令后增量运行得到的各层像素、逐层贡献分解、层指纹与瓦片缓存键，必须与从空白工作区按相同最终配置一次性全量重建的结果完全相同。
-8. 实现阶段快照整体替换、恢复判定、并发一致性与诊断报告：各层产物与合成结果先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、已完成命令游标、各层各瓦片产物版本与待办瓦片清单，替换前须识别版本变化而非逐文件覆盖；线程池并发执行逐层瓦片修复与映射，最大并发数取自配置且不得超过，每个瓦片任务携带由层序号、瓦片行号与瓦片列号派生的稳定排序键，最终瓦片顺序、预算扣减序列与失败清单须与单线程按稳定顺序执行一致；收到可处理的退出信号时完成当前命令的快照提交后以整数退出码 0 退出，强制终止后仅依据已完整替换的快照恢复并输出恢复点版本号，每次完整运行生成 JSON 报告含各层耗时、复用与重算清单、待办瓦片、失败清单与预算判定记录。
+核心不是单分辨率邻域填充，而是可审计的跨层、跨瓦片失效：编辑某一层后，只重算该层及上层依赖到编辑区域的瓦片；其余瓦片从缓存/快照直接复用。每条命令后的增量状态都可与从相同最终配置出发的全量重建逐像素、逐层指纹和逐瓦片缓存键比较。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-用本地样本执行命令序列，验证跨层瓦片失效范围、预算待办保留、增量与全量逐像素一致及快照恢复点版本。
+要求 Python 3.10+、`numpy`、`Pillow`、`PyYAML`。不需要网络、容器或外部服务。
+
+```bash
+# 方式一：直接使用源码
+PYTHONPATH=src python -m inpaint_pyramid --help
+
+# 方式二：可编辑安装后使用 ipw
+python -m pip install -e .
+ipw --help
+```
+
+生成默认 128x128 固定种子样本并运行：
+
+```bash
+PYTHONPATH=src python -m inpaint_pyramid generate \
+  --output samples --size 128 --levels 4 --tile-size 16 \
+  --tile-budget 8 --threads 4
+
+PYTHONPATH=src python -m inpaint_pyramid validate \
+  --config samples/config.json \
+  --commands samples/commands.json \
+  --images samples
+
+PYTHONPATH=src python -m inpaint_pyramid run --reset \
+  --config samples/config.json \
+  --commands samples/commands.json \
+  --images samples \
+  --state-dir artifacts/demo-state \
+  --output-dir artifacts/demo-output \
+  --report artifacts/demo-report.json
+
+PYTHONPATH=src python -m inpaint_pyramid recover \
+  --state-dir artifacts/demo-state
+
+PYTHONPATH=src python -m inpaint_pyramid verify \
+  --config samples/config.json \
+  --commands samples/commands.json \
+  --images samples \
+  --report artifacts/demo-verify.json
+```
+
+`run` 默认是增量模式；`run --mode full` 从最终生效配置一次性全量重建，用于对照。`verify` 会在预算允许时逐命令比较，并在预算造成待办时记录延后项，最终清空待办后做完整对照。
+
+## 关键语义
+
+### 金字塔与定点数
+
+- `pyramid.downsample_factors` 长度为层数，`factor[0]` 必须为 `1`，其余因子单调不减；第 `l` 层尺寸为底图尺寸除以 `product(factor[0..l])`。
+- 下采样是块均值，整数定点下使用 half-up 舍入。
+- 上采样是边缘钳制的双线性插值，坐标映射为 `src=(dst+0.5)*src_size/dst_size-0.5`，恰好半值时向正方向 half-up，规则写入报告与快照清单。
+- 所有像素与中间量均为 `int64`。RGB 初始左移 `fixed_point.fraction_bits` 位，输出时 half-up 回到 8 位。
+
+### 逐层修复
+
+- 最粗层在瓦片内从掩码外已知像素由外向内做 Jacobi 扩散，八邻域权重为 `cardinal=2, diagonal=1`，等价于按 `1/d²` 缩放后的反平方权重。
+- 其余层的像素先验为 `(1-g)*本层初始像素 + g*上采样低频引导`，扩散候选与先验按固定 1:1 混合；所有舍入为 half-up。
+- 修复是瓦片局部的，不使用未声明的跨瓦片隐藏状态。因此缓存瓦片可安全拼接，增量与全量使用完全相同的局部规则。
+- `retention.mask_fill=preserve_source` 时掩码像素直接保留本层输入；层报告与快照清单记录实际掩码集合、保留集合和风格决断集合的计数与指纹。
+
+### 风格映射与合成
+
+- 每层按 `style.quant_levels_by_layer` 构造 256 项、3 通道的查表；输入值先量化到该层档位，再查风格参考图的对应分位值。
+- `style.weights_by_layer` 是 RGB 分通道映射强度；`retention.style_inside` / `style_outside` 决定掩码内外取修复结果还是映射结果。
+- 合成把所有层双线性上采样到底图尺寸，按 `style.composition_weights` 加权后定点归一化。
+- 报告记录每层贡献数组指纹、通道和/均值、权重，以及最终合成指纹；`contributions.npz` 保存完整逐层贡献数组。
+
+## 失效与调度
+
+每个瓦片缓存键由以下内容派生：
+
+1. 本层瓦片输入指纹：层/瓦片坐标、源瓦片内容、掩码瓦片内容、掩码保留策略。
+2. 低频引导指纹：当前层对应引导瓦片内容及直接引用的下层瓦片集合。
+3. 参数指纹：迭代次数、引导强度、风格逐通道权重、量化档位、保留策略、定点宽度、算法版本等。
+4. 显式量化档位与缓存键版本。
+
+依赖关系记录在 `layer_summaries[*].tiles[*].lower_refs`。上采样使用双线性支持域，因此一个上层瓦片可能引用一个或多个下层瓦片。
+
+- 修改某层掩码矩形时，旧矩形和新矩形覆盖的该层瓦片都会失效，再沿上层依赖闭包传播。不会失效任何更低层瓦片。
+- 修改某层迭代次数、引导强度、风格权重或量化档位时，该层所有瓦片失效，并向上传播。
+- 未失效瓦片保留 `cache_key`、产物版本与像素结果。报告中的 `reused_tiles` 与 `recomputed_tiles` 可直接审计。
+
+每批重算预算来自 `scheduler.recompute_tile_budget`。分配顺序固定为 `(level,row,col)` 行优先，并避开依赖尚未有效的上层瓦片；扣减账本先于并发执行生成，所以与线程数无关。预算不足时：
+
+- 未完成瓦片保持待办；
+- 状态为 `E_TILE_BUDGET_PENDING`；
+- 后续命令继续优先处理更小层号、行号、列号的待办；
+- `budget.ledger` 记录每个瓦片的 `remaining_before/remaining_after`。
+
+线程池只并发执行同一层中已就绪的瓦片，最大并发不超过 `scheduler.threads`。任务结果按稳定键收集，失败也按稳定顺序进入 `failures`。
+
+## 快照与恢复
+
+```text
+state/
+  CURRENT                       # 原子替换的提交指针
+  snapshots/
+    v00000015_<statehash>/      # 不可变、完整快照目录
+      manifest.json
+      state.json
+      COMPLETE
+      report.json
+      layers/*.png
+      tiles/l00_r0000_c0000.npy
+      composite.png
+      contributions.npz
+      retention_masks.npz
+```
+
+- 新快照完全写入临时目录并 `fsync`，随后整体 rename 为不可变版本目录，最后原子替换 `CURRENT`。
+- 相同 `state_hash` 不重复生成目录；版本变化时创建新目录，不做逐文件覆盖。
+- `manifest.json` 记录全局版本、配置哈希、命令游标、待办瓦片、每层每瓦片版本、层/合成指纹、线程上限与并发峰值。
+- `retention_masks.npz` 保存逐层掩码、源保留像素集合、掩码内外风格映射决断集合的完整布尔数组。
+- `recover` 只读取 `CURRENT` 指向且 `COMPLETE`/manifest 哈希全部通过的快照。临时目录、未提交的完整目录或损坏目录均不会被采用。
+- `SIGINT`/`SIGTERM` 只设置停止标志；当前命令完成后提交快照并以进程退出码 `0` 退出。
+
+## 配置与命令
+
+配置结构见 `samples/config.json`。主要字段：
+
+```json
+{
+  "image": {"source": "image_01.png", "style": "style_ref.png"},
+  "pyramid": {"levels": 4, "downsample_factors": [1,2,2,2], "tile_size": 16, "tile_order": "row_major"},
+  "masks": [{"layer": 0, "rects": [[39,37,32,25]]}],
+  "repair": {"iterations_by_layer": [2,3,4,5], "guide_strength_by_layer": [0.12,0.3,0.48,0.66]},
+  "retention": {"mask_fill": "diffuse", "style_inside": "mapped", "style_outside": "mapped"},
+  "style": {
+    "quant_levels_by_layer": [6,10,14,18],
+    "weights_by_layer": [[0.08,0.06,0.04],[0.105,0.08,0.055],[0.13,0.1,0.07],[0.155,0.12,0.085]],
+    "composition_weights": [1.0,0.5,0.3333333333,0.25]
+  },
+  "fixed_point": {"fraction_bits": 12},
+  "scheduler": {"threads": 4, "recompute_tile_budget": 8},
+  "snapshot": {"commit_every_commands": 1}
+}
+```
+
+配置非法时输出 `E_CONFIG_INVALID`。命令流支持：
+
+| 类型 | 参数 | 语义 |
+| --- | --- | --- |
+| `set_mask_rect` | `layer`, `rect` | 替换该层掩码矩形 |
+| `clear_mask` | `layer` | 清空该层掩码 |
+| `set_iterations` | `layer`, `value` | 修改该层迭代次数 |
+| `set_guide_strength` | `layer`, `value` | 修改该层低频引导强度 |
+| `set_style_weight` / `set_style_weights` | `layer`, `weights` | 修改该层 RGB 风格权重 |
+| `set_quant_levels` | `layer`, `levels` | 修改该层量化档位 |
+| `noop` | 无 | 不修改参数，可用于优先清空既有预算待办 |
+
+非法命令产生 `E_COMMAND_INVALID`，当前命令跳过，命令游标继续前进，后续命令和待办调度不受影响。
+
+## 验收结果
+
+本次交付实际执行结果：
+
+- `PYTHONPATH=src:. python -m unittest discover -s tests -v`：17 项测试全部通过。
+- 默认 128x128、4 层、16px 瓦片、85 个瓦片、预算 8、4 线程，15 条命令（含 1 条故意非法命令）。
+- 增量命令 1、2、5、6 出现 `E_TILE_BUDGET_PENDING`；后续命令优先清空待办，最终待办为空。
+- 默认样本逐层指纹：
+  - L0 `0783290ca04513c1805c6d4f0d8b906dbc5fc02c975ec93840f4b27947b5b5f7`
+  - L1 `158a39cbcd1785cfe4760e04a5a3501aa399348d84526d12c41c1b34974ff821`
+  - L2 `751b6d88eb0be554f2f3d3d10f6f21f441f99471c803681966a55d14a6ecfc42`
+  - L3 `27c12e03e1ad929cb5bce7b9f4dd8f0785efd0d58349c0e93ea069463f5fc010`
+- 增量与全量合成指纹均为 `ba86242c5a0b641a8d512159f262ceb1a04678e6f510f63062b7f48489cfc23c`。
+- `verify` 中 11 条命令在无待办状态下即时全等，4 条因预算延后，最终全等且差异列表为空。
+- 真实 `SIGTERM` 测试：进程退出码 `0`，恢复点版本 `1`，待办为空。
+
+留存物：
+
+- `samples/`：三张同分辨率源图、风格参考图、配置、命令流、样本清单。
+- `artifacts/demo-report.json`：增量诊断报告、逐命令失效/复用/重算/待办、预算账本与层耗时。
+- `artifacts/demo-verify.json`：增量/全量逐命令与最终对照。
+- `artifacts/demo-recover.json`：快照恢复点。
+- `artifacts/demo-output/`：各层 PNG、合成 PNG、逐层贡献数组。
+- `artifacts/demo-full-output/` 与 `artifacts/demo-full-report.json`：全量重建对照产物。
+- `artifacts/demo-state/`：不可变快照、瓦片产物与 `CURRENT` 指针。
+
+## 设计边界
+
+- 初始 bootstrap 是完整构建，不消耗“单批重算”预算；预算只约束命令触发的增量重算批次。
+- 修复扩散刻意保持瓦片局部，避免不可见跨瓦片状态破坏精确缓存复用；这优先服务可审计一致性，而不是追求无缝图像质量。
+- 当预算不足时，当前命令后的状态只能部分更新，报告明确标记 `E_TILE_BUDGET_PENDING`；待办清空后，增量结果与全量结果必须全等。
+- 同一目录中的非风格 PNG 作为同分辨率备选源图校验，`image.source` 选择本次运行的源图。
+
+详细实现可从 `src/inpaint_pyramid/config.py`、`pyramid.py`、`repair.py`、`style.py`、`engine.py`、`snapshot.py` 和 `cli.py` 阅读。
