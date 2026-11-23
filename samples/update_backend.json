@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "batch_limit": 4,
+  "backends": [
+    {
+      "id": "blue",
+      "host": "127.0.0.1",
+      "port": 29470,
+      "model_dim": 6,
+      "hidden_dim": 5,
+      "seed": 101,
+      "quantization": "fp32"
+    },
+    {
+      "id": "green",
+      "host": "127.0.0.1",
+      "port": 29471,
+      "model_dim": 6,
+      "hidden_dim": 5,
+      "seed": 909,
+      "quantization": "fp16"
+    },
+    {
+      "id": "amber",
+      "host": "127.0.0.1",
+      "port": 29472,
+      "model_dim": 4,
+      "hidden_dim": 3,
+      "seed": 303,
+      "quantization": "int8"
+    },
+    {
+      "id": "violet",
+      "host": "127.0.0.1",
+      "port": 29473,
+      "model_dim": 4,
+      "hidden_dim": 4,
+      "seed": 404,
+      "quantization": "fp32"
+    }
+  ],
+  "rules": [
+    {
+      "id": "assist",
+      "request_prefix": "/assist",
+      "stable_backend": "blue",
+      "canary_backend": "green",
+      "canary_weight_bp": 3500,
+      "batch_size": 3,
+      "version": 1,
+      "depends_on": []
+    },
+    {
+      "id": "chat",
+      "request_prefix": "/chat",
+      "stable_backend": "blue",
+      "canary_backend": "green",
+      "canary_weight_bp": 5000,
+      "batch_size": 2,
+      "version": 3,
+      "depends_on": []
+    },
+    {
+      "id": "chat_cascade",
+      "request_prefix": "/chat/cascade",
+      "stable_backend": "blue",
+      "canary_backend": {
+        "from_rule": "chat",
+        "select": "conclusion"
+      },
+      "canary_weight_bp": 6500,
+      "batch_size": 2,
+      "version": 2
+    },
+    {
+      "id": "embed",
+      "request_prefix": "/embed",
+      "stable_backend": "amber",
+      "canary_backend": "violet",
+      "canary_weight_bp": 4200,
+      "batch_size": 3,
+      "version": 1
+    },
+    {
+      "id": "embed_audit",
+      "request_prefix": "/embed/audit",
+      "stable_backend": "amber",
+      "canary_backend": {
+        "from_rule": "embed",
+        "select": "conclusion"
+      },
+      "canary_weight_bp": 2500,
+      "batch_size": 2,
+      "version": 1,
+      "depends_on": [
+        "embed"
+      ]
+    }
+  ]
+}
