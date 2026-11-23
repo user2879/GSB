@@ -1,0 +1,764 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-11-23T19:03:20.308037+00:00",
+  "environment": {
+    "python": "3.11.0rc1",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "numpy": "2.4.6"
+  },
+  "samples": {
+    "output_dir": "samples",
+    "text_count": 14,
+    "config_hash": "106679f5bf3874de273cd77f105dd31e14ceb3ff5f28cd44b3fb0fde62fc273e",
+    "semantics": {
+      "boundary_pair": [
+        "T001",
+        "T005"
+      ],
+      "boundary_similarity_fixed": "0.7500",
+      "boundary_bucket": "1110011000",
+      "repeated_similarity_fixed": "1.0000"
+    }
+  },
+  "initial_state": {
+    "clusters": [
+      {
+        "cluster_id": "T001",
+        "members": [
+          "T001",
+          "T002",
+          "T003",
+          "T004",
+          "T005"
+        ],
+        "singleton": false,
+        "bucket": "1110011000"
+      },
+      {
+        "cluster_id": "T006",
+        "members": [
+          "T006",
+          "T007"
+        ],
+        "singleton": false,
+        "bucket": "1110011001"
+      },
+      {
+        "cluster_id": "T008",
+        "members": [
+          "T008"
+        ],
+        "singleton": true,
+        "bucket": "1010011001"
+      },
+      {
+        "cluster_id": "T009",
+        "members": [
+          "T009"
+        ],
+        "singleton": true,
+        "bucket": "1010111001"
+      },
+      {
+        "cluster_id": "T010",
+        "members": [
+          "T010"
+        ],
+        "singleton": true,
+        "bucket": "1110011001"
+      },
+      {
+        "cluster_id": "T011",
+        "members": [
+          "T011"
+        ],
+        "singleton": true,
+        "bucket": "1110011011"
+      },
+      {
+        "cluster_id": "T012",
+        "members": [
+          "T012"
+        ],
+        "singleton": true,
+        "bucket": "1110001011"
+      },
+      {
+        "cluster_id": "T013",
+        "members": [
+          "T013"
+        ],
+        "singleton": true,
+        "bucket": "1001001000"
+      },
+      {
+        "cluster_id": "T014",
+        "members": [
+          "T014"
+        ],
+        "singleton": true,
+        "bucket": "1110111001"
+      }
+    ],
+    "cluster_count": 9,
+    "singleton_cluster_ids": [
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014"
+    ],
+    "boundary_texts": [
+      {
+        "text_ids": [
+          "T001",
+          "T005"
+        ],
+        "similarity_units": 7500,
+        "similarity_fixed": "0.7500",
+        "decision": "merge",
+        "ordered_by": "text_id_lexicographic",
+        "comparison_task_key": "6813727a3db037a44ace81520aa771b61772049dd3a95404b75001c39c6fe917"
+      }
+    ],
+    "boundary_count": 1,
+    "merge_event_count": 5
+  },
+  "validation": {
+    "invalid_texts": {
+      "accepted_records": [
+        "T001"
+      ],
+      "failure_count": 8,
+      "codes": {
+        "E_TEXT_INVALID": 8
+      },
+      "samples": [
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "duplicate text_id",
+          "item_id": "T001",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 2
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "terms must be a non-empty list",
+          "item_id": "BAD_EMPTY",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 3
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "terms fall outside the controlled vocabulary",
+          "item_id": "BAD_TERM",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 4
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "source is not in the configured enumeration",
+          "item_id": "BAD_SOURCE",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 5
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "version markers must be monotonically non-decreasing",
+          "item_id": "BAD_VERSION_DOWN",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 6
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "duplicate text_id",
+          "item_id": "BAD_VERSION_DOWN",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 7
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "version markers must be monotonically non-decreasing",
+          "item_id": "BAD_VERSION_DOWN",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 7
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "invalid JSON: Expecting value: line 1 column 35 (char 34)",
+          "source": "samples/invalid_texts.jsonl",
+          "line": 8
+        }
+      ],
+      "expected_code_present": true
+    },
+    "invalid_plan": {
+      "failure_count": 4,
+      "codes": {
+        "E_PLAN_INVALID": 3,
+        "E_TEXT_INVALID": 1
+      },
+      "samples": [
+        {
+          "code": "E_PLAN_INVALID",
+          "stage": "plan_validation",
+          "message": "unknown operation kind",
+          "item_id": "unknown",
+          "source": "samples/invalid_plan.json",
+          "detail": {
+            "operation_index": 0
+          }
+        },
+        {
+          "code": "E_PLAN_INVALID",
+          "stage": "plan_validation",
+          "message": "delete requires a non-empty text_id",
+          "source": "samples/invalid_plan.json",
+          "detail": {
+            "operation_index": 1
+          }
+        },
+        {
+          "code": "E_PLAN_INVALID",
+          "stage": "plan_validation",
+          "message": "set_config key is not editable",
+          "item_id": "not_a_field",
+          "source": "samples/invalid_plan.json",
+          "detail": {
+            "operation_index": 2
+          }
+        },
+        {
+          "code": "E_TEXT_INVALID",
+          "stage": "text_validation",
+          "message": "terms fall outside the controlled vocabulary",
+          "item_id": "T900",
+          "source": "samples/invalid_plan.json",
+          "detail": {
+            "operation_index": 3
+          }
+        }
+      ],
+      "expected_codes_present": {
+        "E_PLAN_INVALID": true,
+        "E_TEXT_INVALID": true
+      }
+    }
+  },
+  "incremental_sequence": [
+    {
+      "batch": 1,
+      "config_hash": "106679f5bf3874de273cd77f105dd31e14ceb3ff5f28cd44b3fb0fde62fc273e",
+      "signature_invalidated": [
+        "T002",
+        "T015",
+        "T016"
+      ],
+      "signature_reused_count": 12,
+      "signature_computed": [
+        "T002",
+        "T015",
+        "T016"
+      ],
+      "bucket_invalidated_count": 3,
+      "cluster_invalidated_buckets": [
+        "1010001001",
+        "1010011001",
+        "1110011000",
+        "1110011001"
+      ],
+      "cluster_reused_buckets": [
+        "1001001000",
+        "1010111001",
+        "1110001011",
+        "1110111001"
+      ],
+      "pending_signatures": [],
+      "failure_codes": {},
+      "manifest_version": 6
+    },
+    {
+      "batch": 2,
+      "config_hash": "af819b307e3fa0e5937527c858d42095cabff31d703b1d5aef4c85110ea88a69",
+      "signature_invalidated": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "signature_reused_count": 0,
+      "signature_computed": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "bucket_invalidated_count": 15,
+      "cluster_invalidated_buckets": [
+        "0011110110",
+        "0101100110",
+        "0101111110",
+        "0110100110",
+        "1001100110",
+        "1001110110",
+        "1011110111",
+        "1101100110",
+        "1111100110"
+      ],
+      "cluster_reused_buckets": [
+        "0011110110",
+        "0110100110",
+        "1001100110",
+        "1001110110",
+        "1011110111",
+        "1101100110",
+        "1111100110"
+      ],
+      "pending_signatures": [],
+      "failure_codes": {},
+      "manifest_version": 11
+    },
+    {
+      "batch": 3,
+      "config_hash": "cf86bbbd2d49cb6c33dc6972588c9643fd48e9a69a1c8f133f2864321ae27da4",
+      "signature_invalidated": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "signature_reused_count": 0,
+      "signature_computed": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "bucket_invalidated_count": 15,
+      "cluster_invalidated_buckets": [
+        "101000100100",
+        "110000100101",
+        "110000110101",
+        "110000111101",
+        "111000101101",
+        "111010100101",
+        "111010101101"
+      ],
+      "cluster_reused_buckets": [
+        "101000100100",
+        "110000110101",
+        "110000111101",
+        "111000101101",
+        "111010100101",
+        "111010101101"
+      ],
+      "pending_signatures": [],
+      "failure_codes": {},
+      "manifest_version": 16
+    },
+    {
+      "batch": 4,
+      "config_hash": "a3dab2f942760cf17bad90ff800dfa0048d5398feeb0ac9fff4d5cc95f9709c9",
+      "signature_invalidated": [],
+      "signature_reused_count": 15,
+      "signature_computed": [],
+      "bucket_invalidated_count": 0,
+      "cluster_invalidated_buckets": [
+        "101000100100",
+        "110000100101",
+        "110000110101",
+        "110000111101",
+        "111000101101",
+        "111010100101",
+        "111010101101"
+      ],
+      "cluster_reused_buckets": [],
+      "pending_signatures": [],
+      "failure_codes": {},
+      "manifest_version": 17
+    },
+    {
+      "batch": 5,
+      "config_hash": "6c2816a92bbbb3cfc39d05c5ac9db31f036f972f77d3eeefc7e7fd53d721e5e4",
+      "signature_invalidated": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "signature_reused_count": 0,
+      "signature_computed": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "bucket_invalidated_count": 15,
+      "cluster_invalidated_buckets": [
+        "010000110011",
+        "010000110110",
+        "010011110000",
+        "110000010111",
+        "110001110010",
+        "110001110111",
+        "110100110011",
+        "110100110110",
+        "110100110111",
+        "110101110011"
+      ],
+      "cluster_reused_buckets": [
+        "010000110011",
+        "110000010111",
+        "110001110010",
+        "110001110111",
+        "110100110011",
+        "110100110110",
+        "110100110111",
+        "110101110011"
+      ],
+      "pending_signatures": [],
+      "failure_codes": {},
+      "manifest_version": 22
+    }
+  ],
+  "cache_reuse": {
+    "batch": 4,
+    "description": "similarity_threshold-only edit",
+    "signature_invalidated": [],
+    "signature_reused_count": 15,
+    "all_signatures_reused": true
+  },
+  "incremental_vs_full_rebuild": {
+    "equal": true,
+    "incremental_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89",
+    "full_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89",
+    "fields": [
+      "boundary_texts",
+      "buckets",
+      "clusters",
+      "failure_list",
+      "merge_log",
+      "pending_signatures",
+      "signatures"
+    ]
+  },
+  "final_state": {
+    "config_hash": "6c2816a92bbbb3cfc39d05c5ac9db31f036f972f77d3eeefc7e7fd53d721e5e4",
+    "text_count": 15,
+    "cluster_count": 10,
+    "boundary_count": 0,
+    "pending_signatures": [],
+    "failure_count": 0,
+    "clusters": [
+      {
+        "cluster_id": "T001",
+        "members": [
+          "T001",
+          "T003",
+          "T004",
+          "T005"
+        ],
+        "singleton": false,
+        "bucket": "110000010111"
+      },
+      {
+        "cluster_id": "T002",
+        "members": [
+          "T002"
+        ],
+        "singleton": true,
+        "bucket": "110100110110"
+      },
+      {
+        "cluster_id": "T006",
+        "members": [
+          "T006",
+          "T007",
+          "T016"
+        ],
+        "singleton": false,
+        "bucket": "010000110011"
+      },
+      {
+        "cluster_id": "T008",
+        "members": [
+          "T008"
+        ],
+        "singleton": true,
+        "bucket": "110100110011"
+      },
+      {
+        "cluster_id": "T009",
+        "members": [
+          "T009"
+        ],
+        "singleton": true,
+        "bucket": "110101110011"
+      },
+      {
+        "cluster_id": "T010",
+        "members": [
+          "T010"
+        ],
+        "singleton": true,
+        "bucket": "110001110111"
+      },
+      {
+        "cluster_id": "T012",
+        "members": [
+          "T012"
+        ],
+        "singleton": true,
+        "bucket": "110001110010"
+      },
+      {
+        "cluster_id": "T013",
+        "members": [
+          "T013"
+        ],
+        "singleton": true,
+        "bucket": "110100110111"
+      },
+      {
+        "cluster_id": "T014",
+        "members": [
+          "T014"
+        ],
+        "singleton": true,
+        "bucket": "010011110000"
+      },
+      {
+        "cluster_id": "T015",
+        "members": [
+          "T015"
+        ],
+        "singleton": true,
+        "bucket": "010000110110"
+      }
+    ]
+  },
+  "budget_scheduler": {
+    "limit": 32,
+    "per_text_cost": 32,
+    "first_run_computed": [
+      "T001"
+    ],
+    "first_run_pending": [
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014"
+    ],
+    "first_run_consumed": 32,
+    "first_run_pending_failure_count": 13,
+    "second_run_computed": [
+      "T002"
+    ],
+    "second_run_pending": [
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014"
+    ],
+    "pending_priority_preserved": true,
+    "consumed_total": 64
+  },
+  "concurrency": {
+    "serial_workers": 1,
+    "concurrent_workers": 4,
+    "equal": true,
+    "serial_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89",
+    "concurrent_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89"
+  },
+  "snapshot_recovery": {
+    "simulated_crash": "simulated crash after stage 'signatures'",
+    "partial_generation": "g00000006",
+    "partial_version": 6,
+    "partial_completed_count": 3,
+    "partial_pending_count": 12,
+    "resumed_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89",
+    "full_projection_sha256": "2a2687ef3a9b9e196480fc844778231113d835a5698be9777d374cab2b4b4c89",
+    "resumed_equals_full": true,
+    "version_mismatch": {
+      "code": "E_SNAPSHOT_VERSION_MISMATCH",
+      "detail": {
+        "version": {
+          "expected": 999999,
+          "actual": 5
+        }
+      }
+    },
+    "config_hash_mismatch": {
+      "code": "E_SNAPSHOT_VERSION_MISMATCH",
+      "detail": {
+        "config_hash": {
+          "expected": "not-the-config-hash",
+          "actual": "6c2816a92bbbb3cfc39d05c5ac9db31f036f972f77d3eeefc7e7fd53d721e5e4"
+        }
+      }
+    },
+    "mismatch_code_expected": "E_SNAPSHOT_VERSION_MISMATCH"
+  },
+  "injections": [
+    {
+      "injection_id": "I01-ZERO-DIM",
+      "kind": "zero_signature_dimension",
+      "payload": {
+        "injection_id": "I01-ZERO-DIM",
+        "kind": "zero_signature_dimension",
+        "field": "signature_dimension",
+        "value": 0
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "observed_code": "E_CONFIG_INVALID",
+      "message": "signature_dimension must be a positive even integer",
+      "hit": true
+    },
+    {
+      "injection_id": "I02-NONFINITE-SIM",
+      "kind": "non_finite_similarity",
+      "payload": {
+        "injection_id": "I02-NONFINITE-SIM",
+        "kind": "non_finite_similarity",
+        "field": "similarity_threshold",
+        "value": "NaN"
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "observed_code": "E_CONFIG_INVALID",
+      "message": "similarity_threshold must be a finite number in [0, 1]",
+      "hit": true
+    },
+    {
+      "injection_id": "I03-BUCKET-OVERFLOW",
+      "kind": "bucket_bits_out_of_range",
+      "payload": {
+        "injection_id": "I03-BUCKET-OVERFLOW",
+        "kind": "bucket_bits_out_of_range",
+        "field": "bucket_bits",
+        "value": 64
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "observed_code": "E_CONFIG_INVALID",
+      "message": "bucket_bits must not exceed signature_dimension",
+      "hit": true
+    },
+    {
+      "injection_id": "I04-CLUSTER-COLLISION",
+      "kind": "cluster_id_conflict",
+      "payload": {
+        "injection_id": "I04-CLUSTER-COLLISION",
+        "kind": "cluster_id_conflict",
+        "text_ids": [
+          "T001",
+          "T008"
+        ],
+        "forced_cluster_id": "INJECTED-CONFLICT"
+      },
+      "expected_code": "E_CLUSTER_ID_CONFLICT",
+      "observed_code": "E_CLUSTER_ID_CONFLICT",
+      "message": "cluster conflict injection requires at least two clusters",
+      "hit": true
+    }
+  ],
+  "snapshot_locations": {
+    "incremental": "runs/demo/incremental",
+    "full_rebuild": "runs/demo/full-rebuild",
+    "budget": "runs/demo/budget",
+    "recovery": "runs/demo/recovery",
+    "serial": "runs/demo/serial",
+    "concurrent": "runs/demo/concurrent"
+  }
+}

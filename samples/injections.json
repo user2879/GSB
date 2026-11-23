@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "injections": [
+    {
+      "injection_id": "I01-ZERO-DIM",
+      "kind": "zero_signature_dimension",
+      "field": "signature_dimension",
+      "value": 0
+    },
+    {
+      "injection_id": "I02-NONFINITE-SIM",
+      "kind": "non_finite_similarity",
+      "field": "similarity_threshold",
+      "value": "NaN"
+    },
+    {
+      "injection_id": "I03-BUCKET-OVERFLOW",
+      "kind": "bucket_bits_out_of_range",
+      "field": "bucket_bits",
+      "value": 64
+    },
+    {
+      "injection_id": "I04-CLUSTER-COLLISION",
+      "kind": "cluster_id_conflict",
+      "text_ids": [
+        "T001",
+        "T008"
+      ],
+      "forced_cluster_id": "INJECTED-CONFLICT"
+    }
+  ]
+}
