@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mixedmem-diagnostics"
+version = "1.0.0"
+description = "Deterministic mixed-precision block-pool and lease diagnostics workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[tool.setuptools.packages.find]
+include = ["mixedmem*"]

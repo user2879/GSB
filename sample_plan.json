@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "version": 1,
+  "name": "deterministic-mixed-precision-demo",
+  "seed": 20261124,
+  "supported_quant_scales": [64, 128, 256, 512],
+  "quantization_scale_version": 1,
+  "block_size_bytes": 256,
+  "memory_budget_bytes": 4096,
+  "batch_size_max": 4,
+  "lease_ttl_ms": 5000,
+  "layers": [
+    {
+      "id": "embed",
+      "input_dim": 4,
+      "output_dim": 6,
+      "param_count": 30,
+      "precision": "float32",
+      "scale": 256,
+      "depends_on": [],
+      "memory_derivation": {"base_bytes": 64, "terms": []}
+    },
+    {
+      "id": "hidden",
+      "input_dim": 6,
+      "output_dim": 5,
+      "param_count": 35,
+      "precision": "fixed",
+      "scale": 128,
+      "depends_on": ["embed"],
+      "memory_derivation": {"base_bytes": 32, "terms": [{"layer": "embed", "coefficient": 0}]}
+    },
+    {
+      "id": "compress",
+      "input_dim": 5,
+      "output_dim": 4,
+      "param_count": 25,
+      "precision": "fixed",
+      "scale": 128,
+      "depends_on": ["hidden"],
+      "memory_derivation": {"base_bytes": 16, "terms": []}
+    },
+    {
+      "id": "head",
+      "input_dim": 4,
+      "output_dim": 3,
+      "param_count": 15,
+      "precision": "float32",
+      "scale": 512,
+      "depends_on": ["compress"],
+      "memory_derivation": {"base_bytes": 16, "terms": [{"layer": "hidden", "coefficient": 0}]}
+    }
+  ]
+}
