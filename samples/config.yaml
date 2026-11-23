@@ -1,0 +1,19 @@
+# Deterministic local rendering configuration
+frame_width: 32
+frame_height: 24
+prediction_steps: 2
+history_frames: 4
+motion_model:
+  linear_gain: 1.0
+  damping: 0.82
+  search_radius: 2
+noise_layer:
+  amplitude: 2.0
+  seed_salt: 97
+fixed_point_bits: 12
+quantization_levels: [1, 2, 4]
+precision_levels: [6, 8, 10, 12]
+scale_tiers: [1, 2, 4]
+latency_budget_ms: 250
+thread_pool_workers: 4
+snapshot_commit_interval_batches: 1

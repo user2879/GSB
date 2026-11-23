@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "motion-timeseries-pipeline"
+version = "0.1.0"
+description = "Deterministic stage-cached motion-time-series prediction pipeline"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "PyYAML>=6.0"]
+
+[project.scripts]
+motion-pipeline = "motion_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["motion_pipeline*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
