@@ -20,3 +20,20 @@
 
 验收：
 使用本地回环样本验证拥塞定点推进、窗口封存与重算、快照恢复及脚本缺口与重复确认异常的业务码。
+
+---
+
+## 交付与使用
+
+代码位于 `ccobs/`, 入口为 `run_session.py`, 样本在 `samples/`,
+测试在 `tests/`, 技术说明与实际验证结果见 `docs/TECHNICAL_NOTES.md`。
+
+```sh
+python3 -m unittest discover -s tests          # 31 个测试
+python3 run_session.py --config samples/session_config.json \
+    --script samples/peer_script.json --db artifacts/ccobs.db run
+python3 run_session.py --config samples/session_config.json \
+    --script samples/peer_script.json --db artifacts/ccobs.db recover
+python3 run_session.py --config samples/session_config.json \
+    --script samples/peer_script.json --db artifacts/ccobs.db replay
+```
