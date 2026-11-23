@@ -1,0 +1,64 @@
+{
+  "format": "imv.views.v1",
+  "session": {
+    "scale_factor": 100,
+    "truncation": "toward_zero",
+    "overflow": "saturate_int64",
+    "global_concurrency": 2,
+    "batch_size": 2,
+    "default_lease_ttl_ms": 900,
+    "default_lease_renew_ms": 200
+  },
+  "views": [
+    {
+      "id": "v_region",
+      "group_by": ["region_id"],
+      "aggregates": [
+        {"func": "count", "column": "*", "alias": "row_count"},
+        {"func": "sum", "column": "amount", "alias": "amount_sum"},
+        {"func": "min", "column": "amount", "alias": "amount_min"},
+        {"func": "max", "column": "qty", "alias": "qty_max"}
+      ],
+      "filter": {"op": "eq", "column": "active", "value": 1},
+      "refresh_mode": "incremental",
+      "per_view_quota": 1,
+      "lease_ttl_ms": 900,
+      "lease_renew_ms": 200
+    },
+    {
+      "id": "v_region_product",
+      "group_by": ["region_id", "product_id"],
+      "aggregates": [
+        {"func": "count", "column": "*", "alias": "row_count"},
+        {"func": "sum", "column": "amount", "alias": "amount_sum"},
+        {"func": "min", "column": "amount", "alias": "amount_min"},
+        {"func": "max", "column": "amount", "alias": "amount_max"}
+      ],
+      "filter": {
+        "op": "and",
+        "args": [
+          {"op": "eq", "column": "active", "value": 1},
+          {"op": "is_not_null", "column": "amount"}
+        ]
+      },
+      "refresh_mode": "incremental",
+      "per_view_quota": 1,
+      "lease_ttl_ms": 850,
+      "lease_renew_ms": 200
+    },
+    {
+      "id": "v_product",
+      "group_by": ["product_id"],
+      "aggregates": [
+        {"func": "count", "column": "*", "alias": "row_count"},
+        {"func": "sum", "column": "qty", "alias": "qty_sum"},
+        {"func": "count", "column": "channel_id", "alias": "channel_count"}
+      ],
+      "filter": {"op": "gte", "column": "amount", "value": 0},
+      "refresh_mode": "full",
+      "per_view_quota": 1,
+      "lease_ttl_ms": 800,
+      "lease_renew_ms": 190
+    }
+  ]
+}
