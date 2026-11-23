@@ -1,0 +1,190 @@
+{
+  "crash_recovery": {
+    "head_before_recovery": "cp_baseline",
+    "inflight_detail": {
+      "checkpoint_id": "cp_train_003",
+      "unknown_shards": [
+        {
+          "blob_path": "out/demo/s3_crash_rollback/shards/cp_train_003__shard000.bin",
+          "shard_id": "shard000",
+          "status": "UNKNOWN"
+        },
+        {
+          "blob_path": "out/demo/s3_crash_rollback/shards/cp_train_003__shard001.bin",
+          "shard_id": "shard001",
+          "status": "UNKNOWN"
+        }
+      ]
+    },
+    "note": "no forced-kill exit report is fabricated; only committed records are trusted",
+    "rerun_disposition": {
+      "inflight_cleared": true,
+      "replay": {
+        "checkpoints": [
+          {
+            "checkpoint_id": "cp_baseline",
+            "shards": 2,
+            "status": "MATCH"
+          },
+          {
+            "checkpoint_id": "cp_train_003",
+            "shards": 2,
+            "status": "MATCH"
+          }
+        ],
+        "status": "OK"
+      },
+      "result_checkpoint": "cp_train_003",
+      "unknown_shards_seen": [
+        "shard000",
+        "shard001"
+      ]
+    },
+    "rollback_disposition": {
+      "inflight_cleared": true,
+      "replay": {
+        "checkpoints": [
+          {
+            "checkpoint_id": "cp_baseline",
+            "shards": 2,
+            "status": "MATCH"
+          }
+        ],
+        "status": "OK"
+      },
+      "result": {
+        "action": "rollback",
+        "head": "cp_baseline",
+        "note": "uncommitted work discarded; resume from committed parent",
+        "removed_unknown_blobs": [
+          "out/demo/s3_crash_rollback/shards/cp_train_003__shard000.bin",
+          "out/demo/s3_crash_rollback/shards/cp_train_003__shard001.bin"
+        ]
+      }
+    },
+    "simulated_crash_checkpoint": "cp_train_003",
+    "status": "OK",
+    "text_view": "== Checkpoint Dependency Chain ==\n  checkpoint | parent | version | step | shards | mode\n  cp_baseline | - | 1 | 4 | 2 | layer\n  cp_train_003 | cp_baseline | 2 | 5 | 2 | layer\n\n== Change Trace (stable seq order) ==\n  seq=1 checkpoint=cp_baseline ledger_version=1\n  seq=2 checkpoint=cp_train_003 ledger_version=2\n\n== Affected / Unknown Shards ==\n  (none)\n\n== Snapshots ==\n  (none)",
+    "unknown_shards_marked": [
+      "shard000",
+      "shard001"
+    ]
+  },
+  "fault_injection": {
+    "faults": {
+      "E_CHAIN": {
+        "details": [
+          "cp_train_003: parent_id 'ghost_parent' does not exist (dangling reference)"
+        ],
+        "reported_code": "E_CHAIN"
+      },
+      "E_INTEGRITY": {
+        "details": [
+          "cp_train_003/shard000: shard_digest mismatch (stored=000000000000 recomputed=40773222b642)"
+        ],
+        "reported_code": "E_INTEGRITY"
+      },
+      "E_SNAPSHOT": {
+        "injected": "snapshot_digest",
+        "target": "out/demo/snapshots/fault/snapshot.json"
+      }
+    },
+    "status": "OK"
+  },
+  "idempotency_concurrency": {
+    "concurrent_outcomes": [
+      {
+        "change_id": "cp_partition_unit",
+        "idempotent": false,
+        "parent": "cp_train_003",
+        "result": "cp_partition_unit"
+      },
+      {
+        "change_id": "cp_cursor_shift",
+        "idempotent": false,
+        "parent": "cp_partition_unit",
+        "result": "cp_cursor_shift"
+      }
+    ],
+    "idempotent": {
+      "checkpoint_count": 2,
+      "duplicate_skipped": true
+    },
+    "ledger_versions_monotonic": true,
+    "parents": {
+      "cp_baseline": null,
+      "cp_cursor_shift": "cp_partition_unit",
+      "cp_partition_unit": "cp_train_003",
+      "cp_train_003": "cp_baseline"
+    },
+    "status": "OK"
+  },
+  "incremental": {
+    "deterministic_chain_identical": true,
+    "status": "OK",
+    "unchanged_byte_checks": [
+      {
+        "blob_byte_identical": true,
+        "checkpoint": "cp_cursor_shift",
+        "shard": "shard000",
+        "shard_version_unchanged": true
+      },
+      {
+        "blob_byte_identical": true,
+        "checkpoint": "cp_cursor_shift",
+        "shard": "shard001",
+        "shard_version_unchanged": true
+      },
+      {
+        "blob_byte_identical": true,
+        "checkpoint": "cp_cursor_shift",
+        "shard": "shard002",
+        "shard_version_unchanged": true
+      },
+      {
+        "blob_byte_identical": true,
+        "checkpoint": "cp_cursor_shift",
+        "shard": "shard003",
+        "shard_version_unchanged": true
+      }
+    ],
+    "verifications": [
+      {
+        "checkpoint": "cp_train_003",
+        "status": "MATCH"
+      },
+      {
+        "checkpoint": "cp_partition_unit",
+        "status": "MATCH"
+      },
+      {
+        "checkpoint": "cp_cursor_shift",
+        "status": "MATCH"
+      }
+    ]
+  },
+  "snapshot": {
+    "initial_status": {
+      "diffs": [],
+      "identical": true
+    },
+    "post_restore_status": {
+      "diffs": [],
+      "identical": true
+    },
+    "readonly_backup": "/home/zsl/feedback/uidfc5909d3-default-117/ckpt_workbench/out/demo/s2_snapshot/backup_v1",
+    "replaced_checkpoints": [
+      "cp_baseline",
+      "cp_cursor_shift",
+      "cp_partition_unit",
+      "cp_train_003"
+    ],
+    "restored_blob_digests_match": true,
+    "status": "OK",
+    "version_diffs": [
+      "ledger_version snapshot=4 current=5",
+      "checkpoint_set_version differs",
+      "partition_version differs"
+    ]
+  }
+}

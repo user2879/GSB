@@ -1,0 +1,44 @@
+{
+  "incremental": {
+    "deterministic_chain_identical": true,
+    "all_unchanged_byte_identical": true,
+    "verified_checkpoints": [
+      "cp_train_003",
+      "cp_partition_unit",
+      "cp_cursor_shift"
+    ]
+  },
+  "snapshot": {
+    "initial_identical": true,
+    "diffs_detected": [
+      "ledger_version snapshot=4 current=5",
+      "checkpoint_set_version differs",
+      "partition_version differs"
+    ],
+    "replaced": [
+      "cp_baseline",
+      "cp_cursor_shift",
+      "cp_partition_unit",
+      "cp_train_003"
+    ],
+    "restored_blob_digests_match": true,
+    "post_restore_identical": true
+  },
+  "crash_recovery": {
+    "unknown_shards": [
+      "shard000",
+      "shard001"
+    ],
+    "rollback_replay": "OK",
+    "rerun_replay": "OK"
+  },
+  "faults": {
+    "E_CHAIN": "E_CHAIN",
+    "E_INTEGRITY": "E_INTEGRITY",
+    "E_SNAPSHOT": "snapshot_digest"
+  },
+  "idempotency_concurrency": {
+    "duplicate_skipped": true,
+    "versions_monotonic": true
+  }
+}
