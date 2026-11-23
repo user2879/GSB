@@ -1,0 +1,999 @@
+test_adjacent_diff_is_non_negative_integer (test_arbitration.ArbitrationTests.test_adjacent_diff_is_non_negative_integer) ... ok
+test_empty_interval_intersection_is_policy_conflict (test_arbitration.ArbitrationTests.test_empty_interval_intersection_is_policy_conflict) ... ok
+test_error_indistinguishable_attribution (test_arbitration.ArbitrationTests.test_error_indistinguishable_attribution) ... ok
+test_high_rejected_ratio_attribution (test_arbitration.ArbitrationTests.test_high_rejected_ratio_attribution) ... ok
+test_interval_intersection_midpoint (test_arbitration.ArbitrationTests.test_interval_intersection_midpoint) ... ok
+test_latest_wins_uses_seq_desc_then_ts_desc (test_arbitration.ArbitrationTests.test_latest_wins_uses_seq_desc_then_ts_desc) ... ok
+test_order_independence_byte_identical (test_arbitration.ArbitrationTests.test_order_independence_byte_identical) ... ok
+test_reversed_interval_triggers_grid_error (test_arbitration.ArbitrationTests.test_reversed_interval_triggers_grid_error) ... ok
+test_weighted_majority_authority_and_rejections (test_arbitration.ArbitrationTests.test_weighted_majority_authority_and_rejections) ... ok
+test_clean_run_succeeds (test_cli_injection.CliInjectionTests.test_clean_run_succeeds) ... {
+  "distribution_stats": {
+    "view-all-fleets": {
+      "maintenance_window": {
+        "interval_width_max_q": 600,
+        "interval_width_mean_q": 520.0,
+        "interval_width_min_q": 400,
+        "max_q": 1200,
+        "mean_q": 580.0,
+        "median_q": 550.0,
+        "min_q": 100,
+        "sample_count": 10,
+        "spread_q": 1100,
+        "std_q": 334.0658617698013
+      },
+      "pool_size": {
+        "max_q": 800,
+        "mean_q": 540.0,
+        "median_q": 400.0,
+        "min_q": 400,
+        "sample_count": 5,
+        "spread_q": 400,
+        "std_q": 174.35595774162695
+      },
+      "timeout_ms": {
+        "max_q": 15000,
+        "mean_q": 13480.0,
+        "median_q": 13100.0,
+        "min_q": 13000,
+        "sample_count": 5,
+        "spread_q": 2000,
+        "std_q": 762.6270385975048
+      }
+    },
+    "view-production": {
+      "maintenance_window": {
+        "interval_width_max_q": 600,
+        "interval_width_mean_q": 600.0,
+        "interval_width_min_q": 600,
+        "max_q": 1200,
+        "mean_q": 700.0,
+        "median_q": 700.0,
+        "min_q": 200,
+        "sample_count": 6,
+        "spread_q": 1000,
+        "std_q": 341.56502553198663
+      },
+      "pool_size": {
+        "max_q": 800,
+        "mean_q": 633.3333333333334,
+        "median_q": 700.0,
+        "min_q": 400,
+        "sample_count": 3,
+        "spread_q": 400,
+        "std_q": 169.96731711975949
+      },
+      "rate_limit": {
+        "max_q": 10050,
+        "mean_q": 10033.0,
+        "median_q": 10050.0,
+        "min_q": 9999,
+        "sample_count": 3,
+        "spread_q": 51,
+        "std_q": 24.041630560342615
+      },
+      "timeout_ms": {
+        "max_q": 15000,
+        "mean_q": 13700.0,
+        "median_q": 13100.0,
+        "min_q": 13000,
+        "sample_count": 3,
+        "spread_q": 2000,
+        "std_q": 920.1449161228173
+      }
+    }
+  },
+  "scale": {
+    "bound_interval_real": 0.02,
+    "bound_latest_real": 0.01,
+    "bound_majority_real": 0.02,
+    "note": "majority absolute intermediate term grows linearly with the sum of weights; after normalization the decision bound stays at 2u.",
+    "quantum_real": 0.01,
+    "single_observation_quantization_error": 0.005
+  },
+  "unknown_views": [],
+  "views": [
+    {
+      "added_keys": [
+        "maintenance_window",
+        "pool_size",
+        "timeout_ms"
+      ],
+      "changed_keys": [],
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [],
+          "adjacent_diff_q": null,
+          "attribution": [
+            "policy_conflict",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 5/5 observations (1.00 > 0.50)",
+            "policy_conflict": "policy could not merge candidates (empty intersection)"
+          },
+          "authority_q": null,
+          "authority_real": null,
+          "bound_q": 2,
+          "conflict_detail": "empty intersection [600, 500]",
+          "error_influenced": false,
+          "policy": "interval_intersection",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/maintenance_window#2",
+              "quantized_value": [
+                100,
+                500
+              ],
+              "raw_value": [
+                1,
+                5
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2900
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/maintenance_window#1",
+              "quantized_value": [
+                600,
+                1200
+              ],
+              "raw_value": [
+                6,
+                12
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/maintenance_window#1",
+              "quantized_value": [
+                200,
+                800
+              ],
+              "raw_value": [
+                2,
+                8
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1200
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/maintenance_window#2",
+              "quantized_value": [
+                400,
+                1000
+              ],
+              "raw_value": [
+                4,
+                10
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2400
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/maintenance_window#1",
+              "quantized_value": [
+                300,
+                700
+              ],
+              "raw_value": [
+                3,
+                7
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1800
+            }
+          ]
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-canary/pool_size#4"
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "error_indistinguishable",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "error_indistinguishable": "candidate fixed-point diff within synthetic bound",
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 400,
+          "authority_real": 4.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "error_influenced": true,
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/pool_size#2",
+              "quantized_value": 800,
+              "raw_value": 8,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2000
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 3,
+              "timestamp_ms": 3300
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/pool_size#2",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2100
+            }
+          ]
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "adjacent_diff_q": 33,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 13233,
+          "authority_real": 132.33,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/timeout_ms#3",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3600
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "minority_candidate",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 4,
+              "timestamp_ms": 4100
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/timeout_ms#6",
+              "quantized_value": 13200,
+              "raw_value": 132,
+              "reject_reason": "minority_candidate",
+              "seq": 6,
+              "timestamp_ms": 5200
+            }
+          ]
+        }
+      },
+      "removed_keys": [],
+      "version": 1,
+      "view_id": "view-all-fleets"
+    },
+    {
+      "added_keys": [
+        "maintenance_window",
+        "pool_size",
+        "rate_limit",
+        "timeout_ms"
+      ],
+      "changed_keys": [],
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [
+            "env-dr/maintenance_window#1",
+            "env-prod-eu/maintenance_window#1",
+            "env-prod-us/maintenance_window#2"
+          ],
+          "adjacent_diff_q": 100,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 700,
+          "authority_real": 7.0,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "interval_intersection",
+          "rejected": []
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-prod-eu/pool_size#2"
+          ],
+          "adjacent_diff_q": 22,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 722,
+          "authority_real": 7.22,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3300
+            }
+          ]
+        },
+        "rate_limit": {
+          "accepted_obs_ids": [
+            "env-prod-eu/rate_limit#4",
+            "env-prod-us/rate_limit#2"
+          ],
+          "adjacent_diff_q": 6,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 10044,
+          "authority_real": 100.44,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/rate_limit#1",
+              "quantized_value": 9999,
+              "raw_value": 99.99,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1300
+            }
+          ]
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 13000,
+          "authority_real": 130.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 4,
+              "timestamp_ms": 4100
+            }
+          ]
+        }
+      },
+      "removed_keys": [],
+      "version": 1,
+      "view_id": "view-production"
+    }
+  ]
+}ok
+test_crash_recovery_cli_path (test_cli_injection.CliInjectionTests.test_crash_recovery_cli_path) ... 
+{
+  "distribution_stats": {
+    "view-all-fleets": {
+      "maintenance_window": {
+        "interval_width_max_q": 600,
+        "interval_width_mean_q": 520.0,
+        "interval_width_min_q": 400,
+        "max_q": 1200,
+        "mean_q": 580.0,
+        "median_q": 550.0,
+        "min_q": 100,
+        "sample_count": 10,
+        "spread_q": 1100,
+        "std_q": 334.0658617698013
+      },
+      "pool_size": {
+        "max_q": 800,
+        "mean_q": 540.0,
+        "median_q": 400.0,
+        "min_q": 400,
+        "sample_count": 5,
+        "spread_q": 400,
+        "std_q": 174.35595774162695
+      },
+      "timeout_ms": {
+        "max_q": 15000,
+        "mean_q": 13480.0,
+        "median_q": 13100.0,
+        "min_q": 13000,
+        "sample_count": 5,
+        "spread_q": 2000,
+        "std_q": 762.6270385975048
+      }
+    },
+    "view-production": {
+      "maintenance_window": {
+        "interval_width_max_q": 600,
+        "interval_width_mean_q": 600.0,
+        "interval_width_min_q": 600,
+        "max_q": 1200,
+        "mean_q": 700.0,
+        "median_q": 700.0,
+        "min_q": 200,
+        "sample_count": 6,
+        "spread_q": 1000,
+        "std_q": 341.56502553198663
+      },
+      "pool_size": {
+        "max_q": 800,
+        "mean_q": 633.3333333333334,
+        "median_q": 700.0,
+        "min_q": 400,
+        "sample_count": 3,
+        "spread_q": 400,
+        "std_q": 169.96731711975949
+      },
+      "rate_limit": {
+        "max_q": 10050,
+        "mean_q": 10033.0,
+        "median_q": 10050.0,
+        "min_q": 9999,
+        "sample_count": 3,
+        "spread_q": 51,
+        "std_q": 24.041630560342615
+      },
+      "timeout_ms": {
+        "max_q": 15000,
+        "mean_q": 13700.0,
+        "median_q": 13100.0,
+        "min_q": 13000,
+        "sample_count": 3,
+        "spread_q": 2000,
+        "std_q": 920.1449161228173
+      }
+    }
+  },
+  "scale": {
+    "bound_interval_real": 0.02,
+    "bound_latest_real": 0.01,
+    "bound_majority_real": 0.02,
+    "note": "majority absolute intermediate term grows linearly with the sum of weights; after normalization the decision bound stays at 2u.",
+    "quantum_real": 0.01,
+    "single_observation_quantization_error": 0.005
+  },
+  "unknown_views": [],
+  "views": [
+    {
+      "added_keys": [],
+      "changed_keys": [],
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [],
+          "adjacent_diff_q": null,
+          "attribution": [
+            "policy_conflict",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 5/5 observations (1.00 > 0.50)",
+            "policy_conflict": "policy could not merge candidates (empty intersection)"
+          },
+          "authority_q": null,
+          "authority_real": null,
+          "bound_q": 2,
+          "conflict_detail": "empty intersection [600, 500]",
+          "error_influenced": false,
+          "policy": "interval_intersection",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/maintenance_window#2",
+              "quantized_value": [
+                100,
+                500
+              ],
+              "raw_value": [
+                1,
+                5
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2900
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/maintenance_window#1",
+              "quantized_value": [
+                600,
+                1200
+              ],
+              "raw_value": [
+                6,
+                12
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/maintenance_window#1",
+              "quantized_value": [
+                200,
+                800
+              ],
+              "raw_value": [
+                2,
+                8
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1200
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/maintenance_window#2",
+              "quantized_value": [
+                400,
+                1000
+              ],
+              "raw_value": [
+                4,
+                10
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2400
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/maintenance_window#1",
+              "quantized_value": [
+                300,
+                700
+              ],
+              "raw_value": [
+                3,
+                7
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1800
+            }
+          ]
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-canary/pool_size#4"
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "error_indistinguishable",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "error_indistinguishable": "candidate fixed-point diff within synthetic bound",
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 400,
+          "authority_real": 4.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "error_influenced": true,
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/pool_size#2",
+              "quantized_value": 800,
+              "raw_value": 8,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2000
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 3,
+              "timestamp_ms": 3300
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/pool_size#2",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2100
+            }
+          ]
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "adjacent_diff_q": 33,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 13233,
+          "authority_real": 132.33,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/timeout_ms#3",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3600
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "minority_candidate",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 4,
+              "timestamp_ms": 4100
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/timeout_ms#6",
+              "quantized_value": 13200,
+              "raw_value": 132,
+              "reject_reason": "minority_candidate",
+              "seq": 6,
+              "timestamp_ms": 5200
+            }
+          ]
+        }
+      },
+      "removed_keys": [],
+      "version": 1,
+      "view_id": "view-all-fleets"
+    },
+    {
+      "added_keys": [],
+      "changed_keys": [],
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [
+            "env-dr/maintenance_window#1",
+            "env-prod-eu/maintenance_window#1",
+            "env-prod-us/maintenance_window#2"
+          ],
+          "adjacent_diff_q": 100,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 700,
+          "authority_real": 7.0,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "interval_intersection",
+          "rejected": []
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-prod-eu/pool_size#2"
+          ],
+          "adjacent_diff_q": 22,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 722,
+          "authority_real": 7.22,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3300
+            }
+          ]
+        },
+        "rate_limit": {
+          "accepted_obs_ids": [
+            "env-prod-eu/rate_limit#4",
+            "env-prod-us/rate_limit#2"
+          ],
+          "adjacent_diff_q": 6,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 10044,
+          "authority_real": 100.44,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/rate_limit#1",
+              "quantized_value": 9999,
+              "raw_value": 99.99,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1300
+            }
+          ]
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 13000,
+          "authority_real": 130.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "error_influenced": false,
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 4,
+              "timestamp_ms": 4100
+            }
+          ]
+        }
+      },
+      "removed_keys": [],
+      "version": 1,
+      "view_id": "view-production"
+    }
+  ]
+}ok
+test_grid_violation_reports_e_grid (test_cli_injection.CliInjectionTests.test_grid_violation_reports_e_grid) ... {
+  "code": "E_GRID",
+  "detail": {
+    "value": 42
+  },
+  "event": "workbench_error",
+  "level": "ERROR",
+  "location": "scale_exponent",
+  "message": "scale_exponent must be an integer in [-6, 6]",
+  "ts": "2026-11-23T01:59:29.241347+00:00"
+}
+ok
+test_spec_corruption_reports_e_spec (test_cli_injection.CliInjectionTests.test_spec_corruption_reports_e_spec) ... {
+  "code": "E_SPEC",
+  "detail": {},
+  "event": "workbench_error",
+  "level": "ERROR",
+  "location": "environments[env-prod-eu].observations[timeout_ms].seq",
+  "message": "duplicate observation seq 1 for env 'env-prod-eu' key 'timeout_ms'",
+  "ts": "2026-11-23T01:59:29.243735+00:00"
+}
+ok
+test_structured_log_records_error_codes (test_cli_injection.CliInjectionTests.test_structured_log_records_error_codes) ... {
+  "code": "E_SPEC",
+  "detail": {},
+  "event": "workbench_error",
+  "level": "ERROR",
+  "location": "environments[env-prod-eu].observations[timeout_ms].seq",
+  "message": "duplicate observation seq 1 for env 'env-prod-eu' key 'timeout_ms'",
+  "ts": "2026-11-23T01:59:29.245555+00:00"
+}
+ok
+test_version_mismatch_reports_e_version (test_cli_injection.CliInjectionTests.test_version_mismatch_reports_e_version) ... {
+  "code": "E_VERSION",
+  "detail": {},
+  "event": "workbench_error",
+  "level": "ERROR",
+  "location": "snapshot.environment_version",
+  "message": "environment/observation set differs from snapshot; whole-state replacement required",
+  "ts": "2026-11-23T01:59:29.321148+00:00"
+}
+ok
+test_repeated_runs_keep_ledger_stable (test_determinism.DeterminismTests.test_repeated_runs_keep_ledger_stable) ... ok
+test_shuffled_declaration_order_byte_identical (test_determinism.DeterminismTests.test_shuffled_declaration_order_byte_identical) ... ok
+test_division_by_zero_raises_grid (test_fixedpoint.FixedPointTests.test_division_by_zero_raises_grid) ... ok
+test_error_bounds_grow_only_in_intermediate_term (test_fixedpoint.FixedPointTests.test_error_bounds_grow_only_in_intermediate_term) ... ok
+test_midpoint_floor_picks_lower_on_odd_span (test_fixedpoint.FixedPointTests.test_midpoint_floor_picks_lower_on_odd_span) ... ok
+test_negative_exponent_scale (test_fixedpoint.FixedPointTests.test_negative_exponent_scale) ... ok
+test_out_of_grid_exponent_raises_grid (test_fixedpoint.FixedPointTests.test_out_of_grid_exponent_raises_grid) ... ok
+test_quantize_half_away_from_zero (test_fixedpoint.FixedPointTests.test_quantize_half_away_from_zero) ... ok
+test_weighted_mean_floor_and_saturation (test_fixedpoint.FixedPointTests.test_weighted_mean_floor_and_saturation) ... ok
+test_launch_raises_guidance_when_tk_missing (test_gui_guard.GuiGuardTests.test_launch_raises_guidance_when_tk_missing) ... ok
+test_diff_keys_reports_added_removed_changed (test_persistence.PersistenceTests.test_diff_keys_reports_added_removed_changed) ... ok
+test_forced_termination_leaves_unknown_then_rerun (test_persistence.PersistenceTests.test_forced_termination_leaves_unknown_then_rerun) ... ok
+test_full_run_persists_and_reloads (test_persistence.PersistenceTests.test_full_run_persists_and_reloads) ... ok
+test_ledger_format_version_present (test_persistence.PersistenceTests.test_ledger_format_version_present) ... ok
+test_replay_mismatch_locates_view_key_field (test_persistence.PersistenceTests.test_replay_mismatch_locates_view_key_field) ... ok
+test_snapshot_digest_tampering_raises_e_version (test_persistence.PersistenceTests.test_snapshot_digest_tampering_raises_e_version) ... ok
+test_snapshot_roundtrip_and_replay (test_persistence.PersistenceTests.test_snapshot_roundtrip_and_replay) ... ok
+test_snapshot_version_mismatch_raises_e_version (test_persistence.PersistenceTests.test_snapshot_version_mismatch_raises_e_version) ... ok
+test_view_edit_monotonic_version_and_stale_replacement (test_persistence.PersistenceTests.test_view_edit_monotonic_version_and_stale_replacement) ... ok
+test_bad_interval_shape (test_spec_validation.SpecValidationTests.test_bad_interval_shape) ... ok
+test_duplicate_environment_id (test_spec_validation.SpecValidationTests.test_duplicate_environment_id) ... ok
+test_duplicate_observation_seq (test_spec_validation.SpecValidationTests.test_duplicate_observation_seq) ... ok
+test_malformed_json_file (test_spec_validation.SpecValidationTests.test_malformed_json_file) ... ok
+test_negative_timestamp (test_spec_validation.SpecValidationTests.test_negative_timestamp) ... ok
+test_sample_loads (test_spec_validation.SpecValidationTests.test_sample_loads) ... ok
+test_unknown_env_reference (test_spec_validation.SpecValidationTests.test_unknown_env_reference) ... ok
+test_unsupported_policy (test_spec_validation.SpecValidationTests.test_unsupported_policy) ... ok
+test_distribution_stats_are_numpy_derived (test_statistics_view.StatisticsViewTests.test_distribution_stats_are_numpy_derived) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 1.070s
+
+OK
+

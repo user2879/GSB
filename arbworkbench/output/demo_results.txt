@@ -1,0 +1,14 @@
+== clean run ==
+exit 0 unknown_views []
+  view-all-fleets v1 keys=['maintenance_window', 'pool_size', 'timeout_ms']
+  view-production v1 keys=['maintenance_window', 'pool_size', 'rate_limit', 'timeout_ms']
+
+== fault injections ==
+  spec_corruption: exit=2 expected=E_SPEC actual=E_SPEC location=environments[env-prod-eu].observations[timeout_ms].seq
+  grid_violation: exit=2 expected=E_GRID actual=E_GRID location=scale_exponent
+  version_mismatch: exit=2 expected=E_VERSION actual=E_VERSION location=snapshot.environment_version
+
+== forced termination recovery ==
+exit 0 unknown_views []
+
+ALL VALIDATION SCENARIOS PASSED

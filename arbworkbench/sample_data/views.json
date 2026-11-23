@@ -1,0 +1,23 @@
+{
+  "views": [
+    {
+      "view_id": "view-production",
+      "env_ids": ["env-prod-eu", "env-prod-us", "env-dr"],
+      "policies": {
+        "timeout_ms": "latest_wins",
+        "pool_size": "weighted_majority",
+        "rate_limit": "weighted_majority",
+        "maintenance_window": "interval_intersection"
+      }
+    },
+    {
+      "view_id": "view-all-fleets",
+      "env_ids": ["env-prod-eu", "env-prod-us", "env-staging", "env-canary", "env-dr"],
+      "policies": {
+        "timeout_ms": "weighted_majority",
+        "pool_size": "latest_wins",
+        "maintenance_window": "interval_intersection"
+      }
+    }
+  ]
+}

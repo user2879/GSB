@@ -1,0 +1,781 @@
+{
+  "completed_views": [
+    "view-all-fleets",
+    "view-production"
+  ],
+  "content_digest": "92998ae003b7979a5416c46f6318061a49c2e055310e630440f67c203ceef9bd",
+  "environment_version": "tampered-6d5dfe5f8c9051c7",
+  "scale_exponent": 2,
+  "scale_scheme_version": 1,
+  "snapshot_format_version": 1,
+  "view_conclusions": {
+    "view-all-fleets": {
+      "conclusion_digest": "2e692ee34f2c1b9087430df433de5d83fa1aaac83204304a53f2a7ae03ef31cf",
+      "key_digests": {
+        "maintenance_window": "11d0920c3d6f5ddf0c5a3faa3e1b5d88fdca867c9bd9b00491594a69f79fce92",
+        "pool_size": "57ba9204203cc9623e1dd950a0136717bb3683942b3b0e0af1e15d93d3ad5354",
+        "timeout_ms": "06c0a1bc3c2bc8f43fcfd5086f85670771f1bc76d1e46b7eb96521922c07e6b8"
+      },
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [],
+          "accepted_verdicts": [],
+          "adjacent_diff_q": null,
+          "attribution": [
+            "policy_conflict",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 5/5 observations (1.00 > 0.50)",
+            "policy_conflict": "policy could not merge candidates (empty intersection)"
+          },
+          "authority_q": null,
+          "authority_real": null,
+          "bound_q": 2,
+          "conflict_detail": "empty intersection [600, 500]",
+          "distribution_q": {
+            "env-canary": [
+              {
+                "obs_id": "env-canary/maintenance_window#2",
+                "q": [
+                  100,
+                  500
+                ],
+                "seq": 2,
+                "ts": 2900
+              }
+            ],
+            "env-dr": [
+              {
+                "obs_id": "env-dr/maintenance_window#1",
+                "q": [
+                  600,
+                  1200
+                ],
+                "seq": 1,
+                "ts": 1500
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/maintenance_window#1",
+                "q": [
+                  200,
+                  800
+                ],
+                "seq": 1,
+                "ts": 1200
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/maintenance_window#2",
+                "q": [
+                  400,
+                  1000
+                ],
+                "seq": 2,
+                "ts": 2400
+              }
+            ],
+            "env-staging": [
+              {
+                "obs_id": "env-staging/maintenance_window#1",
+                "q": [
+                  300,
+                  700
+                ],
+                "seq": 1,
+                "ts": 1800
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "maintenance_window",
+          "policy": "interval_intersection",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/maintenance_window#2",
+              "quantized_value": [
+                100,
+                500
+              ],
+              "raw_value": [
+                1,
+                5
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2900
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/maintenance_window#1",
+              "quantized_value": [
+                600,
+                1200
+              ],
+              "raw_value": [
+                6,
+                12
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/maintenance_window#1",
+              "quantized_value": [
+                200,
+                800
+              ],
+              "raw_value": [
+                2,
+                8
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1200
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/maintenance_window#2",
+              "quantized_value": [
+                400,
+                1000
+              ],
+              "raw_value": [
+                4,
+                10
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 2,
+              "timestamp_ms": 2400
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/maintenance_window#1",
+              "quantized_value": [
+                300,
+                700
+              ],
+              "raw_value": [
+                3,
+                7
+              ],
+              "reject_reason": "outside_intersection",
+              "seq": 1,
+              "timestamp_ms": 1800
+            }
+          ],
+          "view_id": "view-all-fleets"
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-canary/pool_size#4"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/pool_size#4",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": null,
+              "seq": 4,
+              "timestamp_ms": 4400
+            }
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "error_indistinguishable",
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "error_indistinguishable": "candidate fixed-point diff within synthetic bound",
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 400,
+          "authority_real": 4.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-canary": [
+              {
+                "obs_id": "env-canary/pool_size#4",
+                "q": 400,
+                "seq": 4,
+                "ts": 4400
+              }
+            ],
+            "env-dr": [
+              {
+                "obs_id": "env-dr/pool_size#1",
+                "q": 400,
+                "seq": 1,
+                "ts": 1700
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/pool_size#2",
+                "q": 800,
+                "seq": 2,
+                "ts": 2000
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/pool_size#3",
+                "q": 700,
+                "seq": 3,
+                "ts": 3300
+              }
+            ],
+            "env-staging": [
+              {
+                "obs_id": "env-staging/pool_size#2",
+                "q": 400,
+                "seq": 2,
+                "ts": 2100
+              }
+            ]
+          },
+          "error_influenced": true,
+          "key": "pool_size",
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/pool_size#2",
+              "quantized_value": 800,
+              "raw_value": 8,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2000
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 3,
+              "timestamp_ms": 3300
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/pool_size#2",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2100
+            }
+          ],
+          "view_id": "view-all-fleets"
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/timeout_ms#5",
+              "quantized_value": 13000,
+              "raw_value": 130,
+              "reject_reason": null,
+              "seq": 5,
+              "timestamp_ms": 5000
+            }
+          ],
+          "adjacent_diff_q": 33,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 4/5 observations (0.80 > 0.50)"
+          },
+          "authority_q": 13233,
+          "authority_real": 132.33,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-canary": [
+              {
+                "obs_id": "env-canary/timeout_ms#3",
+                "q": 13100,
+                "seq": 3,
+                "ts": 3600
+              }
+            ],
+            "env-dr": [
+              {
+                "obs_id": "env-dr/timeout_ms#2",
+                "q": 15000,
+                "seq": 2,
+                "ts": 2500
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/timeout_ms#5",
+                "q": 13000,
+                "seq": 5,
+                "ts": 5000
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/timeout_ms#4",
+                "q": 13100,
+                "seq": 4,
+                "ts": 4100
+              }
+            ],
+            "env-staging": [
+              {
+                "obs_id": "env-staging/timeout_ms#6",
+                "q": 13200,
+                "seq": 6,
+                "ts": 5200
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "timeout_ms",
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-canary",
+              "obs_id": "env-canary/timeout_ms#3",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3600
+            },
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "minority_candidate",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "minority_candidate",
+              "seq": 4,
+              "timestamp_ms": 4100
+            },
+            {
+              "accepted": false,
+              "env_id": "env-staging",
+              "obs_id": "env-staging/timeout_ms#6",
+              "quantized_value": 13200,
+              "raw_value": 132,
+              "reject_reason": "minority_candidate",
+              "seq": 6,
+              "timestamp_ms": 5200
+            }
+          ],
+          "view_id": "view-all-fleets"
+        }
+      },
+      "version": 1
+    },
+    "view-production": {
+      "conclusion_digest": "4314f1111579635f429bb6cdbfed68a24efd925a80ead69dcc9526099d0cb68f",
+      "key_digests": {
+        "maintenance_window": "0f28c000e0901b90f703ed4f1e1732acb989783fb43cb1471bdc2b024ec47b28",
+        "pool_size": "31a28892191e23c1bbf2ffed1d88b7978d3f1883c802cf347da0142e281b25a5",
+        "rate_limit": "c360d183a40ae1d75c67e62a88c935d78e4173c0ac4cc62ed79c64654441ca74",
+        "timeout_ms": "d351a79a95aed3876fe759c4d357da5cf047c7f0b55295fb2498ebec5bb9bf4b"
+      },
+      "keys": {
+        "maintenance_window": {
+          "accepted_obs_ids": [
+            "env-dr/maintenance_window#1",
+            "env-prod-eu/maintenance_window#1",
+            "env-prod-us/maintenance_window#2"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/maintenance_window#1",
+              "quantized_value": [
+                600,
+                1200
+              ],
+              "raw_value": [
+                6,
+                12
+              ],
+              "reject_reason": null,
+              "seq": 1,
+              "timestamp_ms": 1500
+            },
+            {
+              "accepted": true,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/maintenance_window#1",
+              "quantized_value": [
+                200,
+                800
+              ],
+              "raw_value": [
+                2,
+                8
+              ],
+              "reject_reason": null,
+              "seq": 1,
+              "timestamp_ms": 1200
+            },
+            {
+              "accepted": true,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/maintenance_window#2",
+              "quantized_value": [
+                400,
+                1000
+              ],
+              "raw_value": [
+                4,
+                10
+              ],
+              "reject_reason": null,
+              "seq": 2,
+              "timestamp_ms": 2400
+            }
+          ],
+          "adjacent_diff_q": 100,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 700,
+          "authority_real": 7.0,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-dr": [
+              {
+                "obs_id": "env-dr/maintenance_window#1",
+                "q": [
+                  600,
+                  1200
+                ],
+                "seq": 1,
+                "ts": 1500
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/maintenance_window#1",
+                "q": [
+                  200,
+                  800
+                ],
+                "seq": 1,
+                "ts": 1200
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/maintenance_window#2",
+                "q": [
+                  400,
+                  1000
+                ],
+                "seq": 2,
+                "ts": 2400
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "maintenance_window",
+          "policy": "interval_intersection",
+          "rejected": [],
+          "view_id": "view-production"
+        },
+        "pool_size": {
+          "accepted_obs_ids": [
+            "env-prod-eu/pool_size#2"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/pool_size#2",
+              "quantized_value": 800,
+              "raw_value": 8,
+              "reject_reason": null,
+              "seq": 2,
+              "timestamp_ms": 2000
+            }
+          ],
+          "adjacent_diff_q": 22,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 722,
+          "authority_real": 7.22,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-dr": [
+              {
+                "obs_id": "env-dr/pool_size#1",
+                "q": 400,
+                "seq": 1,
+                "ts": 1700
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/pool_size#2",
+                "q": 800,
+                "seq": 2,
+                "ts": 2000
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/pool_size#3",
+                "q": 700,
+                "seq": 3,
+                "ts": 3300
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "pool_size",
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/pool_size#1",
+              "quantized_value": 400,
+              "raw_value": 4,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1700
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/pool_size#3",
+              "quantized_value": 700,
+              "raw_value": 7,
+              "reject_reason": "minority_candidate",
+              "seq": 3,
+              "timestamp_ms": 3300
+            }
+          ],
+          "view_id": "view-production"
+        },
+        "rate_limit": {
+          "accepted_obs_ids": [
+            "env-prod-eu/rate_limit#4",
+            "env-prod-us/rate_limit#2"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/rate_limit#4",
+              "quantized_value": 10050,
+              "raw_value": 100.5,
+              "reject_reason": null,
+              "seq": 4,
+              "timestamp_ms": 4500
+            },
+            {
+              "accepted": true,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/rate_limit#2",
+              "quantized_value": 10050,
+              "raw_value": 100.5,
+              "reject_reason": null,
+              "seq": 2,
+              "timestamp_ms": 2600
+            }
+          ],
+          "adjacent_diff_q": 6,
+          "attribution": [],
+          "attribution_contributions": {},
+          "authority_q": 10044,
+          "authority_real": 100.44,
+          "bound_q": 2,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-dr": [
+              {
+                "obs_id": "env-dr/rate_limit#1",
+                "q": 9999,
+                "seq": 1,
+                "ts": 1300
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/rate_limit#4",
+                "q": 10050,
+                "seq": 4,
+                "ts": 4500
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/rate_limit#2",
+                "q": 10050,
+                "seq": 2,
+                "ts": 2600
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "rate_limit",
+          "policy": "weighted_majority",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/rate_limit#1",
+              "quantized_value": 9999,
+              "raw_value": 99.99,
+              "reject_reason": "minority_candidate",
+              "seq": 1,
+              "timestamp_ms": 1300
+            }
+          ],
+          "view_id": "view-production"
+        },
+        "timeout_ms": {
+          "accepted_obs_ids": [
+            "env-prod-eu/timeout_ms#5"
+          ],
+          "accepted_verdicts": [
+            {
+              "accepted": true,
+              "env_id": "env-prod-eu",
+              "obs_id": "env-prod-eu/timeout_ms#5",
+              "quantized_value": 13000,
+              "raw_value": 130,
+              "reject_reason": null,
+              "seq": 5,
+              "timestamp_ms": 5000
+            }
+          ],
+          "adjacent_diff_q": 0,
+          "attribution": [
+            "high_rejected_ratio"
+          ],
+          "attribution_contributions": {
+            "high_rejected_ratio": "rejected 2/3 observations (0.67 > 0.50)"
+          },
+          "authority_q": 13000,
+          "authority_real": 130.0,
+          "bound_q": 1,
+          "conflict_detail": null,
+          "distribution_q": {
+            "env-dr": [
+              {
+                "obs_id": "env-dr/timeout_ms#2",
+                "q": 15000,
+                "seq": 2,
+                "ts": 2500
+              }
+            ],
+            "env-prod-eu": [
+              {
+                "obs_id": "env-prod-eu/timeout_ms#5",
+                "q": 13000,
+                "seq": 5,
+                "ts": 5000
+              }
+            ],
+            "env-prod-us": [
+              {
+                "obs_id": "env-prod-us/timeout_ms#4",
+                "q": 13100,
+                "seq": 4,
+                "ts": 4100
+              }
+            ]
+          },
+          "error_influenced": false,
+          "key": "timeout_ms",
+          "policy": "latest_wins",
+          "rejected": [
+            {
+              "accepted": false,
+              "env_id": "env-dr",
+              "obs_id": "env-dr/timeout_ms#2",
+              "quantized_value": 15000,
+              "raw_value": 150,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 2,
+              "timestamp_ms": 2500
+            },
+            {
+              "accepted": false,
+              "env_id": "env-prod-us",
+              "obs_id": "env-prod-us/timeout_ms#4",
+              "quantized_value": 13100,
+              "raw_value": 131,
+              "reject_reason": "outdated_lower_seq",
+              "seq": 4,
+              "timestamp_ms": 4100
+            }
+          ],
+          "view_id": "view-production"
+        }
+      },
+      "version": 1
+    }
+  },
+  "views": {
+    "view-all-fleets": {
+      "fingerprint": "097646d70b2acad33c3948587c345f3747de5183acde403c1513628324b2d383",
+      "version": 1
+    },
+    "view-production": {
+      "fingerprint": "eb7307b6aac8ddec22fd642f3dd413c358126f26493353762dfe5ea115926a42",
+      "version": 1
+    }
+  }
+}
