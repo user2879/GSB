@@ -21,3 +21,42 @@
 
 验收：
 用本地样本验证发音段切分、音色描述与说话人归属，并核对增量与全量逐字段一致及注入异常处理。
+
+---
+
+# 交付说明（实现摘要）
+
+完整设计见 `DESIGN.md`，代码位于 `timbre_pipeline/`，示例位于 `examples/`，
+测试位于 `tests/test_pipeline.py`。
+
+## 快速开始（Windows PowerShell）
+
+```powershell
+python --version
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+.venv\Scripts\python examples\selfcheck.py
+.venv\Scripts\python examples\run_demo.py
+.venv\Scripts\python -m unittest tests.test_pipeline -v
+```
+
+Linux 等价命令将脚本路径替换为 `.venv/bin/python`。
+
+## 业务码与注入编号
+
+- 错误码：`E_AUDIO_FORMAT`、`E_DIM_QUANT_CONFLICT`、`E_SEGMENT_OVERFLOW`、
+  `E_LATENCY_FALLBACK`、`E_INJECT_*`、`E_SNAPSHOT_VERSION`。
+- 注入清单固定编号 `inj-01` 非有限采样、`inj-02` 维度不匹配、
+  `inj-03` 阈值越界、`inj-04` 注入段越界。
+
+## 实际验证结果
+
+- `tests.test_pipeline`：20 个测试全部通过。
+- 固定种子生成 5 条正常 WAV（每条 5 个发音段）+ 1 条故意损坏 WAV。
+- F0 中位数稳定区分 118/165/228Hz 三位说话人；同说话人段零标注冲突聚类。
+- 增量 split/merge/modify_feature 与独立全量重放逐字段一致；
+  账本同时包含 reuse 与 recompute 事件。
+- 0.01ms 预算稳定触发 `E_LATENCY_FALLBACK` 并保留待办；
+  线程池并发上限实测不超过配置值，并发与单线程结果一致。
+- 快照恢复动作 `resume/manifest_match`；配置哈希变化时 `cold_start/config_hash_changed`。
+- 四类注入与坏音频全部进入失败清单，单音频故障不影响其余音频。

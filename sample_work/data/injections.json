@@ -1,0 +1,37 @@
+[
+  {
+    "audio": "clip_01",
+    "enabled": true,
+    "id": "inj-01",
+    "segment": 1,
+    "stage": "feature",
+    "target_frame": 2,
+    "type": "non_finite"
+  },
+  {
+    "audio": "clip_02",
+    "drop_dim": "energy_cv",
+    "enabled": true,
+    "id": "inj-02",
+    "segment": 0,
+    "stage": "quantize",
+    "type": "dim_mismatch"
+  },
+  {
+    "audio": "clip_03",
+    "enabled": true,
+    "id": "inj-03",
+    "segment": 0,
+    "stage": "attach",
+    "threshold": 1.7,
+    "type": "threshold_out_of_range"
+  },
+  {
+    "audio": "clip_01",
+    "enabled": true,
+    "id": "inj-04",
+    "segment": 999,
+    "stage": "feature",
+    "type": "segment_out_of_range"
+  }
+]

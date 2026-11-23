@@ -1,0 +1,51 @@
+{
+  "clean_audio_count": 6,
+  "config_switch_version": 2,
+  "incremental_commands": 3,
+  "injected_failure_count": 5,
+  "injection_hits": {
+    "clip_01": [
+      {
+        "code": "E_INJECT_SEGMENT_OUT_OF_RANGE",
+        "injection_id": "inj-04",
+        "message": "注入段 999 超出音频 clip_01 段范围 [0,5)",
+        "segment_count": 5,
+        "segment_index": 999,
+        "stage": "feature",
+        "target": "clip_01#s000999"
+      },
+      {
+        "code": "E_INJECT_NON_FINITE",
+        "frame_index": 100,
+        "injection_id": "inj-01",
+        "message": "段 clip_01#s000001 帧 100 出现非有限采样值",
+        "stage": "feature",
+        "target": "clip_01#s000001"
+      }
+    ],
+    "clip_02": [
+      {
+        "code": "E_DIM_QUANT_CONFLICT",
+        "conflict_dims": [
+          "energy_cv"
+        ],
+        "injection_id": "inj-02",
+        "message": "量纲冲突或缺失维度: energy_cv",
+        "stage": "quantize",
+        "target": "clip_02#s000000"
+      }
+    ],
+    "clip_03": [
+      {
+        "code": "E_INJECT_THRESHOLD_RANGE",
+        "injection_id": "inj-03",
+        "message": "归属阈值越界: 1.7",
+        "stage": "attach",
+        "target": "clip_03",
+        "threshold": 1.7
+      }
+    ]
+  },
+  "recovery_action": "resume",
+  "recovery_reason": "manifest_match"
+}
