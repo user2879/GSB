@@ -1,0 +1,12 @@
+SCENARIO cold_start code=OK issued=alpha:3,beta:3,gamma:1
+SCENARIO expiry_reclaim code=OK expired=beta:3;reissued=alpha:1,delta:2
+SCENARIO quota_reclaim code=OK reclaimed=beta:2
+INVARIANT retained+global=capacity code=OK retained=9 global=3 capacity=12
+WATERMARK code=OK samples=88 truncation=FLOOR_TOWARD_ZERO
+AUDIT code=OK events=178 digest=5ad47a234f2c29421566e52a9eb85f6e16aef7ad1e27804d9c4a9c24c6aeed02
+SNAPSHOT_RESTORE code=OK status=RESTORED digest=5ad47a234f2c29421566e52a9eb85f6e16aef7ad1e27804d9c4a9c24c6aeed02
+NETWORK source=alpha requests=23 outcomes=success:23
+NETWORK source=beta requests=10 outcomes=success:10
+NETWORK source=delta requests=15 outcomes=success:15
+NETWORK source=gamma requests=24 outcomes=connection_refused:24
+OVERALL code=OK

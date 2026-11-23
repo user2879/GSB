@@ -1,0 +1,71 @@
+{
+  "format_version": 1,
+  "scenario_version": "local-demo-v1",
+  "lease_params_version": 1,
+  "cluster_capacity": 12,
+  "lease_duration_ms": 1200,
+  "renew_interval_ms": 250,
+  "reclaim_threshold": 250000,
+  "reclaim_window_rounds": 2,
+  "observation_window_ms": 250,
+  "watermark_scale": 1000000,
+  "load_duration_ms": 5600,
+  "sources": [
+    {
+      "source_id": "alpha",
+      "address": "127.0.0.1",
+      "port": 55441,
+      "lease_share": 4,
+      "reserve_quota": 2,
+      "mode": "success",
+      "processing_ms": 0,
+      "request_interval_ms": 200,
+      "seed": 11,
+      "initial_issue": 3,
+      "stop_renew_at_ms": null,
+      "request_timeout_ms": 1000
+    },
+    {
+      "source_id": "beta",
+      "address": "127.0.0.1",
+      "port": 55442,
+      "lease_share": 3,
+      "reserve_quota": 1,
+      "mode": "fixed_delay",
+      "processing_ms": 25,
+      "request_interval_ms": 200,
+      "seed": 22,
+      "initial_issue": 3,
+      "stop_renew_at_ms": 1200,
+      "request_timeout_ms": 1000
+    },
+    {
+      "source_id": "gamma",
+      "address": "127.0.0.1",
+      "port": 55443,
+      "lease_share": 2,
+      "reserve_quota": 1,
+      "mode": "refuse",
+      "processing_ms": 0,
+      "request_interval_ms": 200,
+      "seed": 33,
+      "initial_issue": 1,
+      "stop_renew_at_ms": null,
+      "request_timeout_ms": 500
+    },
+    {
+      "source_id": "delta",
+      "address": "127.0.0.1",
+      "port": 55444,
+      "lease_share": 2,
+      "reserve_quota": 0,
+      "mode": "success",
+      "processing_ms": 0,
+      "request_interval_ms": 200,
+      "seed": 44,
+      "initial_issue": 0,
+      "stop_renew_at_ms": null,
+      "request_timeout_ms": 1000
+    }
+  ]
+}

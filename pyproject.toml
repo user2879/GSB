@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leaseaudit"
+version = "1.0.0"
+description = "Monotonic concurrency lease and quota reclaim audit component"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+leaseaudit = "leaseaudit.cli:main"
+
+[tool.setuptools]
+packages = ["leaseaudit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
