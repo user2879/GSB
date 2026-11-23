@@ -1,23 +1,94 @@
-交付从新建的代码库开始，需要在一个 Windows 本地环境中构建面向多集群配置修订分发的诊断台，交付可交互的专业应用与可重复演示，场景为变更风险与回滚，核心技术问题是增量更新与依赖失效。用户在本地 JSON 文件中声明一组集群（集群标识、127.0.0.1 回环端口、节点列表与整数样本种子）与一组配置分发任务（任务标识、引用的配置键集合、目标集群列表、整数聚合口径标识），并提交带单调递增版本号的配置修订链，每个修订显式引用其父修订并可携带若干配置键的整数取值、分发策略与对上游修订结论的派生引用。系统须为每个集群在声明端口启动确定性模拟服务，按修订在服务侧用 NumPy 对固定种子样本行执行分组聚合；平台侧为每个集群与修订维护结果节点账本，界面只做受影响节点的增量更新，权威重建命令则从指定根修订按整树重算并逐节点比对；当某个修订的配置改动使其下游派生结论失效时，须准确推导失效集合、只重算失效子集，并在回滚到历史根修订时整体替换视图。所有结论须可持久化、可在强制终止后恢复，并可被独立重放校验。
+# 多集群配置修订分发诊断台
 
-任务环境与准备：
-安装 Python 3.11 或 3.12（Windows 官方安装包），确认 python --version 可执行
-安装依赖：python -m pip install numpy==1.26.4 （Tkinter 与 sqlite3 使用标准库自带版本）
-确认 Tkinter 可用：python -c "import tkinter, sqlite3, numpy; print('ok')"
-准备本地样本：在工作区 samples 目录放置集群与修订链 JSON、分发任务 JSON 与固定种子参数文件，全部由本任务随附生成脚本产生，不依赖网络或外部账号
-运行时数据目录统一放在工作区 data 下，运行时确保所选回环端口未被占用，测试脚本须在退出时清理子进程
+面向“变更风险与回滚”场景的本地专业诊断应用：在 Windows 本机为每个集群启动
+确定性模拟服务，维护配置修订链上的结果节点账本，支持界面增量更新、权威重建、
+派生依赖失效传播、历史回滚隔离、强制终止恢复与独立重放校验。
 
-业务要求：
-1. 实现集群声明、配置修订链与分发任务的加载及强校验：校验集群标识与任务标识唯一、端口为 127.0.0.1 回环字面量且全局不重复、修订版本号单调递增、父修订引用存在且无环、派生引用只指向更早修订、任务引用的配置键在修订链中至少出现一次；任一不合法须以 E_SPEC 整体拒绝并指明首个违规修订与字段位置
-2. 实现确定性集群模拟服务的本地编排：以 Windows 子进程方式为每个集群在声明端口启动模拟服务，通过 JSON 行协议接收分发请求并按请求携带的修订取值与固定种子样本行用 NumPy 执行整数定点分组聚合，返回稳定序列化的聚合摘要与所用修订版本；端口占用、握手超时与回执字段缺失须分别以 E_PORT、E_HANDSHAKE、E_REPLY 报告并指明集群标识
-3. 实现结果账本：以本地 SQLite 持久化结果节点，每个节点表示某集群在某修订下某任务的分发结果，含任务标识、集群标识、修订版本、父修订引用、聚合摘要、内容摘要与完成时刻的单调时钟毫秒；同一集群同一修订同一任务的重复写入须幂等，同一事务内提交节点与父引用校验，提交前对其他读取者不可见
-4. 实现界面增量视图与权威重建的分离路径及一致性校验：Tkinter 界面仅对受本批修订影响的集群与任务节点做增量更新并快速展示任务进度与聚合摘要；权威重建命令须从指定根修订按修订链整树重算，逐节点与增量视图比较聚合摘要、父引用与内容摘要，不一致须以 E_PREV 定位到首个不一致的集群、任务与修订
-5. 实现修订链上派生依赖的失效传播与仅失效子集重算：当某修订改动配置键、分发策略或派生引用时，沿修订链与集群任务引用关系推导全部直接与间接失效节点，按修订版本升序与稳定任务序输出失效集合与每步传播依据；仅对失效集合重新分发与重算，未失效节点的聚合摘要与内容摘要必须逐字节保持不变并输出比对结论
-6. 实现回滚到历史根修订的整体替换与陈旧节点隔离：用户指定任一历史修订为回滚目标后，当前根指针、界面视图与统计口径须整体替换为该历史根链，不在该根链上的结果节点保留为只读并稳定列出，不得参与展示与统计；回滚须列出被隔离节点清单与新根链上需重算的节点集合，回滚前后同一节点的内容摘要须可逐字比较
-7. 实现强制终止后的恢复与会话快照的版本识别：进程被强制终止后重启只能依据账本中已完整提交的节点与根指针重建视图，处于未提交事务中的节点须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告；会话快照持久化修订链版本、根指针、节点摘要与进度游标并携带内容摘要，重开时版本或摘要不一致须整体替换而非增量合并
-8. 实现恢复后的一致性重放校验与异常注入：从快照恢复后按当前根修订重建结果树，并对每个节点按其修订在本地模拟服务上重算聚合摘要与复算账本统计，逐项与快照比较，不可复现须以 E_REPLAY 定位到首个不一致节点与字段；支持以命令行参数注入修订链损坏、派生引用悬空、快照内容摘要不符三类异常，分别以 E_SPEC、E_REF、E_SNAPSHOT 报告
+仅依赖 Python 标准库（Tkinter、sqlite3、socket、subprocess）与
+`numpy==1.26.4`，不使用容器，不访问网络外部目标。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 环境准备（Windows）
 
-验收：
-用本地样本验证增量视图与权威重建逐节点一致、失效子集重算、回滚整体替换及强制终止恢复后的重放校验。
+```bat
+python --version                 REM 需要 3.11 或 3.12
+python -m pip install -r requirements.txt
+python -c "import tkinter, sqlite3, numpy; print('ok')"
+python scripts\generate_samples.py --out samples
+```
+
+运行期数据统一写入工作区 `data/`；样本端口固定为 127.0.0.1:19001-19003，
+运行前请确认端口空闲。所有演示与测试在退出时清理子进程。
+
+## 命令行操作
+
+```bat
+python -m diagconsole validate                         REM 强校验声明
+python -m diagconsole apply                            REM 增量分发并记账
+python -m diagconsole rebuild --root 1                 REM 权威整树重建并逐节点比对
+python -m diagconsole rollback --target 3              REM 回滚到历史修订并隔离陈旧节点
+python -m diagconsole view                             REM 查看活动视图与隔离节点
+python -m diagconsole snapshot-save                    REM 持久化会话快照
+python -m diagconsole recover                          REM 强制终止后恢复
+python -m diagconsole rerun                            REM 重跑 unknown 节点
+python -m diagconsole replay                           REM 快照一致性重放
+python -m diagconsole inject corrupt-spec              REM -> E_SPEC
+python -m diagconsole inject dangling-derives          REM -> E_REF
+python -m diagconsole inject snapshot-digest           REM -> E_SNAPSHOT
+python -m diagconsole demo --crash                     REM 可重复端到端演示（含强制终止）
+run_ui.bat                                             REM 启动 Tkinter 交互界面
+```
+
+加 `--local` 可在进程内直接计算（不起服务），便于无头环境快速验证；
+默认模式会为每个集群拉起真实子进程服务。`--samples` 与 `--data`
+可覆盖默认的 `samples/`、`data/` 目录。
+
+## 交互界面
+
+`run_ui.bat`（或 `python run_ui.py`）打开 Tkinter 诊断台：
+
+- 仅对本批受影响节点做行内增量更新，进度条显示任务/集群/修订；
+- 表格展示修订、任务、集群、聚合总量、内容摘要与节点状态；
+- 回滚后链外节点标记为 `isolated (read-only)`，统计口径只统计活动根链；
+- 无头环境启动会得到明确的 HeadlessError 提示并退回 CLI。
+
+## 八项业务要求落点
+
+1. 强校验：`diagconsole/model.py`，E_SPEC 定位首个违规修订与字段路径。
+2. 子进程编排：`diagconsole/orchestrator.py` + `service.py`，
+   E_PORT / E_HANDSHAKE / E_REPLY 均带集群标识。
+3. 结果账本：`diagconsole/ledger.py`，幂等写入、同事务父引用校验、提交前不可见。
+4. 增量与重建分离：`engine.apply_chain`（仅失效节点走服务）与
+   `engine.rebuild`（整树重算逐节点比对，不一致 E_PREV）。
+5. 失效传播：`engine.analyze_invalidation`，输出失效集合与每步传播依据，
+   未失效节点逐字节比对。
+6. 回滚隔离：`engine.rollback`，整体替换根/视图/统计，陈旧节点只读列出，
+   回滚前后内容摘要可逐字比较。
+7. 崩溃恢复：`engine.recover/rerun_unknown` + `snapshot.py`，
+   未提交节点标记 unknown 要求重跑，不生成强制终止退出报告。
+8. 重放与注入：`engine.replay`（E_REPLAY 定位首个节点与字段），
+   `inject.py` 提供 E_SPEC / E_REF / E_SNAPSHOT 三类注入。
+
+## 验收与实测结果
+
+一键演示：
+
+```bat
+run_demo.bat
+REM 或
+python -m diagconsole demo --crash
+```
+
+本工作区在 Python 3.11 + numpy 1.26.4 下的实测（`python -m unittest` 与 demo）：
+
+- 单元/集成测试 32 个全部通过（含真实子进程、端口占用、握手超时、回执缺失）。
+- `demo --crash` 验收四项全绿：
+  - 增量视图与权威重建逐节点一致；
+  - 修正案仅重算失效子集，未失效节点聚合与内容摘要逐字节保持；
+  - 回滚 r3 后 r4-r6 节点整体隔离、不参与统计；
+  - 强制终止后恢复出 unknown 节点并重跑，快照重放全部可复现。
+- 三类注入分别得到 E_SPEC、E_REF、E_SNAPSHOT，重放篡改得到 E_REPLAY。
+
+> 注：当前 Linux 沙箱缺少 Tk 系统库（`libtk8.6.so`），界面代码已做无头保护；
+> 在安装官方 Python 的 Windows 上 Tkinter 为标准库自带，可直接 `run_ui.bat`。
+
+更多设计细节见 `docs/ARCHITECTURE.md`。

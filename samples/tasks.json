@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "caliber": 1,
+      "keys": [
+        "rate_limit",
+        "burst"
+      ],
+      "targets": [
+        "cluster-alpha",
+        "cluster-bravo"
+      ],
+      "task_id": "task-ratelimit"
+    },
+    {
+      "caliber": 2,
+      "keys": [
+        "timeout_ms",
+        "retries"
+      ],
+      "targets": [
+        "cluster-bravo",
+        "cluster-charlie"
+      ],
+      "task_id": "task-timeout"
+    },
+    {
+      "caliber": 3,
+      "keys": [
+        "rate_limit",
+        "timeout_ms"
+      ],
+      "targets": [
+        "cluster-alpha",
+        "cluster-charlie"
+      ],
+      "task_id": "task-weighted"
+    }
+  ]
+}
