@@ -1,0 +1,41 @@
+{
+  "items": [
+    {
+      "expected_error": "E_IMAGE_INVALID",
+      "id": "INJ-001",
+      "kind": "truncate_png",
+      "target": "page_04.png",
+      "truncate_at_ratio": 0.63
+    },
+    {
+      "bbox": [
+        950,
+        100,
+        1010,
+        160
+      ],
+      "char_index": 2,
+      "column_index": 1,
+      "expected_error": "E_TRUTH_INVALID",
+      "id": "INJ-002",
+      "kind": "truth_bbox_out_of_bounds",
+      "target": "page_03.png"
+    },
+    {
+      "expected_error": "E_TEMPLATE_MISSING",
+      "id": "INJ-003",
+      "kind": "missing_template",
+      "target": "page_02.png",
+      "template_id": "回"
+    },
+    {
+      "expected_error": "E_CONFIG_INVALID",
+      "id": "INJ-004",
+      "kind": "nonfinite_fusion_weight",
+      "literal": "nan",
+      "target": "page_01.png",
+      "weight_index": 0
+    }
+  ],
+  "schema_version": 1
+}
