@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quant-workbench"
+version = "0.1.0"
+description = "Deterministic model-compression and deployment diagnostics workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<2"]
+
+[project.scripts]
+quant-workbench = "quant_workbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["quant_workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
