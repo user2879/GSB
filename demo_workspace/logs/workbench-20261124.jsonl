@@ -1,0 +1,45 @@
+{"diff": {"added": ["order_user_join", "orders_by_amount", "orders_by_user", "users_by_id"], "removed": [], "upgraded": []}, "event": "config_loaded", "ts_ms": 1795467493042, "versions": {"budget_version": 1, "dep_graph_version": 1, "ring_version": 1, "rule_version": 1}}
+{"code": "E_CONFIG", "detail": null, "event": "fault_injected", "evidence": "appended invalid JSON tail", "field": "$json", "kind": "config_corruption", "message": "invalid JSON: Extra data at line 49", "ts_ms": 1795467493043}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318023, "granted_ms": 21316523, "lease_id": "lease-1", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493049}
+{"event": "lease_renewed", "lease": {"db": 0, "expires_ms": 21318027, "granted_ms": 21316523, "lease_id": "lease-1", "reclaim_reason": "", "state": "held", "version": 2}, "ts_ms": 1795467493054}
+{"event": "fault_injected", "evidence": {"effect": "next renew with the holder's expected version raises E_LEASE", "injected_version": 3, "lease_id": "lease-1"}, "kind": "lease_version_conflict", "ts_ms": 1795467493054}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318114, "granted_ms": 21316614, "lease_id": "lease-2", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493141}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318114, "granted_ms": 21316614, "lease_id": "lease-2", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493146}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318124, "granted_ms": 21316624, "lease_id": "lease-3", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493151}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318125, "granted_ms": 21316625, "lease_id": "lease-4", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493155}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318124, "granted_ms": 21316624, "lease_id": "lease-3", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493160}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318125, "granted_ms": 21316625, "lease_id": "lease-4", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493164}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318143, "granted_ms": 21316643, "lease_id": "lease-5", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493169}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318143, "granted_ms": 21316643, "lease_id": "lease-6", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493174}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318143, "granted_ms": 21316643, "lease_id": "lease-5", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493179}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318143, "granted_ms": 21316643, "lease_id": "lease-6", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493184}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318158, "granted_ms": 21316658, "lease_id": "lease-7", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493189}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318163, "granted_ms": 21316663, "lease_id": "lease-8", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493194}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318158, "granted_ms": 21316658, "lease_id": "lease-7", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493198}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318163, "granted_ms": 21316663, "lease_id": "lease-8", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493203}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318177, "granted_ms": 21316677, "lease_id": "lease-9", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493207}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318182, "granted_ms": 21316682, "lease_id": "lease-10", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493212}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318177, "granted_ms": 21316677, "lease_id": "lease-9", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493216}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318182, "granted_ms": 21316682, "lease_id": "lease-10", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493221}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318195, "granted_ms": 21316695, "lease_id": "lease-11", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493226}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318200, "granted_ms": 21316700, "lease_id": "lease-12", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493230}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318195, "granted_ms": 21316695, "lease_id": "lease-11", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493235}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318200, "granted_ms": 21316700, "lease_id": "lease-12", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493239}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318214, "granted_ms": 21316714, "lease_id": "lease-13", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493244}
+{"event": "lease_acquired", "lease": {"db": 0, "expires_ms": 21318218, "granted_ms": 21316718, "lease_id": "lease-14", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493249}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318214, "granted_ms": 21316714, "lease_id": "lease-13", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493254}
+{"event": "lease_released", "lease": {"db": 0, "expires_ms": 21318218, "granted_ms": 21316718, "lease_id": "lease-14", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493260}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318233, "granted_ms": 21316733, "lease_id": "lease-15", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493265}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318233, "granted_ms": 21316733, "lease_id": "lease-15", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493270}
+{"batch_id": 1, "event": "batch_committed", "tasks": 14, "ts_ms": 1795467493276, "versions": {"budget_version": 1, "dep_graph_version": 1, "ring_version": 1, "rule_version": 1}}
+{"diff": {"added": [], "removed": [], "upgraded": ["orders_by_user"]}, "event": "wholesale_replace", "invalidated": ["orders_by_user", "order_user_join"], "stale_counts": {"batches": 1, "leases": 15, "tasks": 14}, "ts_ms": 1795467493282}
+{"diff": {"added": [], "removed": [], "upgraded": ["orders_by_user"]}, "event": "config_loaded", "ts_ms": 1795467493282, "versions": {"budget_version": 1, "dep_graph_version": 1, "ring_version": 1, "rule_version": 2}}
+{"event": "invalidation", "invalidated": ["orders_by_user", "order_user_join"], "recomputed": {"order_user_join": ["sha256:777555988ce9f0a2a416da403b6723934efcc13b1f9dd08f9a62bbf695830f5b"], "orders_by_user": ["sha256:d7753320827bdc7df8a09cfc5d482f12eea2cf832fca2b7a58aca75255f9420f"]}, "steps": [{"from": "orders_by_user", "reason": "order_user_join depends_on orders_by_user; upstream result changed", "to": "order_user_join"}], "ts_ms": 1795467493283, "unaffected_byte_identical": true}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318261, "granted_ms": 21316761, "lease_id": "lease-16", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493288}
+{"event": "lease_released", "lease": {"db": 1, "expires_ms": 21318261, "granted_ms": 21316761, "lease_id": "lease-16", "reclaim_reason": "", "state": "released", "version": 1}, "ts_ms": 1795467493293}
+{"batch_id": 2, "event": "batch_committed", "tasks": 1, "ts_ms": 1795467493298, "versions": {"budget_version": 1, "dep_graph_version": 1, "ring_version": 1, "rule_version": 2}}
+{"cursor": 2, "event": "snapshot_saved", "ts_ms": 1795467493299}
+{"event": "lease_acquired", "lease": {"db": 1, "expires_ms": 21318278, "granted_ms": 21316778, "lease_id": "lease-17", "reclaim_reason": "", "state": "held", "version": 1}, "ts_ms": 1795467493304}
+{"cursor": 2, "event": "snapshot_saved", "ts_ms": 1795467493310}
+{"diff": {"added": ["order_user_join", "orders_by_amount", "orders_by_user", "users_by_id"], "removed": [], "upgraded": []}, "event": "config_loaded", "ts_ms": 1795467493311, "versions": {"budget_version": 1, "dep_graph_version": 1, "ring_version": 1, "rule_version": 2}}
+{"event": "recovered", "recovered_cursor": 2, "rerun_required": true, "ts_ms": 1795467493317, "unknown_leases": ["lease-1", "lease-17"]}

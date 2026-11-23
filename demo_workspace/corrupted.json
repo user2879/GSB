@@ -1,0 +1,49 @@
+{
+  "config_version": 1,
+  "ring_version": 1,
+  "dep_graph_version": 1,
+  "logical_tables": [
+    {"name": "orders", "columns": ["order_id", "user_id", "amount", "status", "created_at"]},
+    {"name": "users", "columns": ["user_id", "region", "level"]}
+  ],
+  "routing_units": [
+    {
+      "id": "orders_by_user",
+      "table": "orders",
+      "shard_keys": ["user_id"],
+      "algorithm": {"type": "mod", "modulus": 4, "salt": "orders"},
+      "physical_dbs": 2,
+      "tables_per_db": 2,
+      "depends_on": []
+    },
+    {
+      "id": "orders_by_amount",
+      "table": "orders",
+      "shard_keys": ["amount"],
+      "algorithm": {"type": "mod_range", "boundaries": [100, 500, 1000], "boundary_policy": "left_closed"},
+      "physical_dbs": 2,
+      "tables_per_db": 2,
+      "depends_on": []
+    },
+    {
+      "id": "users_by_id",
+      "table": "users",
+      "shard_keys": ["user_id"],
+      "algorithm": {"type": "consistent_hash", "virtual_nodes": 8},
+      "physical_dbs": 2,
+      "tables_per_db": 2,
+      "depends_on": []
+    },
+    {
+      "id": "order_user_join",
+      "table": "orders",
+      "shard_keys": ["user_id"],
+      "algorithm": {"type": "mod", "modulus": 2, "salt": "join"},
+      "physical_dbs": 2,
+      "tables_per_db": 1,
+      "depends_on": ["orders_by_user", "users_by_id"]
+    }
+  ]
+}
+
+{ not json 

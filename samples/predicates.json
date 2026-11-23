@@ -1,0 +1,18 @@
+{
+  "predicates": [
+    {"id": "p_user_eq", "unit": "orders_by_user",
+     "where": {"eq": ["user_id", 42]}},
+    {"id": "p_user_in", "unit": "orders_by_user",
+     "where": {"and": [{"in": ["user_id", [7, 42, 7, 1001]]}, {"eq": ["status", "PAID"]}]}},
+    {"id": "p_amount_range", "unit": "orders_by_amount",
+     "where": {"range": ["amount", 150, 800]}},
+    {"id": "p_amount_eq_boundary", "unit": "orders_by_amount",
+     "where": {"eq": ["amount", 500]}},
+    {"id": "p_user_hash", "unit": "users_by_id",
+     "where": {"in": ["user_id", [3, 9, 27]]}},
+    {"id": "p_join", "unit": "order_user_join",
+     "where": {"eq": ["user_id", 42]}},
+    {"id": "p_full_scan", "unit": "orders_by_user",
+     "where": {"eq": ["status", "PAID"]}}
+  ]
+}
