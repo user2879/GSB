@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "declaration_version": 1,
+  "global_concurrency": 12,
+  "preemption_checkpoint_ms": 100,
+  "description": "Initial demo declaration: report service owns spare quota.",
+  "functions": [
+    {
+      "function_id": "api",
+      "priority": 30,
+      "memory_mib": 1024,
+      "instance_concurrency": 2,
+      "lease_ms": 700,
+      "min_concurrency": 2,
+      "max_concurrency": 4
+    },
+    {
+      "function_id": "batch",
+      "priority": 20,
+      "memory_mib": 512,
+      "instance_concurrency": 1,
+      "lease_ms": 900,
+      "min_concurrency": 1,
+      "max_concurrency": 4
+    },
+    {
+      "function_id": "report",
+      "priority": 10,
+      "memory_mib": 256,
+      "instance_concurrency": 1,
+      "lease_ms": 1200,
+      "min_concurrency": 2,
+      "max_concurrency": 6
+    }
+  ],
+  "preemptions": [
+    {
+      "higher": "api",
+      "lower": "report",
+      "return_deadline_ms": 400
+    },
+    {
+      "higher": "batch",
+      "lower": "report",
+      "return_deadline_ms": 500
+    }
+  ]
+}

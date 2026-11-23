@@ -1,23 +1,146 @@
-当前为空白工作区，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的 Serverless 并发租约与配额归还诊断工作台，交付领域可视化与诊断工作台。与按分钟规划容量不同，本工作台把 Serverless 并发视为一种可在调用期间被临时持有、到期必须归还的资源租约：用户以本地 JSON 声明若干函数（函数标识、整数内存规格 MiB、整数单实例并发度、整数租约时长毫秒、整数最小与最大并发配额），并声明函数之间的抢占关系（高优先级函数在配额不足时可从低优先级函数借出并发，借用带整数毫秒归还截止），同时以 NDJSON 提交调用事件流（事件序号、单调不降的整数毫秒到达时刻、函数标识、整数预计占用毫秒、整数并发需求）。工作台按到达时刻推进事件，为每次调用申请并发租约、在全局并发预算与每函数配额下裁决授予或排队、到期回收并归还借用；核心业务问题是同一函数在租约到期回收、借用归还与调用排队之间的归属如何被唯一裁决，并把该归属固化为可逐事件复核的账本。工作台须承受进程被强制终止后仅凭账本恢复，并对声明版本演进后的陈旧结论整体作废。
+# Serverless 并发租约与配额归还诊断工作台
 
-任务环境与准备：
-Windows 本地环境，安装 Python 3.10 及以上，并确保 pip 可用。
-安装 NumPy；Tkinter 通常随官方 Python 安装包提供，未提供时需在安装选项中勾选。
-SQLite 使用 Python 标准库 sqlite3，无需外部服务、账号或网络访问。
-任务开始时从空白工作区创建项目，并生成本地确定性函数声明、调用事件流与演示脚本。
-确认系统可提供单调计时，界面使用本地 Tk 渲染，不依赖特定 GPU 或显示分辨率。
+这是一个完全本地运行的 Windows 诊断工作台。它把 Serverless 并发视为有硬归还截止的资源租约，以确定性事件推进、SQLite 批次账本、逐事件归属裁决和 Tk 诊断界面回答：
 
-业务要求：
-1. 实现函数声明、抢占关系与调用事件流的加载和强校验：从本地 JSON 读取函数标识、内存规格 MiB、单实例并发度、租约时长毫秒、最小与最大并发配额及抢占关系；从 NDJSON 逐行读取事件序号、到达时刻、函数标识、预计占用毫秒与并发需求；校验函数标识唯一、抢占关系引用存在且抢占图无环、配额与并发需求为非负整数、到达时刻单调不降且事件序号连续，任一不合法须以 E_DECL 整体拒绝加载并报告首个违规字段。
-2. 实现每次调用的并发租约申请与授予，并输出租约标识、所属函数、授予时刻毫秒、归还截止毫秒与所占并发数；授予须实时扣减全局并发预算与所属函数配额，全局预算或函数配额不足时调用进入排队并记录入队时刻与排队序号，不得绕过任一上限，且同一事件在任意函数遍历顺序下租约标识与授予序列必须逐字节一致。
-3. 实现租约到期回收与借用并发归还的唯一归属裁决：租约到期或被显式释放时须同时释放函数配额与全局预算，若该租约的并发来自其他函数借出则归还给出借方并解除归还截止；同一并发在同一时刻不得既被计入到期回收又被计入归还，须输出每笔借出的借出方、借入方、并发数、归还截止与处置结论，同一事件序列在任意处理顺序下归属结论必须一致。
-4. 实现高优先级函数在配额耗尽时的确定性抢占与挂起恢复：当高优先级函数配额不足且存在可借出的低优先级函数时，按显式稳定规则选择被抢占租约，使其在最近的租约边界安全挂起并记录已占用并发与挂起原因；抢占须满足优先级严格不降序、被抢占调用不丢事件且挂起后可依归还截止重新排队，同输入多次运行抢占对象与挂起时点必须一致。
-5. 实现并发生效水位与借用账本的整数定点口径及误差界：按函数与整体聚合已用配额、借用并发数、队列长度与生效水位比例，比例以会话参数指定的缩放因子（10 的整数幂）定点表示并显式声明截断方向；须给出单值量化误差、比较判定误差界与借用归还延迟带来的额外误差段并标注主导段，当两函数水位之比落在合成误差界内时按稳定决胜规则排序且标注该判定受误差影响。
-6. 实现抢占关系或配额参数演进后的陈旧结论失效与整体替换：函数配额、租约时长或抢占关系被修改后声明版本号单调递增，须沿函数与租约的引用关系推导仍有效的租约与受影响的排队调用，旧版本下的租约归属、水位与抢占结论须整体标记为陈旧且不得参与当前视图，当前视图须整体替换而非增量合并并稳定列出被作废的租约标识与原因。
-7. 实现账本持久化与强制终止后的恢复：每处理一个完整事件批次须在同一 SQLite 事务中写入批次内租约申请、授予、回收、借出与归还记录以及生效水位与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的批次恢复，处于未提交事务中的租约须标记为未知并要求重算，不得声称强制终止时一定能生成退出报告。
-8. 提供 Tkinter 诊断工作台、恢复后重放校验与异常注入：界面展示各函数租约占用、借用并发与归还截止、排队调用、抢占记录、水位与误差界、当前声明版本与账本批次，渲染顺序稳定且刷新不改变账本内容；重放校验须按账本记录的声明版本与缩放因子重新推进剩余事件，将每笔租约归属、水位与抢占结论同账本逐项比较，差异以 E_REPLAY 定位到首个不一致的事件序号与租约标识；并支持以命令行参数注入抢占关系成环、授予超限、账本内容摘要不符三类异常，分别以 E_DECL、E_QUOTA、E_SNAPSHOT 报告并写入结构化日志。
+- 每次调用何时取得并发、租约何时到期、并发最终归还给谁；
+- 高优先级函数如何在显式抢占关系内借用/抢占低优先级并发；
+- 同一函数在到期、借出归还和排队之间如何只裁决一次；
+- 固定点水位及量化、借用归还延迟误差如何影响排序；
+- 声明版本演进后哪些旧租约/队列/抢占结论失效，哪些仍可沿用；
+- 进程被强制终止后，哪些租约只存在于未提交事务中，为什么必须重算。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始（Windows）
 
-验收：
-使用本地样本验证租约授予归还归属、抢占与水位定点一致、账本恢复重放及界面稳定渲染，并附运行结果。
+要求 Python 3.10+、pip、NumPy、Tkinter；SQLite 使用标准库 `sqlite3`，无服务端、账号或网络依赖。
+
+```bat
+py -3 -m venv .venv
+.venv\Scripts\activate
+python -m pip install -r requirements.txt
+python scripts\generate_demo.py
+run_demo.cmd
+```
+
+`run_demo.cmd` 会执行两版声明、11 个事件、账本重放、崩溃恢复、三类异常注入和稳定渲染，并在 `artifacts\` 写入结果。
+
+打开 Tk 工作台：
+
+```bat
+run_ui.cmd
+```
+
+如果官方 Python 安装时未包含 Tk，请重新运行安装器并勾选 **tcl/tk and IDLE**。无显示环境可使用：
+
+```bat
+python -m leasebench ui --db artifacts\demo.sqlite --headless
+```
+
+## 样本格式
+
+声明 JSON 示例见 `samples/declarations_v1.json`。函数字段为：
+
+```json
+{
+  "function_id": "api",
+  "memory_mib": 1024,
+  "instance_concurrency": 2,
+  "lease_ms": 700,
+  "min_concurrency": 2,
+  "max_concurrency": 4,
+  "priority": 30
+}
+```
+
+`priority` 必须全部提供或全部省略；全部省略时由无环抢占图推导。顶层还必须提供 `declaration_version`、`global_concurrency`、`functions`、`preemptions`。`preemption_checkpoint_ms` 默认为 100，用于定义安全检查点边界。
+
+抢占关系：
+
+```json
+{"higher": "api", "lower": "report", "return_deadline_ms": 400}
+```
+
+事件 NDJSON 每行一个对象：
+
+```json
+{"event_seq":1,"arrival_ms":0,"function_id":"api","expected_occupancy_ms":800,"concurrency_demand":4}
+```
+
+加载器以 `E_DECL` 整体拒绝并把 `field` 定位到首个违规项，包括重复函数标识、未知引用、抢占成环、布尔冒充整数、负数、最小配额大于最大配额、到达时刻回退、事件序号不连续等。
+
+## 命令行
+
+```bat
+python -m leasebench validate --declaration samples\declarations_v1.json --events samples\events.ndjson
+python -m leasebench run --declaration samples\declarations_v1.json --events samples\events.ndjson --db artifacts\demo.sqlite --limit-events 6
+python -m leasebench run --declaration samples\declarations_v2.json --events samples\events.ndjson --db artifacts\demo.sqlite
+python -m leasebench replay --db artifacts\demo.sqlite
+python -m leasebench view --db artifacts\demo.sqlite --text-out artifacts\view.txt
+python -m leasebench ui --db artifacts\demo.sqlite
+```
+
+异常注入：
+
+```bat
+python -m leasebench run --declaration samples\declarations_v1.json --events samples\events.ndjson --db artifacts\cycle.sqlite --inject-cycle
+python -m leasebench run --declaration samples\declarations_v1.json --events samples\events.ndjson --db artifacts\quota.sqlite --inject-quota
+python -m leasebench replay --db artifacts\demo.sqlite --inject-snapshot
+```
+
+退出码：`0` 成功，`E_DECL=2`，`E_QUOTA=3`，`E_SNAPSHOT=4`，`E_REPLAY=5`。加 `--log` 会追加 JSON Lines 结构化日志。
+
+## 确定性裁决口径
+
+1. 时间同刻先处理租约回收与借出归还，再处理新到达；同一时刻的释放类别优先级为 `BORROW_RETURN_DUE > PREEMPTED > CALL_COMPLETED > LEASE_EXPIRED`，每份租约只产生一条释放记录。
+2. 每个事件只申请一份租约，标识为 `L{event_seq:08d}`，再次授予为 `L{event_seq:08d}Rnn`。标识只依赖事件序号和尝试次数，不依赖函数遍历顺序。
+3. 授予同时检查全局预算和函数有效容量。函数有效容量为 `max + borrowed_in - lent_out`。低优先级函数可借出的上限为 `max - max(used, min) - lent_out`，即保留最小配额。
+4. 借入只沿显式 `higher -> lower` 关系，且要求优先级严格下降；每笔借入有独立的 `return_deadline_ms`。租约提前释放时借出即刻归还，借出到期早于占用完成时强制释放借用租约并重排原调用。
+5. 高优先级短缺且无可借空闲时，选择低优先级活跃租约，在下一个检查点边界安全挂起；选择规则为被抢占函数优先级升序、边界升序、租约标识升序。被抢占调用以 `event_seq` 为身份写入新队列项，`not_before = 边界 + 关系归还截止`，不丢事件。
+6. 队列按 `priority` 降序、入队时刻、排队序号、事件序号稳定排序；所有集合在输出前显式排序。
+
+更完整说明见 `docs/DESIGN.md`。
+
+## 固定点水位与误差
+
+会话参数 `--watermark-scale` 必须是 10 的整数幂，默认 1000。比例采用 `FLOOR_TOWARD_ZERO`：
+
+```text
+ratio_fp = floor(numerator * scale / denominator)
+```
+
+每个值量化误差上界为 1 个定点单位；两个值比较的量化误差段为 2 个定点单位。`borrow_return_error_ms` 窗口内即将到期的借入并发另计：
+
+```text
+borrow_delay_error_fp = ceil(near_deadline_borrowed * scale / capacity)
+```
+
+总比较误差为量化段加借用归还延迟段，并标记主导段。两项差值落在误差界内时仍按函数标识稳定决胜，同时以 `comparison_affected_by_error=true` 标注判定受误差影响。
+
+## 版本演进与陈旧结论
+
+声明版本只能递增；同版本内容不可改变。配额、租约时长、优先级、抢占关系或全局预算变化时，工作台沿函数、活跃借入和抢占引用闭包推导失效对象。受影响租约变为 `STALE`，受影响队列项作废并重新入队；无关活跃租约可携带到新版本。旧批次水位仍作为审计记录保留，但当前视图整体由新版本状态重建，并稳定列出 `lease/queue/preemption` 对象、原因和版本迁移。
+
+## 账本、崩溃恢复与重放
+
+每个到达时刻的事件组是一个完整批次。批次内申请、授予、回收、借入、归还、抢占、水位、游标、声明和状态快照在同一 SQLite 事务提交。账本包含整数 `format_version=1`、逐批 SHA-256 内容摘要和链式摘要。
+
+处理批次前先单独记录 `pending_batches` 意向。若进程被强制终止，事务回滚，重启只能加载最后完整提交的批次；意向中的候选租约列为 `UNKNOWN_RECOMPUTE_REQUIRED`，从已提交游标后重算。强制终止不保证生成退出报告，本工作台也不作此声明。
+
+`replay` 按账本记录的声明版本、缩放因子和事件重新推进；逐项比较申请、授予、回收、借入、归还、抢占和水位。首个差异以 `E_REPLAY` 返回事件序号与租约标识。
+
+## 验证
+
+本机实际验证结果：
+
+```text
+pytest -q
+28 passed
+
+python scripts/run_demo.py
+status: PASS
+replay batches: 9, events: 11
+E_DECL=2, E_QUOTA=3, E_SNAPSHOT=4, E_REPLAY=5
+forced termination exit: 17; recovery: CLEAN
+headless render stable: true
+```
+
+详细结果见 `artifacts/demo_report.json`、`artifacts/demo_summary.txt`、`artifacts/view_v2_final.txt` 和 `docs/VALIDATION.md`。当前验证容器缺少 Tk 共享库，因此 Tk 窗口未在本容器启动；界面代码惰性导入，固定文本渲染已在无头模式验证稳定，Windows 官方 Python 自带 Tk 时可直接启动。
