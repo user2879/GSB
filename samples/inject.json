@@ -1,0 +1,35 @@
+[
+  {
+    "inj_id": "INJ-001",
+    "tile": "tile_r1_c1",
+    "stage": "load",
+    "fault": "truncate_band_bytes",
+    "band": "R",
+    "keep_bytes": 32
+  },
+  {
+    "inj_id": "INJ-002",
+    "tile": "tile_r0_c1",
+    "stage": "classify",
+    "fault": "nonfinite_band_value",
+    "band": "B",
+    "position": [
+      3,
+      3
+    ]
+  },
+  {
+    "inj_id": "INJ-003",
+    "tile": "tile_r0_c0",
+    "stage": "load",
+    "fault": "adjacency_unknown_ref",
+    "ghost": "tile_ghost"
+  },
+  {
+    "inj_id": "INJ-004",
+    "tile": "*",
+    "stage": "config",
+    "fault": "negative_min_connected",
+    "value": -5
+  }
+]

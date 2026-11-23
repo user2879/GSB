@@ -1,0 +1,386 @@
+{
+  "config_hash": "cf9785bec5499b7003d8c94232f960899530019cd8c1a97ff865a1b8b9c7ff04",
+  "fusion_strategy_version": "fs-v1",
+  "band_set_versions": {
+    "tile_r0_c2": "bs-v1",
+    "tile_r1_c0": "bs-v1",
+    "tile_r1_c2": "bs-v1",
+    "tile_r2_c0": "bs-v1",
+    "tile_r2_c1": "bs-v1",
+    "tile_r2_c2": "bs-v1"
+  },
+  "global_version": "a6982cb024a158e716999321632e2ba33ce1c188b1270a13add8c41dae691001",
+  "global_class_hash": "c38f2b90e012824de53a8b0791b96930d9f5b3f0924d12de7b11db217b8399c1",
+  "global_shape": [
+    176,
+    176
+  ],
+  "per_tile_class_counts": {
+    "tile_r0_c2": [
+      1985,
+      1638,
+      350,
+      123
+    ],
+    "tile_r1_c0": [
+      1974,
+      415,
+      1640,
+      67
+    ],
+    "tile_r1_c2": [
+      497,
+      3204,
+      178,
+      217
+    ],
+    "tile_r2_c0": [
+      1598,
+      714,
+      1534,
+      250
+    ],
+    "tile_r2_c1": [
+      2323,
+      1619,
+      115,
+      39
+    ],
+    "tile_r2_c2": [
+      1022,
+      2637,
+      276,
+      161
+    ]
+  },
+  "per_tile_prob_summaries": {
+    "tile_r0_c2": {
+      "mean_probs": [
+        1052,
+        1296,
+        859,
+        887
+      ],
+      "hash": "c6b234571d9d9482"
+    },
+    "tile_r1_c0": {
+      "mean_probs": [
+        1007,
+        466,
+        1630,
+        991
+      ],
+      "hash": "06309df0c31a0670"
+    },
+    "tile_r1_c2": {
+      "mean_probs": [
+        466,
+        2469,
+        390,
+        768
+      ],
+      "hash": "8e4e85292453e987"
+    },
+    "tile_r2_c0": {
+      "mean_probs": [
+        851,
+        714,
+        1511,
+        1017
+      ],
+      "hash": "5e48773327c2abd1"
+    },
+    "tile_r2_c1": {
+      "mean_probs": [
+        1204,
+        1250,
+        789,
+        851
+      ],
+      "hash": "716e4c6848e6d1a3"
+    },
+    "tile_r2_c2": {
+      "mean_probs": [
+        680,
+        2044,
+        565,
+        804
+      ],
+      "hash": "559f4fc103d58556"
+    }
+  },
+  "fusion_stats": {
+    "tile_r0_c2::tile_r1_c2": {
+      "pixels": 512,
+      "class_counts": [
+        56,
+        401,
+        25,
+        30
+      ],
+      "sensitivity_events": 2,
+      "vote_hash": "8cfa4c8701015562"
+    },
+    "tile_r1_c0::tile_r2_c0": {
+      "pixels": 512,
+      "class_counts": [
+        247,
+        48,
+        214,
+        3
+      ],
+      "sensitivity_events": 0,
+      "vote_hash": "4e978d4f6adbe97a"
+    },
+    "tile_r1_c2::tile_r2_c2": {
+      "pixels": 512,
+      "class_counts": [
+        70,
+        400,
+        19,
+        23
+      ],
+      "sensitivity_events": 0,
+      "vote_hash": "601ab0c3138e075c"
+    },
+    "tile_r2_c0::tile_r2_c1": {
+      "pixels": 512,
+      "class_counts": [
+        407,
+        96,
+        9,
+        0
+      ],
+      "sensitivity_events": 1,
+      "vote_hash": "24ea56a2811dc375"
+    },
+    "tile_r2_c1::tile_r2_c2": {
+      "pixels": 512,
+      "class_counts": [
+        102,
+        401,
+        6,
+        3
+      ],
+      "sensitivity_events": 0,
+      "vote_hash": "178e1eaf7ad5ce84"
+    }
+  },
+  "boundary_events": [
+    {
+      "code": "E_BOUNDARY_SENSITIVITY",
+      "global_row": 57,
+      "global_col": 171,
+      "fixed_point_class": 2,
+      "reference_class": 2,
+      "gap_fixed": 0,
+      "direction": "agree",
+      "flip_pair": null
+    },
+    {
+      "code": "E_BOUNDARY_SENSITIVITY",
+      "global_row": 57,
+      "global_col": 174,
+      "fixed_point_class": 2,
+      "reference_class": 2,
+      "gap_fixed": 0,
+      "direction": "agree",
+      "flip_pair": null
+    },
+    {
+      "code": "E_BOUNDARY_SENSITIVITY",
+      "global_row": 162,
+      "global_col": 63,
+      "fixed_point_class": 2,
+      "reference_class": 2,
+      "gap_fixed": 0,
+      "direction": "agree",
+      "flip_pair": null
+    }
+  ],
+  "refills": [],
+  "budget_trace": [
+    {
+      "seq": 0,
+      "tile_id": "tile_r0_c2",
+      "needed": 4096,
+      "quota": 1000000000,
+      "consumed": 4096,
+      "remaining_global": 999995904,
+      "code": null
+    },
+    {
+      "seq": 1,
+      "tile_id": "tile_r1_c0",
+      "needed": 4096,
+      "quota": 999995904,
+      "consumed": 4096,
+      "remaining_global": 999991808,
+      "code": null
+    },
+    {
+      "seq": 2,
+      "tile_id": "tile_r1_c2",
+      "needed": 4096,
+      "quota": 999991808,
+      "consumed": 4096,
+      "remaining_global": 999987712,
+      "code": null
+    },
+    {
+      "seq": 3,
+      "tile_id": "tile_r2_c0",
+      "needed": 4096,
+      "quota": 999987712,
+      "consumed": 4096,
+      "remaining_global": 999983616,
+      "code": null
+    },
+    {
+      "seq": 4,
+      "tile_id": "tile_r2_c1",
+      "needed": 4096,
+      "quota": 999983616,
+      "consumed": 4096,
+      "remaining_global": 999979520,
+      "code": null
+    },
+    {
+      "seq": 5,
+      "tile_id": "tile_r2_c2",
+      "needed": 4096,
+      "quota": 999979520,
+      "consumed": 4096,
+      "remaining_global": 999975424,
+      "code": null
+    }
+  ],
+  "failed": [
+    {
+      "tile_id": "tile_r0_c1",
+      "stage": "classify",
+      "code": "E_BAND_NONFINITE",
+      "detail": "band contains non-finite values",
+      "inj_id": "INJ-002"
+    },
+    {
+      "tile_id": "*",
+      "stage": "config",
+      "code": "E_CONFIG_INVALID",
+      "detail": "min_connected_pixels must be >= 0",
+      "inj_id": "INJ-004"
+    },
+    {
+      "tile_id": "tile_r0_c0",
+      "stage": "load",
+      "code": "E_ADJ_UNKNOWN_REF",
+      "detail": "neighbor tile_ghost does not exist"
+    },
+    {
+      "tile_id": "tile_r1_c1",
+      "stage": "load",
+      "code": "E_BAND_CORRUPT",
+      "detail": "band R undecodable: cannot identify image file <_io.BytesIO object at 0x74c3be9631a0>",
+      "inj_id": "INJ-001"
+    }
+  ],
+  "pending_tiles": [],
+  "retained_fusions": [],
+  "invalidation_ledger": {
+    "tiles": {
+      "tile_r0_c2": {
+        "cache_key": "310975f4bb92a76206b255059dacb990a29d32c34ba41c77376d1f65e16fe22f",
+        "version": "310975f4bb92a762",
+        "origin": "recomputed"
+      },
+      "tile_r1_c0": {
+        "cache_key": "82ce116aaa24177288748d57aaaae33f8e7e25d1c9c279416a198821199e5b0d",
+        "version": "82ce116aaa241772",
+        "origin": "recomputed"
+      },
+      "tile_r1_c2": {
+        "cache_key": "4050a3ceb20436de00f4861fb5575293e54429f3e54c7d7792d66564658580c5",
+        "version": "4050a3ceb20436de",
+        "origin": "recomputed"
+      },
+      "tile_r2_c0": {
+        "cache_key": "a6fc09dd2a9d052e95471b0293153e9e2535445f8cb7b42da5ab46b157bb2a32",
+        "version": "a6fc09dd2a9d052e",
+        "origin": "recomputed"
+      },
+      "tile_r2_c1": {
+        "cache_key": "00f07e5e80bdfc4521432bdd1a108402a255e67716c6d30af3b32ff8f3303e75",
+        "version": "00f07e5e80bdfc45",
+        "origin": "recomputed"
+      },
+      "tile_r2_c2": {
+        "cache_key": "21acdab840ea6a8eeb3b5fd77bec071324da5641e20ac68d79e2b494dc1e5a38",
+        "version": "21acdab840ea6a8e",
+        "origin": "recomputed"
+      }
+    },
+    "fusions": {
+      "tile_r0_c2::tile_r1_c2": {
+        "fingerprint": "e2f01771d94ed8917d14f8dd941ac7758caa92e0916d8b61ffdc1cc35943205c",
+        "version": "e2f01771d94ed891",
+        "origin": "recomputed"
+      },
+      "tile_r1_c0::tile_r2_c0": {
+        "fingerprint": "294c0617abe4b45a04a560a0c3e89f0c2af985dcfa69cf24d6931c4e43f686b1",
+        "version": "294c0617abe4b45a",
+        "origin": "recomputed"
+      },
+      "tile_r1_c2::tile_r2_c2": {
+        "fingerprint": "81f2297c7b291c2ea98d97df3bef21fd255dbec8c80b95e768d4ce5d835f6639",
+        "version": "81f2297c7b291c2e",
+        "origin": "recomputed"
+      },
+      "tile_r2_c0::tile_r2_c1": {
+        "fingerprint": "247193b9411c2baa373d4194f4cb5065cf53a41e7d1b63416201240ae09065c7",
+        "version": "247193b9411c2baa",
+        "origin": "recomputed"
+      },
+      "tile_r2_c1::tile_r2_c2": {
+        "fingerprint": "d8017756018c4f75d8c809d1635e1524347206a249f640a641d2dd2e094339f5",
+        "version": "d8017756018c4f75",
+        "origin": "recomputed"
+      }
+    }
+  },
+  "confusion": {
+    "matrix": [
+      [
+        12779,
+        0,
+        92,
+        3
+      ],
+      [
+        3299,
+        8869,
+        553,
+        166
+      ],
+      [
+        553,
+        0,
+        2786,
+        92
+      ],
+      [
+        847,
+        12,
+        387,
+        538
+      ]
+    ],
+    "correct": 24972,
+    "total": 30976
+  },
+  "injections_hit": [
+    "INJ-001",
+    "INJ-002",
+    "INJ-003",
+    "INJ-004"
+  ]
+}

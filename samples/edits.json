@@ -1,0 +1,62 @@
+[
+  {
+    "op": "replace_band",
+    "tile": "tile_r0_c1",
+    "band": "G",
+    "seed_delta": 7
+  },
+  {
+    "op": "set_index_weights",
+    "weights": {
+      "farmland": {
+        "veg": 7,
+        "water": -3,
+        "texture": -2,
+        "slope": -1
+      },
+      "water": {
+        "veg": -2,
+        "water": 6,
+        "texture": -1,
+        "slope": -1
+      },
+      "building": {
+        "veg": -1,
+        "water": -1,
+        "texture": 2,
+        "slope": 3
+      },
+      "road": {
+        "veg": -1,
+        "water": 0,
+        "texture": 4,
+        "slope": -2
+      }
+    }
+  },
+  {
+    "op": "set_fusion_strategy",
+    "version": "fs-v2"
+  },
+  {
+    "op": "set_adjacency",
+    "tile": "tile_r0_c0",
+    "neighbors": [
+      "tile_r0_c1",
+      "tile_r1_c0"
+    ]
+  },
+  {
+    "op": "add_tile",
+    "row": 3,
+    "col": 0,
+    "band_set_version": "bs-v2",
+    "neighbors": [
+      "tile_r2_c0"
+    ]
+  },
+  {
+    "op": "remove_tile",
+    "tile": "tile_r0_c2"
+  }
+]
