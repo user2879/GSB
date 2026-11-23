@@ -1,0 +1,184 @@
+{
+  "budget": {
+    "global_concurrency": 2,
+    "per_read_point_concurrency": 1
+  },
+  "format": "mvcc-diagnostic-spec",
+  "format_version": 1,
+  "name": "mvcc-small-per-query",
+  "notes": "小规模样本：低查询数、低行键数、平均链长 2，默认逐查询回溯。",
+  "queries": [
+    {
+      "id": "Q0001",
+      "predicate": {
+        "op": "exists"
+      },
+      "read_point_id": "RP001",
+      "row_key": "row:001"
+    },
+    {
+      "id": "Q0002",
+      "predicate": {
+        "op": "version_eq",
+        "value": 2
+      },
+      "read_point_id": "RP001",
+      "row_key": "row:002"
+    },
+    {
+      "id": "Q0003",
+      "predicate": {
+        "op": "digest_eq",
+        "value": "sha256:3fd1c2761d6b6ef3fbec267b5d5ce9187f4936cfeb9d69232f38fbc5976a9938"
+      },
+      "read_point_id": "RP001",
+      "row_key": "row:003"
+    },
+    {
+      "id": "Q0004",
+      "predicate": {
+        "op": "tx_eq",
+        "value": "T0007"
+      },
+      "read_point_id": "RP001",
+      "row_key": "row:004"
+    },
+    {
+      "id": "Q0005",
+      "predicate": {
+        "op": "exists"
+      },
+      "read_point_id": "RP002",
+      "row_key": "row:001"
+    },
+    {
+      "id": "Q0006",
+      "predicate": {
+        "op": "version_eq",
+        "value": 3
+      },
+      "read_point_id": "RP002",
+      "row_key": "row:002"
+    }
+  ],
+  "read_points": [
+    {
+      "id": "RP001",
+      "snapshot_seq": 18,
+      "tx_id": "T0001"
+    },
+    {
+      "id": "RP002",
+      "snapshot_seq": 34,
+      "tx_id": "T0001"
+    }
+  ],
+  "records": [
+    {
+      "prev_version": null,
+      "row_key": "row:001",
+      "tx_id": "T0001",
+      "value_digest": "sha256:7ec3b761059c374b267863f5fc56ae209dba26a1843b1045d665b993b949b2ec",
+      "version": 1
+    },
+    {
+      "prev_version": 1,
+      "row_key": "row:001",
+      "tx_id": "T0002",
+      "value_digest": "sha256:dbc954ba9c9bdc71f7561412bfb87e71be89d98fc424cd10a57a5be2db80c1ef",
+      "version": 2
+    },
+    {
+      "prev_version": null,
+      "row_key": "row:002",
+      "tx_id": "T0003",
+      "value_digest": "sha256:6098360941d192d6b10acf6bad0213f3a07f9fc4b219711b36f49fc2029c54ca",
+      "version": 1
+    },
+    {
+      "prev_version": 1,
+      "row_key": "row:002",
+      "tx_id": "T0004",
+      "value_digest": "sha256:783be4afae7ef9c43e772bef382ff750a58f3c3aef8a41e0a4f2f41a37048737",
+      "version": 2
+    },
+    {
+      "prev_version": null,
+      "row_key": "row:003",
+      "tx_id": "T0005",
+      "value_digest": "sha256:3fd1c2761d6b6ef3fbec267b5d5ce9187f4936cfeb9d69232f38fbc5976a9938",
+      "version": 1
+    },
+    {
+      "prev_version": 1,
+      "row_key": "row:003",
+      "tx_id": "T0006",
+      "value_digest": "sha256:9349ce8307e9e1a74ee9576be02a1fd1f5164cde0b50d18bfdcd28a1bb1b43d6",
+      "version": 2
+    },
+    {
+      "prev_version": null,
+      "row_key": "row:004",
+      "tx_id": "T0007",
+      "value_digest": "sha256:017bffbbba92406a64e6be994874b1c71e95b9be187f22b051b9d804a0bd18f0",
+      "version": 1
+    },
+    {
+      "prev_version": 1,
+      "row_key": "row:004",
+      "tx_id": "T0008",
+      "value_digest": "sha256:d1e23583a5315683f5f8cd4d05d296a31aa636875c3383c58318d1f0cfad180a",
+      "version": 2
+    }
+  ],
+  "transactions": [
+    {
+      "commit_seq": 12,
+      "id": "T0001",
+      "outcome": "committed",
+      "start_seq": 10
+    },
+    {
+      "commit_seq": null,
+      "id": "T0002",
+      "outcome": "rolledback",
+      "start_seq": 14
+    },
+    {
+      "commit_seq": 27,
+      "id": "T0003",
+      "outcome": "committed",
+      "start_seq": 18
+    },
+    {
+      "commit_seq": 25,
+      "id": "T0004",
+      "outcome": "committed",
+      "start_seq": 22
+    },
+    {
+      "commit_seq": 33,
+      "id": "T0005",
+      "outcome": "committed",
+      "start_seq": 26
+    },
+    {
+      "commit_seq": 40,
+      "id": "T0006",
+      "outcome": "committed",
+      "start_seq": 30
+    },
+    {
+      "commit_seq": 39,
+      "id": "T0007",
+      "outcome": "committed",
+      "start_seq": 34
+    },
+    {
+      "commit_seq": 46,
+      "id": "T0008",
+      "outcome": "committed",
+      "start_seq": 38
+    }
+  ]
+}
