@@ -1,0 +1,57 @@
+{
+  "declaration_version": 4,
+  "global_lease_limit": 4,
+  "handshake_timeout_ms": 3000,
+  "subscribers": [
+    {
+      "subscriber_id": "s-alpha",
+      "host": "127.0.0.1",
+      "port": 47811,
+      "processing_budget_ms": 120,
+      "lease_limit": 2,
+      "seed": 11,
+      "topics": ["orders", "payments", "alerts"]
+    },
+    {
+      "subscriber_id": "s-beta",
+      "host": "127.0.0.1",
+      "port": 47812,
+      "processing_budget_ms": 90,
+      "lease_limit": 2,
+      "seed": 23,
+      "topics": ["orders", "alerts"]
+    },
+    {
+      "subscriber_id": "s-delta",
+      "host": "127.0.0.1",
+      "port": 47814,
+      "processing_budget_ms": 70,
+      "lease_limit": 1,
+      "seed": 41,
+      "topics": ["orders"]
+    }
+  ],
+  "channels": [
+    {
+      "channel_id": "ch-orders",
+      "topic": "orders",
+      "batch_size": 3,
+      "send_rate_limit": 6,
+      "subscriber_quota": 3
+    },
+    {
+      "channel_id": "ch-payments",
+      "topic": "payments",
+      "batch_size": 2,
+      "send_rate_limit": 4,
+      "subscriber_quota": 1
+    },
+    {
+      "channel_id": "ch-alerts",
+      "topic": "alerts",
+      "batch_size": 2,
+      "send_rate_limit": 3,
+      "subscriber_quota": 2
+    }
+  ]
+}

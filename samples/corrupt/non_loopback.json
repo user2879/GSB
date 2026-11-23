@@ -1,0 +1,23 @@
+{
+  "declaration_version": 3,
+  "global_lease_limit": 3,
+  "subscribers": [
+    {
+      "subscriber_id": "s-alpha",
+      "host": "0.0.0.0",
+      "port": 47822,
+      "processing_budget_ms": 80,
+      "lease_limit": 2,
+      "seed": 11
+    }
+  ],
+  "channels": [
+    {
+      "channel_id": "ch-orders",
+      "topic": "orders",
+      "batch_size": 2,
+      "send_rate_limit": 5,
+      "subscriber_quota": 1
+    }
+  ]
+}

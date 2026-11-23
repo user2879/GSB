@@ -1,0 +1,31 @@
+{
+  "declaration_version": 3,
+  "global_lease_limit": 3,
+  "subscribers": [
+    {
+      "subscriber_id": "s-alpha",
+      "host": "127.0.0.1",
+      "port": 47821,
+      "processing_budget_ms": 80,
+      "lease_limit": 2,
+      "seed": 11
+    },
+    {
+      "subscriber_id": "s-beta",
+      "host": "127.0.0.1",
+      "port": 47821,
+      "processing_budget_ms": 90,
+      "lease_limit": 1,
+      "seed": 23
+    }
+  ],
+  "channels": [
+    {
+      "channel_id": "ch-orders",
+      "topic": "orders",
+      "batch_size": 2,
+      "send_rate_limit": 5,
+      "subscriber_quota": 2
+    }
+  ]
+}
