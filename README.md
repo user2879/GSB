@@ -1,3 +1,45 @@
+# 语音转换（Voice Conversion）数据处理管线与验证工具
+
+纯 Python（仅依赖 `numpy==1.26.4`）、单机 CPU、确定性可复现的 VC 分段数据管线，
+覆盖 v1 定宽文本与 v2 JSON 双版本互转、定点声学分析与逐段合成、内容指纹增量
+失效判定、阶段化快照与并发/串行一致性验证。
+
+## 快速开始
+
+```bash
+pip install numpy==1.26.4
+python generate_samples.py                       # 生成 samples/ 下确定性样本
+python -m unittest discover -s tests             # 18 个单元测试
+python run_demo.py                               # 端到端验收，输出 artifacts/validation_report.json
+```
+
+命令行：
+
+```bash
+python -m voice_conversion.cli run --exchange samples/exchange/segments.v1.txt \
+    --version v1 --source samples/wav/source.wav \
+    --config samples/config/acoustic.json --snapshot out/snap --output out/out.wav
+python -m voice_conversion.cli convert --input samples/exchange/segments.v2.json \
+    --from-version v2 --output out/down.v1.txt --config samples/config/acoustic.json \
+    --sidecar out/down.sidecar.json
+python -m voice_conversion.cli restore --v1 out/down.v1.txt \
+    --sidecar out/down.sidecar.json --output out/restored.v2.json \
+    --config samples/config/acoustic.json
+```
+
+## 目录
+
+- `voice_conversion/`：管线包（解析、转换、DSP、缓存账本、快照、编排、CLI）
+- `generate_samples.py`：固定种子 WAV/交换文件/配置生成
+- `run_demo.py`：双版本互转、增量vs全量、并发一致、快照失配验收
+- `tests/`：18 个 unittest 用例
+- `docs/DESIGN.md`：架构与关键算法说明
+- `docs/VALIDATION.md`：实际验证记录
+
+---
+
+## 原始任务说明
+
 交付从新建的代码库开始，构建一个面向语音转换（Voice Conversion）场景的数据处理管线与结果验证工具，核心解决转换分段结果在两种工程质量交换版本之间流转时的格式互操作、精度损失与增量失效判定问题。输入为本地确定性样本目录：若干由固定种子程序合成的 16kHz 单声道 16bit PCM 参考 WAV 与源片段 WAV（含可控基频轮廓、共振峰结构与平稳底噪，不同目标音色在共振峰与基频统计上具有可控差异），一份声学分析配置 JSON（帧长与帧移毫秒、梅尔频带数与上限频率、倒谱阶数、基频搜索范围、每段帧数上限、定点小数位宽与量化档位、线程池并发数、快照提交间隔），同一批转换结果以 v1 定宽文本行（段序号、整数起止帧、千分比整数音色强度、整数目标音色码与缺失位）与 v2 JSON（浮点帧边界、命名音色强度、命名音色标签与旁路元数据）两种交换文件提供。工具需统一解析两版本、双向转换、按统一表示执行分段映射与合成、量化跨版本精度损失，并保证任意编辑命令后增量运行与从空白全量重建逐字段一致。
 
 任务环境与准备：
