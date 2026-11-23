@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "rules": [
+    {
+      "rule_id": "search",
+      "request_prefix": "/search",
+      "stable_backend": "stable-search",
+      "canary_backend": "canary-search",
+      "canary_weight_bp": 3500,
+      "batch_size": 4
+    },
+    {
+      "rule_id": "recommend",
+      "request_prefix": "/recommend",
+      "stable_backend": "stable-rec",
+      "canary_backend": "canary-rec",
+      "canary_weight_bp": 6500,
+      "batch_size": 3
+    }
+  ]
+}

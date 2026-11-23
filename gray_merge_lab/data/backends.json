@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "backends": [
+    {
+      "backend_id": "stable-search",
+      "host": "127.0.0.1",
+      "port": 28101,
+      "model_dim": 12,
+      "hidden_dim": 20,
+      "seed": 1103,
+      "quant_profile": "fp32-v1"
+    },
+    {
+      "backend_id": "canary-search",
+      "host": "127.0.0.1",
+      "port": 28102,
+      "model_dim": 12,
+      "hidden_dim": 24,
+      "seed": 2207,
+      "quant_profile": "int8-sym-v1"
+    },
+    {
+      "backend_id": "stable-rec",
+      "host": "127.0.0.1",
+      "port": 28103,
+      "model_dim": 10,
+      "hidden_dim": 16,
+      "seed": 3301,
+      "quant_profile": "int8-sym-v1"
+    },
+    {
+      "backend_id": "canary-rec",
+      "host": "127.0.0.1",
+      "port": 28104,
+      "model_dim": 10,
+      "hidden_dim": 18,
+      "seed": 4409,
+      "quant_profile": "fp32-v1"
+    }
+  ]
+}

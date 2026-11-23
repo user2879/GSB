@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gray-merge-lab"
+version = "1.0.0"
+description = "Deterministic local gray-release receipt merge diagnostics lab"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3"]
+
+[tool.setuptools.packages.find]
+include = ["gray_merge_lab*"]
+
