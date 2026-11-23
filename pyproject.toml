@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "config-hot-reload-diagnostics"
+version = "0.1.0"
+description = "Windows-local config-center hot-update invalidation and recovery diagnostics workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26.0"]
+
+[project.scripts]
+config-diag = "config_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["config_diag*"]

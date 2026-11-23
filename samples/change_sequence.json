@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "operations": [
+    {
+      "operation_id": "op-001-base-fee",
+      "sequence": 1,
+      "description": "单键编辑基础费用，验证沿派生链的间接失效",
+      "changes": [
+        {
+          "key": "pricing.base_fee",
+          "value": 1500,
+          "version": 2
+        }
+      ]
+    },
+    {
+      "operation_id": "op-002-group",
+      "sequence": 2,
+      "description": "键组编辑税率与批次大小，验证两棵依赖子树同时失效",
+      "changes": [
+        {
+          "key": "tax.rate_permille",
+          "value": 10,
+          "version": 2
+        },
+        {
+          "key": "ops.batch_size",
+          "value": 30,
+          "version": 2
+        }
+      ]
+    },
+    {
+      "operation_id": "op-003-formula",
+      "sequence": 3,
+      "description": "编辑派生公式口径并递增派生口径版本",
+      "changes": [
+        {
+          "key": "reporting.rounded",
+          "version": 4,
+          "refs": ["checkout.total"],
+          "formula": {
+            "op": "linear",
+            "terms": [{"ref": "checkout.total", "weight": 1}],
+            "divisor": 10,
+            "bias": 5
+          }
+        }
+      ]
+    },
+    {
+      "operation_id": "op-004-expiry",
+      "sequence": 4,
+      "description": "缩短区域上限过期时间，供真实单调时钟回收演示",
+      "changes": [
+        {
+          "key": "cache.region_limit",
+          "version": 2,
+          "ttl_ms": 180
+        }
+      ]
+    }
+  ]
+}

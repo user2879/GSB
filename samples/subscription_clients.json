@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "clients": [
+    {
+      "client_id": "sub-alpha",
+      "seed": 101,
+      "poll_interval_ms": 100,
+      "keys": ["pricing.net_fee", "checkout.total", "reporting.rounded"],
+      "sample_size": 2
+    },
+    {
+      "client_id": "sub-beta",
+      "seed": 202,
+      "poll_interval_ms": 150,
+      "keys": ["tax.amount", "ops.batch_value", "cache.shard_span"],
+      "sample_size": 2
+    },
+    {
+      "client_id": "sub-gamma",
+      "seed": 303,
+      "poll_interval_ms": 200,
+      "keys": ["pricing.base_fee", "tax.rate_permille", "ops.batch_size"],
+      "sample_size": 3
+    }
+  ]
+}

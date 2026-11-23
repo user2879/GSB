@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "derivation_version": 1,
+  "keys": [
+    {
+      "key": "pricing.base_fee",
+      "value": 1200,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": [],
+      "formula": {"op": "identity"}
+    },
+    {
+      "key": "pricing.base_discount",
+      "value": 250,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": [],
+      "formula": {"op": "identity"}
+    },
+    {
+      "key": "pricing.net_fee",
+      "value": 950,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["pricing.base_discount", "pricing.base_fee"],
+      "formula": {
+        "op": "linear",
+        "terms": [
+          {"ref": "pricing.base_fee", "weight": 1000},
+          {"ref": "pricing.base_discount", "weight": -1000}
+        ],
+        "divisor": 1000,
+        "bias": 0
+      }
+    },
+    {
+      "key": "tax.rate_permille",
+      "value": 8,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": [],
+      "formula": {"op": "identity"}
+    },
+    {
+      "key": "tax.amount",
+      "value": 76,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["pricing.net_fee", "tax.rate_permille"],
+      "formula": {
+        "op": "product",
+        "terms": [
+          {"ref": "pricing.net_fee", "weight": 1},
+          {"ref": "tax.rate_permille", "weight": 1}
+        ],
+        "divisor": 100,
+        "bias": 0
+      }
+    },
+    {
+      "key": "checkout.total",
+      "value": 1026,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["pricing.net_fee", "tax.amount"],
+      "formula": {
+        "op": "linear",
+        "terms": [
+          {"ref": "pricing.net_fee", "weight": 1000},
+          {"ref": "tax.amount", "weight": 1000}
+        ],
+        "divisor": 1000,
+        "bias": 0
+      }
+    },
+    {
+      "key": "reporting.rounded",
+      "value": 102,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["checkout.total"],
+      "formula": {
+        "op": "linear",
+        "terms": [{"ref": "checkout.total", "weight": 1}],
+        "divisor": 10,
+        "bias": 0
+      }
+    },
+    {
+      "key": "ops.batch_size",
+      "value": 25,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": [],
+      "formula": {"op": "identity"}
+    },
+    {
+      "key": "ops.batch_value",
+      "value": 75,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["ops.batch_size"],
+      "formula": {
+        "op": "linear",
+        "terms": [{"ref": "ops.batch_size", "weight": 3}],
+        "divisor": 1,
+        "bias": 0
+      }
+    },
+    {
+      "key": "cache.region_limit",
+      "value": 40,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": [],
+      "formula": {"op": "identity"}
+    },
+    {
+      "key": "cache.shard_span",
+      "value": 100,
+      "version": 1,
+      "ttl_ms": 600000,
+      "refs": ["cache.region_limit", "ops.batch_size"],
+      "formula": {
+        "op": "product",
+        "terms": [
+          {"ref": "cache.region_limit", "weight": 1},
+          {"ref": "ops.batch_size", "weight": 1}
+        ],
+        "divisor": 10,
+        "bias": 0
+      }
+    }
+  ]
+}
