@@ -1,0 +1,49 @@
+{
+  "policies": [
+    {
+      "description": "Keep every RoPE pair.",
+      "pair_ranges": [
+        {
+          "end_ratio": 1.0,
+          "start_ratio": 0.0
+        }
+      ],
+      "pair_stride": 1,
+      "policy_id": "full"
+    },
+    {
+      "description": "Keep the first 75% of RoPE pairs.",
+      "pair_ranges": [
+        {
+          "end_ratio": 0.75,
+          "start_ratio": 0.0
+        }
+      ],
+      "pair_stride": 1,
+      "policy_id": "balanced_75"
+    },
+    {
+      "description": "Keep the first half of RoPE pairs.",
+      "pair_ranges": [
+        {
+          "end_ratio": 0.5,
+          "start_ratio": 0.0
+        }
+      ],
+      "pair_stride": 1,
+      "policy_id": "low_rank_50"
+    },
+    {
+      "description": "Keep every second RoPE pair.",
+      "pair_ranges": [
+        {
+          "end_ratio": 1.0,
+          "start_ratio": 0.0
+        }
+      ],
+      "pair_stride": 2,
+      "policy_id": "even_pairs"
+    }
+  ],
+  "schema_version": 1
+}
