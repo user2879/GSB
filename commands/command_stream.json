@@ -1,0 +1,102 @@
+[
+  {
+    "op": "replace_pair",
+    "payload": {
+      "record": {
+        "pair_id": "pair-0002",
+        "prompt": "summarize the document for request",
+        "chosen": "accurate and concise summary output",
+        "rejected": "verbose filler repeat noise error",
+        "annotator_id": "ann-beta",
+        "event_ms": 1700000001000,
+        "batch_id": "batch-0"
+      }
+    }
+  },
+  {
+    "op": "set_weight",
+    "payload": {
+      "name": "chosen",
+      "value": 1.25
+    }
+  },
+  {
+    "op": "set_boundary_threshold",
+    "payload": {
+      "value": 0.4
+    }
+  },
+  {
+    "op": "set_quant_mode",
+    "payload": {
+      "value": "trunc"
+    }
+  },
+  {
+    "op": "set_decimal_places",
+    "payload": {
+      "value": 4
+    }
+  },
+  {
+    "op": "delete_pair",
+    "payload": {
+      "pair_id": "pair-0005"
+    }
+  },
+  {
+    "op": "set_batch",
+    "payload": {
+      "pair_id": "pair-0007",
+      "batch_id": "batch-0"
+    }
+  },
+  {
+    "op": "set_tokenizer_version",
+    "payload": {
+      "value": "v2"
+    }
+  },
+  {
+    "op": "set_per_batch_quota",
+    "payload": {
+      "value": 5
+    }
+  },
+  {
+    "op": "set_global_budget",
+    "payload": {
+      "value": 12
+    }
+  },
+  {
+    "op": "set_tokenizer_version",
+    "payload": {
+      "value": "v1"
+    }
+  },
+  {
+    "op": "set_quant_mode",
+    "payload": {
+      "value": "half_even"
+    }
+  },
+  {
+    "op": "set_decimal_places",
+    "payload": {
+      "value": 6
+    }
+  },
+  {
+    "op": "set_per_batch_quota",
+    "payload": {
+      "value": 8
+    }
+  },
+  {
+    "op": "set_global_budget",
+    "payload": {
+      "value": 20
+    }
+  }
+]
