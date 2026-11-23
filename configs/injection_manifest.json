@@ -1,0 +1,58 @@
+{
+  "injections": [
+    {
+      "id": "INJ-001",
+      "type": "missing_tensor",
+      "target": {
+        "tensor": "V"
+      }
+    },
+    {
+      "id": "INJ-002",
+      "type": "head_dim_mismatch",
+      "target": {
+        "tensor": "Q",
+        "head_dim": 6
+      }
+    },
+    {
+      "id": "INJ-003",
+      "type": "nonfinite",
+      "target": {
+        "tensor": "K",
+        "row": 10,
+        "col": 3
+      }
+    },
+    {
+      "id": "INJ-004",
+      "type": "budget_below_min_block",
+      "target": {}
+    },
+    {
+      "id": "INJ-005",
+      "type": "frac_bits_out_of_range",
+      "target": {
+        "value": 40
+      }
+    },
+    {
+      "id": "INJ-006",
+      "type": "block_fault",
+      "target": {
+        "stage": "matmul",
+        "query_block": 2,
+        "key_block": 1
+      }
+    },
+    {
+      "id": "INJ-007",
+      "type": "block_fault",
+      "target": {
+        "stage": "softmax",
+        "query_block": 0,
+        "key_block": 2
+      }
+    }
+  ]
+}

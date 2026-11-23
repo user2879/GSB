@@ -1,0 +1,20 @@
+{
+  "query_block_len": 8,
+  "key_block_len": 8,
+  "head_dim": 8,
+  "burst_query_blocks": [
+    1
+  ],
+  "fixed_point_frac_bits": 12,
+  "quantization_level_bits": 16,
+  "accumulator_int_bits": 64,
+  "stability_offset": 0.0,
+  "tolerances": {
+    "score": 0.05,
+    "softmax_state": 0.05,
+    "output": 0.05
+  },
+  "thread_pool_workers": 4,
+  "point_budget_per_batch": 100000,
+  "snapshot_commit_interval_batches": 1
+}
