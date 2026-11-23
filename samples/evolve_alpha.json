@@ -1,0 +1,24 @@
+{
+  "group_id": "alpha",
+  "session": {
+    "concurrency_limit": 3,
+    "global_budget_bytes": 60000,
+    "segment_bytes": 4096,
+    "scale_exponent": 3,
+    "transfer_window_ms": 40,
+    "time_scale": 0.02
+  },
+  "nodes": [
+    {"node_id": "a-n1", "host": "127.0.0.1", "port": 24101, "bandwidth_kbps": 12, "priority_weight": 5},
+    {"node_id": "a-n3", "host": "127.0.0.1", "port": 24103, "bandwidth_kbps": 16, "priority_weight": 2},
+    {"node_id": "a-n4", "host": "127.0.0.1", "port": 24104, "bandwidth_kbps": 8, "priority_weight": 4}
+  ],
+  "blocks": [
+    {"block_id": "a-b1", "bytes": 10000, "seed": "alpha-b1-seed", "node_id": "a-n1", "mismatch_permille": 800},
+    {"block_id": "a-b2", "bytes": 8192, "seed": "alpha-b2-seed", "node_id": "a-n1", "mismatch_permille": 480},
+    {"block_id": "a-b3", "bytes": 5000, "seed": "alpha-b3-seed", "node_id": "a-n4", "mismatch_permille": 601},
+    {"block_id": "a-b4", "bytes": 4096, "seed": "alpha-b4-seed", "node_id": "a-n4", "mismatch_permille": 600},
+    {"block_id": "a-b5", "bytes": 2048, "seed": "alpha-b5-seed", "node_id": "a-n3"},
+    {"block_id": "a-b6", "bytes": 12288, "seed": "alpha-b6-seed", "node_id": "a-n3", "mismatch_permille": 350}
+  ]
+}
