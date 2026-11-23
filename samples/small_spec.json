@@ -1,0 +1,50 @@
+{
+  "session": {
+    "global_lease_quota": 3,
+    "throughput_budget_bytes": 2097152,
+    "scale_exponent": 6,
+    "tie_threshold_work": 32,
+    "worker_threads": 3,
+    "batch_size": 65536
+  },
+  "objects": [
+    {
+      "object_key": "demo/alpha.bin",
+      "total_bytes": 262144,
+      "shard_size": 65536,
+      "shard_count": 4,
+      "shard_seeds": [
+        1001,
+        1018,
+        1035,
+        1052
+      ],
+      "concurrency_limit": 2,
+      "lease_policy": {
+        "lease_ms": 500,
+        "renew_interval_ms": 100,
+        "max_concurrent_leases": 2
+      },
+      "batch_size": 65536
+    },
+    {
+      "object_key": "demo/beta.bin",
+      "total_bytes": 262144,
+      "shard_size": 65536,
+      "shard_count": 4,
+      "shard_seeds": [
+        2001,
+        2018,
+        2035,
+        2052
+      ],
+      "concurrency_limit": 2,
+      "lease_policy": {
+        "lease_ms": 500,
+        "renew_interval_ms": 100,
+        "max_concurrent_leases": 2
+      },
+      "batch_size": 65536
+    }
+  ]
+}

@@ -1,25 +1,158 @@
-当前只有一台干净的开发机，需要从零构建一个面向 Windows 本地环境的对象存储分片上传诊断工作台。用户在本地 JSON 文件中声明若干对象上传任务：每个任务含对象键、整数总字节数、分片大小、各分片的确定性内容种子与并发上传上限，以及一个分片级租约策略（整数租约时长毫秒、续约间隔毫秒、每对象最大并发租约数）。工作台须模拟对象存储侧的分片租约签发与回收，把每个分片切分为整数批次的字节段，按批在本地工作线程池中完成内容构造与校验摘要计算，并在全局租约配额、每对象配额与全局吞吐预算共同约束下推进。核心难点在于：当对象规模从数 MB 增长到数百 MB 时，逐分片聚合路径、滑动窗口聚合路径与分层聚合路径三条算法的代价显著分化，工作台须按数据规模自适应选择并保证三条路径的结果逐字节一致。
+# 对象存储分片上传诊断工作台
 
-系统同时维护分片元数据账本：每个分片记录分片序号、字节区间、内容摘要、租约版本号、续约次数与完成时刻。账本须可持久化到本地 SQLite、可整体替换恢复，并在进程被强制终止后依据已提交记录恢复。诊断工作台须以 Tkinter 展示每个对象的租约水位、字节构造进度、摘要校验结论、路径选择与误差界，并支持以命令行参数注入租约越界、摘要不符与账本版本冲突三类异常。
+这是一个面向 Windows 10/11 本地环境的确定性诊断项目。它从本地 JSON 读取对象上传声明，在真实单调时钟、本地线程池、SQLite 和 Tkinter 之上模拟分片租约、批级内容构造、三路径摘要聚合、三重配额调度、账本整体替换和强杀恢复。
 
-任务环境与准备：
-Windows 10 或 11，已安装 Python 3.11（安装命令示例：winget install Python.Python.3.11）并确保 python 与 pip 在 PATH 中
-安装依赖：pip install numpy==1.26.4（Tkinter 随 Python 标准发行版提供，无需额外安装；SQLite 使用标准库 sqlite3）
-任务执行前在空工作区创建项目根目录，并在其中准备本地确定性对象样本 JSON 文件与演示脚本所需的种子与分片参数
-确认本地磁盘有至少 2 GB 可用空间用于存放数百 MB 量级的确定性对象分片文件与 SQLite 账本
-无需网络、外部账号、容器环境或 GPU；所有模拟均在 127.0.0.1 本地回环与本地文件上完成
+所有字节都由本地确定性算法生成，不访问网络，不需要账号、容器或 GPU。规模演示样本为 **289 MiB**，快速验收样本为 **512 KiB**。
 
-业务要求：
-1. 实现对象上传声明、分片参数与租约策略的本地 JSON 加载及强校验：从本地 JSON 读取对象键、总字节数、分片大小、分片内容种子、每对象并发上限与租约策略；校验对象键唯一、总字节数为正整数且分片大小属于受支持整数集合、分片数与总字节数自洽、租约时长与续约间隔为正整数且续约间隔小于租约时长、内容种子为整数；任一不合法须以 E_SPEC 整体拒绝并指出首个非法对象键与字段。
-2. 实现分片租约的签发、续约与过期回收：每次分片上传须持有租约，租约含分片序号、授予时刻毫秒、到期时刻毫秒与租约版本号；续约须凭租约版本号做乐观校验，版本不符以 E_LEASE 拒绝且不延长租约；重复签发同一分片的活跃租约须返回同一租约版本并登记被拒绝的重复申请；过期须以本地单调时钟真实计时判定，到期后该分片租约变为过期且占用的并发配额须被回收。
-3. 实现逐分片聚合、滑动窗口聚合与分层聚合三条字节构造与摘要计算路径，并依据对象总字节数、分片数与批大小按确定性规则选择默认路径；须输出选择理由、关键规模参数与各路径的预估工作量，当两条候选路径预估工作量之差小于显式阈值时须按稳定决胜规则选定并标注边界情形；三条路径对同一对象必须产出逐字节一致的分片内容摘要与最终对象摘要。
-4. 实现受全局租约配额、每对象并发上限与全局吞吐预算三重约束的并行分片推进调度：把分片批任务调度到本地工作线程池，任一时刻活跃租约数与单对象活跃租约数不得超限，累计构造字节数不得超出吞吐预算；配额或预算不足时任务排队并记录等待开始与结束的单调时钟毫秒；单批构造须真实计算分片字节内容并按确定性规则计算内容摘要，不得复用未经校验的缓存结果。
-5. 实现分片元数据账本的持久化与整体替换恢复：每完成一个分片批次须在同一 SQLite 事务中写入分片序号、字节区间、内容摘要、租约版本号、续约次数、完成时刻与进度游标，账本携带整数格式版本与内容摘要；重新打开账本时须比较格式版本与内容摘要同磁盘分片数据是否一致，不一致须整体替换分片元数据与租约状态而非增量合并，旧账本保留为只读备份并稳定列出被替换的分片集合。
-6. 实现进程被强制终止后的恢复与未知状态标注：重启后只能依据账本中已完整提交的分片批次恢复租约状态、分片摘要与进度游标，处于未提交批次中的分片须标记为未知并要求重跑，其占用的租约配额须先回收再重新申请，不得声称能生成强制终止时的退出报告；恢复后须按账本记录的路径选择与缩放因子重算未完成分片，并与一次性不间断执行在相同参数下逐字节比较分片摘要与对象摘要。
-7. 实现摘要校验结论与聚合统计的整数定点口径及误差界：对每个对象按分片与整体聚合已完成字节数、平均分片摘要计算耗时与租约续约率，比例与耗时以会话缩放因子（10 的整数幂）按整数定点表示并显式声明截断方向与溢出饱和规则；须给出单值量化误差、比例比较判定误差界与对象级聚合误差上界；当两个对象的分片完成率定点值之差落在合成误差界内时须按对象键字典序稳定排序并标注该判定受误差影响。
-8. 提供 Tkinter 诊断工作台、异常注入链路与可重复演示：界面展示每个对象的租约水位（已用配额与余量）、各分片的字节区间与完成状态、内容摘要校验结论、所选聚合路径与决胜依据、定点统计与误差界、未知分片标记、账本版本与快照列表，渲染顺序稳定且刷新不改变账本内容；支持以命令行参数分别注入租约越界申请、分片内容摘要不符与账本版本冲突三类异常，分别以 E_LEASE、E_DIGEST、E_SNAPSHOT 业务码报告并写入含单调时间、对象键与分片序号的结构化日志；注入仅改变输入文件或参数，不得通过修改源码制造失败。
+## 功能概览
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 严格加载对象键、总字节数、受支持分片大小、分片种子、批大小和租约策略；全量校验失败统一返回 `E_SPEC`，并指出首个非法对象键与字段。
+- 租约签发、重复申请登记、版本号乐观续约、真实单调时钟过期与配额回收。
+- `direct`（逐分片前沿聚合）、`sliding`（有界滑动窗口）、`hierarchical`（分层 Merkle 树）三条路径共享固定 64 KiB 内容叶和规范 Merkle 根，保证分片摘要与对象摘要逐字节一致。
+- 按字节数、分片数和批次数计算整数工作量，自动选择路径；接近阈值时使用稳定优先级并标记边界情形。
+- 全局租约配额、对象租约配额、对象并发上限、累计吞吐预算四重约束。
+- 每批先写盘、回读校验，再用同一 SQLite 事务写批次、叶摘要和进度游标。
+- SQLite 账本携带格式版本、会话声明摘要和整体内容摘要；版本/摘要/磁盘数据不一致时整体替换，旧账本保留为只读备份。
+- `inflight` 意图表支持强杀恢复：未提交批次所在分片标记为 `unknown`，旧租约先回收，再从已提交游标重跑。
+- 整数定点统计、截断与 64 位饱和规则、单值误差、比较误差界和对象级聚合误差界。
+- Tkinter 工作台展示对象/分片/租约/摘要/路径/定点统计/未知分片/快照；刷新只读。
+- 命令行参数注入 `E_LEASE`、`E_DIGEST`、`E_SNAPSHOT`，结构化 JSONL 日志包含单调时间、对象键和分片序号。
 
-验收：
-使用本地确定性对象样本验证三条聚合路径的摘要一致、租约与预算约束、账本整体替换恢复及三类异常业务码。
+## Windows 环境准备
+
+在 PowerShell 中执行：
+
+```powershell
+winget install Python.Python.3.11
+python --version
+python -m pip install -r requirements.txt
+```
+
+Tkinter 由 Windows 官方 Python 发行版提供，SQLite 使用标准库 `sqlite3`。Tk 界面需要本地桌面会话。运行 289 MiB 演示及数据库/备份时建议至少保留 2 GB 可用空间。
+
+## 快速开始
+
+在项目根目录运行：
+
+```powershell
+python scripts/make_samples.py
+python -m ossdiag run --spec samples/small_spec.json --workdir .ossdiag-work
+```
+
+打开 Tkinter 诊断工作台：
+
+```powershell
+python -m ossdiag gui --spec samples/small_spec.json --workdir .ossdiag-work
+```
+
+一键演示规模路径分化（约 25 秒，生成约 290 MiB 本地数据）：
+
+```powershell
+python scripts/demo.py --large --workdir .demo-scale-work
+```
+
+演示样本的默认路径选择：
+
+| 对象 | 大小 | 分片 | 路径 | 说明 |
+|---|---:|---:|---|---|
+| `scale/tiny-1m.bin` | 1 MiB | 1 | `direct` | 小规模逐分片成本最低 |
+| `scale/medium-32m.bin` | 32 MiB | 16 | `sliding` | 与 `hierarchical` 同分，落入 32 单位阈值，稳定优先选滑动窗口 |
+| `scale/large-256m.bin` | 256 MiB | 32 | `hierarchical` | 叶节点规模增大后分层聚合明显占优 |
+
+## 上传声明示例
+
+```json
+{
+  "session": {
+    "global_lease_quota": 4,
+    "throughput_budget_bytes": 104857600,
+    "scale_exponent": 6,
+    "tie_threshold_work": 32,
+    "worker_threads": 4,
+    "batch_size": 1048576
+  },
+  "objects": [
+    {
+      "object_key": "demo/object.bin",
+      "total_bytes": 8388608,
+      "shard_size": 1048576,
+      "shard_count": 8,
+      "shard_seeds": [1001, 1018, 1035, 1052, 1069, 1086, 1103, 1120],
+      "concurrency_limit": 2,
+      "batch_size": 1048576,
+      "lease_policy": {
+        "lease_ms": 2000,
+        "renew_interval_ms": 400,
+        "max_concurrent_leases": 2
+      }
+    }
+  ]
+}
+```
+
+`shard_count` 可选；出现时必须等于 `ceil(total_bytes / shard_size)`。`shard_seeds` 必须恰好包含该数量的整数。分片大小支持 `64 KiB` 到 `64 MiB` 的二次幂集合，批大小支持 `64 KiB` 到 `16 MiB` 的二次幂集合。`renew_interval_ms` 必须小于 `lease_ms`。
+
+## 命令行与业务码
+
+```powershell
+python -m ossdiag run --spec samples/small_spec.json --workdir .ossdiag-work --inject-lease-overflow
+python -m ossdiag run --spec samples/small_spec.json --workdir .ossdiag-work --inject-digest-mismatch
+python -m ossdiag run --spec samples/small_spec.json --workdir .ossdiag-work --inject-snapshot-conflict
+```
+
+三项注入都只改变命令行参数，不修改源码。业务码：
+
+- `E_LEASE`：租约越界或版本校验失败。
+- `E_DIGEST`：批次/分片/对象摘要不符；未提交批次不会写入账本。
+- `E_SNAPSHOT`：账本格式版本、内容摘要或磁盘分片不一致；先备份旧账本，再整体替换。
+- `E_SPEC`：上传声明不合法，整体拒绝。
+- `E_BUDGET`：累计吞吐预算不足，不再构造后续字节。
+
+退出码：`0` 成功；`2` 规格错误；`3` 注入或恢复类业务错误；`5` 未完成；`1` 环境/内部错误；`130` 键盘中断。
+
+指定摘要异常目标：
+
+```powershell
+python -m ossdiag run --spec samples/demo_spec.json --workdir .demo-work `
+  --inject-digest-mismatch --target-object scale/medium-32m.bin --target-shard 3
+```
+
+## 强杀恢复演示
+
+`--crash-after-batches` 仅用于恢复演示：指定的批次写盘后立即 `os._exit(137)`，不会生成退出报告。随后用同一工作目录重新运行即可依据账本恢复：
+
+```powershell
+python -m ossdiag run --spec samples/small_spec.json --workdir .recovery-work --crash-after-batches 2
+echo $LASTEXITCODE   # 137
+python -m ossdiag run --spec samples/small_spec.json --workdir .recovery-work
+```
+
+恢复时，`inflight` 中未提交批次所属分片会变为 `unknown`；该分片文件截断到账本游标；旧活跃租约在账本中标记为 `reclaimed_after_crash`；新租约使用更高版本号。恢复后的分片摘要和对象摘要与一次不间断执行一致。
+
+## 输出与目录
+
+默认布局：
+
+```text
+.ossdiag-work/
+  ledger.sqlite                  # WAL SQLite 账本
+  data/objects/<key-hash>/...    # 确定性分片文件
+  events.jsonl                   # 结构化事件与业务错误
+  run_summary.json               # CLI 运行摘要
+  ledger_backups/                # 只读整体备份
+```
+
+`python -m ossdiag inspect ...` 会输出仪表盘 JSON，但初始化阶段可能执行恢复或整体替换。Tk 界面的“刷新（只读）”只读取账本与租约内存快照，不改变账本内容。
+
+## 测试
+
+```powershell
+python -m pip install pytest
+pytest -q
+```
+
+测试覆盖三路径/不同批边界摘要一致、租约乐观版本与真实过期、配额与预算、账本整体替换、强杀恢复、三类 CLI 业务码、定点误差排序和 GUI 数据模型只读刷新。实际验证记录见 [`docs/VERIFICATION.md`](docs/VERIFICATION.md)。
+
+## 设计说明
+
+算法、事务协议、恢复语义、定点口径、误差界和成本模型详见 [`docs/DESIGN.md`](docs/DESIGN.md)。项目不包含 Docker、容器、网络访问或外部服务。

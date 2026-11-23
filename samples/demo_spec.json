@@ -1,0 +1,106 @@
+{
+  "session": {
+    "global_lease_quota": 8,
+    "throughput_budget_bytes": 335544320,
+    "scale_exponent": 6,
+    "tie_threshold_work": 32,
+    "worker_threads": 4,
+    "batch_size": 1048576
+  },
+  "objects": [
+    {
+      "object_key": "scale/tiny-1m.bin",
+      "total_bytes": 1048576,
+      "shard_size": 1048576,
+      "shard_count": 1,
+      "shard_seeds": [
+        10001
+      ],
+      "concurrency_limit": 1,
+      "lease_policy": {
+        "lease_ms": 2000,
+        "renew_interval_ms": 400,
+        "max_concurrent_leases": 1
+      },
+      "batch_size": 1048576
+    },
+    {
+      "object_key": "scale/medium-32m.bin",
+      "total_bytes": 33554432,
+      "shard_size": 2097152,
+      "shard_count": 16,
+      "shard_seeds": [
+        20001,
+        20018,
+        20035,
+        20052,
+        20069,
+        20086,
+        20103,
+        20120,
+        20137,
+        20154,
+        20171,
+        20188,
+        20205,
+        20222,
+        20239,
+        20256
+      ],
+      "concurrency_limit": 3,
+      "lease_policy": {
+        "lease_ms": 2000,
+        "renew_interval_ms": 400,
+        "max_concurrent_leases": 3
+      },
+      "batch_size": 1048576
+    },
+    {
+      "object_key": "scale/large-256m.bin",
+      "total_bytes": 268435456,
+      "shard_size": 8388608,
+      "shard_count": 32,
+      "shard_seeds": [
+        30001,
+        30018,
+        30035,
+        30052,
+        30069,
+        30086,
+        30103,
+        30120,
+        30137,
+        30154,
+        30171,
+        30188,
+        30205,
+        30222,
+        30239,
+        30256,
+        30273,
+        30290,
+        30307,
+        30324,
+        30341,
+        30358,
+        30375,
+        30392,
+        30409,
+        30426,
+        30443,
+        30460,
+        30477,
+        30494,
+        30511,
+        30528
+      ],
+      "concurrency_limit": 4,
+      "lease_policy": {
+        "lease_ms": 5000,
+        "renew_interval_ms": 1000,
+        "max_concurrent_leases": 4
+      },
+      "batch_size": 1048576
+    }
+  ]
+}
