@@ -1,0 +1,118 @@
+{
+  "schema": "config-arbiter.views/v1",
+  "arbitration_policy_version": "arb-policy/2026-11-23.1",
+  "session": {
+    "scale_power": 3,
+    "scale_policy_version": "scale-policy/1000.1",
+    "truncation": "toward_zero",
+    "overflow": "saturate_int64"
+  },
+  "views": [
+    {
+      "view_id": "ops-authority",
+      "environments": [
+        "prod-cn",
+        "staging-eu",
+        "dr-ap"
+      ],
+      "environment_priority": [
+        "prod-cn",
+        "staging-eu",
+        "dr-ap"
+      ],
+      "environment_weights": {
+        "prod-cn": 3,
+        "staging-eu": 2,
+        "dr-ap": 1
+      },
+      "key_policies": {
+        "cache.ttl_s": {
+          "strategy": "interval_midpoint",
+          "tolerance": 2
+        },
+        "db.pool_size": {
+          "strategy": "latest",
+          "tolerance": 0
+        },
+        "edge.latency_ms": {
+          "strategy": "latest",
+          "tolerance": 0
+        },
+        "http.timeout_ms": {
+          "strategy": "latest",
+          "tolerance": 20
+        },
+        "rate.limit_qps": {
+          "strategy": "weighted_majority",
+          "tolerance": 0
+        },
+        "retry.backoff_ms": {
+          "strategy": "weighted_majority",
+          "tolerance": 40
+        }
+      }
+    },
+    {
+      "view_id": "release-guard",
+      "environments": [
+        "staging-eu",
+        "dr-ap"
+      ],
+      "environment_priority": [
+        "staging-eu",
+        "dr-ap"
+      ],
+      "environment_weights": {
+        "staging-eu": 2,
+        "dr-ap": 1
+      },
+      "key_policies": {
+        "cache.ttl_s": {
+          "strategy": "interval_midpoint",
+          "tolerance": 1
+        },
+        "http.timeout_ms": {
+          "strategy": "latest",
+          "tolerance": 0
+        },
+        "rate.limit_qps": {
+          "strategy": "weighted_majority",
+          "tolerance": 0
+        },
+        "retry.backoff_ms": {
+          "strategy": "latest",
+          "tolerance": 0
+        }
+      }
+    },
+    {
+      "view_id": "cost-focus",
+      "environments": [
+        "prod-cn",
+        "dr-ap"
+      ],
+      "environment_priority": [
+        "dr-ap",
+        "prod-cn"
+      ],
+      "environment_weights": {
+        "prod-cn": 5,
+        "dr-ap": 1
+      },
+      "key_policies": {
+        "db.pool_size": {
+          "strategy": "latest",
+          "tolerance": 0
+        },
+        "rate.limit_qps": {
+          "strategy": "weighted_majority",
+          "tolerance": 0
+        },
+        "retry.backoff_ms": {
+          "strategy": "weighted_majority",
+          "tolerance": 10
+        }
+      }
+    }
+  ]
+}

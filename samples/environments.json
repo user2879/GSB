@@ -1,0 +1,371 @@
+{
+  "schema": "config-arbiter.environments/v1",
+  "environment_set_version": 3,
+  "source_priority_version": 7,
+  "source_type_order": [
+    "baseline",
+    "override",
+    "runtime"
+  ],
+  "environments": [
+    {
+      "environment_id": "prod-cn",
+      "depth": 1,
+      "available_sources": [
+        "baseline",
+        "override",
+        "runtime"
+      ],
+      "bindings": {
+        "http.timeout_ms": {
+          "required_source_types": [
+            "override",
+            "runtime"
+          ],
+          "min_observed_seq": 100
+        },
+        "retry.backoff_ms": {
+          "required_source_types": [
+            "override"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "source_id": "prod-cn/baseline",
+          "source_type": "baseline",
+          "priority_bias": 10,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3001.25,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.0,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 60,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 175,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 8,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0004,
+              "observed_seq": 10,
+              "captured_at_ms": 1735689600000
+            }
+          ]
+        },
+        {
+          "source_id": "prod-cn/override",
+          "source_type": "override",
+          "priority_bias": 60,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3002.004,
+              "observed_seq": 140,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.0,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 60,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 180,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 12.0004,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0004,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689603000
+            }
+          ]
+        },
+        {
+          "source_id": "prod-cn/runtime",
+          "source_type": "runtime",
+          "priority_bias": 90,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3010,
+              "observed_seq": 80,
+              "captured_at_ms": 1735689604000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 300.0,
+              "observed_seq": 110,
+              "captured_at_ms": 1735689604000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 59.5,
+              "observed_seq": 110,
+              "captured_at_ms": 1735689604000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 180,
+              "observed_seq": 110,
+              "captured_at_ms": 1735689604000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 12.0004,
+              "observed_seq": 110,
+              "captured_at_ms": 1735689604000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0004,
+              "observed_seq": 110,
+              "captured_at_ms": 1735689604000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "environment_id": "staging-eu",
+      "depth": 2,
+      "available_sources": [
+        "baseline",
+        "override"
+      ],
+      "bindings": {
+        "http.timeout_ms": {
+          "required_source_types": [
+            "baseline"
+          ]
+        },
+        "retry.backoff_ms": {
+          "required_source_types": [
+            "override"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "source_id": "staging-eu/baseline",
+          "source_type": "baseline",
+          "priority_bias": 20,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3002.001,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.0,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 61,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 180,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 12.0001,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0016,
+              "observed_seq": 50,
+              "captured_at_ms": 1735689601000
+            }
+          ]
+        },
+        {
+          "source_id": "staging-eu/override",
+          "source_type": "override",
+          "priority_bias": 70,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3015,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.0,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 60.5,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 180,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 12.0001,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0016,
+              "observed_seq": 160,
+              "captured_at_ms": 1735689603000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "environment_id": "dr-ap",
+      "depth": 3,
+      "available_sources": [
+        "baseline",
+        "runtime"
+      ],
+      "bindings": {},
+      "sources": [
+        {
+          "source_id": "dr-ap/baseline",
+          "source_type": "baseline",
+          "priority_bias": 10,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 2990,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.0,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 60,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 120,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 8,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0016,
+              "observed_seq": 30,
+              "captured_at_ms": 1735689600000
+            }
+          ]
+        },
+        {
+          "source_id": "dr-ap/runtime",
+          "source_type": "runtime",
+          "priority_bias": 80,
+          "observations": [
+            {
+              "key": "http.timeout_ms",
+              "value": 3002.002,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            },
+            {
+              "key": "retry.backoff_ms",
+              "value": 250.05,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            },
+            {
+              "key": "cache.ttl_s",
+              "value": 64,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            },
+            {
+              "key": "rate.limit_qps",
+              "value": 120,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            },
+            {
+              "key": "db.pool_size",
+              "value": 12.0004,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            },
+            {
+              "key": "edge.latency_ms",
+              "value": 100.0016,
+              "observed_seq": 120,
+              "captured_at_ms": 1735689605000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
