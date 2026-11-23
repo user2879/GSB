@@ -1,0 +1,28 @@
+{
+  "format_version": 1,
+  "name": "snapshot-divergence-sample",
+  "pages": [
+    {
+      "page_id": "p1",
+      "size_bytes": 256,
+      "initial_version": 5
+    },
+    {
+      "page_id": "p2",
+      "size_bytes": 512,
+      "initial_version": 9
+    },
+    {
+      "page_id": "p4",
+      "size_bytes": 64,
+      "initial_version": 0
+    }
+  ],
+  "budget": {
+    "global_slots": 2,
+    "per_tx_quota": 1,
+    "page_byte_budget": 512,
+    "checkpoint_interval": 2
+  },
+  "log_file": "alt_pages.ndjson"
+}

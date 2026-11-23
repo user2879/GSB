@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "walcrash"
+version = "1.0.0"
+description = "Deterministic local WAL crash-recovery diagnostics for Windows"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+walcrash = "walcrash.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["walcrash*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
