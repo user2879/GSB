@@ -1,0 +1,30 @@
+{
+  "injections": [
+    {
+      "inj_id": "INJ-001",
+      "kind": "timestamp_reorder",
+      "stage": "decay",
+      "tid": "T0011"
+    },
+    {
+      "inj_id": "INJ-002",
+      "kind": "relation_self_reference",
+      "stage": "relation",
+      "target_seq": 1,
+      "tid": "T0010"
+    },
+    {
+      "inj_id": "INJ-003",
+      "kind": "evidence_type_unknown",
+      "stage": "decay",
+      "target_seq": 1,
+      "tid": "T0009"
+    },
+    {
+      "inj_id": "INJ-004",
+      "kind": "fixed_width_overflow",
+      "stage": "arbitration",
+      "tid": "T0008"
+    }
+  ]
+}

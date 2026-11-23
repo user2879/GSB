@@ -1,0 +1,98 @@
+{
+  "mutex": [
+    {
+      "kind": "mutex",
+      "left": "PAYMENT",
+      "rid": "1",
+      "right": "REFUND"
+    },
+    {
+      "kind": "mutex",
+      "left": "LOGIN",
+      "rid": "2",
+      "right": "DEVICE"
+    },
+    {
+      "kind": "mutex",
+      "left": "COMPLAINT",
+      "rid": "3",
+      "right": "ACCESS"
+    }
+  ],
+  "priority_tiers": [
+    {
+      "label": "LOW",
+      "level": 1,
+      "limit": 600
+    },
+    {
+      "label": "MEDIUM",
+      "level": 2,
+      "limit": 1200
+    },
+    {
+      "label": "HIGH",
+      "level": 3,
+      "limit": 2000
+    }
+  ],
+  "reason_codes": [
+    {
+      "code": "MX1",
+      "name": "payment_refund_conflict"
+    },
+    {
+      "code": "MX2",
+      "name": "login_device_conflict"
+    },
+    {
+      "code": "MX3",
+      "name": "complaint_access_conflict"
+    },
+    {
+      "code": "SP1",
+      "name": "login_device_support"
+    },
+    {
+      "code": "SP2",
+      "name": "payment_complaint_support"
+    },
+    {
+      "code": "MX9",
+      "name": "rare_conflict_slot"
+    },
+    {
+      "code": "SP9",
+      "name": "rare_support_slot"
+    }
+  ],
+  "role_credibility": {
+    "agent": 726,
+    "auditor": 643,
+    "customer": 495,
+    "partner": 648,
+    "system": 886
+  },
+  "support": [
+    {
+      "kind": "support",
+      "left": "LOGIN",
+      "rid": "1",
+      "right": "DEVICE"
+    },
+    {
+      "kind": "support",
+      "left": "PAYMENT",
+      "rid": "2",
+      "right": "COMPLAINT"
+    }
+  ],
+  "type_weights": {
+    "ACCESS": 477,
+    "COMPLAINT": 805,
+    "DEVICE": 463,
+    "LOGIN": 889,
+    "PAYMENT": 970,
+    "REFUND": 873
+  }
+}

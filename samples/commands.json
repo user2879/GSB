@@ -1,0 +1,84 @@
+{
+  "commands": [
+    {
+      "op": "set_version",
+      "version": "v1"
+    },
+    {
+      "op": "set_version",
+      "version": "v2"
+    },
+    {
+      "etype": "PAYMENT",
+      "op": "set_type_weight",
+      "weight": 920
+    },
+    {
+      "credibility": 980,
+      "op": "set_role_cred",
+      "role": "system"
+    },
+    {
+      "kind": "mutex",
+      "left": "DEVICE",
+      "op": "add_relation",
+      "rid": "4",
+      "right": "REFUND"
+    },
+    {
+      "code": "MX4",
+      "name": "device_refund_conflict",
+      "op": "add_reason_code"
+    },
+    {
+      "half_life_ms": 45000,
+      "op": "set_half_life"
+    },
+    {
+      "evidence": {
+        "confidence": 890,
+        "etype": "LOGIN",
+        "role": "customer",
+        "seq": 1,
+        "terms": [
+          "fraud",
+          "risk",
+          "payment"
+        ],
+        "ticket_id": "T0000",
+        "ts": 87305
+      },
+      "op": "replace_evidence"
+    },
+    {
+      "kind": "mutex",
+      "op": "remove_relation",
+      "rid": "4"
+    },
+    {
+      "code": "MX4",
+      "op": "remove_reason_code"
+    },
+    {
+      "level": 2,
+      "limit": 1100,
+      "op": "set_tier_limit"
+    },
+    {
+      "op": "set_version",
+      "version": "v3"
+    },
+    {
+      "decimals": 4,
+      "op": "set_decimals"
+    },
+    {
+      "decimals": 3,
+      "op": "set_decimals"
+    },
+    {
+      "op": "set_version",
+      "version": "v2"
+    }
+  ]
+}
