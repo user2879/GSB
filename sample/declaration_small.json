@@ -1,0 +1,55 @@
+{
+  "sources": [
+    {
+      "source_id": "src-tiny",
+      "seed": 42,
+      "record_count": 12,
+      "services": [
+        "svc-gateway",
+        "svc-order",
+        "svc-db"
+      ],
+      "levels": [
+        "P1",
+        "P2"
+      ],
+      "start_ts_ms": 1700000000000,
+      "max_gap_ms": 200,
+      "fingerprint_namespace": 12,
+      "label_vocabulary": [
+        "zone=a",
+        "tier=core"
+      ],
+      "max_labels": 2,
+      "closed_probability": 0.5
+    }
+  ],
+  "topology": {
+    "edges": [
+      [
+        "svc-gateway",
+        "svc-order"
+      ],
+      [
+        "svc-order",
+        "svc-db"
+      ]
+    ]
+  },
+  "parameters": {
+    "silence_window_ms": 5000,
+    "correlation_window_ms": 1500,
+    "global_concurrency": 2,
+    "service_concurrency": 1,
+    "lease_ttl_ms": 250,
+    "exact_alert_threshold": 120,
+    "fingerprint_cardinality_threshold": 160,
+    "layer_weights": [
+      100,
+      50,
+      20
+    ],
+    "fixed_point_scale": 10000,
+    "saturation_max": 1000000
+  }
+}

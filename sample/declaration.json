@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "source_id": "src-gateway",
+      "seed": 20261124,
+      "record_count": 90,
+      "services": ["svc-gateway", "svc-auth"],
+      "levels": ["P1", "P2", "P3"],
+      "start_ts_ms": 1700000000000,
+      "max_gap_ms": 400,
+      "fingerprint_namespace": 128,
+      "label_vocabulary": ["region=cn", "zone=a", "tier=edge", "team=platform"],
+      "max_labels": 3,
+      "closed_probability": 0.3
+    },
+    {
+      "source_id": "src-order",
+      "seed": 77001,
+      "record_count": 70,
+      "services": ["svc-order", "svc-payment", "svc-db"],
+      "levels": ["P1", "P2"],
+      "start_ts_ms": 1700000000150,
+      "max_gap_ms": 650,
+      "fingerprint_namespace": 96,
+      "label_vocabulary": ["region=cn", "zone=b", "tier=core", "team=trade"],
+      "max_labels": 2,
+      "closed_probability": 0.25
+    },
+    {
+      "source_id": "src-infra",
+      "seed": 555,
+      "record_count": 40,
+      "services": ["svc-db", "svc-cache"],
+      "levels": ["P2", "P3"],
+      "start_ts_ms": 1700000000300,
+      "max_gap_ms": 900,
+      "fingerprint_namespace": 64,
+      "label_vocabulary": ["zone=a", "zone=b", "tier=infra"],
+      "max_labels": 2,
+      "closed_probability": 0.4
+    }
+  ],
+  "topology": {
+    "edges": [
+      ["svc-gateway", "svc-auth"],
+      ["svc-gateway", "svc-order"],
+      ["svc-order", "svc-payment"],
+      ["svc-order", "svc-db"],
+      ["svc-payment", "svc-db"],
+      ["svc-auth", "svc-db"],
+      ["svc-order", "svc-cache"],
+      ["svc-cache", "svc-db"]
+    ]
+  },
+  "parameters": {
+    "silence_window_ms": 5000,
+    "correlation_window_ms": 1500,
+    "global_concurrency": 4,
+    "service_concurrency": 2,
+    "lease_ttl_ms": 250,
+    "exact_alert_threshold": 120,
+    "fingerprint_cardinality_threshold": 160,
+    "layer_weights": [100, 50, 20, 10],
+    "fixed_point_scale": 10000,
+    "saturation_max": 1000000
+  }
+}

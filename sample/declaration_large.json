@@ -1,0 +1,37 @@
+{
+  "sources": [
+    {
+      "source_id": "src-bulk",
+      "seed": 909090,
+      "record_count": 260,
+      "services": ["svc-gateway", "svc-order", "svc-payment", "svc-db"],
+      "levels": ["P1", "P2", "P3"],
+      "start_ts_ms": 1700000000000,
+      "max_gap_ms": 300,
+      "fingerprint_namespace": 300,
+      "label_vocabulary": ["region=cn", "zone=a", "zone=b", "tier=core"],
+      "max_labels": 2,
+      "closed_probability": 0.2
+    }
+  ],
+  "topology": {
+    "edges": [
+      ["svc-gateway", "svc-order"],
+      ["svc-order", "svc-payment"],
+      ["svc-order", "svc-db"],
+      ["svc-payment", "svc-db"]
+    ]
+  },
+  "parameters": {
+    "silence_window_ms": 5000,
+    "correlation_window_ms": 1500,
+    "global_concurrency": 4,
+    "service_concurrency": 2,
+    "lease_ttl_ms": 250,
+    "exact_alert_threshold": 120,
+    "fingerprint_cardinality_threshold": 160,
+    "layer_weights": [100, 50, 20, 10],
+    "fixed_point_scale": 10000,
+    "saturation_max": 1000000
+  }
+}
