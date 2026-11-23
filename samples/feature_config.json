@@ -1,0 +1,73 @@
+{
+  "crosses": [
+    {
+      "left": "category",
+      "name": "category_x_brand",
+      "right": "brand"
+    }
+  ],
+  "features": [
+    {
+      "binning": "equal_width",
+      "bins": 5,
+      "kind": "dense",
+      "name": "price"
+    },
+    {
+      "binning": "equal_frequency",
+      "bins": 4,
+      "kind": "dense",
+      "name": "dwell"
+    },
+    {
+      "binning": "equal_width",
+      "bins": 4,
+      "kind": "dense",
+      "name": "quality"
+    },
+    {
+      "kind": "sparse",
+      "name": "category"
+    },
+    {
+      "kind": "sparse",
+      "name": "brand"
+    },
+    {
+      "kind": "sparse",
+      "name": "device"
+    }
+  ],
+  "fusion": {
+    "ctr_weight": 0.65,
+    "cvr_weight": 0.35,
+    "mode": "weighted_sum"
+  },
+  "model": {
+    "hidden_dim": 4
+  },
+  "quantization": {
+    "fractional_bits": 8,
+    "tier": "Q16"
+  },
+  "schema_version": "1.0",
+  "seed": 20261124,
+  "shared_features": [
+    "price",
+    "dwell",
+    "category",
+    "category_x_brand"
+  ],
+  "tower_features": {
+    "ctr": [
+      "quality",
+      "device",
+      "category"
+    ],
+    "cvr": [
+      "price",
+      "brand",
+      "category_x_brand"
+    ]
+  }
+}

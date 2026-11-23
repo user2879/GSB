@@ -1,0 +1,19 @@
+seed: 71029
+learning_rate: 0.08
+batch_size: 4
+epochs: 2
+positive_weight: 2.0
+negative_weight: 1.0
+conversion_weight: 1.5
+conversion_delay_cutoff_ms: 6000
+global_train_sample_budget: 24
+per_batch_sample_quota: 4
+thread_pool_workers: 4
+snapshot_commit_interval_batches: 2
+initial_event_time_ms: 0
+tolerances:
+  feature_quantization: 0.18
+  shared_hidden: 0.12
+  ctr_tower: 0.1
+  cvr_tower: 0.1
+  fusion: 0.08
