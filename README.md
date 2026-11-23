@@ -1,21 +1,166 @@
-交付从新建的代码库开始，构建一个面向本地确定性中文语料的命名实体识别（NER）领域数据编辑与操作应用，核心解决交互延迟与计算结果一致性之间的冲突。输入为一个本地样本目录：字级标注语料 JSONL（每行含样本 ID、以空格分隔的字序列与 BIESO 实体标签序列及实体类型，覆盖人物、地点、机构、时间四类，文本由固定种子从受控字表生成）、一份本地小型 NER 模型参数包 JSON（字嵌入哈希表、发射权重与转移权重、特征维度与哈希桶数、模型版本号）、一份交互配置 JSON（交互延迟预算毫秒、定点小数位宽与量化档位、线程池并发数、快照提交间隔命令数、边界得分容差）以及一份交互命令流 JSON（每条命令可增删或替换受控词表条目、替换或删除单条语料、调整发射或转移权重、切换定点位宽与量化档位）。用户通过命令流反复编辑语料与模型参数，应用须在每次编辑后于预算内给出可用摘要，并保证最终实体识别结果与从空白全量执行逐字段一致。
+# 本地确定性中文 NER 编辑与操作应用
 
-任务环境与准备：
-安装 Python 3.10 及以上版本，使用标准库 json、hashlib、threading 与 concurrent.futures，无需第三方依赖。
-在本地新建工作区目录，准备固定种子生成的字级标注 JSONL、模型参数包 JSON 与交互命令流 JSON；样本仅含受控字表，不引用任何外部模型或网络资源。
-确保工作区可写并预留临时目录用于阶段产物整体替换；在 Windows 上可直接运行入口脚本，以整数退出码表示可处理退出与结束。
+这是一个仅使用 Python 标准库的单机应用。它面向固定种子生成的字级中文 NER 语料，在用户连续编辑词表、语料、模型权重、定点位宽与量化档位时，同时提供：
 
-业务要求：
-1. 实现语料、模型参数包与命令流的加载校验层：逐行解析字级标注 JSONL 并校验样本 ID 唯一、字序列与 BIESO 标签序列长度一致、标签取值在枚举内、实体片段起止连续且不越界；解析参数包并校验特征维度与哈希桶数为正整数、字嵌入哈希表与发射权重维度一致、转移权重矩阵形状与标签集合匹配；解析命令流并校验命令类型在允许枚举内、目标样本与否决权重字段存在；非法输入分别输出 E_CORPUS_INVALID、E_MODEL_PARAM_INVALID、E_COMMAND_INVALID 并进入失败清单，失败项不得进入后续阶段。
-2. 实现字级特征哈希与定点发射打分：对每个字按当前字、前后字、字在样本中的相对位置分档与词表命中长度构造哈希特征，按特征维度与哈希桶数映射后与发射权重点积；全程使用定点整数并按配置量化档位与定点小数位宽保留，逐字记录量化残差与舍入方向；同一字在同一参数与档位下多次运行必须得到逐位一致的特征索引与发射得分，非有限参数须在该阶段被识别并输出 E_EMISSION_INVALID。
-3. 实现对数域 BIESO 维特比解码与确定性并列决断：以发射打分与转移权重在对数域执行前向递推与回溯，输出最优标签序列、路径总分与逐位置候选标签得分；前向累加顺序固定为位置序号升序、标签编码升序，得分并列时按标签编码字典序决断并在产物中记录并列来源；同一输入在相同配置下重复解码必须得到完全一致的最优路径与候选得分。
-4. 实现实体片段合并与类型归属校验：把 BIESO 序列还原为实体片段并赋类型，对 B 后未跟 I、I 前无 B 与标签跳跃等非法结构按固定修复规则处理并逐条记录修复依据与受影响位置；同一片段在多候选类型并列时按类型编码升序决断；置信度恰等于边界的片段须输出高一位宽参考得分与差值，并在两档位判定不一致时标注翻转环节。
-5. 实现基于内容指纹的阶段级精确失效判定：为特征哈希、发射打分、维特比解码与片段合并各阶段产物计算由上游内容指纹、参数指纹与量化档位派生的缓存键，并记录每个结果引用的受控词表条目与样本 ID；当命令增删或替换词表条目、替换单条语料、调整权重或切换档位时，仅将使受影响阶段及其下游失效并纳入重算集合，未失效产物必须直接复用且不得重新计算。
-6. 实现交互延迟预算内的响应语义与并发一致性：每条命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，含已完成样本数、当前实体片段数与类型分布、受影响样本清单与进度；预算内无法得到最新参数下结果时返回带 E_LATENCY_BUDGET_EXCEEDED 的摘要而非等待；使用线程池并发执行各样本的发射打分与解码，最大并发数取自配置，每个样本任务携带由样本 ID 与阶段名派生的稳定排序键，最终样本顺序、实体片段顺序与失败清单顺序须与单线程按样本 ID 顺序执行逐字段一致。
-7. 保证任意命令序列后增量运行与从空白全量运行逐字段一致：从任意初始状态施加包含词表条目增删与替换、单条语料替换与删除、发射与转移权重调整、定点位宽与量化档位切换的命令序列，每次稳定后增量运行得到的逐样本实体片段列表、路径总分、候选得分、边界清单、失效复用清单以及失败清单顺序，必须与按相同最终语料和参数一次性全量运行的结果完全相同，不得因词表累积顺序或调度顺序而漂移。
-8. 实现阶段化快照整体替换、恢复判定与诊断报告输出：将加载校验、发射打分、维特比解码与片段合并划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、参数包版本号、配置哈希、已完成样本列表与各阶段产物版本，替换前须比对版本变化而非逐文件覆盖；收到可处理的退出信号时完成当前命令的快照提交后以整数退出码退出；每次完整运行输出 JSON 报告，含逐样本实体片段、路径总分、边界清单、复用重算账本与业务码统计。
+- 配置预算内的交互摘要；超预算时返回最近一次已完成摘要和 `E_LATENCY_BUDGET_EXCEEDED`。
+- 基于内容指纹的阶段级增量计算；未失效的特征、发射、解码、合并产物直接复用。
+- 与空白缓存全量计算逐字段一致的业务结果。
+- 分段原子快照、可恢复快照、信号中断后的安全退出。
+- 完整 JSON 诊断报告与可重复的单元/集成测试。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-使用本地语料与命令流验证首响摘要、增量结果与全量执行逐字段一致，并覆盖非法输入与中断恢复。
+```bash
+python3 --version                 # 需要 3.10+
+python3 main.py --workspace . --verify-full --report artifacts/report.json
+```
+
+也可使用模块入口：
+
+```bash
+python3 -m ner_editor --workspace . --verify-full --report artifacts/report.json
+```
+
+常用选项：
+
+```text
+--corpus PATH          字级语料 JSONL，默认 samples/corpus.jsonl
+--model PATH           模型参数包 JSON，默认 samples/model.json
+--config PATH          交互配置 JSON，默认 samples/config.json
+--commands PATH        命令流 JSON，默认 samples/commands.json
+--report PATH          报告路径，默认 <workspace>/artifacts/report.json
+--run-id ID            快照运行标识，默认 default
+--resume               从 CURRENT 快照恢复并只执行尚未处理的命令
+--max-commands N       本次最多执行 N 条命令后稳定并提交快照
+--budget-ms MS         覆盖配置中的交互延迟预算
+--verify-full          最终状态再用空白缓存全量重算并比较
+--no-snapshot          禁用快照
+--quiet                不输出逐命令 JSONL，只写报告
+```
+
+正常完成返回 `0`；可恢复信号 `SIGINT`/`SIGTERM` 在完成当前命令快照后分别返回 `130`/`143`；模型或配置致命非法返回 `2`。
+
+Windows 可直接运行：
+
+```powershell
+python main.py --workspace . --verify-full --report artifacts\report.json
+```
+
+## 目录
+
+```text
+main.py                    入口脚本
+ner_editor/app.py          CLI、信号、恢复、全量对照
+ner_editor/loader.py       四类输入解析与业务码校验
+ner_editor/features.py     字符/前后字/位置/词表命中长度特征哈希
+ner_editor/emission.py     定点嵌入聚合与发射打分
+ner_editor/decoder.py      整数对数域 BIESO 维特比
+ner_editor/merging.py      片段修复、类型裁决、边界探测
+ner_editor/engine.py       内容寻址缓存、线程池、预算摘要、账本
+ner_editor/snapshot.py     分代目录快照与原子 CURRENT 指针
+samples/                   固定种子样本、参数、配置、命令流
+samples/invalid/           非法输入演示
+tests/                     标准库 unittest 验收测试
+TECHNICAL.md               算法、缓存键、快照与确定性规则
+VALIDATION.md              实际运行结果
+```
+
+## 输入契约
+
+### 字级语料 JSONL
+
+每行一个对象。字符、BIESO 标签、实体类型都可用空格分隔字符串或数组：
+
+```json
+{"id":"s001","chars":"张 三 在 北 京","labels":"B E O B E","types":"PER PER O LOC LOC"}
+```
+
+支持字段别名：
+
+- 样本 ID：`id` / `sample_id`
+- 字序列：`chars` / `tokens` / `text`
+- 标签：`labels` / `bieos` / `tags`
+- 类型：`types` / `entity_types` / `ner_types`
+- 也接受 `B-PER` 形式的组合标签。
+
+校验项：样本 ID 唯一、字与标签等长、标签限于 `B/I/E/S/O`、实体从 `B` 开始并以 `E` 结束（允许 `B E` 两字实体）、`I/E` 不得孤立、片段不越界、同一片段类型一致。非法行产生 `E_CORPUS_INVALID`，且不会进入推理阶段；其他合法行继续运行。
+
+### 模型参数包
+
+核心字段：
+
+```json
+{
+  "model_version": "local-hash-bieso-v1",
+  "feature_dim": 12,
+  "hash_buckets": 97,
+  "labels": ["B", "I", "E", "S", "O"],
+  "char_embeddings": {"张": [0.1, -0.2, "..."], "@BOS": ["..."]},
+  "emission_weights": [["12 行，每行 5 列"]],
+  "transition_weights": [["5x5 对数域转移"]],
+  "start_weights": [0, 0, 0, 0, 0],
+  "default_entity_type": "ORG",
+  "vocabulary": [{"id": "v001", "text": "张三", "type": "PER"}]
+}
+```
+
+约束：`feature_dim`、`hash_buckets` 为正整数；每个嵌入向量长度等于 `feature_dim`；发射矩阵行数等于 `feature_dim`、列数等于标签数；转移矩阵为标签数乘标签数；词表条目 ID 唯一、类型在 `LOC/ORG/PER/TIME` 内。结构/维度非法输出 `E_MODEL_PARAM_INVALID`。非有限数值允许载入，但在发射阶段输出 `E_EMISSION_INVALID`。
+
+### 交互配置
+
+```json
+{
+  "interaction_latency_budget_ms": 600,
+  "fixed_decimals": 4,
+  "quantization_level": 1,
+  "quantization_levels": [1, 2, 8],
+  "thread_pool_workers": 4,
+  "snapshot_commit_interval_commands": 3,
+  "boundary_score_tolerance": 4.50006,
+  "temp_dir": "artifacts/tmp",
+  "default_entity_type": "ORG"
+}
+```
+
+### 命令流
+
+命令流可以是顶层数组、`{"commands":[...]}` 或 JSONL。支持别名，规范命令如下：
+
+| `type` | 必需字段 |
+|---|---|
+| `vocab_add` | `entry:{id,text,type}` |
+| `vocab_delete` | `entry_id` |
+| `vocab_replace` | `entry_id`, `entry:{id,text,type}` |
+| `corpus_replace` | `sample_id`, `sample:{id,chars,labels,types}` |
+| `corpus_delete` | `sample_id` |
+| `emission_adjust` | `target:{dimension,label}`, `delta`/`value`/`weight` |
+| `transition_adjust` | `target:{from,to}`, `delta`/`value`/`weight` |
+| `fixed_point_set` | `fixed_decimals` |
+| `quantization_set` | `quantization_level` |
+| `noop` / `quit` | 无 |
+
+命令类型不合法、目标缺失或权重字段缺失输出 `E_COMMAND_INVALID`；命令携带的语料非法输出 `E_CORPUS_INVALID`；越界权重目标输出 `E_MODEL_PARAM_INVALID`。失败命令不会修改状态。
+
+## 输出与确定性
+
+报告包含：
+
+- `samples`：逐样本实体片段、路径标签/总分、逐位置候选得分、修复依据、边界记录、发射量化细节、阶段版本。
+- `failures` / `current_stage_failures`：按固定顺序排列。
+- `code_counts`：业务码统计，包括延迟预算码。
+- `reuse_recompute_ledger`：每样本每阶段的缓存键、输入/输出指纹、版本、引用词表 ID 和 `reuse/recompute/failed`。
+- `command_responses`：逐命令首响摘要、进度和状态。
+- `snapshot`：当前快照代次、清单、变化阶段。
+- `equivalence`：`--verify-full` 时的空白缓存全量对照结果。
+
+同一内容、配置与量化档位下，特征索引、发射得分、维特比路径、候选得分、实体片段和失败顺序均逐位一致。线程数只影响执行方式，不影响业务投影。
+
+## 测试
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+测试覆盖：三类加载错误、非有限参数、定点残差、标签/类型并列决断、片段修复、边界翻转、阶段级失效、逐命令增量/全量一致、1/4 线程一致、低预算首响、快照硬链接复用、损坏快照回退、正常恢复与 `SIGINT` 恢复。
+
+详细算法与快照协议见 [TECHNICAL.md](TECHNICAL.md)，实际结果见 [VALIDATION.md](VALIDATION.md)。

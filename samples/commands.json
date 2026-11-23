@@ -1,0 +1,88 @@
+[
+  {
+    "seq": 1,
+    "type": "noop"
+  },
+  {
+    "seq": 2,
+    "type": "vocab_add",
+    "entry": {
+      "id": "v100",
+      "text": "南湖",
+      "type": "LOC"
+    }
+  },
+  {
+    "seq": 3,
+    "type": "vocab_replace",
+    "entry_id": "v019",
+    "entry": {
+      "id": "v019",
+      "text": "开会",
+      "type": "TIME"
+    }
+  },
+  {
+    "seq": 4,
+    "type": "corpus_replace",
+    "sample_id": "s003",
+    "sample": {
+      "id": "s003",
+      "chars": "在 杭 州 和 李 四 开 会",
+      "labels": "O B E O B E O O",
+      "types": "O LOC LOC O PER PER O O"
+    }
+  },
+  {
+    "seq": 5,
+    "type": "emission_adjust",
+    "target": {
+      "dimension": 0,
+      "label": "B"
+    },
+    "delta": 0.2
+  },
+  {
+    "seq": 6,
+    "type": "transition_adjust",
+    "target": {
+      "from": "O",
+      "to": "B"
+    },
+    "delta": 0.15
+  },
+  {
+    "seq": 7,
+    "type": "fixed_point_set",
+    "fixed_decimals": 5
+  },
+  {
+    "seq": 8,
+    "type": "quantization_set",
+    "quantization_level": 2
+  },
+  {
+    "seq": 9,
+    "type": "vocab_delete",
+    "entry_id": "v020"
+  },
+  {
+    "seq": 10,
+    "type": "emission_adjust",
+    "target": {
+      "dimension": 5,
+      "label": "S"
+    },
+    "delta": -0.03
+  },
+  {
+    "seq": 11,
+    "type": "corpus_delete",
+    "sample_id": "s018"
+  },
+  {
+    "seq": 12,
+    "type": "quantization_set",
+    "quantization_level": 1
+  }
+]
