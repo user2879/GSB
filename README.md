@@ -1,22 +1,246 @@
-在一台没有历史代码的机器上，需要从零构建一个面向 Windows 本地环境的云原生构建流水线制品缓存租约仲裁组件，交付数据处理管线与结果验证工具。与按清单逐个登记制品并判定缓存命中不同，本组件把缓存复用视为一种可被多个流水线运行临时持有的租约资源：用户在本地 JSON 中声明若干缓存节点（节点标识、127.0.0.1 回环端口、整数容量槽位、整数每节点租约上限、整数随机种子），并声明一条构建流水线清单（阶段、制品、制品间引用以及各阶段并发配额）；制品以本地文件形式存放在工作区目录内，其内容摘要决定可复用性。每个流水线运行在回环 TCP 上以 JSON 行协议向缓存节点申请制品租约，节点按自身种子生成确定性制品内容并回传摘要，租约带整数毫秒到期时刻与可复用制品键集合。核心业务是：同一制品键在有多个缓存节点可服务时如何被唯一仲裁给某个节点，租约到期与配额回收如何互不重叠，以及任一节点被强制终止后重启的副本摘要如何与仲裁账本收敛。系统须持久化账本并支持整体替换恢复与独立重放校验。
+# 云原生构建流水线制品缓存租约仲裁组件
 
-任务环境与准备：
-确认 Windows 本地已安装 Python 3.10 或以上版本，并可在命令行中调用 python。
-安装依赖：执行 python -m pip install numpy。
-无需外部服务、账号或网络资源，所有样本与制品文件随题目本地生成。
-运行时由脚本在工作区内创建临时目录存放缓存节点数据、账本与日志，不依赖预先存在的项目文件。
+这是一个面向 Windows 本地环境、从零实现的可执行参考实现。它把制品缓存复用建模为可独占、可到期、可持久恢复的租约资源，并同时交付：
 
-业务要求：
-1. 实现缓存节点声明、流水线清单与制品引用的加载及强校验：从本地 JSON 读取节点集合（节点标识、回环端口、容量槽位、每节点租约上限、随机种子）与流水线清单（阶段、制品键、制品间引用、阶段并发配额），校验节点标识与制品键唯一、端口为 127.0.0.1 回环字面量且全局不重复、容量槽位与租约上限为正整数、引用目标存在且无环；任一不合法须以 E_SPEC 拒绝并指明首个违规制品键或节点标识。
-2. 实现按制品键的确定性副本摘要与可复用性判定：每个缓存节点按自身种子与制品键按显式规则生成制品内容并计算内容摘要，相同节点与制品键多次生成的摘要必须逐位一致；以制品键、内容摘要与引用列表共同判定可复用性，某节点摘要与清单声明摘要不符时该节点对该制品不可复用，须输出节点标识、期望摘要与实际摘要并说明不可复用原因。
-3. 实现回环 TCP 上的租约申请与逐行协议处理：以 Windows 子进程按节点声明启动缓存节点并绑定端口，流水线运行通过真实套接字连接发送包含制品键集合、期望租约毫秒与申请序号的请求行，接收含租约标识、授予制品键、到期时刻与节点摘要的应答行；端口占用、握手超时与应答字段缺失须分别以 E_PORT、E_HANDSHAKE、E_REPLY 报告并稳定可复现。
-4. 实现同一制品键在多节点间的唯一仲裁与配额裁决：当多个节点均可服务同一制品键时，按节点摘要匹配优先、剩余容量槽位降序、节点标识序的稳定规则选定唯一服务节点，其他候选须保留为对照并记录否决理由；节点租约上限耗尽时申请须排队并输出排队序号与等待依据，同一节点在任一时刻被授予的租约数不得超出其租约上限，同一制品键不得被同时授予两个节点。
-5. 实现租约到期回收与配额回收并存的唯一归属裁决：租约到期须以本地单调时钟真实计时判定而非人为延迟，到期时须同时释放节点容量槽位与租约计数；同一份容量权益不得既被计入到期回收又被计入配额回收，也不得被两个租约同时持有；须输出每次归属变化的裁决依据与事件序号，且按任意申请处理顺序结果须一致。
-6. 实现受全局并发上限与每节点并发配额约束的并行租约处理调度：任一时刻在途租约请求总数与单节点在途请求数不得超出上限与配额，配额耗尽时请求排队并记录等待开始与结束的单调时钟毫秒；调度须真实投射到工作线程池，不得绕过配额继续处理，并输出每请求的排队时长与执行时长。
-7. 实现仲裁账本的持久化、版本识别整体替换与强制终止后的恢复：每次授予、续约、到期回收与配额回收须在同一 SQLite 事务中写入事件记录、节点容量余量、租约集合与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时版本或摘要与磁盘状态不一致须整体替换而非增量合并并稳定列出差异；进程被强制终止后重启只能依据已完整提交的记录恢复，处于未提交中的租约须标记为未知并要求重新申请，不得声称能生成退出报告。
-8. 实现独立重放校验工具与节点重启后的副本摘要收敛判定：验证工具仅读账本与原始声明文件，自行完成摘要生成、仲裁推导与归属裁决，与账本逐项比较，差异须以 E_VERIFY 定位到首个不一致的制品键、节点与字段；节点被强制终止后重启须依据本地持久化的制品内容重新计算摘要，若与仲裁账本记录的摘要不一致须以 E_CONVERGE 报告偏差节点与制品键集合。
+- 强校验的节点/流水线声明加载器；
+- 确定性制品内容与摘要生成器；
+- 真实回环 TCP JSON-lines 缓存节点；
+- 多节点唯一仲裁、容量/租约配额排队、线程池调度；
+- SQLite 仲裁账本、事件哈希链、整库快照替换与强杀恢复；
+- 独立重放验证器 `verify` 和节点副本收敛工具 `converge`；
+- 26 个本地 `unittest` 验收测试。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+实现只使用 Python 标准库；按照题目准备步骤执行 `python -m pip install numpy` 即可，核心运行不依赖外部服务、账号、Docker 或网络。
 
-验收：
-使用本地样本验证多节点租约仲裁唯一性、到期与配额回收归属、强制终止恢复及独立重放校验结论。
+## 环境与快速验收
+
+```bat
+python --version
+python -m pip install numpy
+
+python -m gsbcache sample --out runtime\demo
+python -m gsbcache validate --spec runtime\demo\spec.json
+python -m gsbcache run --spec runtime\demo\spec.json --work runtime\demo\work --lease-ms 420 --result-out runtime\demo\result.json
+python -m gsbcache verify --spec runtime\demo\spec.json --ledger runtime\demo\work\ledger.sqlite3
+python -m gsbcache converge --spec runtime\demo\spec.json --ledger runtime\demo\work\ledger.sqlite3 --nodes-root runtime\demo\work\nodes
+
+python -m unittest discover -v
+```
+
+`sample` 会自动寻找三个空闲回环端口写入 `spec.json`，并在 `published/` 下物化清单声明的制品文件。`run` 会启动真实子进程节点、创建 SQLite 账本和节点数据目录，结束后自动执行独立重放与收敛校验。
+
+实际运行结论见 [VALIDATION.md](VALIDATION.md)。
+
+## 规格文件
+
+单个 JSON 同时声明节点和流水线：
+
+```json
+{
+  "format_version": 1,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 43101,
+      "capacity_slots": 2,
+      "lease_limit": 1,
+      "seed": 17
+    }
+  ],
+  "pipeline": {
+    "pipeline_id": "demo",
+    "global_concurrency": 3,
+    "stages": [
+      {
+        "stage_id": "prepare",
+        "concurrency": 2,
+        "artifacts": [
+          {
+            "key": "src:main",
+            "expected_digest": "<64-lowercase-hex>",
+            "refs": []
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+强校验包括：
+
+- `format_version` 为整数 `1`；
+- 节点标识唯一；制品键在整条流水线内唯一；阶段标识唯一；
+- `host` 必须是字面量 `127.0.0.1`；端口必须是 `1..65535` 的整数且全局不重复；
+- `capacity_slots`、`lease_limit`、阶段 `concurrency`、全局 `global_concurrency` 均为正整数；
+- `seed` 为整数；
+- `expected_digest` 为 64 位小写十六进制 SHA-256；
+- 每个 `refs` 目标存在，引用图无环；
+- 校验按节点文档顺序、再按阶段/制品文档顺序执行，发现首个错误立即抛出 `E_SPEC`，并携带 `node_id` 或 `artifact_key`。
+
+流水线阶段会按跨阶段制品引用进行拓扑排序后执行。
+
+## 确定性内容与可复用性
+
+节点不使用随机数生成内容。显式规则为：
+
+```text
+content = UTF-8 canonical JSON:
+  {"artifact_key": <key>, "content_version": 1, "node_seed": <seed>}
+        sort_keys=True, separators=(",", ":"), ensure_ascii=True
+digest  = SHA-256(content)
+```
+
+节点标识不进入内容，因此相同 seed 的不同节点会生成逐位相同的副本，可参与同一制品键的竞争；不同 seed 会产生不同摘要。
+
+节点把内容写入：
+
+```text
+<nodes-root>/<node_id>/artifacts/artifact-<sha256(artifact_key)>.bin
+```
+
+重启时，如果文件存在则直接读取并重新计算摘要，不静默重写。制品可复用必须同时满足：
+
+1. 节点实际摘要等于清单 `expected_digest`；
+2. `refs` 闭包内每个引用制品在该节点的摘要也等于其清单声明摘要。
+
+失败输出包含 `node_id`、`expected_digest`、`actual_digest`、`reason`，引用失败还包含 `bad_references`。
+
+## TCP JSON-lines 协议
+
+每个请求/应答是一行紧凑 JSON。租约请求示例：
+
+```json
+{"type":"lease","protocol":1,"request_id":"demo:compile:app:bin","sequence":3,"artifact_keys":["app:bin"],"lease_ms":420}
+```
+
+节点成功应答包含：
+
+```json
+{
+  "ok": true,
+  "type": "lease_granted",
+  "protocol": 1,
+  "lease_id": "lease_...",
+  "request_id": "demo:compile:app:bin",
+  "sequence": 3,
+  "node_id": "node-a",
+  "granted_key": "app:bin",
+  "granted_keys": ["app:bin"],
+  "expires_at_ms": 1795459229404,
+  "digests": {"app:bin": "<sha256>"},
+  "reusable_keys": ["app:bin"]
+}
+```
+
+错误分类稳定为：
+
+| 代码 | 场景 | 进程退出码 |
+|---|---|---|
+| `E_SPEC` | 声明/引用/端口/整数等规格错误 | 2 |
+| `E_PORT` | 节点子进程绑定回环端口失败 | 3 |
+| `E_HANDSHAKE` | 节点未就绪或握手超时/失败 | 4 |
+| `E_REPLY` | 应答缺字段、超时、连接中断 | 5 |
+| `E_VERIFY` | 独立重放与账本不一致 | 6 |
+| `E_CONVERGE` | 节点落盘副本摘要与账本不一致 | 7 |
+| `E_LEDGER` | 账本版本/摘要/快照完整性错误 | 8 |
+| `E_ARB` | 制品键冲突、无候选或仲裁队列超时 | 9 |
+
+节点使用逐连接线程处理协议行；控制器使用 `subprocess.Popen` 启动 `python -m gsbcache.node`，Windows 下设置 `CREATE_NO_WINDOW`，并传递父进程号。父进程被强杀后，节点会检测父进程消失并自行退出，避免遗留端口。
+
+## 仲裁与调度
+
+候选节点必须同时满足：摘要匹配、引用闭包可复用、剩余容量槽位大于 0、剩余租约配额大于 0。可服务候选按以下稳定键排序：
+
+```text
+摘要匹配优先（不匹配者直接否决）
+→ 剩余容量槽位降序
+→ node_id 字典序升序
+```
+
+所有候选（包括被否决者）会写入请求结果和 `lease_granted` 事件，包含实际/期望摘要、剩余容量、剩余配额、排名与否决理由。
+
+配额耗尽时：
+
+- 控制器在条件队列中等待，并输出 `queue_position`、`queue_reason`、容量等待时间、线程池/并发门等待时间；
+- 到期回收后唤醒等待者重新仲裁；
+- 同一制品键已被活跃租约或另一个请求持有时立即返回 `E_ARB`，不会同时授予两个节点。
+
+流水线调度真实使用 `ThreadPoolExecutor`。阶段线程池与阶段信号量执行阶段并发配额；全局信号量执行全局在途请求上限；节点信号量执行每节点在途请求配额。每个请求输出：
+
+- `stage_queue_ms`：等待阶段工作线程；
+- `queue_ms` / `total_queue_ms`：容量/配额及并发门等待；
+- `execution_ms`：真实 socket 请求执行时间；
+- 单调时钟起止毫秒和观测到的在途数。
+
+## 到期与唯一归属
+
+控制器为每个租约维护 `deadline_mono_ns`，到期回收线程用 `time.monotonic_ns()` 真实计时，不使用人工 `sleep` 伪造事件。到期或配额回收都在一个 SQLite 事务中：
+
+1. 条件更新 `leases.state='active' → 'closed'`；只有更新成功的路径能继续；
+2. 同时释放容量槽位与租约配额；
+3. 写入唯一释放事件、`custody_token=<lease_id>`、释放原因和事件序号；
+4. 更新节点的 `capacity_used/capacity_remaining/active_leases/quota_remaining`、进度游标和内容摘要。
+
+因此到期回收与配额回收竞态时只有一个赢家；不会重复释放同一份容量权益，也不会出现两个活跃租约持有同一制品键。
+
+## SQLite 账本与恢复
+
+账本表包含 `meta`、`nodes`、`leases`、`events`、`attempts`、`sessions`。关键性质：
+
+- 授予、续约、到期回收、配额回收均在同一事务中写入事件、节点余量、租约集合和游标；
+- 事件序号连续，并使用 `prev_hash + canonical_event` 形成 SHA-256 事件链；
+- `meta.content_digest` 覆盖元数据、节点、租约、尝试、会话和全部事件；
+- 账本首次写入整数 `format_version=1` 和清单摘要。
+
+恢复语义：
+
+- 网络请求前先提交 `attempts.state='pending'`；
+- 节点授予后，只有在账本授予事务提交后才算完整授予；
+- 强杀后 SQLite 自动丢弃未提交事务；重新打开时，已提交的 `pending` 尝试被标为 `unknown`，并追加 `attempt_unknown` 事件要求重新申请；
+- 上一个会话遗留的活跃租约被标为 `lease_unknown` 并释放，不继续假定可用；
+- `sessions.state='aborted', exit_report=0`，恢复结果 `exit_report=null`，不会声称能生成退出报告。
+
+快照工具：
+
+```bat
+python -m gsbcache ledger-export --ledger ... --spec ... --out snapshot.json
+python -m gsbcache ledger-replace --ledger ... --snapshot snapshot.json --spec ...
+```
+
+`ledger-replace` 校验快照格式版本、内容摘要和事件链后，使用临时 SQLite 文件重建全部状态，再一次性替换目标文件；绝不增量合并，并输出稳定排序的版本、摘要、游标和各表计数差异。
+
+## 独立验证与收敛
+
+`verify` 只读取账本和原始声明，不读取节点运行状态。它独立重做：
+
+- 内容摘要生成；
+- 引用闭包可复用性；
+- 候选节点排序和唯一赢家推导；
+- 容量槽位、租约配额、单键唯一性；
+- 授予/续约/到期/配额回收归属；
+- 最终节点余量与活跃租约集合。
+
+首个差异以 `E_VERIFY` 返回，并定位 `artifact_key`、`node_id`、`field`、`expected`、`actual`、`event_seq`。
+
+`converge` 读取每个节点目录中持久化的制品文件，重新计算 SHA-256，并与账本中该节点/制品的摘要逐项比较。偏差以 `E_CONVERGE` 返回，包含：
+
+- `deviating_nodes`：偏差节点列表；
+- `deviating_artifact_keys`：每个节点对应的制品键集合；
+- `deviations`：逐项路径、原因、期望与实际摘要。
+
+## 测试覆盖
+
+`python -m unittest discover -v` 覆盖 26 个场景，包括：
+
+- 所有 `E_SPEC` 强校验及首个错误定位；
+- 确定性摘要、seed 不匹配、引用闭包不匹配；
+- `E_PORT`、`E_HANDSHAKE`、`E_REPLY`；
+- 多节点唯一仲裁、同键竞争、到期后重新申请；
+- 租约上限与容量槽位排队、线程池/全局/节点并发上限；
+- 到期回收与配额回收竞态只有一个赢家；
+- 强杀后 `unknown/requires_reapply` 与无退出报告；
+- 快照摘要篡改检测和整库替换；
+- 独立重放 `E_VERIFY` 定位；
+- 节点重启后持久内容摘要偏差 `E_CONVERGE`。
