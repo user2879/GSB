@@ -1,0 +1,22 @@
+[
+  {
+    "rule_id": "rule-gray",
+    "worker_ids": ["worker-alpha", "worker-delta"],
+    "batch_size": 3,
+    "param_version": 3,
+    "receipt_formats": ["r1", "r3"],
+    "retry_policy": "immediate",
+    "max_retries": 2,
+    "socket_timeout_ms": 2000
+  },
+  {
+    "rule_id": "rule-gamma",
+    "worker_ids": ["worker-gamma"],
+    "batch_size": 2,
+    "param_version": 4,
+    "receipt_formats": ["r3"],
+    "retry_policy": "bounded",
+    "max_retries": 1,
+    "socket_timeout_ms": 1500
+  }
+]

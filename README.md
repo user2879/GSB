@@ -20,3 +20,29 @@
 
 验收：
 用本地样本运行，校验三格式回执归一、快速与权威重算逐字节一致、强制终止后重放定位与未知批次标注。
+
+---
+
+## 交付物与使用方式
+
+实现位于 `receipt_ledger/`，样本位于 `samples/v1` 与 `samples/v2`，
+测试位于 `tests/`，设计说明见 `docs/DESIGN.md`。
+
+```bash
+python -m pytest tests/ -q                      # 35 项测试
+bash scripts/run_demo.sh                        # 端到端验收脚本
+
+python -m receipt_ledger.cli \
+  --workers samples/v1/workers.json \
+  --requests samples/v1/requests.json \
+  --rules samples/v1/rules.json \
+  --db artifacts/v1.db run                      # 运行并提交账本
+python -m receipt_ledger.cli ... preview        # 单次读取快速视图
+python -m receipt_ledger.cli ... recompute      # 权威重算逐字节比对
+python -m receipt_ledger.cli ... resume         # 强制终止后恢复重放
+python -m receipt_ledger.cli ... verify         # 链式摘要+重放校验
+python -m receipt_ledger.cli ... ui             # Tkinter 只读界面
+```
+
+错误码：`E_SPEC` 规格违规、`E_CODEC` 回执非法、`E_PREVIEW` 缓存/重算偏差、
+`E_REPLAY` 重放不一致、`E_SNAPSHOT` 快照/链校验失败。
