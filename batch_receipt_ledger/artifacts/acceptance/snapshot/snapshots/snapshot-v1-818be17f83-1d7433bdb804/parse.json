@@ -1,0 +1,1026 @@
+{
+  "failures": [
+    {
+      "code": "E_RECEIPT_VERSION",
+      "details": {
+        "v": "r9"
+      },
+      "message": "receipt version code must be r1, r2, or r3",
+      "record_index": 0,
+      "source": "receipts/bad_version.jsonl"
+    },
+    {
+      "code": "E_WORKER_INVALID",
+      "details": {
+        "receipt_ref": "rr-55ea05631344cc09",
+        "worker_id": "W999"
+      },
+      "message": "receipt references an unknown worker_id",
+      "record_index": 0,
+      "source": "receipts/invalid_worker.jsonl"
+    },
+    {
+      "code": "E_ARRIVAL_ORDER",
+      "details": {
+        "arrival_ms": 1,
+        "previous_arrival_ms": 238,
+        "request_id": "Q9000"
+      },
+      "message": "arrival_ms moved backwards",
+      "record_index": 32,
+      "source": "requests_invalid.jsonl"
+    },
+    {
+      "code": "E_WORKER_INVALID",
+      "details": {
+        "port": 70000,
+        "worker_id": "W-BAD-PORT"
+      },
+      "message": "port must be 0 (auto) or in [20000, 39999]",
+      "record_index": 3,
+      "source": "workers.json"
+    }
+  ],
+  "planned_batches": [
+    {
+      "batch_id": "B-0001",
+      "batch_index": 1,
+      "param_version": 11,
+      "request_ids": [
+        "Q0001",
+        "Q0002",
+        "Q0003"
+      ],
+      "seqs": [
+        1,
+        2,
+        3
+      ],
+      "size": 3,
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0002",
+      "batch_index": 2,
+      "param_version": 22,
+      "request_ids": [
+        "Q0004",
+        "Q0005",
+        "Q0006"
+      ],
+      "seqs": [
+        4,
+        5,
+        6
+      ],
+      "size": 3,
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0003",
+      "batch_index": 3,
+      "param_version": 31,
+      "request_ids": [
+        "Q0007",
+        "Q0008",
+        "Q0009"
+      ],
+      "seqs": [
+        7,
+        8,
+        9
+      ],
+      "size": 3,
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0004",
+      "batch_index": 4,
+      "param_version": 11,
+      "request_ids": [
+        "Q0010",
+        "Q0011",
+        "Q0012"
+      ],
+      "seqs": [
+        10,
+        11,
+        12
+      ],
+      "size": 3,
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0005",
+      "batch_index": 5,
+      "param_version": 22,
+      "request_ids": [
+        "Q0013",
+        "Q0014",
+        "Q0015"
+      ],
+      "seqs": [
+        13,
+        14,
+        15
+      ],
+      "size": 3,
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0006",
+      "batch_index": 6,
+      "param_version": 31,
+      "request_ids": [
+        "Q0016",
+        "Q0017",
+        "Q0018"
+      ],
+      "seqs": [
+        16,
+        17,
+        18
+      ],
+      "size": 3,
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0007",
+      "batch_index": 7,
+      "param_version": 11,
+      "request_ids": [
+        "Q0019",
+        "Q0020",
+        "Q0021"
+      ],
+      "seqs": [
+        19,
+        20,
+        21
+      ],
+      "size": 3,
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0008",
+      "batch_index": 8,
+      "param_version": 22,
+      "request_ids": [
+        "Q0022",
+        "Q0023",
+        "Q0024"
+      ],
+      "seqs": [
+        22,
+        23,
+        24
+      ],
+      "size": 3,
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0009",
+      "batch_index": 9,
+      "param_version": 31,
+      "request_ids": [
+        "Q0025",
+        "Q0026",
+        "Q0027"
+      ],
+      "seqs": [
+        25,
+        26,
+        27
+      ],
+      "size": 3,
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0010",
+      "batch_index": 10,
+      "param_version": 11,
+      "request_ids": [
+        "Q0028",
+        "Q0005",
+        "Q0009"
+      ],
+      "seqs": [
+        28,
+        29,
+        30
+      ],
+      "size": 3,
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0011",
+      "batch_index": 11,
+      "param_version": 22,
+      "request_ids": [
+        "Q0017",
+        "Q0021",
+        "Q0101"
+      ],
+      "seqs": [
+        31,
+        32,
+        101
+      ],
+      "size": 3,
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0012",
+      "batch_index": 12,
+      "param_version": 31,
+      "request_ids": [
+        "Q0102",
+        "Q0103",
+        "Q0104"
+      ],
+      "seqs": [
+        102,
+        103,
+        104
+      ],
+      "size": 3,
+      "worker_id": "W3"
+    }
+  ],
+  "receipts": [
+    {
+      "batch_id": "B-0001",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:6a9cf51e9e1b418bd0b3b939e81d7177ff3e1797d549c091573a2af69b0fa739",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-0c34a6a4f314a8a5",
+      "request_id": "Q0001",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0001",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:3f66411fad5dfb27b0e14ae976540c28241d65d88ddcda1ec154ffa657b581ba",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-6222ea125a67fde2",
+      "request_id": "Q0002",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0001",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:0e816e83edf806151d60ca7e2a7397b0e53847505e1cce7bbe59c60d536f5943",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-739b275065bb751a",
+      "request_id": "Q0003",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0001",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:97e91637d1fb148b13ff296b8e037e9c75b3eb671223acd16b541689fff245d4",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-b0407ffb51a731fb",
+      "request_id": "Q0004",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0002",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:ed7ec2f9790461c608c24a72d341eddae70b7f69da0d46e9d98cbfaf2bdd8b50",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-a27237ad914a6651",
+      "request_id": "Q0005",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0002",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:e169a4f64763088bcd7ba7ab3d281dc723eff1c08d3469132ea51418cad832f7",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-9f79c654f33ee658",
+      "request_id": "Q0006",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0002",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:e3b49c87a98abe16607812738b8ee01361cbb3e59f6b3b532d03ad1a01c76e32",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-808511728ab90cc4",
+      "request_id": "Q0007",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0002",
+      "completeness_label": "r1_core",
+      "completeness_score": 3,
+      "elapsed_ms": "$missing",
+      "missing_fields": [
+        "param_version",
+        "elapsed_ms",
+        "worker_id",
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r1",
+      "output_digest": "sha256:5631d8eb6f51ce7935d3bbf7d7af44591f212290abff79289c9af43ac3b25ef7",
+      "param_digest": "$missing",
+      "param_version": "$missing",
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-7b02b97c8d7e8535",
+      "request_id": "Q0008",
+      "source_version": "r1",
+      "supersedes_ref": "$missing",
+      "worker_id": "$missing"
+    },
+    {
+      "batch_id": "B-0003",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 24,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:96f3507c634d76b2f1e98dd77ab0bb2d66b35554f2696246a69463314cbf3745",
+      "param_digest": "$missing",
+      "param_version": 31,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-e90dfbf11723f720",
+      "request_id": "Q0009",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0003",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 25,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:75c4d1e8040289580e1e6f2b3dfe11924a4ffb68e6b3e6d16a20bf4a69f86dd7",
+      "param_digest": "$missing",
+      "param_version": 31,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-c8d36154b8495c3a",
+      "request_id": "Q0010",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0003",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 26,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:40eb80e5d8311218c4221777b674d1ae2544f91d42278f729d0f3b9edd6d3d2e",
+      "param_digest": "$missing",
+      "param_version": 31,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-b4b79e8c9bdb75d5",
+      "request_id": "Q0011",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0003",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 27,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:6895dd4a4303c4228efb1eb542cd4df9bf4d4f024e3dbb49723598fa8f82bc1a",
+      "param_digest": "$missing",
+      "param_version": 31,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-322cc490efd451bf",
+      "request_id": "Q0012",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0004",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 28,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:7227dd91d72eab732dc0f1124434f958768501f933b30b6ee3f5ce9c49884539",
+      "param_digest": "$missing",
+      "param_version": 11,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-1bfb4b901f3e35d0",
+      "request_id": "Q0013",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0004",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 29,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:502bc066004c8650bb3f4a502ba1881a7a04a5cf3fe3a82eaa4c0a2222c61f39",
+      "param_digest": "$missing",
+      "param_version": 11,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-969b64e3791dd6b8",
+      "request_id": "Q0014",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0004",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 30,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:6fbded45b5e540cb10e2e05471cff202c41c6044b284c52abdca0fe728dce7a2",
+      "param_digest": "$missing",
+      "param_version": 11,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-f49f66ef67f59784",
+      "request_id": "Q0015",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0004",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 31,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:2e35c55a0b5317e3b7ba46eb867fdc9394ac93627eec20e4a2fbfd6d5603608d",
+      "param_digest": "$missing",
+      "param_version": 11,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-e425d95e0450d869",
+      "request_id": "Q0016",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0005",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 32,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:8c5de4be3212749ce71fc0d6e0a2fa86d057cf9914f8751763b967059578c2fa",
+      "param_digest": "$missing",
+      "param_version": 21,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-5fd35b420c71c38d",
+      "request_id": "Q0017",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0005",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 33,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:4a5d4d4a0b76a0d85d1918a719bd28721f48ba6ac5a4131db99a3ec3b7d5a440",
+      "param_digest": "$missing",
+      "param_version": 21,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-231231bbe2d26fc1",
+      "request_id": "Q0018",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0005",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 34,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:f9758e367fe4bcabc9e607aca7e236a889194de2a19512acfb2498803bcaf99e",
+      "param_digest": "$missing",
+      "param_version": 21,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-a2f72c9d2ffe78fb",
+      "request_id": "Q0019",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0005",
+      "completeness_label": "r2_core",
+      "completeness_score": 6,
+      "elapsed_ms": 35,
+      "missing_fields": [
+        "rank_in_batch",
+        "supersedes_ref",
+        "param_digest"
+      ],
+      "origin_version": "r2",
+      "output_digest": "sha256:f2ebf309e925aa4246ed7d2b79b919ebd0573d182923c513d4141e8b4dcf27a2",
+      "param_digest": "$missing",
+      "param_version": 21,
+      "rank_in_batch": "$missing",
+      "receipt_ref": "rr-3c4d9f93a37fcf1c",
+      "request_id": "Q0020",
+      "source_version": "r2",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0006",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 36,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:83424f7fec4daf06d2f462291cbbdf380d6e0086d5602579f3e0490e5ef82cce",
+      "param_digest": "param:f32b5a1d96b82405116696c2",
+      "param_version": 31,
+      "rank_in_batch": 0,
+      "receipt_ref": "rr-e7122ba0225bce31",
+      "request_id": "Q0021",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0006",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 37,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:28122c80a14edf0c6e9b059b2272602d37092ee5ceda4374a3e95c35182b509c",
+      "param_digest": "param:f32b5a1d96b82405116696c2",
+      "param_version": 31,
+      "rank_in_batch": 1,
+      "receipt_ref": "rr-f05380f601706362",
+      "request_id": "Q0022",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0006",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 38,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:b207c27121d3c28f11376911bf640117890724cef49b9cf41b79bb32c8be7f6a",
+      "param_digest": "param:f32b5a1d96b82405116696c2",
+      "param_version": 31,
+      "rank_in_batch": 2,
+      "receipt_ref": "rr-3b315269ae79fecf",
+      "request_id": "Q0023",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0006",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 39,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:49ced42668e2e7a03670ad00b7e9e1f051d458011d16db2742ac19cb70a99000",
+      "param_digest": "param:f32b5a1d96b82405116696c2",
+      "param_version": 31,
+      "rank_in_batch": 3,
+      "receipt_ref": "rr-179211f22d724200",
+      "request_id": "Q0024",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B-0007",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 77,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:d05191347d20e5ab322e080825cbcc33b2c68db4835ba790f7b9d8b56a5adbf4",
+      "param_digest": "param:fba0507e323b03303f24c52f",
+      "param_version": 11,
+      "rank_in_batch": 0,
+      "receipt_ref": "rr-73a992baa950d1a4",
+      "request_id": "Q0025",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0007",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 41,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:08046b5ff8d55df835a672eadf1eea175cfb4bf2509efc88c3ad4465ded89c7d",
+      "param_digest": "param:fba0507e323b03303f24c52f",
+      "param_version": 11,
+      "rank_in_batch": 1,
+      "receipt_ref": "rr-101eb4f3d61daa4d",
+      "request_id": "Q0026",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0007",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 42,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:cede43198b997010b99d74ac563d0ac9830a18f1171fb17b7045854f780ca4ca",
+      "param_digest": "param:fba0507e323b03303f24c52f",
+      "param_version": 11,
+      "rank_in_batch": 2,
+      "receipt_ref": "rr-8a1bc865f93352d2",
+      "request_id": "Q0027",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0007",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 43,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:e3294acb4214fe47f981b794720ee812e239c44ccab9877360cef0797b6774f2",
+      "param_digest": "param:fba0507e323b03303f24c52f",
+      "param_version": 11,
+      "rank_in_batch": 3,
+      "receipt_ref": "rr-9ee67a4ed6aed5d4",
+      "request_id": "Q0028",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B-0008",
+      "completeness_label": "complete_r3",
+      "completeness_score": 9,
+      "elapsed_ms": 44,
+      "missing_fields": [],
+      "origin_version": "r3",
+      "output_digest": "sha256:ed7ec2f9790461c608c24a72d341eddae70b7f69da0d46e9d98cbfaf2bdd8b50",
+      "param_digest": "param:92e3d00b6c9168e50dd5d533",
+      "param_version": 21,
+      "rank_in_batch": 0,
+      "receipt_ref": "rr-3e2ec2725faab106",
+      "request_id": "Q0005",
+      "source_version": "r3",
+      "supersedes_ref": "rr-a27237ad914a6651",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0008",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 45,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:96f3507c634d76b2f1e98dd77ab0bb2d66b35554f2696246a69463314cbf3745",
+      "param_digest": "param:92e3d00b6c9168e50dd5d533",
+      "param_version": 21,
+      "rank_in_batch": 1,
+      "receipt_ref": "rr-3a6c35c6cd654498",
+      "request_id": "Q0009",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0008",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 46,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:8c5de4be3212749ce71fc0d6e0a2fa86d057cf9914f8751763b967059578c2fa",
+      "param_digest": "param:92e3d00b6c9168e50dd5d533",
+      "param_version": 21,
+      "rank_in_batch": 2,
+      "receipt_ref": "rr-9d9f98a5dbe926ef",
+      "request_id": "Q0017",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-0008",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 47,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:83424f7fec4daf06d2f462291cbbdf380d6e0086d5602579f3e0490e5ef82cce",
+      "param_digest": "param:92e3d00b6c9168e50dd5d533",
+      "param_version": 21,
+      "rank_in_batch": 3,
+      "receipt_ref": "rr-d61f13a54f739216",
+      "request_id": "Q0021",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-9001",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 19,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:09e1172039afb8aaae1f5896dc39c0e5cf8fda0f094bb08bfee6eda7b4982cbb",
+      "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+      "param_version": 22,
+      "rank_in_batch": 0,
+      "receipt_ref": "rr-89d92ad68526325f",
+      "request_id": "Q0101",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-9001",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 20,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:28ed78ee93766a951e72f7feef60c4b3edca530aba5d6ad9a8c6c2f7704944e4",
+      "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+      "param_version": 22,
+      "rank_in_batch": 1,
+      "receipt_ref": "rr-a178a222e0c6f4f6",
+      "request_id": "Q0102",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-9001",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 21,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:c5211574be1995d874c8f3416227efb5ad4ac81aa6ab9f786ac6693c15b3890e",
+      "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+      "param_version": 22,
+      "rank_in_batch": 2,
+      "receipt_ref": "rr-07d7d0bb6360894f",
+      "request_id": "Q0103",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B-9001",
+      "completeness_label": "partial",
+      "completeness_score": 8,
+      "elapsed_ms": 22,
+      "missing_fields": [
+        "supersedes_ref"
+      ],
+      "origin_version": "r3",
+      "output_digest": "sha256:7586486e6426416318ee50bb86311ff8c2c3049a25b16841e2f76e7531fb5c9f",
+      "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+      "param_version": 22,
+      "rank_in_batch": 3,
+      "receipt_ref": "rr-ea6be6bebafb5069",
+      "request_id": "Q0104",
+      "source_version": "r3",
+      "supersedes_ref": "$missing",
+      "worker_id": "W2"
+    }
+  ],
+  "schema_version": "parse-v1",
+  "workers": [
+    {
+      "hidden_dim": 32,
+      "host": "127.0.0.1",
+      "model_dim": 16,
+      "param_version": 11,
+      "port": 29101,
+      "worker_id": "W1"
+    },
+    {
+      "hidden_dim": 32,
+      "host": "127.0.0.1",
+      "model_dim": 16,
+      "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+      "param_version": 22,
+      "port": 29102,
+      "worker_id": "W2"
+    },
+    {
+      "hidden_dim": 32,
+      "host": "127.0.0.1",
+      "model_dim": 16,
+      "param_version": 31,
+      "port": 29103,
+      "worker_id": "W3"
+    }
+  ]
+}

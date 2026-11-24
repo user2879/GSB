@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "run_report": "artifacts/acceptance/run_report.json",
+  "summary": {
+    "worker_count": 3,
+    "valid_request_count": 36,
+    "planned_batch_count": 12,
+    "receipt_count": 36,
+    "decision_count": 32,
+    "duplicate_request_count": 4,
+    "batch_stat_count": 9,
+    "resource_entry_count": 9,
+    "failure_count": 4,
+    "failure_code_counts": {
+      "E_ARRIVAL_ORDER": 1,
+      "E_RECEIPT_VERSION": 1,
+      "E_WORKER_INVALID": 2
+    }
+  },
+  "consistency": {
+    "incremental_vs_blank_full_equal": true,
+    "parallel_vs_serial_equal": true,
+    "report_hash": "sha256:6f290014bf382cb6c2c3f6354189bb81336bc72157a0fa4a56689d23721b19b0",
+    "cache_trace": [
+      {
+        "command": "replace_receipt",
+        "hits": 7,
+        "misses": 1,
+        "hit_resource_keys": [
+          "resource:B-0001:W1",
+          "resource:B-0002:W2",
+          "resource:B-0003:W3",
+          "resource:B-0004:W1",
+          "resource:B-0005:W2",
+          "resource:B-0006:W3",
+          "resource:B-0008:W2"
+        ],
+        "miss_resource_keys": [
+          "resource:B-0007:W1"
+        ]
+      },
+      {
+        "command": "set_batch_size",
+        "hits": 8,
+        "misses": 0,
+        "hit_resource_keys": [
+          "resource:B-0001:W1",
+          "resource:B-0002:W2",
+          "resource:B-0003:W3",
+          "resource:B-0004:W1",
+          "resource:B-0005:W2",
+          "resource:B-0006:W3",
+          "resource:B-0007:W1",
+          "resource:B-0008:W2"
+        ],
+        "miss_resource_keys": []
+      },
+      {
+        "command": "switch_param_version",
+        "hits": 6,
+        "misses": 2,
+        "hit_resource_keys": [
+          "resource:B-0001:W1",
+          "resource:B-0002:W2",
+          "resource:B-0003:W3",
+          "resource:B-0004:W1",
+          "resource:B-0006:W3",
+          "resource:B-0007:W1"
+        ],
+        "miss_resource_keys": [
+          "resource:B-0005:W2",
+          "resource:B-0008:W2"
+        ]
+      },
+      {
+        "command": "add_batch",
+        "hits": 8,
+        "misses": 1,
+        "hit_resource_keys": [
+          "resource:B-0001:W1",
+          "resource:B-0002:W2",
+          "resource:B-0003:W3",
+          "resource:B-0004:W1",
+          "resource:B-0005:W2",
+          "resource:B-0006:W3",
+          "resource:B-0007:W1",
+          "resource:B-0008:W2"
+        ],
+        "miss_resource_keys": [
+          "resource:B-9001:W2"
+        ]
+      },
+      {
+        "command": "set_merge_rule",
+        "hits": 9,
+        "misses": 0,
+        "hit_resource_keys": [
+          "resource:B-0001:W1",
+          "resource:B-0002:W2",
+          "resource:B-0003:W3",
+          "resource:B-0004:W1",
+          "resource:B-0005:W2",
+          "resource:B-0006:W3",
+          "resource:B-0007:W1",
+          "resource:B-0008:W2",
+          "resource:B-9001:W2"
+        ],
+        "miss_resource_keys": []
+      }
+    ]
+  }
+}

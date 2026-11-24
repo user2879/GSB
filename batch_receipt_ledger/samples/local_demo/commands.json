@@ -1,0 +1,113 @@
+[
+  {
+    "match": {
+      "batch_id": "B-0007",
+      "request_id": "Q0025"
+    },
+    "receipt": {
+      "batch_id": "B-0007",
+      "elapsed_ms": 77,
+      "output_digest": "sha256:d05191347d20e5ab322e080825cbcc33b2c68db4835ba790f7b9d8b56a5adbf4",
+      "param_digest": "param:fba0507e323b03303f24c52f",
+      "param_version": 11,
+      "rank_in_batch": 0,
+      "request_id": "Q0025",
+      "supersedes_ref": "$missing",
+      "v": "r3",
+      "worker_id": "W1"
+    },
+    "type": "replace_receipt"
+  },
+  {
+    "batch_size": 3,
+    "type": "set_batch_size"
+  },
+  {
+    "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+    "param_version": 22,
+    "type": "switch_param_version",
+    "worker_id": "W2"
+  },
+  {
+    "batch": {
+      "batch_id": "B-9001",
+      "receipts": [
+        {
+          "batch_id": "B-9001",
+          "elapsed_ms": 19,
+          "output_digest": "sha256:09e1172039afb8aaae1f5896dc39c0e5cf8fda0f094bb08bfee6eda7b4982cbb",
+          "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+          "param_version": 22,
+          "rank_in_batch": 0,
+          "request_id": "Q0101",
+          "supersedes_ref": "$missing",
+          "v": "r3",
+          "worker_id": "W2"
+        },
+        {
+          "batch_id": "B-9001",
+          "elapsed_ms": 20,
+          "output_digest": "sha256:28ed78ee93766a951e72f7feef60c4b3edca530aba5d6ad9a8c6c2f7704944e4",
+          "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+          "param_version": 22,
+          "rank_in_batch": 1,
+          "request_id": "Q0102",
+          "supersedes_ref": "$missing",
+          "v": "r3",
+          "worker_id": "W2"
+        },
+        {
+          "batch_id": "B-9001",
+          "elapsed_ms": 21,
+          "output_digest": "sha256:c5211574be1995d874c8f3416227efb5ad4ac81aa6ab9f786ac6693c15b3890e",
+          "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+          "param_version": 22,
+          "rank_in_batch": 2,
+          "request_id": "Q0103",
+          "supersedes_ref": "$missing",
+          "v": "r3",
+          "worker_id": "W2"
+        },
+        {
+          "batch_id": "B-9001",
+          "elapsed_ms": 22,
+          "output_digest": "sha256:7586486e6426416318ee50bb86311ff8c2c3049a25b16841e2f76e7531fb5c9f",
+          "param_digest": "param:ab6d7b5db2b8b14a21447e11",
+          "param_version": 22,
+          "rank_in_batch": 3,
+          "request_id": "Q0104",
+          "supersedes_ref": "$missing",
+          "v": "r3",
+          "worker_id": "W2"
+        }
+      ],
+      "requests": [
+        {
+          "arrival_ms": 600,
+          "request_id": "Q0101",
+          "seq": 101
+        },
+        {
+          "arrival_ms": 609,
+          "request_id": "Q0102",
+          "seq": 102
+        },
+        {
+          "arrival_ms": 618,
+          "request_id": "Q0103",
+          "seq": 103
+        },
+        {
+          "arrival_ms": 627,
+          "request_id": "Q0104",
+          "seq": 104
+        }
+      ]
+    },
+    "type": "add_batch"
+  },
+  {
+    "merge_rule": "version_then_batch_v1",
+    "type": "set_merge_rule"
+  }
+]

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batch-receipt-ledger"
+version = "1.0.0"
+description = "Deterministic local batch attribution receipt ledger"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+batch-ledger = "batch_ledger.cli:main"
+batch-ledger-worker = "batch_ledger.worker:main"
+
+[tool.setuptools.packages.find]
+include = ["batch_ledger*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
