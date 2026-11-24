@@ -1,0 +1,625 @@
+{
+  "actual_invalidation": {
+    "changed_workers": [
+      {
+        "current_parameter_version": 3,
+        "previous_parameter_version": {
+          "$missing": true
+        },
+        "worker_id": "w-alpha"
+      },
+      {
+        "current_parameter_version": 4,
+        "previous_parameter_version": {
+          "$missing": true
+        },
+        "worker_id": "w-beta"
+      }
+    ],
+    "cold_cache": true,
+    "normalization_computed_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "normalization_invalidated_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "normalization_reused_batches": [],
+    "normalization_task_count": 5,
+    "ownership_global_invalidated": false,
+    "reasons_by_batch": {
+      "batch-001": [
+        "cold_cache"
+      ],
+      "batch-002": [
+        "cold_cache"
+      ],
+      "batch-003": [
+        "cold_cache"
+      ],
+      "batch-004": [
+        "cold_cache"
+      ],
+      "batch-005": [
+        "cold_cache"
+      ]
+    },
+    "resource_computed_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "resource_global_invalidated": false,
+    "resource_invalidated_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "resource_reused_batches": [],
+    "resource_task_count": 5,
+    "reused_batches": []
+  },
+  "config_path": "/home/zsl/feedback/uidfc5909d3-default-249/samples/config.json",
+  "counts": {
+    "authoritative_requests": 12,
+    "failures": 4,
+    "pending_batches": 0,
+    "processed_batches": 5,
+    "quota_blocked_batches": 0,
+    "receipts_ok": 15,
+    "resource_batches": 5
+  },
+  "dependency_invalidation": {
+    "batches": [
+      {
+        "batch_id": "batch-001",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3
+        ],
+        "request_ids": [
+          "req-001",
+          "req-002",
+          "req-003"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-002",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-004",
+          "req-005",
+          "req-006"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-003",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3
+        ],
+        "request_ids": [
+          "req-007",
+          "req-008",
+          "req-009"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-004",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-009",
+          "req-010"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-005",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3,
+          4
+        ],
+        "request_ids": [
+          "req-011",
+          "req-012"
+        ],
+        "stale": true,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      }
+    ],
+    "stale_batches": [
+      "batch-005"
+    ],
+    "stale_requests": [
+      "req-011",
+      "req-012"
+    ],
+    "worker_parameter_versions": {
+      "w-alpha": 3,
+      "w-beta": 4
+    }
+  },
+  "failures": [
+    {
+      "code": "E_DUPLICATE_BATCH_ID",
+      "details": {
+        "first_uid": "fault_receipts/injected_duplicate_batch.json#0"
+      },
+      "injection_id": "INJ-DUPLICATE-BATCH",
+      "item": "fault_receipts/injected_duplicate_batch.json#1",
+      "message": "duplicate delivery identity for batch batch-001",
+      "ordinal": 1,
+      "source": "fault_receipts/injected_duplicate_batch.json"
+    },
+    {
+      "code": "E_DURATION_NONFINITE",
+      "details": {
+        "value": "nan"
+      },
+      "injection_id": "INJ-NONFINITE-DURATION",
+      "item": "fault_receipts/injected_nonfinite_duration.json#0",
+      "message": "duration_ms is not finite",
+      "ordinal": 0,
+      "source": "fault_receipts/injected_nonfinite_duration.json"
+    },
+    {
+      "code": "E_TRUNCATED_RECEIPT",
+      "details": {
+        "column": 29,
+        "line": 1,
+        "position": 28
+      },
+      "injection_id": "INJ-TRUNCATED",
+      "item": "",
+      "message": "invalid JSON receipt: Expecting value",
+      "ordinal": 1,
+      "source": "fault_receipts/injected_truncated.json"
+    },
+    {
+      "code": "E_UNKNOWN_PARAM_VERSION",
+      "details": {
+        "parameter_version": 99
+      },
+      "injection_id": "INJ-UNKNOWN-PARAM",
+      "item": "fault_receipts/injected_unknown_parameter.json#0",
+      "message": "unknown parameter_version 99",
+      "ordinal": 0,
+      "source": "fault_receipts/injected_unknown_parameter.json"
+    }
+  ],
+  "injection_hits": [
+    {
+      "code": "E_DUPLICATE_BATCH_ID",
+      "hit": true,
+      "injection_id": "INJ-DUPLICATE-BATCH",
+      "ordinal": 1,
+      "source": "fault_receipts/injected_duplicate_batch.json"
+    },
+    {
+      "code": "E_DURATION_NONFINITE",
+      "hit": true,
+      "injection_id": "INJ-NONFINITE-DURATION",
+      "ordinal": 0,
+      "source": "fault_receipts/injected_nonfinite_duration.json"
+    },
+    {
+      "code": "E_TRUNCATED_RECEIPT",
+      "hit": true,
+      "injection_id": "INJ-TRUNCATED",
+      "ordinal": 1,
+      "source": "fault_receipts/injected_truncated.json"
+    },
+    {
+      "code": "E_UNKNOWN_PARAM_VERSION",
+      "hit": true,
+      "injection_id": "INJ-UNKNOWN-PARAM",
+      "ordinal": 0,
+      "source": "fault_receipts/injected_unknown_parameter.json"
+    }
+  ],
+  "jobs": 4,
+  "ledger_digest": "d30f55893e0bc12b96ab09703bc207f5bffe05ba58cb8960d1d9e5e4db991b68",
+  "quality": {
+    "batch_resource_totals": {
+      "macs": 3456,
+      "missing_duration_batch_count": 0,
+      "observed_batch_count": 5,
+      "quantized_macs": 3456,
+      "request_count": 12
+    },
+    "duration_histogram_ms": {
+      "gte_500": 0,
+      "lt_10": 4,
+      "lt_100": 0,
+      "lt_20": 6,
+      "lt_250": 0,
+      "lt_5": 0,
+      "lt_50": 0,
+      "lt_500": 0
+    },
+    "kinds": {
+      "image_only": {
+        "complete_receipt_count": 4,
+        "count": 4,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 1,
+          "lt_100": 0,
+          "lt_20": 3,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 44,
+        "max_duration_ms": 12,
+        "mean_duration_us": 11000,
+        "min_duration_ms": 8,
+        "missing_duration_count": 0,
+        "observed_duration_count": 4
+      },
+      "image_text": {
+        "complete_receipt_count": 6,
+        "count": 8,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 3,
+          "lt_100": 0,
+          "lt_20": 3,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 60,
+        "max_duration_ms": 12,
+        "mean_duration_us": 10000,
+        "min_duration_ms": 8,
+        "missing_duration_count": 2,
+        "observed_duration_count": 6
+      }
+    },
+    "missing_duration_total": 2,
+    "total_authoritative_requests": 12
+  },
+  "receipt_versions": {
+    "fault_receipts/injected_duplicate_batch.json": "r2",
+    "fault_receipts/injected_nonfinite_duration.json": "r2",
+    "fault_receipts/injected_unknown_parameter.json": "r2",
+    "receipts/r1_batch_001.json": "r1",
+    "receipts/r2_batch_002.json": "r2",
+    "receipts/r3_batch_003.json": "r3",
+    "receipts/r3_batch_004_overwrite.json": "r3",
+    "receipts/r3_batch_005.json": "r3",
+    "receipts/r3_batch_005_rank_conflict.json": "r3"
+  },
+  "resources": [
+    {
+      "batch_id": "batch-001",
+      "duration_missing_count": 2,
+      "duration_ms": 12,
+      "duration_observed_count": 1,
+      "macs": 864,
+      "parameter_version": 3,
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": 83333,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 3,
+      "macs": 864,
+      "parameter_version": 4,
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 55555,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 4,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-alpha"
+    }
+  ],
+  "schedule": {
+    "budget": 64,
+    "consumed_budget": 13,
+    "pending_batches": [],
+    "quota_blocked_batches": [],
+    "tickets": [
+      {
+        "batch_id": "batch-001",
+        "budget_after": 61,
+        "budget_before": 64,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_used_after": 3,
+        "worker_used_before": 0
+      },
+      {
+        "batch_id": "batch-002",
+        "budget_after": 58,
+        "budget_before": 61,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 1,
+        "worker_id": "w-beta",
+        "worker_used_after": 3,
+        "worker_used_before": 0
+      },
+      {
+        "batch_id": "batch-003",
+        "budget_after": 55,
+        "budget_before": 58,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_used_after": 6,
+        "worker_used_before": 3
+      },
+      {
+        "batch_id": "batch-004",
+        "budget_after": 53,
+        "budget_before": 55,
+        "points": 2,
+        "priority_pending": false,
+        "sequence": 3,
+        "worker_id": "w-beta",
+        "worker_used_after": 5,
+        "worker_used_before": 3
+      },
+      {
+        "batch_id": "batch-005",
+        "budget_after": 51,
+        "budget_before": 53,
+        "points": 2,
+        "priority_pending": false,
+        "sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_used_after": 8,
+        "worker_used_before": 6
+      }
+    ],
+    "trace": [
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 2,
+        "budget_remaining": 63,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-001",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 1,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 1,
+        "budget_remaining": 62,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-002",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 2,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 0,
+        "budget_remaining": 61,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-003",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 3,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 2,
+        "budget_remaining": 60,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-004",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 1,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 1,
+        "budget_remaining": 59,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-005",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 2,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 0,
+        "budget_remaining": 58,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-006",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 3,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 2,
+        "budget_remaining": 57,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-007",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 4,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 1,
+        "budget_remaining": 56,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-008",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 5,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 0,
+        "budget_remaining": 55,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-009",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 6,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-004",
+        "batch_points_remaining": 1,
+        "budget_remaining": 54,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-009",
+        "ticket_sequence": 3,
+        "worker_id": "w-beta",
+        "worker_points_used": 4,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-004",
+        "batch_points_remaining": 0,
+        "budget_remaining": 53,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-010",
+        "ticket_sequence": 3,
+        "worker_id": "w-beta",
+        "worker_points_used": 5,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-005",
+        "batch_points_remaining": 1,
+        "budget_remaining": 52,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-011",
+        "ticket_sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_points_used": 7,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-005",
+        "batch_points_remaining": 0,
+        "budget_remaining": 51,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-012",
+        "ticket_sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_points_used": 8,
+        "worker_quota_points": 20
+      }
+    ]
+  },
+  "schema_version": "mmledger-report-v1",
+  "snapshot": {
+    "generation": null,
+    "global_version": null,
+    "restore_decision": {
+      "decision": "cold_full_rebuild",
+      "reason": "no_current_snapshot",
+      "reuse_snapshot": false
+    }
+  },
+  "state_hash": "1e48d6eeeae5149ff2fb9f8ca51c9168615d5559bf525671bede48efe65d785e"
+}

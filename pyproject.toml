@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mmledger"
+version = "1.0.0"
+description = "Deterministic multimodal batch-inference receipt ledger and diagnostics"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+mmledger = "mmledger.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mmledger*"]

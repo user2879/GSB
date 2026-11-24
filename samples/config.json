@@ -1,0 +1,52 @@
+{
+  "fault_injections": "fault_injections.json",
+  "fault_receipt_glob": "fault_receipts/*.json",
+  "limits": {
+    "batch_size": 3,
+    "normalization_budget": 64,
+    "worker_quota_points": 20
+  },
+  "merge_rules": "merge_rules.json",
+  "model": {
+    "hidden_dim": 8,
+    "input_dim": 16,
+    "quantization_bits": 8
+  },
+  "parameters": [
+    {
+      "digest": "sha256:pv3-alpha",
+      "parameter_version": 3
+    },
+    {
+      "digest": "sha256:pv4-beta",
+      "parameter_version": 4
+    }
+  ],
+  "port_range": {
+    "max": 19400,
+    "min": 18800
+  },
+  "receipt_glob": "receipts/*.json",
+  "request_stream": "requests.json",
+  "schema_version": "mmledger-config-v1",
+  "seed": 20261125,
+  "workers": [
+    {
+      "host": "127.0.0.1",
+      "parameter_digest": "sha256:pv3-alpha",
+      "parameter_version": 3,
+      "port": 18900,
+      "quota_points": 20,
+      "worker_id": "w-alpha"
+    },
+    {
+      "host": "127.0.0.1",
+      "parameter_digest": "sha256:pv4-beta",
+      "parameter_version": 4,
+      "port": 18901,
+      "quota_points": 20,
+      "worker_id": "w-beta"
+    }
+  ],
+  "workspace_root": ".."
+}

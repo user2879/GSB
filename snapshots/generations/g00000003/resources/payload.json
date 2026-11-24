@@ -1,0 +1,259 @@
+{
+  "actual_invalidation": {
+    "changed_workers": [],
+    "cold_cache": false,
+    "normalization_computed_batches": [],
+    "normalization_invalidated_batches": [],
+    "normalization_reused_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "normalization_task_count": 0,
+    "ownership_global_invalidated": false,
+    "reasons_by_batch": {},
+    "resource_computed_batches": [],
+    "resource_global_invalidated": false,
+    "resource_invalidated_batches": [],
+    "resource_reused_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "resource_task_count": 0,
+    "reused_batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ]
+  },
+  "dependency_invalidation": {
+    "batches": [
+      {
+        "batch_id": "batch-001",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [],
+        "request_ids": [
+          "req-001",
+          "req-002",
+          "req-003"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-002",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-004",
+          "req-005",
+          "req-006"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-003",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3
+        ],
+        "request_ids": [
+          "req-007",
+          "req-008",
+          "req-009"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-004",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-009",
+          "req-010"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-005",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3,
+          4
+        ],
+        "request_ids": [
+          "req-011",
+          "req-012"
+        ],
+        "stale": true,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      }
+    ],
+    "stale_batches": [
+      "batch-005"
+    ],
+    "stale_requests": [
+      "req-011",
+      "req-012"
+    ],
+    "worker_parameter_versions": {
+      "w-alpha": 3,
+      "w-beta": 4
+    }
+  },
+  "quality": {
+    "batch_resource_totals": {
+      "macs": 3456,
+      "missing_duration_batch_count": 1,
+      "observed_batch_count": 4,
+      "quantized_macs": 3456,
+      "request_count": 12
+    },
+    "duration_histogram_ms": {
+      "gte_500": 0,
+      "lt_10": 4,
+      "lt_100": 0,
+      "lt_20": 5,
+      "lt_250": 0,
+      "lt_5": 0,
+      "lt_50": 0,
+      "lt_500": 0
+    },
+    "kinds": {
+      "image_only": {
+        "complete_receipt_count": 4,
+        "count": 4,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 1,
+          "lt_100": 0,
+          "lt_20": 3,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 44,
+        "max_duration_ms": 12,
+        "mean_duration_us": 11000,
+        "min_duration_ms": 8,
+        "missing_duration_count": 0,
+        "observed_duration_count": 4
+      },
+      "image_text": {
+        "complete_receipt_count": 5,
+        "count": 8,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 3,
+          "lt_100": 0,
+          "lt_20": 2,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 48,
+        "max_duration_ms": 12,
+        "mean_duration_us": 9600,
+        "min_duration_ms": 8,
+        "missing_duration_count": 3,
+        "observed_duration_count": 5
+      }
+    },
+    "missing_duration_total": 3,
+    "total_authoritative_requests": 12
+  },
+  "resources": [
+    {
+      "batch_id": "batch-001",
+      "duration_missing_count": 3,
+      "duration_ms": {
+        "$missing": true
+      },
+      "duration_observed_count": 0,
+      "macs": 864,
+      "parameter_version": {
+        "$missing": true
+      },
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": {
+        "$missing": true
+      },
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 3,
+      "macs": 864,
+      "parameter_version": 4,
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 55555,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 4,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-alpha"
+    }
+  ]
+}

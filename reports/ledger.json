@@ -1,0 +1,1137 @@
+{
+  "batches": [
+    {
+      "batch_id": "batch-001",
+      "candidate_uids": [
+        "receipts/r1_batch_001.json#0",
+        "receipts/r1_batch_001.json#1",
+        "receipts/r1_batch_001.json#2"
+      ],
+      "conflicts": [],
+      "input_hash": "e82eea478d69de8ab89dd90dbec16075441f61b3b754bf975f3d009b197703d1",
+      "param_version": {
+        "$missing": true
+      },
+      "receipt_uids": [
+        "receipts/r1_batch_001.json#0",
+        "receipts/r1_batch_001.json#1",
+        "receipts/r1_batch_001.json#2"
+      ],
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "candidate_uids": [
+        "receipts/r2_batch_002.json#0",
+        "receipts/r2_batch_002.json#1",
+        "receipts/r2_batch_002.json#2"
+      ],
+      "conflicts": [],
+      "input_hash": "ce7cc5843914b3969051bac1fc0bb73979d3e8d21370f4e7aaa3619466939f3b",
+      "param_version": 4,
+      "receipt_uids": [
+        "receipts/r2_batch_002.json#0",
+        "receipts/r2_batch_002.json#1",
+        "receipts/r2_batch_002.json#2"
+      ],
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "candidate_uids": [
+        "receipts/r3_batch_003.json#0",
+        "receipts/r3_batch_003.json#1",
+        "receipts/r3_batch_003.json#2"
+      ],
+      "conflicts": [],
+      "input_hash": "511aa28ffa5962fe92088ac6d07867bd77794a8379971793826d5c81c05678ab",
+      "param_version": 3,
+      "receipt_uids": [
+        "receipts/r3_batch_003.json#0",
+        "receipts/r3_batch_003.json#1",
+        "receipts/r3_batch_003.json#2"
+      ],
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "candidate_uids": [
+        "receipts/r3_batch_004_overwrite.json#1",
+        "receipts/r3_batch_004_overwrite.json#0"
+      ],
+      "conflicts": [],
+      "input_hash": "0ea87145c6cf9e8f71de107f05ff0b57ab766d3050d25e62779f21b80a83b3d4",
+      "param_version": 4,
+      "receipt_uids": [
+        "receipts/r3_batch_004_overwrite.json#1",
+        "receipts/r3_batch_004_overwrite.json#0"
+      ],
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "candidate_uids": [
+        "receipts/r3_batch_005.json#0",
+        "receipts/r3_batch_005.json#1"
+      ],
+      "conflicts": [
+        {
+          "batch_id": "batch-005",
+          "rank_a": 1,
+          "rank_b": 2,
+          "request_id": "req-011",
+          "rule": "worker_id_ascending",
+          "winner_worker": "w-alpha",
+          "worker_a": "w-alpha",
+          "worker_b": "w-beta"
+        }
+      ],
+      "input_hash": "f4f012955b41bd2accc960120a1bab9998cd57bad4103dbf43d88183ce413e13",
+      "param_version": 3,
+      "receipt_uids": [
+        "receipts/r3_batch_005.json#0",
+        "receipts/r3_batch_005_rank_conflict.json#0",
+        "receipts/r3_batch_005.json#1"
+      ],
+      "worker_id": "w-alpha"
+    }
+  ],
+  "cache_plan": [
+    {
+      "batch_id": "batch-001",
+      "cache_action": "reusable",
+      "dependency_hash": "e82eea478d69de8ab89dd90dbec16075441f61b3b754bf975f3d009b197703d1",
+      "local_invalidation_reasons": [],
+      "parameter_version": {
+        "$missing": true
+      },
+      "reusable_after_commit": true,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "cache_action": "reusable",
+      "dependency_hash": "ce7cc5843914b3969051bac1fc0bb73979d3e8d21370f4e7aaa3619466939f3b",
+      "local_invalidation_reasons": [],
+      "parameter_version": 4,
+      "reusable_after_commit": true,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "cache_action": "reusable",
+      "dependency_hash": "511aa28ffa5962fe92088ac6d07867bd77794a8379971793826d5c81c05678ab",
+      "local_invalidation_reasons": [],
+      "parameter_version": 3,
+      "reusable_after_commit": true,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "cache_action": "reusable",
+      "dependency_hash": "0ea87145c6cf9e8f71de107f05ff0b57ab766d3050d25e62779f21b80a83b3d4",
+      "local_invalidation_reasons": [],
+      "parameter_version": 4,
+      "reusable_after_commit": true,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "cache_action": "invalidate",
+      "dependency_hash": "f4f012955b41bd2accc960120a1bab9998cd57bad4103dbf43d88183ce413e13",
+      "local_invalidation_reasons": [
+        "parameter_version_boundary_stale"
+      ],
+      "parameter_version": 3,
+      "reusable_after_commit": false,
+      "worker_id": "w-alpha"
+    }
+  ],
+  "config_hash": "d4a3b3f32519ac6670b1742dbcec8ff1ccb55fd1819f2b7300ded98146ffa420",
+  "counts": {
+    "authoritative_requests": 12,
+    "failures": 0,
+    "pending_batches": 0,
+    "processed_batches": 5,
+    "quota_blocked_batches": 0,
+    "receipts_ok": 14,
+    "resource_batches": 5
+  },
+  "dependency_invalidation": {
+    "batches": [
+      {
+        "batch_id": "batch-001",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [],
+        "request_ids": [
+          "req-001",
+          "req-002",
+          "req-003"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-002",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-004",
+          "req-005",
+          "req-006"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-003",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3
+        ],
+        "request_ids": [
+          "req-007",
+          "req-008",
+          "req-009"
+        ],
+        "stale": false,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      },
+      {
+        "batch_id": "batch-004",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          4
+        ],
+        "request_ids": [
+          "req-009",
+          "req-010"
+        ],
+        "stale": false,
+        "worker_id": "w-beta",
+        "worker_parameter_version": 4
+      },
+      {
+        "batch_id": "batch-005",
+        "boundary": "worker_parameter_version -> batch -> request",
+        "receipt_parameter_versions": [
+          3,
+          4
+        ],
+        "request_ids": [
+          "req-011",
+          "req-012"
+        ],
+        "stale": true,
+        "worker_id": "w-alpha",
+        "worker_parameter_version": 3
+      }
+    ],
+    "stale_batches": [
+      "batch-005"
+    ],
+    "stale_requests": [
+      "req-011",
+      "req-012"
+    ],
+    "worker_parameter_versions": {
+      "w-alpha": 3,
+      "w-beta": 4
+    }
+  },
+  "failures": [],
+  "invalidation_reuse_plan": [
+    {
+      "batch_id": "batch-001",
+      "cache_action": "reusable",
+      "dependency_hash": "e82eea478d69de8ab89dd90dbec16075441f61b3b754bf975f3d009b197703d1",
+      "local_invalidation_reasons": [],
+      "parameter_version": {
+        "$missing": true
+      },
+      "reusable_after_commit": true,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "cache_action": "reusable",
+      "dependency_hash": "ce7cc5843914b3969051bac1fc0bb73979d3e8d21370f4e7aaa3619466939f3b",
+      "local_invalidation_reasons": [],
+      "parameter_version": 4,
+      "reusable_after_commit": true,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "cache_action": "reusable",
+      "dependency_hash": "511aa28ffa5962fe92088ac6d07867bd77794a8379971793826d5c81c05678ab",
+      "local_invalidation_reasons": [],
+      "parameter_version": 3,
+      "reusable_after_commit": true,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "cache_action": "reusable",
+      "dependency_hash": "0ea87145c6cf9e8f71de107f05ff0b57ab766d3050d25e62779f21b80a83b3d4",
+      "local_invalidation_reasons": [],
+      "parameter_version": 4,
+      "reusable_after_commit": true,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "cache_action": "invalidate",
+      "dependency_hash": "f4f012955b41bd2accc960120a1bab9998cd57bad4103dbf43d88183ce413e13",
+      "local_invalidation_reasons": [
+        "parameter_version_boundary_stale"
+      ],
+      "parameter_version": 3,
+      "reusable_after_commit": false,
+      "worker_id": "w-alpha"
+    }
+  ],
+  "ledger": [
+    {
+      "authoritative_uid": "receipts/r1_batch_001.json#0",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r1_batch_001.json#0"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-001",
+        "winner_parameter_version": {
+          "$missing": true
+        },
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-001",
+      "candidates": [
+        {
+          "batch_id": "batch-001",
+          "duration_ms": {
+            "$missing": true
+          },
+          "output_digest": "037f2bbcc08999408c9cc8341528e14094da26796af8e452208fb1549a0779b7",
+          "parameter_version": {
+            "$missing": true
+          },
+          "receipt_uid": "receipts/r1_batch_001.json#0",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": {
+            "$missing": true
+          }
+        }
+      ],
+      "duration_ms": {
+        "$missing": true
+      },
+      "kind": "image_text",
+      "output_digest": "037f2bbcc08999408c9cc8341528e14094da26796af8e452208fb1549a0779b7",
+      "parameter_version": {
+        "$missing": true
+      },
+      "rank_conflicts": [],
+      "request_id": "req-001",
+      "request_sequence": 1,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r1_batch_001.json#1",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r1_batch_001.json#1"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-001",
+        "winner_parameter_version": {
+          "$missing": true
+        },
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-001",
+      "candidates": [
+        {
+          "batch_id": "batch-001",
+          "duration_ms": {
+            "$missing": true
+          },
+          "output_digest": "106e1b74b1f5fea2bcf8ad9746bd8c0b0e2903e20ba652b283225ef4f261087f",
+          "parameter_version": {
+            "$missing": true
+          },
+          "receipt_uid": "receipts/r1_batch_001.json#1",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": {
+            "$missing": true
+          }
+        }
+      ],
+      "duration_ms": {
+        "$missing": true
+      },
+      "kind": "image_text",
+      "output_digest": "106e1b74b1f5fea2bcf8ad9746bd8c0b0e2903e20ba652b283225ef4f261087f",
+      "parameter_version": {
+        "$missing": true
+      },
+      "rank_conflicts": [],
+      "request_id": "req-002",
+      "request_sequence": 2,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r1_batch_001.json#2",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r1_batch_001.json#2"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-001",
+        "winner_parameter_version": {
+          "$missing": true
+        },
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-001",
+      "candidates": [
+        {
+          "batch_id": "batch-001",
+          "duration_ms": {
+            "$missing": true
+          },
+          "output_digest": "27e8ffb89e13face458917a28f8307f3668a95271a37a55c7009b00b1d6cf7e8",
+          "parameter_version": {
+            "$missing": true
+          },
+          "receipt_uid": "receipts/r1_batch_001.json#2",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": {
+            "$missing": true
+          }
+        }
+      ],
+      "duration_ms": {
+        "$missing": true
+      },
+      "kind": "image_text",
+      "output_digest": "27e8ffb89e13face458917a28f8307f3668a95271a37a55c7009b00b1d6cf7e8",
+      "parameter_version": {
+        "$missing": true
+      },
+      "rank_conflicts": [],
+      "request_id": "req-003",
+      "request_sequence": 3,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r2_batch_002.json#0",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r2_batch_002.json#0"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-002",
+        "winner_parameter_version": 4,
+        "winner_worker_id": "w-beta"
+      },
+      "batch_id": "batch-002",
+      "candidates": [
+        {
+          "batch_id": "batch-002",
+          "duration_ms": 12,
+          "output_digest": "49434d8b7ca133ae938ec5f517ee26e104d915cc3bce2f17508c223157e0c2b9",
+          "parameter_version": 4,
+          "receipt_uid": "receipts/r2_batch_002.json#0",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": "w-beta"
+        }
+      ],
+      "duration_ms": 12,
+      "kind": "image_only",
+      "output_digest": "49434d8b7ca133ae938ec5f517ee26e104d915cc3bce2f17508c223157e0c2b9",
+      "parameter_version": 4,
+      "rank_conflicts": [],
+      "request_id": "req-004",
+      "request_sequence": 4,
+      "worker_id": "w-beta"
+    },
+    {
+      "authoritative_uid": "receipts/r2_batch_002.json#1",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r2_batch_002.json#1"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-002",
+        "winner_parameter_version": 4,
+        "winner_worker_id": "w-beta"
+      },
+      "batch_id": "batch-002",
+      "candidates": [
+        {
+          "batch_id": "batch-002",
+          "duration_ms": 12,
+          "output_digest": "6f3a74881e935fa7dfd8e3a01e03790547109a3cbad924fd98afee25021ecac4",
+          "parameter_version": 4,
+          "receipt_uid": "receipts/r2_batch_002.json#1",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": "w-beta"
+        }
+      ],
+      "duration_ms": 12,
+      "kind": "image_only",
+      "output_digest": "6f3a74881e935fa7dfd8e3a01e03790547109a3cbad924fd98afee25021ecac4",
+      "parameter_version": 4,
+      "rank_conflicts": [],
+      "request_id": "req-005",
+      "request_sequence": 5,
+      "worker_id": "w-beta"
+    },
+    {
+      "authoritative_uid": "receipts/r2_batch_002.json#2",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r2_batch_002.json#2"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-002",
+        "winner_parameter_version": 4,
+        "winner_worker_id": "w-beta"
+      },
+      "batch_id": "batch-002",
+      "candidates": [
+        {
+          "batch_id": "batch-002",
+          "duration_ms": 12,
+          "output_digest": "613ba2fe11b6997442491696dd69b062628c89a589911ff96a4559871bd957ec",
+          "parameter_version": 4,
+          "receipt_uid": "receipts/r2_batch_002.json#2",
+          "stable_rank": {
+            "$missing": true
+          },
+          "worker_id": "w-beta"
+        }
+      ],
+      "duration_ms": 12,
+      "kind": "image_only",
+      "output_digest": "613ba2fe11b6997442491696dd69b062628c89a589911ff96a4559871bd957ec",
+      "parameter_version": 4,
+      "rank_conflicts": [],
+      "request_id": "req-006",
+      "request_sequence": 6,
+      "worker_id": "w-beta"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_003.json#0",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_003.json#0"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-003",
+        "winner_parameter_version": 3,
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-003",
+      "candidates": [
+        {
+          "batch_id": "batch-003",
+          "duration_ms": 12,
+          "output_digest": "9c932f8b25a2c936c56b387f28309b7c3b432a72a54462c958d4fbf73e10905e",
+          "parameter_version": 3,
+          "receipt_uid": "receipts/r3_batch_003.json#0",
+          "stable_rank": 1,
+          "worker_id": "w-alpha"
+        }
+      ],
+      "duration_ms": 12,
+      "kind": "image_text",
+      "output_digest": "9c932f8b25a2c936c56b387f28309b7c3b432a72a54462c958d4fbf73e10905e",
+      "parameter_version": 3,
+      "rank_conflicts": [],
+      "request_id": "req-007",
+      "request_sequence": 7,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_003.json#1",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_003.json#1"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-003",
+        "winner_parameter_version": 3,
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-003",
+      "candidates": [
+        {
+          "batch_id": "batch-003",
+          "duration_ms": 12,
+          "output_digest": "6c7ba8f54912ace9dd67991cf0799e00ae69638f3199ade5e9011ffb23fa8221",
+          "parameter_version": 3,
+          "receipt_uid": "receipts/r3_batch_003.json#1",
+          "stable_rank": 2,
+          "worker_id": "w-alpha"
+        }
+      ],
+      "duration_ms": 12,
+      "kind": "image_text",
+      "output_digest": "6c7ba8f54912ace9dd67991cf0799e00ae69638f3199ade5e9011ffb23fa8221",
+      "parameter_version": 3,
+      "rank_conflicts": [],
+      "request_id": "req-008",
+      "request_sequence": 8,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_004_overwrite.json#1",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_003.json#2",
+          "receipts/r3_batch_004_overwrite.json#1"
+        ],
+        "overwrite_edges": [
+          {
+            "from": "receipts/r3_batch_003.json#2",
+            "to": "receipts/r3_batch_004_overwrite.json#1"
+          }
+        ],
+        "overwritten_uids": [
+          "receipts/r3_batch_003.json#2"
+        ],
+        "rule": "overwrite_reference+lowest_duration_ms",
+        "winner_duration_ms": 8,
+        "winner_worker_id": "w-beta"
+      },
+      "batch_id": "batch-004",
+      "candidates": [
+        {
+          "batch_id": "batch-003",
+          "duration_ms": 12,
+          "output_digest": "fd2c45e4ac3c4c7a248311a503620865367c4db1a4470769ea684ab57316c425",
+          "parameter_version": 3,
+          "receipt_uid": "receipts/r3_batch_003.json#2",
+          "stable_rank": 3,
+          "worker_id": "w-alpha"
+        },
+        {
+          "batch_id": "batch-004",
+          "duration_ms": 8,
+          "output_digest": "4604851e8fc24c56c63b00a5926ae97c08eaaa4b714e1c84aa569b02b3846518",
+          "parameter_version": 4,
+          "receipt_uid": "receipts/r3_batch_004_overwrite.json#1",
+          "stable_rank": 1,
+          "worker_id": "w-beta"
+        }
+      ],
+      "duration_ms": 8,
+      "kind": "image_text",
+      "output_digest": "4604851e8fc24c56c63b00a5926ae97c08eaaa4b714e1c84aa569b02b3846518",
+      "parameter_version": 4,
+      "rank_conflicts": [],
+      "request_id": "req-009",
+      "request_sequence": 9,
+      "worker_id": "w-beta"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_004_overwrite.json#0",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_004_overwrite.json#0"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-004",
+        "winner_parameter_version": 4,
+        "winner_worker_id": "w-beta"
+      },
+      "batch_id": "batch-004",
+      "candidates": [
+        {
+          "batch_id": "batch-004",
+          "duration_ms": 8,
+          "output_digest": "b8b401944657527b15609d00d485020a118da4ed00d6fc2cc08cd2244890f05a",
+          "parameter_version": 4,
+          "receipt_uid": "receipts/r3_batch_004_overwrite.json#0",
+          "stable_rank": 2,
+          "worker_id": "w-beta"
+        }
+      ],
+      "duration_ms": 8,
+      "kind": "image_only",
+      "output_digest": "b8b401944657527b15609d00d485020a118da4ed00d6fc2cc08cd2244890f05a",
+      "parameter_version": 4,
+      "rank_conflicts": [],
+      "request_id": "req-010",
+      "request_sequence": 10,
+      "worker_id": "w-beta"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_005.json#0",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_005.json#0"
+        ],
+        "rank_conflict_count": 1,
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-005",
+        "winner_parameter_version": 3,
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-005",
+      "candidates": [
+        {
+          "batch_id": "batch-005",
+          "duration_ms": 8,
+          "output_digest": "cb5e947918dc486765c4df16a4f24e3d5630ad14ae91b1a63614c3c489a1c48e",
+          "parameter_version": 3,
+          "receipt_uid": "receipts/r3_batch_005.json#0",
+          "stable_rank": 1,
+          "worker_id": "w-alpha"
+        }
+      ],
+      "duration_ms": 8,
+      "kind": "image_text",
+      "output_digest": "cb5e947918dc486765c4df16a4f24e3d5630ad14ae91b1a63614c3c489a1c48e",
+      "parameter_version": 3,
+      "rank_conflicts": [
+        {
+          "batch_id": "batch-005",
+          "rank_a": 1,
+          "rank_b": 2,
+          "request_id": "req-011",
+          "rule": "worker_id_ascending",
+          "winner_worker": "w-alpha",
+          "worker_a": "w-alpha",
+          "worker_b": "w-beta"
+        }
+      ],
+      "request_id": "req-011",
+      "request_sequence": 12,
+      "worker_id": "w-alpha"
+    },
+    {
+      "authoritative_uid": "receipts/r3_batch_005.json#1",
+      "basis": {
+        "candidate_uids": [
+          "receipts/r3_batch_005.json#1"
+        ],
+        "rule": "parameter_version_desc+batch_id_asc",
+        "winner_batch_id": "batch-005",
+        "winner_parameter_version": 3,
+        "winner_worker_id": "w-alpha"
+      },
+      "batch_id": "batch-005",
+      "candidates": [
+        {
+          "batch_id": "batch-005",
+          "duration_ms": 8,
+          "output_digest": "cbfcd76f59b7f4896c5770ccd80d9e47f136204d2095b6fc041ae545708eeae8",
+          "parameter_version": 3,
+          "receipt_uid": "receipts/r3_batch_005.json#1",
+          "stable_rank": 2,
+          "worker_id": "w-alpha"
+        }
+      ],
+      "duration_ms": 8,
+      "kind": "image_text",
+      "output_digest": "cbfcd76f59b7f4896c5770ccd80d9e47f136204d2095b6fc041ae545708eeae8",
+      "parameter_version": 3,
+      "rank_conflicts": [],
+      "request_id": "req-012",
+      "request_sequence": 13,
+      "worker_id": "w-alpha"
+    }
+  ],
+  "ledger_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+  "merge_rules_hash": "d8294b312a8f54a50d1a212b174d86e76264d43e47ad9105fd0d2ba4cbed0365",
+  "quality": {
+    "batch_resource_totals": {
+      "macs": 3456,
+      "missing_duration_batch_count": 1,
+      "observed_batch_count": 4,
+      "quantized_macs": 3456,
+      "request_count": 12
+    },
+    "duration_histogram_ms": {
+      "gte_500": 0,
+      "lt_10": 4,
+      "lt_100": 0,
+      "lt_20": 5,
+      "lt_250": 0,
+      "lt_5": 0,
+      "lt_50": 0,
+      "lt_500": 0
+    },
+    "kinds": {
+      "image_only": {
+        "complete_receipt_count": 4,
+        "count": 4,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 1,
+          "lt_100": 0,
+          "lt_20": 3,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 44,
+        "max_duration_ms": 12,
+        "mean_duration_us": 11000,
+        "min_duration_ms": 8,
+        "missing_duration_count": 0,
+        "observed_duration_count": 4
+      },
+      "image_text": {
+        "complete_receipt_count": 5,
+        "count": 8,
+        "duration_histogram_ms": {
+          "gte_500": 0,
+          "lt_10": 3,
+          "lt_100": 0,
+          "lt_20": 2,
+          "lt_250": 0,
+          "lt_5": 0,
+          "lt_50": 0,
+          "lt_500": 0
+        },
+        "duration_sum_ms": 48,
+        "max_duration_ms": 12,
+        "mean_duration_us": 9600,
+        "min_duration_ms": 8,
+        "missing_duration_count": 3,
+        "observed_duration_count": 5
+      }
+    },
+    "missing_duration_total": 3,
+    "total_authoritative_requests": 12
+  },
+  "receipt_versions": {
+    "receipts/r1_batch_001.json": "r1",
+    "receipts/r2_batch_002.json": "r2",
+    "receipts/r3_batch_003.json": "r3",
+    "receipts/r3_batch_004_overwrite.json": "r3",
+    "receipts/r3_batch_005.json": "r3",
+    "receipts/r3_batch_005_rank_conflict.json": "r3"
+  },
+  "requests_hash": "0277a0ab71d44c0dc05dafca7e293c76363cf3a4b02fcaa63fae70cbb4656914",
+  "resources": [
+    {
+      "batch_id": "batch-001",
+      "duration_missing_count": 3,
+      "duration_ms": {
+        "$missing": true
+      },
+      "duration_observed_count": 0,
+      "macs": 864,
+      "parameter_version": {
+        "$missing": true
+      },
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": {
+        "$missing": true
+      },
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-002",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 3,
+      "macs": 864,
+      "parameter_version": 4,
+      "quantized_macs": 864,
+      "quantized_parameter_units": 144,
+      "request_count": 3,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-003",
+      "duration_missing_count": 0,
+      "duration_ms": 12,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 55555,
+      "worker_id": "w-alpha"
+    },
+    {
+      "batch_id": "batch-004",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 4,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-beta"
+    },
+    {
+      "batch_id": "batch-005",
+      "duration_missing_count": 0,
+      "duration_ms": 8,
+      "duration_observed_count": 2,
+      "macs": 576,
+      "parameter_version": 3,
+      "quantized_macs": 576,
+      "quantized_parameter_units": 144,
+      "request_count": 2,
+      "utilization_ppm": 83333,
+      "worker_id": "w-alpha"
+    }
+  ],
+  "scheduler": {
+    "budget": 64,
+    "consumed_budget": 13,
+    "pending_queue": [],
+    "quota_blocked": [],
+    "tickets": [
+      {
+        "batch_id": "batch-001",
+        "budget_after": 61,
+        "budget_before": 64,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_used_after": 3,
+        "worker_used_before": 0
+      },
+      {
+        "batch_id": "batch-002",
+        "budget_after": 58,
+        "budget_before": 61,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 1,
+        "worker_id": "w-beta",
+        "worker_used_after": 3,
+        "worker_used_before": 0
+      },
+      {
+        "batch_id": "batch-003",
+        "budget_after": 55,
+        "budget_before": 58,
+        "points": 3,
+        "priority_pending": false,
+        "sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_used_after": 6,
+        "worker_used_before": 3
+      },
+      {
+        "batch_id": "batch-004",
+        "budget_after": 53,
+        "budget_before": 55,
+        "points": 2,
+        "priority_pending": false,
+        "sequence": 3,
+        "worker_id": "w-beta",
+        "worker_used_after": 5,
+        "worker_used_before": 3
+      },
+      {
+        "batch_id": "batch-005",
+        "budget_after": 51,
+        "budget_before": 53,
+        "points": 2,
+        "priority_pending": false,
+        "sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_used_after": 8,
+        "worker_used_before": 6
+      }
+    ],
+    "trace": [
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 2,
+        "budget_remaining": 63,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-001",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 1,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 1,
+        "budget_remaining": 62,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-002",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 2,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-001",
+        "batch_points_remaining": 0,
+        "budget_remaining": 61,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-003",
+        "ticket_sequence": 0,
+        "worker_id": "w-alpha",
+        "worker_points_used": 3,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 2,
+        "budget_remaining": 60,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-004",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 1,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 1,
+        "budget_remaining": 59,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-005",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 2,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-002",
+        "batch_points_remaining": 0,
+        "budget_remaining": 58,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-006",
+        "ticket_sequence": 1,
+        "worker_id": "w-beta",
+        "worker_points_used": 3,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 2,
+        "budget_remaining": 57,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-007",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 4,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 1,
+        "budget_remaining": 56,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-008",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 5,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-003",
+        "batch_points_remaining": 0,
+        "budget_remaining": 55,
+        "event": "deduct",
+        "point_index": 2,
+        "request_id": "req-009",
+        "ticket_sequence": 2,
+        "worker_id": "w-alpha",
+        "worker_points_used": 6,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-004",
+        "batch_points_remaining": 1,
+        "budget_remaining": 54,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-009",
+        "ticket_sequence": 3,
+        "worker_id": "w-beta",
+        "worker_points_used": 4,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-004",
+        "batch_points_remaining": 0,
+        "budget_remaining": 53,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-010",
+        "ticket_sequence": 3,
+        "worker_id": "w-beta",
+        "worker_points_used": 5,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-005",
+        "batch_points_remaining": 1,
+        "budget_remaining": 52,
+        "event": "deduct",
+        "point_index": 0,
+        "request_id": "req-011",
+        "ticket_sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_points_used": 7,
+        "worker_quota_points": 20
+      },
+      {
+        "batch_id": "batch-005",
+        "batch_points_remaining": 0,
+        "budget_remaining": 51,
+        "event": "deduct",
+        "point_index": 1,
+        "request_id": "req-012",
+        "ticket_sequence": 4,
+        "worker_id": "w-alpha",
+        "worker_points_used": 8,
+        "worker_quota_points": 20
+      }
+    ],
+    "worker_quotas": {
+      "w-alpha": 20,
+      "w-beta": 20
+    }
+  },
+  "schema_version": "mmledger-ledger-v1",
+  "state_hash": "1e48d6eeeae5149ff2fb9f8ca51c9168615d5559bf525671bede48efe65d785e"
+}

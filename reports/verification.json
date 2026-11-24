@@ -1,0 +1,308 @@
+{
+  "checks": [
+    {
+      "check": "serial_concurrent_ledger_equality",
+      "details": {
+        "concurrent_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+        "serial_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f"
+      },
+      "passed": true
+    },
+    {
+      "check": "incremental_full_ledger_equality",
+      "details": {
+        "actual_normalization_computed": [],
+        "actual_resource_computed": [],
+        "full_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+        "incremental_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f"
+      },
+      "passed": true
+    },
+    {
+      "check": "three_version_normalized_ledger",
+      "details": {
+        "counts": {
+          "authoritative_requests": 12,
+          "failures": 0,
+          "pending_batches": 0,
+          "processed_batches": 5,
+          "quota_blocked_batches": 0,
+          "receipts_ok": 14,
+          "resource_batches": 5
+        },
+        "ledger_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+        "receipt_versions": {
+          "receipts/r1_batch_001.json": "r1",
+          "receipts/r2_batch_002.json": "r2",
+          "receipts/r3_batch_003.json": "r3",
+          "receipts/r3_batch_004_overwrite.json": "r3",
+          "receipts/r3_batch_005.json": "r3",
+          "receipts/r3_batch_005_rank_conflict.json": "r3"
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "conversion_roundtrip_restores_all_fields",
+      "details": {
+        "completeness": "complete",
+        "fields_equal": {
+          "batch_id": true,
+          "duration_ms": true,
+          "output_digest": true,
+          "overwritten_ref": true,
+          "parameter_digest": true,
+          "parameter_version": true,
+          "request_id": true,
+          "stable_rank": true,
+          "worker_id": true
+        },
+        "restored_uid": "conversion/r1_from_r3.json#0",
+        "source_uid": "receipts/r3_batch_003.json#0"
+      },
+      "passed": true
+    },
+    {
+      "check": "fault_injection_isolation",
+      "details": {
+        "failure_codes": [
+          "E_DUPLICATE_BATCH_ID",
+          "E_DURATION_NONFINITE",
+          "E_TRUNCATED_RECEIPT",
+          "E_UNKNOWN_PARAM_VERSION"
+        ],
+        "injection_hits": [
+          {
+            "code": "E_DUPLICATE_BATCH_ID",
+            "hit": true,
+            "injection_id": "INJ-DUPLICATE-BATCH",
+            "ordinal": 1,
+            "source": "fault_receipts/injected_duplicate_batch.json"
+          },
+          {
+            "code": "E_DURATION_NONFINITE",
+            "hit": true,
+            "injection_id": "INJ-NONFINITE-DURATION",
+            "ordinal": 0,
+            "source": "fault_receipts/injected_nonfinite_duration.json"
+          },
+          {
+            "code": "E_TRUNCATED_RECEIPT",
+            "hit": true,
+            "injection_id": "INJ-TRUNCATED",
+            "ordinal": 1,
+            "source": "fault_receipts/injected_truncated.json"
+          },
+          {
+            "code": "E_UNKNOWN_PARAM_VERSION",
+            "hit": true,
+            "injection_id": "INJ-UNKNOWN-PARAM",
+            "ordinal": 0,
+            "source": "fault_receipts/injected_unknown_parameter.json"
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "parameter_version_invalidation_boundary",
+      "details": {
+        "after_digest": "8f3381bc0999edc25d28e6806f35436d6404be90aa834aca9e2eecce84cee168",
+        "before_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+        "changed_workers": [
+          {
+            "current_parameter_version": 5,
+            "previous_parameter_version": 3,
+            "worker_id": "w-alpha"
+          }
+        ],
+        "normalization_computed": [
+          "batch-001",
+          "batch-003",
+          "batch-005"
+        ],
+        "normalization_reused": [
+          "batch-002",
+          "batch-004"
+        ],
+        "resource_computed": [
+          "batch-001",
+          "batch-003",
+          "batch-005"
+        ],
+        "resource_reused": [
+          "batch-002",
+          "batch-004"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "normalization_budget_pending",
+      "details": {
+        "budget": 9,
+        "consumed": 9,
+        "failure_codes": [
+          "E_NORMALIZE_BUDGET_PENDING",
+          "E_NORMALIZE_BUDGET_PENDING"
+        ],
+        "pending": [
+          "batch-004",
+          "batch-005"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "previous_pending_priority",
+      "details": {
+        "budget": 4,
+        "consumed": 4,
+        "tickets": [
+          {
+            "batch_id": "batch-004",
+            "budget_after": 2,
+            "budget_before": 4,
+            "points": 2,
+            "priority_pending": true,
+            "sequence": 0,
+            "worker_id": "w-beta",
+            "worker_used_after": 2,
+            "worker_used_before": 0
+          },
+          {
+            "batch_id": "batch-005",
+            "budget_after": 0,
+            "budget_before": 2,
+            "points": 2,
+            "priority_pending": true,
+            "sequence": 1,
+            "worker_id": "w-alpha",
+            "worker_used_after": 2,
+            "worker_used_before": 0
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "check": "worker_quota_exceeded",
+      "details": {
+        "blocked": [
+          "batch-003"
+        ],
+        "failure_codes": [
+          "E_WORKER_QUOTA_EXCEEDED"
+        ],
+        "quota": 5
+      },
+      "passed": true
+    },
+    {
+      "check": "unit_tests",
+      "details": {
+        "command": "python -m unittest discover -s tests -v",
+        "returncode": 0,
+        "tail": "test_bad_records_are_isolated_and_codes_are_specific (test_receipts.ReceiptParsingTests.test_bad_records_are_isolated_and_codes_are_specific) ... ok\ntest_three_versions_share_one_internal_field_set (test_receipts.ReceiptParsingTests.test_three_versions_share_one_internal_field_set) ... ok\ntest_batch_size_change_invalidates_resources_not_batch_normalization (test_resources_scheduler.ResourceTests.test_batch_size_change_invalidates_resources_not_batch_normalization) ... ok\ntest_fixed_point_macs_utilization_and_quality (test_resources_scheduler.ResourceTests.test_fixed_point_macs_utilization_and_quality) ... ok\ntest_parameter_version_change_invalidates_only_linked_batches (test_resources_scheduler.ResourceTests.test_parameter_version_change_invalidates_only_linked_batches) ... ok\ntest_budget_pending_then_previous_pending_has_priority (test_resources_scheduler.SchedulerTests.test_budget_pending_then_previous_pending_has_priority) ... ok\ntest_worker_quota_blocks_batch_without_deducting_budget (test_resources_scheduler.SchedulerTests.test_worker_quota_blocks_batch_without_deducting_budget) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 3.880s\n\nOK",
+        "tests": 30
+      },
+      "passed": true
+    },
+    {
+      "check": "snapshot_manifest_complete",
+      "details": {
+        "completed_workers": [
+          "w-alpha",
+          "w-beta"
+        ],
+        "config_hash": "d4a3b3f32519ac6670b1742dbcec8ff1ccb55fd1819f2b7300ded98146ffa420",
+        "consumed_budget": 13,
+        "global_version": 3,
+        "receipt_fingerprint_count": 6
+      },
+      "passed": true
+    },
+    {
+      "check": "final_continued_run_reuses_cache",
+      "details": {
+        "actual_invalidation": {
+          "changed_workers": [],
+          "cold_cache": false,
+          "normalization_computed_batches": [],
+          "normalization_invalidated_batches": [],
+          "normalization_reused_batches": [
+            "batch-001",
+            "batch-002",
+            "batch-003",
+            "batch-004",
+            "batch-005"
+          ],
+          "normalization_task_count": 0,
+          "ownership_global_invalidated": false,
+          "reasons_by_batch": {},
+          "resource_computed_batches": [],
+          "resource_global_invalidated": false,
+          "resource_invalidated_batches": [],
+          "resource_reused_batches": [
+            "batch-001",
+            "batch-002",
+            "batch-003",
+            "batch-004",
+            "batch-005"
+          ],
+          "resource_task_count": 0,
+          "reused_batches": [
+            "batch-001",
+            "batch-002",
+            "batch-003",
+            "batch-004",
+            "batch-005"
+          ]
+        },
+        "ledger_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f"
+      },
+      "passed": true
+    }
+  ],
+  "environment": {
+    "numpy": "1.26.4",
+    "platform": "linux",
+    "python": "3.11.0rc1"
+  },
+  "generation": {
+    "batches": [
+      "batch-001",
+      "batch-002",
+      "batch-003",
+      "batch-004",
+      "batch-005"
+    ],
+    "faults": [
+      "injected_duplicate_batch.json",
+      "injected_nonfinite_duration.json",
+      "injected_truncated.json",
+      "injected_unknown_parameter.json"
+    ],
+    "ports": [
+      18900,
+      18901
+    ],
+    "receipts": [
+      "r1_batch_001.json",
+      "r2_batch_002.json",
+      "r3_batch_003.json",
+      "r3_batch_004_overwrite.json",
+      "r3_batch_005.json",
+      "r3_batch_005_rank_conflict.json"
+    ],
+    "workers": [
+      "w-alpha",
+      "w-beta"
+    ],
+    "workspace": "/home/zsl/feedback/uidfc5909d3-default-249"
+  },
+  "ledger_digest": "9574beb364c2d5aa2f4297a7a0b64c552461f0c15814bfc82c96f0d01b64da4f",
+  "schema_version": "mmledger-verification-v1",
+  "status": "passed",
+  "workspace": "/home/zsl/feedback/uidfc5909d3-default-249"
+}
