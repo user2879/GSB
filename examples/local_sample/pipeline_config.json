@@ -1,0 +1,158 @@
+{
+  "concurrency": {
+    "max_workers": 4
+  },
+  "data_source": {
+    "batch_count": 8,
+    "channels": [
+      "acc_x_g",
+      "acc_y_g",
+      "acc_z_g"
+    ],
+    "missing_rate": 0.05,
+    "null_bitmap": [
+      [
+        7,
+        1
+      ],
+      [
+        18,
+        2
+      ],
+      [
+        31,
+        0
+      ],
+      [
+        44,
+        1
+      ],
+      [
+        57,
+        2
+      ]
+    ],
+    "samples_per_batch": 8,
+    "seed": 250
+  },
+  "device_id": "rotating-pump-A",
+  "drift_denominator_floor_q": 1000000,
+  "feature_stage": "clip",
+  "fixed_point": {
+    "attribution_tolerance_q": 1000,
+    "decimal_width": 12,
+    "quantization_gear": "Q6"
+  },
+  "input_scale": 1000000000000,
+  "point_budget_per_batch": 10000,
+  "samples_path": "samples.jsonl",
+  "schema_version": "1.0",
+  "snapshot_interval_batches": 2,
+  "stages": [
+    {
+      "name": "standardize",
+      "params": {
+        "inv_std_q": [
+          4000000000000,
+          3000000000000,
+          2000000000000
+        ],
+        "mean_q": [
+          0,
+          0,
+          0
+        ]
+      },
+      "scale": 1000000000000,
+      "type": "standardize",
+      "upstream": "source"
+    },
+    {
+      "name": "bucket",
+      "params": {
+        "centers_q": [
+          1000000000000,
+          2000000000000,
+          3000000000000,
+          4000000000000,
+          5000000000000,
+          6000000000000,
+          7000000000000
+        ],
+        "edges_q": [
+          -2000000000000,
+          -1000000000000,
+          -400000000000,
+          400000000000,
+          1000000000000,
+          2000000000000
+        ]
+      },
+      "scale": 1000000000000,
+      "type": "bucket",
+      "upstream": "standardize"
+    },
+    {
+      "name": "log_stage",
+      "params": {
+        "epsilon_q": 1000,
+        "iterations": 14
+      },
+      "scale": 1000000000000,
+      "type": "log",
+      "upstream": "bucket"
+    },
+    {
+      "name": "interaction",
+      "params": {
+        "output_names": [
+          "xy_energy",
+          "yz_energy",
+          "xz_energy"
+        ],
+        "pairs": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      "scale": 1000000000000,
+      "type": "interaction",
+      "upstream": "log_stage"
+    },
+    {
+      "name": "clip",
+      "params": {
+        "max_q": 10000000000000,
+        "min_q": -10000000000000
+      },
+      "scale": 1000000000000,
+      "type": "clip",
+      "upstream": "interaction"
+    }
+  ],
+  "thresholds_bp": {
+    "clip:xy_energy": 430,
+    "clip:xz_energy": 400,
+    "clip:yz_energy": 1000
+  },
+  "windows": {
+    "observation": {
+      "end_seq": 48,
+      "start_seq": 25
+    },
+    "reference": {
+      "end_seq": 24,
+      "start_seq": 1
+    }
+  }
+}

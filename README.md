@@ -1,3 +1,27 @@
+# VibPipe：振动流式特征与漂移诊断工具
+
+这是一个可在 Windows、Linux 和 macOS 运行的 Python 3.11+ 命令行交付。完整运行说明见 `docs/WINDOWS_RUNBOOK.md`，实际验收记录见 `docs/VERIFICATION_RESULTS.md`。
+
+快速开始：
+
+```powershell
+python -m pip install numpy pyyaml
+python -m vibpipe.cli generate --out examples/local_sample --injections examples/injections
+python -m vibpipe.cli run --config examples/local_sample/pipeline_config.json --samples examples/local_sample/samples.jsonl --out out/demo
+python -m unittest discover -s tests
+python -m vibpipe.verify
+```
+
+主要目录：
+
+- `vibpipe/`：配置/样本校验、定点算子、统计漂移、误差归因、缓存账本、并发、预算和快照。
+- `examples/local_sample/`：固定种子的完整示例配置与 JSONL。
+- `examples/injections/`：配置、样本和运行时故障注入。
+- `tests/test_pipeline.py`：定点数学、校验、边界、归因分类和一致性测试。
+- `artifacts/verification_report.json`：一键验收的机器可读结果。
+
+---
+
 工作区目前是空目录，没有任何现成代码、配置或样本，本次要在 Windows 上首次交付一个面向设备振动监测的流式特征管线与漂移判定诊断工具，作为可运行的命令行管线与完整示例。业务方是旋转机械健康监测团队：每台设备的多通道振动信号按批次滚动到达，经标准化、分桶、对数变换、交互乘积与截断等串联阶段构造特征，再以参考窗口与观测窗口对比判定漂移。团队已在评审中确定要与既有定点量化口径保持一致，并把数值可信度作为验收重点。输入为本地样本目录：一份管线配置 JSON，声明数据源（整数随机种子、通道列表、每批样本数、缺失率与空值位图）、按顺序串联的特征阶段（标准化、分桶、对数变换、交互乘积与截断，各阶段含整数参数、定点缩放因子与对上游阶段的引用）、参考窗口与观测窗口的划分、每个特征的漂移判定阈值（以万分比整数表示）、定点小数位宽与量化档位、线程池并发数、单批特征点数预算、快照提交间隔批次数与容差；一份按固定种子程序生成的样本 JSONL，每行含样本序号、批次号、通道读数与缺失标记。系统需在受限并发与点数预算下执行增量管线，输出逐特征逐窗口统计、漂移判定、逐级误差归因与可恢复的阶段快照。
 
 任务环境与准备：

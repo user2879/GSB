@@ -1,0 +1,69 @@
+[
+  {
+    "config": "examples/injections/INJ-CONFIG-CYCLE-001.json",
+    "expected_code": "E_CONFIG_INVALID",
+    "injection_id": "INJ-CONFIG-CYCLE-001",
+    "kind": "config",
+    "samples": "examples/local_sample/samples.jsonl"
+  },
+  {
+    "config": "examples/injections/INJ-WIDTH-ZERO-002.json",
+    "expected_code": "E_CONFIG_INVALID",
+    "injection_id": "INJ-WIDTH-ZERO-002",
+    "kind": "config",
+    "samples": "examples/local_sample/samples.jsonl"
+  },
+  {
+    "config": "examples/injections/INJ-WIDTH-RANGE-003.json",
+    "expected_code": "E_CONFIG_INVALID",
+    "injection_id": "INJ-WIDTH-RANGE-003",
+    "kind": "config",
+    "samples": "examples/local_sample/samples.jsonl"
+  },
+  {
+    "config": "examples/injections/INJ-GEAR-ENUM-004.json",
+    "expected_code": "E_CONFIG_INVALID",
+    "injection_id": "INJ-GEAR-ENUM-004",
+    "kind": "config",
+    "samples": "examples/local_sample/samples.jsonl"
+  },
+  {
+    "config": "examples/injections/INJ-THRESHOLD-RANGE-005.json",
+    "expected_code": "E_CONFIG_INVALID",
+    "injection_id": "INJ-THRESHOLD-RANGE-005",
+    "kind": "config",
+    "samples": "examples/local_sample/samples.jsonl"
+  },
+  {
+    "config": "examples/local_sample/pipeline_config.json",
+    "expected_code": "E_SAMPLE_INVALID",
+    "injection_id": "INJ-SAMPLE-NONFINITE-006",
+    "kind": "sample",
+    "samples": "examples/injections/INJ-SAMPLE-NONFINITE-006.jsonl"
+  },
+  {
+    "config": "examples/local_sample/pipeline_config.json",
+    "expected_code": "E_SAMPLE_INVALID",
+    "injection_id": "INJ-SAMPLE-DUPLICATE-007",
+    "kind": "sample",
+    "samples": "examples/injections/INJ-SAMPLE-DUPLICATE-007.jsonl"
+  },
+  {
+    "config": "examples/local_sample/pipeline_config.json",
+    "expected_code": "E_SAMPLE_INVALID",
+    "injection_id": "INJ-SAMPLE-BATCH-REGRESS-008",
+    "kind": "sample",
+    "samples": "examples/injections/INJ-SAMPLE-BATCH-REGRESS-008.jsonl"
+  },
+  {
+    "config": "examples/local_sample/pipeline_config.json",
+    "expected_codes": [
+      "E_BATCH_COMPUTE",
+      "E_SNAPSHOT_WRITE"
+    ],
+    "injection_id": "INJ-RUNTIME-BATCH-009",
+    "kind": "runtime",
+    "runtime_config": "examples/injections/INJ-RUNTIME-FAULTS-009.json",
+    "samples": "examples/local_sample/samples.jsonl"
+  }
+]
