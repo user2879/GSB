@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "h2burst-workbench"
+version = "1.0.0"
+description = "Local HTTP/2 burst window scheduling and fairness diagnostic workbench"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+h2burst = "h2burst.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["h2burst*"]

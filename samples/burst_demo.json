@@ -1,0 +1,417 @@
+{
+  "format_version": 1,
+  "session_id": "burst-demo-28-streams",
+  "declared_version": 1,
+  "notes": "Fixed-seed burst windows, strategy changes, RST_STREAM, priority changes, and GOAWAY.",
+  "connection": {
+    "initial_window": 65535,
+    "initial_stream_window": 65535,
+    "max_concurrent_streams": 64,
+    "max_frame_size": 16384,
+    "scheduling_quantum": 5
+  },
+  "streams": [
+    {
+      "stream_id": 1,
+      "priority": 2,
+      "request_body_bytes": 85202
+    },
+    {
+      "stream_id": 3,
+      "priority": 8,
+      "request_body_bytes": 52291
+    },
+    {
+      "stream_id": 5,
+      "priority": 2,
+      "request_body_bytes": 33056
+    },
+    {
+      "stream_id": 7,
+      "priority": 8,
+      "request_body_bytes": 79617
+    },
+    {
+      "stream_id": 9,
+      "priority": 5,
+      "request_body_bytes": 55210
+    },
+    {
+      "stream_id": 11,
+      "priority": 2,
+      "request_body_bytes": 80208
+    },
+    {
+      "stream_id": 13,
+      "priority": 6,
+      "request_body_bytes": 30676
+    },
+    {
+      "stream_id": 15,
+      "priority": 3,
+      "request_body_bytes": 35777
+    },
+    {
+      "stream_id": 17,
+      "priority": 6,
+      "request_body_bytes": 35686
+    },
+    {
+      "stream_id": 19,
+      "priority": 5,
+      "request_body_bytes": 55176
+    },
+    {
+      "stream_id": 21,
+      "priority": 2,
+      "request_body_bytes": 67364
+    },
+    {
+      "stream_id": 23,
+      "priority": 6,
+      "request_body_bytes": 36622
+    },
+    {
+      "stream_id": 25,
+      "priority": 2,
+      "request_body_bytes": 45712
+    },
+    {
+      "stream_id": 27,
+      "priority": 7,
+      "request_body_bytes": 57665
+    },
+    {
+      "stream_id": 29,
+      "priority": 2,
+      "request_body_bytes": 40614
+    },
+    {
+      "stream_id": 31,
+      "priority": 4,
+      "request_body_bytes": 38420
+    },
+    {
+      "stream_id": 33,
+      "priority": 6,
+      "request_body_bytes": 84660
+    },
+    {
+      "stream_id": 35,
+      "priority": 6,
+      "request_body_bytes": 82436
+    },
+    {
+      "stream_id": 37,
+      "priority": 2,
+      "request_body_bytes": 45782
+    },
+    {
+      "stream_id": 39,
+      "priority": 6,
+      "request_body_bytes": 46733
+    },
+    {
+      "stream_id": 41,
+      "priority": 4,
+      "request_body_bytes": 72660
+    },
+    {
+      "stream_id": 43,
+      "priority": 8,
+      "request_body_bytes": 68140
+    },
+    {
+      "stream_id": 45,
+      "priority": 2,
+      "request_body_bytes": 34952
+    },
+    {
+      "stream_id": 47,
+      "priority": 4,
+      "request_body_bytes": 43975
+    },
+    {
+      "stream_id": 49,
+      "priority": 7,
+      "request_body_bytes": 53363
+    },
+    {
+      "stream_id": 51,
+      "priority": 1,
+      "request_body_bytes": 69252
+    },
+    {
+      "stream_id": 53,
+      "priority": 3,
+      "request_body_bytes": 54575
+    },
+    {
+      "stream_id": 55,
+      "priority": 7,
+      "request_body_bytes": 34141
+    }
+  ],
+  "events": [
+    {
+      "seq": 0,
+      "arrival_ms": 0,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 393216
+    },
+    {
+      "seq": 1,
+      "arrival_ms": 2,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 1,
+      "increment": 65536
+    },
+    {
+      "seq": 2,
+      "arrival_ms": 4,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 3,
+      "increment": 98304
+    },
+    {
+      "seq": 3,
+      "arrival_ms": 6,
+      "type": "strategy_change",
+      "strategy": "proportional"
+    },
+    {
+      "seq": 4,
+      "arrival_ms": 8,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 5,
+      "increment": 131072
+    },
+    {
+      "seq": 5,
+      "arrival_ms": 10,
+      "type": "priority_change",
+      "stream_id": 5,
+      "priority": 1
+    },
+    {
+      "seq": 6,
+      "arrival_ms": 12,
+      "type": "priority_change",
+      "stream_id": 7,
+      "priority": 2
+    },
+    {
+      "seq": 7,
+      "arrival_ms": 14,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 393216
+    },
+    {
+      "seq": 8,
+      "arrival_ms": 16,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 9,
+      "increment": 65536
+    },
+    {
+      "seq": 9,
+      "arrival_ms": 18,
+      "type": "strategy_change",
+      "strategy": "round_robin"
+    },
+    {
+      "seq": 10,
+      "arrival_ms": 20,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 11,
+      "increment": 196608
+    },
+    {
+      "seq": 11,
+      "arrival_ms": 22,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 13,
+      "increment": 65536
+    },
+    {
+      "seq": 12,
+      "arrival_ms": 24,
+      "type": "rst_stream",
+      "stream_id": 27,
+      "error_code": 8
+    },
+    {
+      "seq": 13,
+      "arrival_ms": 26,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 524288
+    },
+    {
+      "seq": 14,
+      "arrival_ms": 28,
+      "type": "strategy_change",
+      "strategy": "proportional"
+    },
+    {
+      "seq": 15,
+      "arrival_ms": 30,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 15,
+      "increment": 65536
+    },
+    {
+      "seq": 16,
+      "arrival_ms": 32,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 17,
+      "increment": 131072
+    },
+    {
+      "seq": 17,
+      "arrival_ms": 34,
+      "type": "priority_change",
+      "stream_id": 19,
+      "priority": 1
+    },
+    {
+      "seq": 18,
+      "arrival_ms": 36,
+      "type": "strategy_change",
+      "strategy": "round_robin"
+    },
+    {
+      "seq": 19,
+      "arrival_ms": 38,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 524288
+    },
+    {
+      "seq": 20,
+      "arrival_ms": 40,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 21,
+      "increment": 65536
+    },
+    {
+      "seq": 21,
+      "arrival_ms": 42,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 23,
+      "increment": 131072
+    },
+    {
+      "seq": 22,
+      "arrival_ms": 44,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 25,
+      "increment": 65536
+    },
+    {
+      "seq": 23,
+      "arrival_ms": 46,
+      "type": "strategy_change",
+      "strategy": "proportional"
+    },
+    {
+      "seq": 24,
+      "arrival_ms": 48,
+      "type": "priority_change",
+      "stream_id": 3,
+      "priority": 1
+    },
+    {
+      "seq": 25,
+      "arrival_ms": 50,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 7,
+      "increment": 262144
+    },
+    {
+      "seq": 26,
+      "arrival_ms": 52,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 524288
+    },
+    {
+      "seq": 27,
+      "arrival_ms": 54,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 29,
+      "increment": 131072
+    },
+    {
+      "seq": 28,
+      "arrival_ms": 56,
+      "type": "strategy_change",
+      "strategy": "round_robin"
+    },
+    {
+      "seq": 29,
+      "arrival_ms": 58,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 31,
+      "increment": 65536
+    },
+    {
+      "seq": 30,
+      "arrival_ms": 60,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 524288
+    },
+    {
+      "seq": 31,
+      "arrival_ms": 62,
+      "type": "window_update",
+      "scope": "stream",
+      "stream_id": 33,
+      "increment": 131072
+    },
+    {
+      "seq": 32,
+      "arrival_ms": 64,
+      "type": "priority_change",
+      "stream_id": 9,
+      "priority": 1
+    },
+    {
+      "seq": 33,
+      "arrival_ms": 66,
+      "type": "strategy_change",
+      "strategy": "proportional"
+    },
+    {
+      "seq": 34,
+      "arrival_ms": 68,
+      "type": "window_update",
+      "scope": "connection",
+      "increment": 524288
+    },
+    {
+      "seq": 35,
+      "arrival_ms": 70,
+      "type": "goaway",
+      "last_stream_id": 45,
+      "error_code": 0
+    }
+  ]
+}

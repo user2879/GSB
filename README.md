@@ -1,23 +1,208 @@
-团队准备新建一个项目，从零构建一个面向 Windows 本地环境的 HTTP/2 流控窗口突发更新诊断工作台，交付可交互的专业应用与可重复演示。用户在本地 JSON 文件中声明一个连接会话：连接级初始窗口、最大并发流数、帧大小上限、若干请求流（流标识、发送优先级、请求体字节数）以及一份按到达序号排列的窗口更新与流事件脚本（含对连接级或某个流的窗口增量、RST_STREAM、GOAWAY 与权重变更，含到达序号与整数毫秒到达时刻）。工作台须在纯本地实现 HTTP/2 简化帧编解码与静态表头编解码，按脚本推进连接级与流级双层窗口，同时维护流状态机。核心业务问题是：当窗口更新以突发方式到达、流数量从数十增至上千且事件交错时，帧调度须在“按发送优先级轮转”与“按流剩余窗口带宽比例分配”两条策略间做出可复核的取舍，并保证策略切换前后每一帧的目标流、字节数与两层窗口余量都能被逐帧重建。
+# HTTP/2 流控窗口突发更新诊断工作台
 
-任务环境与准备：
-Windows 10/11 本地开发机，安装 Python 3.11 及以上版本并在 PATH 中可用。
-执行 pip install numpy 安装 NumPy，用于确定性数值样本与摘要计算；无需其他第三方库。
-使用 Python 标准库 sqlite3、tkinter、json 与 hashlib，无需容器、网络服务或外部账号。
-准备本地样本目录存放会话声明 JSON 与事件脚本，所有数据由固定整数种子生成。
-确认本机 Tkinter 可正常启动界面。
+这是一个纯本地的 Windows 桌面诊断应用。它读取本地 JSON 会话声明，按事件脚本推进连接级/流级双层窗口，维护流状态机，并在突发窗口更新与千流规模下比较两种确定性调度策略。
 
-业务要求：
-1. 实现会话声明与事件脚本的本地 JSON 加载及强校验：校验流标识唯一且为奇数、发送优先级在 1 至 256 且可重复、请求体字节数为非负整数、连接级初始窗口在协议允许整数范围、帧大小上限属于受支持集合、事件到达序号连续唯一且到达时刻单调不减、窗口增量非负且不溢出窗口上限；任一不合法须以 E_SPEC 整体拒绝并指出首个非法字段与事件序号。
-2. 实现 HTTP/2 简化帧编解码与静态表头编解码：支持 SETTINGS、HEADERS、DATA、WINDOW_UPDATE、RST_STREAM、GOAWAY 的定长头与负载，逐帧校验长度自洽、帧类型受支持、流标识合法（连接级帧除外），静态表头编码结果须由显式表项序确定而非字典遍历顺序；非法帧须以 E_FRAME 报告帧序号与出错字段，编解码往返须逐字节一致。
-3. 实现按事件脚本推进的双层窗口账本：处理连接级与流级 WINDOW_UPDATE 时分别增加对应余量并校验不超上限，发出 DATA 帧时同时扣减连接级与所属流余量且均不得为负；须逐帧输出目标流、字节数、扣减前后两层余量、触发该帧的事件序号与所用策略标识，同一脚本在多次运行下输出逐字节一致。
-4. 实现流状态机与生命周期管理：每条流在 idle、open、half_closed_local、half_closed_remote、closed 间按显式许可表迁移，请求体发送完毕、收到 RST_STREAM 与 GOAWAY 分别触发相应迁移，每次迁移记录触发事件序号、迁移前后状态与原因；非法迁移须以 E_STATE 拒绝且不得改变账本，GOAWAY 后不得再对已关闭流发出帧。
-5. 实现两条帧调度策略与按规模自适应的确定性取舍：轮转策略按发送优先级顺序等额分配帧预算，比例策略按各流剩余窗口占可调度流总余量之比分配帧预算；须依据流数量、待发帧数、平均窗口余量按显式规模规则选出默认策略并输出选择理由与关键规模参数，当两条策略的预估帧数差额落在显式阈值内时按稳定决胜规则选定并标注该选择受阈值影响，策略切换须记录切换事件序号与切换前后各流应得与实得字节数偏差。
-6. 实现突发窗口更新下的饥饿与公平性诊断：按运行窗口统计各流应得字节数、实得字节数与偏差比，识别连续若干帧调度周期内未获配额的饥饿流；当某流因窗口突发增加而抢占份额导致其他低优先级流饥饿时须按显式阈值给出告警并输出抢占来源事件序号，诊断结论不得依赖流的遍历顺序与事件到达顺序的等价改写。
-7. 实现会话快照的版本识别与整体替换恢复：快照持久化声明版本、当前策略与切换历史、连接级与各流窗口余量、流状态、优先级顺序与已发送帧轨迹并携带整数格式版本与内容摘要；重新打开快照时须比较快照声明版本与内容摘要同当前会话，不一致须整体替换而非增量合并，旧快照保留为只读备份，替换时稳定列出新增、删除与变化项。
-8. 实现从快照恢复后的逐帧重放校验并提供 Tkinter 演示界面：从快照记录的下一事件序号继续推进剩余脚本，与不中断推进在同一脚本区间逐帧比较目标流、字节数、扣减前后两层余量、流状态迁移与业务码，差异须定位到首个不一致帧序号与字段并以 E_REPLAY 报告依据；界面展示帧时序列、各流两层余量变化、状态迁移轨迹、当前策略与公平性偏差、饥饿告警与快照列表，渲染顺序稳定且刷新不改变账本内容。
+项目不启动网络服务、不连接外部目标、不使用容器。运行计算只使用 Python 标准库与 NumPy；快照存放在本地 SQLite 数据库。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始（Windows 10/11）
 
-验收：
-使用本地确定性事件脚本验证双层窗口账本、策略取舍、状态迁移与快照恢复逐帧一致，并覆盖异常业务码。
+```powershell
+py -3.11 -m pip install -r requirements.txt
+py -3.11 -m h2burst validate samples\minimal.json
+py -3.11 -m h2burst run samples\burst_demo.json --full
+py -3.11 -m h2burst gui samples\minimal.json
+```
+
+也可以双击 `run_workbench.bat`，默认打开 `samples\minimal.json`。若 Tkinter 不可用，CLI 会返回明确的 `E_IO`，全部诊断仍可通过命令行与测试执行。
+
+常用命令：
+
+```powershell
+py -3.11 -m unittest discover -s tests -v
+py -3.11 -m h2burst verify
+py -3.11 -m h2burst snapshot samples\minimal.json --at 1 --label checkpoint
+py -3.11 -m h2burst snapshots
+py -3.11 -m h2burst replay samples\minimal.json 1
+py -3.11 -m h2burst restore samples\minimal.json 1
+```
+
+## 已实现能力
+
+- 会话 JSON 强校验：流标识唯一且为奇数、优先级 `1..256`、非负请求体、窗口范围、受支持帧大小、连续事件序号、单调到达时刻、窗口增量及溢出检查。
+- HTTP/2 简化帧编解码：`SETTINGS`、`HEADERS`、`DATA`、`WINDOW_UPDATE`、`RST_STREAM`、`GOAWAY`；9 字节定长头、24 位长度、31 位流标识。
+- 静态表头编解码：RFC 7541 静态表 61 项，按显式静态索引排序，不使用字典遍历顺序；无 Huffman、无动态表。
+- 双层窗口账本：连接窗口与每个流窗口分别更新、分别扣减；每个 DATA 帧记录扣减前后两个余量。
+- 流状态机：`idle -> open -> half_closed_local -> closed` 等显式许可表，HEADERS、请求体完成、RST_STREAM、GOAWAY 均留下迁移记录。
+- 两种调度策略：按优先级轮转，以及按剩余窗口比例分配帧槽；规模规则自动选择，阈值内使用稳定决胜规则。
+- 突发抢占诊断：按整数最大余数法统计应得/实得字节，识别连续无配额流，并输出抢占来源事件序号。
+- SQLite 快照：整数格式版本、声明版本、内容摘要、状态摘要、策略/切换历史、窗口、状态、优先级和帧轨迹；异会话恢复执行整体替换，旧快照只读保留。
+- 逐帧重放：从快照的下一事件继续，比较帧号、目标流、字节、两层窗口前后值、策略、事件、业务码与状态迁移；首个差异抛 `E_REPLAY`。
+- Tkinter 工作台：帧时序、双层余量、状态迁移、公平性、饥饿告警与快照列表，刷新只读取视图模型。
+
+## 目录
+
+```text
+h2burst/
+  model.py          会话声明、强校验、内容摘要
+  frames.py         帧与静态表头编解码
+  state_machine.py  显式流状态迁移表
+  engine.py         双层账本、调度、公平性诊断、序列化
+  snapshot.py       SQLite 快照、整体替换、稳定差异
+  replay.py         快照续跑与逐帧比较
+  viewmodel.py      无副作用 GUI 视图模型
+  gui.py            Tkinter 界面
+  cli.py            命令行入口
+samples/            固定种子本地样本
+tests/              77 项自动化测试
+tools/verify.py     可重复验收工件生成器
+artifacts/verification.json  最近一次实际验证结果
+```
+
+## 会话 JSON
+
+最小结构如下；事件序号从 0（也兼容从 1）开始，必须连续。
+
+```json
+{
+  "format_version": 1,
+  "session_id": "minimal-two-stream",
+  "declared_version": 1,
+  "connection": {
+    "initial_window": 65535,
+    "initial_stream_window": 65535,
+    "max_concurrent_streams": 10,
+    "max_frame_size": 16384,
+    "scheduling_quantum": 3
+  },
+  "streams": [
+    {"stream_id": 1, "priority": 1, "request_body_bytes": 50000},
+    {"stream_id": 3, "priority": 2, "request_body_bytes": 22000}
+  ],
+  "events": [
+    {"seq": 0, "arrival_ms": 0, "type": "window_update", "scope": "connection", "increment": 10000},
+    {"seq": 1, "arrival_ms": 4, "type": "window_update", "scope": "stream", "stream_id": 1, "increment": 8000},
+    {"seq": 2, "arrival_ms": 10, "type": "strategy_change", "strategy": "proportional"},
+    {"seq": 3, "arrival_ms": 20, "type": "rst_stream", "stream_id": 3, "error_code": 8}
+  ]
+}
+```
+
+事件类型：
+
+| `type` | 必填字段 | 说明 |
+|---|---|---|
+| `window_update` | `scope`, `increment`；流级另需 `stream_id` | 连接或流窗口增量，允许 0，执行时不得使窗口超过 `2^31-1` |
+| `rst_stream` | `stream_id`, 可选 `error_code` | 关闭流；已关闭流再次收到 RST 报 `E_STATE` |
+| `goaway` | `last_stream_id`, 可选 `error_code` | 关闭编号大于 `last_stream_id` 的未关闭流，后续不再打开它们 |
+| `priority_change` | `stream_id`, `priority` | 发送优先级可重复，数值越小优先级越高 |
+| `strategy_change` | `strategy` | `round_robin` 或 `proportional`，显式钉住策略 |
+
+所有非法声明在运行前整体拒绝，错误包含首个非法 `field`；事件错误同时包含 `event_seq`。
+
+## 调度规则
+
+初始化时为受最大并发限制的流发送 HEADERS，状态进入 `open`；请求体为零时立即进入 `half_closed_local`。每处理一个脚本事件执行一个调度轮，每轮最多发送 `scheduling_quantum` 个 DATA 帧，脚本结束后继续排空可发送数据。未显式指定时，量子按流数量取 3、5 或 12。
+
+轮转策略：
+
+1. 可调度流按 `(priority, stream_id)` 稳定排序。
+2. 每轮给各流等量帧槽。
+3. 帧槽按稳定顺序交错执行，不把同一流的槽位一次性连续发完。
+
+比例策略：
+
+1. 以轮开始时各流剩余窗口为权重。
+2. 将 `scheduling_quantum` 个帧槽用整数最大余数法分配给各流，并受请求体/窗口可容纳帧数约束。
+3. 余数相同时按 `(priority, stream_id)` 决胜。
+4. 固定帧槽再按稳定顺序交错执行，因此 3:1 窗口在 4 个槽位下得到 3:1 槽位。
+
+自动规模规则：
+
+```text
+stream_count >= 128 或 pending_frames >= 256      -> proportional
+average_stream_window >= 3 * max_frame_size 且
+stream_count >= 16                                -> proportional
+否则                                               -> round_robin
+```
+
+若两种策略的预估帧数差不超过阈值（小规模 1，大规模 2），标记 `tie_affected=true`，保留规模规则策略作为稳定决胜。每次策略变化记录事件序号、原因、旧/新策略，以及每个受影响流的“切换前应得字节、切换后实得字节、差值”。
+
+## 账本、状态与诊断
+
+每个出站帧记录：
+
+```text
+frame_seq, event_seq, round_index, strategy, frame_type, stream_id,
+length, data_bytes, connection_window_before/after,
+stream_window_before/after, business_code, end_stream
+```
+
+状态许可表位于 `h2burst/state_machine.py`。非法迁移抛 `E_STATE`；当前事件不会继续修改窗口或帧轨迹。双重窗口不足时调度器不会发出负余额 DATA；窗口更新溢出抛 `E_FLOW`。
+
+公平性诊断对每轮实际发出的 DATA 字节按策略权重做整数最大余数分摊，累计为各流 `expected_bytes`，再与实际 `granted_bytes` 比较。默认诊断参数：
+
+- 连续 5 个调度轮无帧配额：判定饥饿。
+- 相对偏差超过 0.5：满足抢占告警偏差阈值。
+- 流级窗口更新增量不小于 `max_frame_size`：视作突发更新并保留来源事件序号。
+- 高优先级受益流在饥饿区间内收到突发更新并被继续调度：输出 `window_burst_preemption`，包含 `source_event_seq`。
+
+所有输出按帧号、流号、轮次与事件号稳定排序。调度器不依赖声明中流的遍历顺序；JSON 对象键顺序也不会改变内容摘要或结果。
+
+## 快照与重放
+
+快照数据库采用 SQLite，包含：
+
+- `snapshot_format_version=1`、`engine_format_version=1`；
+- 会话声明版本、会话内容摘要、状态摘要；
+- 当前策略、显式钉住策略、选择理由、切换历史；
+- 连接窗口、所有流窗口/状态/优先级/余量/累计分配；
+- 全部 HEADERS/DATA 帧轨迹、状态迁移、告警；
+- `next_event_seq` 与只读标志。
+
+同摘要恢复直接恢复状态。声明版本或内容摘要与当前会话不一致时，不合并、不增量覆盖，而是用快照内的会话声明和状态整体替换当前工作区；替换前把当前状态保存为新快照，并将所有旧快照标为只读。差异以稳定路径列出 `added`、`removed`、`changed`。
+
+重放时从快照记录的事件游标继续执行，与不中断运行比较目标流、数据字节、两层窗口前后值、策略、触发事件、业务码和状态迁移。首个差异抛出 `E_REPLAY` 并定位到 `frame_seq` 和字段。
+
+## 错误协议
+
+| 代码 | 场景 |
+|---|---|
+| `E_SPEC` | 会话声明或事件脚本非法 |
+| `E_FRAME` | 帧长度、类型、流标识、负载或静态表头非法 |
+| `E_FLOW` | 窗口更新溢出或窗口余额不足 |
+| `E_STATE` | 非法流状态迁移或对已关闭流操作 |
+| `E_REPLAY` | 快照续跑与完整运行出现首个逐帧差异 |
+| `E_SNAPSHOT` | 快照格式、摘要或内容损坏 |
+| `E_IO` | 本地文件、SQLite 或 Tk 启动问题 |
+
+错误序列化为 `code/message/field/event_seq/frame_seq/details`。
+
+## 界面
+
+`python -m h2burst gui <session.json>` 打开 Tkinter 工作台。工具栏支持打开、运行、逐步事件、保存快照、恢复、重放和刷新。页签包括 Frames、Streams / windows、Transitions、Fairness、Starvation 与 Snapshots；顶部展示策略选择理由和规模参数，底部展示连接窗口与事件游标。刷新只重建表格，不推进事件或改写账本。
+
+当前 Linux 验证机缺少 `libtk8.6.so`，因此验收工件如实记录 `tkinter.available=false`。Windows 上需确认 Python 安装包含 Tcl/Tk；界面逻辑由无副作用的 `WorkbenchViewModel` 和稳定渲染测试覆盖。
+
+## 实际验证
+
+执行：
+
+```powershell
+py -3.11 -m h2burst verify
+```
+
+最近一次结果写入 `artifacts/verification.json`，摘要如下：
+
+| 样本 | 流 | 事件 | 帧 | 迁移 | 饥饿告警 | 抢占告警 | 结果 |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `minimal.json` | 2 | 6 | 8 | 5 | 0 | 0 | 重放 3 帧、3 个迁移一致 |
+| `burst_demo.json` | 28 | 36 | 132 | 57 | 33 | 13 | 6 次策略切换，重放 24 帧一致 |
+| `scale_1000.json` | 1000 | 109 | 1353 | 1065 | 1190 | 731 | 自动选择 proportional，重放 146 帧一致 |
+
+- 自动化测试：`77` 项，失败 `0`，错误 `0`。
+- 三组样本重复运行摘要一致；快照恢复与逐帧续跑摘要一致。
+- 连续两次执行 `h2burst verify` 生成的 `verification.json` 逐字节一致。
+- 整会话替换探针：版本和摘要均不一致，`added=5`、`removed=5`、`changed=3`，备份快照存在且全部快照只读。
+- 异常码探针全部命中：`E_SPEC`、`E_FRAME`、`E_FLOW`、`E_STATE`、`E_REPLAY`、`E_SNAPSHOT`。
+
+样本生成器使用固定 NumPy 种子 `20261124` 与 `10002026`；运行期调度、窗口运算和摘要分摊全部使用整数逻辑，避免浮点漂移。
