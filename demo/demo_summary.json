@@ -1,0 +1,87 @@
+{
+  "consistency": {
+    "consistent": true,
+    "diffs": [],
+    "final_recompute_list": [
+      "T2",
+      "A5",
+      "T3"
+    ],
+    "final_reuse_list": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A6",
+      "A7",
+      "A8",
+      "A10",
+      "A9",
+      "T1"
+    ],
+    "full_recompute_list": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A6",
+      "A7",
+      "A8",
+      "A10",
+      "A9",
+      "T1",
+      "T2",
+      "A5",
+      "T3"
+    ],
+    "steps": 7
+  },
+  "injection_hit_codes": [
+    "E_ACTIVATION_PARAM",
+    "E_INJ_IMPL_MISSING",
+    "E_INJ_NONFINITE",
+    "E_PERM_INVALID"
+  ],
+  "injection_hits": [
+    {
+      "code": "E_ACTIVATION_PARAM",
+      "fault": "activation_param",
+      "injection_id": "INJ-03",
+      "message": "injected out-of-range activation parameter",
+      "node_id": "A9",
+      "stage": "validate"
+    },
+    {
+      "code": "E_PERM_INVALID",
+      "fault": "duplicate_perm",
+      "injection_id": "INJ-02",
+      "message": "perm must be a 0-based complete permutation matching rank",
+      "node_id": "T3",
+      "stage": "validate"
+    },
+    {
+      "code": "E_INJ_NONFINITE",
+      "fault": "nonfinite",
+      "injection_id": "INJ-05",
+      "message": "injected non-finite element before quantize",
+      "node_id": "A2",
+      "stage": "quantize"
+    },
+    {
+      "code": "E_INJ_NONFINITE",
+      "fault": "nonfinite",
+      "injection_id": "INJ-01",
+      "message": "injected non-finite tensor element",
+      "node_id": "A6",
+      "stage": "compute"
+    },
+    {
+      "code": "E_INJ_IMPL_MISSING",
+      "fault": "impl_version_missing",
+      "injection_id": "INJ-04",
+      "message": "injected missing operator implementation version",
+      "node_id": "A7",
+      "stage": "compute"
+    }
+  ]
+}

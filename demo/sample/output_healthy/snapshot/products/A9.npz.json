@@ -1,0 +1,39 @@
+{
+  "cache_key": "4fad2a6b2840cb068bec523f819ab1e9d2032308b1d6a31528a3f873cc6e2b17",
+  "fusion": null,
+  "meta": {
+    "approximations": {
+      "exp": {
+        "form": "range_reduction_taylor_horner",
+        "ldexp_2k": true,
+        "range_bits": 16,
+        "taylor_degree": 12
+      },
+      "gelu": "tanh_approximation_via_approx_exp",
+      "operation_order": "fixed_horner_and_fixed_newton_iterations",
+      "sqrt": {
+        "form": "newton_raphson_fixed_iterations",
+        "initial_guess": "ldexp_frexp_exponent_half",
+        "iterations": 10
+      }
+    },
+    "impl_version": "impl-2026.11.0",
+    "inplace": false,
+    "node_id": "A9",
+    "op": "tanh",
+    "precision": "fp32",
+    "shape": [
+      4,
+      6
+    ],
+    "sort_key": "00000008|A9|compute"
+  },
+  "node_id": "A9",
+  "output_fingerprint": "ad32f01632506e730ad278aed7e4d02f496a02edef309e4e025c5fb31733e033",
+  "quant_meta": {
+    "bit_width": 16,
+    "mode": "uniform",
+    "qmax": 32767.0
+  },
+  "version": 9
+}

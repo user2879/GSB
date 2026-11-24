@@ -1,0 +1,134 @@
+{
+  "chain_id": "demo-chain-001",
+  "edges": [
+    [
+      "A1",
+      "T1"
+    ],
+    [
+      "A2",
+      "T2"
+    ],
+    [
+      "A3",
+      "A4"
+    ],
+    [
+      "T2",
+      "A5"
+    ],
+    [
+      "A5",
+      "T3"
+    ],
+    [
+      "A4",
+      "A8"
+    ],
+    [
+      "A8",
+      "A10"
+    ]
+  ],
+  "nodes": [
+    {
+      "id": "A1",
+      "input_ref": "in0",
+      "op": "relu",
+      "params": {
+        "slope": 0.1
+      }
+    },
+    {
+      "id": "A2",
+      "input_ref": "in0",
+      "op": "gelu",
+      "params": {}
+    },
+    {
+      "id": "A3",
+      "input_ref": "in1",
+      "op": "sigmoid",
+      "params": {
+        "scale": 1.5
+      }
+    },
+    {
+      "id": "T1",
+      "op": "transpose",
+      "perm": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "T2",
+      "op": "transpose",
+      "perm": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "A4",
+      "op": "tanh",
+      "params": {
+        "gain": 1.2
+      }
+    },
+    {
+      "id": "A5",
+      "inplace": true,
+      "op": "relu",
+      "params": {
+        "slope": 0.0
+      }
+    },
+    {
+      "id": "T3",
+      "op": "transpose",
+      "perm": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "A6",
+      "input_ref": "in2",
+      "op": "relu",
+      "params": {
+        "slope": 0.2
+      }
+    },
+    {
+      "id": "A7",
+      "input_ref": "in2",
+      "op": "gelu",
+      "params": {}
+    },
+    {
+      "id": "A8",
+      "op": "sigmoid",
+      "params": {
+        "scale": 0.8
+      }
+    },
+    {
+      "id": "A9",
+      "input_ref": "in1",
+      "op": "tanh",
+      "params": {
+        "gain": 0.9
+      }
+    },
+    {
+      "id": "A10",
+      "input_ref": "in2",
+      "op": "relu",
+      "params": {
+        "slope": 0.05
+      }
+    }
+  ],
+  "seed": 20261125
+}

@@ -1,0 +1,695 @@
+{
+  "bit_width": 16,
+  "component": "opdiag",
+  "config_hash": "808819dc8bb66aeaf34d536bc0c4d50bd0c3dcaead1a30ccf7dbe41db09167e7",
+  "element_budget": 120,
+  "events": [
+    {
+      "reason": "no_manifest",
+      "type": "cold_start"
+    }
+  ],
+  "failure_codes": [
+    "E_ACTIVATION_PARAM",
+    "E_INJ_NONFINITE",
+    "E_PERM_INVALID",
+    "E_RECOMPUTE_BUDGET_PENDING"
+  ],
+  "failures": [
+    {
+      "code": "E_INJ_NONFINITE",
+      "detail": {
+        "injection": {
+          "fault": "nonfinite",
+          "id": "INJ-05",
+          "node_id": "A2",
+          "stage": "quantize"
+        }
+      },
+      "injection_id": "INJ-05",
+      "message": "injected non-finite element before quantize",
+      "node_id": "A2",
+      "stage": "quantize",
+      "topo_index": 1
+    },
+    {
+      "code": "E_INJ_NONFINITE",
+      "detail": {
+        "injection": {
+          "fault": "nonfinite",
+          "id": "INJ-01",
+          "node_id": "A6",
+          "stage": "compute"
+        }
+      },
+      "injection_id": "INJ-01",
+      "message": "injected non-finite tensor element",
+      "node_id": "A6",
+      "stage": "compute",
+      "topo_index": 4
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {
+        "cost": 15,
+        "remaining": 9
+      },
+      "injection_id": null,
+      "message": "cost 15 exceeds remaining budget 9",
+      "node_id": "A7",
+      "stage": "schedule",
+      "topo_index": 5
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {},
+      "injection_id": null,
+      "message": "blocked behind budget-pending node",
+      "node_id": "A8",
+      "stage": "schedule",
+      "topo_index": 6
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {},
+      "injection_id": null,
+      "message": "blocked behind budget-pending node",
+      "node_id": "A10",
+      "stage": "schedule",
+      "topo_index": 7
+    },
+    {
+      "code": "E_ACTIVATION_PARAM",
+      "detail": {
+        "injection": {
+          "fault": "activation_param",
+          "id": "INJ-03",
+          "node_id": "A9",
+          "stage": "validate"
+        }
+      },
+      "injection_id": "INJ-03",
+      "message": "injected out-of-range activation parameter",
+      "node_id": "A9",
+      "stage": "validate",
+      "topo_index": 8
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {},
+      "injection_id": null,
+      "message": "blocked behind budget-pending node",
+      "node_id": "T1",
+      "stage": "schedule",
+      "topo_index": 9
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {},
+      "injection_id": null,
+      "message": "blocked behind budget-pending node",
+      "node_id": "T2",
+      "stage": "schedule",
+      "topo_index": 10
+    },
+    {
+      "code": "E_RECOMPUTE_BUDGET_PENDING",
+      "detail": {},
+      "injection_id": null,
+      "message": "blocked behind budget-pending node",
+      "node_id": "A5",
+      "stage": "schedule",
+      "topo_index": 11
+    },
+    {
+      "code": "E_PERM_INVALID",
+      "detail": {
+        "injection": {
+          "fault": "duplicate_perm",
+          "id": "INJ-02",
+          "node_id": "T3",
+          "stage": "validate"
+        },
+        "perm": [
+          0,
+          0
+        ],
+        "rank": 2
+      },
+      "injection_id": "INJ-02",
+      "message": "perm must be a 0-based complete permutation matching rank",
+      "node_id": "T3",
+      "stage": "validate",
+      "topo_index": 12
+    }
+  ],
+  "fusion_diagnostics": [],
+  "global_version": 3,
+  "impl_version": "impl-2026.11.0",
+  "injection_hits": [
+    {
+      "code": "E_ACTIVATION_PARAM",
+      "fault": "activation_param",
+      "injection_id": "INJ-03",
+      "message": "injected out-of-range activation parameter",
+      "node_id": "A9",
+      "stage": "validate"
+    },
+    {
+      "code": "E_PERM_INVALID",
+      "fault": "duplicate_perm",
+      "injection_id": "INJ-02",
+      "message": "perm must be a 0-based complete permutation matching rank",
+      "node_id": "T3",
+      "stage": "validate"
+    },
+    {
+      "code": "E_INJ_NONFINITE",
+      "fault": "nonfinite",
+      "injection_id": "INJ-05",
+      "message": "injected non-finite element before quantize",
+      "node_id": "A2",
+      "stage": "quantize"
+    },
+    {
+      "code": "E_INJ_NONFINITE",
+      "fault": "nonfinite",
+      "injection_id": "INJ-01",
+      "message": "injected non-finite tensor element",
+      "node_id": "A6",
+      "stage": "compute"
+    }
+  ],
+  "max_workers": 3,
+  "nodes": [
+    {
+      "cache_key": "e16ce55597416af7eca901844f1feb71ac8bdf9b993b96ef407e1492b7ccb665",
+      "inplace": false,
+      "meta": {
+        "approximations": {
+          "exp": {
+            "form": "range_reduction_taylor_horner",
+            "ldexp_2k": true,
+            "range_bits": 16,
+            "taylor_degree": 12
+          },
+          "gelu": "tanh_approximation_via_approx_exp",
+          "operation_order": "fixed_horner_and_fixed_newton_iterations",
+          "sqrt": {
+            "form": "newton_raphson_fixed_iterations",
+            "initial_guess": "ldexp_frexp_exponent_half",
+            "iterations": 10
+          }
+        },
+        "impl_version": "impl-2026.11.0",
+        "inplace": false,
+        "node_id": "A1",
+        "op": "relu",
+        "precision": "fp32",
+        "shape": [
+          4,
+          6
+        ],
+        "sort_key": "00000000|A1|compute"
+      },
+      "node_id": "A1",
+      "op": "relu",
+      "output_fingerprint": "e171219827c10bc09034124b3a4c039a286aa12a46d72796d8027e6d7ccd3a2f",
+      "quant": {
+        "bit_width": 16,
+        "integer_dtype": "int16",
+        "mode": "uniform",
+        "residual_fingerprint": "8cd841575d2c4ecd0a9cc94ffdbdd451dbf7516256ef1e1f95bf1a2fafaca3c9",
+        "step_fingerprint": "e2c6276fb4c76c12429f46151823bb43e698ba4543d77ab55f84c648a5df3363"
+      },
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000000|A1|compute",
+      "status": "recomputed",
+      "topo_index": 0
+    },
+    {
+      "inplace": false,
+      "node_id": "A2",
+      "op": "gelu",
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000001|A2|compute",
+      "status": "failed",
+      "topo_index": 1
+    },
+    {
+      "cache_key": "2a2d99ddb4876d7f84a5d55d53533e211b94e76b94fe2d1843b4430664b9a5ff",
+      "inplace": false,
+      "meta": {
+        "approximations": {
+          "exp": {
+            "form": "range_reduction_taylor_horner",
+            "ldexp_2k": true,
+            "range_bits": 16,
+            "taylor_degree": 12
+          },
+          "gelu": "tanh_approximation_via_approx_exp",
+          "operation_order": "fixed_horner_and_fixed_newton_iterations",
+          "sqrt": {
+            "form": "newton_raphson_fixed_iterations",
+            "initial_guess": "ldexp_frexp_exponent_half",
+            "iterations": 10
+          }
+        },
+        "impl_version": "impl-2026.11.0",
+        "inplace": false,
+        "node_id": "A3",
+        "op": "sigmoid",
+        "precision": "fp32",
+        "shape": [
+          4,
+          6
+        ],
+        "sort_key": "00000002|A3|compute"
+      },
+      "node_id": "A3",
+      "op": "sigmoid",
+      "output_fingerprint": "a3433ada3502e7e537898742a27370ffb8c1313c21bdb5139eddcf57bf16e921",
+      "quant": {
+        "bit_width": 16,
+        "integer_dtype": "int16",
+        "mode": "uniform",
+        "residual_fingerprint": "8918e8e3b4f8b5e0dc7e5e8e49856701ac9b446a349c9f65f78c20d519c0f96e",
+        "step_fingerprint": "3da37a198d5280fe9ac7a622ad179ca8e170eef1244d95357a252a6335711861"
+      },
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000002|A3|compute",
+      "status": "recomputed",
+      "topo_index": 2
+    },
+    {
+      "cache_key": "9408af3897d2641e6ec471ea69db0fb9d8349cf77ac84d98a3a7c2af919b4541",
+      "inplace": false,
+      "meta": {
+        "approximations": {
+          "exp": {
+            "form": "range_reduction_taylor_horner",
+            "ldexp_2k": true,
+            "range_bits": 16,
+            "taylor_degree": 12
+          },
+          "gelu": "tanh_approximation_via_approx_exp",
+          "operation_order": "fixed_horner_and_fixed_newton_iterations",
+          "sqrt": {
+            "form": "newton_raphson_fixed_iterations",
+            "initial_guess": "ldexp_frexp_exponent_half",
+            "iterations": 10
+          }
+        },
+        "impl_version": "impl-2026.11.0",
+        "inplace": false,
+        "node_id": "A4",
+        "op": "tanh",
+        "precision": "fp32",
+        "shape": [
+          4,
+          6
+        ],
+        "sort_key": "00000003|A4|compute"
+      },
+      "node_id": "A4",
+      "op": "tanh",
+      "output_fingerprint": "7b33a994470ba1ea9e5e8948b27022d0c42778780ef850b30dc0f45bf6a8e9e1",
+      "quant": {
+        "bit_width": 16,
+        "integer_dtype": "int16",
+        "mode": "uniform",
+        "residual_fingerprint": "13e8ff3a1a4bcd4b2fa74970b9eb1145d9fbac9d9b08fc9c9f9ff7c416e8fd5e",
+        "step_fingerprint": "03e0fe4cec19429bc27749d127a541f54265b759fd25239bb537d1a44633d643"
+      },
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000003|A4|compute",
+      "status": "recomputed",
+      "topo_index": 3
+    },
+    {
+      "inplace": false,
+      "node_id": "A6",
+      "op": "relu",
+      "shape": [
+        3,
+        5
+      ],
+      "sort_key": "00000004|A6|compute",
+      "status": "failed",
+      "topo_index": 4
+    },
+    {
+      "inplace": false,
+      "node_id": "A7",
+      "op": "gelu",
+      "shape": [
+        3,
+        5
+      ],
+      "sort_key": "00000005|A7|compute",
+      "status": "pending",
+      "topo_index": 5
+    },
+    {
+      "inplace": false,
+      "node_id": "A8",
+      "op": "sigmoid",
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000006|A8|compute",
+      "status": "pending",
+      "topo_index": 6
+    },
+    {
+      "inplace": false,
+      "node_id": "A10",
+      "op": "relu",
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000007|A10|compute",
+      "status": "pending",
+      "topo_index": 7
+    },
+    {
+      "inplace": false,
+      "node_id": "A9",
+      "op": "tanh",
+      "shape": [
+        4,
+        6
+      ],
+      "sort_key": "00000008|A9|compute",
+      "status": "failed",
+      "topo_index": 8
+    },
+    {
+      "inplace": false,
+      "node_id": "T1",
+      "op": "transpose",
+      "shape": [
+        6,
+        4
+      ],
+      "sort_key": "00000009|T1|compute",
+      "status": "pending",
+      "topo_index": 9
+    },
+    {
+      "inplace": false,
+      "node_id": "T2",
+      "op": "transpose",
+      "shape": [
+        6,
+        4
+      ],
+      "sort_key": "00000010|T2|compute",
+      "status": "pending",
+      "topo_index": 10
+    },
+    {
+      "inplace": true,
+      "node_id": "A5",
+      "op": "relu",
+      "shape": [
+        6,
+        4
+      ],
+      "sort_key": "00000011|A5|compute",
+      "status": "pending",
+      "topo_index": 11
+    },
+    {
+      "inplace": false,
+      "node_id": "T3",
+      "op": "transpose",
+      "shape": [
+        6,
+        4
+      ],
+      "sort_key": "00000012|T3|compute",
+      "status": "failed",
+      "topo_index": 12
+    }
+  ],
+  "observed_max_concurrency": 3,
+  "pending_list": [
+    "A7",
+    "A8",
+    "A10",
+    "T1",
+    "T2",
+    "A5"
+  ],
+  "precision": "fp32",
+  "quant_mode": "uniform",
+  "recompute_list": [
+    "A1",
+    "A3",
+    "A4"
+  ],
+  "reuse_list": [],
+  "tolerance": 1e-05,
+  "topology": [
+    {
+      "consumers": [
+        "T1"
+      ],
+      "inplace": false,
+      "input_ref": "in0",
+      "node_id": "A1",
+      "op": "relu",
+      "params": {
+        "slope": 0.1
+      },
+      "producer": null,
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 0,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "T2"
+      ],
+      "inplace": false,
+      "input_ref": "in0",
+      "node_id": "A2",
+      "op": "gelu",
+      "params": {},
+      "producer": null,
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 1,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "A4"
+      ],
+      "inplace": false,
+      "input_ref": "in1",
+      "node_id": "A3",
+      "op": "sigmoid",
+      "params": {
+        "scale": 1.5
+      },
+      "producer": null,
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 2,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "A8"
+      ],
+      "inplace": false,
+      "input_ref": null,
+      "node_id": "A4",
+      "op": "tanh",
+      "params": {
+        "gain": 1.2
+      },
+      "producer": "A3",
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 3,
+      "valid": true
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": "in2",
+      "node_id": "A6",
+      "op": "relu",
+      "params": {
+        "slope": 0.2
+      },
+      "producer": null,
+      "shape": [
+        3,
+        5
+      ],
+      "topo_index": 4,
+      "valid": true
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": "in2",
+      "node_id": "A7",
+      "op": "gelu",
+      "params": {},
+      "producer": null,
+      "shape": [
+        3,
+        5
+      ],
+      "topo_index": 5,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "A10"
+      ],
+      "inplace": false,
+      "input_ref": null,
+      "node_id": "A8",
+      "op": "sigmoid",
+      "params": {
+        "scale": 0.8
+      },
+      "producer": "A4",
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 6,
+      "valid": true
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": "in2",
+      "node_id": "A10",
+      "op": "relu",
+      "params": {
+        "slope": 0.05
+      },
+      "producer": "A8",
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 7,
+      "valid": true
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": "in1",
+      "node_id": "A9",
+      "op": "tanh",
+      "params": {
+        "gain": 0.9
+      },
+      "producer": null,
+      "shape": [
+        4,
+        6
+      ],
+      "topo_index": 8,
+      "valid": false
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": null,
+      "node_id": "T1",
+      "op": "transpose",
+      "params": {},
+      "producer": "A1",
+      "shape": [
+        6,
+        4
+      ],
+      "topo_index": 9,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "A5"
+      ],
+      "inplace": false,
+      "input_ref": null,
+      "node_id": "T2",
+      "op": "transpose",
+      "params": {},
+      "producer": "A2",
+      "shape": [
+        6,
+        4
+      ],
+      "topo_index": 10,
+      "valid": true
+    },
+    {
+      "consumers": [
+        "T3"
+      ],
+      "inplace": true,
+      "input_ref": null,
+      "node_id": "A5",
+      "op": "relu",
+      "params": {
+        "slope": 0.0
+      },
+      "producer": "T2",
+      "shape": [
+        6,
+        4
+      ],
+      "topo_index": 11,
+      "valid": true
+    },
+    {
+      "consumers": [],
+      "inplace": false,
+      "input_ref": null,
+      "node_id": "T3",
+      "op": "transpose",
+      "params": {},
+      "producer": "A5",
+      "shape": [
+        6,
+        4
+      ],
+      "topo_index": 12,
+      "valid": false
+    }
+  ]
+}
