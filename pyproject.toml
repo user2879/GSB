@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "probelease"
+version = "0.1.0"
+description = "Deterministic loopback UDP probe leases with pause, resume, replay, and splice verification"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+authors = [{name = "probelease contributors"}]
+
+[project.scripts]
+probelease = "probelease.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["probelease*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

@@ -1,0 +1,58 @@
+{
+  "format_version": 1,
+  "session_set_version": 3,
+  "ack_policy_version": 7,
+  "sessions": [
+    {
+      "session_id": "alpha",
+      "port": 18101,
+      "probe_ids": ["alpha_ok_1", "alpha_ok_2", "alpha_drop"],
+      "poll_period_ms": 220,
+      "datagram_timeout_ms": 70,
+      "ack_confirmation_floor_bp": 6000,
+      "lease_miss_limit": 2,
+      "depends_on": ["child"]
+    },
+    {
+      "session_id": "lossy",
+      "port": 18102,
+      "probe_ids": ["lossy_ok", "lossy_drop"],
+      "poll_period_ms": 220,
+      "datagram_timeout_ms": 70,
+      "ack_confirmation_floor_bp": 7500,
+      "lease_miss_limit": 2,
+      "depends_on": []
+    },
+    {
+      "session_id": "late",
+      "port": 18103,
+      "probe_ids": ["late_ok_but_late"],
+      "poll_period_ms": 400,
+      "datagram_timeout_ms": 60,
+      "ack_confirmation_floor_bp": 10000,
+      "lease_miss_limit": 1,
+      "depends_on": []
+    },
+    {
+      "session_id": "mismatch",
+      "port": 18104,
+      "probe_ids": ["bad_sequence"],
+      "poll_period_ms": 220,
+      "datagram_timeout_ms": 70,
+      "ack_confirmation_floor_bp": 10000,
+      "lease_miss_limit": 1,
+      "depends_on": []
+    },
+    {
+      "session_id": "child",
+      "port": 18105,
+      "probe_ids": ["child_ok"],
+      "poll_period_ms": 250,
+      "datagram_timeout_ms": 70,
+      "ack_confirmation_floor_bp": 10000,
+      "lease_miss_limit": 2,
+      "depends_on": ["lossy", "alpha"]
+    }
+  ]
+}
+
