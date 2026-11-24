@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cross-node-quota-ledger-demo"
+version = "1.0.0"
+description = "Deterministic Windows-friendly cross-node shard quota lease ledger demo"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+quota-ledger = "quota_ledger.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["quota_ledger*"]
