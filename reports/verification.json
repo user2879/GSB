@@ -1,0 +1,243 @@
+{
+  "checks": {
+    "all_step_semantics_equal": true,
+    "final_config_matches": true,
+    "height_reuses_columns_and_segments": true,
+    "metric_recomputes_matches": true,
+    "metric_reuses_regression": true,
+    "noop_all_cache_reused": true,
+    "noop_semantics_equal": true,
+    "noop_snapshot_stale": true,
+    "penalty_only_recomputes_oversize_regressions": true,
+    "penalty_reuses_columns_and_segments": true,
+    "replacement_invalidates_changed_image": true,
+    "replacement_reuses_unaffected_images": true
+  },
+  "final_semantic_digest": "8944b58aed20a5f3578ec49bf0afa0279991b077ce7bdcccd4c014357d30177b",
+  "inputs": ".verify/inputs",
+  "noop": {
+    "all_cache_reused": true,
+    "cache_summary": {
+      "by_stage": {
+        "recompute": {},
+        "reuse": {
+          "columns": 3,
+          "match": 30,
+          "regression": 25,
+          "segments": 10
+        }
+      },
+      "recompute_count": 0,
+      "reuse_count": 68
+    },
+    "semantic_digest": "8944b58aed20a5f3578ec49bf0afa0279991b077ce7bdcccd4c014357d30177b"
+  },
+  "passed": true,
+  "steps": [
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 0
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 29,
+          "reuse": 0
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 29,
+          "reuse": 0
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 0
+        }
+      },
+      "config_hash": "afd96e1264bac557009e4c289eeb39127aefacd9b5128f242e64ddb12fc0483c",
+      "description": "初始非最终配置，建立增量缓存",
+      "first_difference": null,
+      "full_semantic_digest": "7a8d8b301a1c4ba05940fe71bd027d778e69350141ad4de9b52507e660133b02",
+      "incremental_global_version": 1,
+      "incremental_semantic_digest": "7a8d8b301a1c4ba05940fe71bd027d778e69350141ad4de9b52507e660133b02",
+      "name": "initial",
+      "semantic_equal": true,
+      "snapshot_stale_reason": null,
+      "step": 1
+    },
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 0
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 18,
+          "reuse": 11
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 21,
+          "reuse": 8
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 0
+        }
+      },
+      "config_hash": "3e607ad2d0106d6f86f510a5fd5e5c815952113daccbd34a0aba140f1915c078",
+      "description": "仅调整二值化阈值",
+      "first_difference": null,
+      "full_semantic_digest": "d0e834b656663bfff19cc2dada48e5f2c0cb12eb9c0c6749ece6db8ed4080f6f",
+      "incremental_global_version": 2,
+      "incremental_semantic_digest": "d0e834b656663bfff19cc2dada48e5f2c0cb12eb9c0c6749ece6db8ed4080f6f",
+      "name": "threshold_edit",
+      "semantic_equal": true,
+      "snapshot_stale_reason": "config_hash_mismatch",
+      "step": 2
+    },
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 29
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 19
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        }
+      },
+      "config_hash": "5d6c6a69cf7f1a477c1a8325a09d3341104f42cd49f5b2f92991fbe7fe32957d",
+      "description": "仅恢复最小/最大字符高度约束",
+      "first_difference": null,
+      "full_semantic_digest": "5e52929b93313df6c6294cc9cbc283640ee5fb628ae5b61f107ff436bc9a1966",
+      "incremental_global_version": 3,
+      "incremental_semantic_digest": "5e52929b93313df6c6294cc9cbc283640ee5fb628ae5b61f107ff436bc9a1966",
+      "name": "height_edit",
+      "semantic_equal": true,
+      "snapshot_stale_reason": "config_hash_mismatch",
+      "step": 3
+    },
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 2,
+          "reuse": 27
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 10,
+          "reuse": 19
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        }
+      },
+      "config_hash": "64339729ce681647be2b031584c1cfdbe7733c9168bdc3cca4c02e1c4aefc02d",
+      "description": "仅调整粘连块分割罚项",
+      "first_difference": null,
+      "full_semantic_digest": "965eb8cc06603ef7f0a93b8b8d06e7365bcc76e60f0cff3d6e0f8661cbc1cef8",
+      "incremental_global_version": 4,
+      "incremental_semantic_digest": "965eb8cc06603ef7f0a93b8b8d06e7365bcc76e60f0cff3d6e0f8661cbc1cef8",
+      "name": "penalty_edit",
+      "semantic_equal": true,
+      "snapshot_stale_reason": "config_hash_mismatch",
+      "step": 4
+    },
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 29,
+          "reuse": 0
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 29
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 10
+        }
+      },
+      "config_hash": "be2661b126420573b657a089b6e88573e308961002a8905339866b8354ae6c4e",
+      "description": "仅切换模板匹配度量，达到最终配置",
+      "first_difference": null,
+      "full_semantic_digest": "86ef4030c83eae6b0afaba5c3d2ab6e6e884481f64ea41ec00bf68a61346857e",
+      "incremental_global_version": 5,
+      "incremental_semantic_digest": "86ef4030c83eae6b0afaba5c3d2ab6e6e884481f64ea41ec00bf68a61346857e",
+      "name": "metric_edit",
+      "semantic_equal": true,
+      "snapshot_stale_reason": "config_hash_mismatch",
+      "step": 5
+    },
+    {
+      "cache_actions": {
+        "columns": {
+          "pending": 0,
+          "recompute": 3,
+          "reuse": 7
+        },
+        "match": {
+          "pending": 0,
+          "recompute": 0,
+          "reuse": 30
+        },
+        "regression": {
+          "pending": 0,
+          "recompute": 9,
+          "reuse": 21
+        },
+        "segments": {
+          "pending": 0,
+          "recompute": 3,
+          "reuse": 7
+        }
+      },
+      "config_hash": "be2661b126420573b657a089b6e88573e308961002a8905339866b8354ae6c4e",
+      "description": "用另一张同分辨率样本整体替换 page_001 图像与真值",
+      "first_difference": null,
+      "full_semantic_digest": "8944b58aed20a5f3578ec49bf0afa0279991b077ce7bdcccd4c014357d30177b",
+      "incremental_global_version": 6,
+      "incremental_semantic_digest": "8944b58aed20a5f3578ec49bf0afa0279991b077ce7bdcccd4c014357d30177b",
+      "name": "image_replace",
+      "semantic_equal": true,
+      "snapshot_stale_reason": null,
+      "step": 6
+    }
+  ],
+  "workdir": ".verify"
+}
