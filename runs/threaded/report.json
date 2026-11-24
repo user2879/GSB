@@ -1,0 +1,600 @@
+{
+  "business_code_counts": {
+    "E_ATTRIBUTION_CONFLICT": 1,
+    "E_ATTRIBUTION_UNDECIDABLE": 1,
+    "E_NORMALIZE_BUDGET_PENDING": 15
+  },
+  "command_cursor": 10,
+  "config_hash": "0df582af85260381604bd182357d9aa8722a9942b87ea4602ffc1f7aeffe65fe",
+  "deterministic_timing_statistics": [
+    {
+      "batch_count": 2,
+      "latency_max_ms": 35,
+      "latency_min_ms": 33,
+      "latency_sum_ms": 68,
+      "param_version": 1,
+      "worker_id": "W1"
+    },
+    {
+      "batch_count": 2,
+      "latency_max_ms": 88,
+      "latency_min_ms": 44,
+      "latency_sum_ms": 132,
+      "param_version": 1,
+      "worker_id": "W2"
+    },
+    {
+      "batch_count": 3,
+      "latency_max_ms": 26,
+      "latency_min_ms": 23,
+      "latency_sum_ms": 73,
+      "param_version": 2,
+      "worker_id": "W3"
+    }
+  ],
+  "end_to_end_elapsed_wall_ms": 275.756,
+  "failure_count": 2,
+  "failures": [
+    {
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:5",
+        "r3:receipts-r3.log:9"
+      ],
+      "code": "E_ATTRIBUTION_CONFLICT",
+      "item_id": "REQ-0016",
+      "message": "unresolved attribution conflict",
+      "source": "attribution"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:7",
+        "r3:receipts-r3.log:8"
+      ],
+      "code": "E_ATTRIBUTION_UNDECIDABLE",
+      "item_id": "REQ-0017",
+      "message": "duplicate reference is missing or dangling",
+      "source": "attribution"
+    }
+  ],
+  "injection_results": [],
+  "invalidation_count": 39,
+  "invalidation_items": [
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0011"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0012"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0013"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0014"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0015"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0016"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0017"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0018"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B301:W3"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B302:W3"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B309:W3"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0001"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B101:W1"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0001"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0002"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0003"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0004"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0005"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0006"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0007"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0008"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0009"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0010"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0011"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0012"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0013"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0014"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0015"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0016"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0017"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "attribution:REQ-0018"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B101:W1"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B102:W1"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B109:W1"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B201:W2"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B209:W2"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B301:W3"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B302:W3"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "batch:B309:W3"
+    }
+  ],
+  "pending_count": 0,
+  "pending_queue": [],
+  "port_checks": [],
+  "receipt_counts_by_version": {
+    "r1": 3,
+    "r2": 9,
+    "r3": 10,
+    "total": 22
+  },
+  "reuse_count": 54,
+  "reuse_hits": [
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0001"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0002"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0004"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0005"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0007"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0008"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0011"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0012"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0015"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "attribution:REQ-0016"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "batch:B209:W2"
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "entry_id": "stage:text_parse"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0001"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0002"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0003"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0004"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0005"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0006"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0007"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0008"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0009"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "attribution:REQ-0010"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B101:W1"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B102:W1"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B109:W1"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B201:W2"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "batch:B209:W2"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "entry_id": "stage:text_parse"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0002"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0003"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0004"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0005"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0006"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0007"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0008"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0009"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0010"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0011"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0012"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0013"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0014"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0015"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0016"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0017"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "attribution:REQ-0018"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B102:W1"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B109:W1"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B201:W2"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B209:W2"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B301:W3"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B302:W3"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "batch:B309:W3"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "entry_id": "stage:text_parse"
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "entry_id": "stage:text_parse"
+    }
+  ],
+  "schema_version": "diagnostic-report.v1",
+  "snapshot_manifest": {
+    "artifact_versions": {
+      "01_parse": 1,
+      "02_attribution": 1,
+      "03_resources": 1,
+      "04_summary": 1,
+      "ledger": 1,
+      "state": 1
+    },
+    "completed_command_cursor": 10,
+    "config_hash": "0df582af85260381604bd182357d9aa8722a9942b87ea4602ffc1f7aeffe65fe",
+    "files": [
+      "01_parse.json",
+      "02_attribution.json",
+      "03_resources.json",
+      "04_summary.json",
+      "ledger.json",
+      "sidecars.json",
+      "state.json"
+    ],
+    "global_version": 10,
+    "snapshot_format_version": 1,
+    "snapshot_id": "snap-0df582af8526-000010-cursor-0010"
+  },
+  "snapshot_recovery": "no_committed_snapshot",
+  "worker_param_version_metrics": [
+    {
+      "batch_entries": [
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1"
+      ],
+      "mac": 43008,
+      "param_version": 1,
+      "request_count": 7,
+      "worker_id": "W1"
+    },
+    {
+      "batch_entries": [
+        "batch:B201:W2",
+        "batch:B209:W2"
+      ],
+      "mac": 30720,
+      "param_version": 1,
+      "request_count": 5,
+      "worker_id": "W2"
+    },
+    {
+      "batch_entries": [
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3"
+      ],
+      "mac": 74463,
+      "param_version": 2,
+      "request_count": 9,
+      "worker_id": "W3"
+    }
+  ]
+}

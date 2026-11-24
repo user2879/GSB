@@ -1,0 +1,43 @@
+{
+  "injections": [
+    {
+      "drop_suffix": 9,
+      "expected_code": "E_RECEIPT_TRUNCATED",
+      "file": "receipts-r1.log",
+      "id": "INJ-001-truncated-receipt",
+      "kind": "truncate_line",
+      "line_no": 2
+    },
+    {
+      "expected_code": "E_VERSION_UNKNOWN",
+      "field": "param_version",
+      "file": "receipts-r2.log",
+      "id": "INJ-002-unknown-param-version",
+      "kind": "set_field",
+      "line_no": 1,
+      "value": 999
+    },
+    {
+      "expected_code": "E_RECEIPT_NONFINITE_LATENCY",
+      "field": "latency_ms",
+      "file": "receipts-r2.log",
+      "id": "INJ-003-nonfinite-latency",
+      "kind": "set_field",
+      "line_no": 2,
+      "value": "NaN"
+    },
+    {
+      "arrived_ms": 999,
+      "batch_id": "B101",
+      "expected_code": "E_SCHEMA_INVALID",
+      "id": "INJ-004-duplicate-request-id",
+      "kind": "duplicate_request_id",
+      "request_id": "REQ-0001",
+      "seq": 9001,
+      "source": "request_stream.json",
+      "worker_id": "W1"
+    }
+  ],
+  "schema_version": "injections.v1",
+  "seed": 234
+}

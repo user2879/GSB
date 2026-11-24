@@ -1,0 +1,201 @@
+{
+  "business_code_counts": {
+    "E_ATTRIBUTION_CONFLICT": 1,
+    "E_NORMALIZE_BUDGET_PENDING": 13,
+    "E_RECEIPT_NONFINITE_LATENCY": 1,
+    "E_RECEIPT_TRUNCATED": 1,
+    "E_SCHEMA_INVALID": 1,
+    "E_VERSION_UNKNOWN": 1
+  },
+  "cycles": [
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "batch:B209:W2",
+        "stage:ledger_summary",
+        "stage:text_parse"
+      ],
+      "command_id": "C001-normalize-constrained",
+      "command_index": 0,
+      "invalidated": [],
+      "pending": [
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3"
+      ],
+      "propagation": [],
+      "recomputed": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "batch:B209:W2",
+        "stage:ledger_summary",
+        "stage:text_parse"
+      ],
+      "reused": []
+    }
+  ],
+  "pending_queue": [
+    {
+      "batch_id": "B201",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0009",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B201",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0010",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B301",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0013",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B301",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0014",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B302",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0017",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B309",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "attribution:REQ-0018",
+      "last_attempt_command_index": 0,
+      "reason": "worker_quota",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B101",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B101:W1",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B102",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B102:W1",
+      "last_attempt_command_index": 0,
+      "reason": "worker_quota",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B109",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B109:W1",
+      "last_attempt_command_index": 0,
+      "reason": "worker_quota",
+      "worker_id": "W1"
+    },
+    {
+      "batch_id": "B201",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B201:W2",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W2"
+    },
+    {
+      "batch_id": "B301",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B301:W3",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B302",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B302:W3",
+      "last_attempt_command_index": 0,
+      "reason": "batch_budget",
+      "worker_id": "W3"
+    },
+    {
+      "batch_id": "B309",
+      "code": "E_NORMALIZE_BUDGET_PENDING",
+      "enqueued_command_index": 0,
+      "entry_id": "batch:B309:W3",
+      "last_attempt_command_index": 0,
+      "reason": "worker_quota",
+      "worker_id": "W3"
+    }
+  ],
+  "summary": {
+    "attribution_count": 10,
+    "batch_metric_count": 1,
+    "conflict_count": 1,
+    "failure_count": 5,
+    "invalidation_item_count": 0,
+    "pending_count": 13,
+    "receipt_counts": {
+      "r1": 2,
+      "r2": 8,
+      "r3": 10,
+      "total": 20
+    },
+    "request_stream_count": 18,
+    "reuse_hit_count": 0,
+    "undecidable_count": 0,
+    "worker_count": 3
+  }
+}

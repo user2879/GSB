@@ -1,0 +1,80 @@
+{
+  "budget_pending_demonstrated": true,
+  "incremental_differences": [],
+  "incremental_restart_matches_full": true,
+  "initial_pending_count": 15,
+  "injection_results": [
+    {
+      "applied": true,
+      "business_code": "E_RECEIPT_TRUNCATED",
+      "expected_code": "E_RECEIPT_TRUNCATED",
+      "id": "INJ-001-truncated-receipt",
+      "kind": "truncate_line",
+      "matching_failure_keys": [
+        "receipts-r1.log:2:output_digest"
+      ],
+      "observed": true
+    },
+    {
+      "applied": true,
+      "business_code": "E_VERSION_UNKNOWN",
+      "expected_code": "E_VERSION_UNKNOWN",
+      "id": "INJ-002-unknown-param-version",
+      "kind": "set_field",
+      "matching_failure_keys": [
+        "receipts-r2.log:1:r2:receipts-r2.log:1"
+      ],
+      "observed": true
+    },
+    {
+      "applied": true,
+      "business_code": "E_RECEIPT_NONFINITE_LATENCY",
+      "expected_code": "E_RECEIPT_NONFINITE_LATENCY",
+      "id": "INJ-003-nonfinite-latency",
+      "kind": "set_field",
+      "matching_failure_keys": [
+        "receipts-r2.log:2:"
+      ],
+      "observed": true
+    },
+    {
+      "applied": true,
+      "business_code": "E_SCHEMA_INVALID",
+      "expected_code": "E_SCHEMA_INVALID",
+      "id": "INJ-004-duplicate-request-id",
+      "kind": "duplicate_request_id",
+      "matching_failure_keys": [
+        "request_stream.json:18:REQ-0001"
+      ],
+      "observed": true
+    }
+  ],
+  "injections_observed": true,
+  "pending_differences": [],
+  "pending_then_complete_matches_full": true,
+  "reference_business_code_counts": {
+    "E_ATTRIBUTION_CONFLICT": 1,
+    "E_ATTRIBUTION_UNDECIDABLE": 1,
+    "E_NORMALIZE_BUDGET_PENDING": 15
+  },
+  "reference_summary": {
+    "attribution_count": 18,
+    "batch_metric_count": 8,
+    "conflict_count": 1,
+    "failure_count": 2,
+    "invalidation_item_count": 39,
+    "pending_count": 0,
+    "receipt_counts": {
+      "r1": 3,
+      "r2": 9,
+      "r3": 10,
+      "total": 22
+    },
+    "request_stream_count": 18,
+    "reuse_hit_count": 54,
+    "undecidable_count": 1,
+    "worker_count": 3
+  },
+  "threaded_differences": [],
+  "threaded_matches_single_thread": true
+}

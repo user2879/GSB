@@ -1,0 +1,399 @@
+{
+  "business_code_counts": {
+    "E_ATTRIBUTION_CONFLICT": 1,
+    "E_ATTRIBUTION_UNDECIDABLE": 1,
+    "E_NORMALIZE_BUDGET_PENDING": 13,
+    "E_RECEIPT_NONFINITE_LATENCY": 1,
+    "E_RECEIPT_TRUNCATED": 1,
+    "E_SCHEMA_INVALID": 1,
+    "E_VERSION_UNKNOWN": 1
+  },
+  "cycles": [
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "batch:B209:W2",
+        "stage:ledger_summary",
+        "stage:text_parse"
+      ],
+      "command_id": "C001-normalize-constrained",
+      "command_index": 0,
+      "invalidated": [],
+      "pending": [
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3"
+      ],
+      "propagation": [],
+      "recomputed": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "batch:B209:W2",
+        "stage:ledger_summary",
+        "stage:text_parse"
+      ],
+      "reused": []
+    },
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "command_id": "C003-normalize-full",
+      "command_index": 2,
+      "invalidated": [],
+      "pending": [],
+      "propagation": [],
+      "recomputed": [
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "reused": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "batch:B209:W2",
+        "stage:text_parse"
+      ]
+    },
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "command_id": "C005-normalize-version-change",
+      "command_index": 4,
+      "invalidated": [
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3"
+      ],
+      "pending": [],
+      "propagation": [
+        {
+          "attribution_entries": [
+            "attribution:REQ-0011",
+            "attribution:REQ-0012",
+            "attribution:REQ-0013",
+            "attribution:REQ-0014",
+            "attribution:REQ-0015",
+            "attribution:REQ-0016",
+            "attribution:REQ-0017",
+            "attribution:REQ-0018"
+          ],
+          "batch_entries": [
+            "batch:B301:W3",
+            "batch:B302:W3",
+            "batch:B309:W3"
+          ],
+          "root": "param_version:W3:2"
+        }
+      ],
+      "recomputed": [
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "reused": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B209:W2",
+        "stage:text_parse"
+      ]
+    },
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0001",
+        "batch:B101:W1",
+        "stage:ledger_summary"
+      ],
+      "command_id": "C007-normalize-request-replacement",
+      "command_index": 6,
+      "invalidated": [
+        "attribution:REQ-0001",
+        "batch:B101:W1"
+      ],
+      "pending": [],
+      "propagation": [
+        {
+          "attribution_entries": [
+            "attribution:REQ-0001"
+          ],
+          "batch_entries": [
+            "batch:B101:W1"
+          ],
+          "root": "request:REQ-0001"
+        }
+      ],
+      "recomputed": [
+        "attribution:REQ-0001",
+        "batch:B101:W1",
+        "stage:ledger_summary"
+      ],
+      "reused": [
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B209:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:text_parse"
+      ]
+    },
+    {
+      "admitted_order_canonical": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B209:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "command_id": "C009-normalize-rules-change",
+      "command_index": 8,
+      "invalidated": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0002",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0005",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B209:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3"
+      ],
+      "pending": [],
+      "propagation": [
+        {
+          "attribution_entries": [
+            "attribution:REQ-0001",
+            "attribution:REQ-0002",
+            "attribution:REQ-0003",
+            "attribution:REQ-0004",
+            "attribution:REQ-0005",
+            "attribution:REQ-0006",
+            "attribution:REQ-0007",
+            "attribution:REQ-0008",
+            "attribution:REQ-0009",
+            "attribution:REQ-0010",
+            "attribution:REQ-0011",
+            "attribution:REQ-0012",
+            "attribution:REQ-0013",
+            "attribution:REQ-0014",
+            "attribution:REQ-0015",
+            "attribution:REQ-0016",
+            "attribution:REQ-0017",
+            "attribution:REQ-0018"
+          ],
+          "batch_entries": [
+            "batch:B101:W1",
+            "batch:B102:W1",
+            "batch:B109:W1",
+            "batch:B201:W2",
+            "batch:B209:W2",
+            "batch:B301:W3",
+            "batch:B302:W3",
+            "batch:B309:W3"
+          ],
+          "root": "rules:35b7c9ff14ee191027b70ab09a49b4018b4e2a7b5ce947dd7f50236a2f88b0bb"
+        }
+      ],
+      "recomputed": [
+        "attribution:REQ-0001",
+        "attribution:REQ-0003",
+        "attribution:REQ-0004",
+        "attribution:REQ-0006",
+        "attribution:REQ-0007",
+        "attribution:REQ-0008",
+        "attribution:REQ-0009",
+        "attribution:REQ-0010",
+        "attribution:REQ-0011",
+        "attribution:REQ-0012",
+        "attribution:REQ-0013",
+        "attribution:REQ-0014",
+        "attribution:REQ-0015",
+        "attribution:REQ-0016",
+        "attribution:REQ-0017",
+        "attribution:REQ-0018",
+        "batch:B101:W1",
+        "batch:B102:W1",
+        "batch:B109:W1",
+        "batch:B201:W2",
+        "batch:B209:W2",
+        "batch:B301:W3",
+        "batch:B302:W3",
+        "batch:B309:W3",
+        "stage:ledger_summary"
+      ],
+      "reused": [
+        "stage:text_parse"
+      ]
+    }
+  ],
+  "pending_queue": [],
+  "summary": {
+    "attribution_count": 16,
+    "batch_metric_count": 8,
+    "conflict_count": 1,
+    "failure_count": 6,
+    "invalidation_item_count": 39,
+    "pending_count": 0,
+    "receipt_counts": {
+      "r1": 2,
+      "r2": 8,
+      "r3": 10,
+      "total": 20
+    },
+    "request_stream_count": 18,
+    "reuse_hit_count": 50,
+    "undecidable_count": 1,
+    "worker_count": 3
+  }
+}

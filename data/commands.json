@@ -1,0 +1,98 @@
+{
+  "commands": [
+    {
+      "command_id": "C001-normalize-constrained",
+      "op": "normalize",
+      "reason": "initial constrained normalization"
+    },
+    {
+      "batch_budget": 8,
+      "command_id": "C002-grant-budget",
+      "op": "grant_budget",
+      "worker_quota": 16
+    },
+    {
+      "command_id": "C003-normalize-full",
+      "op": "normalize",
+      "reason": "budget granted"
+    },
+    {
+      "command_id": "C004-w3-version-digest",
+      "op": "set_param_version",
+      "param_digest": "6873157a792b1ab5",
+      "param_version": 2,
+      "worker_id": "W3"
+    },
+    {
+      "command_id": "C005-normalize-version-change",
+      "op": "normalize",
+      "reason": "propagate W3 version invalidation"
+    },
+    {
+      "command_id": "C006-replace-req-0001",
+      "op": "replace_request",
+      "request": {
+        "output_digest": "e5fee2715e72b057"
+      },
+      "request_id": "REQ-0001"
+    },
+    {
+      "command_id": "C007-normalize-request-replacement",
+      "op": "normalize",
+      "reason": "propagate one request replacement"
+    },
+    {
+      "command_id": "C008-switch-rules-v2",
+      "op": "switch_rules",
+      "rules": {
+        "allowed_workers": [
+          "W1",
+          "W2",
+          "W3"
+        ],
+        "budgets": {
+          "batch_budget_units": 8,
+          "worker_quota_units": 16
+        },
+        "policy": {
+          "authority_order": [
+            "r3_override_reference",
+            "param_version_desc",
+            "batch_id_asc",
+            "latency_ms_asc",
+            "receipt_uid_asc"
+          ],
+          "fixed_point_scale": 1000000,
+          "missing_r3_override_is_undecidable": true,
+          "tie_breaker_note": "same deterministic order; rule hash changes"
+        },
+        "resource": {
+          "mac_factor": 2,
+          "version_weight_step_q": 10000
+        },
+        "rule_version": 2,
+        "rules_id": "merge-rules-v2",
+        "worker_sets": {
+          "accelerator_pool": [
+            "W3"
+          ],
+          "cpu_pool": [
+            "W1",
+            "W2"
+          ]
+        }
+      }
+    },
+    {
+      "command_id": "C009-normalize-rules-change",
+      "op": "normalize",
+      "reason": "propagate rule switch"
+    },
+    {
+      "command_id": "C010-checkpoint",
+      "op": "checkpoint"
+    }
+  ],
+  "schema_version": "commands.v1",
+  "seed": 234
+}

@@ -1,0 +1,352 @@
+{
+  "attributions": [
+    {
+      "authoritative_batch_id": "B101",
+      "authoritative_latency_ms": null,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r1:receipts-r1.log:1",
+      "authoritative_worker_id": "W1",
+      "candidate_receipt_uids": [
+        "r1:receipts-r1.log:1"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B101,latency_ms_asc=None"
+      ],
+      "request_id": "REQ-0001",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B101",
+      "authoritative_latency_ms": null,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r1:receipts-r1.log:2",
+      "authoritative_worker_id": "W1",
+      "candidate_receipt_uids": [
+        "r1:receipts-r1.log:2"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B101,latency_ms_asc=None"
+      ],
+      "request_id": "REQ-0002",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B102",
+      "authoritative_latency_ms": 31,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r2:receipts-r2.log:1",
+      "authoritative_worker_id": "W1",
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:1",
+        "r2:receipts-r2.log:8"
+      ],
+      "conflict": false,
+      "covered_receipts": [
+        {
+          "batch_id": "B109",
+          "covered_by": "r2:receipts-r2.log:1",
+          "reason": "deterministic_tie_break",
+          "receipt_uid": "r2:receipts-r2.log:8",
+          "worker_id": "W1"
+        }
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B102,latency_ms_asc=31"
+      ],
+      "request_id": "REQ-0004",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B102",
+      "authoritative_latency_ms": 29,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r2:receipts-r2.log:2",
+      "authoritative_worker_id": "W1",
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:2"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B102,latency_ms_asc=29"
+      ],
+      "request_id": "REQ-0005",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B201",
+      "authoritative_latency_ms": 44,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r2:receipts-r2.log:4",
+      "authoritative_worker_id": "W2",
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:4"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B201,latency_ms_asc=44"
+      ],
+      "request_id": "REQ-0007",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B201",
+      "authoritative_latency_ms": 41,
+      "authoritative_param_version": 1,
+      "authoritative_receipt_uid": "r2:receipts-r2.log:5",
+      "authoritative_worker_id": "W2",
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:5"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B201,latency_ms_asc=41"
+      ],
+      "request_id": "REQ-0008",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B301",
+      "authoritative_latency_ms": 22,
+      "authoritative_param_version": 2,
+      "authoritative_receipt_uid": "r3:receipts-r3.log:2",
+      "authoritative_worker_id": "W3",
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:2"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=2,batch_id_asc=B301,latency_ms_asc=22"
+      ],
+      "request_id": "REQ-0011",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B301",
+      "authoritative_latency_ms": 19,
+      "authoritative_param_version": 2,
+      "authoritative_receipt_uid": "r3:receipts-r3.log:4",
+      "authoritative_worker_id": "W3",
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:4"
+      ],
+      "conflict": false,
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=2,batch_id_asc=B301,latency_ms_asc=19"
+      ],
+      "request_id": "REQ-0012",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": "B302",
+      "authoritative_latency_ms": 18,
+      "authoritative_param_version": 2,
+      "authoritative_receipt_uid": "r3:receipts-r3.log:6",
+      "authoritative_worker_id": "W3",
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:9",
+        "r3:receipts-r3.log:6"
+      ],
+      "conflict": false,
+      "covered_receipts": [
+        {
+          "batch_id": "B209",
+          "covered_by": "r3:receipts-r3.log:6",
+          "reason": "r3_override_reference",
+          "receipt_uid": "r2:receipts-r2.log:9",
+          "worker_id": "W2"
+        }
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "override:r3:receipts-r3.log:6->B209@W2 resolves to r2:receipts-r2.log:9",
+        "unique_override_root=r3:receipts-r3.log:6"
+      ],
+      "request_id": "REQ-0015",
+      "status": "attributed",
+      "undecidable": false
+    },
+    {
+      "authoritative_batch_id": null,
+      "authoritative_receipt_uid": null,
+      "authoritative_worker_id": null,
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:5",
+        "r3:receipts-r3.log:9"
+      ],
+      "conflict": true,
+      "conflict_receipt_uids": [
+        "r3:receipts-r3.log:5",
+        "r3:receipts-r3.log:9"
+      ],
+      "covered_receipts": [],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "unresolved_tie:same_version_batch_worker_latency_with_different_digest"
+      ],
+      "request_id": "REQ-0016",
+      "status": "conflict",
+      "undecidable": false
+    }
+  ],
+  "decision_log": [
+    {
+      "candidate_receipt_uids": [
+        "r1:receipts-r1.log:1"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B101,latency_ms_asc=None"
+      ],
+      "request_id": "REQ-0001",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r1:receipts-r1.log:2"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B101,latency_ms_asc=None"
+      ],
+      "request_id": "REQ-0002",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:1",
+        "r2:receipts-r2.log:8"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B102,latency_ms_asc=31"
+      ],
+      "request_id": "REQ-0004",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:2"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B102,latency_ms_asc=29"
+      ],
+      "request_id": "REQ-0005",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:4"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B201,latency_ms_asc=44"
+      ],
+      "request_id": "REQ-0007",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:5"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=1,batch_id_asc=B201,latency_ms_asc=41"
+      ],
+      "request_id": "REQ-0008",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:2"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=2,batch_id_asc=B301,latency_ms_asc=22"
+      ],
+      "request_id": "REQ-0011",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:4"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "tie_break:param_version_desc=2,batch_id_asc=B301,latency_ms_asc=19"
+      ],
+      "request_id": "REQ-0012",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r2:receipts-r2.log:9",
+        "r3:receipts-r3.log:6"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "override:r3:receipts-r3.log:6->B209@W2 resolves to r2:receipts-r2.log:9",
+        "unique_override_root=r3:receipts-r3.log:6"
+      ],
+      "request_id": "REQ-0015",
+      "status": "attributed"
+    },
+    {
+      "candidate_receipt_uids": [
+        "r3:receipts-r3.log:5",
+        "r3:receipts-r3.log:9"
+      ],
+      "decision_basis": [
+        "aggregate_by=(batch_id,worker_id)",
+        "policy=r3_override_reference>param_version_desc>batch_id_asc>latency_ms_asc>receipt_uid_asc",
+        "unresolved_tie:same_version_batch_worker_latency_with_different_digest"
+      ],
+      "request_id": "REQ-0016",
+      "status": "conflict"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "business_code_counts": {
+    "E_SCHEMA_INVALID": 10
+  },
+  "invalid_case_results": [
+    {
+      "failures": [
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "worker_id",
+          "index": 2,
+          "item_id": "W-DUP",
+          "message": "duplicate worker identifier",
+          "source": "workers.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "port",
+          "index": 3,
+          "item_id": "W-PORT",
+          "message": "port must be an integer in [43000, 43999]",
+          "source": "workers.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "model_dim",
+          "index": 4,
+          "item_id": "W-DIM",
+          "message": "dimension must be finite",
+          "source": "workers.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "hidden_dim",
+          "index": 4,
+          "item_id": "W-DIM",
+          "message": "dimension must be a positive integer",
+          "source": "workers.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "mystery",
+          "index": 5,
+          "item_id": "W-UNKNOWN",
+          "message": "unknown field(s): mystery",
+          "source": "workers.json"
+        }
+      ],
+      "file": "workers.json"
+    },
+    {
+      "failures": [
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "batch_size",
+          "index": 1,
+          "item_id": "B-NEG",
+          "message": "batch_size must be a positive integer; negative sizes are invalid",
+          "source": "request_stream.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "seq",
+          "index": 1,
+          "item_id": "Q1",
+          "message": "request seq must be strictly increasing",
+          "source": "request_stream.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "arrived_ms",
+          "index": 2,
+          "item_id": "Q3",
+          "message": "arrived_ms must be a non-negative integer",
+          "source": "request_stream.json"
+        }
+      ],
+      "file": "request_stream.json"
+    },
+    {
+      "failures": [
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "allowed_workers",
+          "message": "rule references unknown worker(s): W-GHOST",
+          "source": "rules.json"
+        },
+        {
+          "code": "E_SCHEMA_INVALID",
+          "field": "worker_sets.ghost_set",
+          "item_id": "ghost_set",
+          "message": "worker set ghost_set references unknown worker(s): W-GHOST-2",
+          "source": "rules.json"
+        }
+      ],
+      "file": "rules.json"
+    }
+  ],
+  "main_failures": []
+}
