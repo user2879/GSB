@@ -1,0 +1,123 @@
+{
+  "format_version": 1,
+  "messages": [
+    {
+      "arrival_ms": 1700000000000,
+      "cert_ids": [
+        "leaf-server",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 1,
+      "expected": "PASS",
+      "sender": "client",
+      "seq": 1,
+      "server_seq": 0,
+      "type": "CLIENT_HELLO"
+    },
+    {
+      "arrival_ms": 1700000000000,
+      "cert_ids": [
+        "leaf-server",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 1,
+      "expected": "PASS",
+      "sender": "server",
+      "seq": 4,
+      "server_seq": 1,
+      "type": "SERVER_HELLO"
+    },
+    {
+      "arrival_ms": 1700000000010,
+      "cert_ids": [
+        "leaf-server",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 2,
+      "expected": "PASS",
+      "sender": "client",
+      "seq": 3,
+      "server_seq": 1,
+      "type": "CERTIFICATE"
+    },
+    {
+      "arrival_ms": 1700000000010,
+      "cert_ids": [
+        "leaf-expired",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 2,
+      "expected": "FAIL",
+      "sender": "server",
+      "seq": 4,
+      "server_seq": 2,
+      "type": "CERTIFICATE"
+    },
+    {
+      "arrival_ms": 1700000000020,
+      "cert_ids": [
+        "leaf-edge",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 3,
+      "expected": "INDETERMINATE",
+      "sender": "client",
+      "seq": 5,
+      "server_seq": 2,
+      "type": "CERTIFICATE_VERIFY"
+    },
+    {
+      "alternative_cert_ids": [
+        "leaf-b-2",
+        "intermediate-b-2",
+        "root-ca"
+      ],
+      "arrival_ms": 1700000000020,
+      "cert_ids": [
+        "leaf-b-1",
+        "intermediate-b-1",
+        "root-ca"
+      ],
+      "client_seq": 3,
+      "expected": "INDETERMINATE",
+      "sender": "server",
+      "seq": 6,
+      "server_seq": 3,
+      "type": "SERVER_HELLO"
+    },
+    {
+      "arrival_ms": 1700000000030,
+      "cert_ids": [
+        "leaf-server",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 4,
+      "expected": "PASS",
+      "sender": "client",
+      "seq": 7,
+      "server_seq": 3,
+      "type": "FINISHED"
+    },
+    {
+      "arrival_ms": 1700000000030,
+      "cert_ids": [
+        "leaf-server",
+        "intermediate-ca",
+        "root-ca"
+      ],
+      "client_seq": 4,
+      "expected": "PASS",
+      "sender": "server",
+      "seq": 8,
+      "server_seq": 4,
+      "type": "FINISHED"
+    }
+  ],
+  "socket_timeout_ms": 750
+}
