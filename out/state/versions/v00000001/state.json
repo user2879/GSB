@@ -1,0 +1,395 @@
+{
+  "budget": {
+    "batches": [
+      {
+        "batch": 1,
+        "charges": [
+          {
+            "page": "page_01_linear_bars.png",
+            "points": 12
+          },
+          {
+            "page": "page_02_log_line.png",
+            "points": 10
+          }
+        ],
+        "limit": 24,
+        "remaining_end": 2,
+        "remaining_start": 24
+      },
+      {
+        "batch": 2,
+        "charges": [
+          {
+            "page": "page_03_broken_line.png",
+            "points": 10
+          },
+          {
+            "page": "page_04_linear_line_occluded.png",
+            "points": 11
+          }
+        ],
+        "limit": 24,
+        "remaining_end": 3,
+        "remaining_start": 24
+      },
+      {
+        "batch": 3,
+        "charges": [
+          {
+            "page": "page_05_dense_bars.png",
+            "points": 17
+          }
+        ],
+        "limit": 24,
+        "remaining_end": 7,
+        "remaining_start": 24
+      },
+      {
+        "batch": 4,
+        "charges": [
+          {
+            "page": "page_06_linear_bar_occluded.png",
+            "points": 8
+          },
+          {
+            "page": "page_07_log_bars.png",
+            "points": 9
+          }
+        ],
+        "limit": 24,
+        "remaining_end": 7,
+        "remaining_start": 24
+      }
+    ],
+    "consumed_total": 22,
+    "limit_per_batch": 24,
+    "oversized_pages": [],
+    "pending_events": [
+      {
+        "batch": 1,
+        "code": "E_CALIB_BUDGET_PENDING",
+        "page": "page_03_broken_line.png",
+        "reason": "batch_budget_exhausted",
+        "remaining": 2,
+        "required": 10
+      },
+      {
+        "batch": 2,
+        "code": "E_CALIB_BUDGET_PENDING",
+        "page": "page_05_dense_bars.png",
+        "reason": "batch_budget_exhausted",
+        "remaining": 3,
+        "required": 17
+      },
+      {
+        "batch": 3,
+        "code": "E_CALIB_BUDGET_PENDING",
+        "page": "page_06_linear_bar_occluded.png",
+        "reason": "batch_budget_exhausted",
+        "remaining": 7,
+        "required": 8
+      }
+    ],
+    "planned_total": 77
+  },
+  "completed_pages": [
+    "page_01_linear_bars.png",
+    "page_02_log_line.png"
+  ],
+  "config_hash": "3ef31db622a1a962f839e7c652b90243968ff27c0d18ecf480f3df5b9b8c0ba3",
+  "consumed_budget": 22,
+  "engine_version": "1.0.0",
+  "page_order": [
+    "page_01_linear_bars.png",
+    "page_02_log_line.png",
+    "page_03_broken_line.png",
+    "page_04_linear_line_occluded.png",
+    "page_05_dense_bars.png",
+    "page_06_linear_bar_occluded.png",
+    "page_07_log_bars.png"
+  ],
+  "pages": {
+    "page_01_linear_bars.png": {
+      "artifacts": {
+        "data": {
+          "key": "a49224cae8218cdc06f7714bef421237f15b45413b3c8074d3fa8655a7b8f76c",
+          "version": "5e48edc73fd44fdc59f9c74e7c0bb8947e3c777d74bc582280bff10a993b593f"
+        },
+        "mapping": {
+          "key": "1b6de61a0d0fa03da03146e776289253dcef50788afa7fbe00a99fc3e2c46134",
+          "version": "c9e5d4d639ba67cae92eb59674b55fca164eac9923bc1e7ee306db8961b8050b"
+        },
+        "ticks": {
+          "key": "447f04afb4066f04ec6c087a839fbaea353443af597498dae485d1050ab60dea",
+          "version": "9912ee31f8eedb69a19a0829776dd1e6ce6bbbdcef070708a00d0140a17b1f06"
+        }
+      },
+      "completed": true,
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "9c4f4275b5ab7ebb920a390737b2963e943b483cec9bcee0793643cafe17c0f1",
+      "keys": {
+        "data": "a49224cae8218cdc06f7714bef421237f15b45413b3c8074d3fa8655a7b8f76c",
+        "mapping": "1b6de61a0d0fa03da03146e776289253dcef50788afa7fbe00a99fc3e2c46134",
+        "ticks": "447f04afb4066f04ec6c087a839fbaea353443af597498dae485d1050ab60dea"
+      },
+      "status": "ok",
+      "truth_sha256": "a371c738f5d9fbd5308cd01dd1646bff7161c7488dab0f873cacc12d1f8d2e2d"
+    },
+    "page_02_log_line.png": {
+      "artifacts": {
+        "data": {
+          "key": "b6a7307684bd70b87fec303f82731c67e56e6426302fa199a9a741f7b93996b0",
+          "version": "74f26fd183722c6f6cf7f0e10c5cfafa0ef43f9641a6ddf602bcb2069f789f59"
+        },
+        "mapping": {
+          "key": "751532c683199e83f5eec1e45eb5b17aa0d8052a175b12b93861fa80ffd93e23",
+          "version": "3d70bbdcb39781e5314b6346532c326cc74c50b69d33e4cd0936fa53c4f3a37c"
+        },
+        "ticks": {
+          "key": "888a89fd2f5feac30a984929b10edd240b0db065e4cd2f64fd87014fdc0f4d4b",
+          "version": "92f762692343e23822775de6f30ca28569759af83b7f2eb419c5ae114e73b8b9"
+        }
+      },
+      "completed": true,
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "4aec6d7444315bfa0ebb5f0c8a9bf9b0410b7eabf67a2ca85a3bc63b20ec70e3",
+      "keys": {
+        "data": "b6a7307684bd70b87fec303f82731c67e56e6426302fa199a9a741f7b93996b0",
+        "mapping": "751532c683199e83f5eec1e45eb5b17aa0d8052a175b12b93861fa80ffd93e23",
+        "ticks": "888a89fd2f5feac30a984929b10edd240b0db065e4cd2f64fd87014fdc0f4d4b"
+      },
+      "status": "ok",
+      "truth_sha256": "0c613b07ff2d27fc74c3804c453d399d5e636e799230e966d0fb9ff8a20ae75e"
+    },
+    "page_03_broken_line.png": {
+      "artifacts": {
+        "ticks": {
+          "key": "9f9d7ae85db11dedad43b513be36fa8c75abd9a9309dec76a9d5a6dbb2ed388f",
+          "version": "94d390742db61043dd03aed24f8f2df8546d11bb468e3bf6106674e9ca2041b9"
+        }
+      },
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "620aa10dfff47e8ec475c78d808200ba01daa2126a92a1fbf89486096c758a2c",
+      "keys": {
+        "data": "6f1fb5231e7816a6b360eb6e042ce674e1f5d4b20449ff586a252a455da72544",
+        "mapping": "40a4af8a2ac4a42e307b49b289da025cf74d4b37f7b8f5cbbb2db5a675d19cab",
+        "ticks": "9f9d7ae85db11dedad43b513be36fa8c75abd9a9309dec76a9d5a6dbb2ed388f"
+      },
+      "truth_sha256": "56ed66412c66be06dd28c0d54a541d1ecaea8d9a12fd5985d45ce4ae476e486b"
+    },
+    "page_04_linear_line_occluded.png": {
+      "artifacts": {
+        "ticks": {
+          "key": "3cae1dac13d752e3c28da98405ad1606d360237c30c759b7036e9917300f19b0",
+          "version": "98d248ae92ee5512f9d99635afe2a5bc3859ad07b253f74efd123fc6072b41d3"
+        }
+      },
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "f0cfea0784cba8d3cf93213e90aef1d65b3a8496c3d62bb5b90dd9ee9cf35043",
+      "keys": {
+        "data": "94b1b15bf0647541ef4650dd456a8d48e74a2cb5a4a1a2a354d8ce44ddb2d683",
+        "mapping": "3105c67be04cef7d85d7ad7be218a37e29e396ef7863c927c95ad07380045f7d",
+        "ticks": "3cae1dac13d752e3c28da98405ad1606d360237c30c759b7036e9917300f19b0"
+      },
+      "truth_sha256": "9d0822024ea6988b3fd3c4d727c77d4f670dc4dffba5a26ba555f91b03db63ac"
+    },
+    "page_05_dense_bars.png": {
+      "artifacts": {
+        "ticks": {
+          "key": "a232ffada14152100a5e610d405031db399618d26b19fcd1c5dc80ffb92d8ffb",
+          "version": "a066da1de018fcd5c9fcde5820d9341a7a5302ce5162db73cb22448c55e48c26"
+        }
+      },
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "0e4ae36364ab9289947e7dd5018a214dfda20f7c4159eb1cafd890c53cbb3d7e",
+      "keys": {
+        "data": "3d50f46bbbe782e62c6daa6c3cedf28e40b9230e60f0c5b9efe415e3b9813439",
+        "mapping": "3eb9c12b5a58b5c94b87534829ed5875d9622514a1f380bcd2d471db4f3bd614",
+        "ticks": "a232ffada14152100a5e610d405031db399618d26b19fcd1c5dc80ffb92d8ffb"
+      },
+      "truth_sha256": "80ebae76b1579af057d3fdd710229ee1a4e8246009af700855577178246a7c08"
+    },
+    "page_06_linear_bar_occluded.png": {
+      "artifacts": {
+        "ticks": {
+          "key": "008e3222bae7c2a225e3db9e7635147704d214913d6f4ce05d319a2d646752c7",
+          "version": "bca8a826492c931a2e23f2509f8702f4b9a0a9228352419e60b1162eec0a5be3"
+        }
+      },
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "4c759dc5788f4748283c749ee325a97e6ad2253010d59deea36da642ae88ef1b",
+      "keys": {
+        "data": "11b7653528bc6621232665d1827e9083cfcc3ab7b5ef25554b937518455b3a6d",
+        "mapping": "d998d55d76ef0f4c248ac3181cd8ef7d7bdccef99a54cab3512d7d757c29764f",
+        "ticks": "008e3222bae7c2a225e3db9e7635147704d214913d6f4ce05d319a2d646752c7"
+      },
+      "truth_sha256": "0438db8d51b3fabbd86f6dbc061c20e64e271b2c4ea36f0bd9f35aad8d382aaf"
+    },
+    "page_07_log_bars.png": {
+      "artifacts": {
+        "ticks": {
+          "key": "def9c9f1d20f613e843f92702fdcdfa8cbd3087682a63f133dcc9245d7550797",
+          "version": "b02538908fbc7cb78422e8998dddd91b4e88c100a56328c0529a0e8fa232cc85"
+        }
+      },
+      "fingerprints": {
+        "data": {
+          "algorithm_version": 1,
+          "fixed_decimal_places": 3,
+          "line_width_tolerance": 2,
+          "page_data_point_quota": 12,
+          "quantization_step": 0.1
+        },
+        "mapping": {
+          "algorithm_version": 1,
+          "broken_axis_detection_threshold": 0.35,
+          "inverse_mode": "ols",
+          "label_occlusion_tolerance": 0.34,
+          "log_axis_detection_threshold": 0.01
+        },
+        "ticks": {
+          "algorithm_version": 1,
+          "axis_detection_threshold": 0.45,
+          "line_width_tolerance": 2,
+          "tick_min_length": 6
+        }
+      },
+      "image_sha256": "7e1b5b62fa64fd9c626e1a123a71fbd54f585d9d1619f91a19ee20e5322921d4",
+      "keys": {
+        "data": "127b39b605afa531f24bcb65e093fa48b4d907ea8c3868142998c8db3311afd4",
+        "mapping": "762f672b3c9178ce65ee4e26fcf1ce74544ed2e2884e601713ff68cdbbb708fd",
+        "ticks": "def9c9f1d20f613e843f92702fdcdfa8cbd3087682a63f133dcc9245d7550797"
+      },
+      "truth_sha256": "7f7d77146ad580255a0c8dfd01c46f8e4923e2e2907791965568021b1d9edc02"
+    }
+  },
+  "schema_version": 1,
+  "version": 1
+}

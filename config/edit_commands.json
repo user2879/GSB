@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "commands": [
+    {
+      "op": "replace_page",
+      "page": "page_01_linear_bars.png",
+      "source_png": "../variants/page_01_linear_bars.png",
+      "source_truth": "../variants/page_01_linear_bars.json"
+    },
+    {
+      "op": "add_page",
+      "page": "page_08_extra_line.png",
+      "source_png": "../variants/page_08_extra_line.png",
+      "source_truth": "../variants/page_08_extra_line.json"
+    },
+    {
+      "op": "remove_page",
+      "page": "page_06_linear_bar_occluded.png"
+    },
+    {
+      "op": "set_config",
+      "path": "log_axis_detection_threshold",
+      "value": 1e-06
+    },
+    {
+      "op": "set_config",
+      "path": "quantization_step",
+      "value": 0.5
+    }
+  ]
+}
