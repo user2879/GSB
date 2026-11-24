@@ -1,0 +1,62 @@
+{
+  "evidence_type_weights": {
+    "abuse_report": 1.1,
+    "appeal_context": 0.55,
+    "baseline_signal": 0.5,
+    "device_risk": 0.95,
+    "login_anomaly": 1.2,
+    "payment_fraud": 1.45,
+    "refund_request": 0.7
+  },
+  "half_life_ms": 86400000,
+  "mutual_exclusions": [
+    {
+      "id": "mx-001",
+      "left_type": "payment_fraud",
+      "right_type": "appeal_context"
+    },
+    {
+      "id": "mx-002",
+      "left_type": "abuse_report",
+      "right_type": "device_risk"
+    }
+  ],
+  "priority_thresholds": [
+    {
+      "min_score": 0.0,
+      "priority": "P1"
+    },
+    {
+      "min_score": 0.25,
+      "priority": "P2"
+    },
+    {
+      "min_score": 1.0,
+      "priority": "P3"
+    }
+  ],
+  "schema_version": 1,
+  "source_role_credibility": {
+    "agent": 0.85,
+    "customer": 0.7,
+    "reviewer": 0.9,
+    "system": 1.0
+  },
+  "supports": [
+    {
+      "id": "sup-001",
+      "left_type": "login_anomaly",
+      "right_type": "device_risk"
+    },
+    {
+      "id": "sup-002",
+      "left_type": "payment_fraud",
+      "right_type": "device_risk"
+    },
+    {
+      "id": "sup-003",
+      "left_type": "refund_request",
+      "right_type": "appeal_context"
+    }
+  ]
+}

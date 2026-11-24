@@ -1,0 +1,60 @@
+{
+  "commands": [
+    {
+      "evidence": {
+        "confidence": 0.83,
+        "event_ms": 1700182800000,
+        "evidence_seq": 2,
+        "evidence_type": "refund_request",
+        "source_role": "reviewer",
+        "terms": [
+          "refund",
+          "verified",
+          "urgent"
+        ],
+        "workorder_id": "WO-0002"
+      },
+      "evidence_seq": 2,
+      "op": "replace_evidence",
+      "workorder_id": "WO-0002"
+    },
+    {
+      "evidence_type": "payment_fraud",
+      "op": "set_evidence_type_weight",
+      "value": 0.9
+    },
+    {
+      "op": "set_role_credibility",
+      "source_role": "customer",
+      "value": 0.6
+    },
+    {
+      "kind": "support",
+      "op": "add_relation",
+      "relation": {
+        "id": "sup-004",
+        "left_type": "abuse_report",
+        "right_type": "login_anomaly",
+        "strength": 0.03
+      }
+    },
+    {
+      "op": "delete_relation",
+      "relation_id": "mx-002"
+    },
+    {
+      "evidence_seq": 1,
+      "op": "delete_evidence",
+      "workorder_id": "WO-0004"
+    },
+    {
+      "op": "set_half_life_ms",
+      "value": 172800000
+    },
+    {
+      "min_score": 0.3,
+      "op": "set_priority_threshold",
+      "priority": "P2"
+    }
+  ]
+}
