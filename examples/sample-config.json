@@ -1,0 +1,82 @@
+{
+  "capacity_policies": [
+    {
+      "capacity_version": 1,
+      "hard_permille": 800,
+      "soft_permille": 600
+    },
+    {
+      "capacity_version": 2,
+      "hard_permille": 500,
+      "soft_permille": 300
+    }
+  ],
+  "clock_mode": "seeded",
+  "manifest": {
+    "schema_version": "feature-manifest.v1",
+    "stages": [
+      {
+        "artifact_key": "feat:user_profile",
+        "concurrency_quota": 2,
+        "needs": [],
+        "stage_id": "source_profile"
+      },
+      {
+        "artifact_key": "feat:window_7d",
+        "concurrency_quota": 3,
+        "needs": [
+          "feat:user_profile"
+        ],
+        "stage_id": "window_builder"
+      },
+      {
+        "artifact_key": "feat:rank_score",
+        "concurrency_quota": 10,
+        "needs": [
+          "feat:user_profile",
+          "feat:window_7d"
+        ],
+        "stage_id": "rank_builder"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "capacity_slots": 10,
+      "capacity_version": 1,
+      "lease_limit": 4,
+      "node_id": "n-core-a",
+      "port": 45031,
+      "quota_version": 1,
+      "seed": 1101
+    },
+    {
+      "capacity_slots": 10,
+      "capacity_version": 2,
+      "lease_limit": 4,
+      "node_id": "n-core-b",
+      "port": 46713,
+      "quota_version": 1,
+      "seed": 2202
+    },
+    {
+      "capacity_slots": 10,
+      "capacity_version": 1,
+      "lease_limit": 8,
+      "node_id": "n-water",
+      "port": 47471,
+      "quota_version": 1,
+      "seed": 3303
+    },
+    {
+      "capacity_slots": 5,
+      "capacity_version": 1,
+      "lease_limit": 5,
+      "node_id": "n-lease",
+      "port": 45543,
+      "quota_version": 1,
+      "seed": 4404
+    }
+  ],
+  "schema_version": "workbench.config.v1"
+}

@@ -1,3 +1,18 @@
+# 租约与容量水印诊断工作台
+
+本目录已交付一个可运行的 Python 3.11+ 独立组件。快速开始：
+
+```bash
+python -m pip install -r requirements.txt
+python -m pytest tests/test_workbench.py -v
+python -m workbench.cli init-sample --dir examples
+python -m workbench.cli run --config examples/sample-config.json --events examples/events.jsonl --out artifacts/demo --parallel --protocol-self-check
+```
+
+交付说明、JSON 协议、裁决规则、快照恢复与 Windows 注意事项见 `docs/TECHNICAL.md`；最近一次真实验证日志见 `artifacts/verification/`。
+
+---
+
 工作区当前是空目录，没有任何代码、配置或样本，首版需按独立组件方式交付一个面向推荐系统在线特征缓存的跨节点租约与容量水印诊断工作台。业务对象是若干缓存节点子进程，每个节点在 127.0.0.1 回环 TCP 上以 JSON 行协议接收特征分片写入、读取、释放与配额变更请求，按自身整数容量槽位与每节点租约上限维护占用，并回报内容摘要、所用配额版本与单调时钟毫秒耗时。用户在本地 JSON 中声明节点（节点标识、回环端口、整数容量槽位、整数每节点租约上限、整数随机种子、容量版本）与一条推荐特征构建清单（阶段、特征制品键、制品间引用与各阶段并发配额），并按到达序号提交事件流。组件要回答两件事：同一特征制品在多个节点被重复写入时哪次写入可作为权威副本；容量版本或租约上限变化后哪些驻留块必须驱逐、哪些待处理申请应被预占或拒绝。核心矛盾在于容量水印由定点比例计算，驱逐顺序又由租约到期与优先级共同决定，预占裁决必须与真实驱逐序列一致才可复核。
 
 任务环境与准备：

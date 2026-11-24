@@ -1,0 +1,25 @@
+{"content": {"embedding": [1, 2, 3], "user_id": "u-1001", "version": "v1"}, "key": "feat:user_profile", "node_ids": ["n-core-a", "n-core-b"], "now_ms": 1000, "priority": 2, "seq": 1, "stage_id": "source_profile", "ttl_ms": 120000, "type": "WRITE"}
+{"content": {"embedding": [1, 2, 4], "user_id": "u-1001", "version": "v2-overwrite"}, "key": "feat:user_profile", "node_id": "n-core-a", "now_ms": 1001, "priority": 2, "seq": 2, "stage_id": "source_profile", "ttl_ms": 120000, "type": "WRITE"}
+{"content": {"clicks": 42, "windows": [7, 30]}, "key": "feat:window_7d", "node_id": "n-core-a", "now_ms": 1002, "priority": 1, "seq": 3, "stage_id": "window_builder", "ttl_ms": 120000, "type": "WRITE"}
+{"key": "feat:user_profile", "node_id": "n-core-b", "now_ms": 1003, "seq": 4, "type": "READ"}
+{"content": "high-priority", "key": "lease:high", "node_id": "n-lease", "now_ms": 2000, "priority": 5, "seq": 10, "ttl_ms": 200, "type": "WRITE"}
+{"content": "middle-priority", "key": "lease:middle", "node_id": "n-lease", "now_ms": 2000, "priority": 1, "seq": 11, "ttl_ms": 150, "type": "WRITE"}
+{"content": "will-renew", "key": "lease:renewed", "node_id": "n-lease", "now_ms": 2000, "priority": 1, "seq": 12, "ttl_ms": 100, "type": "WRITE"}
+{"content": "late-renew", "key": "lease:late", "node_id": "n-lease", "now_ms": 2000, "priority": 0, "seq": 13, "ttl_ms": 100, "type": "WRITE"}
+{"key": "lease:renewed", "node_id": "n-lease", "now_ms": 2050, "seq": 14, "ttl_ms": 500, "type": "LEASE_RENEW"}
+{"key": "lease:late", "node_id": "n-lease", "now_ms": 2150, "seq": 15, "ttl_ms": 500, "type": "LEASE_RENEW"}
+{"node_id": "n-lease", "now_ms": 2300, "seq": 16, "type": "TICK"}
+{"content": {"block": "block:01", "weights": [20, 21]}, "key": "block:01", "node_id": "n-water", "now_ms": 3000, "priority": 1, "seq": 20, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:02", "weights": [21, 22]}, "key": "block:02", "node_id": "n-water", "now_ms": 3000, "priority": 5, "seq": 21, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:03", "weights": [22, 23]}, "key": "block:03", "node_id": "n-water", "now_ms": 3000, "priority": 1, "seq": 22, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:04", "weights": [23, 24]}, "key": "block:04", "node_id": "n-water", "now_ms": 3000, "priority": 9, "seq": 23, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:05", "weights": [24, 25]}, "key": "block:05", "node_id": "n-water", "now_ms": 3000, "priority": 0, "seq": 24, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:06", "weights": [25, 26]}, "key": "block:06", "node_id": "n-water", "now_ms": 3000, "priority": 0, "seq": 25, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:07", "weights": [26, 27]}, "key": "block:07", "node_id": "n-water", "now_ms": 3000, "priority": 0, "seq": 26, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"content": {"block": "block:08", "weights": [27, 28]}, "key": "block:08", "node_id": "n-water", "now_ms": 3000, "priority": 0, "seq": 27, "stage_id": "rank_builder", "ttl_ms": 100000, "type": "WRITE"}
+{"application_id": "app-pending-a", "content": {"pending": "a"}, "key": "af:pending:a", "node_id": "n-water", "now_ms": 3100, "priority": 2, "seq": 30, "slots": 1, "stage_id": "rank_builder", "ttl_ms": 50000, "type": "APPLY"}
+{"application_id": "app-pending-b", "content": {"pending": "b"}, "key": "af:pending:b", "node_id": "n-water", "now_ms": 3101, "priority": 1, "seq": 31, "slots": 1, "stage_id": "rank_builder", "ttl_ms": 50000, "type": "APPLY"}
+{"capacity_version": 2, "lease_limit": 6, "node_id": "n-water", "now_ms": 3200, "seq": 32, "type": "POLICY_CHANGED"}
+{"node_id": "n-water", "now_ms": 3201, "seq": 33, "type": "RUN_EVICTION"}
+{"content": "should-be-rejected-at-hard-watermark", "key": "block:overflow", "node_id": "n-water", "now_ms": 3202, "seq": 34, "stage_id": "rank_builder", "ttl_ms": 10000, "type": "WRITE"}
+{"concurrency_quotas": {"source_profile": 3}, "node_id": "n-core-a", "now_ms": 4000, "quota_version": 2, "seq": 40, "type": "QUOTA_CHANGED"}
