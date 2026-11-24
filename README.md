@@ -1,21 +1,115 @@
-从无到有搭建时，需要为一个本地推理服务编写批归属诊断组件：推理请求到达后按批切分并分配到若干个本地推理工作器，工作器对确定性输入执行前向计算并回传带批次归属的推理回执。回执随组件版本演进出现三种历史格式：r1 只含批次标识、请求标识与输出摘要；r2 增加参数版本序号、整数耗时毫秒与工作器标识；r3 再增加请求在批内的稳定名次、被覆盖的重复投递引用与参数摘要快照。组件必须把三种格式回执统一归一为同一内部视图，并能沿「工作器参数版本 → 批次 → 请求归属」的依赖关系精确判断哪些批与请求需要在参数版本或批大小变更后重算，未受影响的批归属与输出摘要须逐字节保持不变。组件运行于 Windows 本地回环，交付可集成的 Python 包、Tkinter 诊断界面与可重复演示脚本。
+# Batch Attribution Diagnostic Component（本地推理批归属诊断组件）
 
-任务环境与准备：
-安装 Python 3.11 及以上版本，并在项目虚拟环境中执行 pip install numpy；Windows 官方安装包已内置 Tkinter，无需单独安装。
-确认所有回环端口由命令行参数指定且互不重复，运行前用本地脚本检查端口可绑定，不得占用已被监听端口。
-准备本地请求流 JSON、工作器声明 JSON 与演示脚本，均放在项目 samples 目录，不依赖任何外部服务或在线资源。
+一个完全离线、确定性的 Python 包：把本地推理请求按批切分并分配到若干
+`127.0.0.1` 回环工作器，工作器用 NumPy 执行确定性前向计算并回传带批次归属的
+回执；组件把 r1/r2/r3 三种历史回执归一为同一内部视图，并沿
+「工作器参数版本 → 批次 → 请求归属」依赖链做失效传播、仅失效子集重算、
+SQLite 账本持久化、恢复重放与独立验证。
 
-业务要求：
-1. 实现请求流、工作器声明与成本预算参数的本地 JSON 加载及强校验：校验请求标识唯一、到达序号为非负整数且不重复、输入维度与隐藏层维度为正整数、整数随机种子合法、工作器回环端口为 127.0.0.1 字面量且在 1 至 65535 内互不重复、批量大小与重试上限为正整数；任一项不合法须以 E_SPEC 拒绝并指明首个非法条目及其字段。
-2. 实现 r1、r2、r3 三种回执格式的编解码与归一：加载时检测格式版本，未知版本、必需字段缺失、耗时毫秒为负、名次越界或重复投递引用悬空须以 E_FIELD 拒绝；归一后的内部表示须携带来源格式版本、被补齐字段集合与补齐依据，补齐规则须用显式默认值且可逐条回溯。
-3. 实现按批大小与工作器配额把请求切分为批的确定性计划：批标识由工作器标识、批序号与参与请求的到达序号按显式稳定序列化规则推导，同一请求流在任意派发顺序与任意字典遍历顺序下必须得到逐字节一致的批划分与批标识；不满一批的余数批处理规则须显式声明并输出依据。
-4. 实现逐批前向推理与回执生成：按归一批次用 NumPy 完成输入矩阵与工作器参数矩阵的前向计算，输出摘要须与参与请求的标识集合、参数版本序号与参数摘要共同绑定，同批请求的处理顺序变化不得改变输出摘要；须逐批输出中间维度、参数摘要与耗时占位值等待回执轮次填入。
-5. 实现沿「工作器参数版本 → 批次 → 请求归属」依赖链的失效传播与仅失效子集重算：当某工作器种子、维度或批大小变更后须推导全部直接与间接失效批与失效请求，按工作器标识序与批序稳定输出失效集合与每步传播依据；仅对失效集合重新计算，未受影响批的回执摘要、归属结论与批版本号必须逐字节保持不变且可逐项校验。
-6. 实现受全局并发上限与每工作器并发配额约束的并行回执处理调度：任一时刻运行批次数与单工作器运行批次数不得超限，配额耗尽时批次排队并记录等待开始与结束的单调时钟毫秒；处理须真实投射到工作线程池并向工作器发起真实回环套接字往返，且单个回执处理须有真实超时，超时按策略重试但不得改变单次处理语义。
-7. 实现回执账本持久化与会话快照的版本识别整体替换恢复：每完成一个批次须在同一 SQLite 事务中写入批次归属、回执摘要、失效传播轨迹、预算消耗与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时须先比较快照工作器集合版本、批大小版本与内容摘要同当前状态，不一致须整体替换回执归属与进度状态而非增量合并，并保留只读备份；进程被强制终止后重启只能依据已完整提交的批次恢复，未提交批次须标记为未知并要求重跑。
-8. 实现恢复后的一致性重放校验、异常注入与独立验证工具：恢复后按账本记录的版本重新生成未完成批次并重算输出摘要与归属，逐批与账本比较，差异须定位到首个不一致的批标识、请求标识与字段并以 E_REPLAY 报告；支持以命令行参数分别注入请求流损坏、重复投递引用悬空、账本内容摘要不符三类异常，分别以 E_SPEC、E_CHAIN、E_SNAPSHOT 报告并写入结构化日志；独立验证工具仅读取账本与原始声明文件自行完成归一、前向重算与失效推导，不一致须以 E_VERIFY 报告首个违规批。
+- Python ≥ 3.11，仅依赖 `numpy`；Tkinter 使用 Windows 官方安装包内置版本。
+- 不使用 Docker，不访问任何外部服务或在线资源。
+- 所有回环端口均来自命令行声明，运行前做可绑定检查，互不重复。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录结构
 
-验收：
-用本地确定性样本验证三格式归一、失效传播与恢复重放，输出业务码与账本比对结论。
+```
+batch_diagnostic/
+  errors.py          业务错误码 E_SPEC/E_FIELD/E_CHAIN/E_REPLAY/E_SNAPSHOT/E_VERIFY
+  canonical.py       显式稳定序列化与 SHA-256 摘要（与字典/派发顺序无关）
+  logging_utils.py   结构化 JSONL 日志
+  spec.py            请求流/工作器/预算 JSON 强校验与版本指纹
+  receipt.py         r1/r2/r3 编解码、E_FIELD 校验、带补齐依据的归一视图
+  planning.py        确定性批计划、批标识推导、显式余数批规则
+  inference.py       NumPy 确定性前向与顺序无关输出摘要
+  invalidation.py    参数版本→批次→请求的失效传播与逐步依据
+  network.py         真实回环套接字帧、真实超时、幂等重试
+  scheduler.py       线程池 + 全局/每工作器并发信号量、单调时钟排队计时
+  engine.py          工作器服务、批执行、本地复核、逐批账本提交
+  ledger.py          SQLite 单事务提交、内容摘要、整体替换恢复、只读备份
+  replay.py          恢复一致性重放（E_REPLAY，定位首个分歧批/请求/字段）
+  verifier.py        只读账本+原始声明的独立验证（E_VERIFY/E_CHAIN）
+  gui.py             Tkinter 诊断界面（无显示环境可导入/降级为 JSON）
+  cli.py             命令行入口 batch-diagnostic
+samples/             确定性本地样本与历史回执、样本生成器
+scripts/             check_ports.py 端口预检、demo.py 可重复演示
+tests/               pytest 套件（36 个用例）
+docs/VALIDATION.md   实际验证记录
+```
+
+## 安装
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+source .venv/bin/activate
+pip install -r requirements.txt
+# 可选：以可编辑方式安装并获得 batch-diagnostic 命令
+pip install -e .
+```
+
+## 快速开始
+
+```bash
+# 0) 生成/刷新确定性样本（已随仓库提供）
+python samples/generate_samples.py
+
+# 1) 回环端口预检（必须全部可绑定且互不重复）
+python scripts/check_ports.py \
+  --requests samples/requests.json \
+  --workers samples/workers.json \
+  --budget samples/budget.json
+
+# 2) 一条命令跑完可重复演示（归一化→计划→回环推理→失效重算→重放→注入）
+python scripts/demo.py
+```
+
+等价的模块化命令：
+
+```bash
+python -m batch_diagnostic.cli check-ports --requests ... --workers ... --budget ... --ledger run/d.sqlite
+python -m batch_diagnostic.cli plan        --requests ... --workers ... --budget ...
+python -m batch_diagnostic.cli run         --requests ... --workers ... --budget ... --ledger run/d.sqlite
+python -m batch_diagnostic.cli rerun       --requests ... --workers ... --budget ... --ledger run/d.sqlite --new-workers samples/workers_v2.json
+python -m batch_diagnostic.cli replay      --requests ... --workers ... --budget ... --ledger run/d.sqlite
+python -m batch_diagnostic.cli verify      --requests ... --workers ... --budget ... --ledger run/d.sqlite
+python -m batch_diagnostic.cli inject      --kind request_corrupt|dangling_ref|snapshot_digest ...
+python -m batch_diagnostic.cli dashboard   --requests ... --workers ... --budget ... --text
+```
+
+## 关键设计约定
+
+- 稳定序列化：所有标识/摘要基于键排序、无空白的 canonical JSON + SHA-256，
+  任意字典遍历顺序与派发顺序下批划分和批标识逐字节一致。
+- 批标识：`batch-<worker_id>-<batch_index:04d>-<digest(worker_id,batch_index,arrival_seqs)>`。
+- 余数批：剩余不足 `batch_size` 时仍生成一个尾随部分批，`remainder=true` 并附带
+  显式依据，不丢请求、不改顺序。
+- 归一补齐：r1/r2 缺失字段使用显式默认值（如 `param_version=1`、
+  `elapsed_ms=0`、`worker_id="unknown"`、`rank=0`、`duplicate_ref=null`、
+  `param_digest="unavailable"`），每个补齐字段记录默认值与可回溯依据。
+- 顺序无关摘要：批输出摘要在哈希前对请求标识排序，处理顺序变化不改变摘要。
+- 失效语义：种子/维度/参数版本/工作器集合/批大小变化 → 失效该工作器全部批
+  → 失效这些批上的请求；仅重算失效集合，未受影响批的回执、归属与批版本号
+  逐字节保持不变（演示与测试逐项断言）。
+- 账本：每批在单事务内写归属、回执、失效轨迹、预算消耗与进度游标；头部携带
+  整数格式版本与内容摘要。重开先比对工作器集合版本/批大小版本/内容摘要，
+  不一致则保留只读备份并整体替换；未完整提交的批标记为 unknown 要求重跑。
+- 并发：真实线程池 + 全局信号量 + 每工作器信号量，记录单调时钟
+  `wait_started_ms/wait_ended_ms`；套接字设置真实超时，超时按重试上限做
+  幂等重试，不改变单次处理语义。
+
+## 业务码
+
+| 码 | 触发场景 |
+| --- | --- |
+| `E_SPEC` | 请求流/工作器/预算声明非法，定位首个非法条目与字段 |
+| `E_FIELD` | 回执未知版本、缺字段、负耗时、名次越界等 |
+| `E_CHAIN` | 重复投递引用悬空等归属链断裂 |
+| `E_REPLAY` | 恢复重放与账本首个分歧批/请求/字段 |
+| `E_SNAPSHOT` | 快照工作器集合/批大小版本或内容摘要不符 |
+| `E_VERIFY` | 独立验证工具发现首个违规批 |
+
+## 测试
+
+```bash
+python -m pytest
+```

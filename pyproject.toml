@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batch-diagnostic"
+version = "1.0.0"
+description = "Local inference batch attribution diagnostic component (r1/r2/r3 receipts, invalidation, ledger replay)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+batch-diagnostic = "batch_diagnostic.cli:main"
+
+[tool.setuptools]
+packages = ["batch_diagnostic"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

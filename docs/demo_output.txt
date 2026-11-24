@@ -1,0 +1,122 @@
+workdir: /tmp/batchdiag-demo-iibup_g6
+
+========================================================================
+1. Load and strongly validate local JSON declarations [E_SPEC guard]
+========================================================================
+{
+  "requests": "11",
+  "workers": "2",
+  "input_dim": "6",
+  "global_max_in_flight": "2",
+  "worker_set_version": "a6472db3c86a6f75",
+  "batch_size_version": "1e11d5ca5ae1c03b",
+  "content_digest": "b6abbc6678361224"
+}
+
+========================================================================
+2. Normalize r1/r2/r3 historical receipts into one view [E_FIELD guard]
+========================================================================
+r1 req-000 filled= ['param_version', 'elapsed_ms', 'worker_id', 'rank', 'duplicate_ref', 'param_digest']
+r1 req-001 filled= ['param_version', 'elapsed_ms', 'worker_id', 'rank', 'duplicate_ref', 'param_digest']
+r2 req-004 filled= ['rank', 'duplicate_ref', 'param_digest']
+r3 req-005 filled= []
+r3 req-006 filled= []
+
+========================================================================
+3. Deterministic batch plan and explicit remainder rule
+========================================================================
+remainder rule: fewer than batch_size requests remain; emit one trailing partial batch without dropping or reordering requests
+batch-worker-a-0000-125a37055071 worker-a remainder=False ('req-000', 'req-001', 'req-002')
+batch-worker-b-0000-1ebcfc3801fe worker-b remainder=False ('req-003', 'req-004', 'req-005', 'req-006')
+batch-worker-a-0001-045190d70c62 worker-a remainder=False ('req-007', 'req-008', 'req-009')
+batch-worker-b-0001-d5f975b7b335 worker-b remainder=True ('req-010',)
+byte-identical rebuild: True
+
+========================================================================
+4. Forward inference via real 127.0.0.1 socket round trips
+========================================================================
+{
+  "code": "OK",
+  "processed_batches": [
+    "batch-worker-a-0000-125a37055071",
+    "batch-worker-a-0001-045190d70c62",
+    "batch-worker-b-0000-1ebcfc3801fe",
+    "batch-worker-b-0001-d5f975b7b335"
+  ],
+  "peak_global": 2,
+  "peak_worker": {
+    "worker-a": 1,
+    "worker-b": 1
+  },
+  "total_budget_ms": 22
+}
+
+========================================================================
+5. Parameter change -> invalidation chain -> subset recompute
+========================================================================
+invalid workers: ('worker-a',)
+invalid batches: ('batch-worker-a-0000-125a37055071', 'batch-worker-a-0001-045190d70c62')
+invalid requests: ('req-000', 'req-001', 'req-002', 'req-007', 'req-008', 'req-009')
+propagation levels: ['batch', 'request_attribution', 'worker_param_version']
+preserved byte-identical batches: {'batch-worker-b-0000-1ebcfc3801fe': True, 'batch-worker-b-0001-d5f975b7b335': True}
+
+========================================================================
+6. Recovery replay and independent ledger verification
+========================================================================
+replay: {"replayed_batches": ["batch-worker-a-0000-125a37055071", "batch-worker-a-0001-045190d70c62", "batch-worker-b-0000-1ebcfc3801fe", "batch-worker-b-0001-d5f975b7b335"], "status": "match"}
+verify: {"verified_batches": ["batch-worker-a-0000-125a37055071", "batch-worker-a-0001-045190d70c62", "batch-worker-b-0000-1ebcfc3801fe", "batch-worker-b-0001-d5f975b7b335"], "worker_diff_available": true, "status": "match"}
+
+========================================================================
+7. Fault injection -> E_SPEC / E_CHAIN / E_SNAPSHOT
+========================================================================
+{
+  "code": "E_SPEC",
+  "context": {
+    "entry": "requests[0]",
+    "field": "arrival_seq",
+    "value": -1
+  },
+  "event": "injection_detected",
+  "message": "field 'arrival_seq' of requests[0] out of range [0]",
+  "ts_ms": 1795479384605
+}
+request_corrupt: exit=1 (1 means diagnosed; business code E_SPEC written to events.jsonl)
+{
+  "code": "E_CHAIN",
+  "context": {
+    "entry": "receipt[r3]",
+    "field": "duplicate_ref",
+    "request_id": "req-000",
+    "value": "req-does-not-exist"
+  },
+  "event": "injection_detected",
+  "message": "duplicate_ref dangles: overridden request id is not present",
+  "ts_ms": 1795479384625
+}
+dangling_ref: exit=1 (1 means diagnosed; business code E_CHAIN written to events.jsonl)
+{
+  "code": "E_SNAPSHOT",
+  "context": {
+    "entry": "/tmp/batchdiag-demo-iibup_g6/inject-2.sqlite",
+    "field": "content_digest",
+    "stored": {
+      "batch_size_version": "1e11d5ca5ae1c03b904d96bb8641f06a5e451d4634ca0252c80b7eb8c1bd37b8",
+      "content_digest": "tampered-675cd4fefd54f4d643e9bb74",
+      "format_version": 1,
+      "worker_set_version": "55b0a7858bf93d7d5bd385a31a18d03a2fb29b1e901762f5bd3d668c334a9f85"
+    }
+  },
+  "event": "injection_detected",
+  "message": "snapshot version/content digest mismatch",
+  "ts_ms": 1795479384658
+}
+snapshot_digest: exit=1 (1 means diagnosed; business code E_SNAPSHOT written to events.jsonl)
+
+========================================================================
+Demo conclusion
+========================================================================
+replay status: match
+verify status: match
+preserved unimpacted batches byte-identical: True
+injection results: [('request_corrupt', 'E_SPEC', 1), ('dangling_ref', 'E_CHAIN', 1), ('snapshot_digest', 'E_SNAPSHOT', 1)]
+ledger path: /tmp/batchdiag-demo-iibup_g6/diagnostic.sqlite
