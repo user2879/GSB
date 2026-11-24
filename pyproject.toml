@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cachelease-diagnostics"
+version = "1.0.0"
+description = "Deterministic multi-node cache lease and capacity-watermark diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+cachelease = "cachelease.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cachelease*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

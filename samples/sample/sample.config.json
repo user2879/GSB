@@ -1,0 +1,101 @@
+{
+  "format_version": 1,
+  "session": {
+    "scale": 1000
+  },
+  "runtime": {
+    "global_concurrency": 4,
+    "handshake_timeout_ms": 4000,
+    "reply_timeout_ms": 4000,
+    "grace_ms": 160
+  },
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 48334,
+      "capacity_slots": 5,
+      "lease_limit": 6,
+      "seed": 101,
+      "quota_version": 1,
+      "request_concurrency": 2
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 45306,
+      "capacity_slots": 4,
+      "lease_limit": 4,
+      "seed": 202,
+      "quota_version": 1,
+      "request_concurrency": 2
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 43571,
+      "capacity_slots": 3,
+      "lease_limit": 3,
+      "seed": 303,
+      "quota_version": 1,
+      "request_concurrency": 1
+    }
+  ],
+  "pipeline": {
+    "stages": [
+      {
+        "stage": "build",
+        "concurrency": 3
+      },
+      {
+        "stage": "test",
+        "concurrency": 2
+      }
+    ],
+    "artifacts": [
+      {
+        "key": "core",
+        "stage": "build",
+        "refs": [],
+        "shards": {
+          "count": 3,
+          "bytes": 96
+        }
+      },
+      {
+        "key": "api",
+        "stage": "build",
+        "refs": [
+          "core"
+        ],
+        "shards": {
+          "count": 2,
+          "bytes": 64
+        }
+      },
+      {
+        "key": "suite",
+        "stage": "test",
+        "refs": [
+          "core",
+          "api"
+        ],
+        "shards": {
+          "count": 2,
+          "bytes": 80
+        }
+      },
+      {
+        "key": "docs",
+        "stage": "test",
+        "refs": [
+          "core"
+        ],
+        "shards": {
+          "count": 1,
+          "bytes": 48
+        }
+      }
+    ]
+  }
+}

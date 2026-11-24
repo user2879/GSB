@@ -1,0 +1,440 @@
+{
+  "arbitration": {
+    "duplicate_artifact_unique_on_repeat": true,
+    "seq1_node": "node-a",
+    "seq5_candidates": [
+      {
+        "artifact_key": "core",
+        "digest_match": true,
+        "eligible": true,
+        "existing_digest": "8154856e89c17b1a56b1a77017fa0a15131eb8c5863dae4ae70c5f484eefeb29",
+        "expected_digest": "8154856e89c17b1a56b1a77017fa0a15131eb8c5863dae4ae70c5f484eefeb29",
+        "free_slots": 2,
+        "lease_remaining": 3,
+        "node_concurrency_limit": 2,
+        "node_id": "node-a",
+        "node_in_flight": 0,
+        "quota_version": 1,
+        "reason": "selected",
+        "selected": true
+      },
+      {
+        "artifact_key": "core",
+        "digest_match": false,
+        "eligible": true,
+        "existing_digest": null,
+        "expected_digest": "6242b1e713fa9aa2bd62e0aa564ffc3bf57ee37c3fd839574223c3945b2003a9",
+        "free_slots": 3,
+        "lease_remaining": 3,
+        "node_concurrency_limit": 2,
+        "node_id": "node-b",
+        "node_in_flight": 0,
+        "quota_version": 1,
+        "reason": "lower_priority",
+        "selected": false
+      },
+      {
+        "artifact_key": "core",
+        "digest_match": false,
+        "eligible": true,
+        "existing_digest": null,
+        "expected_digest": "be030c39e199a2c3a7fe0bd12085731e55dcb7b19b0a5281aae2b17e5b4c89ef",
+        "free_slots": 3,
+        "lease_remaining": 3,
+        "node_concurrency_limit": 1,
+        "node_id": "node-c",
+        "node_in_flight": 0,
+        "quota_version": 1,
+        "reason": "lower_priority",
+        "selected": false
+      }
+    ],
+    "seq5_node": "node-a"
+  },
+  "environment": {
+    "executable": "/home/zsl/.feedback/python-base/bin/python",
+    "platform": "linux",
+    "python": "3.11.0rc1"
+  },
+  "full_run": {
+    "content_digest": "441d681d2c24688c68ff19464635152910b1f4779dad13715e9f2adc5bcf20ff",
+    "final_watermarks": {
+      "node-a": {
+        "active_leases": 6,
+        "elapsed_ms": 0,
+        "free_slots": 2,
+        "lease_remaining": 0,
+        "node_id": "node-a",
+        "observation": "{\"active_leases\":6,\"elapsed_ms\":0,\"free_slots\":2,\"lease_remaining\":0,\"node_id\":\"node-a\",\"ordinal\":25,\"quantization_error_upper\":100,\"quota_version\":2,\"seq\":25,\"used_slots\":3,\"watermark_units\":600}",
+        "observation_digest": "58adb10c41c2eb73c249f02a765077cbc0feadd48adddfbbf54753aba3184252",
+        "ordinal": 25,
+        "quantization_error_upper": 100,
+        "quota_version": 2,
+        "seq": 25,
+        "stale": 0,
+        "used_slots": 3,
+        "watermark_units": 600
+      },
+      "node-b": {
+        "active_leases": 4,
+        "elapsed_ms": 0,
+        "free_slots": 3,
+        "lease_remaining": 0,
+        "node_id": "node-b",
+        "observation": "{\"active_leases\":4,\"elapsed_ms\":0,\"free_slots\":3,\"lease_remaining\":0,\"node_id\":\"node-b\",\"ordinal\":25,\"quantization_error_upper\":125,\"quota_version\":2,\"seq\":25,\"used_slots\":1,\"watermark_units\":250}",
+        "observation_digest": "10dc573bbf42d5c4ca63aeda5e9e9bd9b8038ff391d6876e276c113891413a3f",
+        "ordinal": 25,
+        "quantization_error_upper": 125,
+        "quota_version": 2,
+        "seq": 25,
+        "stale": 0,
+        "used_slots": 1,
+        "watermark_units": 250
+      },
+      "node-c": {
+        "active_leases": 1,
+        "elapsed_ms": 1,
+        "free_slots": 2,
+        "lease_remaining": 2,
+        "node_id": "node-c",
+        "observation": "{\"active_leases\":1,\"elapsed_ms\":1,\"free_slots\":2,\"lease_remaining\":2,\"node_id\":\"node-c\",\"ordinal\":25,\"quantization_error_upper\":167,\"quota_version\":1,\"seq\":25,\"used_slots\":1,\"watermark_units\":333}",
+        "observation_digest": "d94a0ef25cbc925e1e0532a25699d8356fadc50b3e7a4fd735f5d540990f5ab9",
+        "ordinal": 25,
+        "quantization_error_upper": 167,
+        "quota_version": 1,
+        "seq": 25,
+        "stale": 0,
+        "used_slots": 1,
+        "watermark_units": 333
+      }
+    },
+    "progress": {
+      "last_batch": 15,
+      "last_ordinal": 25,
+      "last_seq": 25,
+      "ledger_digest": "ee77655eb9c605797e128991e7df0a8cf0ae6725590ac97337fd366b06202b32"
+    },
+    "replay": {
+      "events": 25,
+      "last_seq": 25,
+      "watermarks": 75
+    }
+  },
+  "incremental_verify": {
+    "checkpoint_seq": 15,
+    "incremental_processed_events": 10,
+    "ok": true,
+    "prefix_events": 15,
+    "prefix_snapshots_byte_identical": true,
+    "progress_equal": {
+      "last_ordinal": true,
+      "last_seq": true
+    },
+    "projection_digest": "b8e461ca942dfcf16403312a74c7a964b287d25078cd9231c6cebf7cae235c5c",
+    "suffix_events": 10
+  },
+  "ok": true,
+  "port_check": {
+    "ok": true,
+    "ports": [
+      {
+        "available": true,
+        "endpoint": "127.0.0.1:48334",
+        "node_id": "node-a"
+      },
+      {
+        "available": true,
+        "endpoint": "127.0.0.1:45306",
+        "node_id": "node-b"
+      },
+      {
+        "available": true,
+        "endpoint": "127.0.0.1:43571",
+        "node_id": "node-c"
+      }
+    ]
+  },
+  "quota": {
+    "node_a_quota_version": 2,
+    "node_b_quota_version": 2,
+    "stale_watermark_rows": 20
+  },
+  "recovery": {
+    "crash_exit_code": 137,
+    "projection_equal_to_fresh_full": true,
+    "recovery_actions": [
+      {
+        "action_id": 1,
+        "batch_id": 5,
+        "created_ms": 32737349,
+        "detail_json": "{\"action\":\"rerun_from_committed_progress\",\"batch_id\":5,\"first_ordinal\":8,\"last_ordinal\":8,\"reason\":\"process terminated before the final batch transaction committed\"}",
+        "kind": "UNKNOWN_UNCOMMITTED_BATCH"
+      }
+    ],
+    "replay": {
+      "events": 7,
+      "last_seq": 7,
+      "watermarks": 21
+    },
+    "resume_progress": {
+      "last_batch": 15,
+      "last_ordinal": 25,
+      "last_seq": 25,
+      "ledger_digest": "f9a635f2ddb28e54ae7b92ae5f0f3af642e0a6dc89d66f378aa8fc67356be520"
+    },
+    "unknown_batches": [
+      {
+        "action": "rerun_from_committed_progress",
+        "batch_id": 5,
+        "first_ordinal": 8,
+        "last_ordinal": 8
+      }
+    ]
+  },
+  "reservation_rollback": {
+    "rolled_back_rows": 1,
+    "seq14_error": "E_EXPIRED",
+    "seq14_status": "error"
+  },
+  "sample": {
+    "artifacts": [
+      "core",
+      "api",
+      "suite",
+      "docs"
+    ],
+    "checkpoint_seq": 15,
+    "config": "reports/acceptance/sample/sample.config.json",
+    "event_count": 25,
+    "events": "reports/acceptance/sample/events.ndjson",
+    "nodes": [
+      "node-a",
+      "node-b",
+      "node-c"
+    ]
+  },
+  "scheduler": {
+    "metrics": [
+      {
+        "batch_id": 1,
+        "max_global_in_flight": 2,
+        "max_node_in_flight": {
+          "node-a": 2,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 2,
+          "test": 0
+        }
+      },
+      {
+        "batch_id": 2,
+        "max_global_in_flight": 2,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 1,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 0,
+          "test": 2
+        }
+      },
+      {
+        "batch_id": 3,
+        "max_global_in_flight": 2,
+        "max_node_in_flight": {
+          "node-a": 2,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 2,
+          "test": 0
+        }
+      },
+      {
+        "batch_id": 5,
+        "max_global_in_flight": 1,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 1,
+          "test": 0
+        }
+      },
+      {
+        "batch_id": 7,
+        "max_global_in_flight": 1,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 1,
+          "test": 0
+        }
+      },
+      {
+        "batch_id": 10,
+        "max_global_in_flight": 1,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 0,
+          "test": 1
+        }
+      },
+      {
+        "batch_id": 11,
+        "max_global_in_flight": 1,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 0,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 0,
+          "test": 1
+        }
+      },
+      {
+        "batch_id": 12,
+        "max_global_in_flight": 1,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 1,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 0,
+          "test": 1
+        }
+      },
+      {
+        "batch_id": 14,
+        "max_global_in_flight": 2,
+        "max_node_in_flight": {
+          "node-a": 1,
+          "node-b": 1,
+          "node-c": 0
+        },
+        "max_stage_in_flight": {
+          "build": 1,
+          "test": 1
+        }
+      },
+      {
+        "batch_id": 15,
+        "max_global_in_flight": 3,
+        "max_node_in_flight": {
+          "node-a": 2,
+          "node-b": 1,
+          "node-c": 1
+        },
+        "max_stage_in_flight": {
+          "build": 1,
+          "test": 2
+        }
+      }
+    ],
+    "queue_arithmetic_consistent": true,
+    "queue_observations": 20
+  },
+  "tests": {
+    "returncode": 0,
+    "summary": "22 passed in 22.50s"
+  },
+  "validation": {
+    "artifacts": [
+      {
+        "key": "core",
+        "refs": [],
+        "shard_bytes": 96,
+        "shards": 3,
+        "stage": "build"
+      },
+      {
+        "key": "api",
+        "refs": [
+          "core"
+        ],
+        "shard_bytes": 64,
+        "shards": 2,
+        "stage": "build"
+      },
+      {
+        "key": "suite",
+        "refs": [
+          "core",
+          "api"
+        ],
+        "shard_bytes": 80,
+        "shards": 2,
+        "stage": "test"
+      },
+      {
+        "key": "docs",
+        "refs": [
+          "core"
+        ],
+        "shard_bytes": 48,
+        "shards": 1,
+        "stage": "test"
+      }
+    ],
+    "batches": 15,
+    "config_digest": "49850c369cbe7af56a011548c0a8b6f9f99172a3b513436ff5568d6616de3e54",
+    "events": 25,
+    "first_seq": 1,
+    "last_seq": 25,
+    "nodes": [
+      {
+        "capacity_slots": 5,
+        "endpoint": "127.0.0.1:48334",
+        "lease_limit": 6,
+        "node_id": "node-a",
+        "quota_version": 1,
+        "request_concurrency": 2,
+        "seed": 101
+      },
+      {
+        "capacity_slots": 4,
+        "endpoint": "127.0.0.1:45306",
+        "lease_limit": 4,
+        "node_id": "node-b",
+        "quota_version": 1,
+        "request_concurrency": 2,
+        "seed": 202
+      },
+      {
+        "capacity_slots": 3,
+        "endpoint": "127.0.0.1:43571",
+        "lease_limit": 3,
+        "node_id": "node-c",
+        "quota_version": 1,
+        "request_concurrency": 1,
+        "seed": 303
+      }
+    ],
+    "ok": true,
+    "stages": [
+      {
+        "concurrency": 3,
+        "stage": "build"
+      },
+      {
+        "concurrency": 2,
+        "stage": "test"
+      }
+    ]
+  }
+}
