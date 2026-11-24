@@ -1,22 +1,202 @@
-从一个空仓库出发，构建一个面向本地确定性样本的流式多模态事件窗口聚合组件与完整示例：图像帧、文本断言与传感器读数三类事件按毫秒时间戳交错到达，组件需在可配置的事件时间窗口与水位线下生成窗口级结论，并在地乱序、迟到与重复事件场景中维护窗口状态与检查点。输入为本地样本目录：按固定种子生成的 PNG 帧序列（固定分辨率，画面为几何图元与噪声）、结构化文本断言 JSONL（事件毫秒时间戳、实体与属性断言）、传感器读数 JSONL（事件毫秒时间戳、通道名与浮点读数）；一份窗口配置 JSON（窗口长度与滑动步长毫秒、允许迟到毫秒、水位线推进规则、视觉与文本特征维度、量化档位与定点小数位宽、融合温度、线程池并发数、每窗口事件数上限、检查点提交间隔窗口数），以及一份乱序注入计划 JSON（声明每个事件的到达序号与到达延迟，用于制造真实乱序）。
+# mmwin：确定性流式多模态事件窗口聚合
 
-任务环境与准备：
-Windows 工作区，Python 3.11 及以上，安装命令：pip install numpy
-使用任意文本编辑器与命令行终端，无需数据库、消息队列或外部服务
-准备本地样本生成脚本：以固定种子生成 PNG 帧序列、文本断言 JSONL、传感器读数 JSONL、窗口配置 JSON 与乱序注入计划 JSON，全部写入 samples 目录
-确认工作目录可创建临时目录与检查点清单文件，运行时通过命令行参数注入样本目录与配置路径
+这是一个完全本地、无外部服务的 Python 3.11+ 示例组件。图像帧、结构化文本断言和传感器读数按**注入计划中的到达序号**交错投递；组件维护事件时间水位线、滑动窗口、迟到再结算、定点融合摘要、内容缓存和原子检查点。
 
-业务要求：
-1. 实现三类事件与配置的加载校验层：逐行解析文本断言与传感器读数 JSONL，校验事件 ID 唯一、事件时间戳为非负整数毫秒、实体字段完整、通道名在配置枚举内、读数为有限数；解析配置与乱序注入计划，校验窗口长度为正且能整除步长关系、允许迟到为非负整数、并发数不超过上限、每窗口事件数上限为正，不合规事件输出 E_EVENT_INVALID 并进入失败清单。
-2. 实现以到达序号驱动的乱序事件回放与水位线推进：按注入计划的到达序号投递事件，水位线取已投递事件中最大事件时间戳减去允许迟到毫秒，并对同时间戳事件按事件 ID 字典序稳定排序；乱序回放下的投递次序必须与注入计划逐条一致，禁止按事件时间戳预排序后再回放。
-3. 实现视觉帧按事件时间戳映射到窗口的确定性特征摘要：每个窗口取覆盖区间内时间戳最近的若干帧，按帧序号升序计算分块颜色均值、梯度强度与边缘密度并经配置指纹派生的固定投影矩阵映射为定点整数；某窗口无帧事件时输出空窗标记与空窗特征向量，切换量化档位必须真实改变中间整数。
-4. 实现窗口级定点融合结论与迟到事件再结算：把窗口内文本证据与传感器证据按融合温度做减去最大值的稳定融合并叠加视觉摘要，在定点整数域输出置信度与贡献分解；当迟到事件落入已关闭窗口时须按配置的再结算或丢弃策略处理并记录再结算窗口编号、旧结论与新结论，迟到恰等于允许迟到边界时按固定规则决断。
-5. 实现基于内容指纹的窗口级精确失效判定：为窗口归属、视觉摘要、定点融合与再结算各阶段产物计算由上游事件内容指纹、配置指纹与量化档位派生的缓存键，并记录每个窗口结果引用的事件集合；单事件替换或删除只使引用该事件的窗口及其重结算链路失效，未受影响窗口必须直接复用缓存且不得重新计算。
-6. 实现每窗口事件数上限与单批事件处理预算约束下的调度与待办保留：调度器按窗口起止时间与事件 ID 稳定顺序消耗单批事件处理预算，某窗口事件数超出上限时输出 E_WINDOW_OVERFLOW 并跳过该窗口结论，预算不足时未处理事件保留在待办队列并以 E_EVENT_BUDGET_PENDING 标记，下一批优先处理待办。
-7. 保证任意注入计划与编辑序列后增量运行与从空白全量重放逐字段一致：施加包含乱序计划替换、单事件替换与删除、窗口长度与步长调整、允许迟到变更及量化档位切换的编辑序列，每次稳定后增量运行得到的逐窗口结论、再结算记录、空窗标记、失效复用清单与失败清单顺序，必须与按相同最终事件集与配置一次性全量重放完全相同。
-8. 实现检查点整体替换、恢复判定与并发一致性：将回放与水位线、窗口归属、视觉摘要、融合与再结算划分为阶段，各阶段产物与水位线、待办队列先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、注入计划哈希、已处理到达序号与各阶段产物版本；启动时以版本号与配置哈希判定是否续跑，不符则输出 E_CHECKPOINT_VERSION_MISMATCH 并全量重放；线程池并发执行窗口计算时每个任务携带由窗口起止时间与阶段名派生的稳定排序键，最终窗口顺序、预算扣减序列与失败清单顺序与串行一致。
+运行时唯一的第三方依赖是 `numpy`。PNG 的读写由项目内的小型标准库实现完成，不依赖 Pillow、数据库、消息队列或容器。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始（Windows PowerShell）
 
-验收：
-使用本地乱序样本验证水位线推进、窗口定点结论、迟到再结算、增量与全量逐字段一致及检查点恢复。
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install numpy
+
+python tools\generate_samples.py --samples samples --seed 20261124
+python -m mmwin run `
+  --samples samples `
+  --config samples\window_config.json `
+  --plan samples\injection_plan.json `
+  --checkpoint .mmwin-checkpoint `
+  --output out\report.json `
+  --reset
+```
+
+也可以安装本仓库的 CLI：`pip install -e .` 后使用同一组参数的 `mmwin run ...`。
+不安装时 `python -m mmwin` 与 `python tools\generate_samples.py` 均可直接运行。
+
+Linux/macOS 下把续行符改为 `\` 即可：
+
+```bash
+python3 tools/generate_samples.py --samples samples --seed 20261124
+python3 -m mmwin run --samples samples \
+  --config samples/window_config.json \
+  --plan samples/injection_plan.json \
+  --checkpoint .mmwin-checkpoint \
+  --output out/report.json --reset
+```
+
+不带 `--reset` 再次执行就是增量续跑。检查点的计划哈希、来源哈希、配置哈希均匹配时从已提交的到达位置续跑；配置或状态版本不匹配时输出 `E_CHECKPOINT_VERSION_MISMATCH` 并从到达序号 0 全量重放。
+
+## 目录
+
+```text
+mmwin/                      核心组件和 CLI
+  config.py                 配置加载与校验
+  events.py                 图像/文本/传感器事件加载与校验
+  plan.py                   乱序注入计划
+  png.py                    无 Pillow 的 PNG 编解码
+  features.py               视觉摘要、证据向量、定点融合
+  engine.py                 回放、水位线、窗口、缓存、调度
+  checkpoint.py             分阶段检查点与原子代际提交
+  generate.py               确定性样本生成
+  cli.py                    python -m mmwin
+tools/generate_samples.py   样本生成入口
+samples/                    已生成的本地样本
+tests/test_mmwin.py         完整验收测试
+```
+
+## 输入
+
+### 图像帧
+
+`samples/frames.jsonl` 是 PNG 帧元数据 sidecar，`path` 相对于样本目录：
+
+```json
+{"event_id":"img-0000","timestamp_ms":60,"frame_index":0,"path":"frames/frame_0000_t00000060.png"}
+```
+
+事件时间戳来自 sidecar，不从 PNG 文件时间推断。所有帧必须是同一固定分辨率；默认样本是 128x96 RGB。没有 `frames.jsonl` 时，也会发现符合 `frame_<序号>_<毫秒>.png` 的文件。
+
+### 文本断言
+
+```json
+{"event_id":"txt-0000","timestamp_ms":90,"entity":{"id":"vehicle-00","type":"vehicle"},"attribute":"lane_state","value":"clear","confidence":0.92,"polarity":0.31}
+```
+
+`entity.id`、`entity.type`、`attribute` 必须完整；`value` 是有限标量；`confidence` 和 `polarity` 可选且必须有限。
+
+### 传感器读数
+
+```json
+{"event_id":"sen-0000","timestamp_ms":70,"channel":"temperature","value":20.4}
+```
+
+`channel` 必须属于配置中的 `sensor_channels`，`value` 必须是有限数。
+
+### 配置
+
+完整样例为 `samples/window_config.json`。核心字段：
+
+| 字段 | 含义 |
+| --- | --- |
+| `window_length_ms` / `window_step_ms` | 半开窗口 `[start, end)` 的长度与步长；长度必须被步长整除 |
+| `allowed_lateness_ms` | 水位线回退量，必须是非负整数 |
+| `watermark_rule` | 固定规则 `max_seen_minus_lateness` |
+| `late_policy` | `resettle` 或 `drop` |
+| `visual_feature_dim` / `text_feature_dim` | 视觉投影维度与文本/传感器证据维度 |
+| `visual_block_rows` / `visual_block_cols` | 每帧分块网格 |
+| `visual_frames_per_window` | 每窗口取离窗口中心最近的帧数 |
+| `quantization_level` / `fractional_bits` | 当前量化档位与定点小数位宽；档位值必须等于位宽 |
+| `fusion_temperature` | 定点 softmax 融合温度，必须大于 0 |
+| `thread_pool_size` / `concurrency_limit` | 实际线程数和硬上限 |
+| `max_events_per_window` | 窗口事件数上限 |
+| `checkpoint_commit_interval_windows` | 每累计闭窗多少提交一次中间检查点 |
+| `batch_event_budget` | 默认单批事件预算 |
+| `sensor_channels` | 通道枚举及其归一化 `min`/`max` |
+
+完整配置指纹用于检查点兼容判定；**语义配置指纹**排除了线程数、并发上限、检查点间隔和批预算，因此把 `thread_pool_size` 从 1 改成 6 不会改变视觉整数、融合或窗口结论。
+
+### 乱序注入计划
+
+```json
+{"schema_version":1,"seed":20261124,"arrivals":[{"arrival_seq":0,"event_id":"sen-0011","delay_ms":911}]}
+```
+
+到达按 `arrival_seq` 排序后逐条投递，`delay_ms` 只记录注入的到达延迟。回放绝不按事件时间戳重排。
+
+额外样本：
+
+- `samples/injection_plan_duplicate.json`：末尾重复投递一个事件，用于触发 `E_EVENT_INVALID`。
+- `samples/window_config_drop.json`：迟到事件丢弃策略。
+- `samples/window_config_q12.json`：1024 定点档位。
+
+## 固定语义规则
+
+1. 窗口起点是 0 的整数倍步长；窗口是半开区间 `[start, end)`。
+2. 水位线为已接受投递事件的最大时间戳减去允许迟到毫秒。没有投递事件时为 `null`，可以小于 0。
+3. 当 `window_end_ms <= watermark_ms` 时窗口关闭。
+4. 当前事件迟到量为 `max_seen_before - event_timestamp_ms`。**仅当迟到量严格大于允许迟到时判为迟到；恰好等于边界时按准时处理。**
+5. 窗口内事件引用按 `(timestamp_ms, event_id)` 排序；这不会改变实际投递顺序。
+6. 迟到 `resettle` 会加入事件并生成新的窗口快照；`drop` 不改变成员，但会记录旧/新结论相同的审计项。
+7. 每窗口事件数超过上限时，窗口状态为 `overflow`，不输出置信度，并产生 `E_WINDOW_OVERFLOW`。
+8. 批预算按到达逐条消耗。预算耗尽后剩余到达留在待办队列，每个待办事件产生 `E_EVENT_BUDGET_PENDING`；下一次运行从该前缀继续，待办优先。
+
+## 视觉与定点融合
+
+每个窗口：
+
+1. 在窗口覆盖的事件中选离窗口中心最近的 `visual_frames_per_window` 帧，再按帧序号升序处理。
+2. 每帧按块计算 RGB 均值、梯度强度均值、边缘密度，形成 5 个值/块。
+3. 将原始特征定点化，用由语义配置指纹和量化档位派生的固定整数投影矩阵映射到 `visual_feature_dim`。
+4. 文本与传感器事件生成稀疏有符号证据向量；视觉向量与其叠加。
+5. 融合 logits 先减去最大值，再做稳定 softmax；置信度、logits、文本/传感器/视觉贡献均为定点整数。
+
+量化档位改变会改变缩放、投影矩阵种子和中间整数，不只是格式化输出。空窗输出 `empty_visual=true`，视觉向量为全零。
+
+## 输出报告
+
+`--output out/report.json` 生成完整报告，主要字段：
+
+- `delivery_order`：严格等于注入计划的逐条投递轨迹。
+- `watermark`：最终水位线、最大事件时间及边界规则。
+- `windows`：按窗口起止排序的结论、事件引用、视觉摘要、置信度、贡献分解和各阶段缓存键。
+- `resettlements`：迟到窗口、到达序号、迟到量、策略、旧/新快照和旧/新结论。
+- `empty_windows`：无帧事件的窗口编号。
+- `failures`：按窗口起止、事件 ID、到达序号、错误码稳定排序的失败清单。
+- `invalidation_manifest`：仅含窗口、事件引用和阶段内容键，是跨增量/全量可比较的精确失效清单。
+- `cache.stats` / `cache.window_manifest`：命中/计算遥测；命中状态属于运行遥测，不参与业务等价比较。
+- `checkpoint`：全局版本、配置/计划/来源哈希、已处理到达、待办序号和阶段版本。
+- `diagnostics`：如 `E_CHECKPOINT_VERSION_MISMATCH`、`E_CHECKPOINT_PLAN_CHANGED`。
+
+## 增量缓存与检查点
+
+缓存分阶段内容寻址：
+
+- 窗口归属键：窗口起止、全部引用事件指纹、语义配置。
+- 视觉键：窗口起止、帧事件指纹、选中帧集合、视觉配置和量化档位。
+- 融合键：全部事件引用指纹、视觉键、融合配置和量化档位。
+- 再结算键：窗口快照语义链和迟到决策链，不依赖全局快照序号。
+
+因此替换一个文本事件时，未引用该事件的窗口直接复用归属、视觉、融合和再结算产物；引用它的窗口只重算变化的下游阶段。删除事件不会因为快照序号移动而误伤无关窗口。
+
+检查点目录：
+
+```text
+.mmwin-checkpoint/
+  MANIFEST.json
+  generations/
+    g00000002-<id>/
+      replay.json membership.json visual.json fusion.json
+      resettle.json pending.json runtime.json cache.json
+```
+
+一次提交先把全部阶段、水位线、待办和缓存写入同盘临时目录，再原子改名成新代际目录，最后原子替换 `MANIFEST.json` 指针。清单记录全局版本、配置哈希、计划哈希、来源哈希、已处理到达序号、待办序号及每个阶段文件的内容哈希。
+
+窗口视觉/融合任务在线程池中执行，每个任务携带 `(window_start_ms, window_end_ms, phase, snapshot_id)` 稳定排序键；提交顺序和最终合并顺序固定。失败清单、预算轨迹和窗口顺序与串行结果一致。
+
+## 测试
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+测试覆盖：
+
+- 配置、三类事件、重复 ID、非法时间戳、实体、通道、有限数和重复投递校验。
+- 乱序投递顺序、水位线公式、边界恰好等于允许迟到、迟到再结算。
+- 空窗、量化档位改变中间整数、窗口溢出跳过结论。
+- 批预算待办、检查点续跑和阶段清单。
+- 乱序计划替换、单事件替换/删除、窗口/迟到/量化编辑序列的增量与空白全量逐字段一致。
+- 内容键精确失效、未受影响窗口零重算、线程池串并行一致、配置版本不匹配全量重放。
+
+实际验证摘要见 `VERIFICATION.md`。
