@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "commands": [
+    {
+      "type": "replace_receipt",
+      "source": "fixtures/replacement-w-beta.r2.ndjson",
+      "target": "receipts/w-beta.r2.ndjson"
+    },
+    {
+      "type": "append_batch",
+      "worker_id": "w-alpha",
+      "batch_id": "b-alpha-003",
+      "param_version": 4,
+      "receipt_version": "r3",
+      "request_ids": ["r-004"],
+      "covered_refs": {"r-004": ["b-alpha-002/r-004"]},
+      "duration_ms": 8
+    },
+    {
+      "type": "switch_param_version",
+      "worker_id": "w-alpha",
+      "param_version": 5,
+      "keep_old_merge_entry": true
+    },
+    {
+      "type": "set_batch_size",
+      "batch_size": 2
+    },
+    {
+      "type": "append_batch",
+      "worker_id": "w-alpha",
+      "batch_id": "b-alpha-v5-001",
+      "param_version": 5,
+      "receipt_version": "r3",
+      "request_ids": ["r-001", "r-004"],
+      "covered_refs": {"r-004": ["b-alpha-003/r-004"]},
+      "duration_ms": 6
+    },
+    {
+      "type": "set_merge_rule",
+      "entries": [
+        {"worker_id": "w-alpha", "param_version": 5},
+        {"worker_id": "w-alpha", "param_version": 4},
+        {"worker_id": "w-beta", "param_version": 3},
+        {"worker_id": "w-gamma", "param_version": 2}
+      ]
+    },
+    {
+      "type": "run_incremental"
+    }
+  ]
+}
+

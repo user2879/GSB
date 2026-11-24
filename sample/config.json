@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "workers": [
+    {
+      "worker_id": "w-alpha",
+      "param_version": 4,
+      "known_param_versions": [3, 4],
+      "port": 18301,
+      "model_dim": 32,
+      "hidden_dim": 64,
+      "seed": 101,
+      "quant_scale": 1000
+    },
+    {
+      "worker_id": "w-beta",
+      "param_version": 3,
+      "known_param_versions": [2, 3],
+      "port": 18302,
+      "model_dim": 16,
+      "hidden_dim": 32,
+      "seed": 202,
+      "quant_scale": 1000
+    },
+    {
+      "worker_id": "w-gamma",
+      "param_version": 2,
+      "known_param_versions": [1, 2],
+      "port": 18303,
+      "model_dim": 8,
+      "hidden_dim": 16,
+      "seed": 303,
+      "quant_scale": 1000
+    }
+  ],
+  "port_range": {
+    "min": 18300,
+    "max": 18399
+  },
+  "batch_size": 3,
+  "fixed_point_bits": 32,
+  "throughput_ops_per_ms": 500000,
+  "merge_rule": {
+    "entries": [
+      {"worker_id": "w-alpha", "param_version": 4},
+      {"worker_id": "w-alpha", "param_version": 3},
+      {"worker_id": "w-beta", "param_version": 3},
+      {"worker_id": "w-gamma", "param_version": 2}
+    ],
+    "tie_break": [
+      "covered_ref",
+      "duration_ms_asc",
+      "param_version_desc",
+      "batch_id_asc",
+      "worker_id_asc",
+      "source_order_asc"
+    ]
+  },
+  "receipt_sources": [
+    {
+      "path": "receipts/w-alpha.r3.ndjson",
+      "default_worker_id": "w-alpha",
+      "default_param_version": 4,
+      "format": "r3"
+    },
+    {
+      "path": "receipts/w-beta.r2.ndjson",
+      "default_worker_id": "w-beta",
+      "default_param_version": 3,
+      "format": "r2"
+    },
+    {
+      "path": "receipts/w-gamma.r1.ndjson",
+      "default_worker_id": "w-gamma",
+      "default_param_version": 2,
+      "format": "r1"
+    }
+  ],
+  "interaction_budget_ms": 25,
+  "fault_config": null
+}
+

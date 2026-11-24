@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "injections": [
+    {
+      "injection_id": "INJ-TRUNCATE-001",
+      "kind": "truncate_line",
+      "path": "receipts/w-alpha.r3.ndjson",
+      "line": 1,
+      "expected_code": "E_RECEIPT_MALFORMED"
+    },
+    {
+      "injection_id": "INJ-UNKNOWN-VERSION-001",
+      "kind": "unknown_param_version",
+      "path": "receipts/w-alpha.r3.ndjson",
+      "line": 2,
+      "value": 999999,
+      "expected_code": "E_UNKNOWN_PARAM_VERSION"
+    },
+    {
+      "injection_id": "INJ-NONFINITE-DURATION-001",
+      "kind": "non_finite_duration",
+      "path": "receipts/w-beta.r2.ndjson",
+      "line": 1,
+      "expected_code": "E_RECEIPT_MALFORMED"
+    },
+    {
+      "injection_id": "INJ-DUPLICATE-RANK-001",
+      "kind": "duplicate_rank",
+      "path": "receipts/w-alpha.r3.ndjson",
+      "line": 5,
+      "expected_code": "E_DUPLICATE_RANK"
+    }
+  ]
+}
+
