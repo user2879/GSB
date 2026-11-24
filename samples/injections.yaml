@@ -1,0 +1,31 @@
+injections:
+- id: INJ-001
+  fault: nonfinite_trigger_weight
+  target:
+    domain: account
+    term: 密码
+  expected_code: E_ROUTE_INVALID
+- id: INJ-002
+  fault: undeclared_slot_pattern
+  target:
+    intent: password_reset
+    slot: ghost_slot
+  expected_code: E_ROUTE_INVALID
+- id: INJ-003
+  fault: turn_gap
+  target:
+    utterance_id: S001-U2
+    turn: 9
+  expected_code: E_ROUTE_INVALID
+- id: INJ-004
+  fault: out_of_vocab
+  target:
+    utterance_id: S001-U3
+    token: 未登记词项
+  expected_code: E_ROUTE_INVALID
+- id: INJ-005
+  fault: runtime_exception
+  target:
+    utterance_id: S002-U2
+    stage: intent
+  expected_code: E_ROUTE_INJECTED_RUNTIME
