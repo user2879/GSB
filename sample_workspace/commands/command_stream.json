@@ -1,0 +1,152 @@
+{
+  "commands": [
+    {
+      "id": "cmd-001-append-batch",
+      "op": "append_batch",
+      "paragraphs": [
+        {
+          "document_id": "D07",
+          "paragraph_id": "P9001",
+          "sequence_no": 0,
+          "terms": [
+            "threshold",
+            "prefix",
+            "orbit",
+            "falcon",
+            "lynx",
+            "document",
+            "window",
+            "amber",
+            "matrix",
+            "amber",
+            "query"
+          ]
+        },
+        {
+          "document_id": "D07",
+          "paragraph_id": "P9002",
+          "sequence_no": 1,
+          "terms": [
+            "willow",
+            "signal",
+            "lantern",
+            "vector",
+            "quant",
+            "receipt",
+            "chunk",
+            "query",
+            "dimension",
+            "ngram",
+            "ngram",
+            "shadow",
+            "ledger"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmd-002-replace-paragraph",
+      "op": "replace_paragraph",
+      "paragraph": {
+        "document_id": "D01",
+        "paragraph_id": "P0003",
+        "sequence_no": 2,
+        "terms": [
+          "copper",
+          "meadow",
+          "feature",
+          "lynx",
+          "bucket",
+          "willow",
+          "river",
+          "matrix",
+          "shadow",
+          "otter",
+          "granite",
+          "document"
+        ]
+      },
+      "target_id": "P0003"
+    },
+    {
+      "id": "cmd-003-replace-block",
+      "op": "replace_block",
+      "target_id": "D03-C0000",
+      "terms": [
+        "receipt",
+        "stable",
+        "granite",
+        "canyon",
+        "chunk",
+        "granite",
+        "orbit",
+        "bucket",
+        "index",
+        "document"
+      ]
+    },
+    {
+      "id": "cmd-004-delete-block",
+      "op": "delete_block",
+      "target_id": "D04-C0000"
+    },
+    {
+      "id": "cmd-005-delete-paragraph",
+      "op": "delete_paragraph",
+      "target_id": "P0004"
+    },
+    {
+      "id": "cmd-006-window-overlap",
+      "op": "set_config",
+      "values": {
+        "chunk_overlap": 2,
+        "chunk_window": 8
+      }
+    },
+    {
+      "id": "cmd-007-projection-dim",
+      "op": "set_config",
+      "values": {
+        "projection_dim": 12
+      }
+    },
+    {
+      "id": "cmd-008-threshold-loose",
+      "op": "set_threshold",
+      "threshold": 0.42
+    },
+    {
+      "id": "cmd-009-quant-level",
+      "op": "set_config",
+      "values": {
+        "quant_level": "Q8"
+      }
+    },
+    {
+      "id": "cmd-010-threshold-exact-boundary",
+      "op": "set_threshold",
+      "threshold": 1.0
+    },
+    {
+      "id": "cmd-011-receipt-v2",
+      "op": "switch_receipt_version",
+      "target_version": "v2"
+    },
+    {
+      "id": "cmd-012-receipt-v1",
+      "op": "switch_receipt_version",
+      "target_version": "v1"
+    },
+    {
+      "id": "cmd-013-receipt-v3",
+      "op": "switch_receipt_version",
+      "target_version": "v3"
+    },
+    {
+      "budget": 3,
+      "id": "cmd-014-budget-pending",
+      "op": "set_point_budget"
+    }
+  ],
+  "schema": "command-stream/v1"
+}

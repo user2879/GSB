@@ -1,0 +1,123 @@
+{
+  "all_hit": true,
+  "cases": [
+    {
+      "actual_code": "E_CORPUS_INVALID",
+      "case_id": "corpus_jsonl",
+      "expected_code": "E_CORPUS_INVALID",
+      "failures": [
+        {
+          "code": "E_CORPUS_INVALID",
+          "details": {
+            "term": "not_a_vocab_term"
+          },
+          "field": "terms[1]",
+          "injection_id": null,
+          "line": 1,
+          "message": "term at position 1 is outside controlled vocabulary",
+          "path": "sample_workspace/fixtures/corpus_invalid.jsonl"
+        },
+        {
+          "code": "E_CORPUS_INVALID",
+          "details": {},
+          "field": "paragraph_id",
+          "injection_id": null,
+          "line": 2,
+          "message": "duplicate paragraph_id 'BAD1'",
+          "path": "sample_workspace/fixtures/corpus_invalid.jsonl"
+        },
+        {
+          "code": "E_CORPUS_INVALID",
+          "details": {},
+          "field": "document_id",
+          "injection_id": null,
+          "line": 3,
+          "message": "document_id must be non-empty",
+          "path": "sample_workspace/fixtures/corpus_invalid.jsonl"
+        },
+        {
+          "code": "E_CORPUS_INVALID",
+          "details": {
+            "column": 2
+          },
+          "field": null,
+          "injection_id": null,
+          "line": 4,
+          "message": "JSON parse error: Expecting property name enclosed in double quotes",
+          "path": "sample_workspace/fixtures/corpus_invalid.jsonl"
+        }
+      ],
+      "hit": true,
+      "message": "4 corpus error(s)"
+    },
+    {
+      "actual_code": "E_CONFIG_INVALID",
+      "case_id": "config_overlap",
+      "expected_code": "E_CONFIG_INVALID",
+      "failures": [
+        {
+          "code": "E_CONFIG_INVALID",
+          "details": {
+            "chunk_overlap": 9,
+            "chunk_window": 8
+          },
+          "field": "chunk_overlap",
+          "injection_id": null,
+          "line": null,
+          "message": "chunk_overlap must be smaller than chunk_window",
+          "path": null
+        }
+      ],
+      "hit": true,
+      "message": "1 configuration error(s)"
+    },
+    {
+      "actual_code": "E_CONFIG_INVALID",
+      "case_id": "config_bucket_bits",
+      "expected_code": "E_CONFIG_INVALID",
+      "failures": [
+        {
+          "code": "E_CONFIG_INVALID",
+          "details": {
+            "value": 32
+          },
+          "field": "bucket_bits",
+          "injection_id": null,
+          "line": null,
+          "message": "bucket_bits must be in [1, 8]",
+          "path": null
+        }
+      ],
+      "hit": true,
+      "message": "1 configuration error(s)"
+    },
+    {
+      "actual_code": "E_RECEIPT_INVALID",
+      "case_id": "receipt_v1",
+      "expected_code": "E_RECEIPT_INVALID",
+      "failures": [
+        {
+          "code": "E_RECEIPT_INVALID",
+          "details": {},
+          "field": "bucket_id",
+          "injection_id": null,
+          "line": 0,
+          "message": "bucket_id must be a non-empty string",
+          "path": "sample_workspace/fixtures/receipt_invalid_v1.json"
+        },
+        {
+          "code": "E_RECEIPT_INVALID",
+          "details": {},
+          "field": "hit_rate_permille",
+          "injection_id": null,
+          "line": 0,
+          "message": "hit_rate_permille must be an integer in [0, 1000]",
+          "path": "sample_workspace/fixtures/receipt_invalid_v1.json"
+        }
+      ],
+      "hit": true,
+      "message": "2 receipt error(s)"
+    }
+  ],
+  "schema": "input-failure-manifest/v1"
+}

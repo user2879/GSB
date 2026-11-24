@@ -1,0 +1,156 @@
+{
+  "all_hit": true,
+  "hit_count": 9,
+  "items": [
+    {
+      "actual_code": "E_CORPUS_INVALID",
+      "detail": {
+        "failure_count": 4,
+        "first": {
+          "code": "E_CORPUS_INVALID",
+          "details": {
+            "term": "not_a_vocab_term"
+          },
+          "field": "terms[1]",
+          "injection_id": null,
+          "line": 1,
+          "message": "term at position 1 is outside controlled vocabulary",
+          "path": "sample_workspace/fixtures/corpus_invalid.jsonl"
+        }
+      },
+      "expected_code": "E_CORPUS_INVALID",
+      "hit": true,
+      "injection_id": "FI-001",
+      "kind": "corpus_invalid",
+      "title": "unknown term, duplicate paragraph id, empty document id and truncated JSONL line"
+    },
+    {
+      "actual_code": "E_CONFIG_INVALID",
+      "detail": {
+        "failure_count": 1
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "hit": true,
+      "injection_id": "FI-002",
+      "kind": "overlap_not_smaller_than_window",
+      "title": "overlap length is not smaller than chunk window"
+    },
+    {
+      "actual_code": "E_CONFIG_INVALID",
+      "detail": {
+        "failure_count": 1
+      },
+      "expected_code": "E_CONFIG_INVALID",
+      "hit": true,
+      "injection_id": "FI-003",
+      "kind": "bucket_bits_out_of_range",
+      "title": "bucket_bits exceeds supported range and projection dimension"
+    },
+    {
+      "actual_code": "E_RECEIPT_INVALID",
+      "detail": {
+        "message": "Expecting property name enclosed in double quotes: line 5 column 7 (char 48)",
+        "truncated_chars": 48
+      },
+      "expected_code": "E_RECEIPT_INVALID",
+      "hit": true,
+      "injection_id": "FI-004",
+      "kind": "receipt_truncated",
+      "title": "truncate a v1 receipt file in the middle of JSON"
+    },
+    {
+      "actual_code": "E_VECTOR_NONFINITE",
+      "detail": {
+        "injection_id": "FI-005",
+        "target_block_id": "D01-C0000"
+      },
+      "expected_code": "E_VECTOR_NONFINITE",
+      "hit": true,
+      "injection_id": "FI-005",
+      "kind": "nonfinite_vector",
+      "title": "inject a NaN projection component into one isolated block task"
+    },
+    {
+      "actual_code": "E_SNAPSHOT_RECOVERY",
+      "detail": {
+        "interrupted_stage": "sample_workspace/outputs/injections/FI-006/snapshots/.staging-interrupted-fe309b20ea6742a98b34584e7973c136",
+        "recovered_global_version": 1,
+        "recovery_rule": "newest_valid_committed_manifest_and_config_version",
+        "truncated_manifest": "sample_workspace/outputs/injections/FI-006/snapshots/snapshot-v000002/manifest.json"
+      },
+      "expected_code": "E_SNAPSHOT_RECOVERY",
+      "hit": true,
+      "injection_id": "FI-006",
+      "kind": "snapshot_truncated",
+      "title": "truncate newest manifest and leave an interrupted staging fragment"
+    },
+    {
+      "actual_code": "E_BOUNDARY_FLIP",
+      "detail": {
+        "block_id": "BLOCK-QUANT-FLIP",
+        "boundary": true,
+        "cause": "quantization_truncation",
+        "code": "E_BOUNDARY_FLIP",
+        "current_decision": true,
+        "decision": true,
+        "exact_threshold": false,
+        "flip": true,
+        "half_step_band": 1.0,
+        "lexicographic_key": "BLOCK-QUANT-FLIP",
+        "query_id": "QUERY-QUANT-FLIP",
+        "reference_decision": false,
+        "reference_difference": 0.10557280900008414,
+        "reference_effective_fractional_bits": 1,
+        "reference_score": 0.8944271909999159,
+        "score": 1.0,
+        "threshold": 0.9,
+        "threshold_gap": 0.09999999999999998
+      },
+      "expected_code": "E_BOUNDARY_FLIP",
+      "hit": true,
+      "injection_id": "FI-007",
+      "kind": "boundary_flip_quantization",
+      "title": "coarse truncation and one-bit-wider reference cross threshold differently"
+    },
+    {
+      "actual_code": "E_BOUNDARY_FLIP",
+      "detail": {
+        "alternative_block_bucket": "B-0000",
+        "alternative_query_bucket": "B-0003",
+        "alternative_shared_bucket": false,
+        "cause": "tie_rule",
+        "code": "E_BOUNDARY_FLIP",
+        "current_block_bucket": "B-0000",
+        "current_query_bucket": "B-0000",
+        "current_shared_bucket": true,
+        "flip": true
+      },
+      "expected_code": "E_BOUNDARY_FLIP",
+      "hit": true,
+      "injection_id": "FI-008",
+      "kind": "boundary_flip_tie_rule",
+      "title": "zero-sign tie rule changes query bucket routing"
+    },
+    {
+      "actual_code": "E_POINT_BUDGET_PENDING",
+      "detail": {
+        "expected_first_two": [
+          "D01-C0000",
+          "D01-C0001"
+        ],
+        "pending_count": 51,
+        "scheduled_ids": [
+          "D01-C0000",
+          "D01-C0001"
+        ]
+      },
+      "expected_code": "E_POINT_BUDGET_PENDING",
+      "hit": true,
+      "injection_id": "FI-009",
+      "kind": "point_budget_pending",
+      "title": "two-point projection budget preserves stable-order pending work"
+    }
+  ],
+  "schema": "fault-injection-report/v1",
+  "total": 9
+}
