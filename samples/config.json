@@ -1,0 +1,57 @@
+{
+  "allowed_norm_schemes": [
+    "layernorm_affine",
+    "layernorm_scale_only"
+  ],
+  "exchange_version": "v1",
+  "fixed_point": {
+    "allowed_quant_levels": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "fractional_bits": 12,
+    "quant_level": 1
+  },
+  "layernorm": {
+    "variance_floor": 1e-06
+  },
+  "limits": {
+    "batch_element_budget": 1000,
+    "max_workers": 4,
+    "per_layer_element_quota": 1000
+  },
+  "paths": {
+    "activations": "samples/activations.jsonl",
+    "commands": "samples/commands.jsonl",
+    "injections": "samples/injections.json",
+    "runtime": "runtime",
+    "weights_v1": "samples/weights_v1.txt",
+    "weights_v2": "samples/weights_v2.jsonl"
+  },
+  "quant_codebook": {
+    "int16": 16,
+    "int32": 32,
+    "int8": 8
+  },
+  "schema": "opexlab.config.v1",
+  "scheme_bias_policy": {
+    "layernorm_affine": true,
+    "layernorm_scale_only": false
+  },
+  "softmax": {
+    "exp_approximation": "range_reduced_ln2_taylor",
+    "max_tie_rule": "first_smallest_column_index",
+    "polynomial_base_order": 4,
+    "zero_denominator_rule": "uniform_with_remainder_at_column_zero"
+  },
+  "v1_field_widths": {
+    "bias_code": 8,
+    "layer": 12,
+    "quant_bits": 3,
+    "row": 5,
+    "scale_permille": 8
+  },
+  "v1_upgrade_scheme": "layernorm_affine"
+}

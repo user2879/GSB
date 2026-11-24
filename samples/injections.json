@@ -1,0 +1,50 @@
+{
+  "injections": [
+    {
+      "expected_code": "E_FIELD_TRUNCATED",
+      "id": "INJ-001",
+      "kind": "truncated_weight_line",
+      "target": {
+        "layer": "layer_beta",
+        "row": 1
+      }
+    },
+    {
+      "expected_code": "E_NONFINITE",
+      "id": "INJ-002",
+      "kind": "nonfinite_activation",
+      "target": {
+        "layer": "layer_alpha",
+        "row": 2
+      }
+    },
+    {
+      "expected_code": "E_SCHEME_UNKNOWN",
+      "id": "INJ-003",
+      "kind": "unknown_scheme",
+      "target": {
+        "layer": "layer_gamma",
+        "row": 0
+      }
+    },
+    {
+      "expected_code": "E_WIDTH_OUT_OF_RANGE",
+      "id": "INJ-004",
+      "kind": "width_out_of_range",
+      "target": {
+        "layer": "layer_alpha",
+        "row": 1
+      }
+    },
+    {
+      "expected_code": "E_BUDGET_TOO_SMALL",
+      "id": "INJ-005",
+      "kind": "budget_smaller_than_row",
+      "target": {
+        "layer": "layer_alpha",
+        "row": 0
+      }
+    }
+  ],
+  "schema": "opexlab.injections.v1"
+}
