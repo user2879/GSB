@@ -1,21 +1,103 @@
-需求方只给了一份条目清单，工作区里没有任何代码、配置或样本，第一个可用版本需要独立完成：为多环境部署平台做一套配置生效链与权威摘要仲裁诊断应用。用户在本地 JSON 中声明若干部署环境、每个环境向平台上报的键值配置切片，以及一份合并视图（含视图标识、参与环境集合、每键仲裁口径与整数容差）。平台以子进程方式在 127.0.0.1 回环端口托管若干确定性环境模拟服务，服务按切片对固定整数种子生成的样本执行整数定点分组聚合，回报聚合摘要与所用切片版本号。应用要回答两件事：同一逻辑键在多个环境并发上报后如何被仲裁为唯一权威摘要，以及某环境切片变更后哪些合并视图结论真正失效。
+# 配置权威仲裁与失效诊断
 
-任务环境与准备：
-安装 Python 3.11 并执行 pip install numpy；Tkinter 随官方 Windows 安装包提供，无需额外安装。
-确认工作区为空目录，准备本地 JSON 环境声明、配置切片、合并视图与预算参数样本。
-无需容器、外部服务或网络访问；子进程仅在 127.0.0.1 回环高位端口通信，运行前确认端口未被占用。
+一个可离线运行的 Python 3.11 应用：加载多环境配置声明，以子进程托管回环模拟服务，通过真实套接字并发采集整数定点聚合摘要，完成三口径权威仲裁、误差归因、视图失效传播、SQLite 单事务落账和强制终止后的重放校验。附带 CLI 与可选 Tk 桌面界面。
 
-业务要求：
-1. 实现环境声明、配置切片与合并视图的本地 JSON 加载及强校验：校验环境标识与视图标识唯一、回环端口为 127.0.0.1 字面量且全局不重复、切片版本号单调递增、参与环境引用存在、整数容差为非负整数；错误须以 E_SPEC 报告并定位到首个非法字段。
-2. 实现以子进程托管的环境模拟服务与逐行回执协议：按声明端口在 127.0.0.1 启动服务，平台通过真实套接字下发配置切片并接收含服务标识、切片版本号、聚合摘要与单调时钟毫秒耗时的回执；端口占用、握手超时与回执字段缺失分别以 E_PORT、E_TIMEOUT、E_FIELD 记录。
-3. 实现三类仲裁口径的确定性合成：最新切片优先、按环境权重加权多数、按数值区间交集中点，对每个逻辑键产出权威摘要与被采纳环境集合；结果不得依赖字典或哈希遍历顺序，同一输入在任意环境上报顺序下必须得到逐字节一致的权威摘要。
-4. 实现以会话缩放因子（10 的整数幂）把键值与环境权重统一量化为定点整数的口径，乘除以整数完成并显式声明截断方向与溢出饱和规则；须给出单键量化误差、逐键比较判定误差界与视图级聚合误差上界，并把误差界拆分为量化截断、仲裁口径差异与容差吸收三段贡献。
-5. 实现仲裁结论不可区分情形的稳定裁决与成因归因：当两个候选权威摘要的定点差落在合成判定误差界内时按显式决胜规则选定并标注受误差影响；须区分误差不可区分、口径冲突与被否环境占比过高三类成因并给出占比，结论不得依赖上报顺序。
-6. 实现受全局并发上限与每环境并发配额双重约束的仲裁与聚合调度：任一时刻在途切片下发数与单环境在途数不得超限，配额耗尽时任务排队并记录等待开始与结束的单调时钟毫秒；调度须真实投射到工作线程池，且不得以人为延迟冒充套接字超时。
-7. 实现视图增删或仲裁口径变更后的失效传播与陈旧结论整体替换：视图增删、参与环境集合或仲裁口径被修改后视图版本号单调递增，须沿环境、键与视图引用关系推导受影响键集合与受影响视图，按稳定顺序输出传播依据；旧版本权威摘要、采纳集合与归因须整体标记为陈旧且不得参与当前展示。
-8. 实现账本持久化、快照版本识别与强制终止后的重放校验：每完成一个视图仲裁须在同一 SQLite 事务中写入权威摘要、采纳与被否集合、定点误差界、归因与视图版本号，账本携带整数格式版本与内容摘要；重新打开快照时版本或摘要不一致须整体替换并稳定列出差异，进程被强制终止后重启只能依据已提交记录恢复，恢复后重放须以 E_REPLAY 定位首个不一致的键与字段。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3.11 -m pip install -r requirements.txt
+python3 -m unittest discover -v
+python3 -m config_arbiter demo
+```
 
-验收：
-用本地样本验证三类仲裁、误差归因、视图失效替换与强制终止后重放一致，并附运行结果。
+`demo` 会重建示例账本、执行首轮仲裁、模拟 `cn-prod` 切片变更、输出失效传播并完成两次重放。运行前确认样本端口 `46301-46303` 未被占用。
+
+常用命令：
+
+```bash
+# 执行全部视图并验证重放
+python3 -m config_arbiter run --reset --report artifacts/run-report.json
+
+# 仅按当前声明重新计算并与账本逐键逐字段比对
+python3 -m config_arbiter replay
+
+# 打开 Tk 桌面界面（需要 Tk 运行库和图形显示）
+python3 -m config_arbiter gui
+```
+
+Windows 可双击 `run_demo.bat` 或 `run_gui.bat`。GUI 依赖官方 Python 安装包自带的 Tk。
+
+## 交付内容
+
+- `config_arbiter/`：声明校验、定点运算、子进程服务、套接字客户端、双配额调度、三口径仲裁、失效引擎、SQLite 账本、CLI 与 GUI。
+- `samples/sample_spec.json`：三个环境、两个合并视图、三种仲裁口径和并发/超时预算。
+- `tests/`：42 项标准库 `unittest`，覆盖真实套接字、错误码、乱序确定性、并发峰值、失效替换、摘要替换、SIGKILL 恢复和 `E_REPLAY`。
+- `scripts/run_acceptance.py`：一次运行环境信息、全部测试和验收演示。
+- `docs/TECHNICAL.md`：协议、量化公式、仲裁决胜、误差界、失效与账本设计。
+- `artifacts/acceptance-output.txt`：最近一次实际验证输出。
+- `artifacts/acceptance_report.json`：最近一次验收的结构化结果。
+
+## 样本结果概览
+
+```text
+global-release v1
+  cpu_limit      weighted_majority  1.234  adopted=cn-prod,us-prod
+  memory_limit   interval_midpoint  7.65   adopted=cn-prod,us-prod
+  replicas       latest             3      adopted=cn-prod
+us-eu-cpu v1
+  cpu_limit      interval_midpoint  1.166  adopted=eu-prod,us-prod
+  memory_limit   weighted_majority  7.8    adopted=us-prod
+```
+
+`cn-prod` 从版本 2 变更为版本 3 后，仅 `global-release` 失效，受影响键为 `cpu_limit`、`replicas`；`us-eu-cpu` 因不引用该环境而保持版本 1。旧结果整体标为陈旧，当前展示只读取新版本。
+
+实际摘要哈希、错误归因、重放字段数和陈旧行数见 `artifacts/acceptance-output.txt`。
+
+## 数据格式
+
+最小结构：
+
+```json
+{
+  "format_version": 1,
+  "session": {
+    "scale_exponent": 3,
+    "seed": 20261125,
+    "sample_count": 48,
+    "group_size": 8,
+    "noise_bound": 9,
+    "global_concurrency": 2,
+    "per_environment_concurrency": 1,
+    "handshake_timeout_ms": 1500
+  },
+  "environments": [
+    {
+      "id": "cn-prod",
+      "host": "127.0.0.1",
+      "port": 46301,
+      "weight": "1.0",
+      "slices": [{"version": 2, "values": {"replicas": "3"}}]
+    }
+  ],
+  "views": [
+    {
+      "id": "global-release",
+      "environments": ["cn-prod"],
+      "keys": {"replicas": {"mode": "latest", "tolerance": 0}}
+    }
+  ]
+}
+```
+
+`mode` 取 `latest`、`weighted_majority`、`interval_midpoint`。容差以会话缩放后的整数单位表示。
+
+## 错误码
+
+- `E_SPEC`：声明非法，`field` 定位首个非法字段。
+- `E_PORT`：端口占用、绑定或连接失败。
+- `E_TIMEOUT`：服务就绪或套接字握手真实超时。
+- `E_FIELD`：回执缺字段或字段不合法。
+- `E_REPLAY`：重放不一致，上下文给出首个 `key` 与 `field`。
+- `E_TK`：当前环境缺少 Tk 或图形显示。
+
+详细设计、公式和取舍见 `docs/TECHNICAL.md`。

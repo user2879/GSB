@@ -1,0 +1,112 @@
+{
+  "format_version": 1,
+  "session": {
+    "scale_exponent": 3,
+    "seed": 20261125,
+    "sample_count": 48,
+    "group_size": 8,
+    "noise_bound": 9,
+    "global_concurrency": 2,
+    "per_environment_concurrency": 1,
+    "handshake_timeout_ms": 1500
+  },
+  "environments": [
+    {
+      "id": "cn-prod",
+      "host": "127.0.0.1",
+      "port": 46301,
+      "weight": "1.0",
+      "slices": [
+        {
+          "version": 1,
+          "values": {
+            "cpu_limit": "1.2000",
+            "memory_limit": "7.4",
+            "replicas": "3"
+          }
+        },
+        {
+          "version": 2,
+          "values": {
+            "cpu_limit": "1.2345",
+            "memory_limit": "7.5",
+            "replicas": "3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "us-prod",
+      "host": "127.0.0.1",
+      "port": 46302,
+      "weight": "1.25",
+      "slices": [
+        {
+          "version": 1,
+          "values": {
+            "cpu_limit": "1.2345",
+            "memory_limit": "7.8",
+            "replicas": "2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "eu-prod",
+      "host": "127.0.0.1",
+      "port": 46303,
+      "weight": "1.0",
+      "slices": [
+        {
+          "version": 1,
+          "values": {
+            "cpu_limit": "1.0999",
+            "memory_limit": "7.2",
+            "replicas": "2"
+          }
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "id": "global-release",
+      "environments": [
+        "cn-prod",
+        "us-prod",
+        "eu-prod"
+      ],
+      "keys": {
+        "cpu_limit": {
+          "mode": "weighted_majority",
+          "tolerance": 0
+        },
+        "memory_limit": {
+          "mode": "interval_midpoint",
+          "tolerance": 200
+        },
+        "replicas": {
+          "mode": "latest",
+          "tolerance": 0
+        }
+      }
+    },
+    {
+      "id": "us-eu-cpu",
+      "environments": [
+        "us-prod",
+        "eu-prod"
+      ],
+      "keys": {
+        "cpu_limit": {
+          "mode": "interval_midpoint",
+          "tolerance": 200
+        },
+        "memory_limit": {
+          "mode": "weighted_majority",
+          "tolerance": 100
+        }
+      }
+    }
+  ]
+}
