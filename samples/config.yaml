@@ -1,0 +1,30 @@
+quantization:
+  scheme: asymmetric
+  bit_width: 8
+  group_granularity: 4
+  percentile_lower_permille: 100
+  percentile_upper_permille: 900
+  fractional_bits: 8
+  quantization_levels: 1
+  scale_effective_digits: 15
+layers:
+  embedding.proj:
+    bit_width: 8
+    fractional_bits: 8
+  encoder.block:
+    bit_width: 8
+    fractional_bits: 8
+  retrieval.head:
+    bit_width: 8
+    fractional_bits: 8
+distillation:
+  temperature: 2.0
+  steps: 3
+  soft_label_weight: 0.5
+  tolerance: 0.02
+scheduling:
+  thread_pool_workers: 3
+  global_calibration_point_budget: 64
+  per_layer_calibration_quota: 24
+  batch_quantization_point_budget: 8
+  snapshot_commit_interval_batches: 2

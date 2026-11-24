@@ -1,0 +1,15 @@
+injections:
+- id: F01_NONFINITE
+  kind: nonfinite_weight
+  layer: embedding.proj
+- id: F02_GROUP_INDIVISIBLE
+  kind: group_indivisible
+  layer: encoder.block
+  value: 5
+- id: F03_BIT_WIDTH
+  kind: bit_width_out_of_range
+  layer: retrieval.head
+  value: 32
+- id: F04_CALIBRATION_DIM
+  kind: calibration_dimension_mismatch
+  sample_index: 0
