@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "colmv-local"
+version = "1.0.0"
+description = "Deterministic incremental materialized-view aggregation over local columnar pages"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+
+[tool.setuptools.packages.find]
+include = ["colmv*"]

@@ -1,0 +1,67 @@
+{
+  "format_version": 1,
+  "scale_power": 3,
+  "views": [
+    {
+      "view_id": "sales_by_region",
+      "group_by": [
+        "region_id",
+        "product_id"
+      ],
+      "aggregates": [
+        "count",
+        "sum",
+        "avg"
+      ],
+      "value_column": "amount",
+      "filters": [
+        {
+          "column": "status",
+          "op": "eq",
+          "value": 1
+        }
+      ],
+      "refresh_mode": "auto"
+    },
+    {
+      "view_id": "units_by_product",
+      "group_by": [
+        "product_id"
+      ],
+      "aggregates": [
+        "count",
+        "sum",
+        "avg"
+      ],
+      "value_column": "qty",
+      "filters": [
+        {
+          "column": "qty",
+          "op": "gte",
+          "value": 1
+        }
+      ],
+      "refresh_mode": "auto"
+    },
+    {
+      "view_id": "sales_region_product_live",
+      "group_by": [
+        "region_id",
+        "product_id"
+      ],
+      "aggregates": [
+        "count",
+        "sum"
+      ],
+      "value_column": "amount",
+      "filters": [
+        {
+          "column": "status",
+          "op": "eq",
+          "value": 1
+        }
+      ],
+      "refresh_mode": "auto"
+    }
+  ]
+}

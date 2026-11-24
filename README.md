@@ -1,22 +1,283 @@
-这项需求没有既有代码，需要从零构建一个面向 Windows 本地环境的增量物化视图聚合组件，交付可集成的领域组件与完整示例。系统以本地 JSON 声明一组物化视图定义（视图标识、分组键、聚合函数、过滤条件与刷新模式）与一张列式基表（列名、整数或浮点类型、空值位图与确定性样本行），基表数据以本地列式页文件持久化。系统接收 NDJSON 增量变更流（变更序号、插入/更新/删除、行标识与变更后行），并把变更映射到受影响的列式页与视图分组。核心业务是：在声明的整数视图中间结果缓存槽位预算下，按显式规则在“槽位驻留增量收敛路径”与“受影响页重扫收敛路径”之间择一推进；前者用有限槽位驻留视图分组中间结果并记录命中与置换，后者对未获槽位的分组直接在基表页上重扫并重建中间结果。两条路径必须产出逐字节一致的物化视图结果，账本可持久化、可整体替换恢复，并支持异常注入与恢复后重放校验。
+# COLMV：本地列式物化视图增量聚合组件
 
-任务环境与准备：
-在 Windows 本地创建一个新的工作目录作为项目根目录，使用 Python 3.11 或以上版本。
-使用命令 python -m pip install numpy 安装 NumPy，并确认版本不低于 1.24。
-准备本地确定性样本：若干列式基表页文件与基表目录 JSON，以及物化视图定义与 NDJSON 增量变更流文件，包含视图标识、分组键、聚合函数、过滤条件与空值位图。
-确认 Python 标准库自带的 SQLite3 可用，并准备一个用于账本与会话快照的本地文件路径。
+这是一个面向 Windows 本地环境的纯 Python 组件。它从本地 JSON 读取视图定义与基表目录，从本地二进制列式页读取基表，按 NDJSON 变更流维护物化视图分组，并在整数缓存槽位预算下确定性选择“槽位驻留增量收敛”或“受影响页重扫收敛”。两条路径的最终物化视图结果按规范化 JSON 逐字节一致。
 
-业务要求：
-1. 实现物化视图定义与列式基表的加载及强校验：从本地 JSON 读取视图标识、分组键、聚合函数集合、过滤条件、刷新模式与基表列定义，逐个读取基表列式页文件；校验视图标识唯一、分组键列存在、聚合函数属于受支持集合、空值位图长度与行数相等、浮点列值为有限数、页目录声明的行数区间首尾相接且不重叠，任一不合法须以 E_VIEW 整体拒绝并指明首个非法视图标识与字段。
-2. 实现受整数缓存槽位预算约束的驻留增量收敛路径：按变更流推进各视图的分组中间结果，为分组中间结果申请缓存槽位，槽位不足时按显式置换规则选择被置换分组并输出置换事件（被置换分组键、占用该槽位的分组键、事件序号）；同一分组在驻留期内被再次变更须计为命中，相同变更流与预算下置换事件序列须与任意字典或哈希遍历顺序无关，不得依赖浮点比较结果决定置换。
-3. 实现受影响页重扫收敛路径与逐页代价记账：对未获槽位的分组，按变更所影响的行区间定位其所在列式页并在本地文件上重扫，重建该分组中间结果并参与聚合；重扫须记录分组键、页标识、事件序号与重扫原因，不得把重扫分组计入驻留集合与命中计数；相同变更流与预算下重扫分组集合须与驻留路径的置换序列严格互补且稳定可复现。
-4. 实现依据变更条数、受影响页数、视图数与槽位预算在两个路径间切换的确定性规则：须输出选择理由、关键规模参数与未触发判定时的边界值；当变更条数与槽位预算的比值落在显式边界附近时须按稳定决胜规则选定一条路径并标注该判定受边界影响，切换历史须逐次留痕。
-5. 实现两条路径下的增量维护与逐组定点估计及误差上界：按变更序号顺序把插入、更新、删除应用到分组中间结果，分组键为空值的行须显式排除，计数、求和与均值以会话缩放因子（10 的整数幂）按整数定点表示并显式声明截断方向与溢出饱和规则，累加顺序须与变更序号及分组键稳定序绑定而不依赖驻留或重扫时机；须输出单值量化误差、逐组聚合误差上界与占比最高的误差段。
-6. 实现视图定义、分组键或槽位预算演进后的失效传播与聚合结论整体替换：当视图定义、过滤条件、分组键或槽位预算被修改后方案版本号单调递增，须沿视图、分组与列式页的引用关系推导受影响分组集合与受影响页集合，按稳定顺序输出受影响集合与每步依据；旧版本下的驻留轨迹、重扫事件与逐组估计须整体标记为陈旧且不得参与当前展示与统计，当前结论视图须整体替换而非逐组修补。
-7. 实现账本持久化、会话快照的版本识别整体替换与强制终止后的恢复：每完成一个变更批次须在同一 SQLite 事务中写入该批视图分组结局、置换与重扫事件、逐组聚合中间状态、定点口径版本与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的批次恢复，处于未提交批次中的分组须标记为未知并要求重跑，不得声称能生成退出报告；快照重新打开时版本或摘要不一致须整体替换。
-8. 实现恢复后的一致性重放校验、异常注入与结果验证工具：恢复后按账本记录的方案版本与变更游标继续推进同一变更流，将每分组结局、置换与重扫事件、逐组估计值与误差界同账本逐项比较，差异须定位到首个不一致的分组键与字段并以 E_REPLAY 报明依据；另提供校验命令在同一变更流下分别执行驻留路径与重扫路径并逐字节比较物化视图结果，不一致须以 E_DIVERGE 定位到首个不一致分组键；支持命令行注入页文件截断与槽位预算为零两类异常，分别以 E_INTEGRITY 与 E_BUDGET 报告。
+项目不依赖 Docker、数据库服务或网络。唯一外部运行依赖是 `numpy>=1.24`，账本和会话快照使用 Python 标准库 `sqlite3`。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 交付内容
 
-验收：
-使用本地样本验证两条路径物化视图结果逐字节一致，并核对缓存预算、账本恢复与异常处理。
+- `colmv/`：可集成领域组件与 CLI。
+- `samples/`：24 行、3 个列式页、3 个视图、20 条 NDJSON 变更的确定性样本。
+- `samples/views_v2.json`：用于演进/失效传播示例的新版视图定义。
+- `scripts/generate_samples.py`：可重复生成全部样本与页文件。
+- `examples/in_memory.py`：直接调用领域组件的内存集成示例。
+- `tests/`：31 项标准库 `unittest` 测试。
+- `docs/ARCHITECTURE.md`：数据格式、确定性规则、事务与恢复设计。
+- `docs/VERIFICATION.md`：本次实际执行命令和验证结果。
+
+## Windows 快速开始
+
+在项目根目录执行：
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install "numpy>=1.24"
+python -m colmv doctor
+```
+
+`doctor` 会检查 Python >= 3.11、NumPy >= 1.24、SQLite3，并输出实际版本。样本已经提交；也可以重新生成：
+
+```powershell
+python scripts/generate_samples.py
+```
+
+直接调用组件 API：
+
+```powershell
+python examples/in_memory.py
+```
+
+## 五分钟示例
+
+强校验样本：
+
+```powershell
+python -m colmv validate `
+  --catalog samples/base/catalog.json `
+  --views samples/views.json
+```
+
+同一变更流分别跑驻留路径与重扫路径，并逐字节比较结果：
+
+```powershell
+python -m colmv verify-paths `
+  --catalog samples/base/catalog.json `
+  --views samples/views.json `
+  --changes samples/changes.ndjson `
+  --budget 1 `
+  --batch-plan 3,6,3,6,2
+```
+
+输出包含 `equal_bytes`、`materialized_digest`、`byte_length`、两条路径的命中/置换/重扫计数，以及每批槽位分区互补检查。当前样本结果为 `equal_bytes=true`、`17017` 字节、摘要 `d7467813ac4d0180dca66d388090665088193cfce010e1f57103964fad902723`。
+
+写入 SQLite 账本：
+
+```powershell
+python -m colmv run `
+  --catalog samples/base/catalog.json `
+  --views samples/views.json `
+  --changes samples/changes.ndjson `
+  --ledger demo.sqlite `
+  --budget 1 `
+  --batch-plan 3,6,3,6,2
+```
+
+样本批次规模 `3,6,3,6,2` 与预算 `1` 会得到路径序列 `resident,rescan,resident,rescan,resident`，切换历史逐批留痕。每批在同一 SQLite 事务中提交分组结局、置换/重扫事件、中间状态、固定点口径版本和游标。
+
+重放校验：
+
+```powershell
+python -m colmv replay `
+  --catalog samples/base/catalog.json `
+  --ledger demo.sqlite `
+  --changes samples/changes.ndjson
+```
+
+扫描并修复未提交批次：
+
+```powershell
+python -m colmv recover --ledger demo.sqlite
+python -m colmv run `
+  --catalog samples/base/catalog.json `
+  --views samples/views.json `
+  --changes samples/changes.ndjson `
+  --ledger demo.sqlite `
+  --budget 1 --resume --batch-size 4
+```
+
+视图定义/分组键/过滤条件/预算演进：
+
+```powershell
+python -m colmv evolve `
+  --catalog samples/base/catalog.json `
+  --old-views samples/views.json `
+  --new-views samples/views_v2.json `
+  --old-budget 1 --new-budget 1 `
+  --changes samples/changes.ndjson `
+  --ledger demo.sqlite
+```
+
+演进会输出稳定的受影响分组集合、受影响页集合和每步依据；旧方案批次/分组/事件整体标记为陈旧，快照清空，要求整体重算，不做逐组修补。
+
+## 本地数据契约
+
+### 基表目录
+
+```json
+{
+  "format_version": 1,
+  "table": {
+    "name": "sales_events",
+    "row_count": 24,
+    "row_key": "row_id",
+    "columns": [
+      {"name": "row_id", "type": "int"},
+      {"name": "region_id", "type": "int"},
+      {"name": "amount", "type": "float"}
+    ]
+  },
+  "pages": [
+    {"page_id": "p000", "file": "pages/p000.col", "start_row": 0, "end_row": 8, "row_count": 8}
+  ]
+}
+```
+
+约束：
+
+- 列类型只允许 `int`/`float`，整数以有符号 64 位存储，浮点以 IEEE-754 `float64` 存储。
+- `row_key` 必须是整数列且值唯一、非空。
+- 页目录区间必须从 0 开始、首尾相接、不重叠、最终覆盖 `row_count`。
+- 任一页头必须与目录中的 `page_id`、`start_row`、`end_row` 一致。
+- 每个页内每列有空值位图；位图一个字节一行，长度必须严格等于页行数。
+- 浮点列所有编码值必须是有限数（NaN/Inf 被拒绝）。
+- 语义契约问题返回 `E_VIEW`，物理文件截断/魔数/长度损坏返回 `E_INTEGRITY`。
+
+### 列式页文件
+
+页格式是确定性二进制：
+
+```text
+b"COLMVPG1\n" | uint32 header_length | canonical JSON header | payload
+```
+
+payload 按列依次存放“每行 1 字节空值位图”和“每行 8 字节小端数据”。header 给出每列偏移、长度、dtype 和列数据 SHA-256。详细布局见 `docs/ARCHITECTURE.md`。
+
+### 视图定义
+
+```json
+{
+  "format_version": 1,
+  "scale_power": 3,
+  "views": [
+    {
+      "view_id": "sales_by_region",
+      "group_by": ["region_id"],
+      "aggregates": ["count", "sum", "avg"],
+      "value_column": "amount",
+      "filters": [{"column": "status", "op": "eq", "value": 1}],
+      "refresh_mode": "auto"
+    }
+  ]
+}
+```
+
+- 支持聚合：`count`、`sum`、`avg`（`mean` 归一化为 `avg`）。
+- `sum`/`avg` 必须声明数值型 `value_column`；`count` 统计过滤后行数。
+- 支持过滤操作：`eq`、`ne`、`gt`、`gte`、`lt`、`lte`、`in`、`not_in`、`is_null`、`is_not_null`。
+- `refresh_mode` 支持 `auto`、`resident`、`rescan`；兼容别名 `incremental`、`page_rescan`。仅当所有视图声明同一个非 `auto` 模式时，视图声明强制路径，否则由自动规则决定。
+- 视图标识唯一、分组列存在、聚合受支持、过滤列存在；任意非法定义整体拒绝为 `E_VIEW`，并给出首个非法 `view_id` 与 `field`。
+
+### NDJSON 变更流
+
+```json
+{"seq":1,"op":"update","row_id":2,"row":{"row_id":2,"region_id":10,"product_id":101,"amount":8.25,"qty":1,"status":1}}
+{"seq":2,"op":"delete","row_id":6}
+{"seq":3,"op":"insert","row_id":1001,"row":{"row_id":1001,"region_id":10,"product_id":100,"amount":13.579,"qty":2,"status":1}}
+```
+
+- `seq` 必须严格递增，`row_id` 必须为整数并等于 `row` 中 `row_key` 列的值。
+- `insert`/`update` 的 `row` 必须包含全部基表列；`delete` 可省略 `row`。
+- 更新不得改变 `row_key`；插入不得复用历史 `row_id`。
+- 插入行归入虚拟页 `delta`；页文件保持不可变，重扫时读取原页并叠加当前已提交行状态。
+
+## 路径选择规则
+
+每个批次按以下确定性规则选择路径。令：
+
+- `C` = 本批变更条数
+- `P` = 本批受影响页数
+- `V` = 视图数
+- `B` = 整数槽位预算（必须 > 0）
+- `R = C / B`
+
+规则：
+
+1. `R < 7/2`：选择 `resident`。
+2. `R > 9/2`：选择 `rescan`。
+3. `7/2 <= R <= 9/2`：标记 `boundary_affected=true`，比较整数工作量：
+   - `resident_work = C * V`
+   - `rescan_work = P * V * 8 + C`
+   - `resident_work <= rescan_work` 选 `resident`，否则选 `rescan`；精确相等时稳定选 `resident`。
+
+输出包含 `reason`、`change_count`、`affected_page_count`、`view_count`、`budget`、比例分数、决策阈值、边界上下界、到阈值距离、投影工作量和是否受边界影响。每批路径变化都会写入 `switch_history`。
+
+## 槽位、命中与重扫
+
+- 槽位预算是全视图共享的整数上限。置换使用整数单调时钟 LRU；若时钟相同，按 `(view_id, typed group key)` 稳定决胜，不比较浮点值。
+- 分组首次进入空闲槽位不计命中；同一批或后续驻留期内再次变更计一次命中。
+- 满槽时输出置换事件：`event_seq`、被置换分组键、占用该槽位的分组键、槽位号和原因。
+- 本批被置换的分组不重新进入本批驻留集合；未获槽位的受影响分组进入重扫集合。每批严格满足：
+  `resident_affected ∪ rescan_affected = affected` 且两者不相交。
+- `rescan` 路径对重扫集合按当前引用页逐页重读本地页文件，叠加已提交行状态，重建中间结果；每个 `(group, page)` 输出 `event_seq`、分组键、页标识和原因。重扫分组不进入驻留集合，也不计命中。
+
+## 整数定点与误差
+
+- 会话缩放因子为 `10^scale_power`，样本为 `10^3`。
+- 浮点输入在摄入时向零截断为整数定点单位；整数输入精确。
+- 均值除法同样向零截断。
+- 最终 `count`、`sum`、`avg` 都提供整数定点值，并显式给出 `fixed-v1;scale=10^k;trunc=toward-zero;saturate=int64` 口径。
+- 内部累加使用 Python 任意精度整数，输出时饱和到有符号 64 位；每个聚合附带 `saturated` 标志。
+- 累加顺序为 `change_seq, initial_row_order, row_id`；分组按带类型的分组键稳定排序，与驻留或重扫时机无关。
+- 每个分组输出 `error_bounds_fp_units`：`count=0`；`sum` 上界为浮点非空值个数；`avg` 上界为 2（有浮点输入）或 1（仅整数）。全局输出单值量化误差上界、误差段列表、`share_ppm` 和占比最高的误差段。
+
+## 账本、快照与恢复
+
+SQLite 账本格式版本为整数 `1`，包含：
+
+- `meta`：账本格式版本、快照格式版本、链式内容摘要、最后批次和游标。
+- `schemes`：方案版本、fingerprint、规范化视图、预算、固定点口径、是否当前、被替代版本。
+- `batch_attempts` / `attempt_groups`：批次意图及计划分组。
+- `batches`：每批路径、决策、事件、分组结局、物化摘要、物化结果、固定点版本和游标。
+- `group_states` / `events`：可逐项重放的逐组中间状态和事件。
+- `snapshot`：单行会话快照，包含格式版本、方案版本、摘要和完整 payload。
+- `recovery_log` / `invalidation_runs`：恢复与演进审计。
+
+处理每批前先独立提交批次意图；成功批次在**同一事务**中写入批次、分组状态、事件、固定点口径版本、游标、链式摘要和快照。被强杀后：
+
+- 已完整提交批次可恢复并继续；
+- 处于未提交批次中的计划分组被标记为 `unknown`，必须重跑；
+- `recover` 明确返回 `exit_report_available=false`，不会伪造未完成批次的退出报告；
+- 打开快照时校验格式版本、方案版本和内容摘要；任一不一致会从最后完整提交批次整体替换快照。
+
+## 错误码
+
+| 错误码 | 退出码 | 含义 |
+|---|---:|---|
+| `E_USAGE` | 2 | 命令行/API 用法错误 |
+| `E_VIEW` | 3 | 视图、基表目录或页语义契约非法；带首个 `view_id`/`field` |
+| `E_BUDGET` | 4 | 槽位预算 <= 0 |
+| `E_INTEGRITY` | 5 | 页文件截断、魔数、长度或列摘要损坏 |
+| `E_REPLAY` | 6 | 重放某分组/字段/事件与账本不一致 |
+| `E_DIVERGE` | 7 | 两条路径物化结果字节不一致；带首个差异分组键 |
+| `E_CHANGE` | 8 | NDJSON 变更流序号、操作或行形状非法 |
+| `E_LEDGER` | 9 | 账本状态/版本/恢复条件冲突 |
+
+异常注入示例：
+
+```powershell
+python -m colmv validate --catalog samples/base/catalog.json --views samples/views.json --inject truncate-page
+python -m colmv run --catalog samples/base/catalog.json --views samples/views.json --changes samples/changes.ndjson --ledger x.sqlite --budget 1 --inject zero-budget
+```
+
+分别返回 `E_INTEGRITY` 和 `E_BUDGET`。
+
+## 测试
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+测试覆盖强校验、错误码、固定点截断/饱和、双路径逐字节一致、严格槽位互补、边界决胜、跨 `PYTHONHASHSEED` 确定性、账本事务与快照替换、强杀恢复、重放差异定位、演进失效和 `E_DIVERGE` 定位。
+
+实际验证结果与命令见 `docs/VERIFICATION.md`。
