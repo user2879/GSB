@@ -1,0 +1,26 @@
+{
+  "port": {
+    "spec": "samples/preemption.json",
+    "inject": "port",
+    "expected_code": "E_PORT"
+  },
+  "cycle": {
+    "spec": "samples/cycle_injection.json",
+    "inject": "cycle",
+    "expected_code": "E_CYCLE"
+  },
+  "snapshot": {
+    "spec": "samples/propagation.json",
+    "inject": "snapshot",
+    "expected_code": "E_SNAPSHOT"
+  },
+  "failure_propagation": {
+    "spec": "samples/propagation.json",
+    "fail_shard": "etl#0"
+  },
+  "forced_kill_recovery": {
+    "spec": "samples/recovery.json",
+    "crash_ready_file": "runtime/verify/crash-ready.json",
+    "signal": "SIGKILL"
+  }
+}

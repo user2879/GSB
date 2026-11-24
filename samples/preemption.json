@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "global_gpu_quota": 4,
+  "scale_power": 3,
+  "pools": [
+    {
+      "id": "alpha",
+      "host": "127.0.0.1",
+      "port": 39111,
+      "gpu_count": 4,
+      "memory_mib_per_gpu": 8192,
+      "integer_units_per_gpu": 64,
+      "max_concurrent_tasks": 2,
+      "quota_share": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": "low-old",
+      "pool": "alpha",
+      "gpu_count": 2,
+      "memory_mib_per_gpu": 4096,
+      "priority": 10,
+      "estimated_duration_ms": 180,
+      "shard_count": 3,
+      "submitted_monotonic_ms": 100
+    },
+    {
+      "id": "low-new",
+      "pool": "alpha",
+      "gpu_count": 2,
+      "memory_mib_per_gpu": 4096,
+      "priority": 1,
+      "estimated_duration_ms": 180,
+      "shard_count": 3,
+      "submitted_monotonic_ms": 200
+    },
+    {
+      "id": "high-vip",
+      "pool": "alpha",
+      "gpu_count": 2,
+      "memory_mib_per_gpu": 4096,
+      "priority": 100,
+      "estimated_duration_ms": 180,
+      "shard_count": 2,
+      "submitted_monotonic_ms": 300,
+      "admission": {"after_task_running": "low-new"}
+    }
+  ]
+}

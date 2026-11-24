@@ -1,5 +1,19 @@
 工作区目前只有一个空目录，尚无任何代码、配置或样本，首个可用版本需要独立完成。平台管理若干 GPU 资源池（池标识与本地回环端口、每池 GPU 卡数、每卡显存 MiB、每卡整数计算单元数）、若干训练与推理混合任务（所需 GPU 数、每卡显存需求、优先级、预估耗时毫秒、分片数、分片依赖引用、提交单调时刻）以及全局配额与每池并发任务上限。系统须在 127.0.0.1 回环端口以子进程托管确定性执行器：执行器接收分片批次，按自身声明的量化口径在 NumPy 上做整数定点计算，回传分片结局、资源占用与单调时钟毫秒耗时。核心业务是：每轮调度在配额与显存双重约束下推进分片，当高优先级任务资源不足时在分片边界安全抢占并挂起低优先级任务，同时把配额水位、抢占轨迹、挂起任务的续约与恢复路径写成可重放的账本。使用者会反复调整配额参数并注入异常，须能在强制终止后依据持久化账本恢复，并区分可处理退出信号与强制终止后的恢复能力。
 
+## 交付运行入口
+
+实现代码位于 `gpu_scheduler/`，样本位于 `samples/`，测试位于 `tests/`。
+
+```bash
+python -m pip install numpy
+python -m gpu_scheduler doctor
+python -m gpu_scheduler verify --workdir runtime/acceptance
+python -m gpu_scheduler --workdir runtime/demo run samples/platform.json
+python -m gpu_scheduler --workdir runtime/ui ui samples/platform.json
+```
+
+完整操作说明见 `docs/USAGE.md`，实际验证结果见 `docs/VALIDATION.md`。
+
 任务环境与准备：
 安装 Python 3.11 及以上版本，并执行 python -m pip install numpy；Tkinter 随官方 Windows 安装包提供，无需额外安装。
 确认 127.0.0.1 多个高位端口可本地监听，且工作目录可写入 SQLite 文件与日志。

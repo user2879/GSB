@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "global_gpu_quota": 1,
+  "scale_power": 0,
+  "pools": [
+    {
+      "id": "cyc",
+      "host": "127.0.0.1",
+      "port": 39114,
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 2048,
+      "integer_units_per_gpu": 8,
+      "max_concurrent_tasks": 1,
+      "quota_share": 1
+    }
+  ],
+  "tasks": [
+    {
+      "id": "cyclic",
+      "pool": "cyc",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 1024,
+      "priority": 1,
+      "estimated_duration_ms": 0,
+      "shard_count": 2,
+      "submitted_monotonic_ms": 1,
+      "shard_dependencies": [
+        {"shard": 0, "requires": [1]},
+        {"shard": 1, "requires": [0]}
+      ]
+    }
+  ]
+}

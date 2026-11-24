@@ -1,0 +1,54 @@
+{
+  "format_version": 1,
+  "global_gpu_quota": 4,
+  "scale_power": 2,
+  "pools": [
+    {
+      "id": "dag",
+      "host": "127.0.0.1",
+      "port": 39112,
+      "gpu_count": 4,
+      "memory_mib_per_gpu": 8192,
+      "integer_units_per_gpu": 32,
+      "max_concurrent_tasks": 4,
+      "quota_share": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": "etl",
+      "pool": "dag",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 1024,
+      "priority": 10,
+      "estimated_duration_ms": 0,
+      "shard_count": 3,
+      "submitted_monotonic_ms": 100,
+      "shard_dependencies": [
+        {"shard": 1, "requires": [0]},
+        {"shard": 2, "requires": [1]}
+      ]
+    },
+    {
+      "id": "mart",
+      "pool": "dag",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 1024,
+      "priority": 5,
+      "estimated_duration_ms": 0,
+      "shard_count": 1,
+      "submitted_monotonic_ms": 110,
+      "depends_on": ["etl"]
+    },
+    {
+      "id": "branch",
+      "pool": "dag",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 1024,
+      "priority": 20,
+      "estimated_duration_ms": 0,
+      "shard_count": 2,
+      "submitted_monotonic_ms": 90
+    }
+  ]
+}

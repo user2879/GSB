@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "global_gpu_quota": 8,
+  "scale_power": 2,
+  "pools": [
+    {
+      "id": "alpha",
+      "host": "127.0.0.1",
+      "port": 39101,
+      "gpu_count": 4,
+      "memory_mib_per_gpu": 8192,
+      "integer_units_per_gpu": 64,
+      "max_concurrent_tasks": 2,
+      "quota_share": 4
+    },
+    {
+      "id": "beta",
+      "host": "127.0.0.1",
+      "port": 39102,
+      "gpu_count": 4,
+      "memory_mib_per_gpu": 8192,
+      "integer_units_per_gpu": 64,
+      "max_concurrent_tasks": 3,
+      "quota_share": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": "alpha-old",
+      "pool": "alpha",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 2048,
+      "priority": 10,
+      "estimated_duration_ms": 20,
+      "shard_count": 3,
+      "submitted_monotonic_ms": 100,
+      "shard_dependencies": [
+        {"shard": 1, "requires": [0]},
+        {"shard": 2, "requires": [1]}
+      ]
+    },
+    {
+      "id": "alpha-parallel",
+      "pool": "alpha",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 2048,
+      "priority": 20,
+      "estimated_duration_ms": 10,
+      "shard_count": 2,
+      "submitted_monotonic_ms": 110
+    },
+    {
+      "id": "infer-beta",
+      "pool": "beta",
+      "gpu_count": 1,
+      "memory_mib_per_gpu": 1024,
+      "priority": 50,
+      "estimated_duration_ms": 5,
+      "shard_count": 4,
+      "submitted_monotonic_ms": 90
+    },
+    {
+      "id": "train-beta",
+      "pool": "beta",
+      "gpu_count": 2,
+      "memory_mib_per_gpu": 4096,
+      "priority": 30,
+      "estimated_duration_ms": 15,
+      "shard_count": 2,
+      "submitted_monotonic_ms": 120,
+      "shard_dependencies": [
+        {"shard": 1, "requires": [0]}
+      ]
+    }
+  ]
+}
