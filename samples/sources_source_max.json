@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "session_id": "diag-source-max",
+  "scale": 3,
+  "strategy": {"kind": "source_max"},
+  "sources": [
+    {
+      "source_id": "alpha_clean",
+      "seed": 101,
+      "event_count": 120,
+      "out_of_order_ppm": 0,
+      "start_ms": 0,
+      "pace_ms": 40,
+      "partition_values": {"region": ["east", "west"]},
+      "measure_range": [10000, 9000000],
+      "measure_decimals": 4,
+      "weight_range": [1000, 8000],
+      "weight_decimals": 4
+    },
+    {
+      "source_id": "beta_bursty",
+      "seed": 202,
+      "event_count": 120,
+      "out_of_order_ppm": 9500,
+      "start_ms": 10,
+      "pace_ms": 43,
+      "partition_values": {"region": ["east", "west"]},
+      "measure_range": [10000, 9000000],
+      "measure_decimals": 4,
+      "weight_range": [1000, 8000],
+      "weight_decimals": 4
+    },
+    {
+      "source_id": "gamma_paced",
+      "seed": 303,
+      "event_count": 120,
+      "out_of_order_ppm": 0,
+      "start_ms": 20,
+      "pace_ms": 47,
+      "partition_values": {"region": ["east", "west"]},
+      "measure_range": [10000, 9000000],
+      "measure_decimals": 4,
+      "weight_range": [1000, 8000],
+      "weight_decimals": 4
+    }
+  ]
+}

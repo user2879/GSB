@@ -1,0 +1,53 @@
+{
+  "format_version": 1,
+  "derivations": [
+    {
+      "derivation_id": "d-base-to-derived",
+      "parent_rule_id": "base",
+      "child_rule_id": "derived",
+      "boundary_mode": "end_from_parent_end",
+      "offset_ms": 300
+    },
+    {
+      "derivation_id": "d-derived-to-tail",
+      "parent_rule_id": "derived",
+      "child_rule_id": "tail",
+      "boundary_mode": "end_from_parent_end",
+      "offset_ms": 100
+    }
+  ],
+  "late_budgets": {
+    "default": {
+      "event_count_limit": 2,
+      "absolute_measure_limit_fixed": 1000000
+    },
+    "rule_overrides": {
+      "base": {
+        "event_count_limit": 3,
+        "absolute_measure_limit_fixed": 1500000
+      },
+      "derived": {
+        "event_count_limit": 2,
+        "absolute_measure_limit_fixed": 900000
+      },
+      "tail": {
+        "event_count_limit": 1,
+        "absolute_measure_limit_fixed": 500000
+      }
+    },
+    "window_overrides": {}
+  },
+  "finalization_scheduler": {
+    "global_limit": 4,
+    "per_partition_limit": 1,
+    "task_timeout_ms": 2000,
+    "retries": 0
+  },
+  "source_probe": {
+    "enabled": false,
+    "timeout_ms": 50,
+    "attempts": 2,
+    "backoff_ms": 5,
+    "server_delay_ms": 200
+  }
+}

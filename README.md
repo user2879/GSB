@@ -1,22 +1,139 @@
-项目从零开始，需要在 Windows 本地环境构建一个面向事件时间流式窗口聚合的迟到事件位移与水位账本诊断台，交付领域可视化与诊断工作台。业务核心不是复制延迟观测，而是：同一条事件流在不同水位推进策略与不同窗口边界归属规则下，迟到事件被接纳还是丢弃的判定如何沿窗口依赖链位移，并收敛为唯一可复核的账本。用户在本地 JSON 文件中声明若干事件源（源标识、固定整数种子、事件条数、乱序比例上限）、一组滚动窗口规则（窗口宽度毫秒、允许迟到阈值毫秒、分区键集合与聚合函数集合）以及水位推进策略（基于源最大事件时间、基于分区间最小事件时间、基于固定步长追赶），并声明窗口之间的派生引用（某窗口的结束边界由另一窗口结论派生）。系统须按事件时间推进各分区水位，在滚动窗口定稿时把度量值以整数定点聚合并写入本地 SQLite 账本，同时对迟到事件按窗口迟到预算裁决接纳或丢弃。工作台须支持快照整体替换恢复、强制终止后标注未知窗口，并在恢复后逐窗口重放校验。
+# 迟到事件位移与水位账本诊断台
 
-任务环境与准备：
-安装 Python 3.11 或更高版本，确认 tkinter 可用（Windows 官方安装包默认包含），并安装 NumPy 1.26 或更高版本：python -m pip install numpy。
-准备本地样本：三种水位策略各一份事件源声明 JSON，滚动窗口规则 JSON 一份，派生引用与迟到预算参数 JSON 一份，覆盖乱序比例上限为 0 与接近上限两种场景。
-创建工作目录并在其中运行，确认 SQLite 可写、本地工作线程池与回环端口可用于模拟源子进程；无需容器或外部服务。
-执行前检查样本 JSON 为 UTF-8 编码、事件时间戳与毫秒参数为非负整数、缩放因子为 0 至 6 的整数。
+这是一个完全在 Windows 本地运行的确定性事件时间诊断工作台。它不只展示延迟，而是把以下判定收敛为可复核的 SQLite 账本：
 
-业务要求：
-1. 实现事件源声明、滚动窗口规则与派生引用的本地 JSON 加载及强校验：校验源标识唯一、种子与事件条数为非负整数、乱序比例上限在 0 至 10000 之间、窗口宽度与允许迟到阈值为正整数、分区键列存在、派生引用目标窗口存在且窗口派生关系无环；任一不合法须以 E_SPEC 整体拒绝并指明首个非法源或窗口。
-2. 实现三种水位推进策略下的分区水位与窗口定稿判定：按源最大事件时间、分区间最小事件时间与固定步长追赶分别维护各分区水位与全局水位，滚动窗口在其结束边界不晚于全局水位减允许迟到阈值时定稿并记录触发该定稿的源事件序号与策略标识；同一事件流在任意分区数与任意事件到达顺序下须得到相同的窗口定稿集合与定稿次序，结果不得依赖字典或哈希遍历顺序。
-3. 实现迟到事件的窗口迟到预算裁决与逐事件证据账本：每个窗口设有整数迟到预算（可接纳迟到事件条数与累计度量绝对量），预算内迟到事件须接纳并计入窗口，耗尽后按稳定规则转为丢弃并登记窗口标识、剩余预算、被拒事件序号与累计量；同一窗口在预算恰好耗尽边界上的裁决须唯一确定，且裁决输出与窗口遍历顺序无关。
-4. 实现窗口依赖链上的位移传播与仅受影响窗口的增量重算：当某窗口因迟到事件接纳或派生引用变化导致其结论变化时，须沿窗口派生引用与共享分区键推导全部直接与间接下游窗口，按稳定拓扑序输出位移集合与每步依据；只对位移集合内窗口重算，未受影响窗口的定点统计、定稿次序与窗口版本号必须逐字节保持不变且可逐项校验。
-5. 实现窗口聚合的整数定点口径与逐窗口误差界归因：以会话缩放因子（10 的整数幂，允许 0 至 6）把度量值、迟到预算中的累计绝对量与聚合权重统一量化为定点整数，计数、求和与均值以整数运算完成并显式声明截断方向与溢出饱和规则；须给出单值量化误差、窗口聚合误差上界与均值误差上界，并把误差界拆分为量化截断、迟到接纳与窗口边界归属三段贡献并标注主导段阈值。
-6. 实现受全局并发上限与每分区并发配额双重约束的并行窗口定稿调度，并登记真实等待与真实超时：任一时刻运行中的定稿任务数与单分区运行任务数不得超限，配额耗尽时任务排队并记录等待开始与结束的单调时钟毫秒；对本地模拟源子进程的采样调用须有真实套接字超时，超时按策略重试且不得以人为延迟代替真实计时。
-7. 实现账本的格式版本识别、快照整体替换恢复与强制终止后的未知窗口标注：逐窗口把定点统计、位移轨迹、迟到裁决、误差界归因与进度游标在同一 SQLite 事务中写入并携带整数格式版本与内容摘要；重新打开快照时版本或摘要与当前会话不一致须整体替换窗口结论集与水位状态而非增量合并，并稳定列出新增、删除与口径升级的窗口；进程被强制终止后重启只能依据已完整提交记录恢复，未提交窗口须标记为未知并要求重跑，不得声称能生成退出报告。
-8. 实现恢复后的一致性重放校验、异常注入与 Tkinter 诊断界面：恢复后按账本记录的规则版本、缩放因子与事件游标重新推进水位与窗口定稿，将每分区水位、定稿窗口集合、迟到裁决与定点统计同账本逐项比较，差异须定位到首个不一致的分区键、窗口边界与字段并以 E_REPLAY 报明依据；支持以命令行参数分别注入事件流时间戳倒退、迟到预算越界、水位策略缺口三类异常，分别以 E_ORDER、E_BUDGET、E_WATERMARK 报告并写入结构化日志；界面展示分区水位轨迹、定稿窗口与迟到裁决、位移传播链、定点误差归因、当前策略与快照列表，渲染顺序稳定且刷新不改变账本内容。
+- 同一事件流在 `source_max`、`partition_min`、`fixed_step` 三种水位推进策略下何时定稿；
+- 同一窗口在迟到预算恰好耗尽时接纳还是丢弃；
+- 迟到接纳或派生边界变化后，哪些下游窗口被位移、如何按稳定拓扑序重算；
+- 定点聚合误差怎样拆成量化截断、迟到接纳、边界归属三段；
+- 快照整体替换、强制终止后的未知窗口、恢复后的逐项重放定位。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+不使用 Docker、容器或外部服务。事件源、窗口规则和派生/预算声明均来自本地 UTF-8 JSON。
 
-验收：
-使用本地样本验证三种水位策略下的定稿、迟到预算裁决与位移重算，并检查快照恢复与重放定位。
+## Windows 准备
+
+```powershell
+python --version                    # 需要 3.11 或更高
+python -c "import tkinter; print(tkinter.TkVersion)"
+python -m pip install "numpy>=1.26"
+python -m pip install -e .
+```
+
+Windows 官方 Python 安装包默认包含 Tk。若 `tkinter` 导入失败，重新运行安装包并勾选 Tcl/Tk。SQLite 使用 Python 标准库，不需要额外服务。
+
+## 快速开始
+
+在仓库根目录运行：
+
+```powershell
+python -m lateness_ledger validate `
+  --sources samples/sources_source_max.json `
+  --rules samples/window_rules.json `
+  --budgets samples/derivation_budget.json
+
+python -m lateness_ledger run `
+  --sources samples/sources_source_max.json `
+  --rules samples/window_rules.json `
+  --budgets samples/derivation_budget.json `
+  --ledger .\work\source_max.sqlite
+
+python -m lateness_ledger replay `
+  --sources samples/sources_source_max.json `
+  --rules samples/window_rules.json `
+  --budgets samples/derivation_budget.json `
+  --ledger .\work\source_max.sqlite
+```
+
+其余两种策略只需替换 `--sources`：
+
+- `samples/sources_partition_min.json`
+- `samples/sources_fixed_step.json`
+
+三份源声明除会话标识和策略外完全一致，并用固定种子生成同一事件流；样本同时覆盖 `out_of_order_ppm=0`（`alpha_clean`、`gamma_paced`）和 `9500`（`beta_bursty`）。
+
+## 常用命令
+
+```powershell
+# 快照
+python -m lateness_ledger snapshot --ledger .\work\source_max.sqlite --out .\work\snapshot.sqlite
+
+# 整体替换恢复；输出 added / removed / scale_upgraded 稳定清单
+python -m lateness_ledger restore --ledger .\work\target.sqlite --snapshot .\work\snapshot.sqlite
+
+# 强制终止恢复分类。未提交窗口标为 unknown，不生成退出报告
+python -m lateness_ledger recover --ledger .\work\source_max.sqlite
+
+# 只读状态汇总
+python -m lateness_ledger status --ledger .\work\source_max.sqlite
+
+# Tkinter 诊断界面
+python -m lateness_ledger ui --ledger .\work\source_max.sqlite
+
+# 真实回环套接字采样；server-delay-ms 大于 timeout-ms 时按次数真实超时重试
+python -m lateness_ledger probe `
+  --sources samples/sources_source_max.json `
+  --rules samples/window_rules.json `
+  --budgets samples/derivation_budget.json `
+  --timeout-ms 30 --attempts 3 --server-delay-ms 200
+```
+
+同一账本已包含完整结论时，重新运行需显式 `--reset`；崩溃留下的未完成账本应先 `recover`，或用新账本重跑。
+
+## 异常注入
+
+```powershell
+python -m lateness_ledger run ... --inject order       # E_ORDER，退出码 3
+python -m lateness_ledger run ... --inject budget      # E_BUDGET，退出码 4
+python -m lateness_ledger run ... --inject watermark   # E_WATERMARK，退出码 5
+```
+
+每次运行默认在账本旁写 `<ledger>.events.jsonl`，也可用 `--log-json` 指定。异常记录包含稳定错误码、事件/窗口证据和 UTC/单调时钟时间。
+
+## 输入 JSON 口径
+
+- **源声明**：`session_id`、`scale`（0..6 整数）、`strategy`、`sources[]`。每个源包含唯一的 `source_id`、非负整数 `seed`/`event_count`/`start_ms`、正整数 `pace_ms`、`0..10000` 的 `out_of_order_ppm`、`partition_values` 以及十进制量度范围。
+- **窗口规则**：`rules_version` 和 `rules[]`。每条规则包含正整数 `width_ms`、`allowed_lateness_ms`，非空 `partition_keys`，`aggregate_functions` 子集（`count`、`sum`、`mean`、`weighted_mean`），以及量度/权重列名。
+- **派生与预算**：`derivations[]` 指定父/子规则与 `offset_ms`；子窗口结束边界等于父窗口结论结束边界加偏移。`late_budgets` 支持 default、规则覆盖和窗口覆盖；绝对预算使用会话缩放因子下的定点整数。
+
+任一重复 ID、负数/非整数值、越界 ppm、缺失分区列、未知派生目标或多父、派生环都会在写账本前以 `E_SPEC` 整体拒绝，并报告首个非法源或窗口。
+
+完整字段和语义见 [docs/DESIGN.md](docs/DESIGN.md)。
+
+## 确定性、定点与并发
+
+- 事件流按排序后的源标识和源内序号轮转生成；所有窗口、分区、水位轨迹、派生边和拓扑序都使用显式稳定排序，不依赖字典/哈希遍历。
+- 滚动窗口的定稿条件是 `end_ms <= global_watermark - allowed_lateness_ms`。流尾以逻辑 EOS 水位排空；`fixed_step` 仍按配置步长逐级追赶。
+- 固定点：`trunc(10^scale * value)`，向零截断；整数累加按 int64 饱和；除法向零截断。窗口行显式携带 `truncation_direction`、`overflow_rule`、单值量子、聚合上界和均值上界。
+- 三个误差段以定点整数记录：量化截断、迟到接纳绝对量、派生边界新增事件绝对量。主导段阈值为 `1/2`；均以精确整数比较。
+- 定稿调度使用真实线程池和单调时钟。全局并发上限与每分区配额同时生效，排队任务记录真实等待开始/结束；超时任务记录实际尝试耗时并重试。
+
+## SQLite 与恢复
+
+- 每个窗口的定点统计、迟到证据、三段误差、进度游标和位移轨迹在**同一事务**中写入 `windows`，并携带整数格式版本 `1` 和内容摘要。
+- `run_plans` 在运行前提交全部窗口计划；每个窗口提交后更新计划状态。进程被强制终止时 SQLite 回滚未提交事务，重启只看到完整提交行，其余计划稳定标为 `unknown`。
+- 快照是完整的 SQLite 备份。恢复永远整体替换窗口结论、迟到证据、位移、计划和分区水位，不做增量合并；差异按 `added`、`removed`、`scale_upgraded` 排序输出。
+- 重放按账本记录的规则版本、缩放因子、策略和事件游标重新推进；首先比较元数据与水位轨迹，再按窗口 ID 比较边界、定稿次序、触发序号、定点统计、迟到裁决、误差和位移。首个差异返回分区键、窗口边界、字段、期望值与实际值并报 `E_REPLAY`。
+
+## 界面
+
+`python -m lateness_ledger ui ...` 打开只读工作台，页签包含：
+
+- 水位轨迹及画布折线；
+- 定稿窗口及策略/触发序号；
+- 逐事件迟到接纳/丢弃证据；
+- 位移传播链、路径、依据和版本变化；
+- 三段定点误差与主导段；
+- 当前策略、规则版本、账本状态和快照列表。
+
+刷新只重新读取 SQLite，不写账本；所有渲染集合按窗口定稿序号、分区标识和事件序号稳定排序。
+
+## 验证
+
+```powershell
+python -m unittest discover -s tests -v
+python scripts/acceptance.py --output artifacts/acceptance.json
+```
+
+最近一次本机实测：36 个单元/集成测试全部通过；三策略各 36 个窗口且相同窗口键集；`source_max` 接纳 48/丢弃 972、`partition_min` 接纳 46/丢弃 947、`fixed_step` 接纳 47/丢弃 928；三次重放均 `MATCH`；三类异常分别报 `E_ORDER`/`E_BUDGET`/`E_WATERMARK`；强制终止后 2 个已提交、34 个未知。详见 [artifacts/verification.md](artifacts/verification.md) 和 [artifacts/acceptance.json](artifacts/acceptance.json)。
+
+当前 Linux 验证容器缺少 `libtk8.6.so`，因此本机只验证了 Tk 不可用时的 `E_UI`、只读投影稳定性和刷新不写账本；Windows 官方 Python 的 Tk 实际窗口需在目标机执行上述 `ui` 命令。
