@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "global_concurrency": 2,
+  "receipt_format": "r3",
+  "routes": [
+    {
+      "request_ids": [
+        "req-0000",
+        "req-0002",
+        "req-0004",
+        "req-0006",
+        "req-0008"
+      ],
+      "worker_id": "w-alpha"
+    },
+    {
+      "request_ids": [
+        "req-0001",
+        "req-0003",
+        "req-0005",
+        "req-0007",
+        "req-0009"
+      ],
+      "worker_id": "w-beta"
+    }
+  ],
+  "socket_timeout_ms": 5000,
+  "worker_start_timeout_ms": 10000
+}
