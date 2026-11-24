@@ -1,23 +1,92 @@
-当前只有一台干净的开发机，没有现存项目、代码或数据附件，需要从零构建一个面向 Windows 本地环境的列式存储压缩与扫描诊断应用。业务以本地文件持久化列式段：若干行组，每组内每列以独立编码块存储，块头记录整数编码方式（原始、字典、游程）、整数行数、压缩前与压缩后字节数；列可带压缩标记。核心业务问题是增量更新：当用户提交对某列某行组某编码块的更新（重写样本值、改变编码方式或压缩标记）后，须沿列、行组与扫描任务之间的依赖关系精确推导受影响块集合与受影响扫描任务集合，仅对失效子集重算，未失效块的块摘要、编码产物与扫描结果必须逐字节保持不变。应用须以全局并行度预算、每列解码内存预算与每段并发配额三重约束调度块级扫描任务，维护块级扫描账本，并支持账本版本识别、整体替换恢复与强制终止后的重放校验。
+# 列式段压缩与扫描诊断应用
 
-任务环境与准备：
-确认 Windows 本地具备 Python 3.11 或以上版本，执行 python --version 检查。
-安装依赖：python -m pip install numpy。
-Tkinter 随 CPython Windows 官方安装包提供，执行 python -m tkinter 确认可用。
-SQLite 使用 Python 标准库 sqlite3，无需额外安装。
-在干净目录中创建项目；本地样本 JSON、段文件与运行脚本均由题目交付物自行生成，不依赖外部数据。
+面向 Windows 本地环境的确定性列式段诊断工具。应用从 JSON 规范构建二进制列式段，提供原始/字典/游程块编码、列裁剪与谓词下推、三重预算线程池调度、增量失效传播、SQLite 块级账本、权威重放、版本整体替换和会话快照恢复。
 
-业务要求：
-1. 实现列式段文件、块表与扫描查询的加载及强校验：从本地 JSON 读取列定义、行组划分、每列每块的编码方式与压缩标记及确定性样本值，校验列名唯一、行组区间首尾相接且不重叠、编码方式属于原始/字典/游程、压缩前后字节数为非负整数、查询引用的列存在；任一不合法须以 E_SPEC 报告首个非法块标识与字段。
-2. 实现原始、字典、游程三种块编码的编解码与字典序稳定性：编码以长度前缀写入本地段文件并能逐块解回结果行集合，字典编码的字典项顺序须由显式规则确定而非映射遍历顺序；相同样本数据多次编码再解码必须得到逐字节一致的结果行集合与块摘要。
-3. 实现列裁剪与谓词下推的扫描计划：按查询引用的列集合裁掉未引用列，把等值、范围、IN 与 AND 组合谓词下推到对应行组与块，输出候选块集合、裁列集合与推导依据；下推与裁剪不得改变结果语义，同一查询在空白与括号差异下须得到相同的计划摘要。
-4. 实现受全局并行度上限、每列解码内存预算与每段并发配额三重约束的块级并行扫描调度：任一时刻运行任务数、每列运行数与每段运行数不得超限，解码内存之和不得超出预算；不足时任务排队并记录等待开始与结束的单调时钟毫秒，调度须真实投射到工作线程池，不得绕过预算。
-5. 实现增量更新下的失效传播与仅失效子集重算：用户以变更集修改某列某行组某块的样本值、编码方式或压缩标记后，须沿列、行组与扫描任务引用关系推导全部直接与间接失效块及受影响扫描任务，按稳定顺序输出失效集合与每步传播依据；仅对失效集合重算编码与扫描，未失效块的块摘要、编码产物与扫描结果必须逐字节保持不变且可逐项校验。
-6. 实现块级扫描账本与权威重算的分离路径及一致性校验：账本以本地 SQLite 逐批记录任务标识、块序号、完成行数、解码内存占用、运行时间与结果摘要；提供权威重算命令从段文件逐块重放同一扫描并重算行集合与统计，账本摘要与权威重算不一致须以 E_DIVERGE 报告首个不一致块序号与字段。
-7. 实现参数版本演进后的整体替换与陈旧结论防护：并行度、内存预算、段配额或编码选择被修改后版本号单调递增，旧版本下的任务轨迹、扫描统计、块摘要与结果摘要须整体标记为陈旧且不得参与当前展示与汇总；当前视图须整体替换而非增量合并，替换须稳定列出新增、删除与变更的结论项。
-8. 实现会话快照的版本识别与整体替换恢复及恢复后重放校验：快照持久化段集合摘要与每段格式版本、编码选择版本、预算参数版本、任务轨迹、块摘要、结果摘要与统计并携带内容摘要；重新打开时版本或摘要不一致须整体替换而非增量合并；从快照恢复后按记录的版本与游标继续推进同一扫描序列，将逐块结局、块摘要与结果摘要同账本逐项比较，差异须定位到首个不一致块并以 E_REPLAY 报明依据；强制终止后仅能依据已完整提交的批次恢复。
+## 快速开始（Windows）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+要求 CPython 3.11+，且安装时勾选 `tcl/tk`。
 
-验收：
-用本地样本验证增量失效推导、仅失效子集重算、三重预算调度及快照恢复后逐块重放一致性并附结果。
+```bat
+python --version
+python -m pip install -r requirements.txt
+python -m tkinter
+setup.bat
+run.bat
+```
+
+`setup.bat` 会检查 Python/Tk、安装 NumPy，并运行完整验收。纯诊断与验收也可直接使用命令行：
+
+```bat
+python run.py demo --output artifacts
+python run.py init --workspace work --overwrite
+python run.py scan --workspace work --batch-size 5 --delay-ms 2
+python run.py verify --workspace work
+```
+
+Linux/WSL 无 `libtk8.6` 时可运行除 `gui` 外的全部命令；本次实际验收即采用该方式。Windows 官方 Python 自带 Tk，`run.bat` 会直接打开六页桌面诊断台。
+
+## 已实现能力
+
+- `E_SPEC` 强校验：列名唯一、行组从 0 开始首尾相接、编码枚举、非负字节数、块/列/行组完整覆盖、查询列存在；错误带首个 `block_id` 与 `field`。
+- 三种确定性块编码：`raw`、`dictionary`、`rle`。字典项显式按数值升序；块以长度前缀写入二进制段，支持可选 zlib 压缩。
+- 规范化谓词 AST：等值、范围比较、`IN`、`AND` 与括号；空白和冗余括号不影响计划摘要。
+- 列裁剪、行组/块候选推导与推导依据输出；跨列谓词在块级掩码上安全合并。
+- 三重预算：全局并行任务数、每列解码内存上限、每段并发配额；实际投射到 `ThreadPoolExecutor`，记录队列开始/结束、运行起止与峰值指标。
+- 稳定槽位块序号：候选块因数据变化增删时，存活任务不重排，便于账本与快照定位。
+- 增量变更集：直接失效块重编码；沿查询×行组×块依赖精确传播；仅失效任务重扫，其余块记录、块摘要、任务结果与查询结论逐项校验保持。
+- SQLite 批次账本：任务、块序号、完成行数、解码内存、单调时钟、块摘要、结果摘要、计划和查询行组结论；批次事务原子提交。
+- 权威重算路径：只从 `segment.seg` 解码并重算，不读取账本摘要作为输入；普通账本一致性差异以 `E_DIVERGE` 定位，快照恢复重放差异以 `E_REPLAY` 定位，均带首个块序号、字段与双方值。
+- 单调版本：预算参数版本与编码选择版本递增；旧生成统一标陈旧并从当前视图/汇总隔离；整体替换并稳定输出 `added/deleted/changed/unchanged`。
+- JSON 会话快照：段集合摘要、格式/编码/预算版本、任务轨迹、块摘要、结果摘要、统计、内容摘要与游标；内容校验失败报 `E_SNAPSHOT`。
+- 恢复为整视图替换；按快照游标继续同一扫描序列；逐块结局、块摘要、结果摘要、查询行集合与统计逐项重放校验。
+- 强制终止安全：每个账本批次单事务；中途异常不会留下部分批次，恢复只基于完整提交批次。
+
+## 常用命令
+
+```bat
+python run.py sample --output samples
+python run.py init --workspace work --spec samples/sample_spec.json --overwrite
+python run.py scan --workspace work --parallelism 4 --memory-budget 128 --segment-quota 3 --batch-size 5
+python run.py update --workspace work --changeset samples/sample_changeset.json
+python run.py snapshot --workspace work --output work/session.json
+python run.py restore --workspace work --snapshot work/session.json
+python run.py replay --workspace work
+python run.py budget --workspace work --parallelism 3 --memory-budget 100 --segment-quota 2
+python run.py encoding-policy --workspace work --column region --encoding raw --compressed no
+python run.py gui
+```
+
+`scan` 从账本游标续跑；修改预算参数时自动创建新版本并整体替换当前视图。`update` 接受数组或含 `changes` 数组的 JSON 变更集。
+
+## 项目结构
+
+- `src/columnar_diag/`：规范、编解码、段文件、规划、调度、扫描、账本、快照、重放、CLI 与 Tk GUI。
+- `tests/`：20 项 `unittest`，覆盖校验、编码稳定性、段完整性、计划归一化与语义、预算调度、增量与重开一致性、账本发散、快照、版本与批次原子性。
+- `samples/`：由交付物生成的内置确定性规范、变更集与预算参数。
+- `artifacts/acceptance_report.json`：机器可读实测报告。
+- `artifacts/ACCEPTANCE.md`：实测摘要。
+- `artifacts/TEST_RESULTS.txt`、`artifacts/CLI_SMOKE.txt`：单元测试与命令行冒烟原始记录。
+- `docs/ARCHITECTURE.md`：格式、调度、账本、快照与恢复不变量。
+
+## 本次实际验证
+
+执行环境：Python `3.11.0rc1`、SQLite `3.37.2`、NumPy `1.26.4`；当前 WSL 环境缺少 `libtk8.6`，故 GUI 未在本容器启动，CLI/调度/账本/快照全链路均已无界面验证。
+
+```text
+python -m unittest discover -s tests -v
+Ran 20 tests ... OK
+
+python run.py demo --output artifacts
+all_checks_passed: true
+```
+
+关键实测：
+
+- 30 个块级任务，全局峰值 3/4，段并发峰值 3/3，每列解码内存峰值均 ≤128 字节，最大排队等待约 24 ms。
+- 修改 `amount@rg1` 后仅该块重编码；11 个未失效块记录、27 个未失效任务结果与 11 个未失效查询行组结论逐字节/逐项一致。
+- 预算版本 2 与编码选择版本 3 均单调推进，旧生成全部 `stale`；当前结论差异稳定分类。
+- 快照在游标 10 保存，继续推进到 30 后恢复，游标回到 10，再续跑到 30；权威逐块重放通过。
+- 篡改快照统计触发 `E_SNAPSHOT`；篡改账本 `result_digest` 时权威校验触发 `E_DIVERGE`、快照重放触发 `E_REPLAY`，均定位 `block_ordinal=3`, `field=result_digest`。
+- 注入批次中途异常后，当前完整批次数不变，账本无半批残留，重放仍通过。
+
+详见 `artifacts/ACCEPTANCE.md` 与 `artifacts/acceptance_report.json`。
