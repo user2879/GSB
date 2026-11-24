@@ -1,0 +1,9 @@
+[OK] E_SOURCE duplicate id        -> E_SOURCE:src_db_primary.source_id duplicate source_id 'src_db_primary'
+[OK] E_SOURCE negative int        -> E_SOURCE:src_db_primary.sample_rows field 'sample_rows' must be a non-negative integer
+[OK] E_FORMAT bad row version     -> E_FORMAT:s.row=1 unknown format version 9 for db_exec_stats
+[OK] no-listener socket failure   -> E_TIMEOUT:127.0.0.1:1.connect handshake connect timed out after 500ms
+[OK] E_PORT port occupied         -> E_PORT:127.0.0.1:44757.bind cannot bind 127.0.0.1:44757: [Errno 98] Address already in use
+[OK] E_TIMEOUT socket timeout     -> E_TIMEOUT:stall.ack replay receipt timed out after 300ms
+[OK] E_ACK missing field          -> E_ACK:x.source_id receipt missing required field 'source_id'
+[OK] E_REPLAY divergence          -> E_REPLAY:ghost.existence replay candidate absent from ledger
+[OK] order independence        -> shuffled bytes identical

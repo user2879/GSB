@@ -1,0 +1,51 @@
+=== merged verdicts (deterministic order) ===
+query=101 latency_winner=src_db_primary adopted_us=70847 rows_winner=src_db_primary rows=87890
+   src_db_primary       v2 ADOPT
+   src_db_legacy        v1 reject:format version v1 older than winner v2
+   src_slow_excerpt     v2 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_slow_legacy      v1 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_app_current      v3 reject:source-type bias app_log_summary ranks after db_exec_stats
+   src_app_legacy       v1 reject:source-type bias app_log_summary ranks after db_exec_stats
+query=102 latency_winner=src_db_primary adopted_us=68484 rows_winner=src_db_primary rows=113780
+   src_db_primary       v2 ADOPT
+   src_db_legacy        v1 reject:format version v1 older than winner v2
+   src_slow_excerpt     v2 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_slow_legacy      v1 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_app_current      v3 reject:source-type bias app_log_summary ranks after db_exec_stats
+   src_app_legacy       v1 reject:source-type bias app_log_summary ranks after db_exec_stats
+query=103 latency_winner=src_db_primary adopted_us=86969 rows_winner=src_db_primary rows=170110
+   src_db_primary       v2 ADOPT
+   src_db_legacy        v1 reject:format version v1 older than winner v2
+   src_slow_excerpt     v2 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_slow_legacy      v1 reject:source-type bias slow_log_excerpt ranks after db_exec_stats
+   src_app_current      v3 reject:source-type bias app_log_summary ranks after db_exec_stats
+   src_app_legacy       v1 reject:source-type bias app_log_summary ranks after db_exec_stats
+
+=== fixed-point error bounds (three-segment split) ===
+latency_us    q=101 total=14100911raw/1410091ticks [quantization=18raw/1ticks, caliber=100893raw/10089ticks, sampling_period=14000000raw/1400000ticks*]
+latency_us    q=102 total=14106018raw/1410601ticks [quantization=18raw/1ticks, caliber=106000raw/10600ticks, sampling_period=14000000raw/1400000ticks*]
+latency_us    q=103 total=14111779raw/1411177ticks [quantization=18raw/1ticks, caliber=111761raw/11176ticks, sampling_period=14000000raw/1400000ticks*]
+rows_scanned  q=101 total=87908raw/8790ticks [quantization=18raw/1ticks, caliber=87890raw/8789ticks*, sampling_period=0raw/0ticks]
+rows_scanned  q=102 total=129896raw/12989ticks [quantization=18raw/1ticks, caliber=129878raw/12987ticks*, sampling_period=0raw/0ticks]
+rows_scanned  q=103 total=170128raw/17012ticks [quantization=18raw/1ticks, caliber=170110raw/17011ticks*, sampling_period=0raw/0ticks]
+
+=== stable diagnosis & cause attribution ===
+cand_101_cover_index         base=7084ticks gain=360ticks affected=True note=stable winner (candidate_id then source-bias order)
+cand_101_index_only          base=7084ticks gain=350ticks affected=True note=error-indistinguishable from cand_101_cover_index; stable tie-break keeps lower candidate_id/source-bias
+cand_102_rewrite_join        base=6848ticks gain=520ticks affected=False note=single candidate; adopted directly
+cand_103_partition_prune     base=8696ticks gain=210ticks affected=False note=single candidate; adopted directly
+session ratios: {'error_indistinguishable': 0.25, 'caliber_conflict': 1.0, 'high_rejected_evidence': 1.0}
+
+=== loopback replay ===
+src_app_current      cand_101_index_only          ok=True ack_latency=6500 queued_wait_ms=0
+src_app_current      cand_103_partition_prune     ok=True ack_latency=7900 queued_wait_ms=2
+src_db_legacy        cand_102_rewrite_join        ok=True ack_latency=4800 queued_wait_ms=0
+src_db_primary       cand_101_cover_index         ok=True ack_latency=6400 queued_wait_ms=0
+src_db_primary       cand_101_index_only          ok=True ack_latency=6500 queued_wait_ms=3
+src_db_primary       cand_102_rewrite_join        ok=True ack_latency=4800 queued_wait_ms=0
+src_slow_excerpt     cand_101_cover_index         ok=True ack_latency=6400 queued_wait_ms=0
+src_slow_excerpt     cand_103_partition_prune     ok=True ack_latency=7900 queued_wait_ms=0
+scheduler stats: SchedulerStats(total_jobs=8, peak_global_inflight=2, peak_per_source={'src_app_current': 1, 'src_db_legacy': 1, 'src_db_primary': 1, 'src_slow_excerpt': 1}, queued_wait_count=2)
+ledger digest: b33700674449b6a714fadb9520f3ad241da74d1b321c6a5530481f73225f15b2
+
+canonical report written to /home/zsl/feedback/uidfc5909d3-default-254/workdir/demo_report.json

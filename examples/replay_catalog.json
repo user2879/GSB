@@ -1,0 +1,61 @@
+{
+  "catalog_format": 1,
+  "replay_catalog": [
+    {
+      "candidate_id": "cand_101_index_only",
+      "source_id": "src_db_primary",
+      "est_latency_us": 4200,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_101_index_only",
+      "source_id": "src_app_current",
+      "est_latency_us": 4200,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_101_cover_index",
+      "source_id": "src_db_primary",
+      "est_latency_us": 4150,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_101_cover_index",
+      "source_id": "src_slow_excerpt",
+      "est_latency_us": 4150,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_102_rewrite_join",
+      "source_id": "src_db_primary",
+      "est_latency_us": 2600,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_102_rewrite_join",
+      "source_id": "src_db_legacy",
+      "est_latency_us": 2600,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_103_partition_prune",
+      "source_id": "src_slow_excerpt",
+      "est_latency_us": 6100,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    },
+    {
+      "candidate_id": "cand_103_partition_prune",
+      "source_id": "src_app_current",
+      "est_latency_us": 6100,
+      "est_rows_scanned": 320,
+      "stall_ms": 0
+    }
+  ]
+}
