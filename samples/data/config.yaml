@@ -1,0 +1,16 @@
+# 摘要与重写配置（确定性样本）
+summarization:
+  max_sentences: 3
+  term_weight: 0.4
+  entity_weight: 0.4
+  coverage_floor: 0.55
+  position_decay: 0.2
+  style_template_id: formal
+  synonym_table_version: syn-v1
+fixedpoint:
+  decimal_width: 6
+  quantization_tier: standard
+runtime:
+  workers: 3
+  snapshot_interval_docs: 2
+  sentence_budget_per_batch: 20

@@ -1,0 +1,42 @@
+version: syn-v1
+templates:
+  - id: formal
+    name: 正式通稿
+  - id: brief
+    name: 简讯
+rules:
+  - id: rule-ai
+    template: formal
+    source: 人工智能
+    target: 人工智能技术
+    enabled: true
+  - id: rule-ai-short
+    template: formal
+    source: 人工
+    target: 人力
+    enabled: true
+  - id: rule-qc
+    template: formal
+    source: 量子计算
+    target: 量子计算研究
+    enabled: true
+  - id: rule-ev
+    template: formal
+    source: 新能源汽车
+    target: 新能源汽车产业
+    enabled: true
+  - id: rule-org
+    template: brief
+    source: 华新通讯社
+    target: 华新社
+    enabled: true
+  - id: rule-bad-template
+    template: undeclared
+    source: 智能制造
+    target: 智能制造升级
+    enabled: true
+  - id: rule-empty-target
+    template: formal
+    source: 生物医药
+    target: ""
+    enabled: true
