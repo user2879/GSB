@@ -1,0 +1,91 @@
+{
+  "commands": [
+    {
+      "comment": "修改 S21 用词使其产生 work_for 关系",
+      "kind": "edit_tokens",
+      "payload": {
+        "sentence_id": "S21",
+        "tokens": [
+          "张伟",
+          "就职",
+          "于",
+          "研究院"
+        ]
+      },
+      "seq": 1
+    },
+    {
+      "comment": "为无实体句新增 ORG 实体",
+      "kind": "add_entity",
+      "payload": {
+        "end": 2,
+        "entity_id": "G1",
+        "sentence_id": "S23",
+        "start": 1,
+        "type": "ORG"
+      },
+      "seq": 2
+    },
+    {
+      "comment": "删除 S20 的一个 PER 实体",
+      "kind": "remove_entity",
+      "payload": {
+        "entity_id": "E2",
+        "sentence_id": "S20"
+      },
+      "seq": 3
+    },
+    {
+      "comment": "下调 visit 模板权重并推进版本号",
+      "kind": "set_template_weight",
+      "payload": {
+        "template_id": "T04",
+        "weight": 0.31
+      },
+      "seq": 4
+    },
+    {
+      "comment": "阈值恰好等于最低关系得分，触发边界决断",
+      "kind": "set_threshold",
+      "payload": {
+        "threshold": 1.572
+      },
+      "seq": 5
+    },
+    {
+      "comment": "切换到 8 位 Q2 档位验证整数变化",
+      "kind": "set_quant",
+      "payload": {
+        "fixedpoint_width": 8,
+        "quant_level": 2
+      },
+      "seq": 6
+    },
+    {
+      "comment": "恢复默认量化档位",
+      "kind": "set_quant",
+      "payload": {
+        "fixedpoint_width": 16,
+        "quant_level": 4
+      },
+      "seq": 7
+    },
+    {
+      "comment": "恢复默认边界阈值",
+      "kind": "set_threshold",
+      "payload": {
+        "threshold": 1.572
+      },
+      "seq": 8
+    },
+    {
+      "comment": "恢复 visit 模板权重",
+      "kind": "set_template_weight",
+      "payload": {
+        "template_id": "T04",
+        "weight": 0.58
+      },
+      "seq": 9
+    }
+  ]
+}

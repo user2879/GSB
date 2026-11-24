@@ -1,0 +1,115 @@
+{
+  "entity_lexicon": {
+    "LOC": [
+      "北京",
+      "上海",
+      "深圳",
+      "杭州",
+      "北京 园区",
+      "上海 大厦"
+    ],
+    "ORG": [
+      "开源 科技",
+      "科技 有限 公司",
+      "联合 实验室",
+      "研究院"
+    ],
+    "PER": [
+      "张伟",
+      "李娜",
+      "王强",
+      "赵敏"
+    ]
+  },
+  "feature_dim": 32,
+  "hash_buckets": 256,
+  "model_version": "relx-model-2026.11",
+  "templates": [
+    {
+      "head_type": "PER",
+      "relation_type": "work_for",
+      "tail_type": "ORG",
+      "template_id": "T01",
+      "trigger_terms": [
+        "就职",
+        "于"
+      ],
+      "version": 1,
+      "weight": 0.82
+    },
+    {
+      "head_type": "ORG",
+      "relation_type": "located_in",
+      "tail_type": "LOC",
+      "template_id": "T02",
+      "trigger_terms": [
+        "位于",
+        "总部 位于"
+      ],
+      "version": 1,
+      "weight": 0.74
+    },
+    {
+      "head_type": "ORG",
+      "relation_type": "cooperate_with",
+      "tail_type": "ORG",
+      "template_id": "T03",
+      "trigger_terms": [
+        "合作",
+        "联合"
+      ],
+      "version": 1,
+      "weight": 0.66
+    },
+    {
+      "head_type": "PER",
+      "relation_type": "visit",
+      "tail_type": "LOC",
+      "template_id": "T04",
+      "trigger_terms": [
+        "拜访",
+        "访问",
+        "参观"
+      ],
+      "version": 1,
+      "weight": 0.58
+    }
+  ],
+  "term_hash": {
+    "上海": 197,
+    "与": 77,
+    "于": 255,
+    "会议": 175,
+    "位于": 191,
+    "公司": 11,
+    "北京": 97,
+    "参观": 94,
+    "合作": 197,
+    "和": 238,
+    "园区": 245,
+    "在": 180,
+    "大厦": 48,
+    "季度": 111,
+    "实验室": 142,
+    "客户": 211,
+    "就职": 164,
+    "峰会": 219,
+    "年度": 144,
+    "开源": 164,
+    "张伟": 25,
+    "总部": 48,
+    "拜访": 161,
+    "有限": 24,
+    "期间": 160,
+    "李娜": 109,
+    "杭州": 99,
+    "深圳": 25,
+    "王强": 246,
+    "的": 80,
+    "研究院": 80,
+    "科技": 250,
+    "联合": 5,
+    "访问": 162,
+    "赵敏": 53
+  }
+}
