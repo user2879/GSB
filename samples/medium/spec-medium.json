@@ -1,0 +1,97 @@
+{
+  "domains": [
+    {
+      "domain_id": "dom-a",
+      "host": "127.0.0.1",
+      "port": 19101,
+      "slots": 8,
+      "lease_cap": 6,
+      "lease_ms": 800,
+      "renew_ms": 250,
+      "seed": 301
+    },
+    {
+      "domain_id": "dom-b",
+      "host": "127.0.0.1",
+      "port": 19102,
+      "slots": 6,
+      "lease_cap": 4,
+      "lease_ms": 700,
+      "renew_ms": 220,
+      "seed": 302
+    },
+    {
+      "domain_id": "dom-c",
+      "host": "127.0.0.1",
+      "port": 19103,
+      "slots": 5,
+      "lease_cap": 4,
+      "lease_ms": 650,
+      "renew_ms": 200,
+      "seed": 303
+    }
+  ],
+  "instances": [
+    {
+      "instance_id": "svc-a1",
+      "domain_id": "dom-a",
+      "priority": 1,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-a2",
+      "domain_id": "dom-a",
+      "priority": 2,
+      "demand": 3
+    },
+    {
+      "instance_id": "svc-a3",
+      "domain_id": "dom-a",
+      "priority": 3,
+      "demand": 1
+    },
+    {
+      "instance_id": "svc-a4",
+      "domain_id": "dom-a",
+      "priority": 4,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-b1",
+      "domain_id": "dom-b",
+      "priority": 1,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-b2",
+      "domain_id": "dom-b",
+      "priority": 2,
+      "demand": 1
+    },
+    {
+      "instance_id": "svc-b3",
+      "domain_id": "dom-b",
+      "priority": 3,
+      "demand": 3
+    },
+    {
+      "instance_id": "svc-c1",
+      "domain_id": "dom-c",
+      "priority": 1,
+      "demand": 1
+    },
+    {
+      "instance_id": "svc-c2",
+      "domain_id": "dom-c",
+      "priority": 2,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-c3",
+      "domain_id": "dom-c",
+      "priority": 3,
+      "demand": 2
+    }
+  ],
+  "events_file": "events-medium.ndjson"
+}

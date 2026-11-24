@@ -1,0 +1,57 @@
+{
+  "domains": [
+    {
+      "domain_id": "dom-a",
+      "host": "127.0.0.1",
+      "port": 19001,
+      "slots": 4,
+      "lease_cap": 3,
+      "lease_ms": 600,
+      "renew_ms": 200,
+      "seed": 101
+    },
+    {
+      "domain_id": "dom-b",
+      "host": "127.0.0.1",
+      "port": 19002,
+      "slots": 3,
+      "lease_cap": 2,
+      "lease_ms": 500,
+      "renew_ms": 150,
+      "seed": 202
+    }
+  ],
+  "instances": [
+    {
+      "instance_id": "svc-a1",
+      "domain_id": "dom-a",
+      "priority": 1,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-a2",
+      "domain_id": "dom-a",
+      "priority": 2,
+      "demand": 1
+    },
+    {
+      "instance_id": "svc-a3",
+      "domain_id": "dom-a",
+      "priority": 3,
+      "demand": 2
+    },
+    {
+      "instance_id": "svc-b1",
+      "domain_id": "dom-b",
+      "priority": 1,
+      "demand": 1
+    },
+    {
+      "instance_id": "svc-b2",
+      "domain_id": "dom-b",
+      "priority": 2,
+      "demand": 2
+    }
+  ],
+  "events_file": "events-small.ndjson"
+}
