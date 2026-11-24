@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "colpage-recovery-diag"
+version = "0.1.0"
+description = "Deterministic columnar-page WAL replay, checkpoint and crash-recovery diagnostics"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+colpage-diag = "colpage_recovery.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

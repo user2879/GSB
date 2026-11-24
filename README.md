@@ -21,3 +21,70 @@
 
 验收：
 使用本地样本验证页版本推进、并行回放预算、检查点续做与强制终止后重放校验，并检查异常注入的业务码。
+
+---
+
+# 交付实现
+
+本仓库已包含可集成 Python 包 `src/colpage_recovery/`、Tkinter 界面、确定性样本、测试和可重复演示。详细设计见 `docs/DESIGN.md`，实际验证记录见 `docs/VERIFICATION.md`。
+
+## Windows 快速开始
+
+在仓库根目录打开 PowerShell：
+
+```powershell
+python --version
+python -m pip install numpy==1.26.4
+python -c "import sqlite3, tkinter, numpy; print('deps ok', numpy.__version__)"
+
+# 无需安装包，脚本会自动把 src 加入 PYTHONPATH
+python .\scripts\demo.py
+python .\scripts\run_tests.py
+
+# 打开 Tkinter 诊断界面
+$env:PYTHONPATH = "$PWD\src"
+python -m colpage_recovery.cli gui --state-dir state\demo --report artifacts\demo_report.json
+```
+
+也可以安装为包后使用 `colpage-diag`：
+
+```powershell
+python -m pip install -e .
+colpage-diag demo
+colpage-diag gui --state-dir state\demo --report artifacts\demo_report.json
+```
+
+或直接运行 `scripts\Run-Demo.ps1`。
+
+## 常用命令
+
+```bash
+# 校验样本
+PYTHONPATH=src python -m colpage_recovery.cli validate --samples samples
+
+# 一键演示：确定性对照 -> 子进程 os._exit(137) -> unknown 批次 -> 恢复校验 -> G2 演进
+python scripts/demo.py
+
+# 测试
+python scripts/run_tests.py
+
+# 三类显式异常注入
+PYTHONPATH=src python -m colpage_recovery.cli diagnose --inject commit-conflict
+PYTHONPATH=src python -m colpage_recovery.cli diagnose --inject range-overflow
+PYTHONPATH=src python -m colpage_recovery.cli diagnose --inject snapshot-mismatch
+
+# 查看当前 SQLite 视图
+PYTHONPATH=src python -m colpage_recovery.cli view --state-dir state/demo
+```
+
+命令行业务码：
+
+- `E_WAL`：一般 JSON/WAL 强校验失败，含首个 `lsn/field`
+- `E_COMMIT`：同事务提交标记冲突
+- `E_RANGE`：行区间越界
+- `E_SNAPSHOT`：账本、检查点摘要与页文件/重放结果不符
+- `E_REPLAY`：恢复重放与不中断参考回放不一致
+- `E_BUDGET`：单页字节预算不足
+- `E_GUI`：当前 Python 无法加载 Tk/Tcl（Windows 官方 Python 一般不会出现）
+
+演示报告默认写入 `artifacts/demo_report.json`，SQLite 与页文件默认写入 `state/demo/`。
