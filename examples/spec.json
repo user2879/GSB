@@ -1,0 +1,58 @@
+{
+  "versions": {
+    "declaration": 1,
+    "endpoint_set": 1,
+    "route_table": 1,
+    "fragment_policy": 1
+  },
+  "endpoints": [
+    {
+      "id": "ep-edge-a",
+      "host": "127.0.0.1",
+      "port": 46371,
+      "mtu": 1400,
+      "encapsulation_overhead": 96,
+      "replay_window": 64,
+      "seed": 73013
+    },
+    {
+      "id": "ep-edge-b",
+      "host": "127.0.0.1",
+      "port": 46372,
+      "mtu": 1400,
+      "encapsulation_overhead": 96,
+      "replay_window": 64,
+      "seed": 91009
+    }
+  ],
+  "routes": [
+    {
+      "prefix": "10.40.0.0/16",
+      "next_hop": "ep-edge-a",
+      "priority": 100,
+      "tunnel_id": "tun-alpha"
+    },
+    {
+      "prefix": "10.41.0.0/16",
+      "next_hop": "ep-edge-b",
+      "priority": 200,
+      "tunnel_id": "tun-beta"
+    }
+  ],
+  "fragment_policy": {
+    "fragment_size": 512,
+    "max_retries": 2,
+    "reassembly_timeout_ms": 750
+  },
+  "runtime": {
+    "global_inflight_limit": 3,
+    "per_tunnel_inflight_quota": 2,
+    "ack_timeout_ms": 400,
+    "fragment_format": "f3",
+    "max_message_bytes": 8388608,
+    "receiver_idle_timeout_ms": 5000
+  },
+  "sample": {
+    "bytes_per_message": 1600
+  }
+}
