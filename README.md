@@ -1,21 +1,153 @@
-这项需求没有既有代码，需要在一个全新的 Windows 工作区从零构建一个面向表格数据的聚类与密度估计交互式编辑与诊断工作台，核心解决交互延迟与计算结果一致性之间的冲突。业务对象是本地 YAML 实验配置与按固定种子确定性生成的表格数据描述：数值列、类别列、缺失值、高基数类别列与冗余列，样本量可按配置档位放大；配置声明预处理方式（标准化或分位数变换）、聚类与密度估计方法集合（KMeans、DBSCAN 与高斯混合）、各方法超参数候选（簇数、邻域半径、最小样本数、协方差类型）、评估指标、全局聚类迭代预算、单候选配额、线程池并发数、交互延迟预算毫秒、快照提交间隔命令数与注入清单。使用者通过交互命令逐步增删候选、调参并分区查看结果，系统须在预算内给出可用摘要，且任意命令序列结束后的最终结果必须与按相同最终配置一次性全量计算逐字段一致。
+# Deterministic Clustering & Density Workbench
 
-任务环境与准备：
-安装 Windows 10/11 64 位与 Python 3.11 或 3.12，执行 python -m pip install numpy==1.26.4 pyyaml==6.0.1。
-确认工作区为空目录，自行创建配置、数据描述、命令流与注入清单等本地样本文件，不依赖网络下载或真实数据集。
-以 python -m pytest 或 python 直接运行自建脚本完成验证，线程池并发度与预算由本地配置控制，避免依赖特定硬件。
+这是一个不依赖容器、网络数据或特定硬件的本地工作台，用于对合成表格数据执行可审计的聚类、密度估计、交互式调参和增量诊断。实现只依赖 Python 3.11/3.12、`numpy==1.26.4` 与 `PyYAML==6.0.1`。
 
-业务要求：
-1. 实现配置、数据描述与命令流的加载校验层：读取 YAML 配置与合成数据描述，按列类型与固定种子确定性生成表格数据，完成数值列缺失填充与类别编码；对未知列、类型不符、簇数为零、邻域半径非正、并发数非正、全局迭代预算非正、交互延迟预算非正分别输出 E_CONFIG_INVALID 等业务码并进入失败清单，不得整批中断。
-2. 实现预处理阶段：按配置选择标准化或分位数变换，缺失值只以该候选训练部分的统计量填充，所有统计量以固定累加顺序计算并随产物保留；预处理产物携带由列描述指纹与参数指纹派生的内容指纹，同一输入与配置下两次运行的预处理矩阵必须逐元素一致，分位数插值并列时的取值规则须显式写入产物元数据。
-3. 实现 KMeans、DBSCAN 与高斯混合三种方法的确定性版本：KMeans 以固定初始质心选取规则与固定迭代上限执行并逐轮记录簇内平方和；DBSCAN 以固定邻域遍历顺序完成核心点判定与簇扩展；高斯混合按固定初始化与固定收敛规则迭代并对协方差奇点按配置正则系数处理而不抛异常；三者对同一样本集与超参数须得到逐样本归属完全一致的结果。
-4. 实现聚类质量评估与候选排名：计算轮廓系数、Calinski-Harabasz 指数与按密度估计对数似然构造的指标，候选排名并列时按方法名与超参数字典序决断；当某候选出现空簇或全噪声簇时不得静默丢弃，须在失败或告警清单中给出方法名、超参数与原因码，并保留其指标为不可比标记。
-5. 实现全局迭代预算、单候选配额与重算点数约束下的并行调度：多候选通过线程池并发执行，最大并发数取自配置且不得超过；调度器按候选稳定键分配单候选迭代配额并维护全局剩余迭代预算，某候选超配额即中止并记 E_CAND_BUDGET_EXHAUSTED，超全局预算的候选保留待办队列并以 E_GLOBAL_BUDGET_PENDING 标记，预算扣减序列须可审计。
-6. 实现交互延迟预算内的响应语义：每条交互命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，含已完成候选数、当前最优候选方法与指标、受影响候选清单与进度；预算内无法得到最新参数下的完整结果时须返回带 E_RESULT_STALE 标记的旧结果并注明其对应的命令序号，不得以等待替代该语义。
-7. 实现基于内容指纹的精确失效判定与复用账本：为预处理、每候选聚类、评估与诊断汇总各阶段产物计算由上游内容指纹与参数指纹派生的缓存键，并记录每候选引用的预处理产物与超参数集合；当修改某方法超参、预处理方式或替换单列数据时，仅使受影响候选及其下游标记失效，未失效候选必须直接复用缓存且不得重算，复用与重算清单顺序须稳定。
-8. 保证任意命令序列后增量运行与从空白全量重建逐字段一致，并实现阶段化快照整体替换、恢复判定与异常注入隔离：逐候选指标、逐样本簇归属、候选排名、预算扣减序列与失败清单顺序均须与按相同最终数据与配置一次性全量计算结果完全相同；快照以临时目录写盘后整体替换提交并识别版本变化，注入非有限特征值、簇数越界与列描述缺失时须隔离为失败项并输出诊断报告。
+核心保证：**任意命令序列结束后的最终状态，与按该最终状态从空白缓存一次性全量重建的结果逐字段一致**。比较字段包括逐样本簇归属、逐候选指标、候选排名、预算账本和失败清单顺序。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## Quick Start (Windows PowerShell)
 
-验收：
-用本地样本校验收敛一致、交互摘要、预算调度与增量等价，输出诊断报告。
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install numpy==1.26.4 pyyaml==6.0.1 pytest==8.2.0
+.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m cluster_workbench `
+  --config samples\config.yaml `
+  --data samples\data.yaml `
+  --commands samples\commands.yaml `
+  --injections samples\injections.yaml `
+  --workspace artifacts\run `
+  --report artifacts\diagnostic_report.json `
+  --responses artifacts\responses.json
+```
+
+Linux/macOS 使用相同参数即可：
+
+```bash
+python -m pytest
+python -m cluster_workbench --config samples/config.yaml --data samples/data.yaml \
+  --commands samples/commands.yaml --injections samples/injections.yaml \
+  --workspace artifacts/run --report artifacts/diagnostic_report.json \
+  --responses artifacts/responses.json
+```
+
+命令成功完成且增量/全量等价检查通过时进程返回 0。诊断报告中的 `equivalence_check.equal` 为 `true` 表示最终一致性验收通过；注入故障会进入 `failures`，但不会让整批中断或使进程误报失败。
+
+## Workspace Layout
+
+```text
+cluster_workbench/
+  config.py       配置规范化、业务码校验、候选校验
+  data.py         固定种子合成数据、列指纹、类别编码、缺失表示
+  preprocess.py   训练分区统计、标准化/分位数变换、内容指纹
+  algorithms.py   确定性 KMeans、DBSCAN、Gaussian Mixture
+  metrics.py      轮廓系数、CH、密度对数似然、稳定排名
+  scheduler.py    预算预留、单候选配额、全局待办与账本
+  cache.py        内容寻址缓存（JSON + NPY，原子写）
+  pipeline.py     四阶段流水线、线程池、精确复用、诊断报告
+  snapshot.py     版本化快照、临时目录写盘、CURRENT 指针原子替换
+  workbench.py    后台流水线、交互超时语义、分区查看、恢复
+  cli.py          端到端命令与空白缓存重建校验
+samples/          本地配置、数据描述、命令流与注入清单
+tests/            18 项确定性/预算/缓存/交互/快照回归测试
+artifacts/        最终诊断报告、响应日志和可恢复快照
+```
+
+## Configuration Model
+
+`samples/config.yaml` 声明：
+
+- 预处理方法：`standardize` 或 `quantile`，训练比例和缺失填充策略；
+- 方法默认值：KMeans/DBSCAN/GMM 的迭代上限、收敛阈值、协方差正则；
+- 评估指标：轮廓系数、Calinski-Harabasz、密度对数似然；
+- 调度：全局迭代预算、单候选迭代配额、线程池并发数、交互延迟预算、快照命令间隔；
+- 初始候选及可选注入。
+
+`samples/data.yaml` 使用 `size_levels` 和 `size_level` 控制样本量档位。数值列支持 `normal`、`uniform`、`integer`、`mixture` 与基于前序列的冗余列；类别列支持显式类别、权重、高基数和缺失率。每列独立派生固定 RNG，避免依赖 Python 随机哈希或全局随机状态。
+
+## Determinism Rules
+
+- 所有指纹使用排序后的规范 JSON、SHA-256 和 NumPy 连续数组字节哈希。
+- 预处理统计只使用候选训练分区；累加按训练索引升序执行，并随产物记录 `finite_accumulation_order`。
+- 缺失值使用训练分区观测值的中位数填充。类别按声明顺序编码；未知类别保留为缺失并产生告警。
+- 分位数变换显式记录并列规则 `average_rank`（也可配置 `lower_rank`/`upper_rank`），相同输入必得相同输出。
+- KMeans 使用字典序最小样本作首质心，再以固定最远点规则初始化；距离、归属和中止平局均按升序索引确定。
+- DBSCAN 使用固定距离矩阵、升序邻居、升序外层遍历与 FIFO 扩展。
+- GMM 使用相同的最远点均值初始化、固定 EM 顺序、固定收敛判据，并对协方差奇点应用配置正则；不抛异常。
+- 排名先按可比性与指标值降序，完全并列时按方法名、规范超参 JSON、候选 ID 决断。
+
+## Preprocessing & Cache Identity
+
+每个候选引用自己的预处理产物。预处理缓存键由以下内容派生：
+
+```text
+selected column description fingerprints
++ selected column content fingerprints
++ preprocessing parameters
++ deterministic training indices
++ implementation schema
+```
+
+产物内容指纹还包含实际矩阵字节、统计量、缺失填充和分位数元数据。聚类键包含预处理内容指纹、方法、超参数、运行参数与迭代分配；评估键包含聚类内容指纹、预处理内容指纹与评估配置；诊断汇总键包含所有候选评估键、排名、预算和失败/告警清单。
+
+因此：
+
+- 修改某候选超参数：预处理复用，该候选聚类/评估重算；
+- 修改预处理方式：所有候选预处理及其下游失效；
+- 替换单列：仅引用该列的候选及其下游失效；
+- 修改评估配置：聚类复用，仅评估重算；
+- 未失效候选重算点数为 0，并出现在 `recompute_accounting.candidates_fully_reused`。
+
+## Budget Semantics
+
+调度器先按候选稳定键（候选 ID）升序预分配预算，再在线程池中执行。账本记录每个候选的 `requested`、`reserved`、`consumed`、`remaining_before_reservation`、`remaining_after_reservation` 和最终 `outcome`。
+
+- 单候选请求超过 `per_candidate_iteration_quota` 时以配额执行；未收敛则中止并记 `E_CAND_BUDGET_EXHAUSTED`；
+- 全局预算不足以完整预留时，候选进入待办队列并记 `E_GLOBAL_BUDGET_PENDING`；
+- 线程池最大并发数严格取 `scheduler.concurrency`；
+- 缓存命中的候选仍保留其逻辑迭代消费，用于保证增量与全量预算账本一致，但不会执行算法。
+
+## Interaction Semantics
+
+每条命令在后台单流水线中执行，候选阶段使用配置并发度的线程池。交互调用最多等待配置的延迟预算；预算内完成则返回当前结果，否则立即返回最近一次已完成摘要，并附带：
+
+- `E_RESULT_STALE` 告警、`stale: true`；
+- `result_command_seq`：旧结果对应的命令序号；
+- 当前任务进度、受影响候选、已完成候选数及当前最优候选。
+
+`view` 命令支持 `candidates`、`labels`、`data`、`failures` 分区，并用 `offset/limit` 切片。
+
+## Snapshots & Recovery
+
+快照先完整写入临时目录并校验文件哈希，然后重命名版本目录，最后原子替换 `CURRENT` 指针。默认每 `snapshot_commit_interval` 条命令请求一次快照，`close()` 保证最终状态快照完成。恢复时会验证指针、清单版本、文件哈希；不兼容版本返回 `E_SNAPSHOT_VERSION_MISMATCH`，损坏指针会尝试回退到最近的完整版本。
+
+## Fault Injection
+
+`samples/injections.yaml` 演示四类隔离：
+
+- `nonfinite_feature`：指定列/行注入 `inf`，仅引用该列的候选预处理失败；
+- `invalid_hyperparameter`：把目标候选簇数改为 0，候选单独进入失败清单；
+- `missing_column_description`：移除列描述，引用该列的候选报 `E_COLUMN_DESCRIPTION_MISSING`；
+- `slow_candidate`：仅用于验证交互超时旧摘要语义。
+
+## Verification
+
+```bash
+python -m pytest
+```
+
+结果：`18 passed`。测试覆盖固定种子数据、训练分区缺失填充、量化并列规则、三种算法重复一致性、协方差奇点、空簇/全噪声、排名平局、预算配额、全局待办、并发上限、单列失效、超时摘要、增量/全量等价和快照版本检测。
+
+最终端到端验收由 CLI 自动完成，并在诊断报告写入：
+
+```json
+{
+  "equivalence_check": {
+    "checked": true,
+    "equal": true,
+    "incremental_fingerprint": "...",
+    "full_rebuild_fingerprint": "..."
+  }
+}
+```
+
+实际验收记录见 `docs/ACCEPTANCE.md`，设计细节见 `docs/DESIGN.md`。

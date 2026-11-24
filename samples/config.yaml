@@ -1,0 +1,78 @@
+schema_version: 1
+seed: 20260117
+
+preprocessing:
+  method: standardize
+  train_fraction: 0.8
+  missing_fill: median
+  quantile_tie_policy: average_rank
+
+evaluation:
+  metrics:
+    - silhouette
+    - calinski_harabasz
+    - density_log_likelihood
+  density_regularization: 0.000001
+
+methods:
+  kmeans:
+    max_iter: 25
+    tolerance: 0.00000001
+  dbscan:
+    metric: euclidean
+  gmm:
+    max_iter: 60
+    tolerance: 0.0001
+    covariance_regularization: 0.00001
+    init: farthest
+
+scheduler:
+  global_iteration_budget: 900
+  per_candidate_iteration_quota: 100
+  concurrency: 4
+  interaction_latency_budget_ms: 250
+  snapshot_commit_interval: 4
+
+candidates:
+  - id: km-3
+    method: kmeans
+    params:
+      n_clusters: 3
+    feature_columns: [x1, x2, x3, x4, region, channel, redundant_x1]
+    train_fraction: 0.8
+  - id: km-bad
+    method: kmeans
+    params:
+      n_clusters: 2
+    feature_columns: [x1, x2]
+    train_fraction: 0.8
+  - id: dbscan-main
+    method: dbscan
+    params:
+      eps: 0.2
+      min_samples: 5
+    feature_columns: [x1, x2, x3, x4]
+    train_fraction: 0.8
+  - id: dbscan-legacy
+    method: dbscan
+    params:
+      eps: 1.2
+      min_samples: 4
+    feature_columns: [legacy_tag, x1]
+    train_fraction: 0.8
+  - id: dbscan-spike
+    method: dbscan
+    params:
+      eps: 1.4
+      min_samples: 5
+    feature_columns: [sensor_spike, x1]
+    train_fraction: 0.8
+  - id: gmm-3
+    method: gmm
+    params:
+      n_components: 3
+      covariance_type: diag
+    feature_columns: [x1, x2, x3, x4, region, channel]
+    train_fraction: 0.8
+
+injections: []

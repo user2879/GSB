@@ -1,0 +1,19 @@
+schema_version: 1
+injections:
+  - id: inj-nonfinite-sensor
+    type: nonfinite_feature
+    column: sensor_spike
+    row: 3
+    value: inf
+  - id: inj-zero-clusters
+    type: invalid_hyperparameter
+    candidate: km-bad
+    params:
+      n_clusters: 0
+  - id: inj-missing-legacy-description
+    type: missing_column_description
+    column: legacy_tag
+  - id: inj-slow-gmm
+    type: slow_candidate
+    candidate: gmm-3
+    delay_ms: 5

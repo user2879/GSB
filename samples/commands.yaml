@@ -1,0 +1,59 @@
+schema_version: 1
+commands:
+  - type: add_candidate
+    id: km-4
+    method: kmeans
+    params:
+      n_clusters: 4
+    feature_columns: [x1, x2, x3, x4, region, channel, redundant_x1]
+    train_fraction: 0.8
+  - type: add_candidate
+    id: dbscan-dense
+    method: dbscan
+    params:
+      eps: 0.18
+      min_samples: 6
+    feature_columns: [x1, x2, x3, x4]
+    train_fraction: 0.8
+  - type: add_candidate
+    id: gmm-4
+    method: gmm
+    params:
+      n_components: 4
+      covariance_type: diag
+    feature_columns: [x1, x2, x3, x4]
+    train_fraction: 0.8
+  - type: view
+    part: candidates
+    offset: 0
+    limit: 5
+  - type: update_candidate
+    id: km-3
+    params:
+      n_clusters: 4
+  - type: replace_column
+    column: channel
+    override:
+      kind: constant
+      value: organic
+  - type: view
+    part: labels
+    candidate: km-4
+    offset: 0
+    limit: 8
+  - type: set_preprocessing
+    preprocessing:
+      method: quantile
+      quantile_tie_policy: average_rank
+  - type: view
+    part: failures
+    offset: 0
+    limit: 10
+  - type: set_scheduler
+    scheduler:
+      interaction_latency_budget_ms: 100
+  - type: update_candidate
+    id: gmm-4
+    params:
+      n_components: 5
+  - type: snapshot

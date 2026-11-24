@@ -1,0 +1,64 @@
+schema_version: 1
+seed: 77123
+size_levels:
+  S: 120
+  M: 180
+  L: 360
+size_level: M
+columns:
+  - name: x1
+    type: numeric
+    distribution: mixture
+    components:
+      - {weight: 1.0, mean: -4.0, std: 0.65}
+      - {weight: 1.0, mean: 0.0, std: 0.7}
+      - {weight: 1.0, mean: 4.0, std: 0.75}
+    missing_rate: 0.015
+    decimals: 6
+  - name: x2
+    type: numeric
+    source: x1
+    multiplier: 1.0
+    offset: 1.1
+    missing_rate: 0.01
+  - name: x3
+    type: numeric
+    distribution: mixture
+    components:
+      - {weight: 1.0, mean: -3.0, std: 0.8}
+      - {weight: 1.0, mean: 0.2, std: 0.75}
+      - {weight: 1.0, mean: 3.2, std: 0.8}
+    missing_rate: 0.02
+  - name: x4
+    type: numeric
+    distribution: uniform
+    low: -1.0
+    high: 1.0
+    missing_rate: 0.0
+  - name: region
+    type: categorical
+    categories: [north, south, east, west]
+    weights: [0.3, 0.25, 0.25, 0.2]
+    missing_rate: 0.02
+  - name: channel
+    type: categorical
+    categories: [organic, search, email, display, social, affiliate, partner, offline, referral, event, podcast, other]
+    weights: [0.12, 0.11, 0.1, 0.09, 0.09, 0.08, 0.08, 0.08, 0.07, 0.07, 0.06, 0.05]
+    missing_rate: 0.04
+  - name: redundant_x1
+    type: numeric
+    source: x1
+    multiplier: 2.0
+    offset: 0.5
+    missing_rate: 0.015
+  - name: sensor_spike
+    type: numeric
+    distribution: normal
+    mean: 0.0
+    std: 1.0
+    missing_rate: 0.0
+  - name: legacy_tag
+    type: categorical
+    categories: [old, current, retired]
+    weights: [0.4, 0.4, 0.2]
+    missing_rate: 0.0
