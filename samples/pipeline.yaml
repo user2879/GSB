@@ -1,0 +1,29 @@
+name: layered_feature_cache_demo
+feature_count: 4
+stages:
+  - name: standardize
+    kind: standardize
+    upstream: []
+    params: {}
+  - name: bucketize
+    kind: bucketize
+    upstream:
+      - standardize
+    params:
+      bucket_count: 5
+  - name: interact
+    kind: interact
+    upstream:
+      - standardize
+    params:
+      degree: 2
+  - name: train_view
+    kind: train_view
+    upstream:
+      - interact
+    params:
+      weights:
+        - 1.0
+        - 0.5
+        - 0.25
+      threshold: 0.0
