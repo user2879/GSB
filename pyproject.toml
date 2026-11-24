@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "leasecache"
+version = "1.0.0"
+description = "Deterministic cross-node lease arbitration for pipeline artifact caches"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3"]
+
+[project.scripts]
+leasecache = "leasecache.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["leasecache*"]

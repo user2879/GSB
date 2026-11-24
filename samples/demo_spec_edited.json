@@ -1,0 +1,89 @@
+{
+  "format_version": 1,
+  "nodes": [
+    {
+      "id": "node-a",
+      "host": "127.0.0.1",
+      "port": 38741,
+      "capacity_slots": 4,
+      "lease_limit": 2,
+      "random_seed": 101
+    },
+    {
+      "id": "node-b",
+      "host": "127.0.0.1",
+      "port": 38742,
+      "capacity_slots": 4,
+      "lease_limit": 2,
+      "random_seed": 202
+    },
+    {
+      "id": "node-c",
+      "host": "127.0.0.1",
+      "port": 38743,
+      "capacity_slots": 6,
+      "lease_limit": 2,
+      "random_seed": 101
+    },
+    {
+      "id": "node-d",
+      "host": "127.0.0.1",
+      "port": 38744,
+      "capacity_slots": 4,
+      "lease_limit": 2,
+      "random_seed": 303
+    }
+  ],
+  "pipeline": {
+    "id": "demo-pipeline",
+    "global_concurrency": 3,
+    "lease_ms": 350,
+    "stages": [
+      {
+        "id": "source",
+        "concurrency": 2,
+        "artifacts": [
+          {
+            "key": "src/app",
+            "references": []
+          },
+          {
+            "key": "src/lib",
+            "references": []
+          }
+        ]
+      },
+      {
+        "id": "objects",
+        "concurrency": 2,
+        "artifacts": [
+          {
+            "key": "obj/app",
+            "references": [
+              "src/app"
+            ]
+          },
+          {
+            "key": "obj/lib",
+            "references": [
+              "src/app"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "package",
+        "concurrency": 1,
+        "artifacts": [
+          {
+            "key": "pkg/bundle",
+            "references": [
+              "obj/app",
+              "obj/lib"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "format_version": 1,
+  "generated_at": "2026-11-25",
+  "environment": {
+    "platform": "Linux 6.18.33.2-microsoft-standard-WSL2 x86_64",
+    "python": "3.11.0rc1",
+    "numpy": "1.26.4",
+    "tkinter": "unavailable in validation container (libtk8.6.so missing); GUI source compiled, Windows launch documented",
+    "docker_used": false
+  },
+  "commands": [
+    "python -m unittest discover -v",
+    "python -m leasecache demo --root reports/acceptance",
+    "python -m leasecache verify --spec samples/demo_spec_edited.json --db <full-ledger>",
+    "python -m leasecache run --replace ... (atomic replacement smoke test)"
+  ],
+  "unit_tests": {
+    "command": "python -m unittest discover -v",
+    "tests": 21,
+    "failures": 0,
+    "elapsed_seconds_approx": 11.4
+  },
+  "acceptance": {
+    "ok": true,
+    "elapsed_mono_ms": 8686,
+    "checks": {
+      "baseline_vs_reuse": true,
+      "reuse_performed_no_network_requests": true,
+      "incremental_edited_vs_full_edited": true,
+      "incremental_only_rebuilt_affected_closure": true,
+      "forced_termination_has_no_exit_report": true,
+      "recovery_marked_open_leases_unknown": true,
+      "recovered_vs_full_edited": true,
+      "independent_verification": true,
+      "node_restart_digest_convergence": true
+    },
+    "actual_results": {
+      "baseline_recomputed": ["obj/app", "obj/lib", "pkg/bundle", "src/app", "src/lib"],
+      "reuse_recomputed": [],
+      "edited_incremental_recomputed": ["obj/lib", "pkg/bundle"],
+      "peak_global_inflight": 2,
+      "queue_waits_in_baseline": 1,
+      "forced_exit_code": 86,
+      "recovery_unknown_leases": [
+        {"lease_id": "node-c:lease:1:1:1", "node_id": "node-c", "artifact_keys": ["src/app"]},
+        {"lease_id": "node-c:lease:1:2:1", "node_id": "node-c", "artifact_keys": ["src/lib"]}
+      ],
+      "convergence_affected_keys": ["obj/app", "obj/lib", "pkg/bundle", "src/app", "src/lib"],
+      "post_restart_affected_keys": []
+    },
+    "ledger_content_digests": {
+      "full_edited": "8d789196c1f0b189a6b44a59237c3051108596439e4ae56330e311d72b076267",
+      "incremental_edited": "1018a7fcce0d6af1c9b758ba1840463bc1ab0778fbae52e00dc28135d2751500",
+      "recovered_edited": "beacba21e21feca0ef5c228261130bfafcbdc7b4875ad30900450f7ab3679acb"
+    },
+    "edited_spec_sha256": "a1d85e431676fbbb6e0969ff190e062897370b6110a497c6a2dbfd5a7a7a0c07"
+  },
+  "final_business_state_sample": {
+    "nodes": [
+      {"node_id": "node-a", "capacity_slots": 4, "lease_limit": 2, "used_slots": 0, "active_leases": 0},
+      {"node_id": "node-b", "capacity_slots": 4, "lease_limit": 2, "used_slots": 0, "active_leases": 0},
+      {"node_id": "node-c", "capacity_slots": 6, "lease_limit": 2, "used_slots": 0, "active_leases": 0},
+      {"node_id": "node-d", "capacity_slots": 4, "lease_limit": 2, "used_slots": 0, "active_leases": 0}
+    ],
+    "source_nodes": {
+      "obj/app": ["node-a", "node-c"],
+      "obj/lib": ["node-a", "node-c"],
+      "pkg/bundle": ["node-a", "node-c"],
+      "src/app": ["node-a", "node-c"],
+      "src/lib": ["node-a", "node-c"]
+    },
+    "selected_node": {
+      "obj/app": "node-c",
+      "obj/lib": "node-c",
+      "pkg/bundle": "node-c",
+      "src/app": "node-c",
+      "src/lib": "node-c"
+    },
+    "all_artifacts_reusable": true
+  },
+  "notes": [
+    "Business snapshots are compared recursively field by field; volatile audit timestamps and audit event histories are intentionally excluded as documented in docs/DESIGN.md section 12.",
+    "The forced-interruption child exits with code 86 via os._exit, leaves no report, and the resumed run completes from committed SQLite rows only.",
+    "The independent verifier reads only the original spec and the ledger in SQLite read-only mode.",
+    "Generated acceptance databases/workspaces are ignored by git; rerun the command to regenerate them."
+  ]
+}
