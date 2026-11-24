@@ -20,3 +20,28 @@
 
 验收：
 在本地样本与回执文件上验证三版本归一账本、失效传播与界面账本一致性，并覆盖异常注入与快照恢复。
+
+---
+
+## 交付说明
+
+本仓库已交付可运行的本地应用 `receipt_ledger`，运行方式：
+
+```bash
+python -m pip install -r requirements.txt
+python tools/generate_samples.py
+python -m receipt_ledger --config samples/workers.json --samples samples \
+  --commands samples/commands.json --output output/normal
+python -m receipt_ledger --config samples_faulty/workers.json --samples samples_faulty \
+  --commands samples_faulty/commands.json --inject samples_faulty/injection.json \
+  --output output/faulty
+python -m unittest discover -s tests -v
+```
+
+- 应用源码：`receipt_ledger/`
+- 固定整数种子（20241125）样本：`samples/`、`samples_faulty/`
+- 样本生成器：`tools/generate_samples.py`
+- 测试：`tests/`（21 个用例，覆盖加载校验、三版本往返、归属裁决、
+  定点资源与失效链、增量/全量等价、并发一致、快照恢复、快速视图、注入隔离）
+- 技术说明与定点公式：`docs/DESIGN.md`
+- 输出：`report.json`、`fast_view.json`、`snapshot_manifest.json` 与 `stages/`

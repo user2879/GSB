@@ -1,0 +1,34 @@
+{
+  "injections": [
+    {
+      "description": "将 r2 首行耗时替换为 NaN",
+      "file": "receipt_r2.jsonl",
+      "id": "INJ-001",
+      "line": 1,
+      "type": "non_finite_duration"
+    },
+    {
+      "description": "r3 首行声明工作器不存在的参数版本 v99",
+      "file": "receipt_r3.jsonl",
+      "id": "INJ-002",
+      "line": 1,
+      "param_version": 99,
+      "type": "unknown_param_version",
+      "worker_id": "worker-a"
+    },
+    {
+      "description": "截断 r3 第三行为非法 JSON",
+      "file": "receipt_r3.jsonl",
+      "id": "INJ-003",
+      "line": 3,
+      "type": "truncated_line"
+    },
+    {
+      "arrival_ms": 999,
+      "description": "重放已存在的请求标识 req-001",
+      "id": "INJ-004",
+      "request_id": "req-001",
+      "type": "duplicate_request_id"
+    }
+  ]
+}
