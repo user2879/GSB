@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "obsflow"
+version = "1.0.0"
+description = "Layered fixed-point sliding-window aggregation for local observation record streams"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+obsflow = "obsflow.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["obsflow*"]
+exclude = ["tests*", "examples*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
