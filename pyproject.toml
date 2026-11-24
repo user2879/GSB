@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "batchdiag"
+version = "1.0.0"
+description = "Deterministic batch attribution diagnostics for a local inference platform"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+batchdiag = "batchdiag.cli:main"
+
+[tool.setuptools]
+packages = ["batchdiag"]

@@ -1,22 +1,48 @@
-一支负责本地推理平台的小团队刚接到新需求：为尚无任何代码的推理服务补上批归属诊断能力，工作区为空，需要从零落地可集成的 Python 包、可重复演示脚本与可对照的归属账本。业务对象是推理请求按批切分并分配到本地工作器后产生的归属回执，回执有三种历史格式：r1 仅含批次标识、请求标识与输出摘要；r2 增加参数版本序号、整数耗时毫秒与工作器标识；r3 再增加请求在批内的稳定名次、被覆盖的重复投递引用与参数摘要快照。团队要回答的是：三种格式能否归一为同一可复核账本，工作器参数版本变化时能否沿「工作器参数版本 → 批次 → 请求归属」依赖链精确判定失效边界，且增量重算与从空白全量重建逐字节一致。
+# batchdiag — 本地推理批归属诊断
 
-任务环境与准备：
-安装 Python 3.11 并在工作区创建虚拟环境，执行 python -m venv .venv 后用 .venv\Scripts\activate 激活。
-执行 pip install numpy 获取 NumPy，SQLite 使用 Python 标准库 sqlite3，Tkinter 使用标准库自带组件，无需额外安装。
-在工作区准备本地 JSON 请求流、工作器声明与 r1/r2/r3 回执样本文件，样本由固定整数种子生成，不依赖任何线上服务或真实账号。
-运行前确认 127.0.0.1 上选定的高位端口未被占用，演示脚本以子进程方式启动本地工作器。
+确定性 Python 3.11 包：把 r1/r2/r3 三种归属回执归一为可复核 SQLite 账本，
+沿 `工作器参数版本 → 批次 → 请求归属` 依赖链判定失效边界，并保证增量重算
+与空白全量重建逐字节一致。纯本地样本 + 127.0.0.1 真实 TCP 工作器子进程，
+无容器、无外部服务。
 
-业务要求：
-1. 实现请求流、工作器声明与归并规则的本地 JSON 加载及强校验：校验请求标识唯一、到达序号为非负整数且不重复、输入向量维度与工作器模型维度一致、隐藏层维度为正整数、随机种子为整数、工作器回环端口为 127.0.0.1 上互不冲突的高位端口；任一不合法须以 E_SPEC 拒绝并指明首个非法字段与行号。
-2. 实现 r1、r2、r3 三种回执格式的编解码与归一，每个归一结果必须携带来源格式版本、被补齐字段集合与补齐依据；解码须校验耗时毫秒非负、名次在批内不重复且不越界、重复投递引用指向存在的请求，错误分别以 E_FIELD 与 E_CHAIN 报告并给出出错位置。
-3. 实现按批大小与工作器配额把请求切分为批的确定性计划，批标识由工作器标识、批序号与参与请求的到达序号按显式稳定序列化规则推导；同一请求流在任意派发顺序与任意字典遍历顺序下必须得到逐字节一致的批划分与批标识。
-4. 实现逐批前向推理与回执生成：按归一批次用 NumPy 完成前向计算，输出摘要须与参与请求的标识集合、参数版本序号与参数摘要共同绑定，同批请求处理顺序变化不得改变输出摘要；须输出每批的参数摘要、参与请求排序与摘要依据。
-5. 实现沿「工作器参数版本 → 批次 → 请求归属」依赖链的失效传播与仅失效子集重算：工作器种子、维度、批大小或参数版本变更后，须按工作器标识序与批序稳定输出全部直接与间接失效批及失效请求，未失效批的回执摘要与归属必须逐字节保持不变，并提供校验命令比较增量重算与全量重建结果。
-6. 实现受全局并发上限与每工作器并发配额约束的并行回执处理调度，任一时刻运行批次数与单工作器运行批次数不得超限，配额耗尽时批次排队并记录等待开始与结束的单调时钟毫秒；处理须真实投射到工作线程池并向工作器发起真实回环通信，单次通信须有真实套接字超时且超时按 E_TIMEOUT 报告。
-7. 实现回执账本持久化与会话快照的版本识别整体替换恢复：每完成一个批次须在同一 SQLite 事务中写入批次归属、回执摘要、失效传播轨迹与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时版本或摘要不一致须整体替换而非增量合并，并稳定列出差异来源。
-8. 实现强制终止后的恢复与一致性重放校验：进程被强制终止后重启只能依据已完整提交的批次记录恢复，未提交批次须标记为未知并要求重跑，不得声称能生成退出报告；恢复后按账本重放未完成批次并重算输出摘要与归属，差异须定位到首个不一致的批标识、请求标识与字段并以 E_REPLAY 报明依据。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3.11 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+bash scripts/demo.sh                                     # 端到端演示
+.venv/bin/python -m unittest discover -s tests -v        # 31 个测试
+```
 
-验收：
-用本地样本验证三格式归一、失效边界与增量/全量逐字节一致，并覆盖恢复与异常码。
+Windows（PowerShell）等价流程见 `scripts/demo.ps1`；激活脚本为
+`.venv\Scripts\Activate.ps1`。
+
+## 常用命令
+
+```bash
+PY=.venv/bin/python
+$PY -m batchdiag.cli gen-samples --samples-dir samples
+$PY -m batchdiag.cli validate   --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json
+$PY -m batchdiag.cli normalize  --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json --receipts samples/receipts_r3.json
+$PY -m batchdiag.cli plan       --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json
+$PY -m batchdiag.cli run        --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json --ledger artifacts/ledger.sqlite3
+$PY -m batchdiag.cli incremental --requests samples/requests.json --workers samples/workers.json --new-workers samples/workers_v2.json --rules samples/merge_rules.json --ledger artifacts/inc.sqlite3
+$PY -m batchdiag.cli verify     --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json --ledger-a artifacts/a.sqlite3 --ledger-b artifacts/b.sqlite3
+$PY -m batchdiag.cli scheduler  --requests samples/requests.json --workers samples/workers.json --rules samples/merge_rules.json [--timeout-demo]
+$PY -m batchdiag.cli snapshot   ... --ledger run/snap.sqlite3 [--tamper]
+$PY -m batchdiag.cli crash      ... --ledger run/crash.sqlite3 --after 2
+$PY -m batchdiag.cli recover    ... --ledger run/crash.sqlite3
+$PY -m batchdiag.cli replay     ... --ledger run/crash.sqlite3
+```
+
+## 目录
+
+- `batchdiag/`：可导入包（规格、回执编解码、切批、推理、失效、调度、账本、引擎、CLI、可选 GUI）
+- `samples/`：固定整数种子生成的请求流、工作器、规则、r1/r2/r3 回执与非法样本
+- `scripts/`：环境准备、演示、测试脚本（bash + PowerShell）
+- `tests/`：31 个 unittest，覆盖全部 8 项业务要求与错误码
+- `docs/DESIGN.md`：架构、稳定序列化规则、依赖链与错误码设计
+- `docs/VALIDATION.md`：实际验证结果与环境限制
+
+错误码：`E_SPEC`（规格）、`E_FIELD`（回执字段）、`E_CHAIN`（引用链路）、
+`E_TIMEOUT`（套接字超时）、`E_REPLAY`（重放分歧）、`E_SNAPSHOT`（快照）。
