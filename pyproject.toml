@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dialogue-rag-fixedpoint"
+version = "1.0.0"
+description = "Deterministic dialogue RAG deduplication, topic attribution, and fixed-point confidence synthesis"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[tool.setuptools.packages.find]
+include = ["dialogue_rag*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

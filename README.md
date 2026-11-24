@@ -20,3 +20,30 @@
 
 验收：
 使用本地样本验证增量运行与全量运行逐字段一致、失效范围精确、定点误差归因与快照恢复。
+
+---
+
+## 交付实现
+
+本目录已包含上述任务的首版可运行实现。
+
+```bash
+pip install numpy
+python -m dialogue_rag.sample_data --out samples
+python -m dialogue_rag.cli run --config samples/config.json --commands samples/commands.json
+python -m pytest tests/test_dialogue_rag.py -q
+```
+
+关键入口：
+
+- `dialogue_rag/cli.py`：命令行与退出信号处理。
+- `dialogue_rag/model.py`：配置/命令加载和业务校验码。
+- `dialogue_rag/recall.py`：通道加权、权威来源和逐轮去重。
+- `dialogue_rag/topics.py`：相似度切题、恰等决断和证据归属。
+- `dialogue_rag/scoring.py`：定点贡献、置信度合成和精确参考值。
+- `dialogue_rag/engine.py`：指纹缓存、依赖传播、预算待办和并发取证。
+- `dialogue_rag/snapshot.py`：事务目录、清单哈希和恢复判定。
+- `docs/TECHNICAL.md`：领域契约、缓存键和快照设计。
+- `docs/VERIFICATION.md`：实际命令与验证结果。
+
+默认诊断报告写入 `artifacts/diagnostic_report.json`，快照写入 `artifacts/state/`。
