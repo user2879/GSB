@@ -1,23 +1,140 @@
-从无到有搭建时，业务方需要一个可集成的纹理与材质生成组件与完整示例：在交互式调整材质分层权重、噪声层频率振幅、混合模式与量化档位时，既要在首响预算内返回可用的预览摘要，又要保证最终逐像素结果与从空白全量重建完全一致。输入为本地确定性样本目录：若干由固定种子程序生成的 PNG 基础纹理图（固定分辨率，含程序化噪声与图案控制点）、一份材质描述 JSON（每个材质含漫反射、粗糙度、金属度与法线扰动的分层权重）、一份生成配置 JSON（分辨率档位、噪声层数与每层频率振幅、材质混合模式、定点小数位宽与量化档位、按通道混合的舍入模式、线程池并发数、单批点数预算、交互延迟预算毫秒、快照提交间隔命令数）以及一份交互命令流 JSON。组件需完成逐层噪声合成、定点量化、逐通道材质混合与逐级误差传播追踪，并维护带版本号的持久化快照，支持中断恢复与异常注入隔离。
+# 确定性纹理与材质生成组件
 
-任务环境与准备：
-确认使用 64 位 Windows 10 或更高版本，并已安装 Python 3.11 及以上版本，且 python 命令在 PATH 中可用。
-创建并激活虚拟环境：python -m venv .venv 与 .venv\Scripts\activate。
-安装依赖：pip install numpy pillow；版本在 requirements.txt 中固定，不依赖 GPU、真实账号或任何外部服务。
-在本地样本目录中准备程序生成的 PNG 基础纹理、材质描述 JSON、生成配置 JSON 与交互命令流 JSON，所有随机性均由文件中声明的种子派生，运行时不得使用全局随机状态。
-准备一份独立注入配置与一份预期诊断报告结构说明，用于验证异常注入项编号与业务码的对应关系。
+这是一个可直接集成的 Python 3.11+ 组件，用于从本地 PNG 基础纹理、材质描述、生成配置和交互命令流生成四通道材质，并满足以下约束：
 
-业务要求：
-1. 实现样本与配置加载层：扫描输入目录下全部 PNG 基础纹理图，校验容器头、尺寸与像素模式并解码为 uint8 数组；解析材质描述、生成配置与交互命令流，校验分辨率档位单调递增、噪声层频率与振幅为正有限数、定点小数位宽与量化档位在允许枚举内、并发数为正且不超过上限、交互延迟预算与单批点数预算为正整数；每类非法输入映射到稳定的 E_xxx 业务码并进入失败清单，不得中断其余样本处理。
-2. 实现逐层确定性噪声合成与定点量化：按配置噪声层数与每层频率振幅叠加噪声，噪声值由像素坐标与层指纹派生的固定随机源生成，禁止任何运行时全局随机采样；每层叠加后按量化档位转换为定点整数并记录量化步长、整数结果与残差，图层叠加顺序固定为层序号升序、层内像素按行列号升序；切换量化档位或位宽必须真实改变中间整数与输出通道，而非仅改显示。
-3. 实现材质通道合成与按通道定点混合：依材质描述把纹理映射为漫反射、粗糙度、金属度与法线扰动四通道，再按混合模式与分层权重以定点整数逐通道加权合成，舍入模式取自配置；权重相等或舍入位于边界时按固定规则决断并记为边界样本；输出最终材质通道像素、逐通道贡献分解与边界样本清单，同一输入与配置下多次运行必须逐像素一致。
-4. 实现逐级误差传播追踪：对同一输入分别以配置定点位宽与高一档位宽完整计算噪声叠加、量化、材质混合、通道合成四个环节，输出各环节逐像素差值与首次超过配置容差所在环节的标注；当最终通道在两档位下判定不一致时，须区分翻转源于量化截断、舍入边界还是混合顺序差异，并输出归因依据数值。
-5. 实现基于内容指纹的精确失效判定与复用账本：为基础纹理、每层噪声、材质通道与最终合成计算由上游内容指纹、参数指纹与量化档位派生的缓存键，并记录每层引用的基础纹理与每通道引用的层集合；替换纹理、调整某层频率振幅、切换混合模式或位宽档位时，仅使受影响产物及其下游失效，未受影响产物必须直接复用且不得重新计算。
-6. 实现单批点数预算约束下的并发调度与待办保留：使用线程池并发执行层噪声生成与材质混合，最大并发数取自配置且不得超过；调度器按层序号稳定顺序消耗单批点数预算，超预算部分保留待算队列并以 E_POINT_BUDGET_PENDING 标记，下一批优先处理待办；每个层任务与素材任务携带由层序号与像素行号派生的稳定排序键，保证任意并发度与预算耗尽时机下预算扣减序列与串行执行一致。
-7. 实现交互延迟预算内的响应语义：每条交互命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，包含已完成层数、当前最终通道摘要、受影响层清单与进度；预算内无法得到最新参数下的完整结果时返回带 E_RESPONSE_STALE 标记的最新可用摘要并保持命令排队，不得以缩短计算或跳过量化来伪造满足预算。
-8. 实现阶段化快照整体替换与恢复判定及诊断报告输出：将加载校验、层噪声合成、材质混合、通道合成划分为阶段，各阶段产物先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、量化档位、已完成批次游标与各产物版本，替换前须识别版本变化而非逐文件覆盖；启动时以版本号与配置哈希判定是否续跑，不一致输出 E_SNAPSHOT_VERSION；每次运行输出含逐级误差追踪结论的 JSON 诊断报告。
+- 逐层程序化噪声由像素坐标和层指纹派生，不使用运行时全局随机状态。
+- 噪声量化、材质混合、通道合成全部使用显式定点整数运算。
+- 缓存键由上游内容指纹、参数指纹和定点档位派生，支持精确失效与复用账本。
+- 线程池并发执行层噪声与材质分片，单批点数预算和待办队列可复核。
+- 交互命令在延迟预算内返回最近已完成摘要，无法及时完成时返回 `E_RESPONSE_STALE`，不缩短计算。
+- 快照先写临时目录，再整体替换 `current`；支持版本/配置哈希恢复和中断回滚。
+- 每次运行输出逐级误差追踪、逐像素重建一致性、注入码映射和诊断 JSON。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 环境与安装
 
-验收：
-用本地样本验证交互摘要、逐像素结果与全量重建一致，并覆盖快照恢复与异常注入。
+目标环境：64 位 Windows 10 或更高版本、Python 3.11+，`python` 在 `PATH` 中。依赖仅 `numpy` 和 `Pillow`，不需要 GPU、账号或外部服务。
+
+```bat
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+`requirements.txt` 固定为：
+
+```text
+numpy==1.26.4
+Pillow==10.3.0
+```
+
+组件不依赖 Docker、shell 脚本或平台私有 API。快照目录替换在 Windows 上使用“旧目录改名为备份 -> 暂存目录改名 -> 清理备份”的流程。
+
+## 快速开始
+
+仓库已经包含确定性样本；也可重新生成：
+
+```bat
+python -m matgen.cli generate-samples --root samples
+python -m matgen.cli run --input samples\basic --output artifacts\basic --fresh
+python -m matgen.cli run --input samples\basic --output artifacts\basic --resume
+```
+
+注入与异常隔离示例：
+
+```bat
+python -m matgen.cli run ^
+  --input samples\injected ^
+  --output artifacts\injected ^
+  --injections samples\injected\injection_config.json ^
+  --fresh
+```
+
+主要输出：
+
+- `artifacts\basic\diagnostic_report.json`：完整诊断报告。
+- `artifacts\basic\artifacts\layers.npz`：每层未量化值、量化整数和残差。
+- `artifacts\basic\artifacts\material_channels.npz`：逐通道混合结果和逐层贡献。
+- `artifacts\basic\artifacts\final_channels.npz`：最终四通道定点像素。
+- `artifacts\basic\artifacts\error_trace_differences.npz`：四个环节逐像素差值。
+- `artifacts\basic\artifacts\preview__*.png`：每个材质通道的 8 位预览。
+- `artifacts\basic\snapshots\current\`：整体替换的版本化快照。
+
+## 输入目录
+
+```text
+samples/basic/
+  config.json
+  materials.json
+  commands.json
+  textures/
+    base_01.png ... base_04.png
+```
+
+加载器递归扫描输入目录下全部 `*.png`，校验 PNG 容器签名、尺寸和像素模式；单张纹理失败只进入失败清单，不终止其余纹理、材质或命令解析。
+
+### 生成配置
+
+`config.json` 的关键字段：
+
+- `resolution_tiers`：严格递增的正整数分辨率档位。
+- `resolution`：必须位于档位列表内，且与所有基础纹理尺寸一致。
+- `noise_layers[]`：`texture`、正有限 `frequency`、正有限 `amplitude`；数组下标即稳定层序号。
+- `material_mix_mode`：`weighted`、`multiply`、`screen` 或 `overlay`。
+- `fixed_point`：位宽、小数位宽、量化档位、允许档位集合、四通道舍入模式。
+- `error_trace.bit_width_ladder`：必须包含当前位宽和至少一个更高位宽。
+- `concurrency`、`max_concurrency`、`point_budget`、`latency_budget_ms`、`snapshot_commit_interval`。
+
+### 材质与命令
+
+材质层引用噪声层序号，并给出 `diffuse`、`roughness`、`metallic`、`normal_perturbation` 四通道非负权重。命令支持：
+
+```json
+{"op":"set_layer","layer":1,"frequency":0.19,"amplitude":0.15}
+{"op":"set_weight","material":"brushed_steel","layer":2,"channel":"roughness","value":0.34}
+{"op":"set_mix_mode","value":"multiply"}
+{"op":"set_quantization","level":4}
+{"op":"set_bit_width","bit_width":20}
+```
+
+修改某一层使该层及下游层失效；修改某材质某通道权重只使该通道产物和最终合成失效；其他层、其他通道直接复用。
+
+## 组件集成
+
+```python
+from matgen.cache import CacheStore
+from matgen.engine import MaterialEngine
+from matgen.injection import InjectionRegistry
+from matgen.interactive import InteractiveRunner
+from matgen.loader import input_fingerprint, load_input
+from matgen.snapshot import SnapshotManager
+
+loaded = load_input("samples/basic")
+snapshots = SnapshotManager("artifacts/basic/snapshots")
+cache = CacheStore()
+engine = MaterialEngine(cache=cache, injections=InjectionRegistry())
+runner = InteractiveRunner(
+    engine=engine,
+    textures=loaded.textures,
+    input_config_hash=input_fingerprint(loaded),
+    commands=loaded.commands,
+    snapshot_manager=snapshots,
+    resume=True,
+)
+output = runner.run(loaded.config, loaded.materials)
+final = output["final_result"]
+print(final.final_digest, output["stale_responses"])
+```
+
+## 兼容性与验证
+
+- 全部随机性来自配置种子、层指纹、像素坐标和内容哈希。
+- 定点整数、显式舍入和固定遍历顺序保证同输入多次运行逐像素一致。
+- 报告中的 `full_rebuild.exact_match` 对比“增量/缓存结果”和“空白缓存全量重建”的最终通道数组。
+- 已提供 28 项自动化测试，覆盖加载、定点、噪声、失效、预算、交互、快照、误差归因和注入隔离。
+
+```bat
+python -m unittest discover -s tests -v
+```
+
+设计说明见 `docs/architecture.md`，诊断字段见 `docs/diagnostic_report_schema.md`，注入码映射见 `docs/injection_and_codes.md`，实际验证记录见 `docs/verification.md`。

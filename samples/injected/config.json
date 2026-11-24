@@ -1,0 +1,79 @@
+{
+  "concurrency": 4,
+  "error_trace": {
+    "bit_width_ladder": [
+      12,
+      16,
+      20,
+      24
+    ],
+    "embed_pixel_diffs": true,
+    "final_consistency_tolerance": 1e-05,
+    "tolerance": {
+      "channel_synthesis": 1e-05,
+      "material_mix": 1e-05,
+      "noise_composition": 1e-05,
+      "quantization": 1e-05
+    }
+  },
+  "fixed_point": {
+    "bit_width": 16,
+    "fraction_bits": 8,
+    "quantization_level": 2,
+    "quantization_tiers": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "rounding": {
+      "diffuse": "half_up",
+      "metallic": "half_up",
+      "normal_perturbation": "half_even",
+      "roughness": "half_even"
+    },
+    "weight_fraction_bits": 12
+  },
+  "latency_budget_ms": 5,
+  "material_mix_mode": "weighted",
+  "max_boundary_samples": 10000,
+  "max_concurrency": 4,
+  "noise_layer_count": 4,
+  "noise_layers": [
+    {
+      "amplitude": 0.22,
+      "frequency": 0.09,
+      "name": "macro",
+      "texture": "textures/base_01.png"
+    },
+    {
+      "amplitude": 0.16,
+      "frequency": 0.17,
+      "name": "weave",
+      "texture": "textures/base_02.png"
+    },
+    {
+      "amplitude": 0.1,
+      "frequency": 0.31,
+      "name": "scratch",
+      "texture": "textures/base_03.png"
+    },
+    {
+      "amplitude": 0.06,
+      "frequency": 0.53,
+      "name": "micro",
+      "texture": "textures/base_04.png"
+    }
+  ],
+  "point_budget": 4096,
+  "resolution": 32,
+  "resolution_tiers": [
+    16,
+    32,
+    48,
+    64
+  ],
+  "schema_version": 1,
+  "seed": 20261124,
+  "snapshot_commit_interval": 2
+}

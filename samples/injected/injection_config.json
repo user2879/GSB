@@ -1,0 +1,47 @@
+{
+  "injections": [
+    {
+      "action": "load_invalid_header",
+      "expected_code": "E_TEXTURE_HEADER",
+      "id": "INJ-LOAD-001",
+      "stage": "load",
+      "target": "textures/bad_header.png"
+    },
+    {
+      "action": "load_wrong_size",
+      "expected_code": "E_TEXTURE_SIZE",
+      "id": "INJ-LOAD-002",
+      "stage": "load",
+      "target": "textures/wrong_size.png"
+    },
+    {
+      "action": "load_unsupported_mode",
+      "expected_code": "E_TEXTURE_MODE",
+      "id": "INJ-LOAD-003",
+      "stage": "load",
+      "target": "textures/palette.png"
+    },
+    {
+      "action": "delay_ms",
+      "delay_ms": 90,
+      "expected_code": "E_RESPONSE_STALE",
+      "id": "INJ-LAYER-001",
+      "stage": "layer_noise",
+      "target_layer": 0
+    },
+    {
+      "action": "raise",
+      "expected_code": "E_MATERIAL_RUNTIME",
+      "id": "INJ-MAT-001",
+      "stage": "material_mix",
+      "target_material": "painted_plastic"
+    },
+    {
+      "action": "snapshot_hash_mismatch",
+      "expected_code": "E_SNAPSHOT_VERSION",
+      "id": "INJ-SNAP-001",
+      "stage": "snapshot"
+    }
+  ],
+  "schema_version": 1
+}

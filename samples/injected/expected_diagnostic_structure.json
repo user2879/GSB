@@ -1,0 +1,42 @@
+{
+  "expected_latency_codes": [
+    "E_RESPONSE_STALE"
+  ],
+  "expected_load_codes": [
+    "E_TEXTURE_HEADER",
+    "E_TEXTURE_SIZE",
+    "E_TEXTURE_MODE"
+  ],
+  "expected_runtime_codes": [
+    "E_MATERIAL_RUNTIME"
+  ],
+  "expected_snapshot_codes": [
+    "E_SNAPSHOT_VERSION"
+  ],
+  "injection_id_to_code": {
+    "INJ-LAYER-001": "E_RESPONSE_STALE",
+    "INJ-LOAD-001": "E_TEXTURE_HEADER",
+    "INJ-LOAD-002": "E_TEXTURE_SIZE",
+    "INJ-LOAD-003": "E_TEXTURE_MODE",
+    "INJ-MAT-001": "E_MATERIAL_RUNTIME",
+    "INJ-SNAP-001": "E_SNAPSHOT_VERSION"
+  },
+  "report_type": "texture_material_generation_diagnostic",
+  "required_top_level": [
+    "status",
+    "codes",
+    "issues",
+    "layers",
+    "materials",
+    "final",
+    "error_trace",
+    "full_rebuild",
+    "cache_ledger",
+    "scheduler",
+    "interactive",
+    "injections",
+    "snapshot",
+    "artifacts"
+  ],
+  "schema_version": 1
+}
