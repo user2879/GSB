@@ -1,0 +1,90 @@
+{
+  "distillation": {
+    "soft_label_weight": 0.35,
+    "temperature": 1.5
+  },
+  "layers": {
+    "block0.attn.k": {
+      "group_size": 4
+    },
+    "block0.attn.q": {
+      "group_size": 2
+    },
+    "block0.mlp.down": {
+      "group_size": 4
+    },
+    "block0.mlp.up": {
+      "group_size": 3
+    },
+    "block1.attn.k": {
+      "group_size": 5
+    },
+    "block1.attn.q": {
+      "group_size": 5
+    },
+    "block1.mlp.down": {
+      "group_size": 4
+    },
+    "block1.mlp.up": {
+      "group_size": 4
+    }
+  },
+  "quantization": {
+    "active_profile": "q8",
+    "allowed_bit_widths": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "group_size": 4,
+    "interpolation": "linear",
+    "min_group_size": 3,
+    "percentile_high": 0.95,
+    "percentile_low": 0.05,
+    "profiles": [
+      {
+        "bits": 6,
+        "fractional_bits": 6,
+        "name": "q6"
+      },
+      {
+        "bits": 8,
+        "fractional_bits": 8,
+        "name": "q8"
+      },
+      {
+        "bits": 10,
+        "fractional_bits": 10,
+        "name": "q10"
+      }
+    ],
+    "rounding": "nearest_even",
+    "saturation": "saturate",
+    "scheme": "symmetric",
+    "tie_break": "lower_index"
+  },
+  "runtime": {
+    "layer_point_quota": 1000,
+    "max_workers": 4,
+    "point_budget": 1000,
+    "snapshot_interval": 2
+  },
+  "seed": 20261124,
+  "tolerances": {
+    "absolute": 0.015,
+    "relative": 0.12
+  },
+  "version": 1
+}

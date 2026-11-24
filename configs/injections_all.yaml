@@ -1,0 +1,43 @@
+{
+  "injections": [
+    {
+      "id": "INJ-001",
+      "layer": "block0.attn.k",
+      "stage": "validation",
+      "type": "non_finite_weight"
+    },
+    {
+      "id": "INJ-002",
+      "layer": "block0.attn.q",
+      "stage": "validation",
+      "type": "group_indivisible"
+    },
+    {
+      "id": "INJ-003",
+      "layer": "block0.mlp.up",
+      "params": {
+        "target_bits": 99
+      },
+      "stage": "config",
+      "type": "bit_width_out_of_range"
+    },
+    {
+      "id": "INJ-004",
+      "layer": "block1.attn.k",
+      "stage": "calibration",
+      "type": "calibration_dimension_mismatch"
+    },
+    {
+      "id": "INJ-005",
+      "stage": "distillation",
+      "type": "zero_temperature"
+    },
+    {
+      "id": "INJ-006",
+      "layer": "block1.mlp.down",
+      "stage": "validation",
+      "type": "duplicate_layer_name"
+    }
+  ],
+  "version": 1
+}

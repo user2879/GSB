@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-quant-pipeline"
+version = "1.0.0"
+description = "Deterministic LLM weight quantization, error attribution, and distillation correction pipeline"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+llm-quant-pipeline = "quant_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["quant_pipeline*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
