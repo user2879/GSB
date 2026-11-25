@@ -20,3 +20,18 @@ Windows 10/11，Python 3.11 已安装并可从命令行调用 python。
 
 验收：
 用本地样本验证两版本互转、逐组件定点烈度与等级、增量与全量一致及注入隔离，并输出诊断报告。
+
+---
+
+## 实现交付入口
+
+可运行实现位于 `pv_ir_ledger/`，完整设计与字段约定见 `docs/TECHNICAL_NOTES.md`。
+
+```bat
+py -3.11 -m pip install -r requirements.txt
+py -3.11 -m pv_ir_ledger generate-samples --root samples
+py -3.11 -m pv_ir_ledger verify --workspace . --report reports\diagnostic_report.json
+py -3.11 -m unittest discover -s tests -v
+```
+
+当前实测：诊断器 `28/28` 项通过，单元测试 `12/12` 通过；诊断报告见 `reports/diagnostic_report.md`。

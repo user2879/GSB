@@ -1,0 +1,61 @@
+{
+  "injections": [
+    {
+      "config": "injections/INJ01_image_config.json",
+      "expected_code": "E_IMAGE_FORMAT",
+      "fault": "truncated PNG bytes",
+      "id": "INJ01",
+      "input": "injections/INJ01_truncated.png",
+      "isolation": "other PNGs in the same directory continue processing"
+    },
+    {
+      "config": "injections/INJ02_bad_colormap_config.json",
+      "expected_code": "E_CONFIG_INVALID",
+      "fault": "configured pseudo-color mapping code outside allowed table",
+      "id": "INJ02A"
+    },
+    {
+      "config": "recognition_config.json",
+      "expected_code": "E_IMAGE_FORMAT",
+      "fault": "PNG pixel color absent from pseudo-color table",
+      "id": "INJ02B",
+      "input": "injections/INJ02_unknown_pseudo_color.png"
+    },
+    {
+      "config": "injections/INJ03_silent_config.json",
+      "expected_code": "E_CELL_DEGRADED",
+      "fault": "one grid cell is completely thermally silent",
+      "id": "INJ03",
+      "input": "injections/INJ03_silent_cell.png",
+      "isolation": "other cells retain independent grades and statistics"
+    },
+    {
+      "config": "recognition_config.json",
+      "expected_code": "E_TRUTH_INVALID",
+      "fault": "truth bbox crosses its grid cell",
+      "id": "INJ04",
+      "truth": "injections/INJ04_bbox_outside_grid_truth.json"
+    },
+    {
+      "config": "recognition_config.json",
+      "expected_code": "E_TRUTH_INVALID",
+      "fault": "truth bbox outside image",
+      "id": "INJ05",
+      "truth": "injections/INJ05_bbox_outside_image_truth.json"
+    },
+    {
+      "config": "injections/INJ06_invalid_config.json",
+      "expected_code": "E_CONFIG_INVALID",
+      "fault": "multiple invalid configuration fields",
+      "id": "INJ06"
+    },
+    {
+      "expected_code": "E_FIELD_TRUNCATED",
+      "fault": "short or illegal v1 fixed-width field",
+      "id": "INJ07",
+      "input": "injections/INJ07_truncated_or_illegal_v1.txt"
+    }
+  ],
+  "schema": "pv-ir-injection-manifest-v1",
+  "seed": 274
+}

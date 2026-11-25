@@ -1,0 +1,42 @@
+{
+  "commands": [
+    {
+      "op": "set_exchange_version",
+      "version": "v2"
+    },
+    {
+      "grid_cols": 7,
+      "grid_rows": 5,
+      "op": "set_grid"
+    },
+    {
+      "op": "set_percentiles",
+      "percentile_high_permille": 920,
+      "percentile_low_permille": 560
+    },
+    {
+      "grade_thresholds_permille": [
+        220,
+        390,
+        570,
+        740
+      ],
+      "op": "set_thresholds"
+    },
+    {
+      "fixed_decimals": 4,
+      "op": "set_quantization",
+      "quant_levels": 32
+    },
+    {
+      "image": "IR_ARRAY_A.png",
+      "op": "replace_image",
+      "variant": 3
+    },
+    {
+      "image": "IR_ARRAY_C.png",
+      "op": "delete_image"
+    }
+  ],
+  "schema": "pv-ir-command-stream-v1"
+}

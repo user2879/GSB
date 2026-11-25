@@ -1,0 +1,1051 @@
+{
+  "checks": [
+    {
+      "details": {
+        "mismatches": [],
+        "parse_issue_count": 0,
+        "strict_mismatch_count": 0,
+        "strict_mismatches": [],
+        "v1_count": 72,
+        "v2_count": 72
+      },
+      "id": "EXCHANGE_ROUNDTRIP",
+      "ok": true,
+      "title": "v2 -> v1+sidecar -> v2 logical representation is identical"
+    },
+    {
+      "details": {
+        "issue_count": 2,
+        "parsed_records": 2,
+        "reasons": [
+          "LINE_WIDTH_INSUFFICIENT",
+          "ILLEGAL_CHARACTER"
+        ]
+      },
+      "id": "EXCHANGE_E_FIELD_TRUNCATED",
+      "ok": true,
+      "title": "short and illegal v1 fields emit E_FIELD_TRUNCATED"
+    },
+    {
+      "details": {
+        "component_count": 72,
+        "failure_count": 0
+      },
+      "id": "INCREMENTAL_BASELINE_DETERMINISM",
+      "ok": true,
+      "title": "blank baseline domain ledger is deterministic"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 72,
+        "conversion_recomputed": 72,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "pending_count": 0,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_01_EXCHANGE_V2",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after EXCHANGE_V2"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "grid_recomputed": 105,
+        "pending_count": 0,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_02_GRID_5X7",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after GRID_5X7"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "grid_reused": 105,
+        "pending_count": 0,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_03_PERCENTILES",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after PERCENTILES"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "grade_recomputed": 105,
+        "pending_count": 0,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_04_THRESHOLDS",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after THRESHOLDS"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "fixed_decimals": 4,
+        "pending_count": 0,
+        "quant_values_changed": 105,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_05_QUANT_Q4_L32",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after QUANT_Q4_L32"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "fixed_decimals": 2,
+        "pending_count": 0,
+        "quant_values_changed": 105,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_06_QUANT_Q2_L16",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after QUANT_Q2_L16"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "pending_count": 0,
+        "sidecar_equal": true,
+        "unchanged_regression_reused": 70
+      },
+      "id": "COMMAND_07_REPLACE_IMAGE_A",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after REPLACE_IMAGE_A"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 70,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "pending_count": 0,
+        "remaining_components": 70,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_08_DELETE_IMAGE_C",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after DELETE_IMAGE_C"
+    },
+    {
+      "details": {
+        "apply_issue_count": 0,
+        "cache_expectation_ok": true,
+        "component_count": 70,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failure_count": 0,
+        "first_difference": null,
+        "pending_count": 0,
+        "sidecar_equal": true
+      },
+      "id": "COMMAND_09_EXCHANGE_V1",
+      "ok": true,
+      "title": "incremental and blank full rebuild match after EXCHANGE_V1"
+    },
+    {
+      "details": {
+        "steps": [
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "op": "set_exchange_version",
+              "version": "v2"
+            },
+            "components": 72,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "EXCHANGE_V2",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "grid_cols": 7,
+              "grid_rows": 5,
+              "op": "set_grid"
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "GRID_5X7",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "op": "set_percentiles",
+              "percentile_high_permille": 930,
+              "percentile_low_permille": 360
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "PERCENTILES",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "grade_thresholds_permille": [
+                220,
+                380,
+                540,
+                700
+              ],
+              "op": "set_thresholds"
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "THRESHOLDS",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "fixed_decimals": 4,
+              "op": "set_quantization",
+              "quant_levels": 32
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "QUANT_Q4_L32",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "fixed_decimals": 2,
+              "op": "set_quantization",
+              "quant_levels": 16
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "QUANT_Q2_L16",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "image": "IR_ARRAY_A.png",
+              "op": "replace_image",
+              "variant": 3
+            },
+            "components": 105,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "REPLACE_IMAGE_A",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "image": "IR_ARRAY_C.png",
+              "op": "delete_image"
+            },
+            "components": 70,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "DELETE_IMAGE_C",
+            "sidecar_equal": true
+          },
+          {
+            "cache_expectation_ok": true,
+            "command": {
+              "op": "set_exchange_version",
+              "version": "v1"
+            },
+            "components": 70,
+            "domain_equal": true,
+            "event_order_equal": true,
+            "failures": 0,
+            "label": "EXCHANGE_V1",
+            "sidecar_equal": true
+          }
+        ]
+      },
+      "id": "INCREMENTAL_SEQUENCE_ALL_MATCH",
+      "ok": true,
+      "title": "every command step matches a blank full rebuild field-for-field"
+    },
+    {
+      "details": {
+        "first_costs": [
+          101760,
+          101760,
+          103680,
+          101760,
+          101760
+        ],
+        "task_count": 72
+      },
+      "id": "BUDGET_STABLE_PREFIX",
+      "ok": true,
+      "title": "different exhaustion points consume the same stable sorted prefix"
+    },
+    {
+      "details": {
+        "manifest": {
+          "colormap_version": "PV-COLORMAP-TABLE-V1",
+          "completed_images": [
+            "IR_ARRAY_A.png"
+          ],
+          "config_hash": "15a4f5f0606148ca3bd3e05e0c3b90b6f00024bd620eed6f456798716fe4ded8",
+          "global_version": 1,
+          "grade_table_version": "PV-GRADE-TABLE-V1",
+          "pending_queue": [
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c00",
+              "component_id": 1,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000001|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c01",
+              "component_id": 2,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000002|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c02",
+              "component_id": 3,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000003|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c03",
+              "component_id": 4,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000004|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c04",
+              "component_id": 5,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000005|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r00c05",
+              "component_id": 6,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000006|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c00",
+              "component_id": 7,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000007|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c01",
+              "component_id": 8,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000008|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c02",
+              "component_id": 9,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000009|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c03",
+              "component_id": 10,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000010|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c04",
+              "component_id": 11,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000011|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r01c05",
+              "component_id": 12,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000012|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c00",
+              "component_id": 13,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000013|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c01",
+              "component_id": 14,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000014|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c02",
+              "component_id": 15,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000015|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c03",
+              "component_id": 16,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000016|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c04",
+              "component_id": 17,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000017|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r02c05",
+              "component_id": 18,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000018|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c00",
+              "component_id": 19,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000019|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c01",
+              "component_id": 20,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000020|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c02",
+              "component_id": 21,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000021|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c03",
+              "component_id": 22,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000022|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c04",
+              "component_id": 23,
+              "cost": 101760,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000023|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_B.png#r03c05",
+              "component_id": 24,
+              "cost": 103680,
+              "image": "IR_ARRAY_B.png",
+              "scheduler_key": "IR_ARRAY_B.png|00000024|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c00",
+              "component_id": 1,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000001|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c01",
+              "component_id": 2,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000002|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c02",
+              "component_id": 3,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000003|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c03",
+              "component_id": 4,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000004|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c04",
+              "component_id": 5,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000005|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r00c05",
+              "component_id": 6,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000006|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c00",
+              "component_id": 7,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000007|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c01",
+              "component_id": 8,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000008|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c02",
+              "component_id": 9,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000009|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c03",
+              "component_id": 10,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000010|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c04",
+              "component_id": 11,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000011|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r01c05",
+              "component_id": 12,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000012|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c00",
+              "component_id": 13,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000013|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c01",
+              "component_id": 14,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000014|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c02",
+              "component_id": 15,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000015|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c03",
+              "component_id": 16,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000016|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c04",
+              "component_id": 17,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000017|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r02c05",
+              "component_id": 18,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000018|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c00",
+              "component_id": 19,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000019|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c01",
+              "component_id": 20,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000020|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c02",
+              "component_id": 21,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000021|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c03",
+              "component_id": 22,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000022|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c04",
+              "component_id": 23,
+              "cost": 101760,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000023|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            },
+            {
+              "cell_ref": "IR_ARRAY_C.png#r03c05",
+              "component_id": 24,
+              "cost": 103680,
+              "image": "IR_ARRAY_C.png",
+              "scheduler_key": "IR_ARRAY_C.png|00000024|heat_sampling:v1",
+              "stage_name": "heat_sampling:v1"
+            }
+          ],
+          "state_schema_version": 1
+        },
+        "pending": 48,
+        "processed": 24
+      },
+      "id": "BUDGET_PENDING_SNAPSHOT",
+      "ok": true,
+      "title": "budget shortfall creates ordered pending queue and committed manifest"
+    },
+    {
+      "details": {
+        "deduction_count": 72,
+        "deductions_equal": true,
+        "domain_equal": true,
+        "first_difference": null
+      },
+      "id": "SNAPSHOT_RECOVERY_FULL_EQUAL",
+      "ok": true,
+      "title": "resume from pending snapshot yields full ledger and identical deduction sequence"
+    },
+    {
+      "details": {
+        "changed_config_detected": true,
+        "changed_config_issue_count": 0,
+        "global_version_after_resume": 2,
+        "ignored_temp_dirs": [
+          ".pv_tmp/snapshot-v-stale-interrupted"
+        ],
+        "same_config_hash": true,
+        "state_schema_version": 1
+      },
+      "id": "SNAPSHOT_VERSION_CONFIG_DETECTION",
+      "ok": true,
+      "title": "startup recognizes schema version and configuration hash changes; stale temp transactions are ignored"
+    },
+    {
+      "details": {
+        "max_configured_concurrency": 4,
+        "max_observed_concurrency": 4
+      },
+      "id": "CONCURRENCY_LIMIT",
+      "ok": true,
+      "title": "thread pool never exceeds configured maximum and results stay sorted"
+    },
+    {
+      "details": {
+        "hard_upper_limit": 8,
+        "issue_count": 1
+      },
+      "id": "CONCURRENCY_UPPER_BOUND_VALIDATION",
+      "ok": true,
+      "title": "concurrency above hard upper limit is rejected"
+    },
+    {
+      "details": {
+        "failure_codes": [
+          "E_IMAGE_FORMAT"
+        ],
+        "neighbor_components": 24
+      },
+      "id": "INJ01_TRUNCATED_PNG_ISOLATED",
+      "ok": true,
+      "title": "truncated PNG emits E_IMAGE_FORMAT while neighbor image completes"
+    },
+    {
+      "details": {
+        "issue_count": 1
+      },
+      "id": "INJ02A_COLORMAP_CONFIG",
+      "ok": true,
+      "title": "out-of-table pseudo-color mapping config emits E_CONFIG_INVALID"
+    },
+    {
+      "details": {
+        "issues": [
+          {
+            "code": "E_IMAGE_FORMAT",
+            "distance_sq": 58642,
+            "message": "pixel color code is outside the supported pseudo-color table",
+            "nearest_heat_code": 788,
+            "reason": "COLORMAP_CODE_OUT_OF_RANGE",
+            "rgb": [
+              0,
+              255,
+              0
+            ]
+          }
+        ]
+      },
+      "id": "INJ02B_COLORMAP_PIXEL_CODE",
+      "ok": true,
+      "title": "unknown pseudo-color pixel code emits E_IMAGE_FORMAT"
+    },
+    {
+      "details": {
+        "component_count": 24,
+        "other_degraded_count": 0,
+        "silent_grade": "DEGRADED"
+      },
+      "id": "INJ03_SILENT_CELL_ISOLATED",
+      "ok": true,
+      "title": "silent cell is degraded and does not pollute other cells"
+    },
+    {
+      "details": {
+        "issue_count": 2,
+        "reasons": [
+          null,
+          "BBOX_OUTSIDE_GRID"
+        ]
+      },
+      "id": "INJ04_BBOX_OUTSIDE_GRID",
+      "ok": true,
+      "title": "INJ04_bbox_outside_grid_truth.json emits E_TRUTH_INVALID"
+    },
+    {
+      "details": {
+        "issue_count": 2,
+        "reasons": [
+          null,
+          null
+        ]
+      },
+      "id": "INJ05_BBOX_OUTSIDE_IMAGE",
+      "ok": true,
+      "title": "INJ05_bbox_outside_image_truth.json emits E_TRUTH_INVALID"
+    },
+    {
+      "details": {
+        "fields": [
+          "colormap_name",
+          "grid_cols",
+          "grid_rows"
+        ],
+        "issue_count": 8
+      },
+      "id": "INJ06_INVALID_CONFIG",
+      "ok": true,
+      "title": "independent invalid config reports all parameter violations"
+    },
+    {
+      "details": {
+        "issue_count": 2
+      },
+      "id": "INJ07_FIELD_TRUNCATED",
+      "ok": true,
+      "title": "injected v1 truncation and illegal characters emit E_FIELD_TRUNCATED"
+    },
+    {
+      "details": {
+        "boundary_threshold_permille": 333,
+        "comparison_rule": "GRADE_IS_COUNT_OF_THRESHOLDS_LESS_OR_EQUAL_TO_INTENSITY",
+        "equality_rule": "EQUAL_TO_THRESHOLD_USES_HIGHER_GRADE_AND_IS_MARKED",
+        "grade_code": 2,
+        "grade_name": "MINOR",
+        "threshold_boundary": true
+      },
+      "id": "BOUNDARY_EQUAL_THRESHOLD",
+      "ok": true,
+      "title": "equality to a threshold selects the higher grade and marks the boundary"
+    }
+  ],
+  "incremental": {
+    "final_config_hash": "718cad77ae83e623f77314105a3220cc9f5de4c894aa9a65176901867b9bad98",
+    "steps": [
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "op": "set_exchange_version",
+          "version": "v2"
+        },
+        "components": 72,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "EXCHANGE_V2",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "grid_cols": 7,
+          "grid_rows": 5,
+          "op": "set_grid"
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "GRID_5X7",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "op": "set_percentiles",
+          "percentile_high_permille": 930,
+          "percentile_low_permille": 360
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "PERCENTILES",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "grade_thresholds_permille": [
+            220,
+            380,
+            540,
+            700
+          ],
+          "op": "set_thresholds"
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "THRESHOLDS",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "fixed_decimals": 4,
+          "op": "set_quantization",
+          "quant_levels": 32
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "QUANT_Q4_L32",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "fixed_decimals": 2,
+          "op": "set_quantization",
+          "quant_levels": 16
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "QUANT_Q2_L16",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "image": "IR_ARRAY_A.png",
+          "op": "replace_image",
+          "variant": 3
+        },
+        "components": 105,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "REPLACE_IMAGE_A",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "image": "IR_ARRAY_C.png",
+          "op": "delete_image"
+        },
+        "components": 70,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "DELETE_IMAGE_C",
+        "sidecar_equal": true
+      },
+      {
+        "cache_expectation_ok": true,
+        "command": {
+          "op": "set_exchange_version",
+          "version": "v1"
+        },
+        "components": 70,
+        "domain_equal": true,
+        "event_order_equal": true,
+        "failures": 0,
+        "label": "EXCHANGE_V1",
+        "sidecar_equal": true
+      }
+    ]
+  },
+  "markdown": "# 光伏红外组件账本诊断报告\n\n- 总体结果：通过\n- Python：3.11.0rc1\n- 平台：Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35\n- 检查数：28；通过：28；失败：0\n- 样本组件数：72；真值一致：72/72\n\n## 检查结果\n\n| ID | 结果 | 说明 |\n| --- | --- | --- |\n| `EXCHANGE_ROUNDTRIP` | PASS | v2 -> v1+sidecar -> v2 logical representation is identical |\n| `EXCHANGE_E_FIELD_TRUNCATED` | PASS | short and illegal v1 fields emit E_FIELD_TRUNCATED |\n| `INCREMENTAL_BASELINE_DETERMINISM` | PASS | blank baseline domain ledger is deterministic |\n| `COMMAND_01_EXCHANGE_V2` | PASS | incremental and blank full rebuild match after EXCHANGE_V2 |\n| `COMMAND_02_GRID_5X7` | PASS | incremental and blank full rebuild match after GRID_5X7 |\n| `COMMAND_03_PERCENTILES` | PASS | incremental and blank full rebuild match after PERCENTILES |\n| `COMMAND_04_THRESHOLDS` | PASS | incremental and blank full rebuild match after THRESHOLDS |\n| `COMMAND_05_QUANT_Q4_L32` | PASS | incremental and blank full rebuild match after QUANT_Q4_L32 |\n| `COMMAND_06_QUANT_Q2_L16` | PASS | incremental and blank full rebuild match after QUANT_Q2_L16 |\n| `COMMAND_07_REPLACE_IMAGE_A` | PASS | incremental and blank full rebuild match after REPLACE_IMAGE_A |\n| `COMMAND_08_DELETE_IMAGE_C` | PASS | incremental and blank full rebuild match after DELETE_IMAGE_C |\n| `COMMAND_09_EXCHANGE_V1` | PASS | incremental and blank full rebuild match after EXCHANGE_V1 |\n| `INCREMENTAL_SEQUENCE_ALL_MATCH` | PASS | every command step matches a blank full rebuild field-for-field |\n| `BUDGET_STABLE_PREFIX` | PASS | different exhaustion points consume the same stable sorted prefix |\n| `BUDGET_PENDING_SNAPSHOT` | PASS | budget shortfall creates ordered pending queue and committed manifest |\n| `SNAPSHOT_RECOVERY_FULL_EQUAL` | PASS | resume from pending snapshot yields full ledger and identical deduction sequence |\n| `SNAPSHOT_VERSION_CONFIG_DETECTION` | PASS | startup recognizes schema version and configuration hash changes; stale temp transactions are ignored |\n| `CONCURRENCY_LIMIT` | PASS | thread pool never exceeds configured maximum and results stay sorted |\n| `CONCURRENCY_UPPER_BOUND_VALIDATION` | PASS | concurrency above hard upper limit is rejected |\n| `INJ01_TRUNCATED_PNG_ISOLATED` | PASS | truncated PNG emits E_IMAGE_FORMAT while neighbor image completes |\n| `INJ02A_COLORMAP_CONFIG` | PASS | out-of-table pseudo-color mapping config emits E_CONFIG_INVALID |\n| `INJ02B_COLORMAP_PIXEL_CODE` | PASS | unknown pseudo-color pixel code emits E_IMAGE_FORMAT |\n| `INJ03_SILENT_CELL_ISOLATED` | PASS | silent cell is degraded and does not pollute other cells |\n| `INJ04_BBOX_OUTSIDE_GRID` | PASS | INJ04_bbox_outside_grid_truth.json emits E_TRUTH_INVALID |\n| `INJ05_BBOX_OUTSIDE_IMAGE` | PASS | INJ05_bbox_outside_image_truth.json emits E_TRUTH_INVALID |\n| `INJ06_INVALID_CONFIG` | PASS | independent invalid config reports all parameter violations |\n| `INJ07_FIELD_TRUNCATED` | PASS | injected v1 truncation and illegal characters emit E_FIELD_TRUNCATED |\n| `BOUNDARY_EQUAL_THRESHOLD` | PASS | equality to a threshold selects the higher grade and marks the boundary |\n\n## 增量步骤\n\n| 步骤 | 域一致 | 事件顺序一致 | 旁路一致 | 缓存断言 | 组件数 |\n| --- | --- | --- | --- | --- | --- |\n| EXCHANGE_V2 | True | True | True | True | 72 |\n| GRID_5X7 | True | True | True | True | 105 |\n| PERCENTILES | True | True | True | True | 105 |\n| THRESHOLDS | True | True | True | True | 105 |\n| QUANT_Q4_L32 | True | True | True | True | 105 |\n| QUANT_Q2_L16 | True | True | True | True | 105 |\n| REPLACE_IMAGE_A | True | True | True | True | 105 |\n| DELETE_IMAGE_C | True | True | True | True | 70 |\n| EXCHANGE_V1 | True | True | True | True | 70 |\n\n## 注入隔离\n\n- `INJ01_TRUNCATED_PNG_ISOLATED`: 通过 — truncated PNG emits E_IMAGE_FORMAT while neighbor image completes\n- `INJ02A_COLORMAP_CONFIG`: 通过 — out-of-table pseudo-color mapping config emits E_CONFIG_INVALID\n- `INJ02B_COLORMAP_PIXEL_CODE`: 通过 — unknown pseudo-color pixel code emits E_IMAGE_FORMAT\n- `INJ03_SILENT_CELL_ISOLATED`: 通过 — silent cell is degraded and does not pollute other cells\n- `INJ04_BBOX_OUTSIDE_GRID`: 通过 — INJ04_bbox_outside_grid_truth.json emits E_TRUTH_INVALID\n- `INJ05_BBOX_OUTSIDE_IMAGE`: 通过 — INJ05_bbox_outside_image_truth.json emits E_TRUTH_INVALID\n- `INJ06_INVALID_CONFIG`: 通过 — independent invalid config reports all parameter violations\n- `INJ07_FIELD_TRUNCATED`: 通过 — injected v1 truncation and illegal characters emit E_FIELD_TRUNCATED\n",
+  "ok": true,
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "3.11.0rc1",
+  "sample": {
+    "boundary_item_count": 1,
+    "component_count": 72,
+    "failure_count": 0,
+    "image_count": 3,
+    "truth_ok": 72,
+    "truth_total": 72
+  },
+  "schema": "pv-ir-diagnostic-report-v1",
+  "summary": {
+    "check_count": 28,
+    "failed": 0,
+    "passed": 28
+  }
+}
