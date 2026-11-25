@@ -1,0 +1,50 @@
+schema_version: "1.0"
+feature_dim: 16
+hash_bucket_count: 32
+subword_rule_version: sw-v1
+normalize: true
+controlled_vocabulary:
+  - analysis
+  - answer
+  - argument
+  - balanced
+  - brief
+  - clear
+  - coherent
+  - concise
+  - context
+  - correct
+  - design
+  - detailed
+  - evidence
+  - explicit
+  - fair
+  - focused
+  - helpful
+  - logic
+  - method
+  - nuanced
+  - objective
+  - precise
+  - prompt
+  - question
+  - reason
+  - robust
+  - safe
+  - summary
+  - supportive
+  - thorough
+  - transparent
+  - vague
+  - weak
+  - workflow
+window_lengths: [2, 3, 4]
+partition_boundaries: [2, 4, 6]
+fixed_decimal_places: 4
+quant_scheme: Q_FINE
+exchange_version: g2
+ledger_generation: L2
+decision_threshold_permille: 0
+score_weights: [4, -3, 5, -2, 3, 4, -5, 2, 3, -4, 2, 5, -2, 3, -3, 4]
+window_budget: 100000
+session_quota: 100000

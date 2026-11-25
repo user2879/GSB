@@ -1,0 +1,65 @@
+- op: replace_record
+  record:
+    session_id: S001
+    turn: 2
+    prompt: design workflow method
+    chosen: concise focused method
+    rejected: vague weak method
+    annotator_id: ann_chen
+    event_ms: 1764100061000
+- op: set_weight
+  annotator_id: ann_kim
+  weight_bp: 6250
+- op: add_annotator
+  annotator_id: ann_temp
+  weight_bp: 4800
+- op: set_weight
+  annotator_id: ann_temp
+  weight_bp: 5100
+- op: remove_annotator
+  annotator_id: ann_unused
+- op: set_window_lengths
+  value: [2, 3]
+- op: set_partition_boundaries
+  value: [2, 4]
+- op: replace_record
+  record:
+    session_id: S002
+    turn: 6
+    prompt: thorough logic workflow
+    chosen: coherent precise logic workflow
+    rejected: weak brief workflow
+    annotator_id: ann_chen
+    event_ms: 1764101301000
+- op: delete_record
+  session_id: S003
+  turn: 4
+- op: delete_session
+  session_id: S004
+- op: add_record
+  record:
+    session_id: S005
+    turn: 1
+    prompt: question context answer
+    chosen: clear helpful answer
+    rejected: vague weak answer
+    annotator_id: ann_patel
+    event_ms: 1764104000000
+- op: add_record
+  record:
+    session_id: S005
+    turn: 2
+    prompt: evidence reason analysis
+    chosen: precise robust evidence reason
+    rejected: weak vague reason
+    annotator_id: ann_garcia
+    event_ms: 1764104060000
+- op: set_quant
+  quant_scheme: Q_COARSE
+  fixed_decimal_places: 2
+- op: set_exchange_version
+  value: g1
+- op: set_ledger_generation
+  value: L1
+- op: remove_annotator
+  annotator_id: ann_temp

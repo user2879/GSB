@@ -21,3 +21,17 @@
 
 验收：
 用本地样本验证会话窗口汇总的双版本往返与增量一致，并检查预算中止、快照恢复与注入故障业务码。
+
+---
+
+## 交付运行入口
+
+实现、样本、测试与实测结果已在本工作区首次建立。运行：
+
+```bash
+source .venv/bin/activate
+python -m preference_ledger.cli verify --root .
+python -m unittest discover -s tests -v
+```
+
+详见 `DELIVERY.md`；机器可读验收结果位于 `artifacts/verification_report.json`。

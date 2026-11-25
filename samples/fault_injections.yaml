@@ -1,0 +1,30 @@
+injections:
+  - id: INJ_VERSION_001
+    code: E_VERSION_UNKNOWN
+    stage: ledger_parse:g1
+    kind: unknown_version
+    target_record: S001#2
+    line: "G9|P|S001:P99                    |S001            |+0001000| 1|0002|0001-0002|trailing-padding-to-fixed-width"
+  - id: INJ_FIELD_001
+    code: E_FIELD_TRUNCATED
+    stage: ledger_parse:g1
+    kind: truncated_g1_line
+    target_record: S001#2
+    line: "G1|W|S001:L2:E02                |S001"
+  - id: INJ_WEIGHT_001
+    code: E_ANNOTATOR_WEIGHT_RANGE
+    stage: load_weights
+    kind: weight_out_of_range
+    annotator_id: ann_bad_range
+    weight_bp: 10001
+  - id: INJ_NONFINITE_001
+    code: E_NON_FINITE
+    stage: load_weights
+    kind: non_finite_weight
+    annotator_id: ann_bad_nan
+    weight_bp: .nan
+  - id: INJ_WINDOW_001
+    code: E_WINDOW_MONOTONIC
+    stage: load_config
+    kind: window_lengths_not_increasing
+    window_lengths: [4, 2, 3]
