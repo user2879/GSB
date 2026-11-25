@@ -1,0 +1,543 @@
+{
+  "checks": {
+    "all_workers_listened_on_loopback": true,
+    "expected_drift_sample_exact": true,
+    "forced_kill_recovery_uses_committed_prefix": true,
+    "invalidation_only_subset_recomputed": true,
+    "ledger_replay_verified": true,
+    "optimistic_lease_renewal": true,
+    "port_conflict_E_PORT": true,
+    "quota_wait_observed": true,
+    "real_monotonic_expiry_reclaimed": true,
+    "reclaim_order_snapshot_identical": true,
+    "routing_layouts_byte_identical": true,
+    "snapshot_whole_replacement": true,
+    "spec_and_samples_generated": true,
+    "thread_pool_parallel_probe": true,
+    "unique_lease_ownership": true
+  },
+  "drift": {
+    "changed": 8,
+    "examples": [
+      {
+        "boundary_index": 1,
+        "boundary_new": 80,
+        "boundary_offset": -20,
+        "boundary_old": 100,
+        "changed": true,
+        "db_id": "db-a",
+        "drift_direction": "left",
+        "event_seq": 1,
+        "key_column": "order_id",
+        "new_route_version": 2,
+        "new_shard": "orders:s1",
+        "old_route_version": 1,
+        "old_shard": "orders:s2",
+        "reason": "key 210 moved orders:s2->orders:s1 under route table 1->2; boundary[1] moved 100->80 (offset -20)",
+        "route_key": 210,
+        "table": "orders"
+      },
+      {
+        "boundary_index": 1,
+        "boundary_new": 40,
+        "boundary_offset": -10,
+        "boundary_old": 50,
+        "changed": true,
+        "db_id": "db-a",
+        "drift_direction": "right",
+        "event_seq": 2,
+        "key_column": "audit_id",
+        "new_route_version": 2,
+        "new_shard": "audit:s1",
+        "old_route_version": 1,
+        "old_shard": "audit:s0",
+        "reason": "key 45 moved audit:s0->audit:s1 under route table 1->2; boundary[1] moved 50->40 (offset -10)",
+        "route_key": 45,
+        "table": "audit"
+      },
+      {
+        "boundary_index": 1,
+        "boundary_new": 80,
+        "boundary_offset": -20,
+        "boundary_old": 100,
+        "changed": true,
+        "db_id": "db-b",
+        "drift_direction": "right",
+        "event_seq": 3,
+        "key_column": "order_id",
+        "new_route_version": 2,
+        "new_shard": "orders:s1",
+        "old_route_version": 1,
+        "old_shard": "orders:s0",
+        "reason": "key 90 moved orders:s0->orders:s1 under route table 1->2; boundary[1] moved 100->80 (offset -20)",
+        "route_key": 90,
+        "table": "orders"
+      },
+      {
+        "boundary_index": 1,
+        "boundary_new": 80,
+        "boundary_offset": -20,
+        "boundary_old": 100,
+        "changed": true,
+        "db_id": "db-b",
+        "drift_direction": "left",
+        "event_seq": 4,
+        "key_column": "order_id",
+        "new_route_version": 2,
+        "new_shard": "orders:s1",
+        "old_route_version": 1,
+        "old_shard": "orders:s2",
+        "reason": "key 210 moved orders:s2->orders:s1 under route table 1->2; boundary[1] moved 100->80 (offset -20)",
+        "route_key": 210,
+        "table": "orders"
+      }
+    ],
+    "records": 14,
+    "sample_exact": true
+  },
+  "environment": {
+    "dependencies": [
+      "numpy",
+      "pytest"
+    ],
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1 (main, Jun 29 2026, 00:05:30) [GCC 11.4.0]",
+    "storage": "SQLite WAL with per-batch IMMEDIATE transactions",
+    "transport": "127.0.0.1 TCP JSON-lines child processes"
+  },
+  "generated": {
+    "databases": [
+      "db-a",
+      "db-b",
+      "db-c"
+    ],
+    "event_digest": "sha256:a2cdb2b506727ec6c62d7aca13141babe185766eb39d4c5bd18def2b509c33d1",
+    "events": 14,
+    "files": {
+      "batch_plans": "/home/zsl/feedback/uidfc5909d3-default-329/samples/batch_plans.json",
+      "edited_spec": "/home/zsl/feedback/uidfc5909d3-default-329/configs/local_edited.json",
+      "evolved_spec": "/home/zsl/feedback/uidfc5909d3-default-329/configs/local_v3.json",
+      "expected_drift": "/home/zsl/feedback/uidfc5909d3-default-329/samples/expected_drift.json",
+      "spec": "/home/zsl/feedback/uidfc5909d3-default-329/configs/local.json"
+    },
+    "generator_seed": 20261126,
+    "ok": true,
+    "spec_digest": "sha256:b4f0e8aa8ffad64f6c530f0f8ecc92698249e99ef2b14f2b3de987b518b3be23",
+    "tables": {
+      "audit": [
+        1,
+        2,
+        3
+      ],
+      "orders": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "generated_at_utc": "2026-11-25T23:42:34.807774+00:00",
+  "invalidation": {
+    "digest": "sha256:0a04a38667d1cabafe997d6af039f9882cdde9e7f7960ed58151363753a1faee",
+    "direct_results": 8,
+    "indirect_and_direct_results": 8,
+    "invalid_event_seqs": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      10,
+      12,
+      13
+    ],
+    "invalid_lease_ids": [
+      "lease-27fed31fbe304e338a3d",
+      "lease-38d72302dbb0fe5c5069",
+      "lease-495992796aa7f61c5f23",
+      "lease-55039a0c3054e8f661de",
+      "lease-59a6f64c3ec61fb9ed9c",
+      "lease-7b54360a1599061f2cd8",
+      "lease-b116d0586ce274982f11",
+      "lease-d4d0c376ab6dd1060c4f",
+      "lease-db1cb726ad94cf207cab",
+      "lease-e1147ec873fe9bc8c2b0",
+      "lease-e175121fb1d395dae068",
+      "lease-eb84b82c007303e74597"
+    ],
+    "only_invalid_events_probed": true,
+    "probed_event_seqs": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      10,
+      12,
+      13
+    ],
+    "unaffected_after_digest": "sha256:b41d7b0218a3c5b27b874f1c292cc779fa58049b4e4addd6c77536bcf126ad60",
+    "unaffected_before_digest": "sha256:b41d7b0218a3c5b27b874f1c292cc779fa58049b4e4addd6c77536bcf126ad60",
+    "unaffected_byte_identical": true,
+    "unaffected_response_after_digest": "sha256:ffcbdfbc6565cd4650e822a8c56d65adfbae0f49976a4ccaa658dadf31f86db2",
+    "unaffected_response_before_digest": "sha256:ffcbdfbc6565cd4650e822a8c56d65adfbae0f49976a4ccaa658dadf31f86db2",
+    "unaffected_responses_byte_identical": true
+  },
+  "layouts": {
+    "layout_a": {
+      "batch_size": 3,
+      "batches": 6,
+      "high_water": {
+        "max_active_global": 3,
+        "max_inflight": 2
+      },
+      "replay": {
+        "matching_batches": 6,
+        "replayed_batches": 6,
+        "session_id": "layout-a",
+        "verified": true
+      },
+      "routing_digest": "sha256:d2b5d18dab743b3bc6587d466ec53e2ed433b201da8ab8e21b7151b64e051f9d",
+      "startup_order": [
+        "db-c",
+        "db-a",
+        "db-b"
+      ],
+      "wait_records": [
+        {
+          "db_id": "db-a",
+          "event_seq": 2,
+          "reasons": [
+            "database 'db-a' lease limit 3 would be exceeded"
+          ],
+          "wait_ended_ms": 18134158,
+          "wait_ms": 18,
+          "wait_started_ms": 18134140
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 3,
+          "reasons": [
+            "shard 'orders:s1' on 'db-a' is already held by lease-27fed31fbe304e338a3d for event 1"
+          ],
+          "wait_ended_ms": 18134158,
+          "wait_ms": 18,
+          "wait_started_ms": 18134140
+        },
+        {
+          "db_id": "db-c",
+          "event_seq": 6,
+          "reasons": [
+            "shard 'orders:s2' on 'db-b' is already held by lease-59a6f64c3ec61fb9ed9c for event 4"
+          ],
+          "wait_ended_ms": 18134209,
+          "wait_ms": 13,
+          "wait_started_ms": 18134196
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 9,
+          "reasons": [
+            "shard 'audit:s2' on 'db-a' is already held by lease-f3902299667f4648876e for event 8"
+          ],
+          "wait_ended_ms": 18134537,
+          "wait_ms": 17,
+          "wait_started_ms": 18134520
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 10,
+          "reasons": [
+            "database 'db-a' lease limit 3 would be exceeded"
+          ],
+          "wait_ended_ms": 18134537,
+          "wait_ms": 16,
+          "wait_started_ms": 18134521
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 12,
+          "reasons": [
+            "shard 'orders:s3' on 'db-a' is already held by lease-38d72302dbb0fe5c5069 for event 13"
+          ],
+          "wait_ended_ms": 18134590,
+          "wait_ms": 14,
+          "wait_started_ms": 18134576
+        }
+      ]
+    },
+    "layout_b": {
+      "batch_size": 5,
+      "batches": 3,
+      "high_water": {
+        "max_active_global": 4,
+        "max_inflight": 3
+      },
+      "replay": {
+        "matching_batches": 3,
+        "replayed_batches": 3,
+        "session_id": "layout-b",
+        "verified": true
+      },
+      "routing_digest": "sha256:d2b5d18dab743b3bc6587d466ec53e2ed433b201da8ab8e21b7151b64e051f9d",
+      "startup_order": [
+        "db-b",
+        "db-c",
+        "db-a"
+      ],
+      "wait_records": [
+        {
+          "db_id": "db-a",
+          "event_seq": 2,
+          "reasons": [
+            "database 'db-a' lease limit 3 would be exceeded"
+          ],
+          "wait_ended_ms": 18138600,
+          "wait_ms": 18,
+          "wait_started_ms": 18138582
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 3,
+          "reasons": [
+            "shard 'orders:s1' on 'db-a' is already held by lease-27fed31fbe304e338a3d for event 1"
+          ],
+          "wait_ended_ms": 18138601,
+          "wait_ms": 18,
+          "wait_started_ms": 18138583
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 4,
+          "reasons": [
+            "database 'db-b' in-flight concurrency 1/1 is exhausted",
+            "shard 'orders:s1' on 'db-a' is already held by lease-27fed31fbe304e338a3d for event 1"
+          ],
+          "wait_ended_ms": 18138629,
+          "wait_ms": 45,
+          "wait_started_ms": 18138584
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 5,
+          "reasons": [
+            "shard 'orders:s3' on 'db-a' is already held by lease-e1147ec873fe9bc8c2b0 for event 1"
+          ],
+          "wait_ended_ms": 18138601,
+          "wait_ms": 16,
+          "wait_started_ms": 18138585
+        },
+        {
+          "db_id": "db-c",
+          "event_seq": 7,
+          "reasons": [
+            "database 'db-c' lease limit 2 would be exceeded",
+            "shard 'audit:s1' on 'db-a' is already held by lease-b760f05f7e7f1373f503 for event 8"
+          ],
+          "wait_ended_ms": 18138695,
+          "wait_ms": 26,
+          "wait_started_ms": 18138669
+        },
+        {
+          "db_id": "db-b",
+          "event_seq": 9,
+          "reasons": [
+            "shard 'audit:s2' on 'db-a' is already held by lease-f3902299667f4648876e for event 8",
+            "shard 'audit:s2' on 'db-c' is already held by lease-49a6e652705b4804ca85 for event 7"
+          ],
+          "wait_ended_ms": 18138715,
+          "wait_ms": 42,
+          "wait_started_ms": 18138673
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 10,
+          "reasons": [
+            "database 'db-a' lease limit 3 would be exceeded",
+            "shard 'orders:s2' on 'db-c' is already held by lease-db1cb726ad94cf207cab for event 6"
+          ],
+          "wait_ended_ms": 18138695,
+          "wait_ms": 22,
+          "wait_started_ms": 18138673
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 13,
+          "reasons": [
+            "shard 'orders:s3' on 'db-b' is already held by lease-b116d0586ce274982f11 for event 12"
+          ],
+          "wait_ended_ms": 18138769,
+          "wait_ms": 21,
+          "wait_started_ms": 18138748
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 14,
+          "reasons": [
+            "shard 'audit:s2' on 'db-c' is already held by lease-e4a9ddd61282ae838ad0 for event 11"
+          ],
+          "wait_ended_ms": 18138768,
+          "wait_ms": 20,
+          "wait_started_ms": 18138748
+        }
+      ]
+    },
+    "routing_bytes_identical": true
+  },
+  "leases": {
+    "active_leases_after_real_expiry": 0,
+    "expired_leases": [
+      "lease-5d71f4451e7f3c2de8cf"
+    ],
+    "expiry_after_renew_ms": 18135274,
+    "expiry_before_renew_ms": 18135648,
+    "optimistic_renew_version": 2,
+    "reconciliation_no_double_reclaim_or_hold": true,
+    "reconciliation_snapshot_byte_identical": true,
+    "renew_count": 1,
+    "stale_renew_code": "E_LEASE",
+    "stale_renew_did_not_extend_expiry": true,
+    "unique_shard_owner_rejected_second_event": true
+  },
+  "ok": true,
+  "protocol": {
+    "port_conflict": {
+      "message": "cannot bind 127.0.0.1:49311: [Errno 98] Address already in use",
+      "reported_code": "E_PORT",
+      "return_code": 2,
+      "verified": true
+    },
+    "worker_receipt_fields": [
+      "db_id",
+      "hit_shards",
+      "route_version",
+      "elapsed_ms"
+    ]
+  },
+  "recovery": {
+    "committed_batches_before_crash": 3,
+    "crash_lease_ids_reclaimed": [
+      "lease-b760f05f7e7f1373f503",
+      "lease-f3902299667f4648876e"
+    ],
+    "exit_report_available": false,
+    "next_batch_index": 4,
+    "quota_after_recovery": {
+      "active_leases": 0,
+      "by_db": {
+        "db-a": {
+          "active_leases": 0,
+          "held_shards": [],
+          "lease_limit": 3,
+          "remaining_leases": 3
+        },
+        "db-b": {
+          "active_leases": 0,
+          "held_shards": [],
+          "lease_limit": 2,
+          "remaining_leases": 2
+        },
+        "db-c": {
+          "active_leases": 0,
+          "held_shards": [],
+          "lease_limit": 2,
+          "remaining_leases": 2
+        }
+      },
+      "digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "global_lease_limit": 6,
+      "held_shards": [],
+      "remaining_global": 6
+    },
+    "quota_before_kill": {
+      "active_leases": 2,
+      "by_db": {
+        "db-a": {
+          "active_leases": 2,
+          "held_shards": [
+            "audit:s1",
+            "audit:s2"
+          ],
+          "lease_limit": 3,
+          "remaining_leases": 1
+        },
+        "db-b": {
+          "active_leases": 0,
+          "held_shards": [],
+          "lease_limit": 2,
+          "remaining_leases": 2
+        },
+        "db-c": {
+          "active_leases": 0,
+          "held_shards": [],
+          "lease_limit": 2,
+          "remaining_leases": 2
+        }
+      },
+      "digest": "sha256:16ae1750efef491dd1ba4a2a0af1d995b851d2ee067ddad85b119998a22ec2b2",
+      "global_lease_limit": 6,
+      "held_shards": [
+        {
+          "db_id": "db-a",
+          "event_seq": 8,
+          "lease_id": "lease-b760f05f7e7f1373f503",
+          "lease_version": 1,
+          "route_version": 2,
+          "shard_id": "audit:s1"
+        },
+        {
+          "db_id": "db-a",
+          "event_seq": 8,
+          "lease_id": "lease-f3902299667f4648876e",
+          "lease_version": 1,
+          "route_version": 2,
+          "shard_id": "audit:s2"
+        }
+      ],
+      "remaining_global": 4
+    },
+    "reclaimed_event_seqs": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "replay_verified": true,
+    "resume_after_seq": 7,
+    "resumed_batches": 3,
+    "unknown_batch_id": "batch-crash-intent",
+    "unknown_event_seqs": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "session": {
+    "final_snapshot_generation": 2,
+    "session_id": "layout-a",
+    "snapshot_digest": "sha256:a91a7a2a6e923d058a4fd0c47968e9e7c49369c30a0c8b0ec56bdb8a9bbdb579",
+    "snapshot_generation": 2
+  },
+  "snapshot_replacement": {
+    "batches_visible_after_replacement": 0,
+    "edited_batches": 15,
+    "edited_event_digest": "sha256:b558a637ba2f94cebe5ba5e4c4504b14daa15987adbc2c2c11ab743fb38270d4",
+    "edited_replay": {
+      "matching_batches": 15,
+      "replayed_batches": 15,
+      "session_id": "layout-a",
+      "verified": true
+    },
+    "generation_after": 2,
+    "generation_before": 1,
+    "old_batches_before_replacement": 6,
+    "replacement_was_whole": true
+  }
+}

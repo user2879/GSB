@@ -1,0 +1,211 @@
+{
+  "databases": [
+    {
+      "concurrency": 2,
+      "host": "127.0.0.1",
+      "id": "db-a",
+      "lease_limit": 3,
+      "port": 49311,
+      "route_version": 2,
+      "seed": 101
+    },
+    {
+      "concurrency": 1,
+      "host": "127.0.0.1",
+      "id": "db-b",
+      "lease_limit": 2,
+      "port": 49312,
+      "route_version": 2,
+      "seed": 202
+    },
+    {
+      "concurrency": 2,
+      "host": "127.0.0.1",
+      "id": "db-c",
+      "lease_limit": 2,
+      "port": 49313,
+      "route_version": 2,
+      "seed": 303
+    }
+  ],
+  "events": [
+    {
+      "database": "db-a",
+      "kind": "write",
+      "route_key": 210,
+      "seq": 1,
+      "table": "orders"
+    },
+    {
+      "database": "db-a",
+      "kind": "write",
+      "route_key": 45,
+      "seq": 2,
+      "table": "audit"
+    },
+    {
+      "database": "db-b",
+      "kind": "write",
+      "route_key": 90,
+      "seq": 3,
+      "table": "orders"
+    },
+    {
+      "database": "db-b",
+      "kind": "query",
+      "route_key": 210,
+      "seq": 4,
+      "table": "orders"
+    },
+    {
+      "database": "db-a",
+      "kind": "write",
+      "route_key": 700,
+      "seq": 5,
+      "table": "orders"
+    },
+    {
+      "database": "db-c",
+      "kind": "query",
+      "route_key": 430,
+      "seq": 6,
+      "table": "orders"
+    },
+    {
+      "database": "db-c",
+      "kind": "write",
+      "route_key": 260,
+      "seq": 7,
+      "table": "audit"
+    },
+    {
+      "database": "db-a",
+      "kind": "query",
+      "route_key": 170,
+      "seq": 8,
+      "table": "audit"
+    },
+    {
+      "database": "db-b",
+      "kind": "write",
+      "route_key": 250,
+      "seq": 9,
+      "table": "audit"
+    },
+    {
+      "database": "db-a",
+      "kind": "query",
+      "route_key": 430,
+      "seq": 10,
+      "table": "orders"
+    },
+    {
+      "database": "db-c",
+      "kind": "write",
+      "route_key": 45,
+      "seq": 11,
+      "table": "audit"
+    },
+    {
+      "database": "db-b",
+      "kind": "query",
+      "route_key": 60,
+      "seq": 12,
+      "table": "orders"
+    },
+    {
+      "database": "db-a",
+      "kind": "write",
+      "route_key": 450,
+      "seq": 13,
+      "table": "orders"
+    },
+    {
+      "database": "db-a",
+      "kind": "query",
+      "route_key": 35,
+      "seq": 14,
+      "table": "audit"
+    },
+    {
+      "database": "db-b",
+      "kind": "query",
+      "route_key": 75,
+      "seq": 15,
+      "table": "orders"
+    }
+  ],
+  "format_version": 1,
+  "global_lease_limit": 6,
+  "tables": [
+    {
+      "boundaries": [
+        0,
+        100,
+        200,
+        400,
+        800
+      ],
+      "key_column": "order_id",
+      "name": "orders",
+      "route_version": 1
+    },
+    {
+      "boundaries": [
+        0,
+        80,
+        220,
+        450,
+        800
+      ],
+      "key_column": "order_id",
+      "name": "orders",
+      "route_version": 2
+    },
+    {
+      "boundaries": [
+        0,
+        70,
+        200,
+        460,
+        850
+      ],
+      "key_column": "order_id",
+      "name": "orders",
+      "route_version": 3
+    },
+    {
+      "boundaries": [
+        0,
+        50,
+        150,
+        300
+      ],
+      "key_column": "audit_id",
+      "name": "audit",
+      "route_version": 1
+    },
+    {
+      "boundaries": [
+        0,
+        40,
+        180,
+        300
+      ],
+      "key_column": "audit_id",
+      "name": "audit",
+      "route_version": 2
+    },
+    {
+      "boundaries": [
+        0,
+        35,
+        170,
+        320
+      ],
+      "key_column": "audit_id",
+      "name": "audit",
+      "route_version": 3
+    }
+  ]
+}
