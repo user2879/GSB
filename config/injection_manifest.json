@@ -1,0 +1,18 @@
+{
+  "injections": [
+    {
+      "injection_id": "INJ-001",
+      "fault": "truncate_data",
+      "stage": "load",
+      "target": "S0005",
+      "detail": {"keep_samples": 400}
+    },
+    {
+      "injection_id": "INJ-002",
+      "fault": "feature_dim_mismatch",
+      "stage": "window",
+      "target": "W0002",
+      "detail": {"dim": 7}
+    }
+  ]
+}
