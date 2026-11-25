@@ -1,0 +1,17 @@
+MVRV acceptance summary
+ok=True python=3.11.0rc1 numpy=1.26.4
+tkinter=False ImportError: libtk8.6.so: cannot open shared object file: No such file or directory
+state_hash=78cbced553336381e10d642a98ec180724bf830525b034c3db7b634e956ad64c
+metrics={"budget_aborted": 0, "budget_pending": 0, "depth_boundary_pixels": 25, "depth_conflict_pixels": 27, "depth_pixel_count": 12288, "empty_voxels": 213, "estimated_subvoxels": 192, "feature_count": 107, "match_count": 140, "max_voxel_level": 2, "occupied_voxels": 64, "pair_count": 6, "rejected_parallax": 0, "strategy_id": "balanced", "subdivided_voxels": 19, "triangulated_points": 140, "view_count": 4, "voxel_count": 296}
+unchanged_exact=True
+scenarios_all_exact=True
+stream_all_exact=True
+budget_all_exact=True
+parallel_all_exact=True
+snapshot_recovery=True
+invalid_inputs_all_rejected=True
+scenario replace-view: exact=True counts={'features_recomputed': 1, 'pairs_recomputed': 3, 'points_recomputed': 0, 'points_reused': 137, 'point_gate_changed': 0, 'depth_recomputed': 4, 'depth_reused': 12284, 'voxels_recomputed': 2, 'voxels_reused': 278, 'invalidated_products': 29}
+scenario extrinsic: exact=True counts={'features_recomputed': 0, 'pairs_recomputed': 0, 'points_recomputed': 67, 'points_reused': 73, 'point_gate_changed': 0, 'depth_recomputed': 93, 'depth_reused': 12195, 'voxels_recomputed': 481, 'voxels_reused': 143, 'invalidated_products': 713}
+scenario min-parallax: exact=True counts={'features_recomputed': 0, 'pairs_recomputed': 0, 'points_recomputed': 0, 'points_reused': 116, 'point_gate_changed': 24, 'depth_recomputed': 32, 'depth_reused': 12256, 'voxels_recomputed': 16, 'voxels_reused': 280, 'invalidated_products': 72}
+scenario voxel-size: exact=True counts={'features_recomputed': 0, 'pairs_recomputed': 0, 'points_recomputed': 0, 'points_reused': 140, 'point_gate_changed': 0, 'depth_recomputed': 0, 'depth_reused': 12288, 'voxels_recomputed': 504, 'voxels_reused': 0, 'invalidated_products': 656}
+scenario threshold: exact=True counts={'features_recomputed': 0, 'pairs_recomputed': 0, 'points_recomputed': 0, 'points_reused': 140, 'point_gate_changed': 0, 'depth_recomputed': 0, 'depth_reused': 12288, 'voxels_recomputed': 432, 'voxels_reused': 0, 'invalidated_products': 432}

@@ -1,0 +1,24 @@
+Tkinter system state before local workaround:
+  ImportError: libtk8.6.so: cannot open shared object file: No such file or directory
+
+Standard WSL/Ubuntu fix:
+  sudo apt-get update && sudo apt-get install -y python3-tk
+
+Local user-space verification without root/Docker used apt-get download and
+dpkg-deb -x for libtcl8.6, libtk8.6, tcl8.6, tk8.6, libxft2, libxss1, python3-tk.
+
+Startup smoke environment:
+  TKLOCAL=/home/zsl/.local/mvrv-tk/usr
+  LD_LIBRARY_PATH=$TKLOCAL/lib/x86_64-linux-gnu
+  TCL_LIBRARY=$TKLOCAL/share/tcltk/tcl8.6
+  TK_LIBRARY=$TKLOCAL/share/tcltk/tk8.6
+
+Verified actions:
+  - import tkinter and create Tk root
+  - construct mvrv.ui.DiagnosticApp on the project root
+  - read latest snapshot metrics and ledger tree at startup
+  - invoke full_rebuild callback and process Tk update
+
+Output:
+  UI_STARTUP_OK strategy= balanced tree= 14
+  UI_CALLBACK_OK tree= 14 strategy= balanced
