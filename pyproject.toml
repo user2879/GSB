@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=40.8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ins-diag"
+version = "0.1.0"
+description = "Deterministic inertial-sensor window clustering and density diagnostics"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+ins-diag = "ins_diag.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

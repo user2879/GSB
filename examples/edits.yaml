@@ -1,0 +1,24 @@
+schema_version: 1
+commands:
+  - op: replace_window
+    window_id: imu-alpha:gx:000096
+    seed: 4101
+  - op: append_batch
+    device_id: imu-beta
+    channel_id: gy
+    count: 64
+    seed: 4102
+  - op: delete_segment
+    device_id: imu-alpha
+    channel_id: gz
+    start: 32
+    length: 16
+  - op: set_family_count
+    value: 4
+  - op: set_kernel_bandwidth
+    value: "0.15"
+  - op: set_fractional_bits
+    value: 10
+  - op: set_quantization_units
+    value: 2
+

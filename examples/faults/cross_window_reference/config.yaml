@@ -1,0 +1,17 @@
+schema_version: 1
+seed: 910
+waveform_path: ../_shared/waveform.yaml
+edits_path: edits.yaml
+lease_declaration_path: ../_shared/lease.yaml
+window: {length: 32, shift: 16}
+features:
+  bands_hz: [[0.0, 8.0], [8.0, 24.0], [24.0, 64.0]]
+standardization: {dispersion: population_std}
+clustering:
+  families: 2
+  family_limit: 4
+  max_iterations: 15
+  fixed_point: {fractional_bits: 10, quantization_units: 2}
+kde: {bandwidth: "0.20", threshold_permille: 450}
+runtime: {max_workers: 2, state_dir: state, report_path: report.json}
+

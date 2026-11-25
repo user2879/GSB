@@ -1,0 +1,60 @@
+schema_version: 1
+sample_rate_hz: 128.0
+devices:
+  - id: imu-alpha
+    channels:
+      - id: gx
+        samples: 256
+        bias: 0.015
+        drift_per_sample: 0.00018
+        periodic:
+          - {amplitude: 0.31, frequency_hz: 7.0, phase: 0.10}
+          - {amplitude: 0.08, frequency_hz: 23.0, phase: 1.20}
+        noise_sigma: 0.045
+        missing_segments: [[72, 81]]
+      - id: gy
+        samples: 256
+        bias: -0.021
+        drift_per_sample: 0.00011
+        periodic:
+          - {amplitude: 0.22, frequency_hz: 11.0, phase: 0.60}
+          - {amplitude: 0.05, frequency_hz: 31.0, phase: 2.10}
+        noise_sigma: 0.052
+        missing_segments: [[128, 139], [220, 225]]
+      - id: gz
+        samples: 256
+        bias: 0.006
+        drift_per_sample: -0.00009
+        periodic:
+          - {amplitude: 0.18, frequency_hz: 17.0, phase: 2.50}
+        noise_sigma: 0.038
+        missing_segments: [[31, 39]]
+  - id: imu-beta
+    channels:
+      - id: gx
+        samples: 256
+        bias: -0.012
+        drift_per_sample: 0.00007
+        periodic:
+          - {amplitude: 0.27, frequency_hz: 9.0, phase: 1.70}
+          - {amplitude: 0.10, frequency_hz: 27.0, phase: 0.30}
+        noise_sigma: 0.061
+        missing_segments: [[190, 202]]
+      - id: gy
+        samples: 256
+        bias: 0.024
+        drift_per_sample: -0.00014
+        periodic:
+          - {amplitude: 0.20, frequency_hz: 14.0, phase: 0.90}
+        noise_sigma: 0.043
+        missing_segments: [[48, 56]]
+      - id: gz
+        samples: 256
+        bias: 0.003
+        drift_per_sample: 0.00021
+        periodic:
+          - {amplitude: 0.36, frequency_hz: 6.0, phase: 2.80}
+          - {amplitude: 0.07, frequency_hz: 35.0, phase: 1.40}
+        noise_sigma: 0.057
+        missing_segments: [[103, 117]]
+
