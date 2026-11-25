@@ -1,0 +1,102 @@
+from __future__ import annotations
+
+from typing import Any
+
+from .client import unused_port
+
+
+def build_demo_declaration(*, allocate_ports: bool = True, ports: list[int] | None = None) -> dict[str, Any]:
+    if ports is None:
+        ports = [unused_port() for _ in range(3)] if allocate_ports else [39111, 39112, 39113]
+    return {
+        "format_version": 1,
+        "global_budget_units": 7,
+        "lease_ttl_ms": 1_000,
+        "socket_timeout_ms": 2_000,
+        "sample_seed": 20261126,
+        "nodes": [
+            {
+                "node_id": "n1",
+                "host": "127.0.0.1",
+                "port": ports[0],
+                "concurrency_quota": 2,
+                "lease_limit": 2,
+                "renewal_limit": 2,
+                "seed": 1101,
+                "capacity_version": 1,
+            },
+            {
+                "node_id": "n2",
+                "host": "127.0.0.1",
+                "port": ports[1],
+                "concurrency_quota": 2,
+                "lease_limit": 3,
+                "renewal_limit": 2,
+                "seed": 2202,
+                "capacity_version": 1,
+            },
+            {
+                "node_id": "n3",
+                "host": "127.0.0.1",
+                "port": ports[2],
+                "concurrency_quota": 1,
+                "lease_limit": 2,
+                "renewal_limit": 1,
+                "seed": 3303,
+                "capacity_version": 1,
+            },
+        ],
+        "shards": [
+            {"shard_id": "s0", "dependencies": [], "sample_rows": 144, "resource_units": 3, "priority": 11},
+            {"shard_id": "s1", "dependencies": [], "sample_rows": 120, "resource_units": 2, "priority": 10},
+            {"shard_id": "s2", "dependencies": [], "sample_rows": 160, "resource_units": 3, "priority": 5},
+            {"shard_id": "s3", "dependencies": ["s1"], "sample_rows": 128, "resource_units": 2, "priority": 8},
+            {"shard_id": "s4", "dependencies": ["s1", "s2"], "sample_rows": 180, "resource_units": 3, "priority": 7},
+            {
+                "shard_id": "s5",
+                "dependencies": ["s3"],
+                "sample_rows": 108,
+                "resource_units": 2,
+                "priority": 4,
+                "node_refs": ["n3"],
+            },
+            {"shard_id": "s6", "dependencies": ["s4", "s5"], "sample_rows": 156, "resource_units": 2, "priority": 6},
+            {"shard_id": "s7", "dependencies": ["s2"], "sample_rows": 96, "resource_units": 1, "priority": 9},
+        ],
+        "revisions": [
+            {
+                "revision": 1,
+                "parent_revision": None,
+                "config": {"multiplier": 1, "group_count": 4},
+            },
+            {
+                "revision": 2,
+                "parent_revision": 1,
+                "config": {"multiplier": 2, "group_count": 4},
+                "changed_shard_ids": ["s2"],
+                "changed_node_ids": ["n3"],
+                "changes": [
+                    {"kind": "shard", "shard_id": "s2", "field": "multiplier"},
+                    {"kind": "node", "node_id": "n3", "field": "capacity_version"},
+                ],
+            },
+        ],
+        "events": [
+            {"seq": 1, "type": "lease_apply", "lease_id": "L1", "shard_id": "s1", "node_id": "n1", "at_ms": 0, "ttl_ms": 100, "resource_units": 2, "quota_version": 1},
+            {"seq": 2, "type": "lease_apply", "lease_id": "L2", "shard_id": "s2", "node_id": "n2", "at_ms": 0, "ttl_ms": 200, "resource_units": 3, "quota_version": 1},
+            {"seq": 3, "type": "lease_apply", "lease_id": "L3", "shard_id": "s3", "node_id": "n3", "at_ms": 10, "ttl_ms": 100, "resource_units": 2, "quota_version": 1},
+            {"seq": 4, "type": "lease_renew", "lease_id": "L1", "expected_version": 1, "at_ms": 40, "quota_version": 1},
+            {"seq": 5, "type": "lease_release", "lease_id": "L3", "at_ms": 50, "quota_version": 1},
+            {"seq": 6, "type": "lease_expire", "lease_id": "L1", "at_ms": 140, "quota_version": 1},
+            {
+                "seq": 7,
+                "type": "quota_change",
+                "quota_version": 2,
+                "node_id": "n1",
+                "lease_limit": 1,
+                "revoke_lease_ids": ["L1"],
+                "at_ms": 150,
+            },
+            {"seq": 8, "type": "quota_change", "quota_version": 3, "global_budget_units": 1, "at_ms": 160},
+        ],
+    }

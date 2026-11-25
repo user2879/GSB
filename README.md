@@ -1,3 +1,23 @@
+# CloudShard 本地云原生分片计算平台
+
+本仓库已交付可安装 Python 包、确定性 JSON 样本、真实回环 TCP 节点子进程、租约/配额裁决、线程池调度、SQLite 原子账本、原子快照、`SIGKILL` 恢复、独立重放校验、Tkinter 只读查看器和 pytest/一键验收。
+
+快速开始：
+
+```bash
+virtualenv .venv && . .venv/bin/activate
+pip install -e '.[test]'
+cloudshard demo --workdir artifacts/demo
+cloudshard verify --spec artifacts/demo/declaration.generated.json \
+  --ledger artifacts/demo/ledger.sqlite
+cloudshard acceptance --workdir artifacts/acceptance
+pytest -q
+```
+
+详细说明见 `docs/USAGE.md`，架构与需求映射见 `docs/ARCHITECTURE.md`，实际验证记录见 `docs/VALIDATION.md`。下面保留原始诊断需求。
+
+---
+
 这份云原生分片计算平台的诊断需求刚刚批复下来，接手者面对的是一台尚未动工的工作机，目录里只有空文件夹，代码、配置与本地样本都需随首个版本一并建立为可集成的 Python 包与可重复演示。业务对象是本地多节点分片下发：每个节点作为独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议接收带配置修订版本的分片批次，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用修订版本与单调时钟毫秒耗时。用户在本地 JSON 中声明节点（节点标识、回环端口、整数并发配额、整数租约上限、整数随机种子、容量版本号）与分片清单（分片标识、上游依赖引用、整数样本行数、整数资源单位需求、整数优先级），并提交按到达序号排列的租约申请、续约、释放、到期与配额变更事件。核心冲突在于：全局资源单位预算与每节点租约上限互相牵制，租约到期回收与配额变更回收会争夺同一份容量权益；配置修订递增后必须整体替换陈旧结论，而进程被强制终止后只能依据持久化账本恢复出可复核的收敛视图。
 
 任务环境与准备：

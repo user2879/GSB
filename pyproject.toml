@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cloudshard"
+version = "1.0.0"
+description = "Local deterministic shard dispatch, lease adjudication, SQLite ledger recovery, and independent replay"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+tk = []
+
+[project.scripts]
+cloudshard = "cloudshard.cli:main"
+cloudshard-node = "cloudshard.node_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
