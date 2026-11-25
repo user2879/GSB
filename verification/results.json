@@ -1,0 +1,236 @@
+{
+  "baseline": {
+    "business_code_counts": {},
+    "cache": {
+      "by_stage": {
+        "components": {
+          "hit": 0,
+          "miss": 3
+        },
+        "keypoints": {
+          "hit": 0,
+          "miss": 84
+        },
+        "reading_order": {
+          "hit": 0,
+          "miss": 77
+        },
+        "sliding": {
+          "hit": 0,
+          "miss": 3
+        }
+      },
+      "entries": 167,
+      "hits": 0,
+      "misses": 167
+    },
+    "candidate_count": 295,
+    "completed_images": [
+      "large_layout_01.png",
+      "medium_layout_01.png",
+      "small_layout_01.png"
+    ],
+    "component_count": 74,
+    "conflict_counts": {
+      "cross_column": 0,
+      "missing_number": 0,
+      "wrong_order": 0
+    },
+    "failures": [],
+    "global_version": 180221396422959,
+    "keypoint_count": 74,
+    "merge_records": 1145,
+    "run_mode": "rebuild",
+    "split_records": 5,
+    "tier": "large"
+  },
+  "budget": {
+    "detected_points": 20,
+    "pending_codes": [
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING",
+      "E_POINT_BUDGET_PENDING"
+    ],
+    "pending_columns": 8,
+    "pending_points": 54,
+    "point_budget": 20,
+    "resume_equal": true,
+    "resume_mode": "resume"
+  },
+  "concurrency": {
+    "configured_max_workers": 4,
+    "equal": true,
+    "execution_modes": [
+      "thread-pool",
+      "serial"
+    ]
+  },
+  "environment": {
+    "config_hash": "95966e6f2c8f93ed10b0195ba5de3e88c8726ff0d0cfd7a75427636e9814be8f",
+    "pixel_mode": "L",
+    "resolution": [
+      640,
+      960
+    ],
+    "sample_content_hash": "ba10a0eadced1cac82bd18202f13521c2ab3a072028304c7b3306ee1bc71cbcd",
+    "samples": [
+      "large_layout_01.png",
+      "medium_layout_01.png",
+      "small_layout_01.png"
+    ]
+  },
+  "incremental_vs_full_rebuild": {
+    "equal_without_reuse_status": true,
+    "full_rebuild_hits": 0,
+    "incremental_hits": 150
+  },
+  "invalidation": {
+    "cache": {
+      "by_stage": {
+        "components": {
+          "hit": 2,
+          "miss": 1
+        },
+        "keypoints": {
+          "hit": 76,
+          "miss": 8
+        },
+        "reading_order": {
+          "hit": 70,
+          "miss": 7
+        },
+        "sliding": {
+          "hit": 2,
+          "miss": 1
+        }
+      },
+      "entries": 167,
+      "hits": 150,
+      "misses": 17
+    },
+    "edit_failures": [],
+    "image_stage_statuses": {
+      "large_layout_01.png:components": "hit",
+      "large_layout_01.png:sliding": "hit",
+      "medium_layout_01.png:components": "hit",
+      "medium_layout_01.png:sliding": "hit",
+      "small_layout_01.png:components": "miss",
+      "small_layout_01.png:sliding": "miss"
+    },
+    "replaced_image_invalidated": true,
+    "run_mode": "incremental",
+    "unaffected_images_reused": true
+  },
+  "ok": true,
+  "python": "3.11.0rc1",
+  "repeat": {
+    "cache": {
+      "by_stage": {
+        "components": {
+          "hit": 3,
+          "miss": 0
+        },
+        "keypoints": {
+          "hit": 84,
+          "miss": 0
+        },
+        "reading_order": {
+          "hit": 77,
+          "miss": 0
+        },
+        "sliding": {
+          "hit": 3,
+          "miss": 0
+        }
+      },
+      "entries": 167,
+      "hits": 167,
+      "misses": 0
+    },
+    "failures_equal": true,
+    "keypoints_equal": true,
+    "reading_equal": true,
+    "run_mode": "resume"
+  },
+  "test_suite": {
+    "errors": 0,
+    "failures": 0,
+    "ok": true,
+    "skipped": 0,
+    "tests_run": 26
+  },
+  "tiers": {
+    "large": {
+      "business_code_counts": {},
+      "candidate_count": 295,
+      "conflict_counts": {
+        "cross_column": 0,
+        "missing_number": 0,
+        "wrong_order": 0
+      },
+      "failures": [],
+      "first_keypoint": {
+        "fixed_bits": 6,
+        "quant_step": 4,
+        "residual_x_q": 1,
+        "residual_y_q": 1,
+        "x_q": 34784,
+        "y_q": 6136
+      },
+      "keypoint_count": 74
+    },
+    "medium": {
+      "business_code_counts": {},
+      "candidate_count": 454,
+      "conflict_counts": {
+        "cross_column": 0,
+        "missing_number": 0,
+        "wrong_order": 0
+      },
+      "failures": [],
+      "first_keypoint": {
+        "fixed_bits": 8,
+        "quant_step": 2,
+        "residual_x_q": 0,
+        "residual_y_q": 0,
+        "x_q": 139132,
+        "y_q": 24344
+      },
+      "keypoint_count": 74
+    },
+    "small": {
+      "business_code_counts": {},
+      "candidate_count": 1334,
+      "conflict_counts": {
+        "cross_column": 0,
+        "missing_number": 0,
+        "wrong_order": 0
+      },
+      "failures": [],
+      "first_keypoint": {
+        "fixed_bits": 10,
+        "quant_step": 1,
+        "residual_x_q": 0,
+        "residual_y_q": 0,
+        "x_q": 556524,
+        "y_q": 98154
+      },
+      "keypoint_count": 74
+    }
+  },
+  "validation": {
+    "failures": [],
+    "stats": {
+      "image_count": 3,
+      "max_chars_per_column": 10,
+      "max_columns": 5,
+      "total_points": 74
+    }
+  },
+  "verification_hash": "9f7314979c07649366a511af053f131a90a4379f5f4e9648ebbd3d02f342f17a"
+}

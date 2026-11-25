@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "layout-diag"
+version = "1.0.0"
+description = "Deterministic vertical-layout keypoint diagnostics"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "Pillow>=10.0"]
+
+[project.scripts]
+layout-diag = "layout_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["layout_diag*"]

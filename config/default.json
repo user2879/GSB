@@ -1,0 +1,101 @@
+{
+  "cc": {
+    "ink_threshold": 192,
+    "max_aspect": 3.2,
+    "merge_gap": 2,
+    "min_area": 10,
+    "split_ratio": 1.9
+  },
+  "fixed_bits_allowed": [
+    4,
+    6,
+    8,
+    10,
+    12
+  ],
+  "keypoint_version": "v1",
+  "max_workers": 4,
+  "pixel_mode": "L",
+  "point_budget": 96,
+  "precision": {
+    "fixed_bits": 8,
+    "quant_step": 2
+  },
+  "quant_steps_allowed": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "resolution": {
+    "height": 960,
+    "width": 640
+  },
+  "schema_version": 1,
+  "strategies": {
+    "large": {
+      "capacity_chars_per_column": 128,
+      "capacity_columns": 32,
+      "capacity_points": 10000000,
+      "cc": {
+        "merge_gap": 5
+      },
+      "precision": {
+        "fixed_bits": 6,
+        "quant_step": 4
+      },
+      "single_image_cost": 0.91,
+      "window": {
+        "height": 80,
+        "step_x": 40,
+        "step_y": 40,
+        "width": 80
+      }
+    },
+    "medium": {
+      "capacity_chars_per_column": 8,
+      "capacity_columns": 4,
+      "capacity_points": 180,
+      "cc": {
+        "merge_gap": 3
+      },
+      "precision": {
+        "fixed_bits": 8,
+        "quant_step": 2
+      },
+      "single_image_cost": 0.34,
+      "window": {
+        "height": 64,
+        "step_x": 32,
+        "step_y": 32,
+        "width": 64
+      }
+    },
+    "small": {
+      "capacity_chars_per_column": 5,
+      "capacity_columns": 3,
+      "capacity_points": 48,
+      "cc": {
+        "merge_gap": 4
+      },
+      "precision": {
+        "fixed_bits": 10,
+        "quant_step": 1
+      },
+      "single_image_cost": 0.12,
+      "window": {
+        "height": 32,
+        "step_x": 16,
+        "step_y": 16,
+        "width": 32
+      }
+    }
+  },
+  "tier": "auto",
+  "window": {
+    "height": 64,
+    "step_x": 32,
+    "step_y": 32,
+    "width": 64
+  }
+}
