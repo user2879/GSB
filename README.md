@@ -20,3 +20,21 @@
 
 验收：
 本地样本上验证误编、归因与恢复三类结论可复核且重复运行逐字节一致。
+
+---
+
+## 交付实现与运行方式
+
+本仓库已按上述需求落地第一版实现，设计细节见 `docs/design.md`，实测结果见
+`data/verification-results.md`。
+
+```bash
+python3 -m unittest discover -s tests -v   # 9 组单元/交叉校验
+bash run_verification.sh                  # 端到端：基线、编辑重算、崩溃恢复
+```
+
+- 代码包：`rdiq/`
+- 确定性样本：`samples/base/` 与 `samples/edit/`
+- 结论输出：`data/`
+- SQLite 账本与只读备份：`ledger/`
+- 错误码：规格首错 `E_SPEC`、图缺陷 `E_GRAPH`、重放不一致 `E_REPLAY`
