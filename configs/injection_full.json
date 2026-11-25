@@ -1,0 +1,9 @@
+{
+  "entries": [
+    {"id": "INJ-T1", "type": "truncate_wav", "fragment_seq": 4, "stage": "audio_load", "enabled": true},
+    {"id": "INJ-N1", "type": "non_finite_sample", "fragment_seq": 6, "stage": "audio_load", "enabled": true},
+    {"id": "INJ-S1", "type": "span_out_of_range", "window_index": 2, "stage": "window_feature", "enabled": true},
+    {"id": "INJ-Q1", "type": "bad_quant_level", "window_index": 3, "stage": "quantize", "enabled": true},
+    {"id": "INJ-D1", "type": "posterior_dimension_mismatch", "window_index": 5, "stage": "classify", "enabled": true}
+  ]
+}

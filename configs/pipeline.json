@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "paths": {
+    "data_dir": "data/wav",
+    "manifest_file": "data/fragment_manifest.json",
+    "command_stream_file": "data/command_stream.json",
+    "injection_file": "configs/injection.json",
+    "snapshot_dir": "data/snapshot",
+    "report_dir": "artifacts"
+  },
+  "sample": {
+    "fragment_count": 8,
+    "samples_per_fragment": 8000,
+    "speech_ratio": 0.55,
+    "noise_seed": 20261126,
+    "sample_rate": 16000,
+    "tone_base_hz": 220.0,
+    "tone_step_hz": 40.0,
+    "tone_amplitude": 4000.0,
+    "noise_std": 300.0
+  },
+  "vad": {
+    "frame_length": 400,
+    "frame_shift": 160,
+    "energy_high": 100000.0,
+    "energy_low": 20000.0,
+    "flatness_high": 0.35,
+    "flatness_low": 0.6,
+    "min_speech_frames": 3,
+    "min_silence_frames": 2
+  },
+  "window": {
+    "window_length": 1600,
+    "window_shift": 400,
+    "drop_partial": true
+  },
+  "mel": {
+    "n_mels": 6,
+    "n_fft": 512,
+    "low_hz": 80.0,
+    "high_hz": 7600.0
+  },
+  "quant": {
+    "quant_level": 16,
+    "allowed_levels": [8, 16, 24, 32],
+    "float_scale": 64,
+    "mel_full_scale": 32.0,
+    "zcr_full_scale": 1.0,
+    "centroid_full_scale": 8000.0
+  },
+  "classifier": {
+    "weight_seed": 9001,
+    "boundary_margin": 0.40,
+    "softmax_temperature": 50000.0
+  },
+  "runtime": {
+    "max_workers": 4,
+    "default_budget": 32
+  },
+  "commands": [
+    {"code": 0, "word": "开灯"},
+    {"code": 1, "word": "关灯"},
+    {"code": 2, "word": "调亮"},
+    {"code": 3, "word": "调暗"},
+    {"code": 4, "word": "播放"},
+    {"code": 5, "word": "暂停"}
+  ]
+}
