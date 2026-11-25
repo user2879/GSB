@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "commands": [
+    {
+      "id": "cmd-01-modify-alpha",
+      "op": "upsert_rect",
+      "rectangle": {
+        "id": "defect_alpha",
+        "x": 20,
+        "y": 17,
+        "width": 36,
+        "height": 22
+      }
+    },
+    {
+      "id": "cmd-02-add-temp",
+      "op": "upsert_rect",
+      "rectangle": {
+        "id": "defect_temp",
+        "x": 48,
+        "y": 70,
+        "width": 24,
+        "height": 18
+      }
+    },
+    {
+      "id": "cmd-03-delete-temp",
+      "op": "delete_rect",
+      "rectangle_id": "defect_temp"
+    },
+    {
+      "id": "cmd-04-iterations-l2",
+      "op": "set_iterations",
+      "level": 2,
+      "iterations": 7
+    },
+    {
+      "id": "cmd-05-guidance-l1",
+      "op": "set_guidance",
+      "level": 1,
+      "strength": 0.84
+    },
+    {
+      "id": "cmd-06-style-weight-l2",
+      "op": "set_style_weight",
+      "level": 2,
+      "weights": [
+        1.34,
+        0.92,
+        0.72
+      ]
+    },
+    {
+      "id": "cmd-07-quant-l3",
+      "op": "set_quantization",
+      "level": 3,
+      "levels": 16,
+      "fractional_bits": 8
+    },
+    {
+      "id": "cmd-08-guidance-l3",
+      "op": "set_guidance",
+      "level": 3,
+      "strength": 0.68
+    }
+  ]
+}

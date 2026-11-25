@@ -1,23 +1,92 @@
-项目刚批下来，代码尚未动笔，工作区里只有一个空目录，没有任何代码、配置或样本，首版要在 Windows 本地建起一套面向图像修复与风格迁移的分层扰动预算诊断工作台。业务对象是本地确定性合成的 PNG 图像（固定分辨率，由固定种子绘制几何图元、纹理块与噪声），每图附缺损掩码 JSON（若干整数矩形区域）。修复采用由粗到细的多级金字塔：最粗级以确定性扩散规则生成低频底色，逐级向上以上一级低频引导约束本级填充；风格迁移在每级以逐级强度做确定性查表映射，最终合成并导出 PNG。使用者会反复编辑掩码区域、逐级迭代层数、逐级引导强度与风格权重、量化档位，并要求每次编辑后只重算真正受影响的层级与瓦片，同时全流程受单批重算瓦片预算约束；核心冲突在于预算只够重算部分失效瓦片时必须保留可续跑的待办状态，而待办状态又必须与整体快照替换、版本识别和逐像素全量重建保持一致。
+# 分层扰动预算诊断工作台
 
-任务环境与准备：
-确认 Windows 本地具备 Python 3.11 或以上，可直接使用标准库 tkinter 检查界面是否可用。
-安装依赖：python -m pip install numpy pillow；不引入容器、外部服务或真实账号。
-在空工作区创建项目根目录与本地样本目录，由程序按固定种子生成若干固定分辨率 PNG 与配套掩码 JSON，作为演示与回归输入。
-准备配置 JSON、编辑命令流 JSON 与异常注入配置 JSON 的样例，命令流覆盖掩码修改、层数调整、引导强度与量化档位切换。
-运行前清空快照临时目录与提交清单，确保演示从空白状态开始且可重复执行。
+本地、确定性的图像修复与风格迁移诊断工作台。样本是固定种子生成的 PNG + 整数矩形缺损掩码；系统构建粗到细金字塔，执行定点扩散修复、逐级 LUT 风格映射、瓦片级缓存失效、单批预算/待办续跑、原子快照恢复和串并行异常注入对比。
 
-业务要求：
-1. 实现配置、掩码、图像与命令流的加载校验层：校验 PNG 容器头与固定分辨率一致、金字塔层数为正整数、逐级下采样因子单调不减且乘积与底图尺寸相容、瓦片边长能整除各级尺寸、掩码矩形为整数且不越界、量化档位与定点小数位宽在允许枚举内、单批重算瓦片预算为正整数；不合法输入返回带业务码的 JSON 错误（E_CONFIG_INVALID、E_MASK_OUT_OF_RANGE、E_TILE_GEOMETRY），且整批不产生部分产物。
-2. 实现多分辨率金字塔构建与确定性上采样：按逐级下采样因子做块均值下采样与固定规则上采样，插值并列值按固定决断规则处理并写入产物元数据；每级产物携带由图像内容指纹、层序号与下采样因子派生的层级指纹，同一输入两次运行的像素与指纹逐字节一致，且不得依赖运行时全局随机状态。
-3. 实现逐级修复填充与逐级风格映射内核：最粗级以由外向内的扩散加权均值填充，其余级以本级初始像素与上采样低频引导按引导强度加权得到填充值；每级风格映射按逐级强度与逐通道权重构建查表并逐像素查表输出，切换量化档位须真实改变查表条目与输出像素；掩码外像素不得被风格映射污染，全部计算以定点整数按定点小数位宽保留。
-4. 实现跨层跨瓦片依赖指纹与精确失效判定：为每级每瓦片产物计算由本瓦片输入指纹、低频引导指纹、参数指纹与量化档位派生的缓存键，并记录每个瓦片结果引用的下级瓦片集合；编辑某层参数或某掩码区域时只使该层覆盖编辑区的瓦片及其全部上级引用者失效，未失效瓦片必须直接复用并记入复用清单，复用与重算条目须与键值一一对应。
-5. 实现单批重算瓦片预算与可续跑待办状态：调度器按层序号升序与瓦片行号稳定顺序在已失效瓦片间分配预算，配额耗尽时未重算瓦片保留在待办队列并以 E_TILE_BUDGET_PENDING 标记，下一批必须优先处理待办；预算耗尽不得使已重算瓦片作废，也不得让待办瓦片在最终结果中被静默当作已重算。
-6. 保证任意命令序列后增量金字塔重建与从空白全量重建逐像素一致：施加包含掩码矩形增删与修改、单级迭代层数调整、逐级引导强度变更、某级风格权重与量化档位切换的命令序列，每条命令稳定后增量运行得到的各层像素、逐瓦片缓存键、待办队列、复用与重算清单顺序，均须与按相同最终状态全量运行的逐像素结果完全一致。
-7. 实现阶段化快照整体替换与恢复判定：将加载校验、金字塔构建、逐级修复、风格映射与合成划分为阶段，各阶段产物连同待办队列先写入临时目录再整体替换提交；清单记录全局版本号、配置哈希、量化档位、已完成命令游标与各层各瓦片产物版本，启动时须以版本号与配置哈希识别版本变化，否则输出 E_SNAPSHOT_STALE 而非逐文件覆盖。
-8. 实现并发渲染与串行结果一致、异常注入隔离与诊断报告：使用线程池并发执行互不依赖的瓦片修复与风格映射，最大并发数取自配置且不得超过，每个任务携带由层序号、瓦片行列号与阶段名派生的稳定排序键；以独立注入配置对指定层指定瓦片施加非有限像素、非法掩码矩形、量化档位越界等真实输入故障，注入项编号须写入报告以证明命中，最终瓦片输出顺序、预算扣减序与失败清单须与串行执行一致。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+要求 Windows/Linux/WSL 上的 Python 3.11+：
 
-验收：
-用本地样本验证分层修复、风格映射、预算待办与快照恢复，增量结果须与全量重建逐像素一致。
+```powershell
+py -3.11 -m pip install -r requirements.txt
+py -3.11 run_demo.py
+py -3.11 -m unittest discover -s tests -v
+py -3.11 -m workbench.cli check-env
+py -3.11 -m workbench.cli gui
+```
+
+Windows 也可以运行 `run_demo.bat`，或：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\verify_windows.ps1
+```
+
+`python -m tkinter` 可检查官方 Python 的 Tcl/Tk；`python scripts\check_tkinter.py` 会做导入和短时窗口冒烟检查。
+
+## 一键演示做了什么
+
+`python run_demo.py` 会：
+
+1. 确定性重建 `samples/`、`configs/` 和 `examples/`；
+2. 清空并重建 `state/` 快照目录；
+3. 用预算 6 演示 48 个瓦片中只提交前 6 片，其余 42 片进入 `E_TILE_BUDGET_PENDING`；
+4. 从快照清单恢复新会话，验证前 6 片复用、下一批 6 片重算；
+5. 应用完整 8 条命令流并逐次原子提交快照；
+6. 对比增量结果与空白全量重建的每层像素、最终像素和全部缓存键；
+7. 验证 `E_SNAPSHOT_STALE` 版本/哈希探测；
+8. 运行 3 个异常注入的串并行一致性诊断；
+9. 写出 `artifacts/reports/verification-report.json` 和 `outputs/*.png`。
+
+当前实际结果：20 个 unittest 全部通过，增量/全量一致，3 个注入全部命中且串并行一致。详见 `docs/TECHNICAL_NOTES.md` 与 `artifacts/reports/test-run.txt`。
+
+## 常用命令
+
+```bash
+# 生成样本和 JSON 样例
+python -m workbench.cli generate-samples
+
+# 校验 PNG 头、配置、掩码和命令流
+python -m workbench.cli validate --config configs/workbench.json --commands configs/edit_stream.json
+
+# 从空白按预算重放命令；--drain 自动续跑待办
+python -m workbench.cli run-stream \
+  --config configs/workbench.json \
+  --commands configs/edit_stream.json \
+  --clean --drain --budget 12 --workers 4
+
+# 检查当前快照版本和配置哈希
+python -m workbench.cli snapshot-check --config configs/workbench.json
+
+# 配置版本/哈希变化后，整体重建恢复
+python -m workbench.cli run-stream --config configs/workbench.json \
+  --commands configs/edit_stream.json --recover-stale --drain
+```
+
+## 目录
+
+- `workbench/configuration.py`：配置、枚举、金字塔因子和瓦片几何校验。
+- `workbench/image_io.py`：PNG 签名/IHDR 分辨率校验与读写。
+- `workbench/masks.py`：整数矩形掩码校验、栅格化和掩码金字塔。
+- `workbench/commands.py`：命令流整批校验和状态更新。
+- `workbench/pyramid.py`：块均值下采样、定点双线性上采样、层级指纹和依赖几何。
+- `workbench/kernels.py`：由外向内扩散修复、引导混合、定点 LUT 风格映射。
+- `workbench/engine.py`：瓦片缓存键、依赖、稳定调度和线程池执行。
+- `workbench/session.py`：复用/失效/预算/待办状态机与清单。
+- `workbench/snapshot.py`：临时目录、整体改名和原子提交指针。
+- `workbench/diagnostics.py`：异常注入与串并行对比。
+- `workbench/demo.py`：一键验收和 JSON 证据报告。
+- `tests/test_workbench.py`：19 个回归测试。
+- `configs/workbench.json`：主配置。
+- `configs/edit_stream.json`：掩码增删改、迭代轮数、引导、风格权重和量化命令。
+- `configs/injection.json`：独立异常注入样例。
+- `examples/invalid_config.json`、`examples/invalid_mask.json`：负路径样例。
+
+## 业务错误码
+
+- `E_CONFIG_INVALID`：配置、PNG 头、命令或枚举不合法。
+- `E_MASK_OUT_OF_RANGE`：掩码矩形非整数、宽高非正或越界。
+- `E_TILE_GEOMETRY`：瓦片边不能整除对应层尺寸。
+- `E_TILE_BUDGET_PENDING`：本批预算已耗尽，仍有稳定排序后的待办瓦片。
+- `E_SNAPSHOT_STALE`：全局版本号或配置哈希与已提交快照不匹配。
+- `E_NONFINITE_PIXELS` / `E_QUANT_OUT_OF_RANGE`：异常注入诊断中的真实输入故障码。
+
+校验、命令流和注入配置都会在写入快照前完成解析；非法整批返回 JSON 错误，不产生新的部分提交。

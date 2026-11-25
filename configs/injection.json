@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "note": "Coordinates target the sample geometry: level 3 has 3 rows x 4 columns of 32px tiles.",
+  "injections": [
+    {
+      "id": "INJ-001-NONFINITE",
+      "kind": "nonfinite_pixels",
+      "level": 3,
+      "row": 0,
+      "col": 0,
+      "stage": "repair"
+    },
+    {
+      "id": "INJ-002-BAD-MASK",
+      "kind": "invalid_mask_rectangle",
+      "level": 3,
+      "row": 0,
+      "col": 1,
+      "stage": "repair",
+      "rect": {
+        "id": "injected_bad",
+        "x": 900,
+        "y": 4,
+        "width": 12,
+        "height": 8
+      }
+    },
+    {
+      "id": "INJ-003-BAD-QUANT",
+      "kind": "quantization_out_of_range",
+      "level": 3,
+      "row": 1,
+      "col": 0,
+      "stage": "style",
+      "levels": 7,
+      "fractional_bits": 8
+    }
+  ]
+}

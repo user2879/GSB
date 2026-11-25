@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "global_version": 1,
+  "seed": 28525,
+  "image": {
+    "path": "../samples/images/sample_01.png",
+    "width": 128,
+    "height": 96,
+    "channels": 3
+  },
+  "mask": {
+    "path": "../samples/masks/sample_01.mask.json"
+  },
+  "pyramid": {
+    "levels": 4,
+    "downsample_factors": [
+      3,
+      2,
+      2
+    ],
+    "tile_sizes": [
+      4,
+      8,
+      16,
+      32
+    ]
+  },
+  "fixed_point": {
+    "fractional_bits_by_level": [
+      8,
+      8,
+      8,
+      8
+    ]
+  },
+  "quantization": {
+    "levels_by_level": [
+      8,
+      16,
+      32,
+      64
+    ]
+  },
+  "inpaint": {
+    "iterations_by_level": [
+      18,
+      8,
+      5,
+      3
+    ],
+    "guidance_strength_by_level": [
+      0.0,
+      0.72,
+      0.62,
+      0.52
+    ]
+  },
+  "style": {
+    "strength_by_level": [
+      0.34,
+      0.44,
+      0.54,
+      0.62
+    ],
+    "weights_by_level": [
+      [
+        1.22,
+        1.0,
+        0.82
+      ],
+      [
+        1.16,
+        1.02,
+        0.86
+      ],
+      [
+        1.1,
+        1.0,
+        0.92
+      ],
+      [
+        1.06,
+        1.0,
+        0.96
+      ]
+    ]
+  },
+  "budget": {
+    "tiles_per_batch": 12
+  },
+  "concurrency": {
+    "max_workers": 4
+  },
+  "snapshot": {
+    "dir": "../state"
+  }
+}
