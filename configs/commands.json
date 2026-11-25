@@ -1,0 +1,18 @@
+{
+  "commands": [
+    {"op": "set_receipt_dir", "dir": "receipts/set_b"},
+    {"op": "set_layer", "layer": "fusion_block",
+     "values": {"bits": 8, "level": "int8", "group_size": 4, "frac_bits": 6}},
+    {"op": "set_rounding_saturation", "rounding": "half_up",
+     "saturation": "wrap"},
+    {"op": "replace_weights",
+     "layer": "retrieval_head",
+     "source": "samples/retrieval_head_replacement.json"},
+    {"op": "set_tier", "layer": "embedding_proj", "tier": "large"},
+    {"op": "set_distill", "temperature": 3.0, "steps": 4,
+     "soft_weight": 0.5, "learning_rate": 0.05, "tolerance": 0.3},
+    {"op": "set_budget", "global_cal_points": 96,
+     "batch_quant_points": 24, "per_layer": {"fusion_block": 8}},
+    {"op": "noop"}
+  ]
+}

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qcalib"
+version = "0.1.0"
+description = "Layer-wise quantization calibration and distillation correction pipeline"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+qcalib = "qcalib.cli:main"
+
+[tool.setuptools]
+packages = ["qcalib"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,52 @@
+receipts_dir: receipts/set_a
+workers: 4
+default_tier: medium
+tiers:
+  small: 4
+  medium: 8
+  large: 12
+layer_tiers:
+  embedding_proj: small
+  retrieval_head: large
+defaults:
+  bits: 8
+  level: int8
+  group_size: 4
+  q_lo: 25
+  q_hi: 975
+  frac_bits: 6
+  scheme: asym
+  rounding: half_even
+  saturation: clip
+layers:
+  embedding_proj:
+    bits: 16
+    level: int16
+    group_size: 8
+    frac_bits: 10
+    scheme: sym
+  retrieval_head:
+    bits: 8
+    level: uint8
+    group_size: 4
+    q_lo: 50
+    q_hi: 950
+  fusion_block:
+    bits: 4
+    level: int4
+    group_size: 2
+    frac_bits: 4
+  score_mixer:
+    group_size: 8
+    rounding: half_up
+distill:
+  temperature: 2.0
+  steps: 3
+  soft_weight: 0.4
+  learning_rate: 0.1
+  tolerance: 0.35
+budgets:
+  global_cal_points: 128
+  batch_quant_points: 16
+  per_layer:
+    none: 0
