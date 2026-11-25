@@ -1,0 +1,10 @@
+# 项目本地环境（无需 sudo / 不做系统级安装）
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TKROOT="${TKROOT:-/home/zsl/.local/tkroot}"
+DEPS="${DEPS:-/home/zsl/.local/opt/uidfc5909d3-deps/root}"
+export VIRTUAL_ENV="$PROJECT_ROOT/.venv"
+export PATH="$VIRTUAL_ENV/bin:$PATH"
+export LD_LIBRARY_PATH="$PROJECT_ROOT/.runtime/xkbfiles/usr/lib/x86_64-linux-gnu:$TKROOT/usr/lib/x86_64-linux-gnu:$TKROOT/usr/lib:$DEPS/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH:-}"
+export TCL_LIBRARY="$DEPS/usr/share/tcltk/tcl8.6"
+export TK_LIBRARY="$DEPS/usr/lib/tcltk/x86_64-linux-gnu/tk8.6"
+export SLO_DISPLAY="${SLO_DISPLAY:-:99}"
