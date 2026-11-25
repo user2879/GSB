@@ -1,0 +1,69 @@
+{
+  "1_three_format_normalization": {
+    "r1_filled_fields": [
+      "param_version_seq",
+      "elapsed_ms",
+      "worker_id",
+      "rank_in_batch",
+      "superseded_ref",
+      "param_summary_snapshot"
+    ],
+    "r2_filled_fields": [
+      "rank_in_batch",
+      "superseded_ref",
+      "param_summary_snapshot"
+    ],
+    "r3_filled_fields": [],
+    "adopted_format": "r3",
+    "rejected_count": 2
+  },
+  "2_hot_update_isolation": {
+    "batches": 6,
+    "batches_mixing_versions": [],
+    "versions_per_worker": {
+      "worker-gray-a": [
+        1
+      ],
+      "worker-gray-b": [
+        2
+      ],
+      "worker-stable-a": [
+        1,
+        2
+      ]
+    }
+  },
+  "3_invalidation_propagation": {
+    "invalid_worker_versions": [
+      [
+        "worker-gray-b",
+        2
+      ]
+    ],
+    "invalid_batches": [
+      "bat-8a7a7dc1ad244af52ab7",
+      "bat-f288ec831b60456b3fe7"
+    ],
+    "invalid_requests": [
+      "req-007",
+      "req-008",
+      "req-009"
+    ]
+  },
+  "4_force_termination_replay": {
+    "committed_batches": [
+      "bat-b47198d82a53b7160557"
+    ],
+    "unknown_requires_rerun": [
+      "bat-f288ec831b60456b3fe7",
+      "bat-8a7a7dc1ad244af52ab7",
+      "bat-185e7b1bfaacd92e80f7",
+      "bat-26a150d4a3b5185d8ce5",
+      "bat-030e87ac0473b307f2b6"
+    ],
+    "exit_report_generated": false,
+    "replay_verified": [
+      "bat-b47198d82a53b7160557"
+    ]
+  }
+}
