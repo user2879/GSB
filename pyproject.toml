@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fixedseason"
+version = "0.1.0"
+description = "Deterministic fixed-point seasonal fit and reproducible experiment bench"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+fixedseason = "fixedseason.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
