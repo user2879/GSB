@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edge-ledger"
+version = "1.0.0"
+description = "Deterministic local edge-cache shard verification ledger"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+edge-ledger-demo = "edge_ledger.acceptance:main"
+edge-ledger-verify = "edge_ledger.replay_cli:main"
+edge-ledger-ui = "edge_ledger.ui:main"
+edge-ledger-node = "edge_ledger.node_worker:main"
+edge-ledger-samples = "edge_ledger.sample_gen:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
