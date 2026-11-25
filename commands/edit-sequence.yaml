@@ -1,0 +1,117 @@
+schema_version: 1
+commands:
+- id: CMD-001
+  op: add_samples
+  batch_id: batch-003
+  samples:
+  - sample_id: S0100
+    template_id: tpl_summary
+    template_revision: 2
+    answer_template_id: tpl_summary_answer
+    answer_template_revision: 1
+    source_shard: shard-d
+    slot_fills:
+    - name: topic
+      value: rolling batch arrival
+      priority: 0
+    - name: style
+      value: concise
+      priority: 0
+    - name: audience
+      value: ingest team
+      priority: 0
+  - sample_id: S0101
+    template_id: tpl_note
+    template_revision: 1
+    answer_template_id: tpl_note
+    answer_template_revision: 1
+    source_shard: shard-d
+    slot_fills:
+    - name: topic
+      value: new source shard
+      priority: 0
+    - name: body
+      value: quota applies per source shard
+      priority: 0
+- id: CMD-002
+  op: replace_sample
+  sample_id: S0003
+  sample:
+    sample_id: S0003
+    template_id: tpl_summary
+    template_revision: 2
+    answer_template_id: tpl_summary_answer
+    answer_template_revision: 1
+    source_shard: shard-a
+    slot_fills:
+    - name: topic
+      value: incremental cache verification updated
+      priority: 0
+    - name: style
+      value: detailed
+      priority: 0
+    - name: audience
+      value: release engineering
+      priority: 0
+- id: CMD-003
+  op: delete_sample
+  sample_id: S0005
+- id: CMD-004
+  op: upsert_template_revision
+  revision_data:
+    template_id: tpl_summary
+    revision: 4
+    parent_revision: 3
+    instruction_template: Give a {style} summary of {topic} for {audience} as {format}.
+    answer_template: For {audience}, {topic} in {style} {format} form.
+    slots:
+    - name: format
+      allowed_values:
+      - bullet
+      - prose
+- id: CMD-005
+  op: add_samples
+  batch_id: batch-004
+  samples:
+  - sample_id: S0102
+    template_id: tpl_summary
+    template_revision: 4
+    answer_template_id: tpl_summary_answer
+    answer_template_revision: 1
+    source_shard: shard-d
+    slot_fills:
+    - name: topic
+      value: template descendant invalidation
+      priority: 0
+    - name: style
+      value: concise
+      priority: 0
+    - name: audience
+      value: cache team
+      priority: 0
+    - name: format
+      value: bullet
+      priority: 0
+- id: CMD-006
+  op: set_slot_constraint
+  template_id: tpl_summary
+  revision: 2
+  slot: style
+  fields:
+    max_length: 30
+- id: CMD-007
+  op: set_dedupe_threshold
+  value: 800
+- id: CMD-008
+  op: set_quantization
+  quantization: Q10000
+  decimal_places: 6
+- id: CMD-009
+  op: rollback_template
+  template_id: tpl_task
+  to_revision: 1
+- id: CMD-010
+  op: set_scheduler
+  max_workers: 3
+  render_point_budget: 10000
+  source_quota_points: 10000

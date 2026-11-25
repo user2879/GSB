@@ -1,0 +1,18 @@
+schema_version: 1
+injections:
+- id: INJ-CYCLE-001
+  type: template_cycle
+  template_id: tpl_broken
+  revision: 2
+  parent_revision: 2
+- id: INJ-MISSING-002
+  type: missing_slot
+  sample_id: S-FAIL-MISSING
+  slot: body
+- id: INJ-REVISION-003
+  type: missing_revision
+  sample_id: S-FAIL-REV
+  revision: 99
+- id: INJ-NONFINITE-004
+  type: nonfinite_quality
+  sample_id: S-FAIL-NONFINITE

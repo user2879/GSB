@@ -1,0 +1,93 @@
+schema_version: 1
+templates:
+- template_id: tpl_summary
+  revision: 1
+  parent_revision: null
+  instruction_template: Summarize {topic} with a {style} tone.
+  answer_template: 'Summary of {topic}: {style}.'
+  slots:
+  - name: topic
+    min_length: 3
+    max_length: 120
+  - name: style
+    allowed_values:
+    - concise
+    - detailed
+- template_id: tpl_summary
+  revision: 2
+  parent_revision: 1
+  instruction_template: Summarize {topic} with a {style} tone for {audience}.
+  answer_template: 'Summary for {audience}: {topic} ({style}).'
+  slots:
+  - name: audience
+    min_length: 3
+    max_length: 60
+  constraints:
+    style:
+      allowed_values:
+      - concise
+      - detailed
+- template_id: tpl_summary
+  revision: 3
+  parent_revision: 2
+  instruction_template: Give a {style} summary of {topic} for {audience}.
+  answer_template: For {audience}, {topic} in {style} form.
+  slots: []
+- template_id: tpl_summary_answer
+  revision: 1
+  parent_revision: null
+  instruction_template: Answer scaffold for {topic}.
+  answer_template: Answer on {topic} in a {style} register.
+  slots:
+  - name: topic
+  - name: style
+- template_id: tpl_summary_answer
+  revision: 2
+  parent_revision: 1
+  instruction_template: Answer scaffold for {topic} and {audience}.
+  answer_template: Answer on {topic} for {audience} in a {style} register.
+  slots:
+  - name: audience
+- template_id: tpl_task
+  revision: 1
+  parent_revision: null
+  instruction_template: Complete task {task_name} for {owner} by {due}.
+  answer_template: Task {task_name} is assigned to {owner} ({due}).
+  slots:
+  - name: task_name
+  - name: owner
+  - name: due
+- template_id: tpl_task
+  revision: 2
+  parent_revision: 1
+  instruction_template: Complete {priority} task {task_name} for {owner} by {due}.
+  answer_template: '{priority} task {task_name}: {owner}, due {due}.'
+  slots:
+  - name: priority
+    allowed_values:
+    - normal
+    - urgent
+- template_id: tpl_note
+  revision: 1
+  parent_revision: null
+  instruction_template: 'Write a note about {topic}: {body}'
+  answer_template: Note [{topic}] {body}
+  slots:
+  - name: topic
+    min_length: 2
+  - name: body
+    min_length: 2
+- template_id: tpl_broken
+  revision: 1
+  parent_revision: null
+  instruction_template: Diagnose {subject}.
+  answer_template: 'Diagnosis: {subject}.'
+  slots:
+  - name: subject
+- template_id: tpl_broken
+  revision: 2
+  parent_revision: 1
+  instruction_template: Diagnose {subject} with detail {detail}.
+  answer_template: 'Diagnosis for {subject}: {detail}.'
+  slots:
+  - name: detail

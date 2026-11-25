@@ -1,0 +1,20 @@
+schema_version: 1
+dedupe:
+  threshold_permille: 720
+  subword_size: 3
+quality:
+  weights_permille:
+    completeness: 400
+    template_coverage: 300
+    answer_length: 300
+  answer_soft_limit_chars: 24
+  answer_decay_per_char: 4000
+  answer_floor: 150000
+fixed_point:
+  decimal_places: 4
+  quantization: Q1000
+scheduler:
+  max_workers: 4
+  render_point_budget: 10000
+  source_quota_points: 10000
+  points_per_render: 1

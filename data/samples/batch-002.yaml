@@ -1,0 +1,147 @@
+batch_id: batch-002
+samples:
+- sample_id: S0011
+  template_id: tpl_summary
+  template_revision: 1
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-c
+  slot_fills:
+  - name: topic
+    value: fixed point residual
+    priority: 0
+  - name: style
+    value: detailed
+    priority: 0
+- sample_id: S0012
+  template_id: tpl_summary
+  template_revision: 1
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-c
+  slot_fills:
+  - name: topic
+    value: fixed point quantization
+    priority: 0
+  - name: style
+    value: detailed
+    priority: 0
+- sample_id: S0013
+  template_id: tpl_summary
+  template_revision: 3
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-c
+  slot_fills:
+  - name: topic
+    value: atomic snapshot commit
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+  - name: audience
+    value: storage team
+    priority: 0
+- sample_id: S0014
+  template_id: tpl_task
+  template_revision: 2
+  answer_template_id: tpl_task
+  answer_template_revision: 2
+  source_shard: shard-c
+  slot_fills:
+  - name: task_name
+    value: deterministic merge
+    priority: 0
+  - name: owner
+    value: runtime
+    priority: 0
+  - name: due
+    value: '2026-12-08'
+    priority: 0
+  - name: priority
+    value: normal
+    priority: 0
+- sample_id: S0015
+  template_id: tpl_note
+  template_revision: 1
+  answer_template_id: tpl_note
+  answer_template_revision: 1
+  source_shard: shard-c
+  slot_fills:
+  - name: topic
+    value: injection isolation
+    priority: 0
+  - name: body
+    value: each injected failure remains local
+    priority: 0
+- sample_id: S0016
+  template_id: tpl_summary
+  template_revision: 2
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-c
+  slot_fills:
+  - name: topic
+    value: cache key derivation
+    priority: 0
+  - name: style
+    value: detailed
+    priority: 0
+  - name: audience
+    value: review board
+    priority: 0
+- sample_id: S-FAIL-CYCLE
+  template_id: tpl_broken
+  template_revision: 2
+  answer_template_id: tpl_broken
+  answer_template_revision: 2
+  source_shard: shard-failure
+  slot_fills:
+  - name: subject
+    value: cycle
+    priority: 0
+  - name: detail
+    value: injected template cycle
+    priority: 0
+- sample_id: S-FAIL-MISSING
+  template_id: tpl_note
+  template_revision: 1
+  answer_template_id: tpl_note
+  answer_template_revision: 1
+  source_shard: shard-failure
+  slot_fills:
+  - name: topic
+    value: missing slot
+    priority: 0
+  - name: body
+    value: this body will be removed by injection
+    priority: 0
+- sample_id: S-FAIL-REV
+  template_id: tpl_summary
+  template_revision: 1
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-failure
+  slot_fills:
+  - name: topic
+    value: missing revision
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+- sample_id: S-FAIL-NONFINITE
+  template_id: tpl_summary
+  template_revision: 2
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-failure
+  slot_fills:
+  - name: topic
+    value: non-finite quality
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+  - name: audience
+    value: quality lab
+    priority: 0

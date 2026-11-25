@@ -1,0 +1,159 @@
+batch_id: batch-001
+samples:
+- sample_id: S0001
+  template_id: tpl_summary
+  template_revision: 2
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-a
+  slot_fills:
+  - name: topic
+    value: incremental cache validation
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+  - name: audience
+    value: release engineering
+    priority: 0
+- sample_id: S0002
+  template_id: tpl_summary
+  template_revision: 2
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-a
+  slot_fills:
+  - name: topic
+    value: incremental cache validation
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+  - name: audience
+    value: release engineering
+    priority: 0
+- sample_id: S0003
+  template_id: tpl_summary
+  template_revision: 2
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-a
+  slot_fills:
+  - name: topic
+    value: incremental cache verification
+    priority: 0
+  - name: style
+    value: concise
+    priority: 0
+  - name: audience
+    value: release engineering
+    priority: 0
+- sample_id: S0004
+  template_id: tpl_summary
+  template_revision: 1
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-a
+  slot_fills:
+  - name: topic
+    value: duplicate slot priority
+    priority: 0
+  - name: style
+    value: detailed
+    priority: 0
+  - name: style
+    value: concise
+    priority: 5
+- sample_id: S0005
+  template_id: tpl_summary
+  template_revision: 3
+  answer_template_id: tpl_summary_answer
+  answer_template_revision: 1
+  source_shard: shard-a
+  slot_fills:
+  - name: topic
+    value: template rollback
+    priority: 0
+  - name: style
+    value: detailed
+    priority: 0
+  - name: audience
+    value: platform team
+    priority: 0
+- sample_id: S0006
+  template_id: tpl_task
+  template_revision: 2
+  answer_template_id: tpl_task
+  answer_template_revision: 2
+  source_shard: shard-b
+  slot_fills:
+  - name: task_name
+    value: snapshot recovery
+    priority: 0
+  - name: owner
+    value: ops
+    priority: 0
+  - name: due
+    value: '2026-12-01'
+    priority: 0
+  - name: priority
+    value: urgent
+    priority: 0
+- sample_id: S0007
+  template_id: tpl_task
+  template_revision: 1
+  answer_template_id: tpl_task
+  answer_template_revision: 1
+  source_shard: shard-b
+  slot_fills:
+  - name: task_name
+    value: ledger compaction
+    priority: 0
+  - name: owner
+    value: data
+    priority: 0
+  - name: due
+    value: '2026-12-03'
+    priority: 0
+- sample_id: S0008
+  template_id: tpl_task
+  template_revision: 1
+  answer_template_id: tpl_task
+  answer_template_revision: 1
+  source_shard: shard-b
+  slot_fills:
+  - name: task_name
+    value: browser smoke test
+    priority: 0
+  - name: owner
+    value: qa
+    priority: 0
+  - name: due
+    value: '2026-12-04'
+    priority: 0
+- sample_id: S0009
+  template_id: tpl_note
+  template_revision: 1
+  answer_template_id: tpl_note
+  answer_template_revision: 1
+  source_shard: shard-b
+  slot_fills:
+  - name: topic
+    value: quota ledger
+    priority: 0
+  - name: body
+    value: record shard quota decisions
+    priority: 0
+- sample_id: S0010
+  template_id: tpl_note
+  template_revision: 1
+  answer_template_id: tpl_note
+  answer_template_revision: 1
+  source_shard: shard-b
+  slot_fills:
+  - name: topic
+    value: render budget
+    priority: 0
+  - name: body
+    value: record pending queue priority
+    priority: 0
