@@ -1,0 +1,35 @@
+{
+  "business_code_counts": {
+    "E_CONFIG_INVALID": 1,
+    "E_UNKNOWN_COLUMN": 1
+  },
+  "combinations": [],
+  "config_paths": {
+    "feature": "config/injections/unknown_pair/features.yaml",
+    "policy": "config/injections/unknown_pair/policy.yaml"
+  },
+  "failure_list": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_UNKNOWN_COLUMN",
+      "message": "candidate pair references unknown column: ghost_column",
+      "path": "cross_policy.candidate_pairs[0][1]",
+      "stage": "config",
+      "value": "ghost_column"
+    }
+  ],
+  "failures": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_UNKNOWN_COLUMN",
+      "message": "candidate pair references unknown column: ghost_column",
+      "path": "cross_policy.candidate_pairs[0][1]",
+      "stage": "config",
+      "value": "ghost_column"
+    }
+  ],
+  "injection_case": "unknown_pair",
+  "ok": false,
+  "pending_queue": [],
+  "status": "config_invalid"
+}

@@ -1,0 +1,35 @@
+{
+  "business_code_counts": {
+    "E_CONFIG_INVALID": 1,
+    "E_WIDTH_NOT_ALLOWED": 1
+  },
+  "combinations": [],
+  "config_paths": {
+    "feature": "config/injections/invalid_width/features.yaml",
+    "policy": "config/injections/invalid_width/policy.yaml"
+  },
+  "failure_list": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_WIDTH_NOT_ALLOWED",
+      "message": "encoding_width_bits must be one of [4, 8, 16, 32, 64]",
+      "path": "cross_policy.encoding_width_bits",
+      "stage": "config",
+      "value": 7
+    }
+  ],
+  "failures": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_WIDTH_NOT_ALLOWED",
+      "message": "encoding_width_bits must be one of [4, 8, 16, 32, 64]",
+      "path": "cross_policy.encoding_width_bits",
+      "stage": "config",
+      "value": 7
+    }
+  ],
+  "injection_case": "invalid_width",
+  "ok": false,
+  "pending_queue": [],
+  "status": "config_invalid"
+}

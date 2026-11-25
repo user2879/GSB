@@ -1,0 +1,35 @@
+{
+  "business_code_counts": {
+    "E_CONFIG_INVALID": 1,
+    "E_VALUE_OUT_OF_RANGE": 1
+  },
+  "combinations": [],
+  "config_paths": {
+    "feature": "config/injections/value_out_of_range/features.yaml",
+    "policy": "config/injections/value_out_of_range/policy.yaml"
+  },
+  "failure_list": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_VALUE_OUT_OF_RANGE",
+      "message": "numeric value 121 is outside [18, 72]",
+      "path": "feature_table.columns[2].values[2]",
+      "stage": "config",
+      "value": 121
+    }
+  ],
+  "failures": [
+    {
+      "code": "E_CONFIG_INVALID",
+      "detail_code": "E_VALUE_OUT_OF_RANGE",
+      "message": "numeric value 121 is outside [18, 72]",
+      "path": "feature_table.columns[2].values[2]",
+      "stage": "config",
+      "value": 121
+    }
+  ],
+  "injection_case": "value_out_of_range",
+  "ok": false,
+  "pending_queue": [],
+  "status": "config_invalid"
+}

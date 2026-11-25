@@ -1,0 +1,291 @@
+{
+  "artifact": {
+    "cache_key": "cache-key:80245fe3edf504e7ce4b5783885f8aa75121e4f8af9b0234916837064564d37f",
+    "canonical_key": "city",
+    "decision": {
+      "action": "retain",
+      "bucket_count": 6,
+      "cardinality_budget": 18,
+      "combined_verdict": "CARDINALITY_RETAINED",
+      "effective_bucket_count": 6,
+      "final_collision_count": 66,
+      "final_collision_rate": 0.9166666666666666,
+      "final_unique_count": 6,
+      "natural_collision_count": 66,
+      "natural_collision_rate": 0.9166666666666666,
+      "natural_unique_count": 6,
+      "over_budget": false,
+      "point": {
+        "code": null,
+        "combo": [
+          "city"
+        ],
+        "cumulative_after": 1152,
+        "cumulative_before": 576,
+        "point_budget": 6000,
+        "point_cost": 576,
+        "point_status": "admitted",
+        "rank": 1
+      },
+      "point_status": "admitted",
+      "raw_bucket_space": 256,
+      "raw_width_bits": 8,
+      "reason": "within_cardinality_budget",
+      "requested_bucket_count": null,
+      "strategy": "truncate_hash_buckets",
+      "truncated": false,
+      "verdict": "CARDINALITY_RETAINED"
+    },
+    "flip_attribution": {
+      "changed_scenario_count": 4,
+      "current_profile": {
+        "encoding_width_bits": 8,
+        "fixed_point_bits": 16,
+        "quantization_levels": 16
+      },
+      "reference_high_width": {
+        "code_counts": {
+          "10821": 18,
+          "23753": 13,
+          "25191": 6,
+          "37470": 13,
+          "39110": 15,
+          "6228": 7
+        },
+        "codes": [
+          39110,
+          23753,
+          39110,
+          6228,
+          10821,
+          23753,
+          39110,
+          23753,
+          37470,
+          10821,
+          23753,
+          10821,
+          23753,
+          6228,
+          25191,
+          39110,
+          39110,
+          10821,
+          10821,
+          10821,
+          6228,
+          6228,
+          25191,
+          39110,
+          6228,
+          10821,
+          37470,
+          39110,
+          23753,
+          37470,
+          39110,
+          10821,
+          37470,
+          23753,
+          23753,
+          37470,
+          37470,
+          39110,
+          6228,
+          39110,
+          37470,
+          37470,
+          23753,
+          10821,
+          37470,
+          39110,
+          10821,
+          25191,
+          39110,
+          39110,
+          25191,
+          10821,
+          39110,
+          25191,
+          37470,
+          23753,
+          37470,
+          37470,
+          10821,
+          23753,
+          10821,
+          23753,
+          6228,
+          10821,
+          23753,
+          10821,
+          10821,
+          10821,
+          39110,
+          37470,
+          10821,
+          25191
+        ],
+        "colliding_code_count": 6,
+        "collision_count": 66,
+        "collision_pair_count": 450,
+        "collision_rate": 0.9166666666666666,
+        "combo_fingerprint": "combination:503485fa39705438d6fb9208d415bfe7e73c8f8a9d2d6891ca8e05a253260a1e",
+        "dictionary_digest": "code-dictionary:fa89fd73bcb3a1854a333fa017b13a855ec82f683266827756d04c9cb5bc6d99",
+        "profile": {
+          "encoding_width_bits": 16,
+          "fixed_point_bits": 16,
+          "quantization_levels": 16
+        },
+        "total_count": 72,
+        "unique_count": 6,
+        "width_bits": 16,
+        "width_capacity": 65536
+      },
+      "scenarios": [
+        {
+          "adjacent": {
+            "bucket_count": 5,
+            "collision_count": 67,
+            "point_status": "admitted",
+            "unique_count": 5,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "collision_count_change": true,
+          "combo_fingerprint": "combination:967bb639e88e652bfefe890defbf12b11d36bb0d119296ebe6f7d3b0b00312ab",
+          "current": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "difference_sources": [
+            "hash_salt_change",
+            "truncation_bucket_count_change"
+          ],
+          "encoded_integer_change": true,
+          "hash_salt_change": true,
+          "point_budget_order_change": false,
+          "profile": {
+            "encoding_width_bits": 4,
+            "fixed_point_bits": 16,
+            "quantization_levels": 16
+          },
+          "scenario": "width_down",
+          "truncation_bucket_count_change": true,
+          "unique_count_change": true,
+          "verdict_change": false
+        },
+        {
+          "adjacent": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "collision_count_change": false,
+          "combo_fingerprint": "combination:503485fa39705438d6fb9208d415bfe7e73c8f8a9d2d6891ca8e05a253260a1e",
+          "current": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "difference_sources": [
+            "hash_salt_change",
+            "point_budget_ruling_order_change"
+          ],
+          "encoded_integer_change": true,
+          "hash_salt_change": true,
+          "point_budget_order_change": true,
+          "profile": {
+            "encoding_width_bits": 16,
+            "fixed_point_bits": 16,
+            "quantization_levels": 16
+          },
+          "scenario": "width_up",
+          "truncation_bucket_count_change": false,
+          "unique_count_change": false,
+          "verdict_change": true
+        },
+        {
+          "adjacent": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "collision_count_change": false,
+          "combo_fingerprint": "combination:42fcb8e74a3cb7a730883463c5d9692944d849e6e639a56abb3d942890e0899f",
+          "current": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "difference_sources": [
+            "hash_salt_change"
+          ],
+          "encoded_integer_change": true,
+          "hash_salt_change": true,
+          "point_budget_order_change": false,
+          "profile": {
+            "encoding_width_bits": 8,
+            "fixed_point_bits": 16,
+            "quantization_levels": 8
+          },
+          "scenario": "quant_down",
+          "truncation_bucket_count_change": false,
+          "unique_count_change": false,
+          "verdict_change": false
+        },
+        {
+          "adjacent": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "collision_count_change": false,
+          "combo_fingerprint": "combination:c68ffc3425ca6cde01acfd43717d8d2034815ecf83d9eff376228c3724b1cbcf",
+          "current": {
+            "bucket_count": 6,
+            "collision_count": 66,
+            "point_status": "admitted",
+            "unique_count": 6,
+            "verdict": "CARDINALITY_RETAINED"
+          },
+          "difference_sources": [
+            "hash_salt_change"
+          ],
+          "encoded_integer_change": true,
+          "hash_salt_change": true,
+          "point_budget_order_change": false,
+          "profile": {
+            "encoding_width_bits": 8,
+            "fixed_point_bits": 16,
+            "quantization_levels": 32
+          },
+          "scenario": "quant_up",
+          "truncation_bucket_count_change": false,
+          "unique_count_change": false,
+          "verdict_change": false
+        }
+      ],
+      "source_counts": {
+        "hash_salt_change": 4,
+        "point_budget_ruling_order_change": 1,
+        "truncation_bucket_count_change": 1
+      }
+    },
+    "rank": 1
+  },
+  "artifact_digest": "cached-artifact:093a743c1c5a2dacf3d038a21c50f0d4dde0f4a8ecca58132be97d01cf23047d",
+  "cache_key": "cache-key:80245fe3edf504e7ce4b5783885f8aa75121e4f8af9b0234916837064564d37f"
+}

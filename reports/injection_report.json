@@ -1,0 +1,42 @@
+{
+  "business_code_counts": {
+    "E_CONFIG_INVALID": 3,
+    "E_UNKNOWN_COLUMN": 1,
+    "E_VALUE_OUT_OF_RANGE": 1,
+    "E_WIDTH_NOT_ALLOWED": 1
+  },
+  "cases": [
+    {
+      "case": "invalid_width",
+      "detail_codes": [
+        "E_WIDTH_NOT_ALLOWED"
+      ],
+      "error_count": 1,
+      "expected": "E_CONFIG_INVALID",
+      "report": "reports/injection_invalid_width.json",
+      "unexpected_valid": false
+    },
+    {
+      "case": "unknown_pair",
+      "detail_codes": [
+        "E_UNKNOWN_COLUMN"
+      ],
+      "error_count": 1,
+      "expected": "E_CONFIG_INVALID",
+      "report": "reports/injection_unknown_pair.json",
+      "unexpected_valid": false
+    },
+    {
+      "case": "value_out_of_range",
+      "detail_codes": [
+        "E_VALUE_OUT_OF_RANGE"
+      ],
+      "error_count": 1,
+      "expected": "E_CONFIG_INVALID",
+      "report": "reports/injection_value_out_of_range.json",
+      "unexpected_valid": false
+    }
+  ],
+  "ok": true,
+  "status": "injections_verified"
+}

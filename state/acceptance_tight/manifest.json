@@ -1,0 +1,108 @@
+{
+  "business_code_counts": {
+    "E_POINT_BUDGET_PENDING": 9
+  },
+  "completed_command_cursor": 1,
+  "global_version": 1,
+  "manifest_digest": "manifest:0367c102e2837d62b0f5f14d4a127f1344ade96c2d4e1d47646e5a6eb86c92e0",
+  "normalized_policy": {
+    "allowed_encoding_width_bits": [
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "allowed_fixed_point_bits": [
+      8,
+      16,
+      24,
+      32,
+      64
+    ],
+    "allowed_quantization_levels": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "candidate_pairs": [
+      [
+        "city",
+        "device"
+      ],
+      [
+        "channel",
+        "city"
+      ],
+      [
+        "device",
+        "membership"
+      ]
+    ],
+    "cardinality_budget": 18,
+    "combination_enumeration": "all_subsets",
+    "encoding_point_budget": 3000,
+    "encoding_width_bits": 8,
+    "feature_config_fingerprint": "feature-config:0d27504d9656f098dfb5e2f4c62843d3db7892e627d6ba7923ce4677c62bddb5",
+    "fixed_point_bits": 16,
+    "max_order": 3,
+    "max_workers": 3,
+    "over_cardinality_strategy": "truncate_hash_buckets",
+    "policy_fingerprint": "policy-config:792e46282538bae667b7112fed247d15dc684b1abc21705cda40c17447c76094",
+    "policy_name": "tight-point-budget-demo",
+    "quantization_levels": 16,
+    "snapshot_commit_interval": 1
+  },
+  "parent_version": 0,
+  "policy_config_hash": "policy-config:792e46282538bae667b7112fed247d15dc684b1abc21705cda40c17447c76094",
+  "snapshot_commit_interval": 1,
+  "snapshot_dir": "snapshots/v000001",
+  "stages": {
+    "adjudication": {
+      "artifact_version": "stage-version:9b95e31258b057eb235d68d4708c299a7d62a95f2b61575270acc73d0c8b4327",
+      "bytes": 170749,
+      "path": "adjudication.json",
+      "sha256": "a9ee184f92977030edcbc18a705f1942c16558a64790fc3fdd699088c8f13cea"
+    },
+    "cardinality": {
+      "artifact_version": "stage-version:d756167b8056cce856309bb415309d80323dd071f83e4b79a7b39f9351f9f15e",
+      "bytes": 63325,
+      "path": "cardinality.json",
+      "sha256": "0d768e4c002885c0cd373fddac2b50a9395a906944da64215576d00c142d2426"
+    },
+    "coding": {
+      "artifact_version": "stage-version:debd79a1d78018c3283752a3282cc627df73f61d61c43689692dd51f42497cc9",
+      "bytes": 10329,
+      "path": "coding.json",
+      "sha256": "9d84b2afc6f92862a4b14707363c6488c895e0696b0181be0bd9655ac01141da"
+    },
+    "enumeration": {
+      "artifact_version": "stage-version:55a4f3042ed7a60c1df71f0bd777c249e14aa79a362c855115b42dc5cb642dbc",
+      "bytes": 12167,
+      "path": "enumeration.json",
+      "sha256": "354f4c92fca3aef62a350cd1713bf757e05e1f6c7ef4b2419a0d981e38679676"
+    },
+    "ledger": {
+      "artifact_version": "stage-version:51fc8648c53b816aa510c38c8917c96353d151ba69ba11100170189b028d7e46",
+      "bytes": 35845,
+      "path": "ledger.json",
+      "sha256": "93d33795dab2f7e2ce85d26b46c77ecd362bc1d23e2fdbe257c0d8bb69238fe8"
+    },
+    "pending_queue": {
+      "artifact_version": "stage-version:3650755678724dd953bd49292c500180a1def10d8751426e44c7904ed0bc5c5d",
+      "bytes": 4620,
+      "path": "pending_queue.json",
+      "sha256": "f38c25d278d4ebb14d32e3461bd51f4c1ee2cd4a4bcc71b9bff4d66df153db17"
+    }
+  },
+  "status": "completed_with_pending",
+  "table_fingerprint": "table:4ea789015bce09b2aff23dce6ede392adcc2084ca32ad2355799bfb3e1acf42b",
+  "width_profile": {
+    "encoding_width_bits": 8,
+    "fixed_point_bits": 16,
+    "quantization_levels": 16
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "business_code_counts": {
+    "E_POINT_BUDGET_PENDING": 4
+  },
+  "completed_command_cursor": 1,
+  "global_version": 1,
+  "manifest_digest": "manifest:43e75357377b3cb0f2e6e63975d892fd417d95b793f4d7cc235b3d7c33e6792b",
+  "normalized_policy": {
+    "allowed_encoding_width_bits": [
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "allowed_fixed_point_bits": [
+      8,
+      16,
+      24,
+      32,
+      64
+    ],
+    "allowed_quantization_levels": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "candidate_pairs": [
+      [
+        "city",
+        "device"
+      ],
+      [
+        "channel",
+        "city"
+      ],
+      [
+        "device",
+        "membership"
+      ]
+    ],
+    "cardinality_budget": 18,
+    "combination_enumeration": "connected_subsets",
+    "encoding_point_budget": 3000,
+    "encoding_width_bits": 8,
+    "feature_config_fingerprint": "feature-config:0d27504d9656f098dfb5e2f4c62843d3db7892e627d6ba7923ce4677c62bddb5",
+    "fixed_point_bits": 16,
+    "max_order": 3,
+    "max_workers": 3,
+    "over_cardinality_strategy": "truncate_hash_buckets",
+    "policy_fingerprint": "policy-config:42dc0a66f14d9b3e548feb5c55ccfe501f21991ea00ac7540c22572be6489f7a",
+    "policy_name": "tight-point-budget-demo",
+    "quantization_levels": 16,
+    "snapshot_commit_interval": 1
+  },
+  "parent_version": 0,
+  "policy_config_hash": "policy-config:42dc0a66f14d9b3e548feb5c55ccfe501f21991ea00ac7540c22572be6489f7a",
+  "snapshot_commit_interval": 1,
+  "stages": {
+    "adjudication": {
+      "artifact_version": "stage-version:a4c718b0719157c19332339226e5950f5e3debc5d6727f5f3d8b883213acf2a4",
+      "bytes": 147785,
+      "path": "adjudication.json",
+      "sha256": "eb43303e476caffe69a288f563374fabd55cbbf5faaea71b7586bd51f2b6571b"
+    },
+    "cardinality": {
+      "artifact_version": "stage-version:59a5bf22279c47842a948a4f5ca5ed8a5e8c81e5be571ec00d150f22c169b351",
+      "bytes": 63333,
+      "path": "cardinality.json",
+      "sha256": "59dcfeee7bf4b645bc333c19ea68c806d973541b6f0db7793958fb297c144dc3"
+    },
+    "coding": {
+      "artifact_version": "stage-version:c3d49d46202eb154055eac26486f714e1a595278fb2ed66bb9cc4454a4147e73",
+      "bytes": 10384,
+      "path": "coding.json",
+      "sha256": "84304f3888e5a85ac655b9aeee10edbc4110f13789e097bc5a4ab54f2ee23107"
+    },
+    "enumeration": {
+      "artifact_version": "stage-version:9ddebff6d80b63dd9b73c84fbb3ef69e502b2b0d8df5d4058a8181dde66075b5",
+      "bytes": 7788,
+      "path": "enumeration.json",
+      "sha256": "93f74d3895a26de88900fde91e1e7b1e91c3df2e034a01d39c9b202c37c0ec7c"
+    },
+    "ledger": {
+      "artifact_version": "stage-version:5b8e65f4dc9fb584a8bd844ff7e23d162f2c5c19d81fd9b13267f99504d2a710",
+      "bytes": 23234,
+      "path": "ledger.json",
+      "sha256": "6b2c58882905f40ad798c51e6767b9dca7fae980cc1458d22042d305d23b226b"
+    },
+    "pending_queue": {
+      "artifact_version": "stage-version:bacef2d46339b2705f9b1fd7a9263d7af37403f4e80aaaaf479d837ce5730157",
+      "bytes": 2060,
+      "path": "pending_queue.json",
+      "sha256": "dec792301a8e4ee1f1f66e6c9a5c79391f201d24b8fa9ee39036f07a05ad3d59"
+    }
+  },
+  "status": "completed_with_pending",
+  "table_fingerprint": "table:4ea789015bce09b2aff23dce6ede392adcc2084ca32ad2355799bfb3e1acf42b",
+  "width_profile": {
+    "encoding_width_bits": 8,
+    "fixed_point_bits": 16,
+    "quantization_levels": 16
+  }
+}

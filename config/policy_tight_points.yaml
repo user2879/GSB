@@ -1,0 +1,15 @@
+policy_name: tight-point-budget-demo
+candidate_pairs:
+  - [city, device]
+  - [city, channel]
+  - [device, membership]
+max_order: 3
+combination_enumeration: all_subsets
+cardinality_budget: 18
+over_cardinality_strategy: truncate_hash_buckets
+encoding_width_bits: 8
+fixed_point_bits: 16
+quantization_levels: 16
+encoding_point_budget: 3000
+max_workers: 3
+snapshot_commit_interval: 1

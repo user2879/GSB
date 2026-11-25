@@ -1,0 +1,105 @@
+{
+  "business_code_counts": {},
+  "completed_command_cursor": 1,
+  "global_version": 1,
+  "manifest_digest": "manifest:e091f58ac0340ef7c19e2af56d64a7d28731cc39aa242d208873a3a39896d27b",
+  "normalized_policy": {
+    "allowed_encoding_width_bits": [
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "allowed_fixed_point_bits": [
+      8,
+      16,
+      24,
+      32,
+      64
+    ],
+    "allowed_quantization_levels": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "candidate_pairs": [
+      [
+        "city",
+        "device"
+      ],
+      [
+        "channel",
+        "city"
+      ],
+      [
+        "device",
+        "membership"
+      ]
+    ],
+    "cardinality_budget": 18,
+    "combination_enumeration": "all_subsets",
+    "encoding_point_budget": 12000,
+    "encoding_width_bits": 8,
+    "feature_config_fingerprint": "feature-config:0d27504d9656f098dfb5e2f4c62843d3db7892e627d6ba7923ce4677c62bddb5",
+    "fixed_point_bits": 16,
+    "max_order": 3,
+    "max_workers": 4,
+    "over_cardinality_strategy": "truncate_hash_buckets",
+    "policy_fingerprint": "policy-config:9ac6ec4ca9c04c06c33009673313768cdb459a5085eafab066c7ed550116446a",
+    "policy_name": "local-deterministic-cross-coding",
+    "quantization_levels": 16,
+    "snapshot_commit_interval": 1
+  },
+  "parent_version": 0,
+  "policy_config_hash": "policy-config:9ac6ec4ca9c04c06c33009673313768cdb459a5085eafab066c7ed550116446a",
+  "snapshot_commit_interval": 1,
+  "stages": {
+    "adjudication": {
+      "artifact_version": "stage-version:079a4549e569a222f693b1c81d2d44e93c8d3f4b58249a6ef7d26de854c2680a",
+      "bytes": 415308,
+      "path": "adjudication.json",
+      "sha256": "3536dcdb85b0057194ae1ad3ce926c3282b3633a72e3a4ccb707c98726fde13f"
+    },
+    "cardinality": {
+      "artifact_version": "stage-version:a85e7f866bebab92b7ac3f310ba0fcb8a6716f7e54c2e2d4f3d787112074a262",
+      "bytes": 200601,
+      "path": "cardinality.json",
+      "sha256": "4ebf52af8d0fffd270d9f24d961e6800f5a9256ec2af5b032ceaf6e22ad8669d"
+    },
+    "coding": {
+      "artifact_version": "stage-version:b946f71a5b0f79347053d91733e35247eccdad2a57584e20f73bb1378286f60c",
+      "bytes": 43890,
+      "path": "coding.json",
+      "sha256": "b2a9a0af0e3cfd7ea4ce3c5008674b5942c1d6e022f30f6b868e107697718739"
+    },
+    "enumeration": {
+      "artifact_version": "stage-version:55a4f3042ed7a60c1df71f0bd777c249e14aa79a362c855115b42dc5cb642dbc",
+      "bytes": 12167,
+      "path": "enumeration.json",
+      "sha256": "354f4c92fca3aef62a350cd1713bf757e05e1f6c7ef4b2419a0d981e38679676"
+    },
+    "ledger": {
+      "artifact_version": "stage-version:23c37530adb59f9d37de6d71fcbff57270acc322750e055f08b1438ccbc0451d",
+      "bytes": 37393,
+      "path": "ledger.json",
+      "sha256": "48a7923c0e3babf5e040eaaffb4b28fa40109c4507bf93b4e502474901bec6bf"
+    },
+    "pending_queue": {
+      "artifact_version": "stage-version:c8ce8b5e0c43c9cf300fb7b279c512502fe9da6601f7fe1fadf50f1828893576",
+      "bytes": 26,
+      "path": "pending_queue.json",
+      "sha256": "79c31ef4ccd02fe446dc02fe28b5f05029c08f82ac5e050dbf85641a649cdbc3"
+    }
+  },
+  "status": "completed",
+  "table_fingerprint": "table:4ea789015bce09b2aff23dce6ede392adcc2084ca32ad2355799bfb3e1acf42b",
+  "width_profile": {
+    "encoding_width_bits": 8,
+    "fixed_point_bits": 16,
+    "quantization_levels": 16
+  }
+}

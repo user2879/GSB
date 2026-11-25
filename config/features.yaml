@@ -1,0 +1,31 @@
+seed: 20261126
+row_count: 72
+columns:
+  - name: channel
+    type: categorical
+    categories: [organic, search, social, referral]
+    missing_rate: 0.06
+  - name: city
+    type: categorical
+    categories: [beijing, shanghai, guangzhou, shenzhen, hangzhou]
+    missing_rate: 0.08
+  - name: device
+    type: categorical
+    categories: [ios, android, web, mini_program]
+    missing_rate: 0.05
+  - name: membership
+    type: categorical
+    categories: [guest, silver, gold]
+    missing_rate: 0.04
+  - name: age_years
+    type: numeric
+    integer: true
+    min: 18
+    max: 72
+    missing_rate: 0.09
+  - name: spend_score
+    type: numeric
+    integer: false
+    min: 0
+    max: 100
+    missing_rate: 0.07
