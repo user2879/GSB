@@ -1,21 +1,97 @@
-预算与周期确定后，这块 WSL Ubuntu 工作目录里只留下空目录层级，没有代码、配置、本地样本或账本，首个版本需要一次落地。业务对象是本地多服务限流与熔断降级链路：每个服务声明整数每秒请求上限、整数并发上限、整数熔断失败率阈值与整数降级档位，请求按到达序号进入服务，先经并发租约准入，再经滑动窗口失败率判定是否熔断，熔断后按降级档位返回降级结论。每个服务在 127.0.0.1 回环端口以子进程托管确定性执行器，按自身整数定点口径用 NumPy 对固定种子样本做计算并回传结论摘要、配置版本与单调时钟毫秒耗时。使用者会反复调整限流参数、熔断阈值、降级档位与请求流，并要求每次编辑后只重算真正受影响的服务与请求批次。
+# RLCB — 本地多服务限流 / 熔断降级链路
 
-任务环境与准备：
-在 Linux（WSL Ubuntu）下准备 Python 3.11 与 venv，执行 python3 -m venv .venv 并激活。
-安装依赖：pip install numpy==1.26.4；SQLite 与 Tkinter 使用 Python 标准库自带模块，确认 python3 -c "import sqlite3, tkinter" 可用。
-确认 127.0.0.1 上可自由绑定高位端口；样本、声明 JSON 与账本目录均在项目内本地生成，不访问外部网络与真实账号。
+离线、确定性的本地限流熔断系统。每个服务在 `127.0.0.1` 回环端口以**真实子进程**托管
+NumPy 整数定点执行器，主进程经真实 TCP 套接字逐行通信；策略结论按整数定点口径计算，
+在任意批次切分、字典遍历顺序与线程交错下逐字节一致。不使用 Docker，不访问外部网络。
 
-业务要求：
-1. 实现服务声明、限流熔断参数、降级档位与请求流的本地 JSON 加载及强校验：服务标识唯一，回环端口为 127.0.0.1 字面量且全局不重复，每秒请求上限与并发上限为非负整数，失败率阈值落在 0 至 10000 的万分比区间，降级档位属于受支持整数集合，请求到达序号单调不减；任一不合法须以 E_SPEC 报告并指明首个非法字段与来源行号。
-2. 实现并发租约的签发、续约与基于本地单调时钟的真实过期判定：每份租约含租约标识、服务标识、请求批次、授予时刻毫秒、到期时刻毫秒与租约版本号，到期须由真实计时判定而非人为延迟，续约须凭版本号向服务子进程做乐观校验，版本不符以 E_LEASE 拒绝且不延长到期时刻；输出每次归属变化所依据的版本与事件序号。
-3. 实现按真实回环套接字托管的服务子进程与逐行协议：以子进程按声明端口真实监听，主进程通过 TCP 套接字下发批次并接收含服务标识、批次标识、结论摘要、配置版本与毫秒耗时的回执；握手与读取使用真实套接字超时，端口占用、握手超时与回执字段缺失分别以 E_PORT、E_TIMEOUT、E_REPLY 报告。
-4. 实现滑动窗口失败率熔断判定与降级档位联动：按声明窗口长度与失败率阈值以整数定点口径逐窗口判定是否熔断，熔断期间请求须转降级结论并记录触发窗口、失败计数与阈值比较依据，恢复须满足显式声明并通过窗口；同一请求流在任意批次切分与任意字典遍历顺序下熔断与降级结论必须逐字节一致。
-5. 实现租约到期回收与配额版本换代作废回收并存时的唯一归属裁决：同一份并发槽位在同一时刻不得既被计入到期回收又被计入作废回收，也不得被两个服务或两个批次同时持有；每次归属变化须记录裁决依据、事件序号与配额版本，并保证按任意事件重排后归属结论可原样复核。
-6. 实现受全局活跃租约上限、每服务活跃租约上限与全局批次预算三重约束的并行请求调度：越界前须排队并记录以单调时钟毫秒计量的等待开始与结束，调度须真实投射到工作线程池且不得绕过配额；同时实现全量重算与基于变更集的增量重算两条路径并按服务数、批次数与窗口数显式规则选择默认路径，输出选择理由与边界值。
-7. 实现参数演进后的失效传播与仅失效子集重算：限流参数、熔断阈值、降级档位或窗口长度变更后配置版本号单调递增，须沿服务、窗口、租约与批次的引用关系推导受影响请求集合，未受影响批次的结论摘要与租约归属须逐字节保持不变，并提供与从零全量重算的逐请求一致性校验命令。
-8. 实现账本原子提交、快照版本识别整体替换与强制终止后的恢复重放：每批次结论、租约归属、失效传播轨迹与进度游标在同一 SQLite 事务写入并携带整数格式版本与内容摘要；重新打开快照时版本或摘要不一致须整体替换而非增量合并，子进程被强制终止后重启只能依据已完整提交记录恢复，未提交批次标记为未知并先回收其配额，恢复后逐请求重放并与账本逐项比对定位首个差异。
+## 环境准备（WSL Ubuntu / Python 3.11）
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3 -m venv .venv            # 若 ensurepip 缺失，见文末“环境备注”
+source .venv/bin/activate
+pip install numpy==1.26.4
+python -c "import sqlite3, tkinter; print('stdlib ok')"
+```
 
-验收：
-使用本地确定性样本验证限流熔断降级结论、租约唯一归属与强制终止后的恢复重放一致性。
+本仓库的 `.venv` 用 `python3 -m venv --without-pip --system-site-packages .venv` 创建，
+复用基础解释器自带的 numpy 1.26.4；Tk 运行库以用户态解压到 `/tmp/tkdeps2`，
+`run_acceptance.sh` 会在该目录存在时自动注入 `LD_LIBRARY_PATH/TCL_LIBRARY/TK_LIBRARY`。
+
+## 一键验收
+
+```bash
+source .venv/bin/activate
+./run_acceptance.sh
+```
+
+包含：环境检查、54 项 unittest（含真实回环子进程、SIGKILL 恢复）、确定性样本生成、
+真实子进程全量运行、从零重算逐请求一致性校验、强制终止恢复演示。
+
+## 常用命令
+
+```bash
+# 生成确定性样本（3 个服务、37 个请求，含触发熔断与恢复的失败模式）
+python -m rlcb.cli sample --out samples/acceptance
+
+# 强校验（非法输入报 E_SPEC，含首个字段与 JSON 行号）
+python -m rlcb.cli validate \
+  --services samples/acceptance/services.json \
+  --requests samples/acceptance/requests.json
+
+# 全量运行（真实 127.0.0.1 子进程 + 线程池 + SQLite 原子提交）
+python -m rlcb.cli run \
+  --services samples/acceptance/services.json \
+  --requests samples/acceptance/requests.json \
+  --ledger artifacts/acceptance/ledger.db \
+  --out artifacts/acceptance --mode full
+
+# 参数演进后的增量重算（仅失效子集重算，未受影响结论逐字节保持）
+python -m rlcb.cli run --services <svc.json> --requests <req.json> \
+  --edits edits.json --ledger artifacts/inc/ledger.db \
+  --out artifacts/inc --mode incremental
+
+# 与从零全量重算逐请求一致性校验
+python -m rlcb.cli verify --services <svc.json> --requests <req.json> \
+  --ledger artifacts/acceptance/ledger.db
+
+# 强制终止后的恢复重放（未提交批次先回收配额再补齐，逐项比对）
+python -m rlcb.cli recover --services <svc.json> --requests <req.json> \
+  --ledger artifacts/crash/ledger.db --in-process
+
+# 快照版本/摘要不一致时整体替换
+python -m rlcb.cli snapshot --ledger <db> --fingerprint <fp.json>
+
+# Tkinter 仪表盘（无显示环境自动降级为文本视图）
+python -m rlcb.cli ui --report artifacts/acceptance/run_report.json
+```
+
+## 目录职责
+
+- `rlcb/spec.py`、`rlcb/linejson.py`：本地 JSON 强校验与首个非法字段行号定位（E_SPEC）。
+- `rlcb/ratelimit.py`：确定性整数准入，rps=0 全拒绝。
+- `rlcb/breaker.py`：纯滑动窗口熔断/降级状态机，万分比整数定点。
+- `rlcb/lease.py`：租约签发/续约/真实过期、乐观版本与唯一归属裁决重放。
+- `rlcb/clock.py`：真实单调毫秒生产钟 + 可推进假钟。
+- `rlcb/fixedpoint.py`：整数定点与固定种子 NumPy 确定性执行器。
+- `rlcb/worker.py`：回环子进程、逐行 JSON 协议与权威租约版本表。
+- `rlcb/transport.py`：子进程生命周期、真实套接字超时与 E_PORT/E_TIMEOUT/E_REPLY。
+- `rlcb/scheduler.py`：全局租约/全局批次/每服务并发三重约束的真实线程池调度。
+- `rlcb/planner.py`、`rlcb/invalidate.py`：全量/增量选择规则与失效传播。
+- `rlcb/ledger.py`：SQLite 单事务原子提交、快照整体替换与崩溃恢复重放。
+- `rlcb/engine.py`：策略层与运行时层编排。
+- `rlcb/cli.py`、`rlcb/ui.py`：命令行与 Tkinter 界面（无头降级）。
+- `tests/`：54 项 unittest；`scripts/demo_force_kill.py`：真实 SIGKILL 恢复演示。
+- `docs/DESIGN.md`：架构与裁决细节；`docs/acceptance-output.txt`：最近一次验收实跑输出。
+
+## 确定性样本
+
+固定种子 `20261126`。svcA 窗口 4/阈值 4000bp、svcB 窗口 5/阈值 5000bp，失败模式手工设计为
+先触发熔断、再经显式恢复探测窗闭合；svcC 的 rps=0，所有请求在进入窗口前被限流拒绝。
+最近一次全量运行结论分布：`executed=13, degraded=18, rate_rejected=6`。
+
+## 环境备注
+
+- 若 `python3 -m venv` 报 ensurepip 不可用且无 sudo，可改用
+  `python3 -m venv --without-pip --system-site-packages .venv`，复用基础解释器的 numpy。
+- Tk 系统共享库缺失时，可在用户态 `apt-get download tk8.6 tcl8.6 libtcl8.6` 后
+  `dpkg-deb -x` 到本地目录，再经上述三个环境变量接入，无需 root。

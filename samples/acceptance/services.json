@@ -1,0 +1,48 @@
+{
+  "global_limits": {
+    "max_active_leases": 6,
+    "max_active_batches": 3,
+    "lease_ttl_ms": 250
+  },
+  "services": [
+    {
+      "service_id": "svcA",
+      "host": "127.0.0.1",
+      "port": 31001,
+      "rps_limit": 4,
+      "concurrency_limit": 2,
+      "failure_threshold_bp": 4000,
+      "window_length": 4,
+      "degrade_level": 1,
+      "recovery_windows": 1,
+      "config_version": 1,
+      "seed": 20261126
+    },
+    {
+      "service_id": "svcB",
+      "host": "127.0.0.1",
+      "port": 31002,
+      "rps_limit": 10,
+      "concurrency_limit": 3,
+      "failure_threshold_bp": 5000,
+      "window_length": 5,
+      "degrade_level": 2,
+      "recovery_windows": 2,
+      "config_version": 1,
+      "seed": 20261126
+    },
+    {
+      "service_id": "svcC",
+      "host": "127.0.0.1",
+      "port": 31003,
+      "rps_limit": 0,
+      "concurrency_limit": 1,
+      "failure_threshold_bp": 10000,
+      "window_length": 3,
+      "degrade_level": 3,
+      "recovery_windows": 1,
+      "config_version": 1,
+      "seed": 20261126
+    }
+  ]
+}

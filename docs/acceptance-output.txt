@@ -1,0 +1,108 @@
+== environment ==
+python 3.11.0rc1 numpy 1.26.4 tk 8.6 sqlite 3.37.2
+== unit tests (real loopback subprocesses included) ==
+test_byte_identical_under_batch_resplit_and_dict_order (test_breaker.BreakerTest.test_byte_identical_under_batch_resplit_and_dict_order) ... ok
+test_failed_probe_reopens (test_breaker.BreakerTest.test_failed_probe_reopens) ... ok
+test_open_persists_to_window_end_then_half_open_recovery (test_breaker.BreakerTest.test_open_persists_to_window_end_then_half_open_recovery) ... ok
+test_opens_streaming_and_degrades (test_breaker.BreakerTest.test_opens_streaming_and_degrades) ... ok
+test_rate_rejected_skips_window (test_breaker.BreakerTest.test_rate_rejected_skips_window) ... ok
+test_threshold_zero_trips_on_first_failure (test_breaker.BreakerTest.test_threshold_zero_trips_on_first_failure) ... ok
+test_two_recovery_windows_required (test_breaker.BreakerTest.test_two_recovery_windows_required) ... ok
+test_full_recompute_matches_scratch_after_edits (test_engine_integration.EngineIntegrationTest.test_full_recompute_matches_scratch_after_edits) ... ok
+test_incremental_preserves_unaffected_decisions_byte_for_byte (test_engine_integration.EngineIntegrationTest.test_incremental_preserves_unaffected_decisions_byte_for_byte) ... ok
+test_real_workers_byte_stable_across_runs (test_engine_integration.EngineIntegrationTest.test_real_workers_byte_stable_across_runs) ... ok
+test_propagation_only_touches_affected_service (test_invalidation_planner.InvalidationTest.test_propagation_only_touches_affected_service) ... ok
+test_version_bumps_monotonically_and_digest_changes (test_invalidation_planner.InvalidationTest.test_version_bumps_monotonically_and_digest_changes) ... ok
+test_window_length_change_invalidates_windows (test_invalidation_planner.InvalidationTest.test_window_length_change_invalidates_windows) ... ok
+test_force_mode_overrides_rules (test_invalidation_planner.PlannerTest.test_force_mode_overrides_rules) ... ok
+test_full_when_changed_fraction_too_large (test_invalidation_planner.PlannerTest.test_full_when_changed_fraction_too_large) ... ok
+test_full_when_no_changes (test_invalidation_planner.PlannerTest.test_full_when_no_changes) ... ok
+test_incremental_when_scale_and_fraction_ok (test_invalidation_planner.PlannerTest.test_incremental_when_scale_and_fraction_ok) ... ok
+test_arbitration_replay_order_independent (test_lease.LeaseTest.test_arbitration_replay_order_independent) ... ok
+test_double_grant_same_slot_rejected (test_lease.LeaseTest.test_double_grant_same_slot_rejected) ... ok
+test_expiry_and_supersede_never_double_count_slot (test_lease.LeaseTest.test_expiry_and_supersede_never_double_count_slot) ... ok
+test_grant_records_version_and_event (test_lease.LeaseTest.test_grant_records_version_and_event) ... ok
+test_optimistic_renewal_stale_version_rejected (test_lease.LeaseTest.test_optimistic_renewal_stale_version_rejected) ... ok
+test_real_clock_expiry_drives_reclamation (test_lease.LeaseTest.test_real_clock_expiry_drives_reclamation) ... ok
+test_renewal_after_expiry_rejected (test_lease.LeaseTest.test_renewal_after_expiry_rejected) ... ok
+test_successful_renewal_extends_deadline (test_lease.LeaseTest.test_successful_renewal_extends_deadline) ... ok
+test_supersede_for_fresh_lease (test_lease.LeaseTest.test_supersede_for_fresh_lease) ... ok
+test_atomic_commit_and_replay_match (test_ledger_recovery.LedgerTest.test_atomic_commit_and_replay_match) ... ok
+test_crash_recovery_marks_unknown_batches_and_reclaims_quota (test_ledger_recovery.LedgerTest.test_crash_recovery_marks_unknown_batches_and_reclaims_quota) ... ok
+test_divergence_detected_at_first_request (test_ledger_recovery.LedgerTest.test_divergence_detected_at_first_request) ... ok
+test_format_version_mismatch_rejected (test_ledger_recovery.LedgerTest.test_format_version_mismatch_rejected) ... ok
+test_snapshot_mismatch_replaces_whole_snapshot (test_ledger_recovery.LedgerTest.test_snapshot_mismatch_replaces_whole_snapshot) ... ok
+test_subprocess_sigkill_leaves_recoverable_state (test_lifecycle_lease_socket.ForceKillRecoveryTest.test_subprocess_sigkill_leaves_recoverable_state) ... ok
+test_manager_refuses_stale_renewal_without_extending (test_lifecycle_lease_socket.LeaseSocketRenewalTest.test_manager_refuses_stale_renewal_without_extending) ... ok
+test_optimistic_version_check_over_real_socket (test_lifecycle_lease_socket.LeaseSocketRenewalTest.test_optimistic_version_check_over_real_socket) ... ok
+test_admission_is_deterministic_by_arrival_seq (test_scheduler_ratelimit.RateLimitTest.test_admission_is_deterministic_by_arrival_seq) ... ok
+test_admission_stable_under_repeated_runs (test_scheduler_ratelimit.RateLimitTest.test_admission_stable_under_repeated_runs) ... ok
+test_zero_rps_rejects_all (test_scheduler_ratelimit.RateLimitTest.test_zero_rps_rejects_all) ... ok
+test_three_gates_enforced_with_real_threads (test_scheduler_ratelimit.SchedulerTest.test_three_gates_enforced_with_real_threads) ... ok
+test_wait_window_recorded_monotonic_ms (test_scheduler_ratelimit.SchedulerTest.test_wait_window_recorded_monotonic_ms) ... ok
+test_arrival_seq_decrease_rejected_with_line (test_spec_validation.SpecValidationTest.test_arrival_seq_decrease_rejected_with_line) ... ok
+test_duplicate_port_rejected (test_spec_validation.SpecValidationTest.test_duplicate_port_rejected) ... ok
+test_duplicate_service_id_rejected (test_spec_validation.SpecValidationTest.test_duplicate_service_id_rejected) ... ok
+test_loads_valid_bundle (test_spec_validation.SpecValidationTest.test_loads_valid_bundle) ... ok
+test_negative_rps_rejected (test_spec_validation.SpecValidationTest.test_negative_rps_rejected) ... ok
+test_non_loopback_host_rejected (test_spec_validation.SpecValidationTest.test_non_loopback_host_rejected) ... ok
+test_threshold_out_of_range_reports_line (test_spec_validation.SpecValidationTest.test_threshold_out_of_range_reports_line) ... ok
+test_unknown_service_in_request (test_spec_validation.SpecValidationTest.test_unknown_service_in_request) ... ok
+test_unsupported_degrade_level (test_spec_validation.SpecValidationTest.test_unsupported_degrade_level) ... ok
+test_deterministic_summary_bytes (test_transport.TransportTest.test_deterministic_summary_bytes) ... ok
+test_missing_reply_field_e_reply (test_transport.TransportTest.test_missing_reply_field_e_reply) ... ok
+test_occupied_port_raises_e_port_on_connect (test_transport.TransportTest.test_occupied_port_raises_e_port_on_connect) ... ok
+test_port_in_use_raises_e_port (test_transport.TransportTest.test_port_in_use_raises_e_port) ... ok
+test_read_timeout_e_timeout (test_transport.TransportTest.test_read_timeout_e_timeout) ... ok
+test_real_loopback_execute_roundtrip (test_transport.TransportTest.test_real_loopback_execute_roundtrip) ... ok
+
+----------------------------------------------------------------------
+Ran 54 tests in 13.606s
+
+OK
+== deterministic samples ==
+== full run with real 127.0.0.1 service subprocesses ==
+{
+  "content_digest": "sha256:b4b5288627843cd638acba65a3a8964677a5333d6a248cd5a55d9a097b19611d",
+  "decisions": 37,
+  "mode": "full",
+  "ok": true,
+  "reason": "forced by caller (full)",
+  "report": "artifacts/acceptance/run_report.json"
+}
+== scratch recompute consistency (per-request) ==
+{
+  "fresh_digest": "sha256:b4b5288627843cd638acba65a3a8964677a5333d6a248cd5a55d9a097b19611d",
+  "ok": true,
+  "verify": {
+    "divergence": null,
+    "matched_requests": 37
+  }
+}
+== forced-kill recovery demonstration ==
+{
+  "committed_batches": [
+    "svcA:svcA-B00"
+  ],
+  "committed_verify": {
+    "divergence": null,
+    "matched_requests": 4
+  },
+  "force_killed": true,
+  "quota_reclaimed_first": [
+    "svcA:svcA-B01",
+    "svcA:svcA-B02"
+  ],
+  "unknown_batches": [
+    "svcA:svcA-B01",
+    "svcA:svcA-B02",
+    "svcA:svcA-B03",
+    "svcB:svcB-B00",
+    "svcB:svcB-B01",
+    "svcB:svcB-B02",
+    "svcC:svcC-B00",
+    "svcC:svcC-B01"
+  ],
+  "worker_pid": 1304610
+}
+ALL ACCEPTANCE STEPS PASSED
