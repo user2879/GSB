@@ -1,0 +1,29 @@
+{
+  "schema": "speaker-diag-workers-sample-v1",
+  "workers": [
+    {
+      "worker_id": "W01",
+      "host": "127.0.0.1",
+      "port": 48191,
+      "model_dim": 16,
+      "hidden_dim": 12,
+      "seed": 7101,
+      "parameter_version": 1,
+      "max_concurrent": 1,
+      "max_worker_leases": 2,
+      "lease_ms": 2500
+    },
+    {
+      "worker_id": "W02",
+      "host": "127.0.0.1",
+      "port": 48192,
+      "model_dim": 16,
+      "hidden_dim": 12,
+      "seed": 7201,
+      "parameter_version": 1,
+      "max_concurrent": 1,
+      "max_worker_leases": 2,
+      "lease_ms": 2500
+    }
+  ]
+}

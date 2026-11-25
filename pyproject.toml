@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "speaker-diag"
+version = "1.0.0"
+description = "Deterministic speaker-log batch attribution diagnostics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+speaker-diag = "speaker_diag.cli:main"
+
+[tool.setuptools]
+packages = ["speaker_diag"]
+

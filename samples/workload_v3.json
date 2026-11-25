@@ -1,0 +1,164 @@
+{
+  "spec_version": 1,
+  "session_version": 3,
+  "seed": 20261125,
+  "audio": {
+    "duration_ms": 7400,
+    "sample_rate": 16000,
+    "channels": 1,
+    "sample_width_bits": 16,
+    "speaker_count": 3,
+    "pause_ms": [
+      55,
+      130
+    ],
+    "overlap_bps": 1500
+  },
+  "window": {
+    "window_ms": 400,
+    "hop_ms": 200,
+    "overlap_bps": 5000
+  },
+  "batch": {
+    "batch_size": 4
+  },
+  "quantization": {
+    "scheme": "symmetric_int",
+    "fractional_bits": 14
+  },
+  "workers": [
+    {
+      "worker_id": "W01",
+      "host": "127.0.0.1",
+      "port": 48191,
+      "model_dim": 16,
+      "hidden_dim": 12,
+      "seed": 7101,
+      "parameter_version": 2,
+      "max_concurrent": 1,
+      "max_worker_leases": 2,
+      "lease_ms": 2500
+    },
+    {
+      "worker_id": "W02",
+      "host": "127.0.0.1",
+      "port": 48192,
+      "model_dim": 16,
+      "hidden_dim": 12,
+      "seed": 7201,
+      "parameter_version": 2,
+      "max_concurrent": 1,
+      "max_worker_leases": 2,
+      "lease_ms": 2500
+    }
+  ],
+  "requests": [
+    {
+      "batch_id": "B001",
+      "worker_id": "W01",
+      "window_ids": [
+        "W0001",
+        "W0002",
+        "W0003",
+        "W0004"
+      ]
+    },
+    {
+      "batch_id": "B002",
+      "worker_id": "W02",
+      "window_ids": [
+        "W0005",
+        "W0006",
+        "W0007",
+        "W0008"
+      ]
+    },
+    {
+      "batch_id": "B003",
+      "worker_id": "W01",
+      "window_ids": [
+        "W0009",
+        "W0010",
+        "W0011",
+        "W0012"
+      ]
+    },
+    {
+      "batch_id": "B004",
+      "worker_id": "W02",
+      "window_ids": [
+        "W0013",
+        "W0014",
+        "W0015",
+        "W0016"
+      ]
+    },
+    {
+      "batch_id": "B005",
+      "worker_id": "W01",
+      "window_ids": [
+        "W0017",
+        "W0018",
+        "W0019",
+        "W0020"
+      ]
+    },
+    {
+      "batch_id": "B006",
+      "worker_id": "W02",
+      "window_ids": [
+        "W0021",
+        "W0022",
+        "W0023",
+        "W0024"
+      ]
+    },
+    {
+      "batch_id": "B007",
+      "worker_id": "W01",
+      "window_ids": [
+        "W0025",
+        "W0026",
+        "W0027",
+        "W0028"
+      ]
+    },
+    {
+      "batch_id": "B008",
+      "worker_id": "W02",
+      "window_ids": [
+        "W0029",
+        "W0030",
+        "W0031",
+        "W0032"
+      ]
+    },
+    {
+      "batch_id": "B009",
+      "worker_id": "W01",
+      "window_ids": [
+        "W0033",
+        "W0034",
+        "W0035",
+        "W0036"
+      ]
+    },
+    {
+      "batch_id": "B010",
+      "worker_id": "W02",
+      "window_ids": [
+        "W0003",
+        "W0015",
+        "W0035"
+      ]
+    }
+  ],
+  "limits": {
+    "global_batch_leases": 3,
+    "metric_scale": 10000,
+    "batch_score_error_bound_units": 2,
+    "worker_watermark_error_bound_units": 2,
+    "handshake_timeout_ms": 3000,
+    "io_timeout_ms": 5000
+  }
+}
