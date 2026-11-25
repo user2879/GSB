@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "topology_version": 1,
+  "quota_version": 1,
+  "quotas": {
+    "global_in_flight": 3,
+    "node_in_flight_default": 2
+  },
+  "nodes": [
+    {
+      "node_id": "cache-a",
+      "host": "127.0.0.1",
+      "port": 48101,
+      "lease_limit": 3,
+      "in_flight_limit": 1,
+      "node_generation": 1,
+      "processing_delay_ms": 30
+    },
+    {
+      "node_id": "cache-b",
+      "host": "127.0.0.1",
+      "port": 48102,
+      "lease_limit": 2,
+      "in_flight_limit": 2,
+      "node_generation": 1,
+      "processing_delay_ms": 30
+    },
+    {
+      "node_id": "cache-c",
+      "host": "127.0.0.1",
+      "port": 48103,
+      "lease_limit": 2,
+      "in_flight_limit": 2,
+      "node_generation": 1,
+      "processing_delay_ms": 30
+    }
+  ]
+}

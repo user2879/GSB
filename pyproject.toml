@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lease-middleware"
+version = "0.1.0"
+description = "Deterministic versioned lease and quota scheduling middleware"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+demo = ["numpy"]
+test = ["pytest", "numpy"]
+
+[project.scripts]
+leasectl = "lease_middleware.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["lease_middleware*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

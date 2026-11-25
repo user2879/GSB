@@ -1,0 +1,37 @@
+{
+  "format_version": 1,
+  "events": [
+    {"seq": 1, "type": "grant", "lease_id": "lease-a1", "at_ms": 0, "parallel": true},
+    {"seq": 2, "type": "grant", "lease_id": "lease-a2", "at_ms": 0, "parallel": true},
+    {"seq": 3, "type": "grant", "lease_id": "lease-b1", "at_ms": 0, "parallel": true},
+    {"seq": 4, "type": "grant", "lease_id": "lease-b2", "at_ms": 0, "parallel": true},
+    {"seq": 5, "type": "grant", "lease_id": "lease-c1", "at_ms": 0, "parallel": true},
+    {"seq": 6, "type": "renew", "lease_id": "lease-a1", "at_ms": 10},
+    {"seq": 7, "type": "renew", "lease_id": "lease-a1", "at_ms": 20},
+    {"seq": 8, "type": "renew", "lease_id": "lease-b1", "at_ms": 10},
+    {"seq": 9, "type": "release", "lease_id": "lease-a2", "at_ms": 20},
+    {
+      "seq": 10,
+      "type": "version_evolved",
+      "topology_version": 2,
+      "quota_version": 2,
+      "changed_node_ids": ["cache-b"],
+      "scope": "node_subset",
+      "at_ms": 50,
+      "reason": "cache-b generation replacement"
+    },
+    {"seq": 11, "type": "expire_scan", "at_ms": 50},
+    {
+      "seq": 12,
+      "type": "version_evolved",
+      "topology_version": 3,
+      "quota_version": 3,
+      "changed_node_ids": ["cache-c"],
+      "scope": "node_subset",
+      "at_ms": 50,
+      "reason": "cache-c replacement after TTL reclaim"
+    },
+    {"seq": 13, "type": "grant", "lease_id": "lease-b3", "at_ms": 60},
+    {"seq": 14, "type": "renew", "lease_id": "lease-b3", "at_ms": 70}
+  ]
+}

@@ -1,22 +1,115 @@
-架构评审的记录已经归档，接下来要落地的分布式锁与租约中间件首版却还缺少任何实现，工作区里只有尚未写入文件的空目录，配置与本地样本也需一并建立。本任务要从零交付一个可集成的 Python 包与可重复演示：多个缓存节点作为独立子进程在 127.0.0.1 回环 TCP 上以 JSON 行协议响应基于版本的租约，续约与释放必须携带节点当前公认的租约版本标签，节点侧按标签匹配与否决定接受或拒绝，形成版本标签推进的租约代数链；中心侧在全局并发上限与每节点租约上限双重约束下调度请求，并维护持久化账本。团队要在参数反复编辑和进程被强制终止之后，仍能把同一批租约代数与归属结论原样复核，并能用本地样本稳定复现各类异常。
+# Lease Middleware v0.1
 
-任务环境与准备：
-准备 Linux（WSL Ubuntu）环境，确认 python3 可用并创建独立虚拟环境。
-在虚拟环境中安装 numpy 与 pytest，Tkinter 使用系统自带的 python3-tk 包。
-工作区只保留空目录，由任务自行创建包结构、本地 JSON 样本与演示脚本。
-运行演示与校验命令前确保 127.0.0.1 上声明的回环端口可用，且无其他进程占用。
+可集成的确定性分布式锁/租约中间件首版。多个缓存节点以独立子进程监听 `127.0.0.1`，中心通过真实 TCP JSON-line 协议驱动版本标签代数链；调度器受全局与节点配额约束，SQLite 账本保存完整代数依据，并支持强杀恢复、独立重放校验和本地异常注入。
 
-业务要求：
-1. 实现节点声明、租约申请清单与事件流的本地 JSON 加载及强校验：校验节点标识唯一、回环端口为 127.0.0.1 字面量且全局不重复、租约上限与并发配额为正整数、事件序号单调递增且不重复；任一不合法须以 E_SPEC 报告并定位到首个非法字段。
-2. 以子进程按节点声明在回环端口真实监听，中心侧通过真实 TCP 套接字逐行收发请求与回执；节点侧为每份租约维护单调递增的版本标签，仅在请求携带标签等于当前标签时接受续约或释放并推进标签，标签不匹配回执须含当前标签；握手须有真实套接字超时，端口占用、握手超时与回执字段缺失分别以 E_PORT、E_TIMEOUT、E_REPLY 报告。
-3. 实现租约代数链在 granted、renewed、released、expired 之间的状态机迁移，按显式许可表校验每次迁移并记录迁移前状态、触发原因与版本标签；同一租约的代数只能沿链单调推进，跨代跳号或标签回退须以 E_LEASE 拒绝且不得延长到期时刻。
-4. 实现租约到期回收与节点换代后旧代数作废回收并存时的唯一归属裁决：同一份容量权益在同一时刻不得既被计入到期回收又被计入旧代数作废回收，也不得被两个节点同时持有；每次归属变化须记录所依据的代数与事件序号，并保证同一事件流在任意节点启动顺序下归属结论逐字节一致。
-5. 实现受全局并发上限与每节点租约上限双重约束的并行调度，任一时刻在途请求总数与单节点在途数不得超限，超限前须排队并记录以单调时钟毫秒计量的等待开始与结束；调度须真实投射到工作线程池，且不得绕过配额。
-6. 实现节点集合或配额版本演进后的代数失效传播与仅失效子集重算：版本号递增后沿节点、租约代数与事件引用关系推导受影响租约集合，按稳定顺序输出失效集合与每步依据；未受影响租约的代数、归属与容量余量须逐字节保持不变。
-7. 实现账本持久化与会话快照的版本识别整体替换恢复：每次授予、续约、到期回收与旧代数作废回收须在同一 SQLite 事务中写入记录与所依据的代数，并携带整数格式版本与内容摘要；重新打开快照时版本或摘要不一致须整体替换而非增量合并，强制终止后只依据已完整提交记录恢复并标注未知租约。
-8. 提供独立重放校验工具与本地异常注入：校验工具仅读账本与原始声明，自行推导全部授予、续约、回收与归属裁决并与账本逐项比较，不一致以 E_VERIFY 定位首个差异；支持注入声明文件损坏、续约携带过期代数标签与账本摘要不符，分别以 E_SPEC、E_LEASE、E_SNAPSHOT 报告。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+# 若系统缺少 ensurepip，可使用 virtualenv；仓库已验证 .venv 流程
+bash scripts/setup_env.sh
 
-验收：
-用本地样本验证租约代数链推进与归属裁决，并复现账本恢复及异常注入的稳定业务码。
+# 检查样本端口 48101-48103、崩溃端口 48191
+./scripts/check_ports.sh
+
+# 校验 JSON 样本
+.venv/bin/python -m lease_middleware validate --sample-dir samples
+
+# 真实启动 3 个节点子进程，运行同一事件流的正序/逆序启动演示
+bash scripts/run_demo.sh
+
+# 全量测试、演示、重放、崩溃恢复和注入
+bash scripts/full_check.sh
+```
+
+演示结论写入：
+
+- `artifacts/demo/order-forward/conclusion.json`
+- `artifacts/demo/order-reverse/conclusion.json`
+- `artifacts/demo/comparison.json`
+- `artifacts/demo/order-forward/ledger.sqlite`
+
+## 常用命令
+
+```bash
+# 独立重放：只读原始声明和 SQLite 账本
+.venv/bin/python -m lease_middleware verify \
+  --sample-dir samples \
+  --ledger artifacts/demo/order-forward/ledger.sqlite
+
+# SIGKILL 中心进程并恢复未知租约
+.venv/bin/python -m lease_middleware crash-demo --root .
+
+# 稳定业务码注入
+.venv/bin/python -m lease_middleware inject --kind spec     --root .
+.venv/bin/python -m lease_middleware inject --kind lease    --root .
+.venv/bin/python -m lease_middleware inject --kind snapshot --root .
+.venv/bin/python -m lease_middleware inject --kind verify   --root .
+.venv/bin/python -m lease_middleware inject --kind port     --root .
+.venv/bin/python -m lease_middleware inject --kind timeout  --root .
+.venv/bin/python -m lease_middleware inject --kind reply    --root .
+```
+
+## 稳定业务码
+
+| 业务码 | 触发条件 |
+| --- | --- |
+| `E_SPEC` | JSON 语法、字段、唯一性、端口字面量或事件序号校验失败 |
+| `E_PORT` | 回环端口被占用或 TCP 端口不可用 |
+| `E_TIMEOUT` | 真实 socket 建连/握手/读回执超时 |
+| `E_REPLY` | 回执不是 JSON、缺少必填字段或节点标识不符 |
+| `E_LEASE` | 标签不匹配、代数跳号/回退、非法状态迁移或容量双重持有 |
+| `E_VERIFY` | 独立重放与有效摘要账本中的业务记录不一致 |
+| `E_SNAPSHOT` | SQLite 整数版本头或内容摘要不一致 |
+
+快照 JSON 的版本/摘要不一致不会增量合并，而是从已完整提交的 SQLite 账本整体替换。
+
+## 样本设计
+
+`samples/nodes.json` 声明 3 个 `127.0.0.1` 节点、全局在途上限 3、节点租约/在途上限和初始节点代数；30ms 的确定性处理延迟用于稳定观察并行峰值。
+
+`samples/lease_requests.json` 声明 6 份租约申请和容量权益 `equity-1..5`。
+
+`samples/events.json` 覆盖：
+
+- 5 个授予请求的真实并行调度；
+- `lease-a1` 连续续约：标签 `1 -> 2 -> 3`；
+- 释放后同一容量权益转移给换代节点上的 `lease-b3`；
+- cache-b 换代先回收、TTL 扫描后抑制重复到期回收；
+- cache-c TTL 先回收、换代事件后抑制重复旧代数作废；
+- topology/quota 版本 `1 -> 2 -> 3` 的子集失效传播。
+
+当前样本结论 SHA-256 以实际 `artifacts/demo/comparison.json` 为准；正序和逆序节点启动产生逐字节相同的 `conclusion.json`。
+
+## 代码地图
+
+- `lease_middleware/spec.py`: JSON 强校验和 `E_SPEC` 字段定位。
+- `lease_middleware/node_server.py`: 节点标签权威和 JSON-line TCP 子进程入口。
+- `lease_middleware/protocol.py`: 中心 TCP 客户端、超时和回执字段校验。
+- `lease_middleware/cluster.py`: 节点子进程启动、握手、端口占用识别和清理。
+- `lease_middleware/statemachine.py`: 显式状态迁移许可表与标签匹配。
+- `lease_middleware/engine.py`: 纯确定性代数链、唯一归属和回收裁决。
+- `lease_middleware/scheduler.py`: 全局/节点配额、单调时钟等待记录、线程池投射。
+- `lease_middleware/propagation.py`: 版本演进后的子集传播和稳定推导步骤。
+- `lease_middleware/ledger.py`: SQLite 事务、意图、链式摘要、快照整体替换。
+- `lease_middleware/verify.py`: 只读重放和首个 `E_VERIFY` 差异定位。
+- `lease_middleware/faults.py`: 本地异常注入。
+- `lease_middleware/crash.py`: 真实 `SIGKILL` 与恢复演示。
+- `tests/`: 22 个单元/集成测试。
+
+## Tkinter
+
+可选只读查看器：
+
+```bash
+.venv/bin/python -m lease_middleware.tk_monitor \
+  --path artifacts/demo/order-forward/conclusion.json
+```
+
+Ubuntu/WSL 正式安装系统依赖：
+
+```bash
+sudo apt-get update
+sudo apt-get install -y python3-tk
+```
+
+无显示环境中不要启动窗口；导入验证或 JSON/CLI 流程不受影响。
