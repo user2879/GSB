@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "global_concurrency": 3,
+  "initial_quota_version": 1,
+  "shard_bytes": 96,
+  "handshake_timeout_ms": 3000,
+  "request_timeout_ms": 3000,
+  "node_concurrency": {
+    "node-a": 2,
+    "node-b": 2,
+    "node-c": 2
+  },
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 48101,
+      "capacity_slots": 2,
+      "lease_limit": 2,
+      "seed": 1101
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 48102,
+      "capacity_slots": 2,
+      "lease_limit": 2,
+      "seed": 2202
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 48103,
+      "capacity_slots": 4,
+      "lease_limit": 4,
+      "seed": 3303
+    }
+  ]
+}

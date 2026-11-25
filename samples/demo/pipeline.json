@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "pipeline_id": "cross-node-cache-demo",
+  "watermark_scale": 1000,
+  "high_watermark_fixed": 900,
+  "stages": [
+    {
+      "stage_id": "build",
+      "concurrency_quota": 2
+    },
+    {
+      "stage_id": "test",
+      "concurrency_quota": 1
+    },
+    {
+      "stage_id": "package",
+      "concurrency_quota": 1
+    }
+  ],
+  "artifacts": [
+    {
+      "key": "core",
+      "stage": "build",
+      "references": []
+    },
+    {
+      "key": "alpha-lib",
+      "stage": "test",
+      "references": [
+        "core"
+      ]
+    },
+    {
+      "key": "beta-lib",
+      "stage": "test",
+      "references": [
+        "core"
+      ]
+    },
+    {
+      "key": "package-bundle",
+      "stage": "package",
+      "references": [
+        "alpha-lib",
+        "beta-lib"
+      ]
+    },
+    {
+      "key": "release-manifest",
+      "stage": "package",
+      "references": [
+        "package-bundle"
+      ]
+    }
+  ]
+}

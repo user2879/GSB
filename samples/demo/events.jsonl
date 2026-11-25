@@ -1,0 +1,12 @@
+{"artifact_key": "core", "lease_ms": 60000, "lease_ref": "core-lease", "seq": 1, "shard_index": 0, "type": "write"}
+{"artifact_key": "alpha-lib", "candidate_nodes": ["node-a", "node-b"], "lease_ms": 120, "lease_ref": "alpha-lease", "seq": 2, "shard_index": 0, "type": "write"}
+{"artifact_key": "beta-lib", "candidate_nodes": ["node-a", "node-b"], "lease_ms": 60000, "lease_ref": "beta-lease", "seq": 3, "shard_index": 0, "type": "write"}
+{"artifact_key": "package-bundle", "candidate_nodes": ["node-a", "node-b"], "fail_write": true, "lease_ms": 60000, "lease_ref": "package-failed", "seq": 4, "shard_index": 0, "type": "write"}
+{"artifact_key": "release-manifest", "lease_ms": 60000, "lease_ref": "manifest-lease", "seq": 5, "shard_index": 0, "type": "write"}
+{"expected_version": 1, "lease_ms": 60000, "lease_ref": "beta-lease", "seq": 6, "type": "renew"}
+{"expected_version": 1, "lease_ms": 60000, "lease_ref": "beta-lease", "seq": 7, "type": "renew"}
+{"lease_ref": "manifest-lease", "seq": 8, "type": "release"}
+{"duration_ms": 240, "seq": 9, "type": "wait"}
+{"artifact_key": "core", "seq": 10, "shard_index": 0, "type": "read"}
+{"global_concurrency": 2, "quota_version": 2, "reason": "sample quota rotation", "seq": 11, "type": "quota_change"}
+{"artifact_key": "core", "candidate_nodes": ["node-a", "node-b"], "lease_ms": 60000, "lease_ref": "core-v2-lease", "seq": 12, "shard_index": 0, "type": "write"}
