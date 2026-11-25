@@ -1,0 +1,32 @@
+{
+  "injections": [
+    {
+      "id": "inj-truncated-package",
+      "kind": "truncate_package",
+      "truncate_bytes": 96
+    },
+    {
+      "id": "inj-tag-length",
+      "kind": "bad_tag_length",
+      "sample_index": 0
+    },
+    {
+      "id": "inj-unknown-tag",
+      "kind": "unknown_tag",
+      "sample_index": 1
+    },
+    {
+      "id": "inj-duplicate-id",
+      "kind": "duplicate_id",
+      "sample_index": 2
+    },
+    {
+      "id": "inj-feature-dim",
+      "kind": "feature_dim_out_of_range"
+    },
+    {
+      "id": "inj-nonfinite",
+      "kind": "non_finite_weight"
+    }
+  ]
+}

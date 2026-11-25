@@ -1,0 +1,5143 @@
+{
+  "applied_command_results": [
+    {
+      "affected_samples": [],
+      "from_stage": "features",
+      "invalidations": [],
+      "ok": true,
+      "op": "upsert_lexicon",
+      "reason": {
+        "command_seq": 1,
+        "entry_id": "lex-custom-001",
+        "kind": "lexicon_upsert",
+        "op": "upsert_lexicon"
+      },
+      "seq": 1
+    },
+    {
+      "affected_samples": [
+        "S0002"
+      ],
+      "from_stage": "features",
+      "invalidations": [
+        {
+          "basis": {
+            "command_seq": 2,
+            "kind": "sample_replace",
+            "op": "replace_sample",
+            "sample_id": "S0002"
+          },
+          "cache_key": "features:e3552a3c3cd6ee2469a206c51ea069805eae0c35f314a7e3a88c94bcd94cac2d",
+          "sample_id": "S0002",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "command_seq": 2,
+            "kind": "sample_replace",
+            "op": "replace_sample",
+            "sample_id": "S0002"
+          },
+          "cache_key": "emission:7e168c5fa3c7241ad94ba554f9c46fd4ed6e2474312094df16d45410d03562a7",
+          "sample_id": "S0002",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 2,
+            "kind": "sample_replace",
+            "op": "replace_sample",
+            "sample_id": "S0002"
+          },
+          "cache_key": "viterbi:5f42eb495acca6dcf102c305a83f27b5f781fc027a7858798a7c985b1873301b",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 2,
+            "kind": "sample_replace",
+            "op": "replace_sample",
+            "sample_id": "S0002"
+          },
+          "cache_key": "merge:4244d5ee5e322ed72db9e3df96343e47a25f47695ada095e2dc62d79b91d8d43",
+          "sample_id": "S0002",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "replace_sample",
+      "reason": {
+        "command_seq": 2,
+        "kind": "sample_replace",
+        "op": "replace_sample",
+        "sample_id": "S0002"
+      },
+      "seq": 2
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010",
+        "S0011",
+        "S0012",
+        "S0013",
+        "S0014",
+        "S0015",
+        "S0016",
+        "S0017",
+        "S0018",
+        "S0019",
+        "S0020",
+        "S0021",
+        "S0022",
+        "S0023",
+        "S0024"
+      ],
+      "from_stage": "emission",
+      "invalidations": [
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:a5891d1af073b6f0a109e22b42b0431da40acd51988ea68ffafcdafd9ca93859",
+          "sample_id": "S0001",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:16e7a4c3ba74518c1f74ee194d143adb69fd843e29454a241a2a9c7aa06a79f3",
+          "sample_id": "S0001",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:20b8b23e37ff0ff52a2619b5493bff5c3a5d535451523204a0a73382de24dd04",
+          "sample_id": "S0001",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:b86e2ca526fe1f01c7be8dea2fb989a4a4b3a1027f3023c434f1b47c4d058805",
+          "sample_id": "S0002",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:07d32759e74515387f30095d2a76f106d03dfa09cbab524b8ebd24224ae2c6f7",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:90bf62126f2c17669de441e2e15f797c11fda7be061926bedfc1f55fd65fd2ab",
+          "sample_id": "S0002",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:596557585b04ad1ab603b3fded5adc08067e3b07ef471b7bddf820fa003cc1b9",
+          "sample_id": "S0003",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:1f9f68ee676e9501a833de52ce3fc73fad6edffbf08ca0a7c889f1685cf7a815",
+          "sample_id": "S0003",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:004168330318b6cc49a112cccb4c22d0faf6e194c10225eb714c14e2d20e4e03",
+          "sample_id": "S0003",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:ea5cf5d6195b9e5cfc2ee623b15fd7853eebb8b2e600f55b24c74053121e6ce4",
+          "sample_id": "S0004",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:5dd9de5fcba31ae9c5d7f7bd3ba9dd84343f8f43f878e13ce16020f6301b24d6",
+          "sample_id": "S0004",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:00323fbd9ec0128bed76fdeff3195f3665ddadd5299aa3a7c790baa6e6060163",
+          "sample_id": "S0004",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:42dad2887a19fbc364994802d915695793cc71d1f5a3e7a9c07401f1a94e9009",
+          "sample_id": "S0005",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:d70d83e7100b29451b1c550783f8b3089d09b06a30e7ea1a607351b8ed52cb38",
+          "sample_id": "S0005",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:b54011a51af904665fbd268b646c840de256e4441efc584672187db2a14b1334",
+          "sample_id": "S0005",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:68ffb1da6a5ee714e505085acd2469e06b66d123ea9134115c3ff2c7dd61a1c7",
+          "sample_id": "S0006",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:2ac846439bac02e5d5190cf34aca8d75b98f518ada3a3df61a02d4546a4637d6",
+          "sample_id": "S0006",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:e3aba939f68bbb0b9e9a54abc0ee2f13da8455aa0c6ad0f6b2ebc235db495f5a",
+          "sample_id": "S0006",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:0043eb8b49541a82613eaeebdd151da366238ae13f7971b25d7376d4ea35133e",
+          "sample_id": "S0007",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:69521ece7f0100e41a03a67094b6bb9faeaffdef1bbd4397a1c2b60e6e377b10",
+          "sample_id": "S0007",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:d4834381d6757a237b9c06675cc8296a46ec01f5ff20be093873997ec47aa297",
+          "sample_id": "S0007",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:8126df2f4fda831b2aefff1d6523040a2883292f335b944c646628e9044cdeb1",
+          "sample_id": "S0008",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:2e440b46bd70e84dabd34cd94e7d969113608ac975c7fa18f32f698e8a50ebdf",
+          "sample_id": "S0008",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:dd3c0915b91fd71b138f1f25ecaf7e71488c4130db40516b0486e36afa0dca36",
+          "sample_id": "S0008",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:6274421632ab45c7566e3f48c465b64f09578fe2a1dd126f01477082cd766105",
+          "sample_id": "S0009",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:1cf241b1f477fda93abecdb0ba4dca55012626bb42fc71f977ae255af9beb3cd",
+          "sample_id": "S0009",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:d59a91b430102a4e18700d07a0198dad43cc6760b82fd141b1a3b7e821ae1d9c",
+          "sample_id": "S0009",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:3b66f1e26a493cb61bd356a674022e3a3cad394acf1d0755b926ab7c05baa05d",
+          "sample_id": "S0010",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:a2eb3df8e384499bfdc94bbf9b73ad093d1d9d1e7389390d6ff771fb6f8acd43",
+          "sample_id": "S0010",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:2fb5440e894525131156df5f68474dcda868248597c53da4f9ccd496444bff88",
+          "sample_id": "S0010",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:d7bc75f8a958d7863ebdcd4104ef1fa25f15c68553a96839245829ea5c2ad45f",
+          "sample_id": "S0011",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:e197af0c75cef0e40811d7cc5e930738ae8686e909090f68330b35422660e17e",
+          "sample_id": "S0011",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:53cb7c232b1f1745b8bea1274af1cb1d8e32ed46dc632b6694d4707850e1acfb",
+          "sample_id": "S0011",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:6fa961702b34fe951a06b6162d11d142a5fbeff336cf9cb4401cf63946c3ec6b",
+          "sample_id": "S0012",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:242a6453ec852ea566e7480c8409618ec1d9ceb2fbf7686a2213cb0065da6693",
+          "sample_id": "S0012",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:0f4129305e94623f3880755c4850031ae323aa0dfb5940ca2d63b963dc6c6310",
+          "sample_id": "S0012",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:5108d6095790b5514992e2dc60d0b04706f500f24bdb20e80f249becf2e91c0a",
+          "sample_id": "S0013",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:9f3e452fb348dd4839a8582f56c565f1b9200d7d72bc64cb47c7cd1a576f6044",
+          "sample_id": "S0013",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:924ecb5549a0cc60ac83423e20c7dc08908663e7d1b20e176e7dcd5e15ed77e4",
+          "sample_id": "S0013",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:c85606877bd63d608a4c99ed703db85157f379cd4b34d8703faa1e04ad36fd12",
+          "sample_id": "S0014",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:7a3a744ffe3dcddfb66a3510120b765dd190b316757da16214057403f1e032ab",
+          "sample_id": "S0014",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:31dd4a7054d1ac2e3d0295b662724b0128804b266d49a3264f7ff8e1bf12b052",
+          "sample_id": "S0014",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:8e20fa36ad931f4303403f08133d75e34b01a1be403460ae4d880111850027e1",
+          "sample_id": "S0015",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:2bbc9881290e62da659f10d53cd597186f5c7de63bf88fd2f85a6b3ff5ca7434",
+          "sample_id": "S0015",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:008f3f3b56e82d1f06143d41f7d3a993e0e472f0f847b25d7bee57ffd701b283",
+          "sample_id": "S0015",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:267bd52be3664c19796676f207aff42edd3d8c5977fa5d0c4c4cc94585867c33",
+          "sample_id": "S0016",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:9ffe9f8b8ee810a62ff068599bbd24da3337d74c9f7162a29e28129bf2ead269",
+          "sample_id": "S0016",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:8e475b968f4e456ce17f18a6dc8069af486f88f4e4bba04aa4e415d5f2355fce",
+          "sample_id": "S0016",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:41048447e148d7dd0c44065e3e67770b5be667927223224e748555d95cfa84cd",
+          "sample_id": "S0017",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:afa26e989d37c3d72bf7e9c078cfbb34b5581081a318f95e4c830960decb0542",
+          "sample_id": "S0017",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:55eb9758dbb191e2e2432dc663911cf079f868a95ccdc3e34e1cfe6586c97ac9",
+          "sample_id": "S0017",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:ec1d0aa5e450f4a9b7f81132983fb389e744de681601973b61327dd959a01ce6",
+          "sample_id": "S0018",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:802527dc874a177cc88b9e9e406215d5d3df8c6401a5a4983b78e9e6cce9a2cf",
+          "sample_id": "S0018",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:735f3b2185a840dd385f310a83b58647534803b267119dc03fdcc02775334f27",
+          "sample_id": "S0018",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:b38ada50471ef1c1b07e4175f19d986046be827ce49b94013f2f27527e357579",
+          "sample_id": "S0019",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:04ae9ac86a7ce0b1b09d6947b5fe8197c21459cbebad7bbc565688153c2d9d96",
+          "sample_id": "S0019",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:ea1b7c9b68cc9283322d143f12e46a3471851f0a0e9129396fe4f7ea59db4104",
+          "sample_id": "S0019",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:350fc8b5948acf6128b6696fbdaf4f751ab7b90cf4f54206a603dc38507226f2",
+          "sample_id": "S0020",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:54481b35c10606c9e8e1f5f081584265b97bc3d918a279c644be6e959a5273d2",
+          "sample_id": "S0020",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:882c0d5ee5f7ca00cc0140fbfb80da69d56cea307e448654f0aaaec55c5485ac",
+          "sample_id": "S0020",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:bf5928d890b57d386f40aee1f2fa570f6573aa699a2c47fc8871208622e1071c",
+          "sample_id": "S0021",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:13d2d40cd12351d0da0651709084963510125938cd39a1b7eb0dad4b34f738f4",
+          "sample_id": "S0021",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:1b58f241e14bcc9a931fa261f6d71da2e625c5515832c3bb62c139931d8040e1",
+          "sample_id": "S0021",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:ec79070a7d42398e1ee302a51b73da5ad5c27e25a8943603a706aa3ba8e285e8",
+          "sample_id": "S0022",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:ede748f1baad1f372c3bc6066ff4ceb60f7c52a3f1c317b95c226e06fcee73c4",
+          "sample_id": "S0022",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:ba9028cde7918ebe1445bbe1d1f3da25e6a75dbc70a36ef821922a83b351ed54",
+          "sample_id": "S0022",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:fa58adfcfc14c9d51205e5e9d7135d2a0e08bf4c2e9946ad18dcde55ce96b482",
+          "sample_id": "S0023",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:a0b8ffc95ac8fa689499092ea6c411886b98a1571fca03bf77c26cc6503d9141",
+          "sample_id": "S0023",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:ed25ed3a4500fe11de657ac6e208dec0afd6659b7870ff80bfddffdd79164426",
+          "sample_id": "S0023",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "emission:a3de7dc9adb4b1436c58e3397a3b9df114e177e6167a588e4575a468ea1003ae",
+          "sample_id": "S0024",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "viterbi:67072601a32bcf28086ac39e30d19ee40a045f05947c5d4f501e2ee231796a06",
+          "sample_id": "S0024",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "bucket": 3,
+            "command_seq": 3,
+            "feature_index": 0,
+            "kind": "emission_weight",
+            "label": "B-LOC",
+            "op": "set_emission_weight"
+          },
+          "cache_key": "merge:a3e61364f205992db0882a0d4e6bcc2e8bde150dd31286b05fcf527245d963c2",
+          "sample_id": "S0024",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "set_emission_weight",
+      "reason": {
+        "bucket": 3,
+        "command_seq": 3,
+        "feature_index": 0,
+        "kind": "emission_weight",
+        "label": "B-LOC",
+        "op": "set_emission_weight"
+      },
+      "seq": 3
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010",
+        "S0011",
+        "S0012",
+        "S0013",
+        "S0014",
+        "S0015",
+        "S0016",
+        "S0017",
+        "S0018",
+        "S0019",
+        "S0020",
+        "S0021",
+        "S0022",
+        "S0023",
+        "S0024"
+      ],
+      "from_stage": "viterbi",
+      "invalidations": [
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:16e7a4c3ba74518c1f74ee194d143adb69fd843e29454a241a2a9c7aa06a79f3",
+          "sample_id": "S0001",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:20b8b23e37ff0ff52a2619b5493bff5c3a5d535451523204a0a73382de24dd04",
+          "sample_id": "S0001",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:07d32759e74515387f30095d2a76f106d03dfa09cbab524b8ebd24224ae2c6f7",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:90bf62126f2c17669de441e2e15f797c11fda7be061926bedfc1f55fd65fd2ab",
+          "sample_id": "S0002",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:1f9f68ee676e9501a833de52ce3fc73fad6edffbf08ca0a7c889f1685cf7a815",
+          "sample_id": "S0003",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:004168330318b6cc49a112cccb4c22d0faf6e194c10225eb714c14e2d20e4e03",
+          "sample_id": "S0003",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:5dd9de5fcba31ae9c5d7f7bd3ba9dd84343f8f43f878e13ce16020f6301b24d6",
+          "sample_id": "S0004",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:00323fbd9ec0128bed76fdeff3195f3665ddadd5299aa3a7c790baa6e6060163",
+          "sample_id": "S0004",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:d70d83e7100b29451b1c550783f8b3089d09b06a30e7ea1a607351b8ed52cb38",
+          "sample_id": "S0005",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:b54011a51af904665fbd268b646c840de256e4441efc584672187db2a14b1334",
+          "sample_id": "S0005",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:833b47f209eff8cb8593d026e48a508a95ecb84df1a87028b9a24bc724d8043f",
+          "sample_id": "S0006",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:6e237c202f918f259891f6dbc8a65e04897c332f8d60308efc3d12ba6fb6c446",
+          "sample_id": "S0006",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:7ead6edce54cd6464682658832f30afad269c3f5b748a9970706ea8e62a145a2",
+          "sample_id": "S0007",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:6c3dbf96105f7895b62edf8ba8f7530885e76d5cee780595093fd6618f62aaa8",
+          "sample_id": "S0007",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:85c81709b4306cc9506e1886539c36e4e7657a847b4293068a44411cb9f214ec",
+          "sample_id": "S0008",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:3744cffbedf651020d95ad37082d24ce8acc3696ea00d6d7415fa716ddf104bd",
+          "sample_id": "S0008",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:1cf241b1f477fda93abecdb0ba4dca55012626bb42fc71f977ae255af9beb3cd",
+          "sample_id": "S0009",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:d59a91b430102a4e18700d07a0198dad43cc6760b82fd141b1a3b7e821ae1d9c",
+          "sample_id": "S0009",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:4ed2faac5165544fa01558fb50e77d9d1a320a241b8b5d84f8bfe289e333db91",
+          "sample_id": "S0010",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:ee2a0f6d4ff033aa05433d628d3a6d324fa422749cb806b166e96e74c8219481",
+          "sample_id": "S0010",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:8e388d3fe01873cc362afc735f834832cf2c4d7c5d91528a262c4e5ab7ce086b",
+          "sample_id": "S0011",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:c862474d945d0b93f17b812327f0a90522d306e67e415020ac8e3994f30cfff4",
+          "sample_id": "S0011",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:ee67031ed2cf9d2c676cbd18d05110e9adb7363356df07f4554a45b4c0a0eeaf",
+          "sample_id": "S0012",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:30956f1f40aa1f2dd4e86c0b454373c8e7837e7022b76f89384e993c538a0705",
+          "sample_id": "S0012",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:d1e3c6a4106a2e304c1c9b9ede1b265cb3e25d799c806e8e034267b54954474d",
+          "sample_id": "S0013",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:78f17a0cacf382d85ef6849b85abfdb83e1758d86dae246ef4370e8bbc11e9be",
+          "sample_id": "S0013",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:10efc674ebb62be8d84fa9ec10f2f4d4dc2192e19e211f8f28b169e810494a47",
+          "sample_id": "S0014",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:83f2176a2d96c4bd580d92656b7fe47127aead50a4d30f8d8a3cb851bdd5beb8",
+          "sample_id": "S0014",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:2bbc9881290e62da659f10d53cd597186f5c7de63bf88fd2f85a6b3ff5ca7434",
+          "sample_id": "S0015",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:008f3f3b56e82d1f06143d41f7d3a993e0e472f0f847b25d7bee57ffd701b283",
+          "sample_id": "S0015",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:5bcba93ea09da765ef5a35e34f5ee5d503aed1bede1593a24b19b83704965364",
+          "sample_id": "S0016",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:5a440cbe7011ff06b22b40aa2fd5003bd1e9f9a1be4d82e817ca18d1ae7101b9",
+          "sample_id": "S0016",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:71d243838355bb42223282334aeeab32fc2d3c06129e4cad7718d38968529a6c",
+          "sample_id": "S0017",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:050362507692ade52c44ae98c7a5bfab056a3c0532996c0e9118f6caf9192b18",
+          "sample_id": "S0017",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:4a5ac709fad5cc37d9557335501f0aac11a6896f8bf0ed3e3eedde99aa04d1ba",
+          "sample_id": "S0018",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:ce8d2172a3ce1b404db79cc84b0cea996409c1324a6aa3f08948deee9dbdf8d4",
+          "sample_id": "S0018",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:04ae9ac86a7ce0b1b09d6947b5fe8197c21459cbebad7bbc565688153c2d9d96",
+          "sample_id": "S0019",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:ea1b7c9b68cc9283322d143f12e46a3471851f0a0e9129396fe4f7ea59db4104",
+          "sample_id": "S0019",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:54481b35c10606c9e8e1f5f081584265b97bc3d918a279c644be6e959a5273d2",
+          "sample_id": "S0020",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:882c0d5ee5f7ca00cc0140fbfb80da69d56cea307e448654f0aaaec55c5485ac",
+          "sample_id": "S0020",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:5a32b95361b54bde651b63431f9cdf18e526cfbbd9165b9806fbee0bd711b7bf",
+          "sample_id": "S0021",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:07a32a5ee73fc3c114e1878979a8059b0a20c18271db29ccc11cc899adc6cc77",
+          "sample_id": "S0021",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:ede748f1baad1f372c3bc6066ff4ceb60f7c52a3f1c317b95c226e06fcee73c4",
+          "sample_id": "S0022",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:ba9028cde7918ebe1445bbe1d1f3da25e6a75dbc70a36ef821922a83b351ed54",
+          "sample_id": "S0022",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:a0b8ffc95ac8fa689499092ea6c411886b98a1571fca03bf77c26cc6503d9141",
+          "sample_id": "S0023",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:ed25ed3a4500fe11de657ac6e208dec0afd6659b7870ff80bfddffdd79164426",
+          "sample_id": "S0023",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "viterbi:67072601a32bcf28086ac39e30d19ee40a045f05947c5d4f501e2ee231796a06",
+          "sample_id": "S0024",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 4,
+            "from": "B-LOC",
+            "kind": "transition_weight",
+            "op": "set_transition_weight",
+            "to": "E-LOC"
+          },
+          "cache_key": "merge:a3e61364f205992db0882a0d4e6bcc2e8bde150dd31286b05fcf527245d963c2",
+          "sample_id": "S0024",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "set_transition_weight",
+      "reason": {
+        "command_seq": 4,
+        "from": "B-LOC",
+        "kind": "transition_weight",
+        "op": "set_transition_weight",
+        "to": "E-LOC"
+      },
+      "seq": 4
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010",
+        "S0011",
+        "S0012",
+        "S0013",
+        "S0014",
+        "S0015",
+        "S0016",
+        "S0017",
+        "S0018",
+        "S0019",
+        "S0020",
+        "S0021",
+        "S0022",
+        "S0023",
+        "S0024"
+      ],
+      "from_stage": "emission",
+      "invalidations": [
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:05af4063bbac3f03cd65089b44249132520d2070a259f2caf4a897b47f5ec0df",
+          "sample_id": "S0001",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:acba9135139bf8b48f5e013c8054dbc682c049ecec2c60c0ba8c4745bf68d3f2",
+          "sample_id": "S0001",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:8c976cc8f28613fe25f82add8101355dcc4a0b48960fbf1f413faa76b69f4454",
+          "sample_id": "S0001",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:1b973e728db593c1521fb1bea4bf9278f72f4ae298851f6d9d269bf880492bf1",
+          "sample_id": "S0002",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:4e5811bfeeb74b4b7966f96a7ba4b757ee2adfe0c176312f1471fd7748e6b888",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:59a5592a32442d9bd220ae4d912bf16f8b8912735345a23b22abc042d0d2906d",
+          "sample_id": "S0002",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:38a2e7539fc4e91df53cf1155c197c5100438deea53677fdb053205c88176b34",
+          "sample_id": "S0003",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:b97077b3d4a2bb3164faa1edd1ed96b635f31895798c817cffd1341650439bf9",
+          "sample_id": "S0003",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:6203bee07dd6d509739e7838ac0e4ebdbd06c3ff266fc5803321bfe55643f9e4",
+          "sample_id": "S0003",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:23e5739c44ce60b59d815045d271ca7e3fb458e1f7d8a12b0d9fb1aa7e17ca2d",
+          "sample_id": "S0004",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:7d0c83702d4cfea548b8929283369773ef26596591a42def143f08d625b4fda7",
+          "sample_id": "S0004",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:f448fd9835564d26090866ed1f3240982039380e4c6a5768f501c33350db2b24",
+          "sample_id": "S0004",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:51715855ce8368abc09437516370f1842d76996bb6caa06be52a2ea4a5c0d342",
+          "sample_id": "S0005",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:08ff0419bacc3b77200233df3ddbf04a0cdb5471282664b6ed23d9c9caf188b7",
+          "sample_id": "S0005",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:25a99eb8e841ad19a78971d6d6bbcde27cf518db0de74f7fd56d63684656260a",
+          "sample_id": "S0005",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:713580f7f9cab07e179c757a67b315e3b986ad99e620d7730818db98631a620a",
+          "sample_id": "S0006",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:705dd077a9908fa3fc7f9b6e4d8c5c6b0e9b9f780b604d8cc648e8b2f32cf027",
+          "sample_id": "S0006",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:e314e30e80be5f60c771d3e8d63a575d85d8a5283245249b5a980b7006530f1c",
+          "sample_id": "S0006",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:84208be97d15a6bfbf08ac26e9e97d6d45d392790e53c52375a4376f4b038895",
+          "sample_id": "S0007",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:8a758279d6c9821309099c52ce1bc7048fc54cb8e9cabf2de1c8fd8db91b80d6",
+          "sample_id": "S0007",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:ea0584c80aea0df0c85dc937c81459bb41a72775cf825e6186023d2ac9ea1bd5",
+          "sample_id": "S0007",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:8f029969efa1ec46b2978aa6bc82c333a82a6b76372eb7d4d994497592d0d7a3",
+          "sample_id": "S0008",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:bbdde3f8a97333f2488c9573bbdd51416147b19aec2b4597838fafb0e739b721",
+          "sample_id": "S0008",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:ea3462c2a01860f8779f0886bbe52d3dd69e7ca14518c2200da6cdf3ac6d0e2c",
+          "sample_id": "S0008",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:d45c01ab0571555ba52ee477c95c7caa5105dbe98c0effa5b784cbbe067cb2c0",
+          "sample_id": "S0009",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:4ad261a7528cac86cd76eb1baef72f4ce74424a09b8453aec04a11a64620e478",
+          "sample_id": "S0009",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:64145be4a87821c1bafe0d41b86f91283997e2c917c59fe3d762ce5d5f497a37",
+          "sample_id": "S0009",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:f1a5968771866ae50b9709a86a0f1ea779429ee192cd0d66ea2e68e24418fcb4",
+          "sample_id": "S0010",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:7b508d75d2d6c7990bd6261a5305971c64bba9311f58d1b0f4908fac17cb026f",
+          "sample_id": "S0010",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:43ea4d626b0d5d0923b935a2cad6017efaaf168762bdbf0f751dc76163b8a325",
+          "sample_id": "S0010",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:f4b4ef51a60bad9a54afc280061fbec8715b102693cedeeb2018323e5f0f737b",
+          "sample_id": "S0011",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:41e2dee72ceb6332c365a013cee7459ac61ff2d611c44aa8c7bbeccc98013549",
+          "sample_id": "S0011",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:15f6d9aa63cb030f2c42678ed7a1c36a05d511bc22ef2bb7308c90ec37f09973",
+          "sample_id": "S0011",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:51a1c259ea1d0bb696c47ba8f47ee768b0aec00b77aeeec8fa8494f27ede48c7",
+          "sample_id": "S0012",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:677f56499b89e9bece5b83b17ede0a970b88b921a86cc8206265aac29c5dc75f",
+          "sample_id": "S0012",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:936cd98ea659a51fddd45b910bca5f9f5c35be9401d7e6fe5d0c375dd34c94e7",
+          "sample_id": "S0012",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:65ceaee39c650d495026d32cf782e434b65166c467646078479f3128dabd76c8",
+          "sample_id": "S0013",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:62ddc65577d3fa1ebf76ba0f8737e3ed1a682139489b90b22c4c5f4e0703c988",
+          "sample_id": "S0013",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:66c97eeb40ff243abcd8c8eb12bfcfd28742fbb155c2e3345f94f41e44f1b73d",
+          "sample_id": "S0013",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:370e2a6288c3b27028b1d2f642249cdc64bf33eaac2fad881a0c3933597341aa",
+          "sample_id": "S0014",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:332236e997307edcd43155c43c18e2cb215357d5798c052ecec0001072e94bad",
+          "sample_id": "S0014",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:f7e12a5b928585cbadf5c4d094bc553d04a29ac5eb3f4fcda0434ec8c17e8e9a",
+          "sample_id": "S0014",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:5ce3c6925d28f85d2a53c0f161ad68d3728ff6f36e36daa5c1d6083f4c5b9b0c",
+          "sample_id": "S0015",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:10176f6b881f2428c6ac2f8c0bf479e399d0e44095313a3747cc39d02cf9e2a0",
+          "sample_id": "S0015",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:3c0ff7cda06ae114f71578cfdb074f3e4a52f86dc667505e4721403d42ed034f",
+          "sample_id": "S0015",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:daf84428541e873f620cd61c9abe64e5b72dd58cfc91f9068b5f72afc39ffcf2",
+          "sample_id": "S0016",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:74c258b426b07c0aaf7c4dea1809a800ae334a86d6983f4b5af9b71f000be8a1",
+          "sample_id": "S0016",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:3a3b43fb84fa45dc1d5dfb09eaceb15284030a76a26fcab08fb05cf052565846",
+          "sample_id": "S0016",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:b3cdacd74af5dd567912cd7ce5a4d2c6e6565bf05e64493558edf93ee4e56c60",
+          "sample_id": "S0017",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:b40581363449a1867800fb07a3b1f3474fc1deb207813fecb873cd1e9e17caa8",
+          "sample_id": "S0017",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:06dce3f248daf163aa15c92bc20ac57fe6e0dc58b5b77852f09e12b9f9ba05ea",
+          "sample_id": "S0017",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:24fdf1b1953f0f9ace38a55cb1d0760036950574144d5fc6c5900afef43abaf2",
+          "sample_id": "S0018",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:0df80f465fb999a32791d73d75fb322310ddcb937bfa17b5b2c38b797f995fce",
+          "sample_id": "S0018",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:bf790febb518b6d81d2b83123d7914fef603e5d54cf12bf4b598b23eeba2dc84",
+          "sample_id": "S0018",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:23d0a26bd445aaea11d528161b873573b2a8c0879e376415752491b4c11f978e",
+          "sample_id": "S0019",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:170d6d839b26d6c939a0af8a9cd350370061cd74718a43f2032ce6a343cd9666",
+          "sample_id": "S0019",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:cfc3614d4d46a995ddf64a90b9f7c2aeab50484ee64f00602f5366b6e734bbd2",
+          "sample_id": "S0019",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:1f322adde9a3cb3e027d39c9d128538491bebc9c4e30a885bc4d1f3b7807af81",
+          "sample_id": "S0020",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:0f9b1be25b5c13cc3e4057fba2e1af0be63a7189f2c346120d157e3c70dc12f4",
+          "sample_id": "S0020",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:49c6779d55c538cc1234208ca44c664c75db172fba51f0ea9fc93564822e19d6",
+          "sample_id": "S0020",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:5f94f828c46f42f63fb6ac9ad60a816656e5e4dba0d98641987e9635424f9c1e",
+          "sample_id": "S0021",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:588e19835799cbf99b73766224bb8dc35844b62865509d8687fed07d8d635539",
+          "sample_id": "S0021",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:b524e944e4353369f3cb9a2bb6460641e300ad6006b05ca2350d42864ae0ed1b",
+          "sample_id": "S0021",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:18f784cd981ce0b07beed7c0d95c6fe972fe7e98d87633f3c85306e714f0caa8",
+          "sample_id": "S0022",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:f1d310c2dc9a8a017f4f48fd9c502e5d6884f763bd2455a09d36742fd144ed0c",
+          "sample_id": "S0022",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:2c2674ffefeb2dbd5cf2a6b7409d038d09542a4d87d503619621fc16ebf731c2",
+          "sample_id": "S0022",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:e6efb781e97cadc99f0a747f8e2f9d60be6c6ec5054e3e1b06423ee6eb348b6e",
+          "sample_id": "S0023",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:dc4f3ca3ab1af1f5a0295a627ea035a23536513a221e39ee78270d65aa61b486",
+          "sample_id": "S0023",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:5f791e72a1ee631900407638edc84503e9aaeecf6aa96d01908e117994f767fa",
+          "sample_id": "S0023",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:a93cb41eeba75f7dc3101227e8214acd864b717bfd2e41af56228763d91c197b",
+          "sample_id": "S0024",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:0fc0aff3f17a91c4878a7c0505f7a76ff09600638735a4b8156e8190cdc568e2",
+          "sample_id": "S0024",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 5,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 8,
+              "quant_level": 1,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:c37a704fa7c6fec498df2fb1b9f743e83c6f9055bdb3e6d9c3746db10121643d",
+          "sample_id": "S0024",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "set_quant",
+      "reason": {
+        "command_seq": 5,
+        "kind": "quant_config",
+        "op": "set_quant",
+        "quant": {
+          "decimal_bits": 8,
+          "quant_level": 1,
+          "total_width": 32
+        }
+      },
+      "seq": 5
+    },
+    {
+      "affected_samples": [
+        "S0002",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0013",
+        "S0014",
+        "S0022",
+        "S0023",
+        "S0024"
+      ],
+      "from_stage": "features",
+      "invalidations": [
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:9ff7a4636a057154e98c3afae742e459d49b7eb72ade8788e87c673f323bb0ef",
+          "sample_id": "S0002",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:5f15739c591d0608c9687c517b7acd4f55908478e089063207704b82dd94f01b",
+          "sample_id": "S0002",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:11482ed36928df92271d05f7e574ff206303dc5c598637574259506b64496da6",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:53ed7f213dc3cb24daf24591521ea2ad23bb10377803443e4dbcefbef11cbd0a",
+          "sample_id": "S0002",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:2d75ef677d9341c9676e456275f40515f673280b03f41baceb05b0eb5dc3a434",
+          "sample_id": "S0007",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:79540095d8f91b8c61c9a952d64a91e56b50f10a1ddbb6f136457282c6ff983f",
+          "sample_id": "S0007",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:7cf8649c2da45cdf61afb8ea9d2c42559104ab220aa1484fd2e7da3e137a59be",
+          "sample_id": "S0007",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:e86a836127df4bb083fb33b145bcca9acbd23f10ba1835e02e7c4ece0b91956c",
+          "sample_id": "S0007",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:1d26e64c82576d87e8891589451d319d93908cea570d99f3adb17795a28c68a2",
+          "sample_id": "S0008",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:ffbf6e0668d4ae9ee996fc7ab0fa72a740b498efeacae96d7f3e016b4d3a960a",
+          "sample_id": "S0008",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:29259a75d945d4c3add8d1da06aa4814b950c2dd6980f5a8b910f4e9c21128fc",
+          "sample_id": "S0008",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:ca618ad3747213c96472087743eb1593135b26f592568d70493b1e0ef5a07db9",
+          "sample_id": "S0008",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:d59fd4eaa00482b24d575fa44a230011aee93e8af0542adaed3f5b2745a4124c",
+          "sample_id": "S0009",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:6fd24a89c5a3022969b9d5f715707d2e9b0e02c5f2338698031b7ecdfc61dbb4",
+          "sample_id": "S0009",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:68a60bad96ccdff5fb3f5fdccbaa0b8e7db0723b9a656f44f2877a3b138db540",
+          "sample_id": "S0009",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:2f6798c6748ed60501cd13724d2f4b43eff0fe647ccb6bee06ae5ef8080da070",
+          "sample_id": "S0009",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:4e24d73289412dd7a813ba27bafc9ef125779c5040e3c68a958405e6814dfb4b",
+          "sample_id": "S0013",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:ce642f7e67ecc11bde187803948e649f1578fa91e222105f93e74150136f0a32",
+          "sample_id": "S0013",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:2eba2f44af18df8da3c3efd31733a4c6d1b23f3a21cf87b6941d5c3c8caf8a35",
+          "sample_id": "S0013",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:4a9b9467a7977a4dcb4c532790cd2857219d47daf35cdad78bdfcdc54f007501",
+          "sample_id": "S0013",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:a0e8081c474fb4a3ddf959fca4003f94fd11242cc909cd55642a8a4bea243a9d",
+          "sample_id": "S0014",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:80b4958404ec5334dcaac2308ba8d596220f12bf8a7a6f3f9d148c4dd9f02b28",
+          "sample_id": "S0014",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:2035dc6d51afe8eb1c49182d5d08c3fb8a6beadb252b61379c60bc19ffe8300a",
+          "sample_id": "S0014",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:955fe4f6cc6bfa0bf4b50447334be5ebaa5e519ce6b648e48735fdc138453810",
+          "sample_id": "S0014",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:35166fe4d0e0c10198f332ca6b0fb2a2e484ca95b40fba7ff2a61944405fbc4e",
+          "sample_id": "S0022",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:86d8bfebe9cfb26a62f671de7ce073d25af88fa1a71507cf039871f67a9fd18d",
+          "sample_id": "S0022",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:100e5a07f01029e5820d98ea1bb575ae8d8abbcb1f1e6f1cf3c78590406611a7",
+          "sample_id": "S0022",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:cb80a708a2295676aeba58335f342b4057f41d6a38f3a08a3162ef97ea00315e",
+          "sample_id": "S0022",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:54cb3548aad0fdcba57cdcfcb750b35b2bf59f67f8c7f222963c46a6fa309b82",
+          "sample_id": "S0023",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:38d0da97da4097291322375af1542232132d7e43cdce1703ab69ecb4e04ac1b3",
+          "sample_id": "S0023",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:480fc4a7307fb644b9b52dd153d27389795aba895d798f2817f9246c077368b1",
+          "sample_id": "S0023",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:ebd911f4d6adc4f7964d241ec399041ea79aeced458e9cebad18753299f826cd",
+          "sample_id": "S0023",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "features:89e16e1ed1e9b7a70666d444d27fb13404cfa3a4ed7cc0f079e6793dab438957",
+          "sample_id": "S0024",
+          "stage": "features"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "emission:b474a00df869d15926bdc8c6216e7b51f6a06d558d543bbbc977f91d11a65759",
+          "sample_id": "S0024",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "viterbi:d9d588e7b94a16848b376a549304031cc295a37032b2006365841507f6c34284",
+          "sample_id": "S0024",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "changed_fields": [
+              "text"
+            ],
+            "command_seq": 6,
+            "entry_id": "lex-loc-000",
+            "kind": "lexicon_upsert",
+            "op": "upsert_lexicon"
+          },
+          "cache_key": "merge:79e0a6a8c5fa3c3410af654fb0bf490f85dfa8eb5041e591451c9c12a46f9eac",
+          "sample_id": "S0024",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "upsert_lexicon",
+      "reason": {
+        "changed_fields": [
+          "text"
+        ],
+        "command_seq": 6,
+        "entry_id": "lex-loc-000",
+        "kind": "lexicon_upsert",
+        "op": "upsert_lexicon"
+      },
+      "seq": 6
+    },
+    {
+      "affected_samples": [],
+      "from_stage": "features",
+      "invalidations": [],
+      "ok": true,
+      "op": "remove_lexicon",
+      "reason": {
+        "command_seq": 7,
+        "entry_id": "lex-custom-001",
+        "kind": "lexicon_remove",
+        "old_text": "苏州",
+        "op": "remove_lexicon"
+      },
+      "seq": 7
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010",
+        "S0011",
+        "S0012",
+        "S0013",
+        "S0014",
+        "S0015",
+        "S0016",
+        "S0017",
+        "S0018",
+        "S0019",
+        "S0020",
+        "S0021",
+        "S0022",
+        "S0023",
+        "S0024"
+      ],
+      "from_stage": "emission",
+      "invalidations": [
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:5edb69dded28dca9b94f95181e4ccad98c1afa56394f66671a79988da4f8267f",
+          "sample_id": "S0001",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:a1685bdb712b2a2c72f74f99a1b6f574fa12e287baec1dc53f9ca6ea76f80dc0",
+          "sample_id": "S0001",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:1986a5053a42864085e542da76f0a0c556c87c966515dc5e4a50fa9f6422d0a7",
+          "sample_id": "S0001",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:d79036894eeb742424e84f2cbeee12b01a38ea9f40b329e84b6f70b7b1c511f1",
+          "sample_id": "S0002",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:11482ed36928df92271d05f7e574ff206303dc5c598637574259506b64496da6",
+          "sample_id": "S0002",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:7cfff3e1d35b3b923a1e92c8d733199a16b71c5045cb18690074e668e6fb9fb3",
+          "sample_id": "S0002",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:e6cef3e174fd0f2a322942166f1c6a3c41484ad825c94010c7f92f186ad1c50d",
+          "sample_id": "S0003",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:d1b792e6845b948ea99b67dc953fd4de49ac5c0dbfb0f4f03a7ea7e39ad630cb",
+          "sample_id": "S0003",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:1f73de269af6320ff7dcfa457e447a417355b53f13d99345d86567f7efad591a",
+          "sample_id": "S0003",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:5b4931b314ef1e5abcae49c100aac327eccb0783cac3f2115f7a71575ed642a0",
+          "sample_id": "S0004",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:e1def22443bc5bd2c3f1ec70983376021110de295576198436d0b5d231ebbb9f",
+          "sample_id": "S0004",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:86c02616e42be95725cd94d312eaca16ae0bb963ccf16ed019568d61118feaf0",
+          "sample_id": "S0004",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:02bba94e45b2697ae94ccb2cf77aed8a38105579a246cf34004948d6e954e8d7",
+          "sample_id": "S0005",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:53dcaea5ad637d7af7e577463347823a277dff8cde1917f8056692c293e4c9a3",
+          "sample_id": "S0005",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:399f689b986520b75a25a847d04509997e9b68b39de34d2ca91578e3ca043c72",
+          "sample_id": "S0005",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:dd8ec55b35360c5004c31c2c51b2fe62b981b6bdb68d313977c8510a8900a084",
+          "sample_id": "S0006",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:a8eae2b627fc4ec7831e5700f28db3176df0117d50465ffd03be8a2962d4fc19",
+          "sample_id": "S0006",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:6dde418db0e52755754a85a4fc720949b806818f0cafeb2ac887e38b1b57b48c",
+          "sample_id": "S0006",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:2f615246a60b1dd9272f42dacf5fa0d3adf55bc399c5b0b78ff35453a45f1cd6",
+          "sample_id": "S0007",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:7cf8649c2da45cdf61afb8ea9d2c42559104ab220aa1484fd2e7da3e137a59be",
+          "sample_id": "S0007",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:9d3240a2f4d0b0e45921b8afc9b3a952ad50814ff0ed04c743c7f6f81993231e",
+          "sample_id": "S0007",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:c10167d102cf01ae842b7615ccd651e2cd335de52673690c43f1a1694ed088f4",
+          "sample_id": "S0008",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:4c967aaf4c8af5af7fa14119c8d8960699b9ab187cdb5b0b78e95afc0547b140",
+          "sample_id": "S0008",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:622c8eaa56ced8a159c2b422d22a6de8f5708d6bdecf62e7a25eb51982d2bd2f",
+          "sample_id": "S0008",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:c3c0eb362dddac300bd59653b58696d8b38ecf3ea1916e5d0252f0136588d0bc",
+          "sample_id": "S0009",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:87f6cb77f91f6aa2784ff598ef2d7987c0cdf52fa8ad1db34ef1f97f6480182c",
+          "sample_id": "S0009",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:7f4090fa2af718d8234d647fe077d6a03ed1cbbcff8c955b23f7b1d745af7e3f",
+          "sample_id": "S0009",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:7ea10650bbce90fd6ca76634a0145fa91e25568d9ae8dc80c4191e0bc4123e4a",
+          "sample_id": "S0010",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:7e4f18df6190d3cf7c6bfbb87b80c64ce78f74160083f633db03bd1e41558330",
+          "sample_id": "S0010",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:159140db4c8486b999ec806a36096384c7d22a875e4f2b13666ff3a082d964d6",
+          "sample_id": "S0010",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:cb1ce6d3e1023a2bef459ed328921cbf2980b57a8dcfee712a54683d3ea3d131",
+          "sample_id": "S0011",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:5e42421f929b4c916846cbb4876c53422a5473264d3de7df5d9198f57c436758",
+          "sample_id": "S0011",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:923e4a44fe7488d1d5d3755a827cf3f772ef260d3b99413e41e43ab3b75d6f43",
+          "sample_id": "S0011",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:174ace535f3a7a50e3f74111491b313ccd4029d6e3ab0f11fedcc913d4437df7",
+          "sample_id": "S0012",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:fac117aa1ac389c9a20490953787b31e71257f637e08c2d4f51a8ca021278bc6",
+          "sample_id": "S0012",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:c93e78e6d5b6a1b2ff7eedfce6515a545f56da2a8637a642434bba6eea3df250",
+          "sample_id": "S0012",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:3b3034eeb3f9b6926523b8b13d3332eb6a52ef05dbcbc57c2510574801df5118",
+          "sample_id": "S0013",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:e248322e1a2618877bd91ba637258f560a324d02dcb3b73e10882b21610dfd1f",
+          "sample_id": "S0013",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:b2d3d947b635ef14e9de9fcc7787adc44c6b301ff88ff34b7e6a1aa14145b28a",
+          "sample_id": "S0013",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:62398030de131394bcc695090fe2a28cd1615e6502d50318ac8c36977711e639",
+          "sample_id": "S0014",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:2035dc6d51afe8eb1c49182d5d08c3fb8a6beadb252b61379c60bc19ffe8300a",
+          "sample_id": "S0014",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:e0dc76a9a7c5845b7bee643f6a7612bcbb141d2b8be11c5cea1da3ef5f0ef644",
+          "sample_id": "S0014",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:9a368117ce2e6d4ffdec3d51f16997ebf20bac5fb771aebbf811d104195ded12",
+          "sample_id": "S0015",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:68f387efa548bdcb8d5c753bdeda59000d9d9ebedb9d2b8b8fbb2ad646799bc7",
+          "sample_id": "S0015",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:65c23eae6142fdbe2f31e8866d6af102c52c1ac6c716e51ba1ea49f1f83c0942",
+          "sample_id": "S0015",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:16bd1fd32acb91b1a8890b2879b66e363c9f32a8acd4f65dd9aede0def336801",
+          "sample_id": "S0016",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:b40d172ff40fc6bdecf8833926e5ac0e4a112c8982cab2478531959bf8efe7f2",
+          "sample_id": "S0016",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:0f65d309f729cd70f85991910350b3a32fcf8b7bc743126352ed4ea7ea1976f2",
+          "sample_id": "S0016",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:58680d1da3189045df939739ec49fd37b0b97fec83d0ecfab201666ddb0dbdca",
+          "sample_id": "S0017",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:c17e56dd971431fe5147e1fe0fb1060d45da8eb30423c415d689083fd12d8cdf",
+          "sample_id": "S0017",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:f491855f371b572f6e14f47d24b3c8c65b803a201b48ed0043cf4d984aa949a8",
+          "sample_id": "S0017",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:2f4de745c4af4c3c24755129ea068f85ec03451acafc79d28fb2baf4cb9ba92b",
+          "sample_id": "S0018",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:7069870f551113e8020e50549d86ee9e853ec1dd7f2c415a9f4910a18d769eaf",
+          "sample_id": "S0018",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:0afc55fec85fa4e2698ab8d25e9fd4dc234a0a6f60b0fcf598992cde06518102",
+          "sample_id": "S0018",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:a665b4e05f9f13ab9589c16398317fc9319b8ffb2fb7933a1dbb661866e5074a",
+          "sample_id": "S0019",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:1a7b6af194e0bbd30cb94c12530ae2bf8b47b7d9d7a8fe2ec748dd52de2e12d3",
+          "sample_id": "S0019",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:52d4aad5e02e5426b7771d2986b49a492f76f9b0bd8fccd782d18ba6105ea0ba",
+          "sample_id": "S0019",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:9db8f5c111622135a8ea522493e7944dbdcb73e5bca9c45012056fdff6b84d5e",
+          "sample_id": "S0020",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:6c6a51fa86950053c6bbd824a58f817b99b5a3686c5706473534e09985bc1379",
+          "sample_id": "S0020",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:9dbbe3da58446a32220de849c83662e65dd7538f559b63bdcef2bec42c84f3a4",
+          "sample_id": "S0020",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:1f1e57f09f0c241097e523d92b58ac0676de61eac648184f9e202434d828f92d",
+          "sample_id": "S0021",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:0f67c7c613198c35097dd80977b9710740ce7ce7a8283fcf73c6f4d94c6540a6",
+          "sample_id": "S0021",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:c9975ca3346edcc58487b5a9aefac61cd01b50bd4b408da3a69558f06fa6720b",
+          "sample_id": "S0021",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:39597530417746f442f0a3475d4e7515df67b9cda4d2abe2e62249a95d2a32a4",
+          "sample_id": "S0022",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:5b934d47d6c6bc80c092fb5aa938bf24339367c8768b0546d06129328a1ba48b",
+          "sample_id": "S0022",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:18fa04c4265a95a6ed2a647bc336e96a2685743b354658ae05d7260b71473808",
+          "sample_id": "S0022",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:c2b8701595d046ca97fc2b91765b41388e22e6d15eb92f7332f6ef8638a64ace",
+          "sample_id": "S0023",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:37c7f718d984127015b3d42521687f8a81e7553369c767160f7a83e05926052c",
+          "sample_id": "S0023",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:42b3e42772e7e24957da7e3dc67a03d0b13e221b1c72bde766bf43034d4b076e",
+          "sample_id": "S0023",
+          "stage": "merge"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "emission:fdb7e05d7ed82029dbaaf71c562cd3648885aa52fd6a6eee5ca46491f8580add",
+          "sample_id": "S0024",
+          "stage": "emission"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "viterbi:d9d588e7b94a16848b376a549304031cc295a37032b2006365841507f6c34284",
+          "sample_id": "S0024",
+          "stage": "viterbi"
+        },
+        {
+          "basis": {
+            "command_seq": 8,
+            "kind": "quant_config",
+            "op": "set_quant",
+            "quant": {
+              "decimal_bits": 12,
+              "quant_level": 2,
+              "total_width": 32
+            }
+          },
+          "cache_key": "merge:51b1aacb8d29f077c50ae583c53b8c9f33bb11f6334145b3945e368c0280f5fa",
+          "sample_id": "S0024",
+          "stage": "merge"
+        }
+      ],
+      "ok": true,
+      "op": "set_quant",
+      "reason": {
+        "command_seq": 8,
+        "kind": "quant_config",
+        "op": "set_quant",
+        "quant": {
+          "decimal_bits": 12,
+          "quant_level": 2,
+          "total_width": 32
+        }
+      },
+      "seq": 8
+    }
+  ],
+  "business_code_counts": {},
+  "command_count": 8,
+  "command_failure_count": 0,
+  "corpus_failure_count": 0,
+  "cumulative_counts": {
+    "commands": 8,
+    "invalidated": 304,
+    "recomputed": 400,
+    "reused": 560
+  },
+  "data_dir": "examples/generated",
+  "elapsed_ms": 4101.072,
+  "failed_sample_ids": [],
+  "invalidation_log_count": 304,
+  "last_run_recomputed": [],
+  "last_run_recomputed_count": 0,
+  "last_run_reused": [
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:745a5512d51ee2301f323897557d2dd1696bff6b61a0f570464bd5ad30585141",
+      "sample_id": "S0001",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:06aeeaf3fdd96fdfaf786d3a012d43eff5a6e0642229400fa67913fbac111e4e",
+      "sample_id": "S0001",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:d1f827c4bb1bed04416abe68817c038445a4d65eea4a1260ec23c7f339d953d6",
+      "sample_id": "S0001",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:15ccdb10ff4c82b434536767fd1f9cafe6adebed59d55b1ccd06768f45890177",
+      "sample_id": "S0001",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:32a96691d33b2d81df6b21e876776af4f3dde84bd684733a8ed4826318be690b",
+      "sample_id": "S0002",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:02778e2e35629bf4345684510d36bbb5dd95986a63a7ce67842faa21a92ccd50",
+      "sample_id": "S0002",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:4ba644eee60d885340218eca17f514774abfe2c21b152e3dd98eeecbc518952e",
+      "sample_id": "S0002",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:4292699ff24b2fc300e37d7193741d0b5830180a8396dbaa345fb68d18c4a9f6",
+      "sample_id": "S0002",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:ea8c4a8eb41643be034d42c82e6eebd657402c4c960f8807e65864d402bf468d",
+      "sample_id": "S0003",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:999db5845a8d8aaf1cd5bc63a959fa9fef416e09fef255c77dddfbfcfc391357",
+      "sample_id": "S0003",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:93e0f21c275ae58ffabe2466c639fed037cc26daa5fba3d30dfed18902489e60",
+      "sample_id": "S0003",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:7a88b4dd66053d3f59c5b6f8f96f676651b35e9949bcae47ba1266b6b919d63c",
+      "sample_id": "S0003",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:13a491c678c1407d7c919a9c954e6c60a98416544e24f800fe7f5a257b20acff",
+      "sample_id": "S0004",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:d512010a672394ac24e71a19f56554752d137bc92abb8b73b7dbb0bee12b0be0",
+      "sample_id": "S0004",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:d20372b23b7648c9ce8327a6c68ed2d0ce0ec11ae8350f31cf3188924575bda3",
+      "sample_id": "S0004",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:4946e98623df71833eec1a8ef893d0eb7afdf00e973faa620c917f7a9faa4242",
+      "sample_id": "S0004",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:1c87cb24f0b659a502524c404d03f4b5cbe8d6730bc59dfb2e2337f66121fcad",
+      "sample_id": "S0005",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:399e1650de767f182d0051b56476aa6eb0d64da3531b16590735a406468c88e7",
+      "sample_id": "S0005",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:43848a669713abbb49c75f5812f93fca1899d0f81d02f898c762f421e2d7a566",
+      "sample_id": "S0005",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:b1aa2a4a5192df90ec1ea848263d1c46996c8afe4862cf677354a5ceccf5836f",
+      "sample_id": "S0005",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:e6b8428c3b7a1b952213cd6474020ed4cd900c14f1436b708331e09419b34dc1",
+      "sample_id": "S0006",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:4e8b8665d91a7681b8c33d662f6c140aa0fc59a82cab73fe04fa2becda2f649a",
+      "sample_id": "S0006",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:96a20862de87ac68e9d7298f881cccc1d6f31e7b7f8fcde316b3275683111715",
+      "sample_id": "S0006",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:b500446c84633e3840f9e4081e567b854f5d53d36f9098db1e0b844f37051fae",
+      "sample_id": "S0006",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:d9b43bcf031c628468983670207e94546e3f4d223faca06d91c27c4dc55f284f",
+      "sample_id": "S0007",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:2f885c70d3cd98280fd695c858acd256c9dd0073de0df60b9610ca014e3b5ad6",
+      "sample_id": "S0007",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:13b9b3db7f892ef2d6d24f2633960b4b751991b4aed412ad5cc5ff3ce1925cc1",
+      "sample_id": "S0007",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:96b9a5abc4ebf1114595ab6fcb19e7b0f259f675418526db4c351184ffe0451a",
+      "sample_id": "S0007",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:e4827849a948cf03df0b587e3b2162f53d9911a2ad86f64df99ec053b40fb9a6",
+      "sample_id": "S0008",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:df6b6299f471de8bd0bbb29ef776b05482bcdde7ed2db51768d8ee054900bc30",
+      "sample_id": "S0008",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:f4c0eab143474e66342047d55297bdbf9f51935351e18e25d3d0ffca8ba3c64f",
+      "sample_id": "S0008",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:9473d66955a580a8d17317a10ba7355f45c96f4f9265a5c3b3e7344041af6f51",
+      "sample_id": "S0008",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:7585ed6409a4d95951919dce956d3c0e2aca4a36528a51bdddbe5b39db851efd",
+      "sample_id": "S0009",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:9d4a74aa8ea62434b85c77b81bffc4af0a2b0687a2acf3020aacf4428f32c22c",
+      "sample_id": "S0009",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:80112ee0a75eb73eb941df0e4ce0c698c95c47c080bcf2df6a5c6f771b94f69c",
+      "sample_id": "S0009",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:a6365b5ecec8e5fa1e243d6311c59bd865c45a0317046f7eebb07086935ef6d6",
+      "sample_id": "S0009",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:1f7f7beb470c456886785e482377366dc0a3d394144dafa2dae397146e737e19",
+      "sample_id": "S0010",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:f591cb023b358514b401d695b122d7f225c08508ec8501acf0ceeb79f558164c",
+      "sample_id": "S0010",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:f9467fb949b81ac003c73cac7b27ab2e2e382b094859103e3419ff673b8c137a",
+      "sample_id": "S0010",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:9999ab7a028629d109060f86693bb034e307f482e0bf6b17d634293f34523be0",
+      "sample_id": "S0010",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:3ae4f6dff83abb36f8032055801e7dbe18130432784055e92d33fe7e6c54c288",
+      "sample_id": "S0011",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:6be23d0a852f5db3784772c24509a7a4f704a3958fa0f4c14c51c423ba0679cc",
+      "sample_id": "S0011",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:dc43618be54efced9b9bca8345222924475528ba8227e5f25f54d36271b376d6",
+      "sample_id": "S0011",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:2435a2be9eb7e3cdf33deaa659ce60076a3ea926f664a713e82930c15a8f4d3a",
+      "sample_id": "S0011",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:cac0219d11a8714ee26dd072bbc5c67804c0bc436fd701404a50be62401e5822",
+      "sample_id": "S0012",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:4d02818c516255174c9d4bb4999f433c78703c31ceb569457a23a969a80a9aeb",
+      "sample_id": "S0012",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:27007a6adf880f8b3bbfdd7b7cf9b827cb5143e38beb6d22663379051d8906a8",
+      "sample_id": "S0012",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:678daa9ebd5827771c681e9282189250883b9d3770d85f0e33edbee4c240e650",
+      "sample_id": "S0012",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:17eab61dccef64e7cf46b35b8a00fed26aedceb53c70a968b22c933f8291844f",
+      "sample_id": "S0013",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:f50d8f01fb5c2b936d952c1ecfcc97c0f21176314ba5dc53c1005b5ebe155c02",
+      "sample_id": "S0013",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:1cb0e2be2295657bc4b52f5c863a6f346143f2cdec5a232be97afbdffe654525",
+      "sample_id": "S0013",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:57da1de148cc9a9c5b486ca3568cc32c273740065a7bd8e3fe3c7e8ca7fa0bbe",
+      "sample_id": "S0013",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:f4cf9d9eb0675354857426459bb9be1adb1e82841aa21736288001713789b9f0",
+      "sample_id": "S0014",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:e00937a5c5e29e3133336c6f11af78e3e7df4735eeb8a9488525f764f3b1eee7",
+      "sample_id": "S0014",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:6c80403923fd34aac30b481fc24407648f19de1131251813579f4dd161b8d048",
+      "sample_id": "S0014",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:92bc7318377d6dc54d23373063b45f362899b239ab0e35d415c6ab7e56dfb684",
+      "sample_id": "S0014",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:e7725c8b55bb090e37f4767134b6b8fa030b6c1b1e54393ef7a4e93041dc7113",
+      "sample_id": "S0015",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:a7cbaade7e65a00f730c15b59e50128c90aa9c272346a5b3b68eafe2d6d4fd4a",
+      "sample_id": "S0015",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:1195d93fa44968e4c8c09760985c9018ad155f3e749f53e46a33ec2b3e162584",
+      "sample_id": "S0015",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:df77e82d1c68b40831cc62c0a0792c88482ede546cb4b50da8c19480e42bec95",
+      "sample_id": "S0015",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:e97c48983b1ab9777181eca1fa21d680cccae7c07674e4cfbb136874b310bdfa",
+      "sample_id": "S0016",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:774d3f13aa057eefa2242e3c8804f6aa7f37f730a802c7fb58bb4e3c9bfb7b1a",
+      "sample_id": "S0016",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:86f8acb609956fabbd06866d6ec27eb130f6f3e6f892c515c6e901acaec313fa",
+      "sample_id": "S0016",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:708e390b136c36e2e919fac6791bc5602eb2e0682250c42810520e6427ab83ab",
+      "sample_id": "S0016",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:e918d75c6b50c6ae8a564038300e4c035ee08d122b68f7c28aef46e9de93f4be",
+      "sample_id": "S0017",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:2740c9b2805180d0ffbc990f0dad29eb96ef967ad6ed774f6185276a8f94b67f",
+      "sample_id": "S0017",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:87352492a22ef2195d826e3fd379e208b7e00d5c1ea4ea4ddc3bb0a5f2432b51",
+      "sample_id": "S0017",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:4b74ff3c418265f31f9cf34a0c77e9d5d78dd1b1aa95f0a004c5c666aac9dbd7",
+      "sample_id": "S0017",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:5ca3604f7f48ffa2030f18ca28f2472c05b6e39aafd9d6f07a9d88779c68e4c0",
+      "sample_id": "S0018",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:44386bb35d3163dd5ecebdc9efd5240d7b1810de71494970a98fb024d875fa06",
+      "sample_id": "S0018",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:2b83362878b5e2883a4cb48a030207693d0eacaea63d4d893091f3d55c78b398",
+      "sample_id": "S0018",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:0d22741d33f381540cb3ed62a38c3f14617a9417c3aa859317c3741b0fe203dd",
+      "sample_id": "S0018",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:b5331d455e48ca2d92be122daacbda306f3752374133b633e9493d92ee727348",
+      "sample_id": "S0019",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:98bcb1b293b8ddbbade3909169bae25e08c73a7fb638ba7689f3d22b08a4827a",
+      "sample_id": "S0019",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:789adca509a80612d66b61a97beb6c910de25d926049c326bfcd196dad124d53",
+      "sample_id": "S0019",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:07e5c7a7eaaec2cf324bc33d086b63189deed4beede1de446cbc7f4b698337a4",
+      "sample_id": "S0019",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:53ff254292c5a54b976dbfc0c7caff6c9c2d57182efa10e0d0839c643a644b39",
+      "sample_id": "S0020",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:fa09eed77c8dae216874b092db071bb61cabd79430f7f67852696bec262da3ab",
+      "sample_id": "S0020",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:b1de39b324056be239b1d0cd18d84b1f94c8cfaa37e2016a5dabfecd9dfc0a47",
+      "sample_id": "S0020",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:42b2d92c5446cf22c20755c4a4797b58fff049c55487de3ea065960a8261094b",
+      "sample_id": "S0020",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:1a0b9144e12f5ff4930eee45bf5c12c3e07ca29c269e1d1a5c180bf3ba35018e",
+      "sample_id": "S0021",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:c2e1465a40e1beb081886fae7b655887b6d22aa3cd3f5043fd6a324ae3d9924e",
+      "sample_id": "S0021",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:b19bef99ce3b4ab10943d21f7258fc0cd176e1e7fdaf2342d53745023ea68e87",
+      "sample_id": "S0021",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:7b50700abf537b7b75878f90488986e70d30df4ce0a65f9248daea803c88cd48",
+      "sample_id": "S0021",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:4b0c53f8e35e2c71c0a5eaf1d8399be6c8d9c83088ced5614fc987223b0c477a",
+      "sample_id": "S0022",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:36ce436a0215468e2a5e3b37dcf561e56756e0971ae6cdf857e409f6049b66f0",
+      "sample_id": "S0022",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:048d6ffe4548c706515f96bf50fbb82e5afc0da97d54de5582340a85b1dc38ed",
+      "sample_id": "S0022",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:c595c2a94aec5319fb032ad75923eb9b89619ea1601e5ac7031a6f98a2738add",
+      "sample_id": "S0022",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:886ad4d00b6eb1e507eeda26ae0a60b443ccbb5361602c1ac7db30ef6e8e13ee",
+      "sample_id": "S0023",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:49c3c05ef26c4b536840f5a51fa433ae735d2307336a3cb48ab002ce6d31b054",
+      "sample_id": "S0023",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:dab2624acb120896db55673550b0e8295c99a05b66449788453343c59a356b57",
+      "sample_id": "S0023",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:58803d14796ef3acb43bcf14d88350dbf397385f48fa55e9e0747be2ee37982c",
+      "sample_id": "S0023",
+      "stage": "merge"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "features:50f7d1b6c3617104ceb5d7b43ce26b43f1087fca468022663232ff4be2c78fdc",
+      "sample_id": "S0024",
+      "stage": "features"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "emission:d9411ec28fa3cd5c7a6c01ad1cc5efdbf816e51ccc4c61b3dbc726acba969184",
+      "sample_id": "S0024",
+      "stage": "emission"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "viterbi:3aa8f68afb128d7a0720bdb8e2b64368f05bd3d64e726d4834c435465ac2162e",
+      "sample_id": "S0024",
+      "stage": "viterbi"
+    },
+    {
+      "basis": "content_key_hit",
+      "cache_key": "merge:0b71b1d4a4e2c4200bdf3d84e200ea66e4d296b2a6f2f390d1bbf2f47a34bf5a",
+      "sample_id": "S0024",
+      "stage": "merge"
+    }
+  ],
+  "last_run_reused_count": 96,
+  "ledger_path": "state/kill-test/authoritative_ledger.json",
+  "ok": true,
+  "recovery": {
+    "code": "NER-0000",
+    "manifest": {
+      "canonical_hash": "617a978af3a587175059e50a1d51d0f390291b1034d6ded7f0e17e974ec4a80d",
+      "command_cursor": 0,
+      "config_hash": "d49216de607fbf0eda2706c4a5351b8c97fff9f074e97f1223626b2719aa698a",
+      "file_hashes": {
+        "emission": "245af2a023d029491c1e2dad3e81a55cad2e7ff8082c8fb5f56294093ebb9e88",
+        "features": "791d92e5305c280b1d5c75a641356c52cd5d2d33f2696a67e0d76c12ab22bcb7",
+        "merge": "451332b81db5c92ca05b073f9c6a0117c2c850368c444552f2566426f7435429",
+        "state": "73f6d7b236caec59891dcda49254563ab497b292eecc6085894054f81fb594c3",
+        "validation": "45e762e91130260be62424c32a29ca08654a09dc2a187a282d9355d5af2f0c92",
+        "viterbi": "fff0c11725a4da7a5862e42770fe6deaa060d9309771ff41f2ab3470144ef2ea"
+      },
+      "generation": 0,
+      "manifest_schema": "ner-snapshot-manifest-v1",
+      "model_version": "ner-local-1.0.0",
+      "phase": "before-kill-demo",
+      "snapshot_format_version": 1,
+      "snapshot_id": "snapshot-00000002-cursor-00000000",
+      "snapshot_version": 2
+    },
+    "pointer": {
+      "canonical_hash": "617a978af3a587175059e50a1d51d0f390291b1034d6ded7f0e17e974ec4a80d",
+      "config_hash": "d49216de607fbf0eda2706c4a5351b8c97fff9f074e97f1223626b2719aa698a",
+      "manifest_hash": "37a318e0de11aaa7e564405118aa51d1e7b723a95c6b8148351e90e699d8f6bc",
+      "model_version": "ner-local-1.0.0",
+      "snapshot_dir": "snapshots/snapshot-00000002-cursor-00000000",
+      "snapshot_format_version": 1,
+      "snapshot_id": "snapshot-00000002-cursor-00000000"
+    },
+    "recovery_action": "resume"
+  },
+  "snapshot": {
+    "manifest": {
+      "canonical_hash": "5f0767535b38007e158b8803b5b7067291d5da79caf52b76ec0fff6ca7435b52",
+      "command_cursor": 8,
+      "config_hash": "21798af873dd8713e85f04893ddfa592e14f1f632d7db983e69f2e7adb85c8cd",
+      "file_hashes": {
+        "emission": "0205df9fa4e238b4dfc7138dcd53acd9bec84ef4537e6586ab850e1c804bd3c4",
+        "features": "d1306fa44ccb9249108e79b201812d12b5bb7494ea3972ed2f24a17f0f812b39",
+        "merge": "3d9183b717542bf08ad01f522f1257d4a708d5cc56d765b475fb6d939b4e3cdb",
+        "state": "b5dd74795674197134a2b938fbbad9e003d978891e282f1d1b3c5762ed25f466",
+        "validation": "45e762e91130260be62424c32a29ca08654a09dc2a187a282d9355d5af2f0c92",
+        "viterbi": "d4aec67a54fdaf541ef7cbb639a35453c4e0b9a41c24373ed9cbe8fa3d60ea36"
+      },
+      "generation": 8,
+      "manifest_schema": "ner-snapshot-manifest-v1",
+      "model_version": "ner-local-1.0.0",
+      "phase": "stable",
+      "snapshot_format_version": 1,
+      "snapshot_id": "snapshot-00000003-cursor-00000008",
+      "snapshot_version": 3
+    },
+    "snapshot_id": "snapshot-00000003-cursor-00000008"
+  },
+  "summary": {
+    "affected_samples": [],
+    "business_counts": {},
+    "code": "NER-0000",
+    "command_cursor": 8,
+    "completed_samples": 24,
+    "entity_count": 283,
+    "generation": 8,
+    "progress": 1.0,
+    "recomputed_count": 0,
+    "reused_count": 96,
+    "stale": false,
+    "total_samples": 24,
+    "type_distribution": {
+      "LOC": 274,
+      "ORG": 9,
+      "PER": 0,
+      "TIME": 0
+    }
+  },
+  "workspace": "state/kill-test"
+}

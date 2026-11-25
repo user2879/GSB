@@ -1,0 +1,97 @@
+{
+  "ok": true,
+  "recovery": {
+    "recovery_action": "rebuild",
+    "code": "NER-E4003",
+    "reason": "current.json 不存在",
+    "commit": {
+      "ok": true,
+      "action": "committed",
+      "snapshot_id": "snapshot-00000001-cursor-00000000",
+      "manifest": {
+        "manifest_schema": "ner-snapshot-manifest-v1",
+        "snapshot_id": "snapshot-00000001-cursor-00000000",
+        "snapshot_format_version": 1,
+        "snapshot_version": 1,
+        "command_cursor": 0,
+        "generation": 0,
+        "phase": "fresh",
+        "model_version": "ner-local-1.0.0",
+        "config_hash": "d49216de607fbf0eda2706c4a5351b8c97fff9f074e97f1223626b2719aa698a",
+        "file_hashes": {
+          "validation": "45e762e91130260be62424c32a29ca08654a09dc2a187a282d9355d5af2f0c92",
+          "features": "88ea578b7cc8cbabdb7224ba8a425dfcab41ce59934b81b059bc0cc80da9b951",
+          "emission": "1136879139b41fb7c47230f5765db1a2af87c46d23d1e849a05252fec4dcf16c",
+          "viterbi": "86556c5687cbc75a1ae85a93a8bb0a713fc97dc463726d88c4f70ef4104e8529",
+          "merge": "1c839d48acbe1f7d6708f70320741db88574741d2626b53c21f52f43dd01b730",
+          "state": "fd8430ac74bd81b23b69942e13eac913075cd1f4015774b8f60a23794e382f6b"
+        },
+        "canonical_hash": "11324a6edde4afd3c43436ea7e2515719de03f8fb82ee415de2465ea4765e892"
+      },
+      "pointer": {
+        "snapshot_id": "snapshot-00000001-cursor-00000000",
+        "snapshot_dir": "snapshots/snapshot-00000001-cursor-00000000",
+        "manifest_hash": "c1e38e663e4009c1b9bc34f81eb804104dd8a5371573e75354e28408bc11d11e",
+        "canonical_hash": "11324a6edde4afd3c43436ea7e2515719de03f8fb82ee415de2465ea4765e892",
+        "snapshot_format_version": 1,
+        "model_version": "ner-local-1.0.0",
+        "config_hash": "d49216de607fbf0eda2706c4a5351b8c97fff9f074e97f1223626b2719aa698a"
+      }
+    }
+  },
+  "elapsed_ms": 5211.026,
+  "business_code_counts": {},
+  "cumulative_counts": {
+    "commands": 8,
+    "invalidated": 304,
+    "reused": 368,
+    "recomputed": 400
+  },
+  "summary": {
+    "code": "NER-0000",
+    "stale": false,
+    "generation": 8,
+    "command_cursor": 8,
+    "completed_samples": 24,
+    "total_samples": 24,
+    "progress": 1.0,
+    "entity_count": 283,
+    "type_distribution": {
+      "LOC": 274,
+      "ORG": 9,
+      "PER": 0,
+      "TIME": 0
+    },
+    "affected_samples": [
+      "S0001",
+      "S0002",
+      "S0003",
+      "S0004",
+      "S0005",
+      "S0006",
+      "S0007",
+      "S0008",
+      "S0009",
+      "S0010",
+      "S0011",
+      "S0012",
+      "S0013",
+      "S0014",
+      "S0015",
+      "S0016",
+      "S0017",
+      "S0018",
+      "S0019",
+      "S0020",
+      "S0021",
+      "S0022",
+      "S0023",
+      "S0024"
+    ],
+    "recomputed_count": 72,
+    "reused_count": 24,
+    "business_counts": {}
+  },
+  "ledger_path": "state/demo-final/authoritative_ledger.json"
+}
+report=reports/demo_run.json

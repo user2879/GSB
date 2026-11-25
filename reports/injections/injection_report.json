@@ -1,0 +1,120 @@
+{
+  "business_code_counts": {
+    "NER-E1002": 1,
+    "NER-E1003": 1,
+    "NER-E1004": 1,
+    "NER-E2001": 1,
+    "NER-E2004": 1,
+    "NER-E2005": 1
+  },
+  "cases": [
+    {
+      "actual_code": "NER-E2001",
+      "diagnosis": "参数包缺失、截断或不是合法 JSON",
+      "expected_code": "NER-E2001",
+      "failure": {
+        "code": "NER-E2001",
+        "locator": "reports/injections/ner-inject-1672kq1h/inj-truncated-package/truncated_package.json",
+        "message": "参数包缺失、截断或 JSON 非法：Expecting ',' delimiter: line 7 column 17 (char 96)"
+      },
+      "injection_id": "inj-truncated-package",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-truncated-package",
+      "kind": "truncate_package",
+      "ok": true
+    },
+    {
+      "actual_code": "NER-E1003",
+      "diagnosis": "字序列与标签序列长度不一致",
+      "expected_code": "NER-E1003",
+      "failure": {
+        "char_count": 22,
+        "code": "NER-E1003",
+        "label_count": 21,
+        "line": 1,
+        "message": "字序列与标签序列长度不一致",
+        "sample_id": "S0001"
+      },
+      "injection_id": "inj-tag-length",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-tag-length",
+      "isolation_continued_other_samples": true,
+      "kind": "bad_tag_length",
+      "ok": true,
+      "total_sample_count": 24,
+      "valid_sample_count": 23
+    },
+    {
+      "actual_code": "NER-E1004",
+      "diagnosis": "存在 BIESO 枚举外标签",
+      "expected_code": "NER-E1004",
+      "failure": {
+        "code": "NER-E1004",
+        "line": 2,
+        "message": "存在枚举外标签",
+        "sample_id": "S0002",
+        "unknown_labels": [
+          "X-UNKNOWN"
+        ]
+      },
+      "injection_id": "inj-unknown-tag",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-unknown-tag",
+      "isolation_continued_other_samples": true,
+      "kind": "unknown_tag",
+      "ok": true,
+      "total_sample_count": 24,
+      "valid_sample_count": 23
+    },
+    {
+      "actual_code": "NER-E1002",
+      "diagnosis": "样本标识重复",
+      "expected_code": "NER-E1002",
+      "failure": {
+        "code": "NER-E1002",
+        "evidence": "S0001",
+        "line": 3,
+        "message": "样本标识重复",
+        "sample_id": "S0001"
+      },
+      "injection_id": "inj-duplicate-id",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-duplicate-id",
+      "isolation_continued_other_samples": true,
+      "kind": "duplicate_id",
+      "ok": true,
+      "total_sample_count": 24,
+      "valid_sample_count": 23
+    },
+    {
+      "actual_code": "NER-E2004",
+      "diagnosis": "特征维度、桶编号或权重形状越界",
+      "expected_code": "NER-E2004",
+      "failure": {
+        "bucket": 0,
+        "code": "NER-E2004",
+        "expected": 999,
+        "locator": "hash_table[0]",
+        "message": "hash_table 列数必须等于 feature_dim"
+      },
+      "injection_id": "inj-feature-dim",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-feature-dim",
+      "kind": "feature_dim_out_of_range",
+      "ok": true
+    },
+    {
+      "actual_code": "NER-E2005",
+      "diagnosis": "参数包权重包含 NaN/Infinity 等非有限数",
+      "expected_code": "NER-E2005",
+      "failure": {
+        "code": "NER-E2005",
+        "locator": "reports/injections/ner-inject-1672kq1h/inj-nonfinite/nonfinite_package.json",
+        "message": "non-finite JSON constant: NaN"
+      },
+      "injection_id": "inj-nonfinite",
+      "isolated_directory": "reports/injections/ner-inject-1672kq1h/inj-nonfinite",
+      "kind": "non_finite_weight",
+      "ok": true
+    }
+  ],
+  "injection_count": 6,
+  "ok": true,
+  "passed_count": 6,
+  "temporary_root": "reports/injections/ner-inject-1672kq1h"
+}

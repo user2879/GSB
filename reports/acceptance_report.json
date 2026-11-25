@@ -1,0 +1,169 @@
+{
+  "budget": {
+    "budget_ok": true,
+    "fresh_status": "fresh",
+    "stale_code": "NER-E3002",
+    "stale_generation": 8,
+    "stale_ok": true
+  },
+  "commands": [
+    {
+      "affected_samples": [],
+      "invalidated_count": 0,
+      "ok": true,
+      "op": "upsert_lexicon",
+      "recomputed_count": 0,
+      "reused_count": 40
+    },
+    {
+      "affected_samples": [
+        "S0002"
+      ],
+      "invalidated_count": 4,
+      "ok": true,
+      "op": "replace_sample",
+      "recomputed_count": 4,
+      "reused_count": 36
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010"
+      ],
+      "invalidated_count": 30,
+      "ok": true,
+      "op": "set_emission_weight",
+      "recomputed_count": 30,
+      "reused_count": 10
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010"
+      ],
+      "invalidated_count": 20,
+      "ok": true,
+      "op": "set_transition_weight",
+      "recomputed_count": 20,
+      "reused_count": 20
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010"
+      ],
+      "invalidated_count": 30,
+      "ok": true,
+      "op": "set_quant",
+      "recomputed_count": 30,
+      "reused_count": 10
+    },
+    {
+      "affected_samples": [
+        "S0002",
+        "S0006",
+        "S0009",
+        "S0010"
+      ],
+      "invalidated_count": 16,
+      "ok": true,
+      "op": "upsert_lexicon",
+      "recomputed_count": 16,
+      "reused_count": 24
+    },
+    {
+      "affected_samples": [],
+      "invalidated_count": 0,
+      "ok": true,
+      "op": "remove_lexicon",
+      "recomputed_count": 0,
+      "reused_count": 40
+    },
+    {
+      "affected_samples": [
+        "S0001",
+        "S0002",
+        "S0003",
+        "S0004",
+        "S0005",
+        "S0006",
+        "S0007",
+        "S0008",
+        "S0009",
+        "S0010"
+      ],
+      "invalidated_count": 30,
+      "ok": true,
+      "op": "set_quant",
+      "recomputed_count": 30,
+      "reused_count": 10
+    }
+  ],
+  "elapsed_ms": 4026.097,
+  "entity_count": 111,
+  "injections": {
+    "business_code_counts": {
+      "NER-E1002": 1,
+      "NER-E1003": 1,
+      "NER-E1004": 1,
+      "NER-E2001": 1,
+      "NER-E2004": 1,
+      "NER-E2005": 1
+    },
+    "injection_count": 6,
+    "ok": true,
+    "passed_count": 6
+  },
+  "ok": true,
+  "parity": {
+    "cache_key_map_equal": true,
+    "full_fingerprint": "a283321911942694613b8293d7312bb9b9222d047310280811041a19c51a5e63",
+    "incremental_fingerprint": "a283321911942694613b8293d7312bb9b9222d047310280811041a19c51a5e63",
+    "incremental_vs_blank_full": true,
+    "live_cache_key_count": 40
+  },
+  "repair_count": 0,
+  "sample_count": 10,
+  "sigkill_recovery": {
+    "kill_returncode": -9,
+    "parity": true,
+    "recovery_returncode": 0,
+    "stderr_tail": ""
+  },
+  "snapshot": {
+    "roundtrip_parity": true,
+    "snapshot_id": "snapshot-00000001-cursor-00000008-dfe51c1c",
+    "version_business_code": "NER-E4001"
+  },
+  "suppression_count": 8,
+  "type_distribution": {
+    "LOC": 109,
+    "ORG": 2,
+    "PER": 0,
+    "TIME": 0
+  }
+}

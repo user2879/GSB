@@ -1,0 +1,55 @@
+{
+  "commands": [
+    {
+      "entry": {
+        "id": "lex-custom-001",
+        "text": "苏州",
+        "type": "LOC"
+      },
+      "op": "upsert_lexicon"
+    },
+    {
+      "op": "replace_sample",
+      "sample": {
+        "char_sequence": "我 去 北 京 大 学 看 欧 阳 峰",
+        "id": "S0002",
+        "label_sequence": "O O B-LOC E-LOC B-ORG I-ORG E-ORG B-PER I-PER E-PER"
+      }
+    },
+    {
+      "bucket": 3,
+      "feature_index": 0,
+      "label": "B-LOC",
+      "op": "set_emission_weight",
+      "value": 0.42
+    },
+    {
+      "from": "B-LOC",
+      "op": "set_transition_weight",
+      "to": "E-LOC",
+      "value": 2.5
+    },
+    {
+      "decimal_bits": 8,
+      "op": "set_quant",
+      "quant_level": 1
+    },
+    {
+      "entry": {
+        "id": "lex-loc-000",
+        "text": "北京市",
+        "type": "LOC"
+      },
+      "op": "upsert_lexicon"
+    },
+    {
+      "entry_id": "lex-custom-001",
+      "op": "remove_lexicon"
+    },
+    {
+      "decimal_bits": 12,
+      "op": "set_quant",
+      "quant_level": 2
+    }
+  ]
+}
