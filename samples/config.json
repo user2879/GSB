@@ -1,0 +1,100 @@
+{
+  "budget": {
+    "score_point_budget": 2000,
+    "slot_point_quota": 600
+  },
+  "config_version": "ffbudget-sample-v1",
+  "fixed_point": {
+    "frac_bits": 16,
+    "width_tier": "i64q16"
+  },
+  "format_version": 1,
+  "scheduler": {
+    "max_concurrency": 4
+  },
+  "slots": [
+    {
+      "default_vector": [
+        -2,
+        0,
+        1
+      ],
+      "default_vector_source": "config://slots/req_context/default_vector#seed=20261125",
+      "dim": 3,
+      "key": "req_context",
+      "layer": "request",
+      "retention": 2,
+      "weight": 4
+    },
+    {
+      "default_vector": [
+        2,
+        -1
+      ],
+      "default_vector_source": "config://slots/req_geo/default_vector#seed=20261125",
+      "dim": 2,
+      "key": "req_geo",
+      "layer": "request",
+      "retention": 2,
+      "weight": 2
+    },
+    {
+      "default_vector": [
+        -2,
+        2,
+        1,
+        -1
+      ],
+      "default_vector_source": "config://slots/item_profile/default_vector#seed=20261125",
+      "dim": 4,
+      "key": "item_profile",
+      "layer": "item",
+      "retention": 3,
+      "weight": 5
+    },
+    {
+      "default_vector": [
+        1,
+        -2
+      ],
+      "default_vector_source": "config://slots/item_quality/default_vector#seed=20261125",
+      "dim": 2,
+      "key": "item_quality",
+      "layer": "item",
+      "retention": 2,
+      "weight": 3
+    },
+    {
+      "default_vector": [
+        0,
+        2,
+        1
+      ],
+      "default_vector_source": "config://slots/cross_cooccur/default_vector#seed=20261125",
+      "dim": 3,
+      "key": "cross_cooccur",
+      "layer": "cross",
+      "retention": 2,
+      "weight": 4
+    },
+    {
+      "default_vector": [
+        -2,
+        2
+      ],
+      "default_vector_source": "config://slots/cross_affinity/default_vector#seed=20261125",
+      "dim": 2,
+      "key": "cross_affinity",
+      "layer": "cross",
+      "retention": 2,
+      "weight": 2
+    }
+  ],
+  "staleness": {
+    "max_staleness_ms": 4000,
+    "penalty_fresh_q16": 65536,
+    "penalty_unavailable_q16": 6554,
+    "stale_floor_q16": 16384,
+    "stale_penalty_per_ms_q16": 8
+  }
+}
