@@ -1,0 +1,154 @@
+{
+  "commands": [
+    {
+      "batch": {
+        "arrival_seq": 3,
+        "records": [
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0013",
+            "metric": 0.9540353,
+            "severity": "error",
+            "template_id": "tmpl-02",
+            "timestamp": 1792800221
+          },
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0014",
+            "metric": 0.8553589,
+            "severity": "info",
+            "template_id": "tmpl-03",
+            "timestamp": 1792800238
+          },
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0015",
+            "metric": 0.8123456,
+            "severity": "debug",
+            "template_id": "tmpl-replaced-15",
+            "timestamp": 1792800255
+          },
+          {
+            "device_id": "core-x",
+            "log_id": "log-0016",
+            "metric": 0.3862351,
+            "severity": "critical",
+            "template_id": "tmpl-05",
+            "timestamp": 1792800272
+          },
+          {
+            "device_id": "core-x",
+            "log_id": "log-0017",
+            "metric": 0.3890715,
+            "severity": "info",
+            "template_id": "tmpl-06",
+            "timestamp": 1792800289
+          },
+          {
+            "device_id": "core-x",
+            "log_id": "log-0018",
+            "metric": 0.5070828,
+            "severity": "warning",
+            "template_id": "tmpl-07",
+            "timestamp": 1792800306
+          }
+        ]
+      },
+      "id": "cmd-01",
+      "type": "replace_batch"
+    },
+    {
+      "id": "cmd-02",
+      "log_id": "log-0018",
+      "type": "delete_log"
+    },
+    {
+      "capacity": 2,
+      "device_id": "edge-a",
+      "id": "cmd-03",
+      "severity": "warning",
+      "type": "set_bucket_capacity"
+    },
+    {
+      "device_id": "edge-b",
+      "id": "cmd-04",
+      "priority": 40,
+      "severity": "error",
+      "type": "set_bucket_priority"
+    },
+    {
+      "id": "cmd-05",
+      "profile": "tight",
+      "type": "set_profile"
+    },
+    {
+      "decimals": 2,
+      "id": "cmd-06",
+      "tier": "coarse",
+      "type": "set_quantization"
+    },
+    {
+      "format": "p1",
+      "id": "cmd-07",
+      "type": "set_evidence_format"
+    },
+    {
+      "batch": {
+        "arrival_seq": 7,
+        "records": [
+          {
+            "device_id": "edge-a",
+            "log_id": "log-0037",
+            "metric": 0.2,
+            "severity": "critical",
+            "template_id": "tmpl-04",
+            "timestamp": 1792800629
+          },
+          {
+            "device_id": "edge-a",
+            "log_id": "log-0038",
+            "metric": 0.277,
+            "severity": "info",
+            "template_id": "tmpl-05",
+            "timestamp": 1792800646
+          },
+          {
+            "device_id": "edge-a",
+            "log_id": "log-0039",
+            "metric": 0.354,
+            "severity": "warning",
+            "template_id": "tmpl-06",
+            "timestamp": 1792800663
+          },
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0040",
+            "metric": 0.431,
+            "severity": "error",
+            "template_id": "tmpl-07",
+            "timestamp": 1792800680
+          },
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0041",
+            "metric": 0.508,
+            "severity": "info",
+            "template_id": "tmpl-08",
+            "timestamp": 1792800697
+          },
+          {
+            "device_id": "edge-b",
+            "log_id": "log-0042",
+            "metric": 0.585,
+            "severity": "debug",
+            "template_id": "tmpl-09",
+            "timestamp": 1792800714
+          }
+        ]
+      },
+      "id": "cmd-08",
+      "type": "append_batch"
+    }
+  ],
+  "schema_version": 1
+}

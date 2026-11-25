@@ -1,0 +1,77 @@
+{
+  "active_profile": "balanced",
+  "allowed_quantization": {
+    "decimals": [
+      2,
+      3,
+      4
+    ],
+    "tiers": [
+      "coarse",
+      "fine"
+    ]
+  },
+  "bucket_overrides": {
+    "core-x|warning": {
+      "capacity": 3,
+      "priority": 20
+    },
+    "edge-a|critical": {
+      "capacity": 2,
+      "priority": 30
+    },
+    "edge-b|error": {
+      "capacity": 3,
+      "priority": 15
+    }
+  },
+  "default_bucket_priority": 10,
+  "devices": [
+    {
+      "device_id": "edge-a",
+      "severities": [
+        "info",
+        "warning",
+        "critical"
+      ]
+    },
+    {
+      "device_id": "edge-b",
+      "severities": [
+        "debug",
+        "info",
+        "error"
+      ]
+    },
+    {
+      "device_id": "core-x",
+      "severities": [
+        "info",
+        "warning",
+        "critical"
+      ]
+    }
+  ],
+  "evidence_format": "p3",
+  "max_workers": 4,
+  "profiles": {
+    "balanced": {
+      "bucket_capacity": 3,
+      "global_budget": 8,
+      "quantization": {
+        "decimals": 3,
+        "tier": "fine"
+      }
+    },
+    "tight": {
+      "bucket_capacity": 3,
+      "global_budget": 5,
+      "quantization": {
+        "decimals": 3,
+        "tier": "fine"
+      }
+    }
+  },
+  "schema_version": 1,
+  "seed": 20261126
+}

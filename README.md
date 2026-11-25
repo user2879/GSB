@@ -1,21 +1,194 @@
-团队刚划分到一块空工作区，里面还没有任何实现、配置或本地样本，首个版本需要独立完成。业务目标是为网络设备的日志采样复核交付一个可集成的诊断组件与可重复演示：设备日志按批次滚动到达，每条记录带整数时间戳、来源设备、严重级别、消息模板标识与由固定整数种子生成的计量值；采样采用分桶蓄水池抽样，把记录按来源设备与严重级别分桶后，在每桶内以确定性的蓄水池算法保留固定容量样本。真正难的地方有三处：一是蓄水池的入样裁决依赖该记录的桶内到达序位与当前计数，因此单条记录替换或迟到批次会牵动其所属桶的整条入样历史与槽位归属；二是抽样证据要在 p1 定宽文本行、p2 JSON、p3 二进制三种历史交换格式之间流转，低版本丢失的序位与计数必须经由旁路元数据还原；三是每桶保留容量与全局蓄水池点数预算同时受限，预算收紧时桶内裁决与边界样本状态会整体变化。用户会反复替换单批日志、调整桶容量与优先级、切换采样口径，并要求增量运行与从空白全量重放逐字段一致。
+# 设备日志分桶蓄水池诊断组件
 
-任务环境与准备：
-在 Linux（WSL Ubuntu）上创建工作目录并确认 python3 --version 可用（建议 3.10 及以上），使用 venv 建立虚拟环境。
-在虚拟环境中安装 numpy 与 pytest：pip install numpy pytest；不依赖网络服务、GPU 或容器。
-准备本地 JSON 配置与由固定整数种子生成的日志批次样本，运行方式与产物目录在项目运行说明中给出。
+本项目在纯本地、无容器环境中实现设备日志的确定性分桶抽样、两级容量裁决、三版本证据交换、内容指纹增量缓存、阶段化快照恢复、边界诊断与异常注入隔离。实现仅依赖 Python 标准库；测试环境另外安装 `numpy` 与 `pytest`。
 
-业务要求：
-1. 实现设备声明、日志批次流、采样配置与 p1/p2/p3 三版本抽样证据文件的加载校验层：设备标识唯一且严重级别落在声明枚举内，批次到达序号严格递增，日志标识全局唯一，计量值为有限非负数，桶容量与全局蓄水池点数预算为正整数，定点小数位宽与量化档位在允许枚举内；格式不合规或字段越界的记录输出 E_SAMPLE_FORMAT 并进入失败清单而不中断其余记录的处理。
-2. 实现按来源设备与严重级别分桶的确定性蓄水池抽样内核：每条记录以其在所属桶内到达序位与由桶指纹派生并固定种子的随机源决定是否入池，入池时替换桶内第（到达序位模桶容量）个槽位并记录被替换记录标识；累加与替换顺序固定为到达序号升序，同一输入与配置下重复运行结果逐字段一致，切换桶容量或全局预算必须真实改变池内成员与被替换记录。
-3. 实现桶内与全局两级容量约束下的统一裁决：先在各桶内保证容量不超限，再在全局蓄水池点数预算下按桶优先级与入池序位稳定顺序做二次截断，被截断记录须记录截断层（桶内还是全局）与裁决依据，优先级与序位完全并列时按日志标识字典序决断；全局预算收紧后必须真实改变最终样本集合而不只是改显示。
-4. 实现 p1 定宽文本行、p2 JSON 与 p3 二进制三种抽样证据格式的解析并统一为同一内部表示：p1 解析出桶标识、槽位序号、千分比整数权重与整数入样标记，p2 额外解析到达序位与随机源摘要，p3 再额外解析被替换记录引用与桶内计数快照；三版本双向互转时把低版本无法表达的序位残差、被替换引用与计数快照写入旁路元数据，再升回高版本时须从旁路还原而非重算。
-5. 实现基于内容指纹的桶级与记录级精确失效判定与复用账本：为桶内入样历史、最终样本集合与每版本序列化产物分别计算由日志内容指纹、桶参数指纹、随机源摘要与预算档位派生的缓存键；替换单条日志或调整单桶容量时只使该桶入样历史与其下游样本失效，未受影响桶必须直接复用持久化产物，并逐条记录失效依据、复用命中与最终样本的来源槽位。
-6. 保证任意编辑命令序列后增量运行与从空白全量重放逐字段一致，并在全局蓄水池点数预算与单桶配额双重约束下实现并发调度：施加包含批次追加与替换、单条日志删除、桶容量与优先级调整、采样口径与量化档位切换、交换版本切换的命令序列，逐桶入样历史、被替换引用、截断裁决依据、最终样本顺序与失败清单均须与全量重放逐字段一致；桶通过线程池并发执行而最大并发数不得超过配置，任务携带由桶标识与到达序号派生的稳定排序键。
-7. 实现阶段化快照整体替换与强制终止后的恢复判定：将加载校验、分桶入样、两级截断与证据序列化划分为阶段，各阶段产物连同待办桶队列、已完成批次游标与已消耗预算先写入临时目录再按版本变化整体替换提交，清单记录全局版本号、配置哈希、随机源摘要与各阶段产物版本；进程被强制终止后重启须依据清单判定续跑或重建，续跑后得到的桶内入样历史与最终样本与未被终止时一致。
-8. 实现边界样本诊断与异常注入隔离：对入样裁决落在随机源判据半步内、或全局截断处相邻记录权重差落在量化档位半步内的情形，输出高一位宽参考裁决、定点裁决与差异方向，两档位下入样结论不一致时区分翻转源自序位计算、随机源摘要还是截断并列决断并输出业务码；以独立注入配置对指定批次施加非有限计量值、桶标识未知、到达序号回退与随机源摘要缺失等真实输入故障，注入项编号须写入报告，单条失败不得影响其余记录的入样与账本完整性。
+## 环境与快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+已在 Linux（WSL Ubuntu）上按以下方式验证：
 
-验收：
-用本地样本验证三版本互转、蓄水池入样与两级截断结论，并核对增量与全量重放、强杀后恢复结果逐字段一致。
+```bash
+cd /home/zsl/feedback/uidfc5909d3-default-332
+
+# 当前机器缺少 ensurepip 时使用 virtualenv；若系统支持可直接 python3 -m venv .venv
+python3 -m virtualenv -p /usr/bin/python3.11 .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install numpy pytest
+pip install -e .
+
+python tools/generate_sample.py
+pytest -q
+python -m log_sampler verify \
+  --config samples/config.json \
+  --batches samples/batches.json \
+  --injections samples/injections.json \
+  --commands samples/commands.json \
+  --state artifacts/verification --fresh
+```
+
+`verify` 会生成增量运行、空白全量重放、强杀恢复、预算/容量探针和三版本证据互转产物，并把结论写入 `artifacts/verification/verification.json`。实际结果见 [REPORT.md](REPORT.md)。
+
+## 目录
+
+```text
+log_sampler/
+  validation.py     设备/批次/配置校验与 E_SAMPLE_FORMAT 隔离
+  reservoir.py      桶指纹、256 位随机源、确定性蓄水池历史
+  truncation.py     桶内容量 + 全局预算两级裁决与截断审计
+  evidence.py       p1/p2/p3 编解码、校验与旁路元数据升级还原
+  cache.py          桶/最终样本/序列化产物缓存键与失效判定
+  snapshot.py       staging -> version 的原子提交与清单
+  pipeline.py       并发调度、阶段执行、账本与恢复续跑
+  diagnostics.py    随机判据、截断权重边界与翻转来源分类
+  state.py          编辑命令、会话持久化与命令幂等
+  demo.py           一键验收与强杀子进程测试
+  cli.py            run/replay/convert/compare/validate-evidence/verify
+samples/            固定种子生成的配置、批次、故障注入和命令序列
+tests/              pytest 单元与端到端验收
+tools/              确定性样本生成器
+```
+
+## 输入
+
+`samples/config.json` 的关键结构：
+
+```json
+{
+  "seed": 20261126,
+  "active_profile": "balanced",
+  "evidence_format": "p3",
+  "max_workers": 4,
+  "devices": [{"device_id": "edge-a", "severities": ["info", "warning", "critical"]}],
+  "profiles": {
+    "balanced": {
+      "global_budget": 8,
+      "bucket_capacity": 3,
+      "quantization": {"decimals": 3, "tier": "fine"}
+    }
+  },
+  "allowed_quantization": {"decimals": [2, 3, 4], "tiers": ["coarse", "fine"]},
+  "bucket_overrides": {"edge-a|critical": {"capacity": 2, "priority": 30}}
+}
+```
+
+批次文件是 `{"batches": [{"arrival_seq": 1, "records": [...]}]}`。每条记录包含整数 `timestamp`、`device_id`、`severity`、`template_id`、有限非负 `metric` 和全局唯一 `log_id`。批次按文件中的流顺序校验，`arrival_seq` 必须严格递增；坏记录只进入失败清单，不中断其余记录。
+
+故障注入支持：
+
+```text
+non_finite_metric        非有限计量值
+unknown_bucket           未声明的设备/严重级别组合
+batch_order_regression   批次到达序号回退
+missing_random_digest    记录携带的随机摘要缺失/非法
+```
+
+每项注入必须有独立编号；该编号会进入 `failure.injection_id`、`validation.injections_applied` 和验收报告。
+
+## 确定性抽样语义
+
+1. 桶标识为 `device_id|severity`。记录进入所属桶，并按 `(arrival_seq, record_index, log_id)` 升序形成 1 基到达序位 `i`。
+2. 每桶容量为 `k`。前 `k` 条记录按序填入槽位 `1..k`；其后若入样，则替换槽位 `((i - 1) mod k) + 1`，并记录被替换日志标识。
+3. 随机源由桶指纹、固定整数种子、日志内容指纹和到达序位派生；裁决使用 256 位整数精确比较 `random * i < k * 2^256`，不依赖平台浮点。
+4. 桶指纹包含桶容量、优先级、采样档位、全局预算、量化配置与种子。因此切换桶容量或全局预算会改变随机源、桶历史、槽位与被替换引用。
+5. 桶内先保证容量上限，再对全部当前槽位候选做全局截断：优先级数值高者优先；同优先级按入池到达序位升序；序位仍相同按 `log_id` 字典序。排序完全确定。
+6. `truncation.audit` 逐条记录给出 `truncation_layer = bucket|global|null` 和裁决依据；`final_samples` 按最终全局名次输出。
+
+## 证据格式
+
+| 版本 | 载体 | 必含字段 | 旁路补充 |
+|---|---|---|---|
+| p1 | 78 列定宽 ASCII 行 + CRC32 | 桶标识、槽位、24 位整数权重、0/1 入样标记 | 序位、随机摘要、被替换引用、计数快照、日志标识等 |
+| p2 | 排序键紧凑 JSON | p1 字段 + 到达序位 + 随机源摘要 | 被替换引用、计数快照、日志标识、记录指纹等 |
+| p3 | 带版本头的二进制 + SHA-256 | p2 字段 + 被替换引用 + 桶内计数快照 + 日志标识等 | 无 |
+
+降级时，目标版本无法表达的字段按行索引写入 `*.metadata.json`。升级时解析器先读取旁路并合并，不重新计算随机裁决。可直接使用：
+
+```bash
+python -m log_sampler convert --from p3 --to p1 \
+  --input artifacts/verification/incremental/versions/v00000009/evidence.p3.bin \
+  --output /tmp/evidence.p1.txt \
+  --metadata-out /tmp/evidence.p1.metadata.json
+
+python -m log_sampler convert --from p1 --to p3 \
+  --input /tmp/evidence.p1.txt --metadata /tmp/evidence.p1.metadata.json \
+  --output /tmp/evidence-roundtrip.p3.bin
+
+python -m log_sampler validate-evidence --version p3 \
+  --input /tmp/evidence-roundtrip.p3.bin
+```
+
+## 增量缓存与账本
+
+缓存键分为三层：
+
+- 桶历史：桶标识、记录内容指纹集合、桶参数指纹、随机源摘要、采样档位与预算档位；
+- 最终样本：全部桶历史键、全局预算、优先级和量化配置；
+- 序列化产物：最终样本键、证据版本和 schema。
+
+替换单条记录或调整单桶容量时，只有该桶历史键变化，其他桶读取持久化产物；最终样本和序列化产物因下游键变化而精确失效。`ledger.json` 输出：
+
+- 每桶 `cache_hit/cache_miss`、原因、内容与参数指纹；
+- 每条记录 `reuse_hit/invalidated/removed` 原因；
+- 最终样本来源桶、槽位和全局名次；
+- 最终样本与 p1/p2/p3 序列化产物的独立缓存状态；
+- 由桶标识与最早到达序位派生的稳定任务排序键。
+
+## 阶段快照与恢复
+
+流水线分为 `validation -> buckets -> truncation -> serialization` 四阶段。产物与待办桶队列、已完成批次游标、已消耗预算先写入 `staging/current`；完成后整个目录重命名为 `versions/vNNNNNNNN`，再原子替换根 `manifest.json`。清单包含全局版本号、配置哈希、输入哈希、随机源摘要、四阶段产物版本和提交状态。
+
+`--crash-after` 可注入真实进程终止：
+
+```bash
+python -m log_sampler run --state /tmp/crash-state --crash-after bucket:2
+# 退出码 137；再次运行同一命令即依据 staging 清单续跑
+python -m log_sampler run --state /tmp/crash-state
+```
+
+重启时若配置哈希与输入哈希匹配，则续跑已完成桶；否则放弃旧 staging 并重建。恢复后的逻辑结果与未终止运行逐字段一致。
+
+## 边界诊断
+
+`diagnostics` 输出：
+
+- 入样裁决落在随机判据半步内：高精度参考裁决、定点裁决、差异方向；
+- 全局截断相邻候选权重差落在量化档位半步内：原始权重、fine/coarse 权重、假设裁决与真实名次裁决；
+- 两档位结论翻转时分源输出业务码：
+  - `E_D_FLIP_ORDINAL`：序位/阈值计算导致翻转；
+  - `E_D_FLIP_RANDOM_SOURCE`：随机源定点化导致翻转；
+  - `E_D_FLIP_MIXED`：两类因素同时参与；
+  - `E_D_FLIP_TRUNCATION_TIE`：截断相邻权重在量化档位间翻转。
+
+本地样本最终口径同时产出 `E_D_FLIP_RANDOM_SOURCE` 与 `E_D_FLIP_TRUNCATION_TIE`。
+
+## 常用命令
+
+```bash
+# 基线增量会话
+python -m log_sampler run --state artifacts/demo \
+  --config samples/config.json --batches samples/batches.json \
+  --injections samples/injections.json
+
+# 应用命令序列（命令带内容指纹，重复执行幂等）
+python -m log_sampler run --state artifacts/demo --commands samples/commands.json
+
+# 从有效会话做空白缓存全量重放并逐字段比较
+python -m log_sampler replay --source-state artifacts/demo \
+  --state artifacts/replay --fresh
+
+# 任意两个逻辑结果比较
+python -m log_sampler compare \
+  --left artifacts/demo/latest_result.json \
+  --right artifacts/replay/latest_result.json
+```
+
+支持命令：`append_batch`、`replace_batch`、`delete_log`、`set_bucket_capacity`、`set_bucket_priority`、`set_profile`、`set_global_budget`、`set_quantization`、`set_evidence_format`。
+
+## 测试
+
+```bash
+pytest -q
+```
+
+测试覆盖：输入越界与失败隔离、批次回退、确定性蓄水池、容量/预算真实变化、两级截断与并列决断、p1/p2/p3 完整互转与损坏检测、缓存单桶失效、线程上限、命令幂等、诊断翻转分类、强杀续跑与空白重放逐字段一致。
+
