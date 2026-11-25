@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 19001,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "seed": 101,
+      "capacity_version": 1,
+      "fixed_point_scale": 1000
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 19002,
+      "concurrency": 2,
+      "lease_limit": 3,
+      "seed": 202,
+      "capacity_version": 1,
+      "fixed_point_scale": 1000
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 19003,
+      "concurrency": 1,
+      "lease_limit": 2,
+      "seed": 303,
+      "capacity_version": 1,
+      "fixed_point_scale": 1000
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "s1",
+      "depends_on": [],
+      "rows": 120,
+      "demand": 4,
+      "priority": 10
+    },
+    {
+      "shard_id": "s2",
+      "depends_on": [],
+      "rows": 90,
+      "demand": 5,
+      "priority": 8
+    },
+    {
+      "shard_id": "s3",
+      "depends_on": [
+        "s1"
+      ],
+      "rows": 150,
+      "demand": 6,
+      "priority": 9
+    },
+    {
+      "shard_id": "s4",
+      "depends_on": [
+        "s1",
+        "s2"
+      ],
+      "rows": 80,
+      "demand": 7,
+      "priority": 5
+    },
+    {
+      "shard_id": "s5",
+      "depends_on": [
+        "s2"
+      ],
+      "rows": 60,
+      "demand": 3,
+      "priority": 4
+    },
+    {
+      "shard_id": "s6",
+      "depends_on": [
+        "s3",
+        "s4"
+      ],
+      "rows": 110,
+      "demand": 8,
+      "priority": 6
+    },
+    {
+      "shard_id": "s7",
+      "depends_on": [
+        "s4",
+        "s5"
+      ],
+      "rows": 70,
+      "demand": 4,
+      "priority": 3
+    },
+    {
+      "shard_id": "s8",
+      "depends_on": [
+        "s6",
+        "s7"
+      ],
+      "rows": 100,
+      "demand": 5,
+      "priority": 1
+    }
+  ],
+  "global": {
+    "budget": 12,
+    "freeze_threshold_ms": 500,
+    "revoke_tolerance": 1000,
+    "lease_ttl_ms": 30000,
+    "fixed_point_scale": 1000
+  }
+}
