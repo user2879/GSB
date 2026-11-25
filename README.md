@@ -1,3 +1,34 @@
+# 交付入口
+
+实现代码位于 `receipt_ledger/`，自动化测试位于 `tests/test_receipt_ledger.py`，固定种子样本位于 `samples/local/`，完整交接说明见 `docs/交付说明.md`。
+
+Windows 快速验证：
+
+```powershell
+python --version
+python -m pip install -r requirements-dev.txt
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-windows.ps1
+python -m receipt_ledger --ui
+```
+
+仅运行端到端验收：
+
+```powershell
+python -m receipt_ledger --verify --sample-dir samples/local --runtime-dir .runtime
+```
+
+异常注入：
+
+```powershell
+python -m receipt_ledger --inject spec --runtime-dir .runtime
+python -m receipt_ledger --inject ref --runtime-dir .runtime
+python -m receipt_ledger --inject snapshot --runtime-dir .runtime
+```
+
+最近一次本地实测：`16 passed`，端到端验收退出码 `0`；结果保存在 `artifacts/verification-result.json` 与 `artifacts/pytest-output.txt`。
+
+---
+
 工作区交接时只留有一份需求条目和一个空目录，没有任何既有代码、配置或本地样本，首版全部内容都要在 Windows 本地建立。业务对象是本地推理服务按批切分后由工作进程回传的带批次归属回执：每个工作进程以子进程方式在 127.0.0.1 回环端口托管，对由固定整数种子生成的确定性输入在 NumPy 上执行前向计算并回传回执，回执在磁盘上共存三种历史格式——r1 仅含批次标识、请求标识与输出摘要，r2 增加参数版本序号、整数耗时毫秒与工作进程标识，r3 再增加请求在批内的稳定名次、被覆盖的重复投递引用与参数摘要快照。使用者会反复编辑请求流、批大小与工作进程参数版本，并要求每次编辑后只重算真正受影响的批次与请求归属；工作进程会被强制终止，之后必须从持久化账本恢复出与不中断运行一致的归并与失效边界结论。核心冲突在于：参数版本演进会让旧回执的摘要依据失效，但旧批次的冻结摘要又必须继续支撑已完成归属；租约到期回收与配额回收还会争用同一份并发权益。
 
 任务环境与准备：

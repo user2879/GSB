@@ -1,0 +1,9 @@
+{
+  "format": "merge-rules/v1",
+  "default_batch_size": 2,
+  "global_concurrency": 2,
+  "lease_ttl_ms": 5000,
+  "lease_renew_ms": 1000,
+  "digest_algorithm": "sha256-v1",
+  "batch_id_serialization": "canonical JSON of {worker_id,batch_index,arrival_seqs}, SHA-256 prefix rb1_"
+}
