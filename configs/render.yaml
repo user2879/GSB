@@ -1,0 +1,39 @@
+seed: 20261126
+frame_width: 64
+frame_height: 64
+num_frames: 2
+latent_scale: 4
+latent_channels: 4
+text_dim: 24
+image_width: 64
+image_height: 64
+image_grid: 4
+image_dim: 80
+motion_block_h: 8
+motion_block_w: 8
+motion_dim: 128
+fusion_dim: 32
+denoise_steps: 4
+tile_height: 8
+guidance_q8: 1536
+noise_amplitude: 96
+fusion_weights:
+  text: 3
+  image: 2
+  motion: 1
+fixed_frac_bits: 8
+quant_mode: round_half_up
+preview_budget_ms: 250
+lease_ttl_ms: 5000
+executor_host: 127.0.0.1
+executor_port: 48765
+max_slots: 2
+conditions:
+  vocab_path: ../samples/vocab/controlled_vocab.txt
+  prompt_tokens:
+    - entity_cube
+    - attr_red
+    - attr_bright
+    - quality_sharp
+  image_path: ../samples/images/condition_a.png
+  motion_path: ../samples/motion/vectors.csv

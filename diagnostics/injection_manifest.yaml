@@ -1,0 +1,40 @@
+manifest_fingerprint: 45ed18b46ac7c16cb0787d654fcb1b32f51fb184863bdbd1770a613720d90788
+injections:
+  - id: INJ-DIM-001
+    fault: dim_mismatch
+    target: "encode:text"
+    expected_code: E_DIM_MISMATCH
+    field_name: condition_vector
+    expected_dim: 24
+    actual_dim: 299
+    description: replace text condition with a 299-dimensional vector before dimension check
+  - id: INJ-NAN-002
+    fault: nonfinite_latent
+    target: "denoise:step:0001"
+    expected_code: E_NONFINITE_LATENT
+    shape:
+      - 2
+      - 16
+      - 16
+      - 4
+    description: poison step input latent with a real NaN floating-point entry
+  - id: INJ-TILE-003
+    fault: tile_out_of_range
+    target: "tile:frame:00:row:00"
+    expected_code: E_TILE_OUT_OF_RANGE
+    tile_index: 99
+    tile_count: 8
+    description: request tile row 99 when only eight row bands exist
+  - id: INJ-QUANT-004
+    fault: quant_invalid
+    target: fuse
+    expected_code: E_QUANT_INVALID
+    frac_bits: 99
+    mode: unsupported_mode
+    description: switch to an out-of-enum fixed fractional width and quant mode
+  - id: INJ-LEASE-005
+    fault: lease_stale
+    target: fuse
+    expected_code: E_LEASE_STALE
+    generation_offset: 1
+    description: authorize one stage with a generation newer than the recognized token

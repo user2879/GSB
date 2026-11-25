@@ -1,0 +1,28 @@
+commands:
+  - op: set_prompt
+    tokens:
+      - entity_sphere
+      - attr_blue
+      - attr_cool
+  - op: set_image
+    path: samples/images/condition_b.png
+  - op: delete_image
+  - op: set_image
+    path: samples/images/condition_a.png
+  - op: tune_motion
+    block_row: 2
+    block_col: 3
+    dx_delta_q8: 512
+    dy_delta_q8: -256
+  - op: set_weights
+    weights:
+      text: 1
+      image: 4
+      motion: 2
+  - op: set_denoise_steps
+    value: 6
+  - op: set_tile_height
+    value: 16
+  - op: set_quant
+    frac_bits: 12
+    mode: round_half_even

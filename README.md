@@ -1,3 +1,21 @@
+# 交付入口
+
+首版实现、复现命令和架构说明见 `IMPLEMENTATION.md`；实际验收结果见
+`artifacts/VERIFICATION_RESULTS.md`。核心命令：
+
+```bash
+bash scripts/setup.sh
+.venv/bin/python -m fixed_render.cli verify --root . \
+  --report artifacts/verification_report.json
+.venv/bin/python -m unittest discover -s tests -v
+TK_SMOKE_MS=800 bash scripts/run_gui.sh artifacts/diagnostic_report.json
+```
+
+最终本地验收为 11/11 通过、单元测试 6/6 通过、五类注入 5/5 命中；
+界面冒烟与截图分别位于 `artifacts/gui_smoke.json` 和 `artifacts/gui_screenshot.png`。
+
+---
+
 一名工程师在启动会上被指定独立完成首版，而承载它的工作目录里除空文件夹外什么都没有，代码、配置、本地样本与账本都要在 Linux（WSL Ubuntu）本地首次建立。业务对象是本地确定性合成的多模态条件：文本提示由受控词表生成实体与属性列表并经确定性词袋编码得到条件向量；图像条件为固定分辨率 PNG，由固定种子绘制几何图元与纹理块；运动条件为按固定种子生成的分块运动矢量表。渲染管线按条件编码、条件融合、潜变量初始化、逐去噪步生成、逐帧解码与按分块行输出 PNG 串联，全部数值在定点整数域计算。与单纯追求生成速度不同，本任务的业务问题是算力预算的仲裁语义：使用者会反复编辑提示词、替换或删除图像条件、调整运动矢量与融合权重、改变去噪步数与分块行数，并要求任意编辑后只有真正受影响的阶段与产物重算，同时整条管线必须在局部算力租约约束下推进——每段渲染必须先取得带到期毫秒的本地租约方可占用并发槽位，租约到期未续期则执行器真实回收槽位，被回收后未完成的阶段只能依赖已持久化的产物续跑，绝不承诺为被强制终止的进程生成退出报告。工作台还需在编辑后立即给出预览摘要，并与最终逐像素结果保持可复核的一致关系。
 
 任务环境与准备：
