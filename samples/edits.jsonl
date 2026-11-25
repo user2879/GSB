@@ -1,0 +1,11 @@
+{"doc":{"doc_id":"D0101","field_stopword_marks":{},"fields":{"body":["vector","score","search","and","beta","the","query"],"title":["search","index","alpha","of"]},"version":0},"op":"append_doc"}
+{"doc":{"doc_id":"D0102","field_stopword_marks":{},"fields":{"body":["index","query","score","theta","the","phi"],"title":["alpha","search","vector"]},"version":2},"op":"append_doc"}
+{"doc":{"doc_id":"D0002","field_stopword_marks":{"body":[2]},"fields":{"body":["alpha","score","index","and","query","phi","the"],"title":["alpha","beta","search","of","vector"]},"version":2},"op":"replace_doc"}
+{"doc_id":"D0007","op":"delete_doc"}
+{"op":"set_field_weights","weights":{"body":0.8,"title":2.5}}
+{"b":0.65,"k1":1.6,"op":"set_bm25"}
+{"field":"title","op":"add_stopword","term":"zeta"}
+{"field":"body","op":"remove_stopword","term":"and"}
+{"decimal_places":4,"op":"set_fixed","quantum":2}
+{"decimal_places":2,"op":"set_fixed","quantum":10}
+{"op":"set_top_k","top_k":6}

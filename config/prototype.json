@@ -1,0 +1,27 @@
+{
+  "schema_version": "search-proto-v1",
+  "fields": {
+    "title": {
+      "weight": 2.0
+    },
+    "body": {
+      "weight": 1.0
+    }
+  },
+  "bm25": {
+    "k1": 1.2,
+    "b": 0.75
+  },
+  "fixed": {
+    "decimal_places": 3,
+    "quantum": 1
+  },
+  "allowed_decimal_places": [2, 3, 4, 5],
+  "allowed_quantums": [1, 2, 5, 10],
+  "top_k": 5,
+  "max_workers": 4,
+  "batch_point_budget": 64,
+  "per_query_point_quota": 192,
+  "stage_tolerance_units": 0.5
+}
+
