@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "config": {
+    "sample_scale": 64,
+    "lease_ttl_ms": 5000,
+    "global_lease_limit": 8,
+    "global_byte_budget": 131072,
+    "socket_timeout_ms": 3000,
+    "handshake_timeout_ms": 4000,
+    "max_workers": 8,
+    "drain_timeout_ms": 3000
+  },
+  "nodes": [
+    {
+      "node_id": "edge-a",
+      "host": "127.0.0.1",
+      "port": 19185,
+      "slots": 4,
+      "lease_limit": 4,
+      "seed": 3101,
+      "quota_version": 1
+    },
+    {
+      "node_id": "edge-b",
+      "host": "127.0.0.1",
+      "port": 19186,
+      "slots": 4,
+      "lease_limit": 4,
+      "seed": 3202,
+      "quota_version": 1
+    }
+  ],
+  "contents": [
+    {
+      "content_key": "crash-clip",
+      "total_bytes": 32768,
+      "shard_count": 4,
+      "content_seed": 9101
+    }
+  ],
+  "events": [
+    {"seq": 1, "type": "apply", "node_id": "edge-a", "content_key": "crash-clip", "shards": [0, 1]},
+    {"seq": 2, "type": "apply", "node_id": "edge-b", "content_key": "crash-clip", "shards": [2, 3]}
+  ]
+}

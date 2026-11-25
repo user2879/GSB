@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "config": {
+    "sample_scale": 64,
+    "lease_ttl_ms": 450,
+    "global_lease_limit": 3,
+    "global_byte_budget": 32768,
+    "socket_timeout_ms": 3000,
+    "handshake_timeout_ms": 4000,
+    "max_workers": 8,
+    "drain_timeout_ms": 3000
+  },
+  "nodes": [
+    {
+      "node_id": "edge-a",
+      "host": "127.0.0.1",
+      "port": 19183,
+      "slots": 1,
+      "lease_limit": 1,
+      "seed": 1101,
+      "quota_version": 1
+    },
+    {
+      "node_id": "edge-b",
+      "host": "127.0.0.1",
+      "port": 19184,
+      "slots": 2,
+      "lease_limit": 2,
+      "seed": 2202,
+      "quota_version": 1
+    }
+  ],
+  "contents": [
+    {
+      "content_key": "clip-001",
+      "total_bytes": 16384,
+      "shard_count": 4,
+      "content_seed": 9001
+    }
+  ],
+  "events": [
+    {"seq": 1, "type": "apply", "node_id": "edge-a", "content_key": "clip-001", "shards": [0]},
+    {"seq": 2, "type": "apply", "node_id": "edge-b", "content_key": "clip-001", "shards": [0, 1]},
+    {"seq": 3, "type": "apply", "node_id": "edge-a", "content_key": "clip-001", "shards": [1]},
+    {"seq": 4, "type": "renew", "lease_id": "L000001-S0000", "expected_version": 1, "extend_ms": 1800},
+    {"seq": 5, "type": "apply", "node_id": "edge-a", "content_key": "clip-001", "shards": [2], "delay_ms": 700},
+    {"seq": 6, "type": "quota", "quota_version": 2, "node_ids": ["edge-a", "edge-b"]},
+    {"seq": 7, "type": "apply", "node_id": "edge-a", "content_key": "clip-001", "shards": [3]},
+    {"seq": 8, "type": "apply", "node_id": "edge-b", "content_key": "clip-001", "shards": [2]},
+    {"seq": 9, "type": "release", "lease_id": "L000007-S0003", "delay_ms": 500},
+    {"seq": 10, "type": "release", "lease_id": "L000008-S0002"},
+    {"seq": 11, "type": "apply", "node_id": "edge-a", "content_key": "clip-001", "shards": [0], "delay_ms": 600},
+    {"seq": 12, "type": "release", "lease_id": "L000011-S0000"},
+    {"seq": 13, "type": "quota", "quota_version": 3, "node_ids": ["edge-a"]},
+    {"seq": 14, "type": "quota", "quota_version": 4, "node_ids": ["edge-a", "edge-b"]},
+    {"seq": 15, "type": "apply", "node_id": "edge-b", "content_key": "clip-001", "shards": [3]},
+    {"seq": 16, "type": "release", "lease_id": "L000015-S0003"}
+  ]
+}
