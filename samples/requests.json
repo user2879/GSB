@@ -1,0 +1,20 @@
+{
+  "schema": "leasemesh.requests/v1",
+  "requests": [
+    {"request_id": "req-a1-grant", "stage": 1, "op": "grant", "node_id": "node-a", "lease_id": "lease-a1", "slot_id": "slot-1"},
+    {"request_id": "req-a2-grant", "stage": 1, "op": "grant", "node_id": "node-a", "lease_id": "lease-a2", "slot_id": "slot-2"},
+    {"request_id": "req-b1-grant", "stage": 1, "op": "grant", "node_id": "node-b", "lease_id": "lease-b1", "slot_id": "slot-3"},
+    {"request_id": "req-b2-grant", "stage": 1, "op": "grant", "node_id": "node-b", "lease_id": "lease-b2", "slot_id": "slot-4"},
+    {"request_id": "req-c1-grant", "stage": 1, "op": "grant", "node_id": "node-c", "lease_id": "lease-c1", "slot_id": "slot-5"},
+    {"request_id": "req-c2-grant", "stage": 1, "op": "grant", "node_id": "node-c", "lease_id": "lease-c2", "slot_id": "slot-6"},
+
+    {"request_id": "req-a1-renew", "stage": 2, "op": "renew", "node_id": "node-a", "lease_id": "lease-a1", "generation": 1, "label": "lease-a1@1"},
+    {"request_id": "req-a2-release", "stage": 2, "op": "release", "node_id": "node-a", "lease_id": "lease-a2", "generation": 1, "label": "lease-a2@1"},
+    {"request_id": "req-b1-renew", "stage": 2, "op": "renew", "node_id": "node-b", "lease_id": "lease-b1", "generation": 1, "label": "lease-b1@1"},
+    {"request_id": "req-b2-release", "stage": 2, "op": "release", "node_id": "node-b", "lease_id": "lease-b2", "generation": 1, "label": "lease-b2@1"},
+    {"request_id": "req-c1-renew", "stage": 2, "op": "renew", "node_id": "node-c", "lease_id": "lease-c1", "generation": 1, "label": "lease-c1@1"},
+
+    {"request_id": "req-a1-release", "stage": 3, "op": "release", "node_id": "node-a", "lease_id": "lease-a1", "generation": 2, "label": "lease-a1@2"},
+    {"request_id": "req-c1-release", "stage": 3, "op": "release", "node_id": "node-c", "lease_id": "lease-c1", "generation": 2, "label": "lease-c1@2"}
+  ]
+}

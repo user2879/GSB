@@ -1,0 +1,40 @@
+{
+  "schema": "leasemesh.declaration/v1",
+  "quota_version": 3,
+  "lease_duration_ms": 30000,
+  "renew_interval_ms": 10000,
+  "global_concurrency": 3,
+  "per_node_lease_limit": 2,
+  "handshake_timeout_ms": 1000,
+  "socket_timeout_ms": 2500,
+  "slots": [
+    "slot-1",
+    "slot-2",
+    "slot-3",
+    "slot-4",
+    "slot-5",
+    "slot-6",
+    "slot-7",
+    "slot-8"
+  ],
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 48611,
+      "checksum": {"seed": 2026112601, "sample_count": 262144, "group_count": 16, "scale": 1000000}
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 48612,
+      "checksum": {"seed": 2026112602, "sample_count": 131072, "group_count": 8, "scale": 100000}
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 48613,
+      "checksum": {"seed": 2026112603, "sample_count": 65536, "group_count": 8, "scale": 10000000}
+    }
+  ]
+}

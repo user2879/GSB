@@ -1,0 +1,18 @@
+{
+  "schema": "leasemesh.events/v1",
+  "events": [
+    {"seq": 1, "kind": "lease_granted", "lease_id": "lease-a1", "node_id": "node-a", "slot_id": "slot-1", "generation": 1, "quota_version": 3},
+    {"seq": 2, "kind": "lease_renewed", "lease_id": "lease-a1", "node_id": "node-a", "slot_id": "slot-1", "generation": 2, "basis_generation": 1},
+    {"seq": 3, "kind": "reclaim_proposed", "claim_id": "claim-exp-a1", "lease_id": "lease-a1", "node_id": "node-a", "slot_id": "slot-1", "generation": 2, "reason": "expired"},
+    {"seq": 4, "kind": "reclaim_proposed", "claim_id": "claim-fence-a1", "lease_id": "lease-a1", "node_id": "node-a", "slot_id": "slot-1", "generation": 2, "reason": "quota_fenced"},
+    {"seq": 5, "kind": "lease_granted", "lease_id": "lease-b1", "node_id": "node-b", "slot_id": "slot-1", "generation": 1, "quota_version": 4},
+
+    {"seq": 6, "kind": "lease_granted", "lease_id": "lease-c1", "node_id": "node-c", "slot_id": "slot-2", "generation": 1, "quota_version": 3},
+    {"seq": 7, "kind": "reclaim_proposed", "claim_id": "claim-fence-c1", "lease_id": "lease-c1", "node_id": "node-c", "slot_id": "slot-2", "generation": 1, "reason": "quota_fenced"},
+    {"seq": 8, "kind": "reclaim_proposed", "claim_id": "claim-exp-c1", "lease_id": "lease-c1", "node_id": "node-c", "slot_id": "slot-2", "generation": 1, "reason": "expired"},
+
+    {"seq": 9, "kind": "lease_granted", "lease_id": "lease-c2", "node_id": "node-c", "slot_id": "slot-3", "generation": 1, "quota_version": 3},
+    {"seq": 10, "kind": "lease_granted", "lease_id": "lease-a2", "node_id": "node-a", "slot_id": "slot-4", "generation": 1, "quota_version": 3},
+    {"seq": 11, "kind": "lease_granted", "lease_id": "lease-b2", "node_id": "node-b", "slot_id": "slot-5", "generation": 1, "quota_version": 4}
+  ]
+}
