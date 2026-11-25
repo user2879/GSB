@@ -1,0 +1,34 @@
+{
+  "views": [
+    {
+      "view_id": "view-edge-policy",
+      "envs": ["env-prod-a", "env-staging-b", "env-canary-c"],
+      "policies": {
+        "conn.timeout_ms": "latest",
+        "pool.max_size": "weighted_majority",
+        "cache.ttl_ms": "interval_midpoint",
+        "retry.backoff_ms": "weighted_majority",
+        "rate.limit_qps": "latest"
+      },
+      "tolerance": 25
+    },
+    {
+      "view_id": "view-all-envs",
+      "envs": ["env-prod-a", "env-staging-b", "env-canary-c", "env-dr-d"],
+      "policies": {"*": "latest"},
+      "tolerance": 40
+    },
+    {
+      "view_id": "view-dr-quorum",
+      "envs": ["env-prod-a", "env-dr-d"],
+      "policies": {
+        "conn.timeout_ms": "interval_midpoint",
+        "pool.max_size": "weighted_majority",
+        "cache.ttl_ms": "latest",
+        "retry.backoff_ms": "interval_midpoint",
+        "rate.limit_qps": "weighted_majority"
+      },
+      "tolerance": 10
+    }
+  ]
+}
