@@ -1,0 +1,208 @@
+{
+  "content_digest": "5d1da7c1460e7b5740d40b35b7cde3aadf198a711adb327b76619317525279be",
+  "current_revision": 3,
+  "errors": [],
+  "format_version": 1,
+  "global_budget": 6,
+  "invalidated_order": [
+    "s3",
+    "s6",
+    "s8"
+  ],
+  "invalidation_steps": {
+    "s3": {
+      "reasons": [
+        {
+          "basis": {
+            "changed_keys": {
+              "gamma": {
+                "new": 7,
+                "old": 5
+              }
+            },
+            "revision": 3
+          },
+          "reason": "config_key_change"
+        }
+      ]
+    },
+    "s6": {
+      "reasons": [
+        {
+          "basis": {
+            "changed_keys": {
+              "gamma": {
+                "new": 7,
+                "old": 5
+              }
+            },
+            "revision": 3
+          },
+          "reason": "config_key_change"
+        },
+        {
+          "basis": {
+            "parent_shard_id": "s3",
+            "path_basis": "depends_on",
+            "revision": 3
+          },
+          "reason": "dependency_invalidation"
+        }
+      ]
+    },
+    "s8": {
+      "reasons": [
+        {
+          "basis": {
+            "changed_keys": {
+              "gamma": {
+                "new": 7,
+                "old": 5
+              }
+            },
+            "revision": 3
+          },
+          "reason": "config_key_change"
+        },
+        {
+          "basis": {
+            "parent_shard_id": "s6",
+            "path_basis": "depends_on",
+            "revision": 3
+          },
+          "reason": "dependency_invalidation"
+        }
+      ]
+    }
+  },
+  "nodes": {
+    "node-a": {
+      "active_leases": [],
+      "active_shards": [],
+      "capacity_version": 1,
+      "concurrency": 2,
+      "lease_limit": 2
+    },
+    "node-b": {
+      "active_leases": [],
+      "active_shards": [],
+      "capacity_version": 1,
+      "concurrency": 2,
+      "lease_limit": 2
+    },
+    "node-c": {
+      "active_leases": [],
+      "active_shards": [],
+      "capacity_version": 1,
+      "concurrency": 2,
+      "lease_limit": 3
+    }
+  },
+  "resource_in_use": 0,
+  "shards": {
+    "s1": {
+      "attempt": 3,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "e9239807a5c17d82e1d3556362bcf6b54c017bc89cc384b3ee33ab081e52b842",
+      "unknown": false,
+      "wait_end_ms": 54342465,
+      "wait_start_ms": 54341583
+    },
+    "s2": {
+      "attempt": 4,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "0fc9575a6bb420dcf7fc2c1d7ea3dec6d1c4f2813f39846d178bb1e1dff25a18",
+      "unknown": false,
+      "wait_end_ms": 54342471,
+      "wait_start_ms": 54339984
+    },
+    "s3": {
+      "attempt": 2,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "cf46092972fdba6f4581330fc30494b8e6ee71840449eb682a9c55be6b917719",
+      "unknown": false,
+      "wait_end_ms": 54342691,
+      "wait_start_ms": 54341595
+    },
+    "s4": {
+      "attempt": 3,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "caded8a3db3d5c2ad506352bc2d4be462d631c7581e37fae65b2b9187ce4cefa",
+      "unknown": false,
+      "wait_end_ms": 54342911,
+      "wait_start_ms": 54339990
+    },
+    "s5": {
+      "attempt": 1,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "3f356b7bd3dd6b3785cc2f2c9d57e87b1875749646e7df7b5c533c3e977735fd",
+      "unknown": false,
+      "wait_end_ms": 54342545,
+      "wait_start_ms": 54341595
+    },
+    "s6": {
+      "attempt": 2,
+      "cancelled": false,
+      "config_version": 3,
+      "status": "completed",
+      "summary_digest": "4ab8d1fb2a85e05596bbed45f51beb9eb6a94b9e7e4943b243b0380b2e0da82d",
+      "unknown": false,
+      "wait_end_ms": 54342947,
+      "wait_start_ms": 54341595
+    },
+    "s7": {
+      "attempt": 0,
+      "cancelled": true,
+      "config_version": null,
+      "status": "cancelled",
+      "summary_digest": null,
+      "unknown": false,
+      "wait_end_ms": null,
+      "wait_start_ms": 54339990
+    },
+    "s8": {
+      "attempt": 0,
+      "cancelled": false,
+      "config_version": null,
+      "status": "blocked",
+      "summary_digest": null,
+      "unknown": false,
+      "wait_end_ms": null,
+      "wait_start_ms": 54341595
+    }
+  },
+  "snapshots": [
+    {
+      "content_digest": "872c4a8a01741b5a71b133226ceb73d69e73c8502c8d79a112c9e8c7e0747054",
+      "monotonic_ms": 54340786,
+      "note": "config_apply:2",
+      "row_id": 1,
+      "wall_ms": 1795578886147
+    },
+    {
+      "content_digest": "5c88db5701a06cab425779a299ca9333235d7d93cdb194c435f7ecbd062a6928",
+      "monotonic_ms": 54341571,
+      "note": "config_apply:3",
+      "row_id": 2,
+      "wall_ms": 1795578886932
+    },
+    {
+      "content_digest": "80564ac826ff55c5c62d7b24f3b1d40c1a397db22e99219b416ff97c0e579bed",
+      "monotonic_ms": 54343705,
+      "note": "run_complete",
+      "row_id": 3,
+      "wall_ms": 1795578889066
+    }
+  ],
+  "unknown_shards": []
+}

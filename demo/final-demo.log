@@ -1,0 +1,89 @@
+
+=== run snapshot ===
+{
+  "digest": "85ec92dad8b08eb65197bf5f20a762d23cc86213841ad3db0e0c98bc887bfac1",
+  "errors": [],
+  "invalidated": [
+    "s3",
+    "s6",
+    "s8"
+  ],
+  "statuses": {
+    "s1": "completed",
+    "s2": "completed",
+    "s3": "completed",
+    "s4": "completed",
+    "s5": "completed",
+    "s6": "completed",
+    "s7": "cancelled",
+    "s8": "blocked"
+  }
+}
+
+=== independent replay ===
+{
+  "cancelled_shards": [
+    "s7"
+  ],
+  "checks": [
+    "lease_events",
+    "resource_budget",
+    "node_limits",
+    "invalidations",
+    "outcome_digests",
+    "aggregate_digests",
+    "capacity_versions",
+    "final_view"
+  ],
+  "completed_shards": [
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "content_digest": "85ec92dad8b08eb65197bf5f20a762d23cc86213841ad3db0e0c98bc887bfac1",
+  "format_version": 1,
+  "resource_in_use": 0,
+  "status": "ok",
+  "unknown_shards": []
+}
+
+=== recovery view ===
+{
+  "progress_cursor": 0,
+  "recovered_outcomes": 8,
+  "unknown_shards": [
+    "s2"
+  ]
+}
+
+=== post-recovery unknown shards ===
+{
+  "s2": {
+    "attempt": 3,
+    "cancelled": false,
+    "config_version": 1,
+    "status": "completed",
+    "summary_digest": "844b57fa4b822eff2d9ba21847a786b801c430b5c0a9856138dce28de79f0aa9",
+    "unknown": false,
+    "wait_end_ms": 54391044,
+    "wait_start_ms": 54390854
+  },
+  "unknown": []
+}
+
+=== tamper handling ===
+{
+  "format_version": 1,
+  "lease_events_after_replace": 0,
+  "replaced": true
+}
+
+=== summary ===
+{
+  "crash": true,
+  "full": true,
+  "tamper": true
+}
