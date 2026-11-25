@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "version": "demo-v1",
+  "seed": 20261126,
+  "paths": {
+    "templates": "templates",
+    "clips": "clips",
+    "labels": "labels.jsonl"
+  },
+  "audio": {
+    "sample_rate": 16000,
+    "channels": 1,
+    "bit_depth": 16
+  },
+  "features": {
+    "frame_length": 256,
+    "frame_shift": 128,
+    "dimension": 12,
+    "cepstral_coefficients": 4
+  },
+  "projection": {
+    "seed": 20261126,
+    "seed_version": 1
+  },
+  "quantization": {
+    "profile": "q12",
+    "fractional_bits": 8,
+    "allowed_profiles": [
+      "q8",
+      "q12",
+      "q16"
+    ],
+    "allowed_fractional_bits": [
+      4,
+      6,
+      8,
+      10
+    ],
+    "reference_profile": "q16"
+  },
+  "thresholds": {
+    "reject_permille": 900,
+    "confusion_candidate_permille": 850,
+    "cluster_merge_permille": 940
+  },
+  "registration": {
+    "template_min": 2,
+    "max_workers": 4,
+    "comparison_budget": 500000,
+    "overlap_candidates": 3,
+    "representative_rule": "composite"
+  },
+  "annotations": {
+    "confusion_pairs": [
+      [
+        "LING",
+        "LIN"
+      ],
+      [
+        "MA",
+        "NA"
+      ],
+      [
+        "SASA",
+        "SHASHA"
+      ]
+    ]
+  },
+  "words": [
+    {
+      "command_word": "LING",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/LING/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/LING/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/LING/T03.wav"
+        }
+      ]
+    },
+    {
+      "command_word": "LIN",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/LIN/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/LIN/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/LIN/T03.wav"
+        }
+      ]
+    },
+    {
+      "command_word": "MA",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/MA/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/MA/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/MA/T03.wav"
+        }
+      ]
+    },
+    {
+      "command_word": "NA",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/NA/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/NA/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/NA/T03.wav"
+        }
+      ]
+    },
+    {
+      "command_word": "SASA",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/SASA/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/SASA/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/SASA/T03.wav"
+        }
+      ]
+    },
+    {
+      "command_word": "SHASHA",
+      "templates": [
+        {
+          "template_id": "T01",
+          "path": "templates/SHASHA/T01.wav"
+        },
+        {
+          "template_id": "T02",
+          "path": "templates/SHASHA/T02.wav"
+        },
+        {
+          "template_id": "T03",
+          "path": "templates/SHASHA/T03.wav"
+        }
+      ]
+    }
+  ]
+}
