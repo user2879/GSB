@@ -1,21 +1,202 @@
-立项条目落地的方式是给出一份尚未写入任何文件的 Linux（WSL Ubuntu）工作目录，代码、配置与本地样本都要随首个版本一起建立。要交付的是一个可集成的多视图几何重建增量诊断工具与可重复演示：本地确定性合成的多视图图像每张固定分辨率，由固定种子绘制几何图元与纹理块，并附相机内参与外参；重建管线依次执行特征提取、跨视图匹配、三维点三角化、深度图生成与基于体素的三维占位重建，全部数值在定点整数域计算。使用者会反复替换单张视图、修改相机外参、调整三角化最小视差与体素尺寸，并要求每次编辑后只重算真正受影响的三维占位结论。核心冲突不在交换格式，而在残差驱动的自适应网格化：每个体素的分辨率由参与它的三角化点残差与深度图一致性联合决定，体素细分会新增子体素并改变邻接关系，使失效范围必须同时沿三角化点、深度图像素与细分父子体素三种关系传播，且细分深度随视图数与残差阈值变化而取舍不同。
+# MG-Recon：定点多视图重建增量诊断工具
 
-任务环境与准备：
-安装 Python 3.10 或以上版本，以及 NumPy 与 Tkinter（在 WSL Ubuntu 上可通过 sudo apt install python3-tk 安装 Tkinter）。
-创建项目根目录并确保其可写，用于存放本地样本、配置、临时快照目录与诊断报告。
-准备本地确定性样本生成所需参数（视图数、分辨率、最小视差、残差阈值、体素尺寸、定点位宽与量化档位），无需外部数据集或网络资源。
+这是一个可直接在 Linux/WSL Ubuntu 本地运行的多视图几何重建诊断项目。它不依赖外部数据集或网络资源，首个版本包含代码、配置、确定性样本、编辑命令、阶段快照、诊断报告和自动化测试。
 
-业务要求：
-1. 实现视图图像、相机参数、重建配置与编辑命令流的加载校验层：校验 PNG 容器头、固定分辨率与像素模式，校验每视图相机内参可逆、外参旋转部分正交、视图序号唯一且与图像一一对应、最小视差与残差阈值为正整数；对未知视图、参数非法、体素尺寸不能整除重建范围分别输出 E_VIEW_UNKNOWN、E_PARAM_INVALID、E_VOXEL_ALIGN 并继续处理其余视图。
-2. 实现逐视图特征提取与跨视图匹配阶段：特征由分块梯度与颜色统计在定点整数域计算并逐视图记录特征点坐标与内容指纹，匹配仅在同一匹配对的视图间进行，匹配对顺序与内点计数累加顺序固定为视图序号升序与特征点坐标字典序；内点数并列时按视图对标识字典序决断并标记并列匹配，切换最小视差或阈值必须真实改变匹配对集合与三角化输入。
-3. 实现三角化与深度图生成阶段：三角化在定点域按匹配对内点求解三维坐标并逐点记录残差与量化舍入方向，深度图按分辨率与量化档位生成并逐像素记录深度整数与舍入方向；深度冲突恰落在量化半步内时按固定规则决断并标记边界像素，切换量化档位必须真实改变三维点坐标、残差与深度图像素，不得仅改显示。
-4. 实现残差驱动的体素细分与三维占位判定内核：每个体素的分辨率由参与它的三角化点残差均值与深度图一致性分数在定点域合成后与残差阈值比较决定，达到阈值即细分为子体素并记录父子标识与细分依据，未达阈值则判定占位为空或实；细分须真实新增子体素并改变邻接关系，父子体素之间的占用计数不得互相借用，子体素结论不得反向覆盖父体素已确认的结论。
-5. 实现三种依赖关系的精确失效传播与复用账本：为特征、匹配对、三角化点、深度图像素与体素（含子体素）分别计算由上游内容指纹、参数指纹与量化档位派生的缓存键，并记录每个体素引用的三角化点集合、深度图像素与父子邻接边；替换单视图、修改外参或残差阈值后，失效范围必须沿三角化点、深度图与细分父子三种关系真实传播，未失效体素直接复用并逐条记录复用命中依据。
-6. 实现视图数规模自适应策略选择器与全局重建点数预算、单视图配额约束下的并行调度：依据视图数、匹配对总数与当前档位下预计子体素数，从预置策略表中选择特征抽取精度、匹配范围与体素细分顺序，选择须实际改变后续计算路径（不同档位下子体素数或复用条目数不同）；使用线程池并发执行匹配与体素细分判定，最大并发数取自配置且不得超过，调度器按视图序号与体素标识稳定顺序消耗全局预算，超配额即中止并记 E_RECON_BUDGET_EXCEEDED，预算不足时保留待办队列。
-7. 保证任意编辑命令序列后增量运行与从空白全量重建逐字段一致，并保证任意并发度、任意预算耗尽时机与任意视图完成顺序下结果与串行执行一致：每个视图任务、匹配对任务与体素任务携带由视图序号、视图对标识或体素路径标识与阶段名派生的稳定排序键，逐特征点坐标、匹配对集合、三维点坐标与残差、深度图像素、体素与子体素结论、失效与复用清单顺序均须与一次性全量重建逐字段一致。
-8. 实现阶段化快照整体替换、恢复判定与 Tkinter 诊断界面：将加载校验、特征提取与匹配、三角化、深度图生成与体素细分占位划分为阶段，各阶段产物与待办队列先写入临时目录再整体替换提交，清单记录全局版本号、配置哈希、相机参数哈希、已完成视图与体素路径、已消耗预算与各阶段产物版本，启动时以版本号与配置哈希识别变化决定续跑或重建；界面展示各视图特征点数、匹配对与边界像素、子体素数量与细分深度分布、失效与复用条目、待办队列与失败清单，支持编辑阈值与残差参数并触发增量重算。
+项目重点不是交换格式，而是以下三件事的真实落地：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 三角化点残差与深度图一致性联合驱动的自适应体素细分；
+- 三角化点、深度图像素、细分父子体素三类依赖上的精确缓存失效；
+- 任意并发度、预算耗尽时机和编辑序列下，增量结果与空白全量重建逐字段一致。
 
-验收：
-用本地样本验证残差驱动细分、三类依赖失效传播与增量全量一致性，并展示诊断界面与异常业务码。
+## 快速开始
+
+环境要求：Python 3.10+、NumPy；Tkinter 用于图形界面。
+
+```bash
+# WSL Ubuntu 如需 Tk
+sudo apt update && sudo apt install -y python3-tk
+
+python3 -m pip install -r requirements.txt
+
+# 生成确定性本地样本与配置
+python3 -m mgirecon init --project demo --force
+
+# 单次全量运行
+python3 -m mgirecon run --project demo --fresh
+
+# 完整验收演示（基线、连续编辑增量、空白全量对照、异常码样例）
+python3 -m mgirecon demo --project demo
+
+# 图形界面（当前无 libtk 的环境会输出 E_GUI_UNAVAILABLE 及文本诊断）
+python3 -m mgirecon gui --project demo
+
+# 自动化测试
+python3 -m unittest discover -s tests -t . -v
+```
+
+验收演示会生成：
+
+- `reports/demo_summary.json` / `reports/demo_summary.txt`
+- `reports/demo_report.json`
+- `reports/baseline.json`
+- `reports/gui_fallback.json`
+- `demo/.mgirecon/current/manifest.json` 与各阶段快照
+
+## 目录
+
+```text
+mgirecon/
+  config.py       配置、矩阵校验、哈希、错误聚合
+  pngio.py        自包含 PNG RGB8 读写与容器校验
+  synth.py        固定种子本地多视图样本生成
+  features.py     分块颜色统计与梯度特征
+  matching.py     固定顺序匹配、内点计数、并列决断
+  geometry.py     定点投影、整数正规方程三角化、量化
+  depth.py        全分辨率深度图、量化舍入方向、边界冲突
+  voxel.py        残差驱动细分、父子/邻接关系、复用账本
+  strategy.py     视图规模自适应策略表
+  scheduler.py    有界线程池与稳定归并
+  engine.py       阶段编排、预算、缓存复用、失效传播
+  snapshot.py     临时目录写入后整体替换的快照
+  commands.py     编辑命令流校验与应用
+  report.py       机器可读与文本诊断
+  gui.py          Tkinter 诊断界面
+  cli.py          命令行与完整演示
+demo/             已生成的确定性样本、配置、命令与快照
+reports/          实际验收报告
+tests/            18 项自动化测试
+```
+
+## 当前实际验证结果
+
+本工作区使用 Python 3.11.0rc1、NumPy 2.4.6 实际运行。
+
+```text
+$ python3 -m unittest discover -s tests -t . -v
+Ran 18 tests in 30.596s
+OK
+```
+
+完整演示最终结果：
+
+```text
+incremental == full: True
+incremental digest: a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb
+full digest:        a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb
+voxels=416, subdivided=16, max_depth=4
+depth distribution={"0":284,"1":28,"2":28,"3":28,"4":32}
+reused entries=455, invalidated entries=8
+relations seen across edits: camera, content, depth, feature, hierarchy, new,
+  pair, parameter, point, quantization, removed
+exception samples: E_PARAM_INVALID, E_RECON_BUDGET_EXCEEDED,
+  E_VIEW_UNKNOWN, E_VOXEL_ALIGN
+```
+
+当前容器缺少 `libtk8.6.so`，因此 Tk 窗口无法实例化。界面代码已交付，命令行会稳定输出：
+
+```text
+[E_GUI_UNAVAILABLE] Tkinter is not available in this runtime:
+libtk8.6.so: cannot open shared object file: No such file or directory
+```
+
+安装 `python3-tk` 并有可用显示服务后，运行 `python3 -m mgirecon gui --project demo` 即可打开诊断界面。
+
+## 配置与样本
+
+`demo/config.json` 固定保存场景种子、分辨率、每个视图的图像路径、渲染种子、3x3 整数内参、3x4 整数外参，以及匹配、重建和调度参数。
+
+- 图像为 RGB8 PNG，固定 `128x96`；PNG 签名、IHDR、CRC、颜色类型、位深和解压尺寸均校验。
+- 内参必须为可逆整数矩阵；外参旋转部分必须满足整数正交条件。
+- 视图 ID 与图像路径各自唯一，映射一一对应。
+- `min_disparity`、`residual_threshold` 必须为正整数。
+- 体素尺寸必须按三轴整除重建范围，否则保留 `E_VOXEL_ALIGN` 并跳过体素阶段。
+- 非法视图被隔离，其余视图继续进入后续阶段。
+
+## 编辑命令
+
+命令流是 JSON 数组，或形如 `{"commands": [...]}` 的对象：
+
+```json
+[
+  {"op": "replace_view", "view": "v02", "render_seed": 9022},
+  {"op": "set_extrinsics", "view": "v03",
+   "value": [[1, 0, 0, 10], [0, 1, 0, 5], [0, 0, 1, 198]]},
+  {"op": "set_param", "name": "min_disparity", "value": 15},
+  {"op": "set_param", "name": "residual_threshold", "value": 14},
+  {"op": "set_param", "name": "quantization_level", "value": 2},
+  {"op": "set_param", "name": "voxel_size", "value": 16}
+]
+```
+
+可编辑参数包括 `min_disparity`、`residual_threshold`、`quantization_level`、`voxel_size`、`voxel_max_depth`、`min_occupancy_points`、`global_point_budget`、`per_view_point_quota`、`max_workers`、`min_inliers`、`max_pairs`。
+
+未知视图输出 `E_VIEW_UNKNOWN`；非法矩阵、未知参数或非法值输出 `E_PARAM_INVALID`。命令出错后继续处理后续命令。
+
+## 定点与数值规则
+
+- 世界坐标使用 Q(`fixed_bits`) 整数，默认 Q10。
+- 投影、三角化、残差、深度、体素评分全部只用 Python 整数。
+- 三角化以整数正规方程与 Cramer 法则求解，记录每个坐标的求解舍入方向。
+- 量化使用 `quantum = level * 2^(fixed_bits-4)`，记录 `exact/up/down` 方向。
+- 三维点量化后重新投影，残差为各视图像素误差平方和。
+- 深度图逐像素保存深度整数、舍入方向、边界标记、来源点和像素缓存键。
+- 深度冲突在投影距离近似并列且深度差不超过半个量化步长时，固定选择较近深度；深度相同则按稳定点标识决断，并标记边界像素。
+
+## 自适应体素与失效
+
+体素评分：
+
+```text
+score = mean(point.residual) + depth_spread / quantum
+```
+
+`score >= residual_threshold` 时递归产生 8 个子体素，直到达到残余阈值或策略细分深度。父节点只记录 `SUBDIVIDED`，其 `direct_occupied` 为 `null`；叶节点独立给出 `SOLID/EMPTY`，父子占用不会互相借用，子结论也不会回写父结论。
+
+缓存键覆盖：
+
+- 特征：图像 SHA、分辨率、分块精度、描述子精度、定点位宽；
+- 匹配对：左右特征键、最小视差、残差阈值、匹配范围、量化档位；
+- 三角化点：匹配对键、左右相机哈希、量化档位、量子；
+- 深度像素：视图、坐标、来源点键、量子、冲突规则；
+- 体素：点键集合、深度像素键集合、阈值、量子、范围、父路径、子键和细分顺序。
+
+失效关系显式保存在账本中：`content`、`camera`、`feature`、`pair`、`point`、`depth`、`quantization`、`hierarchy`、`parameter` 和 `removed`。未失效体素直接复制子树，并为每个复用节点记录点键摘要、深度键摘要、父子结构摘要和命中缓存键。
+
+## 预算、并发与确定性
+
+- 特征、匹配对和根体素判定均通过有界线程池执行，最大并发取自配置。
+- 线程返回结果按视图 ID、匹配对 ID、根体素路径稳定归并。
+- 三角化点按 `pair_id + 左特征坐标 + 右特征坐标` 的稳定键消费全局预算和单视图配额。
+- 预算或视图配额耗尽时停止消费新点，记录 `E_RECON_BUDGET_EXCEEDED`，并把未完成项保留到待办队列。
+- 测试覆盖 1/4 线程结果一致、低预算重复运行一致、增量与空白全量摘要一致。
+
+## 快照与恢复
+
+每次运行先将所有阶段产物、待办队列和清单写入 `.mgirecon/snapshot-tmp-*`，成功后整体替换 `.mgirecon/current`。清单记录：
+
+- 快照 schema 与全局版本号；
+- 配置哈希、相机哈希；
+- 已完成视图和体素路径；
+- 已消耗预算和完整预算摘要；
+- 特征、匹配、三角化、深度、体素和账本各阶段摘要；
+- 待办数量、错误码和状态。
+
+启动时以 schema 版本、配置哈希和阶段缓存键决定续跑、增量或空白重建。快照损坏时输出 `E_SNAPSHOT_INVALID` 并回退到全量路径。
+
+## 集成 API
+
+```python
+from mgirecon.config import load_config
+from mgirecon.engine import reconstruct
+from mgirecon.snapshot import load_snapshot, write_snapshot
+
+root = "demo"
+config = load_config(root)
+previous = load_snapshot(root)["state"]
+result = reconstruct(root, config, previous_state=previous)
+write_snapshot(root, result)
+```
+
+`result` 中的 `features`、`match_pairs`、`points`、`depth_maps`、`voxels`、`ledger`、`pending`、`budget`、`scheduler` 和 `errors` 均可直接序列化或供上层集成。
+
+更多算法与验证细节见 `TECHNICAL.md`。

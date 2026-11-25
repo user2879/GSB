@@ -1,0 +1,448 @@
+{
+  "baseline": {
+    "depth_distribution": {
+      "0": 31,
+      "1": 35,
+      "2": 35,
+      "3": 40
+    },
+    "feature_counts": {
+      "v01": 9,
+      "v02": 10,
+      "v03": 9,
+      "v04": 9
+    },
+    "match_pairs": [
+      {
+        "inliers": 9,
+        "pair": "v01-v02",
+        "rank": 0,
+        "selected": true,
+        "tie_winner": true,
+        "tied": true
+      },
+      {
+        "inliers": 9,
+        "pair": "v01-v03",
+        "rank": 1,
+        "selected": true,
+        "tie_winner": false,
+        "tied": true
+      },
+      {
+        "inliers": 9,
+        "pair": "v01-v04",
+        "rank": 2,
+        "selected": true,
+        "tie_winner": false,
+        "tied": true
+      },
+      {
+        "inliers": 9,
+        "pair": "v02-v03",
+        "rank": 3,
+        "selected": true,
+        "tie_winner": true,
+        "tied": true
+      },
+      {
+        "inliers": 9,
+        "pair": "v02-v04",
+        "rank": 4,
+        "selected": true,
+        "tie_winner": false,
+        "tied": true
+      },
+      {
+        "inliers": 9,
+        "pair": "v03-v04",
+        "rank": 5,
+        "selected": true,
+        "tie_winner": false,
+        "tied": true
+      }
+    ],
+    "subdivided_count": 15,
+    "voxel_count": 156
+  },
+  "exception_samples": {
+    "E_PARAM_INVALID": [
+      {
+        "code": "E_PARAM_INVALID",
+        "detail": {
+          "index": 0,
+          "name": "min_disparity",
+          "value": -4
+        },
+        "message": "invalid parameter 'min_disparity' or value; command skipped",
+        "stage": "command",
+        "view": null
+      }
+    ],
+    "E_RECON_BUDGET_EXCEEDED": [
+      {
+        "code": "E_RECON_BUDGET_EXCEEDED",
+        "detail": {
+          "first_pending": "v01-v02:f0030,0030:f0054,0042",
+          "global_limit": 0,
+          "pending_count": 12,
+          "per_view_quota": 0
+        },
+        "message": "reconstruction point budget or per-view quota exhausted; pending work retained",
+        "stage": "schedule",
+        "view": null
+      }
+    ],
+    "E_VIEW_UNKNOWN": [
+      {
+        "code": "E_VIEW_UNKNOWN",
+        "detail": {
+          "index": 0
+        },
+        "message": "unknown view 'v99'; command skipped",
+        "stage": "command",
+        "view": "v99"
+      }
+    ],
+    "E_VOXEL_ALIGN": [
+      {
+        "code": "E_VOXEL_ALIGN",
+        "detail": {
+          "extents": [
+            128,
+            96,
+            96
+          ],
+          "voxel_size": [
+            64,
+            64,
+            64
+          ]
+        },
+        "message": "voxel_size must divide each reconstruction extent",
+        "stage": "voxel",
+        "view": null
+      }
+    ]
+  },
+  "final": {
+    "boundary_pixels": 179,
+    "cumulative_invalidated": 1761,
+    "cumulative_reused": 1657,
+    "depth_distribution": {
+      "0": 284,
+      "1": 28,
+      "2": 28,
+      "3": 28,
+      "4": 32
+    },
+    "invalidated_entries": 8,
+    "relations_seen_across_steps": [
+      "camera",
+      "content",
+      "depth",
+      "feature",
+      "hierarchy",
+      "new",
+      "pair",
+      "parameter",
+      "point",
+      "quantization",
+      "removed"
+    ],
+    "reused_entries": 455,
+    "subdivided_count": 16,
+    "voxel_count": 416
+  },
+  "full_digest": "a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb",
+  "gui": {
+    "error_code": "E_GUI_UNAVAILABLE",
+    "launch_command": "python3 -m mgirecon gui --project demo",
+    "ok": false
+  },
+  "incremental_digest": "a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb",
+  "incremental_full_equality": true,
+  "project": "demo",
+  "steps": [
+    {
+      "boundary_pixels": 267,
+      "commands": [
+        {
+          "op": "replace_view",
+          "render_seed": 9022,
+          "view": "v02"
+        }
+      ],
+      "depth_distribution": {
+        "0": 31,
+        "1": 35,
+        "2": 34,
+        "3": 48
+      },
+      "error_codes": [],
+      "invalidated": 69,
+      "relations": [
+        "camera",
+        "content",
+        "depth",
+        "feature",
+        "hierarchy",
+        "new",
+        "pair",
+        "point",
+        "quantization",
+        "removed"
+      ],
+      "reused": 170,
+      "status": "ok",
+      "step": "01_replace_view.json",
+      "subdivided_count": 16,
+      "voxel_count": 164
+    },
+    {
+      "boundary_pixels": 138,
+      "commands": [
+        {
+          "op": "set_extrinsics",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              10
+            ],
+            [
+              0,
+              1,
+              0,
+              5
+            ],
+            [
+              0,
+              0,
+              1,
+              198
+            ]
+          ],
+          "view": "v03"
+        }
+      ],
+      "depth_distribution": {
+        "0": 27,
+        "1": 62,
+        "2": 69,
+        "3": 88
+      },
+      "error_codes": [],
+      "invalidated": 235,
+      "relations": [
+        "camera",
+        "depth",
+        "hierarchy",
+        "pair",
+        "point",
+        "quantization"
+      ],
+      "reused": 138,
+      "status": "ok",
+      "step": "02_extrinsics.json",
+      "subdivided_count": 30,
+      "voxel_count": 276
+    },
+    {
+      "boundary_pixels": 45,
+      "commands": [
+        {
+          "name": "residual_threshold",
+          "op": "set_param",
+          "value": 14
+        }
+      ],
+      "depth_distribution": {
+        "0": 32,
+        "1": 27,
+        "2": 35,
+        "3": 40
+      },
+      "error_codes": [],
+      "invalidated": 340,
+      "relations": [
+        "camera",
+        "depth",
+        "feature",
+        "hierarchy",
+        "new",
+        "pair",
+        "parameter",
+        "point",
+        "quantization",
+        "removed"
+      ],
+      "reused": 4,
+      "status": "ok",
+      "step": "03_residual_threshold.json",
+      "subdivided_count": 14,
+      "voxel_count": 148
+    },
+    {
+      "boundary_pixels": 28,
+      "commands": [
+        {
+          "name": "quantization_level",
+          "op": "set_param",
+          "value": 2
+        }
+      ],
+      "depth_distribution": {
+        "0": 32,
+        "1": 27,
+        "2": 35,
+        "3": 35,
+        "4": 40
+      },
+      "error_codes": [],
+      "invalidated": 246,
+      "relations": [
+        "camera",
+        "depth",
+        "feature",
+        "hierarchy",
+        "pair",
+        "parameter",
+        "point",
+        "quantization"
+      ],
+      "reused": 4,
+      "status": "ok",
+      "step": "04_quantization.json",
+      "subdivided_count": 19,
+      "voxel_count": 188
+    },
+    {
+      "boundary_pixels": 28,
+      "commands": [
+        {
+          "name": "voxel_size",
+          "op": "set_param",
+          "value": 16
+        }
+      ],
+      "depth_distribution": {
+        "0": 283,
+        "1": 35,
+        "2": 35,
+        "3": 35,
+        "4": 40
+      },
+      "error_codes": [],
+      "invalidated": 600,
+      "relations": [
+        "depth",
+        "hierarchy",
+        "parameter",
+        "point"
+      ],
+      "reused": 62,
+      "status": "ok",
+      "step": "05_voxel_size.json",
+      "subdivided_count": 20,
+      "voxel_count": 448
+    },
+    {
+      "boundary_pixels": 28,
+      "commands": [
+        {
+          "name": "min_disparity",
+          "op": "set_param",
+          "value": 15
+        }
+      ],
+      "depth_distribution": {
+        "0": 283,
+        "1": 34,
+        "2": 42,
+        "3": 42,
+        "4": 48
+      },
+      "error_codes": [],
+      "invalidated": 128,
+      "relations": [
+        "camera",
+        "depth",
+        "feature",
+        "hierarchy",
+        "new",
+        "pair",
+        "point",
+        "quantization",
+        "removed"
+      ],
+      "reused": 426,
+      "status": "ok",
+      "step": "06_min_disparity.json",
+      "subdivided_count": 23,
+      "voxel_count": 472
+    },
+    {
+      "boundary_pixels": 179,
+      "commands": [
+        {
+          "name": "min_inliers",
+          "op": "set_param",
+          "value": 8
+        }
+      ],
+      "depth_distribution": {
+        "0": 284,
+        "1": 28,
+        "2": 28,
+        "3": 28,
+        "4": 32
+      },
+      "error_codes": [],
+      "invalidated": 135,
+      "relations": [
+        "camera",
+        "depth",
+        "feature",
+        "hierarchy",
+        "pair",
+        "point",
+        "quantization",
+        "removed"
+      ],
+      "reused": 398,
+      "status": "ok",
+      "step": "07_min_inliers.json",
+      "subdivided_count": 16,
+      "voxel_count": 416
+    },
+    {
+      "boundary_pixels": 179,
+      "commands": [
+        {
+          "name": "max_pairs",
+          "op": "set_param",
+          "value": 3
+        }
+      ],
+      "depth_distribution": {
+        "0": 284,
+        "1": 28,
+        "2": 28,
+        "3": 28,
+        "4": 32
+      },
+      "error_codes": [],
+      "invalidated": 8,
+      "relations": [
+        "removed"
+      ],
+      "reused": 455,
+      "status": "ok",
+      "step": "08_max_pairs.json",
+      "subdivided_count": 16,
+      "voxel_count": 416
+    }
+  ]
+}

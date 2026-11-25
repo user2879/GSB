@@ -1,0 +1,24 @@
+status: ok
+error codes: -
+strategy: wide block=12 depth=4 split=[0, 1, 2] estimated_children=2304
+views:
+  v01: features=9 depth_pixels=12288 boundary=30 pairs=v01-v02,v01-v03,v01-v04
+  v02: features=8 depth_pixels=12288 boundary=5 pairs=v01-v02
+  v03: features=9 depth_pixels=12288 boundary=38 pairs=v01-v03
+  v04: features=9 depth_pixels=12288 boundary=106 pairs=v01-v04
+matching pairs:
+  v01-v02: inliers=8 selected=True rank=1 tied=True tie_winner=False
+  v01-v03: inliers=9 selected=True rank=0 tied=False tie_winner=False
+  v01-v04: inliers=8 selected=True rank=2 tied=True tie_winner=False
+  v02-v03: inliers=7 selected=False rank=-1 tied=False tie_winner=False
+  v02-v04: inliers=7 selected=False rank=-1 tied=False tie_winner=False
+  v03-v04: inliers=8 selected=False rank=3 tied=True tie_winner=False
+voxels: total=416 leaves=400 subdivided=16 max_depth=4 adjacency=1194
+subdivision depth distribution: {'0': 284, '1': 28, '2': 28, '3': 28, '4': 32}
+ledger: reused=455 invalidated=8 relations={'removed': 8}
+budget: consumed=12/128 pending=0 quota=48
+
+incremental == full: True (a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb / a74737ff872804986b96031cc6c8060fa35674e8968267d45008678e2e41f7cb)
+relations seen across edits: camera, content, depth, feature, hierarchy, new, pair, parameter, point, quantization, removed
+exception samples: E_PARAM_INVALID, E_RECON_BUDGET_EXCEEDED, E_VIEW_UNKNOWN, E_VOXEL_ALIGN
+gui: E_GUI_UNAVAILABLE
