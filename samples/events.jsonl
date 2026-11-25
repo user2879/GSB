@@ -1,0 +1,12 @@
+{"seq": 1, "at_ms": 0, "op": "grant", "lease_id": "a-cache-1", "expected_label": 0, "reason": "initial grant"}
+{"seq": 2, "at_ms": 0, "op": "grant", "lease_id": "a-cache-2", "expected_label": 0, "reason": "initial grant"}
+{"seq": 3, "at_ms": 0, "op": "grant", "lease_id": "b-session-1", "expected_label": 0, "reason": "initial grant"}
+{"seq": 4, "at_ms": 10, "op": "grant", "lease_id": "b-cache-1", "expected_label": 0, "reason": "global quota probe"}
+{"seq": 5, "at_ms": 100, "op": "renew", "lease_id": "a-cache-1", "expected_label": 1, "reason": "renew generation two"}
+{"seq": 6, "at_ms": 120, "op": "release", "lease_id": "a-cache-2", "expected_label": 1, "reason": "free one global slot"}
+{"seq": 7, "at_ms": 140, "op": "grant", "lease_id": "b-cache-1", "expected_label": 0, "reason": "grant after release"}
+{"seq": 8, "at_ms": 180, "op": "renew", "lease_id": "a-cache-1", "expected_label": 1, "reason": "stale renewal probe"}
+{"seq": 9, "at_ms": 800, "op": "quota_invalidate", "node_id": "alpha", "lease_type": "cache", "quota_version": 2, "reason": "quota generation rollover"}
+{"seq": 10, "at_ms": 840, "op": "release", "lease_id": "b-cache-1", "expected_label": 1, "reason": "release generation two"}
+{"seq": 11, "at_ms": 860, "op": "grant", "lease_id": "a-cache-2", "expected_label": 2, "reason": "obsolete quota generation probe"}
+{"seq": 12, "at_ms": 880, "op": "renew", "lease_id": "a-cache-2", "expected_label": 2, "reason": "terminal state probe"}

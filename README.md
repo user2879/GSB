@@ -1,21 +1,149 @@
-这块 WSL Ubuntu 工作目录在接手时只是一个尚未填入任何文件的空文件夹，配置、本地样本、账本与实现都要随首版一并落地，用于在正式接入前为一套版本标签驱动的多节点租约仲裁中间件建立可独立复核的第一版。业务对象是本地缓存节点上的租约代数链：每个节点作为独立子进程在 127.0.0.1 回环 TCP 上以 JSON 行协议响应租约申请、续约与释放，节点侧为每份租约维护单调递增的版本标签，只有请求携带的标签与节点当前公认标签一致时才接受续约或释放并推进代数；中心侧在全局并发上限与每节点租约上限双重约束下调度请求，并把每次归属变化写入 SQLite 账本。使用者会反复增删节点、调整配额与租约时长、替换单个事件，并要求任意一次编辑后的授予结论与归属裁决都能被唯一复核。
+# 版本标签驱动多节点租约仲裁中间件（首版）
 
-任务环境与准备：
-安装 Python 3.11 及 NumPy、pytest：python3 -m pip install --user numpy pytest
-确认可在 127.0.0.1 高位端口启动多个本地子进程并建连，无需外部网络
-在工作目录建立空的配置、样本与账本子目录，声明文件与事件流均由本任务自行生成
+本目录现在包含一套可独立复核的本地实现：声明与事件强校验、真实回环 TCP 子进程节点、显式租约状态机、逐事件/批量双路径仲裁、受双配额约束的线程池调度、SQLite 事务账本、快照整体替换、强杀后恢复重放，以及逐字节对拍工具。
 
-业务要求：
-1. 实现节点声明、租约申请清单与事件流的本地 JSON 加载及强校验：校验节点标识唯一、回环端口为 127.0.0.1 字面量且全局不重复、并发配额与每节点租约上限为正整数、续约间隔严格小于租约时长、事件序号单调递增且不重复；任一不合法以 E_SPEC 报告首个非法字段与所在行号。
-2. 以子进程按节点声明在回环端口真实监听，中心侧通过真实 TCP 套接字逐行收发请求与回执；节点侧仅在请求携带标签等于当前标签时接受续约或释放并推进标签，标签不匹配回执须以 E_STALE 拒绝且不改变代数，握手与读取均使用真实套接字超时并以 E_PORT、E_TIMEOUT 区分端口占用与超时。
-3. 实现租约代数链在 granted、renewed、released、expired 之间的状态机迁移，按显式许可表校验每次迁移并记录迁移前状态、触发原因与版本标签；同一租约的代数只能沿链单调推进，跨代跳跃或重复推进须以 E_LEASE 拒绝并保留原代数，所有迁移结论不得依赖字典或哈希遍历顺序。
-4. 实现逐事件仲裁与按租约类型分桶的批量仲裁两条路径，并依据节点数、事件数与剩余配额按显式规模规则选择默认路径：逐事件路径按到达序逐条申请，批量路径先按节点与租约类型聚合再统一裁决后回填逐事件结局；须输出路径选择理由、关键规模参数与未触发判定时的边界值。
-5. 实现两条仲裁路径的逐字节一致性校验与独立验证工具：对同一事件流分别执行两条路径，逐事件比较授予或续约或释放结局、推进后的版本标签、所属配额槽位与到期时刻；不一致须以 E_DIVERGE 定位到首个不一致事件序号与字段，且校验命令仅读原始声明与事件流，不得读取主流程的中间缓存。
-6. 实现租约到期回收与配额版本换代后旧代数作废回收并存时的唯一归属裁决：到期须以本地单调时钟真实计时判定；同一份容量权益在同一时刻不得既被计入到期回收又被计入作废回收，也不得被两个节点同时持有，每次归属变化须记录所依据的代数与事件序号。
-7. 实现受全局并发上限与每节点租约上限双重约束的并行调度，任一时刻在途请求总数与单节点在途数不得超限，超限前须排队并以单调时钟记录等待开始与结束毫秒；调度须真实投射到工作线程池且不得绕过配额，配额耗尽时节点侧不得收到请求。
-8. 实现账本与会话快照的版本识别整体替换恢复及强制终止后的重放校验：每次授予、续约、回收与归属裁决须在同一 SQLite 事务中写入并携带整数格式版本与内容摘要；重新打开快照时版本或摘要与当前声明不一致须整体替换而非增量合并，进程被强制终止后重启只能依据已完整提交记录恢复，未提交请求须标记为未知并先回收其占用配额、不承诺生成退出报告，恢复后重算结论与账本差异以 E_REPLAY 定位首个不一致事件。
+实现仅使用 Python 标准库与本地 `127.0.0.1`，不依赖 Docker、外部网络或云端目标。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 目录
 
-验收：
-用本地样例运行两条仲裁路径、独立校验与强制终止后重放，结论逐字节一致。
+```text
+config/                   节点声明与租约清单
+samples/events.jsonl      确定性事件流
+lease_arbiter/            实现包
+ledgers/                  实测生成的 SQLite 账本
+results/                  实测结果与逐字节投影
+scripts/run_demo.py       一键验收脚本
+tests/                    pytest 自动化测试（26 项）
+docs/DESIGN.md            设计、协议、恢复语义
+docs/VERIFICATION.md      实际验证记录
+```
+
+## 快速开始
+
+```bash
+python3 --version                 # 3.11
+python3 -m pip install --user numpy pytest
+
+python3 -m lease_arbiter validate \
+  --nodes config/nodes.json \
+  --leases config/leases.json \
+  --events samples/events.jsonl
+
+python3 -m lease_arbiter verify \
+  --nodes config/nodes.json \
+  --leases config/leases.json \
+  --events samples/events.jsonl \
+  --out results/verify.json \
+  --projection-out results/projection.json
+
+python3 -m lease_arbiter run \
+  --nodes config/nodes.json \
+  --leases config/leases.json \
+  --events samples/events.jsonl \
+  --ledger ledgers/manual.sqlite3 \
+  --path sequential --fresh \
+  --out results/manual-live.json
+
+python3 -m lease_arbiter replay \
+  --nodes config/nodes.json \
+  --leases config/leases.json \
+  --events samples/events.jsonl \
+  --ledger ledgers/manual.sqlite3
+
+python3 scripts/run_demo.py       # 两条真实路径 + 独立校验 + 强杀重放
+python3 -m pytest
+```
+
+`verify` 只接收原始节点声明、租约清单和事件流，不读取账本、运行时缓存或主流程输出。`run` 对已有完整提交的账本要求显式 `--fresh`；恢复核对应使用 `replay`。
+
+## 声明格式
+
+`config/nodes.json`：
+
+```json
+{
+  "schema_version": 1,
+  "declaration_version": 1,
+  "global_concurrency": 3,
+  "connect_timeout_ms": 1000,
+  "read_timeout_ms": 1000,
+  "worker_threads": 4,
+  "nodes": [
+    {"node_id": "alpha", "host": "127.0.0.1", "port": 19341, "max_leases": 2}
+  ]
+}
+```
+
+`config/leases.json`：
+
+```json
+{
+  "schema_version": 1,
+  "declaration_version": 1,
+  "leases": [
+    {
+      "lease_id": "a-cache-1",
+      "node_id": "alpha",
+      "lease_type": "cache",
+      "ttl_ms": 1200,
+      "renew_interval_ms": 200,
+      "quota_version": 1
+    }
+  ]
+}
+```
+
+`events.jsonl` 每行一个事件，`seq` 严格递增且不重复，`at_ms` 单调不减；`grant`/`renew`/`release` 携带 `lease_id` 与 `expected_label`，`quota_invalidate` 携带 `node_id`、`lease_type` 与目标 `quota_version`。
+
+强校验失败统一返回 `E_SPEC`，其中 `field` 为字段路径、`line` 为源文件行号。校验顺序固定，不依赖哈希遍历。
+
+## 关键规则
+
+状态迁移表固定为：
+
+```text
+new      -> granted
+granted  -> renewed | released | expired
+renewed  -> renewed | released | expired
+released -> granted
+expired  -> granted
+```
+
+每次接受迁移必须令标签恰好 `current + 1`；跨代跳跃、重复终态迁移和非法迁移返回 `E_LEASE` 且不改变标签。请求标签与节点当前公认标签不一致返回 `E_STALE`。
+
+默认路径规则是三个条件同时满足时选批量：
+
+```text
+event_count >= 10
+node_count >= 2
+remaining_capacity >= 2
+```
+
+结果同时输出阈值、实际值和未触发时距离阈值的边界差值。批量路径按同一时刻帧、`node_id + lease_type` 聚合，帧边界统一处理到期，再按事件序号统一裁决并回填逐事件结局，以保证与逐事件路径一致。
+
+## 错误码
+
+| 错误码 | 含义 |
+| --- | --- |
+| `E_SPEC` | 声明/事件不合法，附首个非法字段与行号 |
+| `E_PORT` | 回环端口被占用或端点不可用 |
+| `E_TIMEOUT` | 握手或读取发生真实套接字超时 |
+| `E_STALE` | 节点侧标签不匹配，代数不变 |
+| `E_LEASE` | 非法迁移、跨代跳跃、终态重复推进 |
+| `E_QUOTA` | 全局或节点容量不足，请求不下发节点 |
+| `E_DIVERGE` | 双路径首个不一致事件与字段 |
+| `E_REPLAY` | 强杀恢复重放与账本首个不一致事件与字段 |
+| `E_LEDGER` | 账本事务、快照或会话状态错误 |
+
+## 实际验收结果
+
+- `python3 -m pytest`：`26 passed`。
+- 独立校验与两条真实 TCP 路径的投影文件均为 `3538` 字节（规范 JSON `3537` 字节 + 换行），SHA-256 同为 `953b2326d7bee7f4b6ceaa990ac2176c205d54f2271cc5b3fcef973a6f5e598a`。
+- 两条真实路径都提交 12 个事件、9 次节点请求，快照版本推进至 13，调度器观测到并行在途峰值 2。
+- 强制终止返回 `137`，已完整提交 4 个事件；事件 5 留下 1 个未知待定请求；重放核对成功，恢复快照版本为 5。
+- 明细见 `results/demo-report.json`、`results/byte-consistency.json` 与 `docs/VERIFICATION.md`。
+
+## 文档
+
+- `docs/DESIGN.md`：架构、协议、状态机、调度、账本事务与恢复不变量。
+- `docs/VERIFICATION.md`：本地执行命令、结果文件和复核方法。
