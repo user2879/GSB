@@ -1,0 +1,38 @@
+{
+  "injections": [
+    {
+      "expected_code": "E_INPUT_INVALID",
+      "id": "INJ-PNG-001",
+      "image": "page_002.png",
+      "kind": "truncated_png",
+      "stage": "load_validation"
+    },
+    {
+      "expected_code": "E_INPUT_INVALID",
+      "id": "INJ-KP-002",
+      "image": "page_001.png",
+      "kind": "non_integer_keypoint",
+      "stage": "load_validation"
+    },
+    {
+      "expected_code": "E_INPUT_INVALID",
+      "id": "INJ-SEQ-003",
+      "image": "page_002.png",
+      "kind": "reading_number_gap",
+      "stage": "load_validation"
+    },
+    {
+      "expected_code": "E_INPUT_INVALID",
+      "id": "INJ-WIN-004",
+      "kind": "window_not_divisible",
+      "stage": "config_validation"
+    },
+    {
+      "expected_code": "E_TEMPLATE_VERSION_UNKNOWN",
+      "id": "INJ-FONT-005",
+      "kind": "unknown_template_version",
+      "stage": "template_matching"
+    }
+  ],
+  "schema": "vertical-ocr-injection/v1"
+}

@@ -1,3 +1,35 @@
+# 竖排古籍数字化工具（可运行交付版）
+
+一键复现：
+
+```bash
+pip install -r requirements.txt
+bash scripts/run_acceptance.sh
+```
+
+入口与结果：
+
+- 技术说明：`docs/TECHNICAL_NOTES.md:1`
+- 实际验证记录：`docs/VERIFICATION.md:1`
+- 最新验收摘要：`artifacts/acceptance-run/acceptance_summary.md:1`
+- 主编排：`vertical_ocr/pipeline.py:39`
+- 三版本解析/转换：`vertical_ocr/exchange.py:98`
+- 一键验收代码：`vertical_ocr/diagnostics.py:140`
+
+常用命令：
+
+```bash
+python3 -m vertical_ocr.cli sample --root demo_workspace
+python3 -m vertical_ocr.cli validate --root demo_workspace
+python3 -m vertical_ocr.cli run --root demo_workspace
+python3 -m vertical_ocr.cli acceptance --root artifacts/acceptance-run
+python3 -m vertical_ocr.cli recover --root demo_workspace
+```
+
+---
+
+以下为原始任务说明。
+
 这个竖排古籍数字化项目当前只有一个空工作区，没有任何代码、配置或样本，首个可运行版本需要从零建立。业务对象是本地确定性合成的竖排版面图：固定分辨率 PNG，画面为从右到左若干竖排栏，栏内自上而下排列字符块，每块由内置点阵字模在轻微旋转与笔画抖动下渲染，并附字符块中心关键点整数坐标、整数像素边界框与阅读顺序真值；标注员提交的关键点版本可被反复替换。版面识别与定位结果需要在三种工程质量交换版本之间流转：v1 为定宽文本行，按固定字段宽度记录图序号、字符序号、整数边框、千分比整数识别置信度与整数阅读序号码；v2 为 JSON，记录浮点置信度、命名阅读顺序与命名关键点版本；v3 为带分隔头的键值文本，额外记录关键点坐标与来源标注版本。使用者会反复替换单张版面图、增删栏或字符块、切换关键点版本、调整滑窗与投影参数，并要求每次编辑后只重算真正受影响的栏、字符块与阅读顺序结论；同一批结论在异常注入与进程被强制终止后还必须可复核。
 
 任务环境与准备：
