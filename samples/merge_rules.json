@@ -1,0 +1,26 @@
+{
+  "formats": {
+    "r1": {
+      "fill": {
+        "latency_ms": "constant:0",
+        "param_digest": "batch.param_digest",
+        "param_version_seq": "batch.param_version_seq",
+        "rank_in_batch": "request.arrival_rank",
+        "superseded_request_ids": "empty_list",
+        "worker_id": "batch.worker_id"
+      }
+    },
+    "r2": {
+      "fill": {
+        "param_digest": "batch.param_digest",
+        "rank_in_batch": "request.arrival_rank",
+        "superseded_request_ids": "empty_list"
+      }
+    },
+    "r3": {
+      "fill": {}
+    }
+  },
+  "global_concurrency": 3,
+  "schema_version": 1
+}

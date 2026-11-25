@@ -1,22 +1,131 @@
-本地推理服务的批归属诊断需要先做一次技术验证，而当前工作区只是一个空目录，没有任何代码、配置或样本，因此要从零建立一套可集成的 Python 包与可重复演示。业务对象是推理请求按批切分后由本地推理工作器处理的归属回执：工作器以子进程方式在 127.0.0.1 回环端口托管，对固定整数种子生成的确定性输入用 NumPy 完成前向计算并回传带批次归属的回执。工作器经历多轮参数版本迭代，回执在磁盘上共存三种历史格式，r1 仅含批次标识、请求标识与输出摘要，r2 增加参数版本序号、整数耗时毫秒与工作器标识，r3 再增加请求在批内的稳定名次、被覆盖的重复投递引用与参数摘要快照。核心问题是把三种格式归一为同一可复核账本，沿「工作器参数版本 → 批次 → 请求归属」依赖链判定失效边界，并在进程被强制终止后从持久化账本恢复出与全量运行一致的结论。
+# 本地推理批归属诊断
 
-任务环境与准备：
-安装 Python 3.11 或更高版本，并确认 tkinter 可用（Windows 官方安装包默认包含）。
-执行 pip install numpy==1.26.4 以获得确定性数值行为。
-在工作区建立 samples 目录，放入自行编写的请求流 JSON、工作器声明 JSON、归并规则 JSON 与三版本回执样例，样本由固定整数种子生成，不依赖任何外部账号或网络站点。
-确认 127.0.0.1 高位端口可本地监听，运行前不占用；不需要 Docker 或其他容器环境。
+这是一个从零实现、可重复验证的 Python 包。它把本地推理请求切成确定性批次，通过
+`127.0.0.1` 回环套接字工作器子进程执行 NumPy 前向计算，将 r1/r2/r3 三代回执归一为
+可复核账本，并沿「工作器参数版本 → 批次 → 请求归属」传播失效。账本使用 SQLite 单批
+事务提交，支持强制终止后的恢复、会话快照整体替换和重放差异定位。
 
-业务要求：
-1. 实现请求流、工作器声明与归并规则的本地 JSON 加载与强校验：校验请求标识唯一、到达序号为非负整数且不重复、输入向量维度与工作器模型维度一致、隐藏层维度为正整数、随机种子合法、工作器回环端口为 127.0.0.1 字面量且全局不重复；不合法一律以 E_SPEC 报明首个非法对象与字段。
-2. 实现 r1、r2、r3 三种回执格式的编解码与归一，每个归一结果须携带来源格式版本、被补齐字段集合与补齐依据；解码须校验耗时毫秒非负、批内名次不重复且不越界、重复投递引用指向存在的请求，错误分别以 E_FIELD 与 E_REF 报告并定位到回执行号与字段。
-3. 实现按批大小与工作器配额把请求切分为批的确定性计划，批标识由工作器标识、批序号与参与请求的到达序号按稳定序列化规则推导，同一请求流在任意派发顺序与任意字典遍历顺序下必须得到逐字节一致的批划分与批标识；须输出每批参数摘要与参与请求集合。
-4. 实现逐批前向推理与回执生成，输出摘要须与参与请求的标识集合、参数版本序号与参数摘要共同绑定，同批请求处理顺序变化不得改变输出摘要；须真实向 127.0.0.1 回环套接字上的工作器子进程派发批次并回收回执，端口占用与回执字段缺失分别以 E_PORT 与 E_PROTO 报告。
-5. 实现沿「工作器参数版本 → 批次 → 请求归属」依赖链的失效传播与仅失效子集重算：工作器种子、维度、批大小或参数版本变更后，按工作器标识序与批序稳定输出全部直接与间接失效批及失效请求，未失效批的回执摘要、归属与账本条目必须逐字节保持不变且可逐项校验。
-6. 实现受全局并发上限与每工作器并发配额约束的并行回执处理调度，任一时刻运行批次数与单工作器运行批次数不得超限，配额耗尽时批次排队并记录等待开始与结束的单调时钟毫秒；调度须真实投射到工作线程池，不得以人为延迟代替配额控制，也不得绕过配额。
-7. 实现回执账本持久化与强制终止后的恢复：每完成一个批次须在同一 SQLite 事务中写入批次归属、回执摘要、失效传播轨迹与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的批次恢复，未提交批次标记为未知并要求重跑，不得声称能生成强制终止时的退出报告。
-8. 实现会话快照的版本识别整体替换恢复、恢复后重放校验与异常注入：快照持久化工作器集合版本、参数版本、回执账本摘要与游标并携带内容摘要，版本或摘要不一致须整体替换而非增量合并；恢复后重放未完成批次，差异定位到首个不一致批标识与字段并以 E_REPLAY 报明；支持注入声明损坏与账本摘要不符，分别以 E_SPEC、E_SNAPSHOT 报告。
+项目不依赖 Docker、外部服务、账号或业务网络。工作器只绑定字面量 `127.0.0.1`。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-使用本地样本验证三版本回执归一、失效边界判定与强制终止后的恢复重放，附运行记录。
+要求 Python 3.11+、NumPy 1.26.4。tkinter 仅用于环境确认，业务链路不依赖 GUI。
+
+```bash
+python3 --version
+python3 -m pip install numpy==1.26.4
+python3 -m pip install . --no-deps --no-build-isolation
+
+# 也可以不安装，直接从源码运行
+export PYTHONPATH="$PWD/src"
+```
+
+运行本地固定种子样本、完整验收演示和测试：
+
+```bash
+PYTHONPATH=src python3 scripts/run_demo.py
+PYTHONPATH=src python3 -m pytest -q
+```
+
+演示结果写入 `artifacts/demo/summary.json`，本次实际运行记录见
+[`docs/RUN_LOG.md`](docs/RUN_LOG.md)，详细规则见 [`docs/DESIGN.md`](docs/DESIGN.md)。
+
+## 目录
+
+```text
+src/inference_attribution/
+  spec.py          请求、工作器、归并规则强校验
+  model.py         PCG64 参数生成、NumPy 前向和摘要
+  planner.py       稳定批划分与批标识
+  receipts.py      r1/r2/r3 编解码、补齐、归一
+  worker_server.py 回环套接字工作器子进程
+  workers.py       子进程生命周期、协议客户端、输出复核
+  scheduler.py     全局/工作器配额与单调时钟排队记录
+  ledger.py        SQLite 事务账本、恢复状态、完整性摘要
+  invalidation.py  失效传播、重放差异定位
+  snapshot.py      会话快照、整体替换恢复
+  engine.py        逐批派发、回执回收和账本提交
+  cli.py           可执行命令行
+samples/            固定整数种子生成的请求、声明、规则和三代回执
+scripts/            样本重建与端到端演示
+tests/              规格、格式、计划、调度、失效、强杀恢复、快照和重放测试
+```
+
+## 样本与确定性
+
+- 请求输入由整数种子 `90125` 生成；两个工作器参数种子分别为 `41001`、`41002`。
+- 样本含 6 个请求、2 个工作器、3 个批次；r1、r2、r3 各覆盖一个批次。
+- 批标识由 `worker_id`、`batch_seq`、参与请求的 `arrival_seq` 列表经排序键、紧凑 JSON
+  和 SHA-256 推导，不含字典遍历顺序。
+- 每个请求输出摘要和批次输出摘要均绑定请求标识集合、参数版本序号与参数摘要；批内
+  处理顺序不进入摘要。
+
+样本可重建：
+
+```bash
+PYTHONPATH=src python3 scripts/build_samples.py
+```
+
+## 常用 CLI
+
+```bash
+# 强校验
+inference-attribution validate \
+  --requests samples/requests.json \
+  --workers samples/workers.json \
+  --rules samples/merge_rules.json
+
+# 三代回执归一
+inference-attribution normalize \
+  --requests samples/requests.json \
+  --workers samples/workers.json \
+  --rules samples/merge_rules.json \
+  --r1 samples/receipts_r1.jsonl \
+  --r2 samples/receipts_r2.jsonl \
+  --r3 samples/receipts_r3.jsonl \
+  --output artifacts/normalized.json
+
+# 真实回环工作器运行；--crash-after 1 用于强杀演练
+inference-attribution run \
+  --requests samples/requests.json \
+  --workers samples/workers.json \
+  --rules samples/merge_rules.json \
+  --ledger artifacts/full.sqlite
+
+# 读取强杀后账本，不会伪造退出报告
+inference-attribution recover --ledger artifacts/crash.sqlite
+
+# 会话快照与整体替换恢复
+inference-attribution snapshot \
+  --workers samples/workers.json \
+  --ledger artifacts/full.sqlite \
+  --output artifacts/snapshot.json
+inference-attribution restore \
+  --workers samples/workers_param_update.json \
+  --snapshot artifacts/snapshot.json \
+  --ledger artifacts/restored.sqlite
+```
+
+错误统一输出为包含 `code/object/field/line/message` 的 JSON 诊断。
+
+## 错误码
+
+| 错误码 | 含义 |
+| --- | --- |
+| `E_SPEC` | 请求流、工作器声明或归并规则非法；指出首个非法对象和字段 |
+| `E_FIELD` | 回执字段缺失、类型/范围非法、名次重复或越界；带行号 |
+| `E_REF` | 回执中的批次、请求或重复投递引用不存在或不匹配；带行号 |
+| `E_PORT` | 工作器端口已被占用或工作器未能开始监听 |
+| `E_PROTO` | 回环协议响应缺字段、字段非法或输出摘要不一致 |
+| `E_LEDGER` | SQLite 账本格式版本或内容摘要不完整（内部一致性错误） |
+| `E_SNAPSHOT` | 快照内容摘要、账本摘要、游标或格式版本不一致 |
+| `E_REPLAY` | 重放结果与参考账本不一致；定位首个批标识和字段 |
+
+## 保证与边界
+
+- 同一规格文件的任意数组顺序会得到逐字节一致的稳定批计划。
+- 未失效批的账本行不会被重新写入；测试逐字节比较该行。
+- 工作器耗时是真实观测值，因此独立两次运行可能有不同毫秒数。归属结论、批次摘要、
+  参数绑定和重放比较不使用该易变耗时作为语义字段。
+- 强制终止只会留下 `pending` 未知批；只有完整提交的批可恢复。程序明确声明无法生成
+  被强杀进程的可信退出报告。
