@@ -1,23 +1,85 @@
-团队刚拿到一块新的开发机，工作目录中还没有任何代码、配置或样本，首个版本需要独立建立一套可集成的 Python 包与可重复演示，用来回答一个具体问题：当训练样本流持续滚动追加、清洗与加权阶段反复被编辑时，同一批样本的清洗结论与加权结论能否在交互式编辑下即时呈现，又能在事后被唯一复核。业务对象是本地确定性合成的训练样本流：每个领域按整数种子生成带词项计数、长度分布与缺失位图的文档批次，按批次滚动到达；配比与清洗配置声明各领域采样权重、近重复相似度阈值、分片大小、定点计量口径与各清洗阶段的整数参数。管线按阶段串联加权采样、近重复去重与配比归一，逐阶段产出中间量与结论。使用者会在一次会话中连续编辑权重、阈值与分片边界，并要求界面在一次读取内给出当前结论，同时接受随后的权威重算比对。核心冲突在于：滚动追加与连续编辑使界面缓存与权威重算存在时差，而分片边界又与采样权重互相牵动，任何一次领域权重或单篇文档变更都会同时改变多个分片的去重结论与多个领域的配比偏差，缓存必须只失效真正受影响的子集才可能既快又稳。
+# ReconFlow
 
-任务环境与准备：
-在 Linux（WSL Ubuntu）工作目录中确认 Python 3.10 及以上可用，执行 python3 --version 检查。
-安装依赖：python3 -m pip install numpy==1.26.4；Tkinter 使用系统自带 python3-tk，必要时执行 sudo apt-get install -y python3-tk。
-确认本地回环 127.0.0.1 的 TCP 高位端口可自由监听，无其他进程占用。
-准备样本与配置目录：由程序按任务内声明的固定整数种子自行生成领域声明、样本批次流、配比与清洗配置，不依赖外部数据集或网络资源。
-确认当前用户对工作目录有读写权限，以便 SQLite 账本与快照文件落盘。
+ReconFlow 是一套可集成本地 Python 包与可重复演示，用于回答：滚动追加、连续编辑的训练样本流，其加权、去重和配比结论能否在 Tkinter 诊断界面中即时查看，并在事后通过 SQLite 账本和权威重算唯一复核。
 
-业务要求：
-1. 实现领域声明、样本批次流、配比与清洗配置的本地 JSON 与 NDJSON 加载及强校验：校验领域标识唯一、种子与文档数为非负整数、采样权重为万分之一整数、近重复相似度阈值与分片大小为受支持范围的整数、缺失位图长度与词项计数一致；任一不合法须以 E_SPEC 拒绝并指明首个非法记录的来源行号与字段名，不得以部分加载继续运行。
-2. 实现按固定整数种子生成确定性文档批次并计算内容摘要，摘要须绑定领域标识、批序号、文档序号与词项计数分布；同一声明在任意批次切分与任意领域加载顺序下必须得到逐位一致的文档序列与摘要，并输出每个分片的边界、文档数与参与领域集合。
-3. 实现加权采样、近重复去重与配比归一三阶段的整数定点变换，采样权重、相似度判定与配比偏差全部以整数运算完成，除法舍入方向与溢出饱和规则须逐阶段显式声明；同一输入在任意阶段执行顺序与任意并行度下中间量摘要必须逐字节一致。
-4. 实现界面快速视图与权威重算两条路径的分离：界面查询须在一次读取内基于增量缓存给出逐阶段结论、逐领域配比偏差与分片去重计数，不得触发全量重算，并记录以单调时钟毫秒计量的读取耗时；权威重算命令须从原始批次与配置逐阶段重放并产出可逐字节比较的结论，两条路径结论不一致须以 E_DIVERGE 定位到首个不一致的阶段、领域与分片。
-5. 实现滚动追加与连续编辑后的失效传播与仅失效子集重算：当领域权重、近重复阈值、分片大小或单篇文档被修改后配置版本号单调递增，须沿领域到分片到去重结论到配比偏差的引用关系推导受影响子集，按配置版本号与领域标识序稳定输出失效集合与每步传播依据；未受影响分片的去重结论与未受影响领域的配比偏差必须逐字节保持不变且可逐项校验。
-6. 实现受全局采样点数预算与每领域采样点数配额双重约束的并行重算调度，以子进程在 127.0.0.1 回环端口托管分片算力并通过真实 TCP 套接字逐行下发批次，握手与读取须有真实套接字超时；任一时刻在途计算点数不得超出全局预算、单领域在途点数不得超出其配额，耗尽时任务排队并记录等待开始与结束的单调时钟毫秒，端口占用、握手超时与回执字段缺失须分别以 E_PORT、E_TIMEOUT、E_FIELD 报告。
-7. 实现账本与快照的版本识别、强制终止后的恢复与恢复后重放校验：每个批次结局、失效传播轨迹、界面读取耗时与进度游标须在同一 SQLite 事务中落盘并携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交的记录恢复，未提交批次须标记为未知并要求重跑，不得声称一定能生成退出报告；恢复后按账本重放剩余批次，将逐阶段结论、配比偏差与去重计数同账本逐项比较，差异须定位到首个不一致的批次与字段并以 E_REPLAY 报告。
-8. 实现逐阶段定点误差归因与不可区分裁决：把采样权重量化误差、去重阈值边界归属误差与配比归一累积误差按阶段顺序合成为配比结论误差上界，输出每阶段贡献占比与主导阶段并声明主导判定阈值；当两个候选配比方案的定点偏差落在合成误差界内时，须按显式稳定决胜规则选定结论并标注受误差影响；提供 Tkinter 诊断界面展示逐阶段中间量、失效集合与传播依据、误差归因、未知批次标记与账本快照列表，渲染顺序稳定且刷新不改变账本内容。
+核心特性：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 固定整数种子、BLAKE2b/SHA-256 驱动的确定性领域文档与 NDJSON 批次流。
+- JSON/NDJSON 强校验，首个非法记录以 `E_SPEC` 给出行号和字段名。
+- 加权采样、精确整数相似度去重、配比归一的万分之一定点管线。
+- 快速材料化视图与权威全量重算分离；不一致以 `E_DIVERGE` 定位。
+- 权重、阈值、分片大小、单篇文档编辑后的引用图失效传播和仅子集重算。
+- 127.0.0.1 真实 TCP NDJSON 算力子进程，全局/领域双点预算和排队计时。
+- SQLite v1 账本、原子事务、快照、SIGKILL 后 unknown 标记、重跑和 `E_REPLAY`。
+- 定点误差归因、稳定候选裁决和 Tkinter 四页诊断台。
 
-验收：
-用本地样本验证增量与权威重算逐字节一致、失效子集精确、强制终止后可恢复重放并输出诊断界面。
+## 快速开始
+
+```bash
+python3 --version
+python3 -m pip install numpy==1.26.4
+
+export PYTHONPATH=src
+python3 -m reconflow demo --root artifacts/demo
+python3 -m reconflow ui --root artifacts/demo
+python3 -m unittest discover -s tests -v
+```
+
+也可以安装后使用控制台命令：
+
+```bash
+python3 -m pip install .
+reconflow demo --root artifacts/demo
+reconflow ui --root artifacts/demo
+```
+
+一键验证脚本：
+
+```bash
+./scripts/verify.sh
+```
+
+## 常用命令
+
+```bash
+reconflow generate --root artifacts/demo
+reconflow validate --root artifacts/demo
+reconflow init-cache --root artifacts/demo --tcp
+reconflow view --root artifacts/demo --record
+reconflow verify-view --root artifacts/demo
+
+reconflow edit-weight alpha 4000 --root artifacts/demo --tcp
+reconflow edit-threshold 8800 --root artifacts/demo --tcp
+reconflow edit-shard-size 8 --root artifacts/demo
+reconflow edit-doc alpha:d00003 \
+  --term-counts '[12,1,1,1,1,1,1,1,1,1,1,1]' \
+  --missing-bitmap '[0,0,0,0,0,0,0,0,0,0,0,0]' \
+  --root artifacts/demo --tcp
+
+reconflow ledger-init --root artifacts/demo
+reconflow process-batches --root artifacts/demo
+reconflow recover --root artifacts/demo
+reconflow persist-view --root artifacts/demo
+reconflow replay --root artifacts/demo
+reconflow snapshot --root artifacts/demo
+reconflow snapshots --root artifacts/demo
+```
+
+崩溃恢复演示由 `reconflow demo` 自动执行：子进程在 SQLite 提交前被 `SIGKILL`，重启后无完整提交结局的批次标记为 unknown，随后重跑并逐项 replay。
+
+## 文档
+
+- `docs/TECHNICAL.md`：架构、定点舍入/饱和规则、失效图、TCP 协议、账本恢复、误差归因和 UI。
+- `docs/VERIFICATION.md`：本次环境中的实际命令、测试结果、哈希、预算峰值和 Tk 冒烟结果。
+- `artifacts/demo/verification_report.json`：机器可读的端到端验收报告。
+- `artifacts/demo/diagnostic_view.txt`：诊断界面的稳定文本投影。
+
+## Tkinter
+
+Ubuntu/WSL 正常安装方式：
+
+```bash
+sudo apt-get install -y python3-tk
+```
+
+若 Tk 不可用，CLI 返回结构化 `E_UI` 或 `E_UI_DISPLAY`；数据层、demo 和文本诊断投影仍可完整运行。

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reconflow"
+version = "1.0.0"
+description = "Deterministic stream reconciliation, incremental invalidation, ledger recovery, and TCP shard recompute demo"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+reconflow = "reconflow.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.unittest]
+start = "tests"
