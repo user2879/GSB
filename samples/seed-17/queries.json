@@ -1,0 +1,29 @@
+{
+  "queries": [
+    {
+      "query_id": "q-index",
+      "terms": [
+        "index",
+        "shard"
+      ],
+      "top_k": 4
+    },
+    {
+      "query_id": "q-snapshot",
+      "terms": [
+        "snapshot",
+        "revision",
+        "the"
+      ],
+      "top_k": 3
+    }
+  ],
+  "scoring": {
+    "bit_width": 28,
+    "body_weight": 2,
+    "fraction_bits": 8,
+    "quantum_step": 4,
+    "tf_saturation_k": 4,
+    "title_weight": 3
+  }
+}

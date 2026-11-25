@@ -1,0 +1,135 @@
+{
+  "edits": [
+    {
+      "documents": [
+        {
+          "doc_id": "doc-0019",
+          "field_stopwords": {
+            "body": true,
+            "title": false
+          },
+          "fields": {
+            "body": [
+              "encoding",
+              "shard",
+              "of",
+              "cache",
+              "encoding",
+              "partition",
+              "version",
+              "cache",
+              "of",
+              "fragment",
+              "buffer"
+            ],
+            "title": [
+              "delta",
+              "ledger",
+              "snapshot",
+              "cursor"
+            ]
+          },
+          "shard_id": "shard-a",
+          "version": 1
+        },
+        {
+          "doc_id": "doc-0020",
+          "field_stopwords": {
+            "body": true,
+            "title": false
+          },
+          "fields": {
+            "body": [
+              "recall",
+              "tuple",
+              "encoding",
+              "shard",
+              "encoding",
+              "revision",
+              "of",
+              "partition",
+              "of"
+            ],
+            "title": [
+              "encoding",
+              "cursor",
+              "segment",
+              "shard",
+              "codec",
+              "partition"
+            ]
+          },
+          "shard_id": "shard-b",
+          "version": 1
+        }
+      ],
+      "edit_id": "e01-append",
+      "type": "append"
+    },
+    {
+      "document": {
+        "doc_id": "doc-0001",
+        "field_stopwords": {
+          "body": true,
+          "title": false
+        },
+        "fields": {
+          "body": [
+            "query",
+            "token",
+            "tuple",
+            "index",
+            "fragment",
+            "recall",
+            "the",
+            "encoding",
+            "stream",
+            "worker",
+            "cluster",
+            "offset",
+            "revision",
+            "manifest",
+            "cache"
+          ],
+          "title": [
+            "snapshot",
+            "segment",
+            "cursor",
+            "offset"
+          ]
+        },
+        "shard_id": "shard-a",
+        "version": 2
+      },
+      "edit_id": "e02-replace",
+      "type": "replace"
+    },
+    {
+      "doc_id": "doc-0003",
+      "edit_id": "e03-delete",
+      "type": "delete"
+    },
+    {
+      "edit_id": "e04-capacity",
+      "shard_id": "shard-a",
+      "term_bucket_capacity": 256,
+      "type": "set_shard"
+    },
+    {
+      "edit_id": "e05-compression",
+      "revision": 3,
+      "type": "set_current_revision"
+    },
+    {
+      "edit_id": "e06-rollback",
+      "revision": 1,
+      "type": "rollback"
+    }
+  ],
+  "ports": [
+    19200,
+    19201,
+    19202
+  ],
+  "seed": 17
+}
