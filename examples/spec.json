@@ -1,0 +1,69 @@
+{
+  "format_version": 1,
+  "segments": [
+    {
+      "id": "s_east",
+      "rows": 47,
+      "seed": 101,
+      "columns": [
+        {"name": "id", "encoding": "raw", "value_min": 1, "value_max": 10000, "null_per_mille": 0},
+        {"name": "region", "encoding": "dict", "value_min": 0, "value_max": 3, "null_per_mille": 20},
+        {"name": "product", "encoding": "rle", "value_min": 0, "value_max": 6, "null_per_mille": 10},
+        {"name": "amount", "encoding": "raw", "value_min": 100, "value_max": 999, "null_per_mille": 30},
+        {"name": "unused_note", "encoding": "dict", "value_min": 0, "value_max": 2, "null_per_mille": 0}
+      ]
+    },
+    {
+      "id": "s_west",
+      "rows": 71,
+      "seed": 202,
+      "columns": [
+        {"name": "id", "encoding": "raw", "value_min": 1, "value_max": 10000, "null_per_mille": 0},
+        {"name": "region", "encoding": "dict", "value_min": 0, "value_max": 3, "null_per_mille": 20},
+        {"name": "product", "encoding": "rle", "value_min": 0, "value_max": 6, "null_per_mille": 10},
+        {"name": "amount", "encoding": "raw", "value_min": 100, "value_max": 999, "null_per_mille": 30},
+        {"name": "unused_note", "encoding": "dict", "value_min": 0, "value_max": 2, "null_per_mille": 0}
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "q_region",
+      "project": ["region", "product", "amount"],
+      "predicate": {
+        "op": "and",
+        "args": [
+          {"op": "ge", "column": "amount", "value": 300},
+          {"op": "ne", "column": "region", "value": 3}
+        ]
+      },
+      "group_by": ["region"],
+      "aggregates": [
+        {"name": "rows", "op": "count"},
+        {"name": "sum_amount", "op": "sum", "column": "amount"},
+        {"name": "min_amount", "op": "min", "column": "amount"},
+        {"name": "max_amount", "op": "max", "column": "amount"},
+        {"name": "fix_avg_amount", "op": "avg", "column": "amount"}
+      ]
+    },
+    {
+      "id": "q_product",
+      "project": ["product", "amount"],
+      "predicate": {"op": "le", "column": "amount", "value": 800},
+      "group_by": ["product"],
+      "aggregates": [
+        {"name": "rows", "op": "count"},
+        {"name": "sum_amount", "op": "sum", "column": "amount"},
+        {"name": "min_amount", "op": "min", "column": "amount"},
+        {"name": "max_amount", "op": "max", "column": "amount"}
+      ]
+    }
+  ],
+  "execution": {
+    "batch_rows": 16,
+    "scale": 1000,
+    "segment_decode_memory_bytes": 1200,
+    "max_concurrency": 3,
+    "attribution_tolerance_ppm": 2
+  }
+}

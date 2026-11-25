@@ -1,23 +1,117 @@
-计算引擎小组要替换掉旧的逐行扫描脚本，可眼下这块 WSL Ubuntu 工作区里连一个文件都还没有，配置、样本与实现都得随首个可验收版本一起建立。业务对象是本地列式块文件上的向量化扫描：用户以本地 JSON 声明若干列存段（段标识、整数行数、列清单与每列编码方式、由固定整数种子生成的列值），并提交若干查询（投影列、过滤谓词、按列分组与计数求和最小最大聚合），以及一份向量化执行配置（批行数、定点缩放因子、每段解码内存预算与全局批并发上限）。管线须把查询编译为批级向量化执行计划，按列裁剪只读取真正用到的列，把过滤谓词以 NumPy 向量化方式下推到批上，再在定点整数域完成分组聚合。使用者会反复替换单列取值、增删投影列与修改谓词，因此每次编辑后只应重算真正受影响的批与列，并要能说明裁剪与下推各自省下了多少解码字节与比较次数。
+# vscan：本地列式块文件的确定性向量化扫描
 
-任务环境与准备：
-确认运行于 Linux（WSL Ubuntu），python3 -V 显示 3.11 及以上版本。
-在空工作区根目录执行 python3 -m venv .venv 并 source .venv/bin/activate 激活虚拟环境。
-安装依赖：pip install numpy pytest，NumPy 用于批级向量化过滤与定点聚合，pytest 用于本地样本测试；不依赖外部服务、账号或付费资源。
-自行准备本地样本目录，放置按固定整数种子编写的列存段与查询声明 JSON、生成的列存文件及 SQLite 账本目录，全部由确定性规则产生。
-运行前确认所用高位回环端口空闲，如涉及本地子进程则以真实套接字通信，不使用容器环境。
+这是一个从零实现的可验收版本，覆盖列存编解码、批级计划、NumPy 谓词过滤、
+定点聚合、收益归因、受限并发调度、增量失效重算与 SQLite 账本恢复。
+实现不使用外部服务、容器或未授权网络目标。
 
-业务要求：
-1. 实现列存段、列编码方式、查询与向量化执行配置从本地 JSON 的加载及强校验：段标识唯一、行数为正整数、列名唯一、编码方式属于原始/字典/游程、批行数为正整数、缩放因子属于受支持整数集合；投影列与谓词引用列必须存在，按列分组引用的列必须同时被投影，任一不合法须以 E_SPEC 报告首个非法段标识与字段名。
-2. 实现原始、字典与游程三种列编码的确定性编解码，并以固定整数种子为每段每列生成列值写入本地列存文件；字典项顺序与游程序列须由显式规则确定而非映射遍历顺序，同一段声明在任意加载顺序与任意批切分下必须得到逐位一致的列字节、列级摘要与段级摘要，须输出每列编码方式与统计到的非空值个数。
-3. 实现查询到批级向量化计划的编译：按批行数切出首尾相接、不重叠且不遗漏的行区间，确定每批需要解码的列集合（投影列并集上谓词引用列），并输出被裁剪掉未解码的列、下推的谓词表达式与推导依据；同一查询在任意谓词书写顺序、任意投影列声明顺序与任意批行数下必须得到结构可比的计划摘要与逐字节一致的批边界。
-4. 实现批内 NumPy 向量化过滤与定点分组聚合：谓词按批一次性求值为布尔掩码后整体过滤，分组与计数、求和、最小最大全部在整数定点域完成，除法与求均值的截断方向及溢出饱和规则须显式声明；同一段数据在任意批执行顺序下聚合结果、每批通过行数与聚合摘要必须逐字节一致，空值须按显式规则跳过并计入空值计数。
-5. 实现裁剪与下推的收益归因：对每个查询逐批输出未裁剪时需解码的字节数、裁剪后实际解码的字节数、下推谓词前后参与比较的候选行数与由此节省的解码字节与比较次数，并区分列裁剪、谓词下推与批次划分三者的贡献占比；当两种归因口径的定点差值落在声明的整数容差内时须按显式稳定规则选定口径并标注受容差影响，不得以浮点估算替代。
-6. 实现受全局批并发上限与每段解码内存预算双重约束的并行批执行：任一时刻在途批次数不得超出并发上限、在途批的解码字节数之和不得超出内存预算，配额或预算不足时批排队并记录以单调时钟毫秒计量的等待开始与结束；调度须真实投射到工作线程池，依赖未完成或列裁剪结果变更未定的批不得进入就绪集合，单批在一轮调度内至多执行一次。
-7. 实现单列取值、投影列、谓词或批行数变更后的失效传播与仅失效子集重算：须沿列、批、查询聚合与收益归因的引用关系推导受影响批与受影响查询，按段标识序与批序稳定输出失效集合与每步传播依据；未受影响批的聚合摘要与列级摘要必须逐字节保持不变，并提供增量结论与从空白全量重建的逐字段一致性校验，不一致须以 E_DIVERGE 定位首个差异的段、列与批。
-8. 实现账本原子提交、会话快照的版本识别整体替换与强制终止后的重放校验：每完成一个批须在同一 SQLite 事务中写入批结局、聚合摘要、解码字节数、等待时长与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时格式版本或内容摘要与磁盘状态不一致须整体替换而非增量合并并保留只读备份；进程被强制终止后重启只能依据已完整提交记录恢复，未提交批标记为未知并要求重跑，恢复后按账本重算并与记录逐项比较定位差异。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install numpy pytest
 
-验收：
-用本地样本核对列裁剪与谓词下推的向量化聚合结果、收益归因口径及账本恢复后的逐批一致性。
+# 生成确定性列存、执行、全量重建校验并写报告
+python -m vscan verify \
+  --spec examples/spec.json \
+  --data examples/runtime/data \
+  --ledger examples/runtime/ledger.sqlite \
+  --output examples/runtime/report.json
+
+# 仅查看计划、裁剪与下推依据
+python -m vscan explain --spec examples/spec.json
+
+# 只建列存文件
+python -m vscan build --spec examples/spec.json --data /tmp/vscan-data
+```
+
+本次 WSL 镜像的系统 Python 缺少 `ensurepip`，实际等价流程是
+`python3 -m venv --without-pip .venv` 后用官方 `get-pip.py` 引导，再安装同一组依赖；
+普通 Ubuntu 环境可直接使用上面的标准命令。
+
+样本声明在 `examples/spec.json`。生成物已在 `examples/runtime/` 中留档，包括
+`data/manifest.json`、每个段每列的 `.col` 文件、SQLite 账本和完整 JSON 报告。
+
+## 代码入口
+
+- `vscan.spec`：JSON 强校验、规范化与 `E_SPEC` 定位。
+- `vscan.codec`：原始、字典、游程三种二进制编码及选择性行解码。
+- `vscan.store`：固定种子生成、原子写入、列摘要/段摘要/快照摘要。
+- `vscan.planner`：批边界、列裁剪、下推谓词和计划摘要。
+- `vscan.executor`：NumPy 掩码过滤、分组与定点聚合。
+- `vscan.attribution`：整数收益归因与双口径容差决策。
+- `vscan.scheduler`：真实线程池、并发上限与解码内存准入。
+- `vscan.session`：编辑失效传播、增量重算和全量重建校验。
+- `vscan.ledger`：SQLite 原子批提交、整体替换、备份和恢复审计。
+- `vscan.cli`：`build`、`plan`、`explain`、`run`、`verify`。
+
+`python -m vscan` 与安装后的 `vscan` 命令等价。
+
+## 会话式增量编辑
+
+```python
+from vscan.session import Session
+from vscan.spec import load_spec
+
+with Session(load_spec("examples/spec.json"), "examples/runtime/data", "examples/runtime/ledger.sqlite") as s:
+    report = s.run()
+    report = s.edit_column_value("s_east", "amount", 17, 12345)
+    report = s.edit_projection("q_product", ["product", "amount"])
+    report = s.edit_predicate("q_region", {"op": "gt", "column": "amount", "value": 500})
+    report = s.set_batch_rows(8)
+    assert s.verify_against_full_rebuild()["consistent"]
+```
+
+单值编辑只失效包含该行的批；未引用该列的查询和未包含该行的批复用已有摘要。
+投影、谓词或批行数编辑只失效目标查询的全部批，批行数编辑会重建全部批边界。
+
+## 已执行验证
+
+环境：Linux/WSL Ubuntu，Python `3.11.0rc1`，NumPy `2.4.6`，pytest `9.2.0`。
+
+```text
+$ .venv/bin/pytest -q
+46 passed
+```
+
+样本验收结果：
+
+```text
+queries=2, batches=16
+max_observed_inflight=3
+max_observed_decoded_bytes=1152 <= budget 1200
+full_rebuild_verification.consistent=true
+segments_checked=2, columns_checked=10
+batches_checked=16, queries_checked=2
+```
+
+样本归因：
+
+```text
+q_product: bytes 5310 -> 1827, saved 3483
+           (column_pruning=3186, predicate_pushdown=297, batch_partition=0)
+           candidates 118 -> 85, comparisons 118 -> 85, ppm 口径受 2ppm 容差影响
+q_region:  bytes 5310 -> 2655, saved 2655
+           (column_pruning=2124, predicate_pushdown=531, batch_partition=0)
+           candidates 118 -> 59, physical comparisons 236 -> effective 118
+```
+
+账本测试还验证了：同快照重开不替换；快照变化时整体替换并生成 `0444` 只读备份；
+强制子进程在未提交批后 `os._exit(17)`，同快照重开仍保留完整提交记录，批指纹不匹配
+的记录被标为 `unknown`，恢复重算会与旧提交记录逐项比较。
+
+详细设计、精确字节格式、归因公式与恢复规则见
+[`docs/design.md`](docs/design.md)。
+
+## 测试范围
+
+- 三种编码的确定性往返、字典升序、游程定义、选择性行解码。
+- 加载顺序无关的列/段/快照摘要与非空计数。
+- 计划摘要对谓词顺序、投影顺序和批行数不变；批边界无重叠无遗漏。
+- 向量化过滤与独立逐行朴素扫描结果一致。
+- 空值跳过、空值计数、整数溢出饱和、均值向零截断。
+- 两套归因口径的整数差值和稳定选择，全程无浮点。
+- 线程池真实并行、并发峰值、内存峰值、等待起止和单批至多一次。
+- 单值/投影/谓词/批行数编辑后的精确失效集合与 E_DIVERGE 定位。
+- SQLite 原子提交、内容摘要、只读备份、未提交批恢复和逐项重放比较。
+- CLI 样本端到端执行与全量重建校验。
