@@ -1,0 +1,118 @@
+{
+  "authority_digests": {
+    "full": "9b349200fdd4a007a0b71085baf636d13e4d4131d9a372da446abb7bb6ac594d",
+    "incremental": "a85a9715cdda8fc2a709b1eaf7a6f37031b0c6372ab66c91135d911b658969ae"
+  },
+  "full_decision": {
+    "boundary": {
+      "affected_keys": 0,
+      "changed": 0,
+      "rule": "empty_changeset"
+    },
+    "effort_delta": 5760,
+    "full_effort": 5760,
+    "incremental_effort": 0,
+    "parameters": {
+      "affected_key_count": 0,
+      "changed_observation_count": 0,
+      "env_count": 4,
+      "key_count": 3,
+      "observation_count": 480
+    },
+    "path": "full",
+    "reason": "first arbitration for the view requires a full baseline; empty changeset: incremental no-op preserves all prior verdicts",
+    "tolerance_band": 576,
+    "tolerance_influenced": false
+  },
+  "incremental_decision": {
+    "boundary": {
+      "band": 576,
+      "delta": 5752,
+      "rule": "strict_delta"
+    },
+    "effort_delta": 5752,
+    "full_effort": 5760,
+    "incremental_effort": 8,
+    "parameters": {
+      "affected_key_count": 1,
+      "changed_observation_count": 1,
+      "env_count": 4,
+      "key_count": 3,
+      "observation_count": 480
+    },
+    "path": "incremental",
+    "reason": "incremental effort strictly below full effort outside the band",
+    "tolerance_band": 576,
+    "tolerance_influenced": false
+  },
+  "incremental_scheduling": {
+    "max_global_inflight": 1,
+    "max_per_env_inflight": {
+      "env-alpha": 1,
+      "env-bravo": 1,
+      "env-charlie": 1,
+      "env-delta": 1
+    },
+    "tasks": [
+      {
+        "enqueued_ms": 8992401,
+        "env_id": "env-alpha",
+        "error": null,
+        "finished_ms": 8992401,
+        "key": "pool.size",
+        "started_ms": 8992401,
+        "task_id": "view-large:env-alpha:pool.size",
+        "view_id": "pool.size",
+        "wait_end_ms": 8992401,
+        "wait_ms": 0,
+        "wait_start_ms": 8992401
+      },
+      {
+        "enqueued_ms": 8992401,
+        "env_id": "env-bravo",
+        "error": null,
+        "finished_ms": 8992402,
+        "key": "pool.size",
+        "started_ms": 8992402,
+        "task_id": "view-large:env-bravo:pool.size",
+        "view_id": "pool.size",
+        "wait_end_ms": 8992402,
+        "wait_ms": 0,
+        "wait_start_ms": 8992402
+      },
+      {
+        "enqueued_ms": 8992401,
+        "env_id": "env-charlie",
+        "error": null,
+        "finished_ms": 8992402,
+        "key": "pool.size",
+        "started_ms": 8992402,
+        "task_id": "view-large:env-charlie:pool.size",
+        "view_id": "pool.size",
+        "wait_end_ms": 8992402,
+        "wait_ms": 0,
+        "wait_start_ms": 8992402
+      },
+      {
+        "enqueued_ms": 8992402,
+        "env_id": "env-delta",
+        "error": null,
+        "finished_ms": 8992402,
+        "key": "pool.size",
+        "started_ms": 8992402,
+        "task_id": "view-large:env-delta:pool.size",
+        "view_id": "pool.size",
+        "wait_end_ms": 8992402,
+        "wait_ms": 0,
+        "wait_start_ms": 8992402
+      }
+    ]
+  },
+  "scale_parameters_full": {
+    "affected_key_count": 0,
+    "changed_observation_count": 0,
+    "env_count": 4,
+    "key_count": 3,
+    "observation_count": 480
+  }
+}

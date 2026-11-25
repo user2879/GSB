@@ -1,0 +1,29 @@
+{
+  "scale_power": 3,
+  "global_concurrency": 6,
+  "rejected_ratio_threshold": 0.5,
+  "environments": [
+    {"env_id": "env-alpha", "host": "127.0.0.1", "port": 49211, "lease_capacity": 3, "seed": 11, "weight": 4},
+    {"env_id": "env-bravo", "host": "127.0.0.1", "port": 49212, "lease_capacity": 2, "seed": 22, "weight": 3},
+    {"env_id": "env-charlie", "host": "127.0.0.1", "port": 49213, "lease_capacity": 3, "seed": 33, "weight": 2},
+    {"env_id": "env-delta", "host": "127.0.0.1", "port": 49214, "lease_capacity": 2, "seed": 44, "weight": 1}
+  ],
+  "instances": [
+    {"instance_id": "alpha-i1", "env_ref": "env-alpha", "seq_low": 1, "seq_high": 40, "time_base_ms": 1000},
+    {"instance_id": "bravo-i1", "env_ref": "env-bravo", "seq_low": 1, "seq_high": 40, "time_base_ms": 2000},
+    {"instance_id": "charlie-i1", "env_ref": "env-charlie", "seq_low": 1, "seq_high": 40, "time_base_ms": 3000},
+    {"instance_id": "delta-i1", "env_ref": "env-delta", "seq_low": 1, "seq_high": 40, "time_base_ms": 4000}
+  ],
+  "views": [
+    {
+      "view_id": "view-large",
+      "env_refs": ["env-alpha", "env-bravo", "env-charlie", "env-delta"],
+      "policies": {
+        "cache.ttl": "latest_revision",
+        "pool.size": "weighted_majority",
+        "rate.window": "interval_midpoint"
+      },
+      "tolerance": 2
+    }
+  ]
+}

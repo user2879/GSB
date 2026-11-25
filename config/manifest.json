@@ -1,0 +1,60 @@
+{
+  "scale_power": 2,
+  "global_concurrency": 4,
+  "rejected_ratio_threshold": 0.5,
+  "environments": [
+    {
+      "env_id": "env-alpha",
+      "host": "127.0.0.1",
+      "port": 49101,
+      "lease_capacity": 2,
+      "seed": 101,
+      "weight": 3
+    },
+    {
+      "env_id": "env-bravo",
+      "host": "127.0.0.1",
+      "port": 49102,
+      "lease_capacity": 1,
+      "seed": 202,
+      "weight": 2
+    },
+    {
+      "env_id": "env-charlie",
+      "host": "127.0.0.1",
+      "port": 49103,
+      "lease_capacity": 2,
+      "seed": 303,
+      "weight": 1
+    }
+  ],
+  "instances": [
+    {"instance_id": "alpha-i1", "env_ref": "env-alpha", "seq_low": 1, "seq_high": 6, "time_base_ms": 1000},
+    {"instance_id": "alpha-i2", "env_ref": "env-alpha", "seq_low": 1, "seq_high": 5, "time_base_ms": 2000},
+    {"instance_id": "bravo-i1", "env_ref": "env-bravo", "seq_low": 1, "seq_high": 6, "time_base_ms": 3000},
+    {"instance_id": "charlie-i1", "env_ref": "env-charlie", "seq_low": 1, "seq_high": 5, "time_base_ms": 4000},
+    {"instance_id": "charlie-i2", "env_ref": "env-charlie", "seq_low": 1, "seq_high": 4, "time_base_ms": 5000}
+  ],
+  "views": [
+    {
+      "view_id": "view-all",
+      "env_refs": ["env-alpha", "env-bravo", "env-charlie"],
+      "policies": {
+        "cache.ttl": "latest_revision",
+        "pool.size": "weighted_majority",
+        "rate.window": "interval_midpoint"
+      },
+      "tolerance": 1
+    },
+    {
+      "view_id": "view-alpha-bravo",
+      "env_refs": ["env-alpha", "env-bravo"],
+      "policies": {
+        "cache.ttl": "weighted_majority",
+        "pool.size": "latest_revision",
+        "rate.window": "interval_midpoint"
+      },
+      "tolerance": 0
+    }
+  ]
+}
