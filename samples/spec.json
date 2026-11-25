@@ -1,0 +1,271 @@
+{
+  "dominance_threshold_ppm": 400000,
+  "drift_threshold": 250,
+  "sources": [
+    {
+      "default_scale": 100,
+      "id": "src-a",
+      "metrics": [
+        "m0",
+        "m1"
+      ],
+      "null_bitmap": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "record_count": 60,
+      "record_format": 1,
+      "seed": 670488
+    },
+    {
+      "default_scale": 1000,
+      "id": "src-b",
+      "metrics": [
+        "m0"
+      ],
+      "null_bitmap": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "record_count": 50,
+      "record_format": 2,
+      "seed": 116740
+    },
+    {
+      "default_scale": 10,
+      "id": "src-c",
+      "metrics": [
+        "m1",
+        "m2"
+      ],
+      "null_bitmap": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "record_count": 40,
+      "record_format": 3,
+      "seed": 26226
+    }
+  ],
+  "spec_version": 1,
+  "stages": [
+    {
+      "id": "s_diff",
+      "kind": "std_diff",
+      "params": {},
+      "scale": 100,
+      "upstream": []
+    },
+    {
+      "id": "s_avg",
+      "kind": "window_avg",
+      "params": {
+        "window": 4
+      },
+      "scale": 100,
+      "upstream": [
+        "s_diff"
+      ]
+    },
+    {
+      "id": "s_bucket",
+      "kind": "quantile_bucket",
+      "params": {
+        "buckets": 8,
+        "hi": 20000,
+        "lo": -20000
+      },
+      "scale": 1,
+      "upstream": [
+        "s_avg"
+      ]
+    },
+    {
+      "id": "s_norm",
+      "kind": "threshold_norm",
+      "params": {
+        "span": 6,
+        "threshold": 2
+      },
+      "scale": 1000,
+      "upstream": [
+        "s_bucket"
+      ]
+    }
+  ],
+  "task_interval": {
+    "end": 150,
+    "start": 0
+  },
+  "windows": [
+    {
+      "end": 30,
+      "id": "w0",
+      "start": 0
+    },
+    {
+      "end": 60,
+      "id": "w1",
+      "start": 30
+    },
+    {
+      "end": 90,
+      "id": "w2",
+      "start": 60
+    },
+    {
+      "end": 120,
+      "id": "w3",
+      "start": 90
+    },
+    {
+      "end": 150,
+      "id": "w4",
+      "start": 120
+    }
+  ]
+}
