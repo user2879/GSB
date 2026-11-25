@@ -20,3 +20,27 @@
 
 验收：
 用本地样本验证回执归一、租约配额调度、失效传播与中断恢复的一致结论。
+
+---
+
+## 交付实现
+
+本目录已落地可演示实现（纯 Python + NumPy，无容器）：
+
+- `batch_receipt_ledger/`：13 个模块，覆盖强校验、三格式回执、确定性
+  批计划、真实回环子进程、租约、双重上限调度、失效传播与 SQLite 账本。
+- `samples/generate_samples.py`：生成确定性合法样本与 7 类非法样本。
+- `demo.py`：`validate | receipts | plan | run | invalidate | crash | all`。
+- `tests/`：48 个 unittest，含真实 TCP、真实 SIGKILL 与崩溃恢复。
+- `docs/DESIGN.md`：架构与不变量；`docs/VERIFICATION.md`：实测记录。
+
+快速开始：
+
+```bash
+python3 samples/generate_samples.py
+python3 demo.py all
+python3 -m unittest discover -s tests
+```
+
+环境备注：本机 tkinter 缺系统库 `libtk8.6.so`，监控自动降级文本控制台，
+执行 `sudo apt install python3-tk` 后可启用 Tk 面板，不影响业务功能。
