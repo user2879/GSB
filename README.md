@@ -20,3 +20,74 @@
 
 验收：
 用本地样本验证两条伸缩算法结论一致、租约归属唯一及中断后账本重放可复核，附运行结果。
+
+---
+
+# 交付实现与运行指南
+
+本目录已包含可运行的首版实现，不依赖 Docker、外部账号、网络服务或 GPU。
+
+## 安装
+
+Windows PowerShell：
+
+```powershell
+python --version
+python -m pip install numpy
+```
+
+Tkinter 随 python.org 官方 Python 安装包提供。若使用精简 Python，请勾选/安装 Tcl/Tk 支持。
+
+## 一键验证
+
+```powershell
+python scripts\verify.py
+```
+
+Windows 也可双击 `scripts\verify.bat`，或运行 `scripts\run-workbench.bat` 启动界面。
+
+或直接运行验收编排：
+
+```powershell
+python -m scale_review.cli init-sample
+python -m scale_review.cli acceptance --root .
+```
+
+结果写入：
+
+- `artifacts/verification-summary.txt`
+- `artifacts/verification-report.json`
+- `artifacts/acceptance-report.json`
+
+也可使用 `scripts\Verify-Windows.ps1`，它会安装 NumPy、运行全部验证并启动 Tkinter 工作台。
+
+## 常用命令
+
+```powershell
+python -m scale_review.cli validate --spec configs\spec.json
+python -m scale_review.cli compute --spec configs\spec.json
+python -m scale_review.cli port-check --port 0
+python -m scale_review.cli gui
+```
+
+本地只读健康检查服务（可选）：
+
+```powershell
+python -m scale_review.cli serve --host 127.0.0.1 --port 8765
+```
+
+然后访问 `http://127.0.0.1:8765/health`。
+
+## 代码入口
+
+- `scale_review/spec.py`：`E_SPEC` 强校验。
+- `scale_review/algorithms.py`：全量与环形增量算法、路径选择。
+- `scale_review/consistency.py`：`E_DIVERGE` 字段级定位。
+- `scale_review/leases.py`：`E_LEASE`、单调时钟到期、唯一归属裁决。
+- `scale_review/scheduler.py`：并行调度、配额排队与等待时长。
+- `scale_review/propagation.py`：版本化失效传播和子集重算。
+- `scale_review/ledger.py`：SQLite 事务、摘要链、快照整体替换。
+- `scale_review/replay.py`：强杀恢复与 `E_REPLAY` 定位。
+- `tests/test_scale_review.py`：19 个自动化测试。
+
+完整设计与需求映射见 `docs/ARCHITECTURE.md`，实际验证摘要见 `docs/VERIFICATION.md`。
