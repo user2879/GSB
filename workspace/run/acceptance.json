@@ -1,0 +1,199 @@
+{
+  "baseline": {
+    "batches": 1,
+    "completed_ops": [
+      "c1op0",
+      "c1op1",
+      "c1op2",
+      "c1op3",
+      "c1op4",
+      "c2op0",
+      "c2op1",
+      "c2op2"
+    ],
+    "stage_points": {
+      "embed": 128,
+      "final": 128,
+      "layer_norm": 256,
+      "multihead_attn": 128,
+      "segment_pool": 64
+    }
+  },
+  "e2_vs_e1": {
+    "cache_keys_that_differ_by_version": 10,
+    "identical_integer_outputs": true
+  },
+  "incremental": {
+    "applied_edits": [
+      "update_op_param",
+      "replace_token",
+      "set_quant",
+      "set_segments",
+      "set_gear",
+      "set_version",
+      "set_frac_bits",
+      "set_version",
+      "set_gear",
+      "invalidated:10"
+    ],
+    "code_counts": {},
+    "invalidated": 10,
+    "pending": [],
+    "reused": 18,
+    "stage_points": {
+      "embed": 128,
+      "final": 128,
+      "layer_norm": 256,
+      "multihead_attn": 128,
+      "segment_pool": 64
+    }
+  },
+  "incremental_vs_clean_rebuild": {
+    "consistent": true,
+    "entries_compared": 10,
+    "mismatches": []
+  },
+  "issue_codes": {},
+  "ledger_events": [
+    {
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "token-edit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t0,1,2",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t3,4",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c1op3:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c1op4:final:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "op-edit"
+    },
+    {
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "token-edit"
+    },
+    {
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "token-edit"
+    },
+    {
+      "entry_key": "c2op2:final:t0,1,2,3,4,5,6,7",
+      "kind": "invalidated",
+      "reason": "token-edit"
+    },
+    {
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t0,1",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t2,3,4",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t0,1",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t2,3,4",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c1op3:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "entry_key": "c2op2:final:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    }
+  ]
+}

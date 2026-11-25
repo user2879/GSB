@@ -1,0 +1,94 @@
+{
+  "chains": [
+    {
+      "chain_id": 1,
+      "ops": [
+        {
+          "inputs": [],
+          "op_type": "embed",
+          "params": {
+            "seed": 20261126,
+            "table": "synthetic"
+          },
+          "seq": 0
+        },
+        {
+          "inputs": [
+            0
+          ],
+          "op_type": "segment_pool",
+          "params": {
+            "reduction": "sum"
+          },
+          "seq": 1
+        },
+        {
+          "inputs": [
+            0
+          ],
+          "op_type": "multihead_attn",
+          "params": {
+            "causal": false,
+            "weight_scheme": "permille"
+          },
+          "seq": 2
+        },
+        {
+          "inputs": [
+            2
+          ],
+          "op_type": "layer_norm",
+          "params": {
+            "epsilon_q": 4096
+          },
+          "seq": 3
+        },
+        {
+          "inputs": [
+            3,
+            1
+          ],
+          "op_type": "final",
+          "params": {
+            "emit": "per_token"
+          },
+          "seq": 4
+        }
+      ]
+    },
+    {
+      "chain_id": 2,
+      "ops": [
+        {
+          "inputs": [],
+          "op_type": "embed",
+          "params": {
+            "seed": 20261127,
+            "table": "synthetic"
+          },
+          "seq": 0
+        },
+        {
+          "inputs": [
+            0
+          ],
+          "op_type": "layer_norm",
+          "params": {
+            "epsilon_q": 2048
+          },
+          "seq": 1
+        },
+        {
+          "inputs": [
+            1
+          ],
+          "op_type": "final",
+          "params": {
+            "emit": "per_token"
+          },
+          "seq": 2
+        }
+      ]
+    }
+  ]
+}

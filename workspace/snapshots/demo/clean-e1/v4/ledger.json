@@ -1,0 +1,1595 @@
+{
+  "entries": [
+    {
+      "cache_key": "cache:5afc52d9761a2760",
+      "chain_id": 1,
+      "cost_points": 64,
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op0",
+      "op_type": "embed",
+      "output": {
+        "row_fps": [
+          "embrow:95ae07901dc55ddc",
+          "embrow:3707ac63870f7948",
+          "embrow:d58c07b61d72ed45",
+          "embrow:196a0ac0a5448214",
+          "embrow:34bb2dce598aea58",
+          "embrow:6ee8cb4bcf497c81",
+          "embrow:768bba438466685e",
+          "embrow:cf772730b3075d65"
+        ],
+        "rows": [
+          [
+            5391,
+            5714,
+            4957,
+            4926,
+            -4551,
+            4384,
+            -4811,
+            -4328
+          ],
+          [
+            5887,
+            -4170,
+            6252,
+            5676,
+            -5630,
+            5344,
+            -5731,
+            -4330
+          ],
+          [
+            4556,
+            -4114,
+            -4175,
+            -4691,
+            -4193,
+            -4770,
+            -5793,
+            -4430
+          ],
+          [
+            -5258,
+            -4386,
+            4646,
+            -5448,
+            5332,
+            -5403,
+            4703,
+            4929
+          ],
+          [
+            5408,
+            -4226,
+            -5680,
+            -6589,
+            4931,
+            4203,
+            -5131,
+            -5640
+          ],
+          [
+            -6055,
+            -5961,
+            6607,
+            5423,
+            4483,
+            4123,
+            4481,
+            -4774
+          ],
+          [
+            4901,
+            5884,
+            5136,
+            4437,
+            -4596,
+            6533,
+            -4569,
+            5148
+          ],
+          [
+            -5488,
+            -4234,
+            -6414,
+            5401,
+            4801,
+            -5568,
+            5732,
+            -4888
+          ]
+        ],
+        "tokens": [
+          3,
+          7,
+          1,
+          9,
+          4,
+          11,
+          2,
+          6
+        ]
+      },
+      "output_fp": "out:84a101b7ce0c462c",
+      "param_fp": "param:0d002cb806936809",
+      "referenced_ops": [
+        "c1op0"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 0,
+      "stage": "embed",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": []
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "chain_id": 1,
+      "cost_points": 24,
+      "entry_key": "c1op1:segment_pool:t0,1,2",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op1",
+      "op_type": "segment_pool",
+      "output": {
+        "count": 3,
+        "segment": [
+          0,
+          3
+        ],
+        "sum": [
+          15834,
+          -2570,
+          7034,
+          5911,
+          -14374,
+          4958,
+          -16335,
+          -13088
+        ]
+      },
+      "output_fp": "out:31b3db241ca4bbb2",
+      "param_fp": "param:8d072f86b2658327",
+      "referenced_ops": [
+        "c1op0",
+        "c1op1"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 1,
+      "stage": "segment_pool",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2
+      ],
+      "upstream_keys": [
+        "c1op0:embed:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "chain_id": 1,
+      "cost_points": 16,
+      "entry_key": "c1op1:segment_pool:t3,4",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op1",
+      "op_type": "segment_pool",
+      "output": {
+        "count": 2,
+        "segment": [
+          3,
+          5
+        ],
+        "sum": [
+          150,
+          -8612,
+          -1034,
+          -12037,
+          10263,
+          -1200,
+          -428,
+          -711
+        ]
+      },
+      "output_fp": "out:4ac34987a6c32eaf",
+      "param_fp": "param:8d072f86b2658327",
+      "referenced_ops": [
+        "c1op0",
+        "c1op1"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 1,
+      "stage": "segment_pool",
+      "status": "ready",
+      "token_indices": [
+        3,
+        4
+      ],
+      "upstream_keys": [
+        "c1op0:embed:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "chain_id": 1,
+      "cost_points": 24,
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op1",
+      "op_type": "segment_pool",
+      "output": {
+        "count": 3,
+        "segment": [
+          5,
+          8
+        ],
+        "sum": [
+          -6642,
+          -4311,
+          5329,
+          15261,
+          4688,
+          5088,
+          5644,
+          -4514
+        ]
+      },
+      "output_fp": "out:01e8b5e4212a9683",
+      "param_fp": "param:8d072f86b2658327",
+      "referenced_ops": [
+        "c1op0",
+        "c1op1"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 1,
+      "stage": "segment_pool",
+      "status": "ready",
+      "token_indices": [
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c1op0:embed:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:52e6121f76431b46",
+      "chain_id": 1,
+      "cost_points": 128,
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op2",
+      "op_type": "multihead_attn",
+      "output": {
+        "heads": [
+          [
+            [
+              40,
+              -31,
+              11,
+              12
+            ],
+            [
+              18,
+              -35,
+              34,
+              21
+            ],
+            [
+              -5,
+              -64,
+              -26,
+              29
+            ],
+            [
+              15,
+              -52,
+              35,
+              -5
+            ],
+            [
+              28,
+              -17,
+              29,
+              17
+            ],
+            [
+              20,
+              -31,
+              -6,
+              -13
+            ],
+            [
+              34,
+              -15,
+              45,
+              24
+            ],
+            [
+              24,
+              -63,
+              9,
+              7
+            ]
+          ],
+          [
+            [
+              6,
+              4,
+              -8,
+              -20
+            ],
+            [
+              -19,
+              23,
+              -21,
+              13
+            ],
+            [
+              9,
+              4,
+              -30,
+              -38
+            ],
+            [
+              -1,
+              2,
+              -9,
+              -38
+            ],
+            [
+              2,
+              20,
+              -27,
+              -26
+            ],
+            [
+              -17,
+              62,
+              -56,
+              -45
+            ],
+            [
+              11,
+              19,
+              -9,
+              -31
+            ],
+            [
+              1,
+              10,
+              -12,
+              -33
+            ]
+          ]
+        ],
+        "vectors": [
+          [
+            40,
+            -31,
+            11,
+            12,
+            6,
+            4,
+            -8,
+            -20
+          ],
+          [
+            18,
+            -35,
+            34,
+            21,
+            -19,
+            23,
+            -21,
+            13
+          ],
+          [
+            -5,
+            -64,
+            -26,
+            29,
+            9,
+            4,
+            -30,
+            -38
+          ],
+          [
+            15,
+            -52,
+            35,
+            -5,
+            -1,
+            2,
+            -9,
+            -38
+          ],
+          [
+            28,
+            -17,
+            29,
+            17,
+            2,
+            20,
+            -27,
+            -26
+          ],
+          [
+            20,
+            -31,
+            -6,
+            -13,
+            -17,
+            62,
+            -56,
+            -45
+          ],
+          [
+            34,
+            -15,
+            45,
+            24,
+            11,
+            19,
+            -9,
+            -31
+          ],
+          [
+            24,
+            -63,
+            9,
+            7,
+            1,
+            10,
+            -12,
+            -33
+          ]
+        ]
+      },
+      "output_fp": "out:f6d041009b19115c",
+      "param_fp": "param:75c8472e07f454d4",
+      "referenced_ops": [
+        "c1op0",
+        "c1op2"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 2,
+      "stage": "multihead_attn",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c1op0:embed:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:f938c5c752c8164b",
+      "chain_id": 1,
+      "cost_points": 128,
+      "entry_key": "c1op3:layer_norm:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op3",
+      "op_type": "layer_norm",
+      "output": {
+        "means": [
+          1,
+          4,
+          -16,
+          -7,
+          3,
+          -11,
+          9,
+          -8
+        ],
+        "rows": [
+          [
+            32767,
+            -32768,
+            10240,
+            11264,
+            5120,
+            3072,
+            -9216,
+            -21504
+          ],
+          [
+            14336,
+            -32768,
+            30720,
+            17408,
+            -23552,
+            19456,
+            -25600,
+            9216
+          ],
+          [
+            11264,
+            -32768,
+            -10240,
+            32767,
+            25600,
+            20480,
+            -14336,
+            -22528
+          ],
+          [
+            22528,
+            -32768,
+            32767,
+            2048,
+            6144,
+            9216,
+            -2048,
+            -31744
+          ],
+          [
+            25600,
+            -20480,
+            26624,
+            14336,
+            -1024,
+            17408,
+            -30720,
+            -29696
+          ],
+          [
+            31744,
+            -20480,
+            5120,
+            -2048,
+            -6144,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            25600,
+            -24576,
+            32767,
+            15360,
+            2048,
+            10240,
+            -18432,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            17408,
+            15360,
+            9216,
+            18432,
+            -4096,
+            -25600
+          ]
+        ],
+        "variances": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "output_fp": "out:1874772c24465d23",
+      "param_fp": "param:ec086d616d970491",
+      "referenced_ops": [
+        "c1op0",
+        "c1op2",
+        "c1op3"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 3,
+      "stage": "layer_norm",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c1op2:multihead_attn:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:b72054770894c914",
+      "chain_id": 1,
+      "cost_points": 64,
+      "entry_key": "c1op4:final:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c1op4",
+      "op_type": "final",
+      "output": {
+        "per_token": [
+          {
+            "residual": 0,
+            "token": 3,
+            "token_index": 0,
+            "values": [
+              32767,
+              -32768,
+              10240,
+              11264,
+              5120,
+              3072,
+              -9216,
+              -21504
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 7,
+            "token_index": 1,
+            "values": [
+              14336,
+              -32768,
+              30720,
+              17408,
+              -23552,
+              19456,
+              -25600,
+              9216
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 1,
+            "token_index": 2,
+            "values": [
+              11264,
+              -32768,
+              -10240,
+              32767,
+              25600,
+              20480,
+              -14336,
+              -22528
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 9,
+            "token_index": 3,
+            "values": [
+              22528,
+              -32768,
+              32767,
+              2048,
+              6144,
+              9216,
+              -2048,
+              -31744
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 4,
+            "token_index": 4,
+            "values": [
+              25600,
+              -20480,
+              26624,
+              14336,
+              -1024,
+              17408,
+              -30720,
+              -29696
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 11,
+            "token_index": 5,
+            "values": [
+              31744,
+              -20480,
+              5120,
+              -2048,
+              -6144,
+              32767,
+              -32768,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 2,
+            "token_index": 6,
+            "values": [
+              25600,
+              -24576,
+              32767,
+              15360,
+              2048,
+              10240,
+              -18432,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 6,
+            "token_index": 7,
+            "values": [
+              32767,
+              -32768,
+              17408,
+              15360,
+              9216,
+              18432,
+              -4096,
+              -25600
+            ]
+          }
+        ],
+        "rows": [
+          [
+            32767,
+            -32768,
+            10240,
+            11264,
+            5120,
+            3072,
+            -9216,
+            -21504
+          ],
+          [
+            14336,
+            -32768,
+            30720,
+            17408,
+            -23552,
+            19456,
+            -25600,
+            9216
+          ],
+          [
+            11264,
+            -32768,
+            -10240,
+            32767,
+            25600,
+            20480,
+            -14336,
+            -22528
+          ],
+          [
+            22528,
+            -32768,
+            32767,
+            2048,
+            6144,
+            9216,
+            -2048,
+            -31744
+          ],
+          [
+            25600,
+            -20480,
+            26624,
+            14336,
+            -1024,
+            17408,
+            -30720,
+            -29696
+          ],
+          [
+            31744,
+            -20480,
+            5120,
+            -2048,
+            -6144,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            25600,
+            -24576,
+            32767,
+            15360,
+            2048,
+            10240,
+            -18432,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            17408,
+            15360,
+            9216,
+            18432,
+            -4096,
+            -25600
+          ]
+        ]
+      },
+      "output_fp": "out:11d1e2c2e0e3ff23",
+      "param_fp": "param:6a0030c408503685",
+      "referenced_ops": [
+        "c1op0",
+        "c1op1",
+        "c1op2",
+        "c1op3",
+        "c1op4"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 4,
+      "stage": "final",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c1op1:segment_pool:t0,1,2",
+        "c1op1:segment_pool:t3,4",
+        "c1op1:segment_pool:t5,6,7",
+        "c1op3:layer_norm:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:c6a6e4c2fb124772",
+      "chain_id": 2,
+      "cost_points": 64,
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c2op0",
+      "op_type": "embed",
+      "output": {
+        "row_fps": [
+          "embrow:95ae07901dc55ddc",
+          "embrow:3707ac63870f7948",
+          "embrow:d58c07b61d72ed45",
+          "embrow:196a0ac0a5448214",
+          "embrow:34bb2dce598aea58",
+          "embrow:6ee8cb4bcf497c81",
+          "embrow:768bba438466685e",
+          "embrow:cf772730b3075d65"
+        ],
+        "rows": [
+          [
+            5391,
+            5714,
+            4957,
+            4926,
+            -4551,
+            4384,
+            -4811,
+            -4328
+          ],
+          [
+            5887,
+            -4170,
+            6252,
+            5676,
+            -5630,
+            5344,
+            -5731,
+            -4330
+          ],
+          [
+            4556,
+            -4114,
+            -4175,
+            -4691,
+            -4193,
+            -4770,
+            -5793,
+            -4430
+          ],
+          [
+            -5258,
+            -4386,
+            4646,
+            -5448,
+            5332,
+            -5403,
+            4703,
+            4929
+          ],
+          [
+            5408,
+            -4226,
+            -5680,
+            -6589,
+            4931,
+            4203,
+            -5131,
+            -5640
+          ],
+          [
+            -6055,
+            -5961,
+            6607,
+            5423,
+            4483,
+            4123,
+            4481,
+            -4774
+          ],
+          [
+            4901,
+            5884,
+            5136,
+            4437,
+            -4596,
+            6533,
+            -4569,
+            5148
+          ],
+          [
+            -5488,
+            -4234,
+            -6414,
+            5401,
+            4801,
+            -5568,
+            5732,
+            -4888
+          ]
+        ],
+        "tokens": [
+          3,
+          7,
+          1,
+          9,
+          4,
+          11,
+          2,
+          6
+        ]
+      },
+      "output_fp": "out:84a101b7ce0c462c",
+      "param_fp": "param:3eb50444bdb72844",
+      "referenced_ops": [
+        "c2op0"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 0,
+      "stage": "embed",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": []
+    },
+    {
+      "cache_key": "cache:8ac58e09ee96f43a",
+      "chain_id": 2,
+      "cost_points": 128,
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c2op1",
+      "op_type": "layer_norm",
+      "output": {
+        "means": [
+          1460,
+          412,
+          -3452,
+          -111,
+          -1591,
+          1040,
+          2859,
+          -1333
+        ],
+        "rows": [
+          [
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768
+          ],
+          [
+            -32768,
+            -32768,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            32767,
+            32767
+          ],
+          [
+            32767,
+            -32768,
+            -32768,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            -32768,
+            -32768,
+            32767,
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768
+          ],
+          [
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            32767
+          ],
+          [
+            -32768,
+            -32768,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768
+          ]
+        ],
+        "variances": [
+          334,
+          445,
+          143,
+          385,
+          386,
+          412,
+          286,
+          409
+        ]
+      },
+      "output_fp": "out:7af385f7e2a25919",
+      "param_fp": "param:d357d36e22d994d7",
+      "referenced_ops": [
+        "c2op0",
+        "c2op1"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 1,
+      "stage": "layer_norm",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c2op0:embed:t0,1,2,3,4,5,6,7"
+      ]
+    },
+    {
+      "cache_key": "cache:0fc7a25c839c2623",
+      "chain_id": 2,
+      "cost_points": 64,
+      "entry_key": "c2op2:final:t0,1,2,3,4,5,6,7",
+      "exchange_version": "e1",
+      "frac_bits": 16,
+      "gear": "g1",
+      "node_id": "c2op2",
+      "op_type": "final",
+      "output": {
+        "per_token": [
+          {
+            "residual": 0,
+            "token": 3,
+            "token_index": 0,
+            "values": [
+              32767,
+              32767,
+              32767,
+              32767,
+              -32768,
+              32767,
+              -32768,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 7,
+            "token_index": 1,
+            "values": [
+              32767,
+              -32768,
+              32767,
+              32767,
+              -32768,
+              32767,
+              -32768,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 1,
+            "token_index": 2,
+            "values": [
+              32767,
+              -32768,
+              -32768,
+              -32768,
+              -32768,
+              -32768,
+              -32768,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 9,
+            "token_index": 3,
+            "values": [
+              -32768,
+              -32768,
+              32767,
+              -32768,
+              32767,
+              -32768,
+              32767,
+              32767
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 4,
+            "token_index": 4,
+            "values": [
+              32767,
+              -32768,
+              -32768,
+              -32768,
+              32767,
+              32767,
+              -32768,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 11,
+            "token_index": 5,
+            "values": [
+              -32768,
+              -32768,
+              32767,
+              32767,
+              32767,
+              32767,
+              32767,
+              -32768
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 2,
+            "token_index": 6,
+            "values": [
+              32767,
+              32767,
+              32767,
+              32767,
+              -32768,
+              32767,
+              -32768,
+              32767
+            ]
+          },
+          {
+            "residual": 0,
+            "token": 6,
+            "token_index": 7,
+            "values": [
+              -32768,
+              -32768,
+              -32768,
+              32767,
+              32767,
+              -32768,
+              32767,
+              -32768
+            ]
+          }
+        ],
+        "rows": [
+          [
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            32767,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768,
+            -32768
+          ],
+          [
+            -32768,
+            -32768,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            32767,
+            32767
+          ],
+          [
+            32767,
+            -32768,
+            -32768,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            -32768
+          ],
+          [
+            -32768,
+            -32768,
+            32767,
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768
+          ],
+          [
+            32767,
+            32767,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768,
+            32767
+          ],
+          [
+            -32768,
+            -32768,
+            -32768,
+            32767,
+            32767,
+            -32768,
+            32767,
+            -32768
+          ]
+        ]
+      },
+      "output_fp": "out:311f6ca3687aeb05",
+      "param_fp": "param:f682d48be4e652f4",
+      "referenced_ops": [
+        "c2op0",
+        "c2op1",
+        "c2op2"
+      ],
+      "referenced_tokens": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "seq": 2,
+      "stage": "final",
+      "status": "ready",
+      "token_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "upstream_keys": [
+        "c2op1:layer_norm:t0,1,2,3,4,5,6,7"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "cache_key": "cache:5afc52d9761a2760",
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:c6a6e4c2fb124772",
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5afc52d9761a2760",
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t0,1,2",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t3,4",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:52e6121f76431b46",
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:c6a6e4c2fb124772",
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:8ac58e09ee96f43a",
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5afc52d9761a2760",
+      "entry_key": "c1op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t0,1,2",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t3,4",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:5a51e436d833918a",
+      "entry_key": "c1op1:segment_pool:t5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:52e6121f76431b46",
+      "entry_key": "c1op2:multihead_attn:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:f938c5c752c8164b",
+      "entry_key": "c1op3:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:c6a6e4c2fb124772",
+      "entry_key": "c2op0:embed:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:8ac58e09ee96f43a",
+      "entry_key": "c2op1:layer_norm:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    },
+    {
+      "cache_key": "cache:0fc7a25c839c2623",
+      "entry_key": "c2op2:final:t0,1,2,3,4,5,6,7",
+      "kind": "reused",
+      "reason": "cache-hit"
+    }
+  ]
+}
