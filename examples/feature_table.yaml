@@ -1,0 +1,42 @@
+table_name: deterministic_city_device_sample
+seed: 280280
+row_count: 600
+columns:
+  - name: channel
+    type: categorical
+    cardinality: 12
+    distribution: uniform
+    missing_rate: 0.02
+  - name: city
+    type: categorical
+    cardinality: 18
+    distribution: zipf
+    zipf_a: 1.18
+    missing_rate: 0.03
+  - name: device
+    type: categorical
+    cardinality: 14
+    distribution: uniform
+    missing_rate: 0.02
+  - name: membership
+    type: categorical
+    cardinality: 6
+    distribution: uniform
+    missing_rate: 0.04
+  - name: browser
+    type: categorical
+    cardinality: 10
+    distribution: uniform
+    missing_rate: 0.01
+  - name: signup_days
+    type: numeric
+    distribution: uniform
+    low: 0
+    high: 3650
+    missing_rate: 0.02
+  - name: spend_score
+    type: numeric
+    distribution: normal
+    mean: 55
+    std: 18
+    missing_rate: 0.03

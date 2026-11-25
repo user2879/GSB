@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "category-cross-diagnostic"
+version = "1.0.0"
+description = "Deterministic categorical cross encoding budget diagnostics"
+requires-python = ">=3.11"
+dependencies = ["numpy", "PyYAML"]
+
+[project.scripts]
+category-cross-diagnostic = "category_cross_diagnostic.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["category_cross_diagnostic*"]

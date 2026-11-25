@@ -1,0 +1,20 @@
+global_version: 1
+expansion_mode: clique
+candidate_pairs:
+  - [city, device]
+  - [city, channel]
+  - [device, channel]
+  - [city, membership]
+  - [device, membership]
+order_limit: 3
+cardinality_budget: 260
+point_budget: 120000
+encoding_width: 16
+fixed_point_width: 16
+quantization_levels: 16
+over_budget_action: truncate
+truncate_buckets: 128
+max_workers: 4
+snapshot_commit_interval: 3
+dictionary_preview_limit: 12
+enable_flip_analysis: true
