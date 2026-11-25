@@ -1,0 +1,46 @@
+{
+  "schema": "injection-plan-v1",
+  "injections": [
+    {
+      "id": "INJ-NAN-SCORE-001",
+      "kind": "non_finite_score",
+      "target_request_id": "inj-nan",
+      "expected_code": "E_SCORE_NON_FINITE",
+      "value": "Infinity"
+    },
+    {
+      "id": "INJ-DUP-CAND-002",
+      "kind": "duplicate_candidate_id",
+      "target_request_id": "inj-dup",
+      "expected_code": "E_CANDIDATE_ID_DUPLICATE"
+    },
+    {
+      "id": "INJ-RATIO-003",
+      "kind": "sampling_ratio_out_of_range",
+      "expected_code": "E_CONFIG_INVALID",
+      "business_code": "E_RATIO_OUT_OF_RANGE",
+      "ratio": 1.5,
+      "ratio_permille": 1500
+    },
+    {
+      "id": "INJ-CODE-004",
+      "kind": "unknown_selection_code",
+      "expected_code": "E_SELECT_CODE_UNKNOWN",
+      "v1_line": "inj-code    |0001|0000000001|   812|99"
+    },
+    {
+      "id": "INJ-WIDTH-005",
+      "kind": "score_field_width_insufficient",
+      "expected_code": "E_FIELD_TRUNCATED",
+      "score_permille": 1000,
+      "score_width": 3
+    },
+    {
+      "id": "INJ-COUNT-006",
+      "kind": "candidate_count_over_limit",
+      "expected_code": "E_CAND_COUNT_OVER",
+      "count": 13,
+      "limit": 12
+    }
+  ]
+}
