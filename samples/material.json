@@ -1,0 +1,77 @@
+{
+  "name": "four-channel-sample",
+  "metadata": {
+    "tie_rule": "ties_to_even",
+    "equal_weight_rule": "lower_layer_index"
+  },
+  "channels": {
+    "diffuse": {
+      "base_weight": 1.0,
+      "layers": [
+        {
+          "index": 0,
+          "weight": 0.35
+        },
+        {
+          "index": 1,
+          "weight": 0.25
+        },
+        {
+          "index": 3,
+          "weight": 0.15
+        }
+      ]
+    },
+    "roughness": {
+      "base_weight": 0.8,
+      "layers": [
+        {
+          "index": 1,
+          "weight": 0.4
+        },
+        {
+          "index": 2,
+          "weight": 0.6
+        },
+        {
+          "index": 4,
+          "weight": 0.3
+        }
+      ]
+    },
+    "metallic": {
+      "base_weight": 0.7,
+      "layers": [
+        {
+          "index": 0,
+          "weight": 0.2
+        },
+        {
+          "index": 2,
+          "weight": 0.3
+        },
+        {
+          "index": 3,
+          "weight": 0.5
+        }
+      ]
+    },
+    "normal": {
+      "base_weight": 0.9,
+      "layers": [
+        {
+          "index": 1,
+          "weight": 0.4
+        },
+        {
+          "index": 3,
+          "weight": 0.3
+        },
+        {
+          "index": 4,
+          "weight": 0.5
+        }
+      ]
+    }
+  }
+}

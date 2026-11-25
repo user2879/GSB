@@ -1,3 +1,23 @@
+# FixedTex：确定性分层定点纹理与材质渲染器
+
+实现状态：已完成，`python3 -m pytest` 实测 28 项全部通过，`python3 -m fixedtex verify` 实测退出码 0，增量/全量像素一致、部分快照恢复、SIGKILL 恢复、两档量化归因和故障注入隔离均通过。详细设计见 [docs/TECHNICAL.md](docs/TECHNICAL.md)，实测记录见 [docs/VERIFICATION.md](docs/VERIFICATION.md)。
+
+快速开始（在仓库根目录）：
+
+```bash
+python3 -m pytest
+python3 -m fixedtex validate --config samples/config.json --material samples/material.json
+python3 -m fixedtex run --config samples/config.json --material samples/material.json \
+  --commands samples/commands.jsonl --state-dir artifacts/demo --fresh
+python3 -m fixedtex verify --output-dir artifacts/verification
+```
+
+最终图像写入 `artifacts/demo/output.png`、`artifacts/demo/channels/*.png`，提交账本写入 `artifacts/demo/ledger.jsonl`，快照指针与版本写入 `artifacts/demo/CURRENT`、`artifacts/demo/VERSION`。
+
+---
+
+## 原始业务要求
+
 纹理与材质小组刚刚立项，第一行代码尚未写下，工程目录里只有一个空的根文件夹，代码、配置、本地样本与账本都要在 Linux（WSL Ubuntu）环境里首次落地。业务对象是程序化纹理与材质的分层定点渲染：基础纹理为固定分辨率 PNG，由固定种子绘制几何图元、程序化噪声与图案控制点；材质描述声明漫反射、粗糙度、金属度与法线扰动四个通道的分层权重；生成配置声明分辨率档位、噪声层数与逐层频率振幅、混合模式、定点小数位宽与量化档位、逐层点数预算与单批点数预算、预览预算毫秒、线程池并发数与会话提交间隔命令数。渲染管线按层噪声合成、逐层定点量化、材质通道合成、按通道加权混合到输出 PNG 的顺序串联，全部数值在定点整数域计算。使用者会反复编辑分层权重、噪声层频率振幅、混合模式与量化档位，并替换单张基础纹理；每次编辑后只应重算真正受影响的层、通道与像素分块，会话在命令间被提交为快照，进程被强制终止后必须能从持久化快照恢复出与全量重建一致的最终图像。核心冲突在于：量化档位同时牵动层噪声整数、通道混合中间值与误差判定阈值，而分层权重改动又只影响部分通道，重算范围与快照版本必须同时精确。
 
 任务环境与准备：

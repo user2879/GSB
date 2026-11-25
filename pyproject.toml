@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fixedtex"
+version = "1.0.0"
+description = "Deterministic layered fixed-point texture and material renderer"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.23",
+  "Pillow>=9.0",
+]
+
+[project.scripts]
+fixedtex = "fixedtex.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fixedtex*"]

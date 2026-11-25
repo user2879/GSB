@@ -1,0 +1,58 @@
+{
+  "name": "layered-fixed-low-budget",
+  "texture": "base_texture.png",
+  "resolution_tiers": [
+    32,
+    64,
+    96,
+    128
+  ],
+  "resolution": 64,
+  "seed": 20261126,
+  "algorithm": "value2d",
+  "noise": {
+    "layer_count": 5,
+    "layers": [
+      {
+        "frequency": 1.5,
+        "amplitude": 1.0,
+        "seed": 101
+      },
+      {
+        "frequency": 3.25,
+        "amplitude": 0.85,
+        "seed": 202
+      },
+      {
+        "frequency": 6.0,
+        "amplitude": 0.7,
+        "seed": 303
+      },
+      {
+        "frequency": 10.5,
+        "amplitude": 0.55,
+        "seed": 404
+      },
+      {
+        "frequency": 16.0,
+        "amplitude": 0.4,
+        "seed": 505
+      }
+    ]
+  },
+  "fixed": {
+    "fraction_bits": 12,
+    "quant_step": 4,
+    "tie_rule": "ties_to_even",
+    "guard_bits": 2
+  },
+  "budgets": {
+    "layer_points": 1024,
+    "batch_points": 3072
+  },
+  "blend_mode": "weighted",
+  "preview_budget_ms": 5,
+  "thread_pool_size": 3,
+  "commit_interval_commands": 3,
+  "error_tolerance_quant_steps": 0
+}
