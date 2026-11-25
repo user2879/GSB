@@ -1,0 +1,30 @@
+{
+  "commands": [
+    {
+      "band": "elevation",
+      "method": "offset",
+      "op": "replace_band",
+      "tile_id": "tile_r1c2",
+      "value": 9000
+    },
+    {
+      "band": "red",
+      "method": "patch_add",
+      "op": "replace_band",
+      "rect": [
+        22,
+        26,
+        14,
+        14
+      ],
+      "tile_id": "tile_r1c2",
+      "value": 42
+    },
+    {
+      "op": "set_config",
+      "path": "detector.threshold_permille",
+      "value": 600
+    }
+  ],
+  "schema_version": 1
+}

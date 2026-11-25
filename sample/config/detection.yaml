@@ -1,0 +1,69 @@
+{
+  "detector": {
+    "density_weight_milli": 400,
+    "distance_weight_milli": 600,
+    "final_score_step_micro": 1000,
+    "kde_bandwidth_milli": 1400,
+    "minimum_robust_scale_micro": 1000000,
+    "threshold_permille": 530
+  },
+  "fusion": {
+    "min_component_pixels": 6,
+    "overlap_width": 8,
+    "strategy_version": "fusion-distance-score-v1"
+  },
+  "paths": {
+    "manifest": "../input/manifest.json",
+    "output_dir": "../artifacts/output",
+    "state_dir": "../artifacts/state",
+    "tiles_dir": "../input/tiles"
+  },
+  "quantization": {
+    "allowed_fraction_bits": [
+      8,
+      10,
+      12,
+      14
+    ],
+    "allowed_gears": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "dimension_scales_milli": {
+      "elevation_slope": 1000,
+      "normalized_water_index": 1000,
+      "texture_gradient": 1000,
+      "vegetation_index": 1000
+    },
+    "fraction_bits": 12,
+    "gear": 2
+  },
+  "sample_root_label": "sample",
+  "scheduler": {
+    "fusion_recompute_limit": 32,
+    "global_window_budget": 4096,
+    "max_workers": 8,
+    "tile_window_quota": 128
+  },
+  "schema_version": 1,
+  "tile": {
+    "band_set_versions": [
+      "bsv-2026-01",
+      "bsv-2026-02"
+    ],
+    "bands": [
+      "red",
+      "green",
+      "blue",
+      "elevation"
+    ],
+    "size": 64
+  },
+  "window": {
+    "context_overlap": 4,
+    "size": 16,
+    "step": 8
+  }
+}

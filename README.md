@@ -1,22 +1,97 @@
-这条多波段瓦片异常检测需求在评审后交由一名工程师独立实现，而工作区目前只有空的目录结构，代码、配置与本地样本均需在 Linux（WSL Ubuntu）环境首次建立。业务对象是多波段瓦片：每片瓦片按波段分层存放可见光三通道与一个高程通道，由固定整数种子确定性生成农田、水体、建筑、道路四类地物与可控噪声，并附瓦片清单声明行列号、邻接关系与波段集合版本号。检测链路按窗口尺寸、步长与上下文重叠抽取光谱指数、纹理梯度与高程坡度，在定点整数域构造观测向量，再以逐列稳健标准化、马氏距离与核密度估计给出逐窗异常分与阈值判定，最后把窗级结论融合为像素级异常栅格。使用者会反复替换单块瓦片的波段数据、调整窗口与量化档位、修改阈值，并要求只重算真正受影响的窗口与融合带。核心冲突在于窗口跨越瓦片边界使重叠带融合与瓦片摘要互为输入，逐列稳健统计量又由全体参与窗口共同决定，量化误差沿指数比值、观测向量、马氏距离与阈值比较逐级放大，而替换单块瓦片会同时扰动统计量与多个相邻融合带。
+# 多波段瓦片异常检测
 
-任务环境与准备：
-在 WSL Ubuntu 上创建工作目录并初始化 Python 虚拟环境，确认 python3 版本不低于 3.10。
-安装依赖：NumPy 与 Pillow（用于 PNG 读写），按需使用标准库 threading、hashlib 与 json，可用 pip install numpy pillow 安装。
-准备本地样本目录：由题目给出的确定性种子生成脚本生成分层波段文件、瓦片清单 JSON、检测配置 YAML、编辑命令流与异常注入配置，不依赖任何外部数据集或网络资源。
-确认 127.0.0.1 回环可用（如涉及子进程通信），并保证运行命令全部为 Linux 命令，测试数据规模与线程池并发数匹配本机 CPU 核数。
+这是一个仅依赖 NumPy、Pillow 和 Python 标准库的确定性多波段瓦片异常检测实现。程序在 Linux 上生成 3×3 本地瓦片样本，对跨瓦片窗口计算光谱指数、纹理梯度与高程坡度，经定点量化、逐列稳健标准化、马氏距离和 KDE 得到异常分，再融合相邻瓦片边界并输出像素级异常 PNG。
 
-业务要求：
-1. 实现瓦片、清单、检测配置与命令流的加载校验层：按瓦片标识加载分层波段数据并校验波段数量与清单声明一致、分辨率一致、瓦片标识唯一、邻接关系对称且无自引用、波段集合版本号在配置声明集合内、窗口尺寸能整除瓦片边长且步长与上下文重叠为正整数，不合规时以 E_TILE_FORMAT 业务码记录并跳过该瓦片。
-2. 实现窗口特征与定点观测向量构造：按窗口尺寸、步长与上下文重叠生成窗口，窗口只归属其中心区域以避免像素重复计数；由各波段计算植被指数、归一化水体指数、纹理梯度与高程坡度，再按定点小数位宽与量化档位转为定点整数，逐窗口逐维记录量化步长、整数结果与残差，切换位宽或档位必须真实改变中间整数与反量化值。
-3. 实现逐窗异常检测核心：先在全体参与窗口的定点观测向量上按列计算稳健中心与稳健尺度，再计算马氏距离与核密度分值并按配置融合权重在定点整数域合成异常分，累加顺序固定为窗口行列号升序与维度序号升序，禁止依赖数组归约默认顺序与运行时全局随机状态；核密度带宽取自配置档位而非硬编码。
-4. 实现阈值判定与边界窗口诊断：异常分与千分比阈值比较给出逐窗判定，分值恰等于阈值或落在量化半步内时按固定规则决断并标记为边界窗口；对每个边界窗口输出高一位宽参考异常分与差值，当两档位下判定不一致时区分翻转源自指数比值量化、稳健尺度估计舍入还是阈值比较，并保留各环节偏差数值。
-5. 实现重叠带加权投票融合与像素级异常栅格后处理：按融合策略版本对相邻瓦片重叠带做加权投票，权重由重叠像素到所属瓦片边界的距离与两侧窗口异常分共同确定，平票按行列号字典序决断并记录平票原因；再按最小连通异常像素数剔除碎小区域并回填邻接主类别，融合结论须携带所引用的两侧瓦片缓存键与重叠几何。
-6. 实现窗口级与融合带级内容指纹及精确失效判定：为窗口特征、稳健统计量、逐窗异常分、瓦片判定摘要与融合结论分别计算由上游内容指纹、窗口参数指纹、量化档位与融合策略版本派生的缓存键，并记录每个融合结论引用的两侧瓦片缓存键与重叠几何；替换单块瓦片或调整阈值时只使该瓦片覆盖窗口、相关统计量与受影响融合带失效，未受影响部分直接复用持久化产物并逐条记录失效依据与复用命中。
-7. 实现全局窗口计算预算、单瓦片配额与每批融合区重算上限三重约束下的并发调度：使用线程池并发执行窗口特征与异常打分，最大并发数取自配置且不得超过；调度器按行列号稳定顺序分配单瓦片配额并维护全局剩余窗口计算预算，单瓦片超配额即中止本批并记 E_TILE_QUOTA_EXCEEDED，预算耗尽时保留待办队列并以 E_BUDGET_PENDING 标记，下批按稳定顺序优先处理。
-8. 保证任意编辑序列后增量运行与从空白全量重建逐像素一致，并保证并发执行与串行执行逐字段一致，同时实现阶段化快照整体替换与故障隔离：各阶段产物连同待办队列与已消耗预算先写入临时目录再按版本变化整体替换提交，清单记录全局版本号、配置哈希、波段集合版本、融合策略版本与已完成瓦片游标；以独立注入配置施加非有限波段取值、窗口尺寸不能整除、邻接关系自引用与量化档位越界等真实输入故障，单瓦片失败须记录瓦片标识、阶段名与业务码并继续处理其余瓦片。
+## 环境
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Python ≥ 3.10，当前验证环境为 Python 3.11.0rc1
+- NumPy 1.26.4
+- Pillow 10.3.0
+- Linux（WSL Ubuntu），16 个逻辑 CPU
 
-验收：
-用本地样本核对逐窗异常判定、融合栅格、失效复用与并发一致，并查看故障隔离记录。
+创建隔离环境：
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+如果系统缺少 `ensurepip`，可使用本机已安装的 `virtualenv`：
+
+```bash
+python3 -m virtualenv --system-site-packages .venv
+```
+
+## 快速开始
+
+```bash
+./scripts/generate_sample.sh
+./scripts/run_demo.sh
+```
+
+等价命令：
+
+```bash
+.venv/bin/python -m tile_anomaly generate --output sample --seed 20261126
+.venv/bin/python -m tile_anomaly run --config sample/config/detection.yaml --reset --json
+```
+
+输出位置：
+
+- `sample/input/tiles/<tile_id>/{red,green,blue,elevation}.png`：分层波段
+- `sample/input/manifest.json`：行列号、邻接关系、波段集合版本
+- `sample/config/detection.yaml`：窗口、量化、检测、融合与调度配置
+- `sample/config/fault_injection.json`：四类真实输入故障注入
+- `sample/input/edit_commands.json`：确定性编辑命令流
+- `sample/artifacts/output/pixel_anomaly.png`：最终异常栅格
+- `sample/artifacts/state/current/`：原子提交的最新阶段快照
+
+`detection.yaml` 使用 JSON 语法书写，它是 YAML 的合法子集；加载器也支持环境中安装 PyYAML 时解析一般 YAML。
+
+## 应用编辑与增量运行
+
+```bash
+.venv/bin/python -m tile_anomaly apply-edits \
+  --config sample/config/detection.yaml \
+  --edits sample/input/edit_commands.json
+.venv/bin/python -m tile_anomaly run --config sample/config/detection.yaml --json
+```
+
+运行器会从 `state/current` 恢复缓存、待办窗口和预算。相同内容不重复计算；阈值变化复用窗口特征、稳健统计量和异常分；波段替换只重算引用该瓦片的窗口特征。
+
+## 故障隔离
+
+```bash
+.venv/bin/python -m tile_anomaly run \
+  --config sample/config/detection.yaml \
+  --fault-config sample/config/fault_injection.json --reset --json
+```
+
+四类故障分别记录在瓦片级事件中，业务码均为 `E_TILE_FORMAT`，其余可用瓦片继续完成检测。窗口上下文涉及故障瓦片时记为 `E_WINDOW_CONTEXT_UNAVAILABLE`，对应像素保持未知值 128。
+
+## 测试
+
+```bash
+.venv/bin/python -m unittest discover -v
+./scripts/run_verification.sh
+```
+
+验证脚本会生成：
+
+- `artifacts/verification/tests.log`
+- `artifacts/verification/baseline_run.json`
+- `artifacts/verification/fault_run.json`
+- `artifacts/verification/summary.json`
+- `artifacts/verification/fault-sample/`：独立故障场景，避免覆盖基线快照
+
+## 关键设计
+
+- 窗口核心区互不重叠，每个核心区只属于一个中心瓦片；完整上下文允许跨瓦片。
+- 四维观测量以显式定点公式量化，逐维记录步长、整数结果与残差。
+- 稳健中心使用整数双中位数，尺度使用整数 MAD 与固定 1.4826 系数。
+- 马氏距离采用逐列稳健标准化后的对角 covariance；KDE 带宽来自配置。
+- 分数缓存键不包含阈值，因此阈值编辑不会使特征、统计量或异常分失效。
+- 融合结论引用两侧瓦片摘要缓存键、两侧窗口分数键和重叠几何。
+- 所有快照先写临时目录，再整体改名为版本目录，最后原子替换 `current` 符号链接。
+
+详细算法、缓存依赖和调度规则见 [DESIGN.md](DESIGN.md)，实际运行结果见 [VERIFICATION.md](VERIFICATION.md)。
