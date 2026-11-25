@@ -1,0 +1,42 @@
+version: command-stream-v1
+description: Covers every edit class required by the incremental equivalence test.
+commands:
+- id: C1
+  op: replace_prompt
+  frame: 0
+  text: blue cube rough dark terrain
+- id: C2
+  op: replace_image
+  frame: 2
+  image_id: condition_c
+- id: C3
+  op: delete_image
+  frame: 3
+- id: C4
+  op: adjust_motion
+  frame: 1
+  row: 0
+  col: 1
+  component: dx
+  value: 5
+- id: C5
+  op: set_weights
+  weights:
+    text: '0.55'
+    image: '0.20'
+    motion: '0.25'
+- id: C6
+  op: set_denoise_steps
+  steps: 5
+- id: C7
+  op: set_tile_rows
+  tile_rows: 4
+- id: C8
+  op: set_guidance
+  guidance_scale: '2.25'
+- id: C9
+  op: set_quant_profile
+  quant_profile: Q16_DIAG
+- id: C10
+  op: set_denoise_steps
+  steps: 4

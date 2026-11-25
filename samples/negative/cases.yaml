@@ -1,0 +1,41 @@
+version: negative-cases-v1
+cases:
+- id: NEG-VOCAB
+  kind: prompt
+  path: samples/negative/unknown_term_prompt.yaml
+  expected_code: E_VOCAB_UNKNOWN_TERM
+- id: NEG-CONFIG
+  kind: config
+  path: samples/negative/bad_render_config.yaml
+  expected_codes:
+  - E_SEED_RANGE
+  - E_POSITIVE_INT
+  - E_QUANT_ENUM
+- id: NEG-DIM
+  kind: bundle
+  path: samples/negative/bad_dim_config.yaml
+  expected_code: E_COND_DIM_MISMATCH
+- id: NEG-PNG-TRUNC
+  kind: png
+  path: samples/negative/truncated_condition.png
+  expected_code: E_PNG_TRUNCATED
+- id: NEG-PNG-RES
+  kind: png
+  path: samples/negative/wrong_resolution.png
+  expected_code: E_PNG_RESOLUTION
+- id: NEG-PNG-SIG
+  kind: png
+  path: samples/negative/bad_signature.png
+  expected_code: E_PNG_SIGNATURE
+- id: NEG-MOTION
+  kind: motion
+  path: samples/negative/bad_motion_vectors.yaml
+  expected_code: E_MOTION_BLOCK_MISMATCH
+- id: NEG-NOISE-VER
+  kind: noise
+  path: samples/negative/bad_noise_version.json
+  expected_code: E_NOISE_VERSION
+- id: NEG-NOISE-MISSING
+  kind: noise
+  path: samples/negative/missing_noise_version.json
+  expected_code: E_NOISE_VERSION_MISSING

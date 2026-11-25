@@ -1,22 +1,176 @@
-多模态生成小组在评审通过后拿到一个空项目目录，所有代码、配置与样本都要在 Linux（WSL Ubuntu）本地首次建立。首版需要交付一个可集成的文生视频与图生视频条件融合渲染诊断组件与完整示例：文本提示由受控词表生成实体与属性列表并经确定性词袋编码得到条件向量，图像条件为固定分辨率 PNG（固定种子绘制几何图元与纹理块），运动条件为按固定种子生成的分块运动矢量表；渲染管线按条件编码、条件融合、潜变量初始化、逐去噪步生成、逐帧解码与按分块行输出 PNG 串联，全部数值在定点整数域计算。使用者会在有限交互延迟预算内反复编辑提示词、替换图像条件、调整运动约束、融合权重、去噪步数与分块行数，并要求任意编辑后只有真正受影响的帧与分块行重算，进程被强制终止后从持久化快照恢复出与全量渲染逐像素一致的结论。
+# CondFusion 条件融合定点渲染诊断组件
 
-任务环境与准备：
-确认 Linux（WSL Ubuntu）基础环境可用，创建空项目目录并在其中初始化项目结构。
-安装 Python 3.10 及以上版本，并安装 NumPy 与 Tkinter 相关依赖（如 python3-tk），安装说明写入依赖清单文件。
-本地生成确定性样本：按固定种子生成提示词表、固定分辨率 PNG 图像条件、分块运动矢量表、噪声表样例与渲染配置、注入配置及命令流样例。
-无需外部网络服务、GPU、在线账号或付费资源，全部样本与测试数据在本地生成可重复使用。
+一个完全本地、确定性的“文生视频 + 图生视频 + 运动条件”融合渲染诊断组件与完整示例。无需 Docker、GPU、外部网络服务或在线账号；NumPy 负责定长数组运算，PNG 用标准库 `zlib/struct` 确定性读写，快照使用 JSON + 原子符号链接切换。
 
-业务要求：
-1. 实现样本、配置与命令流的加载校验层：解析提示词表、PNG 图像条件、运动矢量表、渲染配置 YAML 与命令流，校验词项落在受控词表内、条件向量维度与配置一致、PNG 容器头与固定分辨率正确、运动矢量表分块数与帧尺寸相容、种子范围、去噪步数与分块行数为正整数、定点小数位宽与量化档位在允许枚举内、噪声表版本在已声明集合内，任何一项不满足即输出对应 E_xxx 业务码并写入失败清单，不得静默跳过。
-2. 实现条件编码与条件融合两个确定性阶段：文本条件按受控词表顺序归一化为词袋向量并记录词项命中位置，图像条件经分块颜色均值与梯度统计映射为图像条件向量，运动条件读入分块运动矢量；融合按配置权重在定点整数域以固定运算顺序（帧序号升序、分块行号升序、维度序号升序）合成融合条件，并逐维记录量化步长与残差，同一输入与配置下两次运行逐字段一致。
-3. 实现潜变量初始化与逐去噪步生成内核：初始潜变量由融合条件摘要、种子与配置指纹派生的固定随机源生成，禁止依赖运行时全局随机状态；每步在定点整数域按固定运算顺序叠加噪声表条目与按引导强度缩放的条件项并记录每步残差与舍入方向；切换引导强度、步数或量化档位必须真实改变潜变量整数与后续帧像素，不得仅改显示。
-4. 实现逐帧解码与按分块行输出，并保证分块边界不互相借用像素：以线性投影把潜变量映射到像素并裁剪到 0-255 后确定性舍入为 uint8 输出 PNG 字节；分块行数须真实改变解码分块划分与完成顺序，任一帧分块行解码只读取本行覆盖的潜变量切片与其参数，分块行被单独重算时结果与整帧全量解码对应行逐像素一致。
-5. 实现基于内容指纹的跨阶段精确失效判定与可复核复用账本：为条件编码、条件融合、每步去噪、逐帧解码与分块行合成各产物计算由上游内容指纹、参数指纹、量化档位与快照版本号派生的缓存键，记录每帧引用的去噪步产物与分块行集合；编辑提示词、替换图像条件或调整融合权重时，只使受影响帧、去噪步与分块行失效，未受影响产物必须复用并逐条记录命中依据。
-6. 实现阶段化快照整体替换与强制终止后的恢复判定：各阶段产物连同待办队列、已完成帧与分块行游标、已消耗重算点数预算先写临时目录再整体替换提交，清单记录全局版本号、配置哈希、条件指纹与各阶段产物版本；启动时以版本号与配置哈希识别版本变化决定续跑或全量重建，被 SIGKILL 强制终止时只依据已提交快照恢复，不承诺补写未提交的进度报告。
-7. 保证任意命令序列与任意并发度下增量渲染与从空白全量渲染逐帧逐像素一致：施加包含提示词替换、图像条件替换与删除、运动矢量调整、融合权重变更、去噪步数调整、分块行数变更与量化档位切换的命令序列，逐帧像素、去噪步残差、分块行完成顺序、复用与重算清单及失败清单顺序均须与最终状态一次性全量渲染结果逐字段一致，并以线程池并发执行互不依赖的去噪步与分块行解码，最大并发数取自配置且不得超过。
-8. 实现交互延迟预算内的预览语义、阶段化诊断报告与异常隔离：每条命令触达后在配置的交互延迟预算毫秒内优先返回最近一次已完成的最新摘要，含已完成帧数、受影响帧区间、分块行完成情况、复用条目数与进度，预算内无法给出最新结果时返回带 E_STALE_PREVIEW 业务码的陈旧摘要并标明其对应的配置版本与条件指纹；同时以独立注入配置对指定帧指定阶段施加真实输入故障（截断 PNG 字节、非有限条件向量、运动矢量分块数不符、噪声表版本缺失），注入项编号写入报告以证明命中并映射业务码，单帧失败记录帧号、阶段名与业务码后继续处理其余帧。
+原始任务书保留在 `docs/TASK_SPEC.md`，业务码见 `docs/BUSINESS_CODES.md`，依赖/Tk 说明见 `docs/DEPENDENCIES.md`。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-用本地样本验证定点渲染逐帧像素、增量与全量一致、快照恢复及注入故障的业务码隔离。
+```bash
+pip install -r requirements.txt
+export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}"
+
+python3 -m condrender.cli generate-samples --root .
+python3 -m condrender.cli validate --root .
+python3 -m unittest discover -s tests -v
+python3 -m condrender.cli verify --root . --artifacts-dir artifacts/verification
+```
+
+常用命令：
+
+```bash
+# 单次全量渲染：输出 full PNG、逐 tile PNG、报告和原子快照
+python3 -m condrender.cli render --root . \
+  --snapshot-dir artifacts/examples/snapshot \
+  --output-dir artifacts/examples/render
+
+# 10 条编辑命令的增量/全量一致性验收
+python3 -m condrender.cli run-commands --root .
+
+# Tk 诊断面板（系统 python3-tk 或 source scripts/tk_vendor_env.sh）
+source scripts/tk_vendor_env.sh
+python3 -m condrender.cli gui --root .
+```
+
+也可直接运行 `bash scripts/verify.sh` 或 `make verify`。
+
+## 确定性样本
+
+`python3 -m condrender.cli generate-samples` 会生成：
+
+- `samples/controlled_vocab.yaml`：6 个实体 + 8 个属性，共 14 个受控词项。
+- `samples/prompt_table.yaml`：4 帧提示词。
+- `samples/images/condition_a.png`、`condition_b.png`、`condition_c.png`：固定 `8x8` RGB PNG，固定种子绘制纹理块、矩形、圆和三角图元。
+- `samples/motion_vectors.yaml`：4 帧 × 2 运动块行 × 4 块列 × `dx/dy`。
+- `samples/noise_table.json`：`noise-v1`，8 个候选步、每步 384 个定点噪声整数。
+- `samples/render_config.yaml`：维度、种子、权重、量化档位、调度、预算和并发上限。
+- `samples/command_stream.yaml`：覆盖提示词、图像替换/删除、运动、权重、步数、分块行、引导强度和量化档切换。
+- `samples/injections.yaml`：4 个独立故障注入项。
+- `samples/negative/`：词表、配置、维度、PNG、运动和噪声负例。
+
+输出视频几何为 4 帧、`16x8` RGB；潜变量形状同样是 `8x16x3`，因此每个水平分块行只读取自己的连续潜变量切片。
+
+## 管线
+
+1. **校验加载**：`condrender/bundle.py` + `condrender/validation.py` 解析 YAML/JSON/PNG/命令流，收集而非吞掉所有 `E_xxx`。
+2. **文本条件**：`condrender/conditions.py:encode_text` 按受控词表顺序计数，定点归一化为 14 维 BoW，并记录词项、类别、token 序号和字符位置。
+3. **图像条件**：2×2 块分别计算 RGB 归一化均值和水平/垂直梯度，得到 20 维向量。
+4. **运动条件**：校验 `[4,2,4,2]` 表并按行展开为 16 维；每个运动块行使用其中 8 维参与融合。
+5. **定点融合**：融合向量为 `14+20+8=42` 维；严格按帧号、运动块行、维度升序计算，逐维记录权重、分子/分母、舍入方向和残差。
+6. **潜变量初始化**：用融合摘要、种子、潜变量参数指纹、帧号和快照版本派生 64-bit PCG64 种子；只使用局部 `np.random.Generator`，不触碰全局随机状态。
+7. **去噪步**：每步独立计算噪声转码残差、引导乘法残差/方向和 alpha 更新残差/方向；最后按步号升序累加。步产物不依赖上一步键，因此可在线程池中并发。
+8. **解码/分块**：3×3 定点线性投影 → 增益/中心映射 → 先裁剪到 `[0,255Q]` → 确定性整数舍入 → `uint8` → 标准库编码 PNG。每个 tile 函数只接收该 tile 的潜变量切片。
+9. **组合输出**：按行号升序拼回完整帧，同时写每块 PNG；调度顺序由 `tile_scheduling: zigzag` 决定，例如 4 行时为 `[0,3,1,2]`，线程池结果仍按规范顺序入账。
+
+所有 Q 格式为 `Q=2^frac_bits`，允许 `Q8_FAST/Q12_BALANCED/Q16_DIAG`。切换量化档会改变缓存键、随机区间、舍入和最终像素；测试明确断言像素变化。
+
+## 指纹、复用与精确失效
+
+每个缓存键由以下内容再次 SHA-256 派生：
+
+- 上游产物完整指纹/键；
+- 步骤、帧、tile 边界等参数指纹；
+- `quant_profile`、`frac_bits`、舍入模式；
+- `snapshot_schema` 与整数 `SNAPSHOT_VERSION=1`。
+
+账本条目包含 `HIT/RECOMPUTE`、阶段、帧、索引、键、成本点和命中依据。最终血缘记录每帧引用的全部步骤键、tile 键和合成键。
+
+示例命令流在基线渲染后逐条编辑的实际计数：
+
+| 命令 | 编辑 | HIT | RECOMPUTE | 说明 |
+|---|---|---:|---:|---|
+| C1 | 改帧 0 提示词 | 38 | 10 | 仅帧 0 的文本→融合→潜变量→步→tile 下游失效；帧 1–3 全复用 |
+| C2 | 替换帧 2 图像 | 38 | 10 | 仅帧 2 下游失效 |
+| C3 | 删除帧 3 图像 | 38 | 10 | 删除被建模为 `absent` 零向量指纹 |
+| C4 | 改帧 1 运动 | 38 | 10 | 仅帧 1 下游失效 |
+| C5 | 改全局权重 | 12 | 36 | 三模态编码命中，4 帧融合及下游重算 |
+| C6 | 步数 3→5 | 32 | 24 | 旧步骤 0/1/2 命中，仅新步 3/4 与帧/tile 下游重算 |
+| C7 | tile 2→4 | 44 | 20 | 条件、潜变量、步骤和帧潜变量全部命中，仅 tile/compose 重算 |
+| C8 | 引导强度变化 | 20 | 44 | 所有步骤参数变化，编码/融合/初始潜变量命中 |
+| C9 | Q12→Q16 | 0 | 64 | 量化档进入每个缓存键，全部重算 |
+| C10 | 步数 5→4 | 36 | 24 | 保留步 0–3 命中，丢弃步 4，重算合成下游 |
+
+测试还用固定种子生成 6 组随机命令序列，混合全部编辑类型和 1/2/4 并发度；增量结果与最终状态冷渲染在像素、完整残差数组、方向数组、tile 顺序和血缘键上逐字段相等。
+
+## 并发
+
+`max_workers: 4` 是硬上限。`RenderEngine(workers=99)` 会收缩到配置上限；测试用任务内计数器观察实际并发，并断言 `max_observed_concurrency <= worker_limit <= config.max_workers`。步骤和 tile 均通过 `ThreadPoolExecutor.map` 按规范顺序回收，因此物理线程时序不会改变账本/完成顺序。
+
+## 快照与 SIGKILL
+
+`SnapshotStore` 将 `snapshot.json` 写入 `snapshots/.tmp-*`，`flush + fsync` 后 rename 到 `snapshots/versions/v...`，再用临时符号链接 + `os.replace` 原子切换 `current`。清单包含：
+
+- 整数快照版本和 schema；
+- `global_version`、完整 `config_hash`、`state_fingerprint`；
+- 每帧条件指纹；
+- 完整内容缓存、账本、待办队列；
+- 已完成帧、tile 游标；
+- 已消耗重算点数和预算；
+- 各阶段产物键/指纹/版本。
+
+恢复决策包括 `resume_pending`、`incremental_config_changed`、`incremental_state_changed` 和 `full_rebuild_snapshot_version`。未提交的 `.tmp-*` 不被当作 current，可在下次启动时清理；不承诺补写一半进度。
+
+真实验证中，子进程以 35ms/task 延迟运行，轮询到帧 0 已提交后发送 `SIGKILL`：
+
+- 被杀进程返回码：`-9`；
+- 终止前提交：`global_version=1`、`completed_frames=[0]`；
+- 新进程恢复决策：`resume_pending`；
+- 恢复时帧 0 的 12 个产物 HIT，其余 36 个产物 RECOMPUTE；
+- 4 个完整 PNG 与同状态冷全量输出逐字节相等。
+
+## 预览语义与故障注入
+
+每条交互命令携带 `interaction_budget_ms`。预算内完成则返回 `fresh=true` 的最新摘要；预算为 0 或到期时返回上一已完成摘要，并带 `E_STALE_PREVIEW`、旧 `config_hash`、旧条件指纹、受影响帧区间、tile 完成情况、HIT/重算数和进度。
+
+`samples/injections.yaml` 的四类注入均为真实输入破坏：
+
+- `INJ-PNG-01`：把 PNG 截到一半，得到 `E_PNG_TRUNCATED`；
+- `INJ-NAN-02`：在图像统计量中注入 NaN，有限性检查得到 `E_NONFINITE_CONDITION`；
+- `INJ-MOT-03`：把运动块行从 2 改成 1，得到 `E_MOTION_BLOCK_MISMATCH`；
+- `INJ-NOISE-04`：删除目标帧噪声表 `version`，得到 `E_NOISE_VERSION_MISSING`。
+
+单注入测试断言目标帧、阶段、业务码和注入编号匹配，其余 3 帧完成；组合注入的失败码顺序为四个预期码。
+
+## 主要目录
+
+```text
+condrender/
+  errors.py          # E_xxx 与异常
+  hashing.py         # canonical JSON / 数组指纹
+  pngcodec.py        # 无 Pillow 的 PNG 编解码与截断检测
+  fixedpoint.py      # Q 格式、确定性舍入、数组残差
+  samples.py         # 固定种子样本生成
+  validation.py      # 加载校验与失败清单
+  bundle.py          # 样本包、状态、命令应用
+  conditions.py      # 文本/图像/运动编码与融合
+  engine.py          # 缓存、线程池、潜变量、去噪、解码、tile
+  snapshot.py        # 原子快照与恢复决策
+  session.py         # 交互会话、增量/全量字段比对
+  acceptance.py      # 全部验收场景编排
+  tk_app.py          # 可选 Tkinter 诊断面板
+tests/test_pipeline.py
+scripts/
+samples/
+docs/
+artifacts/verification/
+```
+
+## 实际验证
+
+最近一次完整结果由以下命令生成：
+
+```bash
+PYTHONPATH=. python3 -m condrender.cli verify \
+  --root . --artifacts-dir artifacts/verification
+```
+
+机器可读结果：`artifacts/verification/verification_report.json`；Markdown 记录：`artifacts/verification/VERIFICATION_REPORT.md`。在最后一次完整运行中，以下六项均为 `true`：
+
+- `command_stream_incremental_equals_full`
+- `negative_validation_codes`
+- `injection_isolation`
+- `stale_preview`
+- `sigkill_snapshot_recovery`
+- `tile_cursor_sigkill_recovery`
+
+完整 `unittest` 套件共 13 个测试，还包含随机命令序列、tile 边界、并发上限、普通快照恢复和半提交 tile 游标恢复。依赖安装与当前环境 Tk 库的实际状态见 `docs/DEPENDENCIES.md`。

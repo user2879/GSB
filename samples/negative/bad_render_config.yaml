@@ -1,0 +1,92 @@
+schema: condrender-config-v1
+snapshot_schema: condrender-snapshot-v1
+global_version: 1
+config_version: cfg-sample-v1
+seed: -7
+seed_min: 0
+seed_max: 4294967295
+frames: 4
+width: 16
+height: 8
+condition_image:
+  width: 8
+  height: 8
+  block_cols: 2
+  block_rows: 2
+motion_grid:
+  block_width: 4
+  block_height: 4
+  cols: 4
+  rows: 2
+  vector_components: 2
+condition_dims:
+  text: 14
+  image: 20
+  motion: 16
+  motion_row: 8
+  fused: 42
+fixed_point:
+  frac_bits: 32
+  quant_profile: Q32_EXTREME
+  rounding_mode: HALF_AWAY_FROM_ZERO
+fusion:
+  weight_scale: 10000
+  weights:
+    text: '0.45'
+    image: '0.25'
+    motion: '0.30'
+denoise_steps: 0
+max_noise_steps: 8
+guidance_scale: '1.50'
+step_alpha_bp:
+- 10000
+- 6500
+- 4000
+- 2500
+- 1500
+- 1000
+- 700
+- 500
+noise:
+  required_version: noise-v1
+  allowed_versions:
+  - noise-v1
+  - noise-v2
+  table_path: samples/noise_table.json
+decoder:
+  matrix_bp:
+  - - 10000
+    - 1200
+    - -800
+  - - -600
+    - 10000
+    - 1000
+  - - 900
+    - -1200
+    - 10000
+  bias_q:
+  - 0
+  - 0
+  - 0
+  center_q_fraction: 128
+  pixel_gain: '48.0'
+tile_rows: -2
+tile_scheduling: zigzag
+max_workers: 4
+interaction_budget_ms: 250
+recompute_point_budget: 100000
+stage_costs:
+  text: 1
+  image: 2
+  motion: 1
+  fusion: 2
+  initial: 1
+  step: 3
+  tile: 2
+  frame_compose: 1
+paths:
+  prompts: samples/prompt_table.yaml
+  vocab: samples/controlled_vocab.yaml
+  motion: samples/motion_vectors.yaml
+  commands: samples/command_stream.yaml
+  injections: samples/injections.yaml

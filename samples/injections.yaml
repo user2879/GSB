@@ -1,0 +1,23 @@
+version: injection-config-v1
+description: Independent fault injection; IDs must appear in diagnostics.
+injections:
+- id: INJ-PNG-01
+  type: truncated_png
+  target_frame: 0
+  stage: image_decode
+  expected_code: E_PNG_TRUNCATED
+- id: INJ-NAN-02
+  type: nonfinite_condition
+  target_frame: 1
+  stage: image_encode
+  expected_code: E_NONFINITE_CONDITION
+- id: INJ-MOT-03
+  type: motion_block_mismatch
+  target_frame: 2
+  stage: motion_validate
+  expected_code: E_MOTION_BLOCK_MISMATCH
+- id: INJ-NOISE-04
+  type: noise_version_missing
+  target_frame: 3
+  stage: denoise_step
+  expected_code: E_NOISE_VERSION_MISSING
