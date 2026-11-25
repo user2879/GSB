@@ -1,0 +1,207 @@
+{
+  "evidence": [
+    {
+      "evidence_id": "e01",
+      "text": "退款申请提交成功后，平台会在一个工作日内完成审核。",
+      "weight": "1.05"
+    },
+    {
+      "evidence_id": "e02",
+      "text": "退款到账时间取决于支付渠道，通常为一至三个工作日。",
+      "weight": "1.01"
+    },
+    {
+      "evidence_id": "e03",
+      "text": "原路退回是默认退款方式，银行卡到账可能延迟。",
+      "weight": "0.49"
+    },
+    {
+      "evidence_id": "e04",
+      "text": "退款进度可在订单详情页的售后记录中查询。",
+      "weight": "0.55"
+    },
+    {
+      "evidence_id": "e05",
+      "text": "节假日期间退款处理与银行清算时间可能顺延。",
+      "weight": "0.82"
+    },
+    {
+      "evidence_id": "e06",
+      "text": "客服工单可以催办超时未到账的退款。",
+      "weight": "0.86"
+    },
+    {
+      "evidence_id": "e07",
+      "text": "发票抬头填写错误时可以申请作废后重开。",
+      "weight": "0.73"
+    },
+    {
+      "evidence_id": "e08",
+      "text": "发票重开需要提供订单号、原发票与正确抬头。",
+      "weight": "0.82"
+    },
+    {
+      "evidence_id": "e09",
+      "text": "电子发票可在发票中心下载 PDF 文件。",
+      "weight": "0.58"
+    },
+    {
+      "evidence_id": "e10",
+      "text": "账号登录异常时先检查密码与安全验证方式。",
+      "weight": "0.97"
+    },
+    {
+      "evidence_id": "e11",
+      "text": "验证失败可通过绑定手机号找回账号。",
+      "weight": "0.89"
+    },
+    {
+      "evidence_id": "e12",
+      "text": "连续多次验证失败会临时冻结登录。",
+      "weight": "0.76"
+    },
+    {
+      "evidence_id": "e13",
+      "text": "查看退款政策更新公告可以确认最新时限。",
+      "weight": "1.14"
+    },
+    {
+      "evidence_id": "e14",
+      "text": "账号申诉需要提交身份验证材料。",
+      "weight": "0.61"
+    }
+  ],
+  "session_id": "refund-invoice-security-20261126",
+  "turns": [
+    {
+      "channels": {
+        "dense": [
+          "e02",
+          "e03"
+        ],
+        "graph": [
+          "e04"
+        ],
+        "keyword": [
+          "e01",
+          "e02",
+          "e02"
+        ]
+      },
+      "query": "退款申请后多久到账？",
+      "turn_id": 1
+    },
+    {
+      "channels": {
+        "dense": [
+          "e02",
+          "e03",
+          "e05"
+        ],
+        "keyword": [
+          "e01",
+          "e02"
+        ]
+      },
+      "query": "退款到账时间受哪些因素影响？",
+      "turn_id": 2
+    },
+    {
+      "channels": {
+        "dense": [
+          "e03",
+          "e04"
+        ],
+        "keyword": [
+          "e01",
+          "e04"
+        ]
+      },
+      "query": "退款进度在哪里查询？",
+      "turn_id": 3
+    },
+    {
+      "channels": {
+        "dense": [
+          "e08",
+          "e09"
+        ],
+        "graph": [
+          "e02"
+        ],
+        "keyword": [
+          "e07",
+          "e08"
+        ]
+      },
+      "query": "发票抬头填错了可以重开吗？",
+      "turn_id": 4
+    },
+    {
+      "channels": {
+        "dense": [
+          "e08",
+          "e09"
+        ],
+        "graph": [
+          "e02"
+        ],
+        "keyword": [
+          "e07",
+          "e08"
+        ]
+      },
+      "query": "发票重开需要什么材料？",
+      "turn_id": 5
+    },
+    {
+      "channels": {
+        "dense": [
+          "e09",
+          "e08"
+        ],
+        "keyword": [
+          "e07",
+          "e09"
+        ]
+      },
+      "query": "电子发票如何下载？",
+      "turn_id": 6
+    },
+    {
+      "channels": {
+        "dense": [
+          "e11",
+          "e12"
+        ],
+        "graph": [
+          "e10",
+          "e02"
+        ],
+        "keyword": [
+          "e10",
+          "e11"
+        ]
+      },
+      "query": "账号登录异常怎么处理？",
+      "turn_id": 7
+    },
+    {
+      "channels": {
+        "dense": [
+          "e11",
+          "e02"
+        ],
+        "graph": [
+          "e08"
+        ],
+        "keyword": [
+          "e10",
+          "e12"
+        ]
+      },
+      "query": "登录验证失败如何找回账号？",
+      "turn_id": 8
+    }
+  ]
+}

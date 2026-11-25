@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evidence-chain-diag"
+version = "1.0.0"
+description = "Deterministic conversational evidence-chain diagnostics"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+evidence-diag = "evidence_diag.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["evidence_diag*"]

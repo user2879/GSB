@@ -1,0 +1,17 @@
+{"op": "add_turn", "seq": 1, "turn": {"channels": {"dense": ["e02", "e05", "e13"], "graph": ["e04"], "keyword": ["e01", "e13"]}, "query": "退款政策更新后到账时间会变化吗？"}}
+{"op": "replace_turn_query", "query": "退款到账受支付渠道和节假日影响吗？", "seq": 2, "turn_id": 2}
+{"channel": "dense", "op": "set_channel_weight", "seq": 3, "weight": "1.58"}
+{"evidence_id": "e02", "op": "set_evidence_weight", "seq": 4, "weight": "0.41"}
+{"op": "set_topic_threshold", "seq": 5, "value_bp": 2500}
+{"channel": "dense", "evidence_ids": ["e03", "e04", "e12"], "op": "set_channel_declaration", "seq": 6, "turn_id": 3}
+{"op": "delete_turn", "seq": 7, "turn_id": 6}
+{"op": "set_budget", "seq": 8, "value": 5}
+{"fractional_bits": 8, "op": "set_fixed_point", "quantization": 8, "rounding": "half_up", "seq": 9}
+{"op": "set_budget", "seq": 10, "value": 200}
+{"fractional_bits": 16, "op": "set_fixed_point", "quantization": 2, "rounding": "half_even", "seq": 11}
+{"evidence_id": "e02", "op": "set_evidence_text", "seq": 12, "text": "退款到账时间取决于支付渠道和银行清算，通常为一至三个工作日。"}
+{"channel": "dense", "op": "set_channel_weight", "seq": 13, "weight": "-1.00"}
+{"op": "set_topic_threshold", "seq": 14, "value_bp": 1200}
+{"channel": "keyword", "evidence_ids": ["e01", "e02", "e05"], "op": "set_channel_declaration", "seq": 15, "turn_id": 2}
+{"fractional_bits": 8, "op": "set_fixed_point", "quantization": 4, "rounding": "half_up", "seq": 16}
+{"channel": "keyword", "op": "set_channel_weight", "seq": 17, "weight": "1.583"}
