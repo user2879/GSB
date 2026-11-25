@@ -1,0 +1,93 @@
+{
+  "command_stream_id": "CMDS-318",
+  "commands": [
+    {
+      "entry": {
+        "enabled": true,
+        "frequency": 88,
+        "id": "E029",
+        "pos": "NN",
+        "pos_tags": [
+          "NN"
+        ],
+        "tag_weights": {
+          "NN": 0.1
+        },
+        "term": "量子",
+        "version": 4
+      },
+      "op": "upsert_entry",
+      "seq": 1
+    },
+    {
+      "entry_version": 4,
+      "frequency": 132,
+      "id": "E001",
+      "op": "set_frequency",
+      "seq": 2
+    },
+    {
+      "op": "update_weights",
+      "seq": 3,
+      "transition_weights": {
+        "NN": {
+          "NN": 0.31,
+          "VV": 0.62
+        }
+      }
+    },
+    {
+      "op": "upsert_rule",
+      "rule": {
+        "action": "split",
+        "doc_id": "D005",
+        "enabled": true,
+        "order": 2,
+        "position": 3,
+        "rule_id": "R-SPLIT-MODEL-INTERNAL",
+        "version": 3
+      },
+      "seq": 4
+    },
+    {
+      "entry_version": 1,
+      "frequency": 1,
+      "id": "E001",
+      "op": "set_frequency",
+      "seq": 5
+    },
+    {
+      "id": "E024",
+      "op": "delete_entry",
+      "seq": 6
+    },
+    {
+      "op": "rollback_revision",
+      "revision": 3,
+      "seq": 7
+    },
+    {
+      "entry_version": 4,
+      "frequency": 211,
+      "id": "E010",
+      "op": "set_frequency",
+      "seq": 8
+    },
+    {
+      "op": "set_exchange_version",
+      "seq": 9,
+      "version": "jv1"
+    },
+    {
+      "op": "set_exchange_version",
+      "seq": 10,
+      "version": "jv2"
+    },
+    {
+      "op": "set_quant_tier",
+      "seq": 11,
+      "tier": "fine"
+    }
+  ],
+  "seed": 3182026
+}
