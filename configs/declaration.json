@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "session_id": "quotalab-demo",
+  "scale_power": 1,
+  "global_budget_units": 6,
+  "lease_ttl_ms": 5000,
+  "lease_max_renewals": 1,
+  "socket_timeout_ms": 1000,
+  "ready_timeout_ms": 5000,
+  "worker_count": 8,
+  "tolerances_q": {
+    "shard_q": 3,
+    "node_watermark_q": 1,
+    "global_budget_q": 1,
+    "dominance_threshold_bp": 5000
+  },
+  "accounting": {
+    "pressure_den": 8,
+    "group_count": 8
+  },
+  "fault_injection": {},
+  "nodes": [
+    {
+      "node_id": "n1",
+      "host": "127.0.0.1",
+      "port": 19161,
+      "concurrency_quota": 2,
+      "lease_limit": 2,
+      "seed": 1001001,
+      "capacity_version": 1
+    },
+    {
+      "node_id": "n2",
+      "host": "127.0.0.1",
+      "port": 19162,
+      "concurrency_quota": 2,
+      "lease_limit": 2,
+      "seed": 2002002,
+      "capacity_version": 1
+    }
+  ]
+}

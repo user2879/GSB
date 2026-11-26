@@ -1,0 +1,58 @@
+{
+  "shards": [
+    {
+      "shard_id": "s1",
+      "node_id": "n1",
+      "depends_on": [],
+      "sample_rows": 48,
+      "resource_units": 2,
+      "priority": 100,
+      "planned_renewals": 1
+    },
+    {
+      "shard_id": "s2",
+      "node_id": "n2",
+      "depends_on": [],
+      "sample_rows": 44,
+      "resource_units": 2,
+      "priority": 90
+    },
+    {
+      "shard_id": "s3",
+      "node_id": "n1",
+      "depends_on": [],
+      "sample_rows": 36,
+      "resource_units": 2,
+      "priority": 80
+    },
+    {
+      "shard_id": "s4",
+      "node_id": "n2",
+      "depends_on": [],
+      "sample_rows": 32,
+      "resource_units": 2,
+      "priority": 70
+    },
+    {
+      "shard_id": "s5",
+      "node_id": "n1",
+      "depends_on": [
+        "s3"
+      ],
+      "sample_rows": 24,
+      "resource_units": 1,
+      "priority": 60
+    },
+    {
+      "shard_id": "s6",
+      "node_id": "n2",
+      "depends_on": [
+        "s2",
+        "s5"
+      ],
+      "sample_rows": 20,
+      "resource_units": 2,
+      "priority": 50
+    }
+  ]
+}

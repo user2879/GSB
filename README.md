@@ -20,3 +20,22 @@
 
 验收：
 使用本地样本验证定点误差传播、预算边界裁决与容量版本替换，运行恢复重放校验并附运行结果。
+
+---
+
+## 实现交付入口
+
+可运行实现位于 `quota_lab/`，自动化测试位于 `tests/`，技术细节见 `docs/TECHNICAL.md`，实际验收输出见 `artifacts/acceptance-output.txt` 与 `artifacts/acceptance-summary.json`。
+
+```bash
+bash scripts/setup_venv.sh
+bash scripts/acceptance.sh 2>&1 | tee artifacts/acceptance-output.txt
+```
+
+常用单独命令：
+
+```bash
+.venv/bin/python -m quota_lab.cli init-demo
+.venv/bin/python -m quota_lab.cli verify-network
+.venv/bin/python -m unittest discover -s tests -v
+```
