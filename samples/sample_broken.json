@@ -1,0 +1,20 @@
+{
+  "spec_version": 1,
+  "epsilon": 0,
+  "global_concurrency": 2,
+  "per_readpoint_quota": 1,
+  "transactions": [
+    {"txn_id": "T1", "begin_seq": 1, "outcome": "committed", "commit_seq": 2},
+    {"txn_id": "T2", "begin_seq": 2, "outcome": "committed", "commit_seq": 4}
+  ],
+  "records": [
+    {"row_key": "R-OK", "writer_txn_id": "T1", "version": 1, "value_digest": "ok-v1", "prev_version": null},
+    {"row_key": "R-OK", "writer_txn_id": "T2", "version": 2, "value_digest": "ok-v2", "prev_version": 1}
+  ],
+  "read_points": [
+    {"read_point_id": "RP-1", "snapshot_seq": 4, "reader_txn_id": "T1"}
+  ],
+  "queries": [
+    {"query_id": "QB1", "read_point_id": "RP-1", "row_key": "R-OK"}
+  ]
+}

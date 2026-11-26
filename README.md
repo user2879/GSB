@@ -20,3 +20,27 @@
 
 验收：
 以本地样本验证可见性判定、并行配额与恢复重放的一致性，并确认异常链路返回约定业务码。
+
+
+---
+
+# 交付说明：mvcc_lab 诊断组件
+
+任务描述之上的工程实现已落地，包结构、声明样本、SQLite 账本与测试均为本任务首次建立。
+
+## 目录
+- `mvcc_lab/`：组件包（加载校验、可见性、执行器、调度、失效传播、账本、编排、CLI）
+- `samples/`：确定性声明（主样本、误差决胜样本、变更声明样本、断链说明样本）
+- `tests/`：40 项 pytest 用例
+- `docs/ARCHITECTURE.md`：架构、协议与规则说明；`docs/VALIDATION.md`：实测记录
+- `build/`：运行产生的账本、备份与报告（可重建）
+
+## 运行
+```bash
+python3 -m virtualenv .venv && . .venv/bin/activate
+pip install numpy pytest
+python -m mvcc_lab --config samples/sample_spec.json --ledger build/demo.sqlite --replay
+```
+异常注入（不改源码）：`--inject none|silent|silent_hold|port_busy|missing_field|rule_conflict`；
+强制终止模拟：`--kill-after <N>`；恢复后一致性重放：`--replay`。
+业务码：`E_SPEC/E_PORT/E_TIMEOUT/E_FIELD/E_REPLAY/E_LEDGER`。

@@ -1,0 +1,38 @@
+{
+  "spec_version": 1,
+  "epsilon": 0,
+  "global_concurrency": 2,
+  "per_readpoint_quota": 1,
+  "transactions": [
+    {"txn_id": "T1", "begin_seq": 1, "outcome": "committed", "commit_seq": 2},
+    {"txn_id": "T2", "begin_seq": 2, "outcome": "committed", "commit_seq": 5},
+    {"txn_id": "T3", "begin_seq": 3, "outcome": "rolledback", "commit_seq": null},
+    {"txn_id": "T4", "begin_seq": 4, "outcome": "pending", "commit_seq": null},
+    {"txn_id": "T5", "begin_seq": 5, "outcome": "committed", "commit_seq": 8}
+  ],
+  "records": [
+    {"row_key": "R-A", "writer_txn_id": "T1", "version": 1, "value_digest": "A-v1", "prev_version": null},
+    {"row_key": "R-A", "writer_txn_id": "T2", "version": 2, "value_digest": "A-v2", "prev_version": 1},
+    {"row_key": "R-A", "writer_txn_id": "T3", "version": 3, "value_digest": "A-v3", "prev_version": 2},
+    {"row_key": "R-A", "writer_txn_id": "T4", "version": 4, "value_digest": "A-v4", "prev_version": 3},
+    {"row_key": "R-B", "writer_txn_id": "T1", "version": 1, "value_digest": "B-v1", "prev_version": null},
+    {"row_key": "R-B", "writer_txn_id": "T5", "version": 2, "value_digest": "B-v2", "prev_version": 1},
+    {"row_key": "R-C", "writer_txn_id": "T4", "version": 1, "value_digest": "C-v1", "prev_version": null}
+  ],
+  "read_points": [
+    {"read_point_id": "RP-1", "snapshot_seq": 3, "reader_txn_id": "T1"},
+    {"read_point_id": "RP-2", "snapshot_seq": 5, "reader_txn_id": "T2"},
+    {"read_point_id": "RP-3", "snapshot_seq": 8, "reader_txn_id": "T4"},
+    {"read_point_id": "RP-4", "snapshot_seq": 8, "reader_txn_id": "T1"}
+  ],
+  "queries": [
+    {"query_id": "Q1", "read_point_id": "RP-1", "row_key": "R-A"},
+    {"query_id": "Q2", "read_point_id": "RP-2", "row_key": "R-A"},
+    {"query_id": "Q3", "read_point_id": "RP-3", "row_key": "R-A"},
+    {"query_id": "Q4", "read_point_id": "RP-4", "row_key": "R-A"},
+    {"query_id": "Q5", "read_point_id": "RP-2", "row_key": "R-B"},
+    {"query_id": "Q6", "read_point_id": "RP-1", "row_key": "R-B"},
+    {"query_id": "Q7", "read_point_id": "RP-3", "row_key": "R-C"},
+    {"query_id": "Q8", "read_point_id": "RP-4", "row_key": "R-C"}
+  ]
+}
