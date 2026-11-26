@@ -1,0 +1,121 @@
+{
+  "cross_attribution": {
+    "blockwave": {
+      "first_exceeded_stage_counts": {
+        "none": 12,
+        "position": 0,
+        "score": 0,
+        "weight": 0
+      },
+      "flip_attributed_sources": {},
+      "flip_count": 0,
+      "flip_dominant_sources": {},
+      "stage_attribution": {
+        "position": {
+          "max_absolute_error": 7.4283374377204225e-06,
+          "max_relative_error": 0.00019863216515458537,
+          "samples_exceeded": 0
+        },
+        "score": {
+          "max_absolute_error": 2.729135001627858e-05,
+          "max_relative_error": 0.00034476114495801224,
+          "samples_exceeded": 0
+        },
+        "weight": {
+          "max_absolute_error": 4.124375254238588e-06,
+          "max_relative_error": 3.884248522865353e-05,
+          "samples_exceeded": 0
+        }
+      }
+    },
+    "linear_ramp": {
+      "first_exceeded_stage_counts": {
+        "none": 12,
+        "position": 0,
+        "score": 0,
+        "weight": 0
+      },
+      "flip_attributed_sources": {
+        "position_vector_quantization": 1
+      },
+      "flip_count": 1,
+      "flip_dominant_sources": {
+        "position_vector_quantization": 1
+      },
+      "stage_attribution": {
+        "position": {
+          "max_absolute_error": 7.5833995005769594e-06,
+          "max_relative_error": 0.001782691994737534,
+          "samples_exceeded": 0
+        },
+        "score": {
+          "max_absolute_error": 2.8892672537583763e-05,
+          "max_relative_error": 0.00024859733396070634,
+          "samples_exceeded": 0
+        },
+        "weight": {
+          "max_absolute_error": 8.128602796211859e-07,
+          "max_relative_error": 3.4054550247560755e-05,
+          "samples_exceeded": 0
+        }
+      }
+    },
+    "sinusoidal": {
+      "first_exceeded_stage_counts": {
+        "none": 12,
+        "position": 0,
+        "score": 0,
+        "weight": 0
+      },
+      "flip_attributed_sources": {},
+      "flip_count": 0,
+      "flip_dominant_sources": {},
+      "stage_attribution": {
+        "position": {
+          "max_absolute_error": 7.620719199685766e-06,
+          "max_relative_error": 0.00028030706698505,
+          "samples_exceeded": 0
+        },
+        "score": {
+          "max_absolute_error": 3.491487952089756e-05,
+          "max_relative_error": 0.0002743362415657842,
+          "samples_exceeded": 0
+        },
+        "weight": {
+          "max_absolute_error": 2.3772671965266445e-06,
+          "max_relative_error": 3.1864154093986674e-05,
+          "samples_exceeded": 0
+        }
+      }
+    }
+  },
+  "flip_attribution": [
+    {
+      "attributed_source": "position_vector_quantization",
+      "contributions": {
+        "accumulation_rounding": -1.8429243937134743e-05,
+        "input_feature_quantization": 0.0,
+        "normalization_max_subtraction": 0.0,
+        "position_only_hybrid": -0.45530383638106287,
+        "position_vector_quantization": -0.45530383638106287,
+        "unexplained_float64": 0.0
+      },
+      "dominant_source": "position_vector_quantization",
+      "frac_bits": 16,
+      "loser_key_index": 6,
+      "loser_position": 38,
+      "new_loser_rank": 1,
+      "new_rank": 2,
+      "new_score_margin": -0.4553070068359375,
+      "old_loser_rank": 2,
+      "old_rank": 1,
+      "old_score_margin": 1.52587890625e-05,
+      "sample_id": "s006",
+      "scheme": "linear_ramp",
+      "tier_from": "Q8",
+      "tier_to": "Q16",
+      "winner_key_index": 0,
+      "winner_position": 0
+    }
+  ]
+}

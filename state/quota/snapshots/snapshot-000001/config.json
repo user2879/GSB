@@ -1,0 +1,50 @@
+{
+  "active_scheme": "sinusoidal",
+  "base_freq": 10000.0,
+  "batch_point_budget": 144,
+  "block_size": 2,
+  "dimension": 8,
+  "frac_bits": 16,
+  "quant_tier": "Q32",
+  "sample_point_quota": 80,
+  "scale": 1.0,
+  "schema_version": 1,
+  "schemes": [
+    {
+      "base_freq": 10000.0,
+      "block_size": 2,
+      "enabled": true,
+      "kind": "sinusoidal",
+      "name": "sinusoidal",
+      "scale": 1.0
+    },
+    {
+      "base_freq": 10000.0,
+      "block_size": 2,
+      "enabled": true,
+      "kind": "linear_ramp",
+      "name": "linear_ramp",
+      "scale": 1.0
+    },
+    {
+      "base_freq": 10000.0,
+      "block_size": 4,
+      "enabled": true,
+      "kind": "blockwave",
+      "name": "blockwave",
+      "scale": 1.0
+    }
+  ],
+  "seed": 20261127,
+  "target_length": 64,
+  "tolerances": {
+    "position_abs": 1e-05,
+    "position_rel": 0.01,
+    "score_abs": 1e-06,
+    "score_rel": 0.02,
+    "weight_abs": 1e-07,
+    "weight_rel": 0.05
+  },
+  "train_length": 16,
+  "workers": 1
+}

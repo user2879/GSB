@@ -1,0 +1,100 @@
+{
+  "accepted_sample_ids": [
+    "s001",
+    "s002",
+    "s003",
+    "s004",
+    "s005",
+    "s006",
+    "s007",
+    "s008",
+    "s010",
+    "s011",
+    "s012"
+  ],
+  "failure_count": 6,
+  "failures": [
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_SAMPLE_PARSE",
+          "field": "line:13",
+          "message": "JSON parse error: Expecting value"
+        }
+      ],
+      "line_number": 13,
+      "sample_id": "<line:13>"
+    },
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_SAMPLE_ID_DUPLICATE",
+          "field": "id",
+          "message": "duplicate sample id 's001'"
+        }
+      ],
+      "line_number": 14,
+      "sample_id": "s001"
+    },
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_QUERY_POSITION",
+          "field": "query_position",
+          "message": "must be a non-negative integer"
+        }
+      ],
+      "line_number": 15,
+      "sample_id": "bad-negative-qpos"
+    },
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_KEY_POSITION_DUPLICATE",
+          "field": "key_positions[1]",
+          "message": "duplicate key position 4"
+        }
+      ],
+      "line_number": 16,
+      "sample_id": "bad-duplicate-keys"
+    },
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_FEATURE_VECTOR",
+          "field": "query_vector",
+          "message": "expected length 8, got 2"
+        },
+        {
+          "code": "E_FEATURE_VECTOR",
+          "field": "query_vector[1]",
+          "message": "1 non-finite/non-numeric elements"
+        }
+      ],
+      "line_number": 17,
+      "sample_id": "bad-vector-length"
+    },
+    {
+      "accepted": false,
+      "errors": [
+        {
+          "code": "E_DIMENSION",
+          "field": "dimension",
+          "message": "dimension must be a positive even integer"
+        },
+        {
+          "code": "E_LENGTH_ORDER",
+          "field": "train_length",
+          "message": "train_length must not exceed target_length"
+        }
+      ],
+      "line_number": 18,
+      "sample_id": "bad-length-order"
+    }
+  ]
+}

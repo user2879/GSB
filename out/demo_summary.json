@@ -1,0 +1,90 @@
+{
+  "budget": {
+    "budget_batch_1_pending": 10,
+    "budget_batch_2_completed": 2,
+    "quota_pending": 1,
+    "quota_recovered": true
+  },
+  "concurrency": {
+    "canonical_business_fields_equal": true,
+    "same_config_workers": 4,
+    "serial_executed_task_count": 144,
+    "thread_executed_task_count": 144
+  },
+  "equivalence": {
+    "canonical_business_fields_equal": true,
+    "comparison": "canonical JSON with sorted keys and stable float repr",
+    "full_flip_count": 4,
+    "full_task_count": 132,
+    "incremental_flip_count": 4,
+    "incremental_task_count": 132
+  },
+  "invalidation": {
+    "base_freq_only_invalidates_named_scheme": true,
+    "length_only_invalidates_stats_error": true
+  },
+  "list_equivalence": {
+    "blank_full_recompute_count": 132,
+    "blank_full_recompute_matches_manifest": true,
+    "blank_full_reuse_count": 0,
+    "canonical_business_fields_equal": true,
+    "failure_order_equal": true,
+    "incremental_recompute_count": 44,
+    "incremental_reuse_count": 88,
+    "incremental_reuse_recompute_union_matches_manifest": true,
+    "note": "A blank cache has no historical hits by definition; stable identities, order, union coverage, and all payload fields are compared here.",
+    "task_manifest_order_equal": true
+  },
+  "load": {
+    "accepted": 12,
+    "code_counts": {
+      "E_DIMENSION": 1,
+      "E_FEATURE_VECTOR": 2,
+      "E_KEY_POSITION_DUPLICATE": 1,
+      "E_LENGTH_ORDER": 1,
+      "E_QUERY_POSITION": 1,
+      "E_SAMPLE_ID_DUPLICATE": 1,
+      "E_SAMPLE_PARSE": 1
+    },
+    "failures": 6
+  },
+  "outputs": [
+    "out/load_validation.json",
+    "out/full_report.json",
+    "out/incremental_report.json",
+    "out/equivalence.json",
+    "out/reuse_recompute_equivalence.json",
+    "out/concurrency_equivalence.json",
+    "out/budget_demo.json",
+    "out/invalidation_demo.json",
+    "out/recovery.json",
+    "out/flip_attribution.json",
+    "out/stage_attribution_profiles.json"
+  ],
+  "recovery": {
+    "current_pointer_exists": true,
+    "global_version": 5,
+    "killed_temp_directory_ignored": true,
+    "recovery": "resumed_committed_snapshot"
+  },
+  "stage_profiles": {
+    "position_first": {
+      "none": 0,
+      "position": 12,
+      "score": 0,
+      "weight": 0
+    },
+    "score_first": {
+      "none": 0,
+      "position": 0,
+      "score": 12,
+      "weight": 0
+    },
+    "weight_first": {
+      "none": 0,
+      "position": 0,
+      "score": 0,
+      "weight": 12
+    }
+  }
+}
