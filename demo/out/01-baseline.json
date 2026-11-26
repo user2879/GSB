@@ -1,0 +1,235 @@
+{
+  "decisions": [
+    {
+      "action": "grant",
+      "adjudication": 1,
+      "at_ms": 20314829,
+      "capacity_version": 1,
+      "lease_id": "lease-000001",
+      "node_id": "node-a",
+      "reason": "scheduled",
+      "shard_id": "s-root"
+    },
+    {
+      "action": "release",
+      "adjudication": 2,
+      "at_ms": 20314866,
+      "capacity_version": 1,
+      "lease_id": "lease-000001",
+      "node_id": "node-a",
+      "reason": "completed",
+      "shard_id": "s-root"
+    },
+    {
+      "action": "grant",
+      "adjudication": 3,
+      "at_ms": 20314878,
+      "capacity_version": 1,
+      "lease_id": "lease-000002",
+      "node_id": "node-b",
+      "reason": "scheduled",
+      "shard_id": "s-alpha"
+    },
+    {
+      "action": "release",
+      "adjudication": 4,
+      "at_ms": 20314885,
+      "capacity_version": 1,
+      "lease_id": "lease-000002",
+      "node_id": "node-b",
+      "reason": "completed",
+      "shard_id": "s-alpha"
+    },
+    {
+      "action": "grant",
+      "adjudication": 5,
+      "at_ms": 20314890,
+      "capacity_version": 1,
+      "lease_id": "lease-000003",
+      "node_id": "node-c",
+      "reason": "scheduled",
+      "shard_id": "s-beta"
+    },
+    {
+      "action": "release",
+      "adjudication": 6,
+      "at_ms": 20314897,
+      "capacity_version": 1,
+      "lease_id": "lease-000003",
+      "node_id": "node-c",
+      "reason": "completed",
+      "shard_id": "s-beta"
+    },
+    {
+      "action": "grant",
+      "adjudication": 7,
+      "at_ms": 20314902,
+      "capacity_version": 1,
+      "lease_id": "lease-000004",
+      "node_id": "node-a",
+      "reason": "scheduled",
+      "shard_id": "s-gamma"
+    },
+    {
+      "action": "release",
+      "adjudication": 8,
+      "at_ms": 20314907,
+      "capacity_version": 1,
+      "lease_id": "lease-000004",
+      "node_id": "node-a",
+      "reason": "completed",
+      "shard_id": "s-gamma"
+    },
+    {
+      "action": "grant",
+      "adjudication": 9,
+      "at_ms": 20314912,
+      "capacity_version": 1,
+      "lease_id": "lease-000005",
+      "node_id": "node-b",
+      "reason": "scheduled",
+      "shard_id": "s-delta"
+    },
+    {
+      "action": "release",
+      "adjudication": 10,
+      "at_ms": 20314919,
+      "capacity_version": 1,
+      "lease_id": "lease-000005",
+      "node_id": "node-b",
+      "reason": "completed",
+      "shard_id": "s-delta"
+    },
+    {
+      "action": "grant",
+      "adjudication": 11,
+      "at_ms": 20314924,
+      "capacity_version": 1,
+      "lease_id": "lease-000006",
+      "node_id": "node-c",
+      "reason": "scheduled",
+      "shard_id": "s-epsilon"
+    },
+    {
+      "action": "release",
+      "adjudication": 12,
+      "at_ms": 20314931,
+      "capacity_version": 1,
+      "lease_id": "lease-000006",
+      "node_id": "node-c",
+      "reason": "completed",
+      "shard_id": "s-epsilon"
+    }
+  ],
+  "outcomes": {
+    "s-alpha": {
+      "capacity_version": 1,
+      "node_id": "node-b",
+      "shard_id": "s-alpha",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "a86d7754d5cc94f83ad0776019965582064a80578fd64b95a2eb51a236191f8b"
+    },
+    "s-beta": {
+      "capacity_version": 1,
+      "node_id": "node-c",
+      "shard_id": "s-beta",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "b22d18250eb2f8e2a74b6fea308f971f3ba0a68ce451f65ce16e44b40861e7fa"
+    },
+    "s-delta": {
+      "capacity_version": 1,
+      "node_id": "node-b",
+      "shard_id": "s-delta",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "3db54dab9f2a61b5c22d01222a69dfb46a6e3d43a93fd62ba11f11b9c8ea7414"
+    },
+    "s-epsilon": {
+      "capacity_version": 1,
+      "node_id": "node-c",
+      "shard_id": "s-epsilon",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "bdeaeda6bfe039908d6a29a0b3d6452a5405860c42620c2ec1ae97519a080d9c"
+    },
+    "s-gamma": {
+      "capacity_version": 1,
+      "node_id": "node-a",
+      "shard_id": "s-gamma",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "5bc115cc0aadc3b293b70facde2574b72b58c56d10261cee05d5a0e9ad70d466"
+    },
+    "s-root": {
+      "capacity_version": 1,
+      "node_id": "node-a",
+      "shard_id": "s-root",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "2814eb3c4bb4b26374dde3e23ef0a43c53b417e821338fa98f87471bb6151784"
+    }
+  },
+  "waits": {
+    "s-alpha": {
+      "reason": "queued",
+      "shard_id": "s-alpha",
+      "wait_end_ms": 20314880,
+      "wait_start_ms": 20314878
+    },
+    "s-beta": {
+      "reason": "queued",
+      "shard_id": "s-beta",
+      "wait_end_ms": 20314893,
+      "wait_start_ms": 20314890
+    },
+    "s-delta": {
+      "reason": "queued",
+      "shard_id": "s-delta",
+      "wait_end_ms": 20314914,
+      "wait_start_ms": 20314912
+    },
+    "s-epsilon": {
+      "reason": "queued",
+      "shard_id": "s-epsilon",
+      "wait_end_ms": 20314927,
+      "wait_start_ms": 20314924
+    },
+    "s-gamma": {
+      "reason": "queued",
+      "shard_id": "s-gamma",
+      "wait_end_ms": 20314904,
+      "wait_start_ms": 20314902
+    },
+    "s-root": {
+      "reason": "queued",
+      "shard_id": "s-root",
+      "wait_end_ms": 20314831,
+      "wait_start_ms": 20314829
+    }
+  },
+  "water_marks": {
+    "node-a": {
+      "capacity_version": 1,
+      "high_water_ms": 20314907,
+      "node_id": "node-a",
+      "resource_total": 4,
+      "shard_count": 2
+    },
+    "node-b": {
+      "capacity_version": 1,
+      "high_water_ms": 20314919,
+      "node_id": "node-b",
+      "resource_total": 6,
+      "shard_count": 2
+    },
+    "node-c": {
+      "capacity_version": 1,
+      "high_water_ms": 20314931,
+      "node_id": "node-c",
+      "resource_total": 6,
+      "shard_count": 2
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shardcast"
+version = "0.1.0"
+description = "Deterministic multi-node shard dispatch over loopback JSON-lines with SQLite recovery"
+readme = "README-package.md"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+shardcast = "shardcast.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["shardcast*"]
+exclude = ["tests*", "demo*"]

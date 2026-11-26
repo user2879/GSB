@@ -1,0 +1,31 @@
+{
+  "invalidated": [
+    {
+      "caused_by": null,
+      "depth": 0,
+      "reason": "resource_units_changed",
+      "shard_id": "s-alpha"
+    },
+    {
+      "caused_by": "s-alpha",
+      "depth": 1,
+      "reason": "upstream_invalid",
+      "shard_id": "s-delta"
+    },
+    {
+      "caused_by": "s-alpha",
+      "depth": 1,
+      "reason": "upstream_invalid",
+      "shard_id": "s-gamma"
+    },
+    {
+      "caused_by": "s-delta",
+      "depth": 2,
+      "reason": "upstream_invalid",
+      "shard_id": "s-epsilon"
+    }
+  ],
+  "unaffected_byte_identical": {
+    "s-root": "{\"capacity_version\":1,\"node_id\":\"node-a\",\"shard_id\":\"s-root\",\"stale\":false,\"status\":\"completed\",\"summary_digest\":\"2814eb3c4bb4b26374dde3e23ef0a43c53b417e821338fa98f87471bb6151784\"}"
+  }
+}

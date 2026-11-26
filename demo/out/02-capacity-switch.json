@@ -1,0 +1,195 @@
+{
+  "final_capacity_version": 2,
+  "final_outcomes": {
+    "s-alpha": {
+      "capacity_version": 2,
+      "node_id": "node-b",
+      "shard_id": "s-alpha",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "e9727f1aaba1bae924723a8282f7018d5353584167af2dff89be32d87b37a631"
+    },
+    "s-beta": {
+      "capacity_version": 2,
+      "node_id": "node-c",
+      "shard_id": "s-beta",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "22d05ab93eb444bdfca4b2b37469b825a4547af64e07afae1e0adc57c80ce721"
+    },
+    "s-delta": {
+      "capacity_version": 2,
+      "node_id": "node-b",
+      "shard_id": "s-delta",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "a1e292cbef8acdd8121d6c7183e4a6e8850a3cde82283564a67178a5f279c5f8"
+    },
+    "s-epsilon": {
+      "capacity_version": 2,
+      "node_id": "node-c",
+      "shard_id": "s-epsilon",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "d1452d977dd643195c6775403fbb025da28602f8aaecc207b60448e327f31398"
+    },
+    "s-gamma": {
+      "capacity_version": 2,
+      "node_id": "node-a",
+      "shard_id": "s-gamma",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "e8ab317d2f04a23d23d386ae046b31b8157279db72b36277849fbb0a9b453b6e"
+    },
+    "s-root": {
+      "capacity_version": 1,
+      "node_id": "node-a",
+      "shard_id": "s-root",
+      "stale": true,
+      "status": "completed",
+      "summary_digest": "2814eb3c4bb4b26374dde3e23ef0a43c53b417e821338fa98f87471bb6151784"
+    }
+  },
+  "revocation": {
+    "backups": [
+      {
+        "global_budget": 6,
+        "quotas": {
+          "node-a": {
+            "concurrency": 2,
+            "lease_limit": 2,
+            "node_id": "node-a"
+          },
+          "node-b": {
+            "concurrency": 2,
+            "lease_limit": 3,
+            "node_id": "node-b"
+          },
+          "node-c": {
+            "concurrency": 1,
+            "lease_limit": 2,
+            "node_id": "node-c"
+          }
+        },
+        "version": 1
+      }
+    ],
+    "decisions": [
+      {
+        "action": "grant",
+        "adjudication": 1,
+        "at_ms": 20314113,
+        "capacity_version": 1,
+        "lease_id": "lease-000001",
+        "node_id": "node-a",
+        "reason": "scheduled",
+        "shard_id": "s-root"
+      },
+      {
+        "action": "release",
+        "adjudication": 2,
+        "at_ms": 20314122,
+        "capacity_version": 1,
+        "lease_id": "lease-000001",
+        "node_id": "node-a",
+        "reason": "completed",
+        "shard_id": "s-root"
+      },
+      {
+        "action": "grant",
+        "adjudication": 3,
+        "at_ms": 20314132,
+        "capacity_version": 1,
+        "lease_id": "lease-inflight-alpha",
+        "node_id": "node-a",
+        "reason": "scheduled",
+        "shard_id": "s-alpha"
+      },
+      {
+        "action": "revoke",
+        "adjudication": 4,
+        "at_ms": 20314134,
+        "capacity_version": 1,
+        "lease_id": "lease-inflight-alpha",
+        "node_id": "node-a",
+        "reason": "capacity_replaced_v2",
+        "shard_id": "s-alpha"
+      }
+    ],
+    "diffs": [
+      {
+        "from_version": 1,
+        "global_budget": {
+          "after": 5,
+          "before": 6
+        },
+        "node_changes": [
+          {
+            "after": {
+              "concurrency": 1,
+              "lease_limit": 1,
+              "node_id": "node-a"
+            },
+            "before": {
+              "concurrency": 2,
+              "lease_limit": 2,
+              "node_id": "node-a"
+            },
+            "node_id": "node-a"
+          },
+          {
+            "after": {
+              "concurrency": 2,
+              "lease_limit": 2,
+              "node_id": "node-b"
+            },
+            "before": {
+              "concurrency": 2,
+              "lease_limit": 3,
+              "node_id": "node-b"
+            },
+            "node_id": "node-b"
+          },
+          {
+            "after": {
+              "concurrency": 3,
+              "lease_limit": 3,
+              "node_id": "node-c"
+            },
+            "before": {
+              "concurrency": 1,
+              "lease_limit": 2,
+              "node_id": "node-c"
+            },
+            "node_id": "node-c"
+          }
+        ],
+        "to_version": 2
+      }
+    ],
+    "in_flight_after_revoke": []
+  },
+  "water_marks": {
+    "node-a": {
+      "capacity_version": 2,
+      "high_water_ms": 20314154,
+      "node_id": "node-a",
+      "resource_total": 2,
+      "shard_count": 1
+    },
+    "node-b": {
+      "capacity_version": 2,
+      "high_water_ms": 20314179,
+      "node_id": "node-b",
+      "resource_total": 6,
+      "shard_count": 2
+    },
+    "node-c": {
+      "capacity_version": 2,
+      "high_water_ms": 20314192,
+      "node_id": "node-c",
+      "resource_total": 6,
+      "shard_count": 2
+    }
+  }
+}

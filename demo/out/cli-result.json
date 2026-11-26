@@ -1,0 +1,288 @@
+{
+  "capacity_diffs": [
+    {
+      "from_version": 1,
+      "global_budget": {
+        "after": 5,
+        "before": 6
+      },
+      "node_changes": [
+        {
+          "after": {
+            "concurrency": 1,
+            "lease_limit": 1,
+            "node_id": "node-a"
+          },
+          "before": {
+            "concurrency": 2,
+            "lease_limit": 2,
+            "node_id": "node-a"
+          },
+          "node_id": "node-a"
+        },
+        {
+          "after": {
+            "concurrency": 2,
+            "lease_limit": 2,
+            "node_id": "node-b"
+          },
+          "before": {
+            "concurrency": 2,
+            "lease_limit": 3,
+            "node_id": "node-b"
+          },
+          "node_id": "node-b"
+        },
+        {
+          "after": {
+            "concurrency": 3,
+            "lease_limit": 3,
+            "node_id": "node-c"
+          },
+          "before": {
+            "concurrency": 1,
+            "lease_limit": 2,
+            "node_id": "node-c"
+          },
+          "node_id": "node-c"
+        }
+      ],
+      "to_version": 2
+    }
+  ],
+  "capacity_version": 2,
+  "decisions": [
+    {
+      "action": "grant",
+      "adjudication": 1,
+      "at_ms": 19663319,
+      "capacity_version": 1,
+      "lease_id": "lease-000001",
+      "node_id": "node-a",
+      "reason": "scheduled",
+      "shard_id": "s-root"
+    },
+    {
+      "action": "release",
+      "adjudication": 2,
+      "at_ms": 19663326,
+      "capacity_version": 1,
+      "lease_id": "lease-000001",
+      "node_id": "node-a",
+      "reason": "completed",
+      "shard_id": "s-root"
+    },
+    {
+      "action": "grant",
+      "adjudication": 3,
+      "at_ms": 19663338,
+      "capacity_version": 1,
+      "lease_id": "lease-000002",
+      "node_id": "node-b",
+      "reason": "scheduled",
+      "shard_id": "s-alpha"
+    },
+    {
+      "action": "release",
+      "adjudication": 4,
+      "at_ms": 19663344,
+      "capacity_version": 1,
+      "lease_id": "lease-000002",
+      "node_id": "node-b",
+      "reason": "completed",
+      "shard_id": "s-alpha"
+    },
+    {
+      "action": "grant",
+      "adjudication": 5,
+      "at_ms": 19663353,
+      "capacity_version": 1,
+      "lease_id": "lease-000003",
+      "node_id": "node-c",
+      "reason": "scheduled",
+      "shard_id": "s-beta"
+    },
+    {
+      "action": "release",
+      "adjudication": 6,
+      "at_ms": 19663361,
+      "capacity_version": 1,
+      "lease_id": "lease-000003",
+      "node_id": "node-c",
+      "reason": "completed",
+      "shard_id": "s-beta"
+    },
+    {
+      "action": "grant",
+      "adjudication": 7,
+      "at_ms": 19663370,
+      "capacity_version": 2,
+      "lease_id": "lease-000004",
+      "node_id": "node-a",
+      "reason": "scheduled",
+      "shard_id": "s-gamma"
+    },
+    {
+      "action": "release",
+      "adjudication": 8,
+      "at_ms": 19663379,
+      "capacity_version": 2,
+      "lease_id": "lease-000004",
+      "node_id": "node-a",
+      "reason": "completed",
+      "shard_id": "s-gamma"
+    },
+    {
+      "action": "grant",
+      "adjudication": 9,
+      "at_ms": 19663389,
+      "capacity_version": 2,
+      "lease_id": "lease-000005",
+      "node_id": "node-b",
+      "reason": "scheduled",
+      "shard_id": "s-delta"
+    },
+    {
+      "action": "release",
+      "adjudication": 10,
+      "at_ms": 19663397,
+      "capacity_version": 2,
+      "lease_id": "lease-000005",
+      "node_id": "node-b",
+      "reason": "completed",
+      "shard_id": "s-delta"
+    },
+    {
+      "action": "grant",
+      "adjudication": 11,
+      "at_ms": 19663406,
+      "capacity_version": 2,
+      "lease_id": "lease-000006",
+      "node_id": "node-c",
+      "reason": "scheduled",
+      "shard_id": "s-epsilon"
+    },
+    {
+      "action": "release",
+      "adjudication": 12,
+      "at_ms": 19663413,
+      "capacity_version": 2,
+      "lease_id": "lease-000006",
+      "node_id": "node-c",
+      "reason": "completed",
+      "shard_id": "s-epsilon"
+    }
+  ],
+  "outcomes": {
+    "s-alpha": {
+      "capacity_version": 1,
+      "node_id": "node-b",
+      "shard_id": "s-alpha",
+      "stale": true,
+      "status": "completed",
+      "summary_digest": "a86d7754d5cc94f83ad0776019965582064a80578fd64b95a2eb51a236191f8b"
+    },
+    "s-beta": {
+      "capacity_version": 1,
+      "node_id": "node-c",
+      "shard_id": "s-beta",
+      "stale": true,
+      "status": "completed",
+      "summary_digest": "b22d18250eb2f8e2a74b6fea308f971f3ba0a68ce451f65ce16e44b40861e7fa"
+    },
+    "s-delta": {
+      "capacity_version": 2,
+      "node_id": "node-b",
+      "shard_id": "s-delta",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "a1e292cbef8acdd8121d6c7183e4a6e8850a3cde82283564a67178a5f279c5f8"
+    },
+    "s-epsilon": {
+      "capacity_version": 2,
+      "node_id": "node-c",
+      "shard_id": "s-epsilon",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "d1452d977dd643195c6775403fbb025da28602f8aaecc207b60448e327f31398"
+    },
+    "s-gamma": {
+      "capacity_version": 2,
+      "node_id": "node-a",
+      "shard_id": "s-gamma",
+      "stale": false,
+      "status": "completed",
+      "summary_digest": "e8ab317d2f04a23d23d386ae046b31b8157279db72b36277849fbb0a9b453b6e"
+    },
+    "s-root": {
+      "capacity_version": 1,
+      "node_id": "node-a",
+      "shard_id": "s-root",
+      "stale": true,
+      "status": "completed",
+      "summary_digest": "2814eb3c4bb4b26374dde3e23ef0a43c53b417e821338fa98f87471bb6151784"
+    }
+  },
+  "snapshot_replacement": null,
+  "waits": {
+    "s-alpha": {
+      "reason": "queued",
+      "shard_id": "s-alpha",
+      "wait_end_ms": 19663340,
+      "wait_start_ms": 19663338
+    },
+    "s-beta": {
+      "reason": "queued",
+      "shard_id": "s-beta",
+      "wait_end_ms": 19663356,
+      "wait_start_ms": 19663353
+    },
+    "s-delta": {
+      "reason": "queued",
+      "shard_id": "s-delta",
+      "wait_end_ms": 19663392,
+      "wait_start_ms": 19663389
+    },
+    "s-epsilon": {
+      "reason": "queued",
+      "shard_id": "s-epsilon",
+      "wait_end_ms": 19663409,
+      "wait_start_ms": 19663406
+    },
+    "s-gamma": {
+      "reason": "queued",
+      "shard_id": "s-gamma",
+      "wait_end_ms": 19663374,
+      "wait_start_ms": 19663370
+    },
+    "s-root": {
+      "reason": "queued",
+      "shard_id": "s-root",
+      "wait_end_ms": 19663321,
+      "wait_start_ms": 19663318
+    }
+  },
+  "water_marks": {
+    "node-a": {
+      "capacity_version": 2,
+      "high_water_ms": 19663379,
+      "node_id": "node-a",
+      "resource_total": 2,
+      "shard_count": 1
+    },
+    "node-b": {
+      "capacity_version": 2,
+      "high_water_ms": 19663397,
+      "node_id": "node-b",
+      "resource_total": 3,
+      "shard_count": 1
+    },
+    "node-c": {
+      "capacity_version": 2,
+      "high_water_ms": 19663413,
+      "node_id": "node-c",
+      "resource_total": 2,
+      "shard_count": 1
+    }
+  }
+}
