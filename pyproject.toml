@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gsb-negscope"
+version = "1.0.0"
+description = "Deterministic Chinese customer-ticket negation-scope, fingerprint cache, budget scheduler, and snapshot ledger"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26"]
+
+[project.scripts]
+gsb = "gsb.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gsb*"]
+
+[tool.unittest]
+start = "tests"
