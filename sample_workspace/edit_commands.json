@@ -1,0 +1,71 @@
+{
+  "commands": [
+    {
+      "clip_id": "c-beta-v1",
+      "command_id": "cmd-0000",
+      "op": "replace_clip",
+      "seed": 209
+    },
+    {
+      "clip": {
+        "bit_depth": 16,
+        "clip_id": "c-zeta-v1",
+        "declared_bit_depths": [
+          8,
+          16,
+          24,
+          32
+        ],
+        "declared_sample_rates": [
+          11025,
+          22050,
+          44100
+        ],
+        "internal_sample_count": 12288,
+        "internal_sample_rate": 11025,
+        "path": "clips/c-zeta-v1.wav",
+        "role": "library",
+        "seed": 606,
+        "source_sample_rate": 22050,
+        "track_id": "trk-zeta",
+        "version": 1
+      },
+      "command_id": "cmd-0001",
+      "op": "add_clip"
+    },
+    {
+      "command_id": "cmd-0002",
+      "op": "set_peak_threshold",
+      "value": 1200
+    },
+    {
+      "clip_id": "c-alpha-v1",
+      "command_id": "cmd-0003",
+      "frame_index": 12,
+      "op": "set_frame_threshold",
+      "value": 15000
+    },
+    {
+      "command_id": "cmd-0004",
+      "op": "set_bucket_capacity",
+      "value": 4
+    },
+    {
+      "command_id": "cmd-0005",
+      "op": "set_time_quant_gear",
+      "value": "tq_coarse"
+    },
+    {
+      "bit_depth": 16,
+      "clip_id": "c-delta-v1",
+      "command_id": "cmd-0006",
+      "op": "set_clip_format",
+      "sample_rate": 44100
+    },
+    {
+      "clip_id": "c-epsilon-v1",
+      "command_id": "cmd-0007",
+      "op": "delete_clip"
+    }
+  ]
+}

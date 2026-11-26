@@ -21,3 +21,25 @@
 
 验收：
 用本地确定性片段验证格式归一、指纹桶失效、投票裁决、预算恢复与全量一致，并附运行结果。
+
+---
+
+## 实现交付与复现
+
+新增实现已放在本目录，完整技术说明见 `docs/TECHNICAL.md`，实测结果见 `docs/VERIFICATION.md`。
+
+```bash
+python3 -m venv --without-pip --system-site-packages .venv
+.venv/bin/python -m pip install --ignore-installed numpy==1.26.4
+PYTHONPATH=. .venv/bin/python audio_fingerprint/acceptance.py
+PYTHONPATH=. .venv/bin/python -m unittest discover -s tests -v
+```
+
+常用入口：
+
+- 生成确定性 WAV/清单/命令流：`PYTHONPATH=. .venv/bin/python scripts/generate_samples.py`
+- 校验业务码：`PYTHONPATH=. .venv/bin/python -m audio_fingerprint.cli validate --workspace sample_workspace`
+- 全量构建：`PYTHONPATH=. .venv/bin/python -m audio_fingerprint.cli rebuild --workspace sample_workspace --state state/cli`
+- 端到端验收：`PYTHONPATH=. .venv/bin/python -m audio_fingerprint.acceptance`
+
+最近一次结果：13 项验收检查全部通过，10 个 unittest 全部通过；增量编辑序列、预算恢复、串行/2/4 线程结果与空白全量重建的 deep-diff 均为 0。机器报告位于 `artifacts/verification_report.json`，测试输出位于 `artifacts/unittest_run.txt`。
