@@ -1,0 +1,64 @@
+{
+  "edit": {
+    "edit_type": "delete_lease",
+    "lease_id": "L-C-LOW"
+  },
+  "invalid_lease_ids": [
+    "L-C-LOW",
+    "L-DEPENDS"
+  ],
+  "invalid_set": [
+    {
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c"
+    },
+    {
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c"
+    }
+  ],
+  "ordering": "node_id_asc,then_lease_id_asc",
+  "propagation_steps": [
+    {
+      "basis": "L-DEPENDS declares generation dependency on L-C-LOW",
+      "from": "lease:L-DEPENDS",
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c",
+      "reason": "generation_reference_reverse",
+      "target": "lease:L-C-LOW"
+    },
+    {
+      "basis": "L-DEPENDS.references includes L-C-LOW",
+      "from": "lease:L-C-LOW",
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c",
+      "reason": "lease_reference",
+      "target": "lease:L-DEPENDS"
+    },
+    {
+      "basis": "event 5 acts on lease L-C-LOW",
+      "from": "event:5",
+      "lease_id": "L-C-LOW",
+      "reason": "event_lease_binding",
+      "target": "lease:L-C-LOW"
+    },
+    {
+      "basis": "event 5 references lease L-C-LOW",
+      "from": "lease:L-C-LOW",
+      "lease_id": "L-C-LOW",
+      "reason": "event_reference",
+      "target": "event:5"
+    }
+  ],
+  "recompute_scope": {
+    "current_view": "whole_replacement_not_merge",
+    "only_subset": [
+      "L-C-LOW",
+      "L-DEPENDS"
+    ],
+    "stable_output": true
+  },
+  "seeds": [
+    "lease:L-C-LOW"
+  ]
+}

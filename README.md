@@ -1,3 +1,36 @@
+# 租约仲裁平台首版
+
+本目录已包含可集成 Python 包、确定性样本、SQLite 账本、测试与技术说明。
+
+```bash
+bash scripts/demo.sh
+```
+
+常用入口：
+
+- 技术与复核手册：`docs/TECHNICAL.md`
+- 声明：`samples/spec.json`
+- 事件流：`samples/events.ndjson`
+- 演示报告：`reports/demo-report.json`
+- 定点水位/裁决报告：`reports/water-adjudication.json`
+- 失效传播报告：`reports/invalidation-delete.json`
+- SQLite 账本：`ledger/demo.sqlite3`
+
+手动验证：
+
+```bash
+source .venv/bin/activate
+lease-arbitrator env-check
+lease-arbitrator demo
+lease-arbitrator verify --spec samples/spec.json \
+  --events samples/events.ndjson --ledger ledger/demo.sqlite3
+pytest -q
+```
+
+Tkinter 若缺少系统动态库，可先 `source scripts/tk-env.sh`；无显示环境下 Tk 冒烟测试会自动跳过。
+
+---
+
 分布式存储平台的租约仲裁此前只停留在立项条目里，这台 Linux（WSL Ubuntu）开发机的工程目录尚无任何实现、配置与本地样本，首版需在此完整建立可集成的 Python 包与可重复演示。业务对象是本地存储节点之间的租约仲裁：每个节点作为独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议响应租约申请、续约与释放，节点侧为每份租约维护单调递增的代数标签，只有请求携带的标签与节点当前公认标签一致时才接受续约或释放并推进代数，标签不符则拒绝且代数不前进。用户在本地 JSON 中声明节点集合（节点标识、回环端口、整数租约配额、整数每节点并发上限、整数随机种子、配额版本号）、租约申请表（租约标识、目标节点、整数所需配额单位、整数优先级、整数预期持有毫秒）以及一条按到达序号排列的申请、续约、释放与配额版本升级事件流，并声明一份全局配额预算。使用者会反复增删节点、替换单份租约、调整配额与优先级，要求每次编辑后租约归属、代数推进与配额水位都能被唯一复核，而配额版本以整体替换方式推进、绝不与旧版本结果合并。
 
 任务环境与准备：

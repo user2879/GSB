@@ -1,0 +1,80 @@
+{
+  "edit": {
+    "edit_type": "remove_node",
+    "node_id": "node-c"
+  },
+  "invalid_lease_ids": [
+    "L-C-HIGH",
+    "L-C-LOW",
+    "L-DEPENDS"
+  ],
+  "invalid_set": [
+    {
+      "lease_id": "L-C-HIGH",
+      "node_id": "node-c"
+    },
+    {
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c"
+    },
+    {
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c"
+    }
+  ],
+  "ordering": "node_id_asc,then_lease_id_asc",
+  "propagation_steps": [
+    {
+      "basis": "lease.target_node == node-c",
+      "from": "node:node-c",
+      "lease_id": "L-C-HIGH",
+      "node_id": "node-c",
+      "reason": "node_membership",
+      "target": "lease:L-C-HIGH"
+    },
+    {
+      "basis": "L-DEPENDS declares generation dependency on L-C-LOW",
+      "from": "lease:L-DEPENDS",
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c",
+      "reason": "generation_reference_reverse",
+      "target": "lease:L-C-LOW"
+    },
+    {
+      "basis": "lease.target_node == node-c",
+      "from": "node:node-c",
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c",
+      "reason": "node_membership",
+      "target": "lease:L-C-LOW"
+    },
+    {
+      "basis": "L-DEPENDS.references includes L-C-LOW",
+      "from": "lease:L-C-LOW",
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c",
+      "reason": "lease_reference",
+      "target": "lease:L-DEPENDS"
+    },
+    {
+      "basis": "lease.target_node == node-c",
+      "from": "node:node-c",
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c",
+      "reason": "node_membership",
+      "target": "lease:L-DEPENDS"
+    }
+  ],
+  "recompute_scope": {
+    "current_view": "whole_replacement_not_merge",
+    "only_subset": [
+      "L-C-HIGH",
+      "L-C-LOW",
+      "L-DEPENDS"
+    ],
+    "stable_output": true
+  },
+  "seeds": [
+    "node:node-c"
+  ]
+}

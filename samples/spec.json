@@ -1,0 +1,117 @@
+{
+  "format_version": 1,
+  "session_id": "local-deterministic-demo",
+  "scale": 2,
+  "priority_range": [0, 100],
+  "global_budget": 10,
+  "replay_horizon_ms": 500,
+  "node_timeout_seconds": 2.0,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 21881,
+      "quota": 6,
+      "max_active": 1,
+      "seed": 1701,
+      "quota_version": 1
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 21882,
+      "quota": 6,
+      "max_active": 2,
+      "seed": 1702,
+      "quota_version": 1
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 21883,
+      "quota": 4,
+      "max_active": 2,
+      "seed": 1703,
+      "quota_version": 1
+    }
+  ],
+  "leases": [
+    {
+      "lease_id": "L-A-LONG",
+      "node_id": "node-a",
+      "units": 3,
+      "priority": 80,
+      "hold_ms": 5000,
+      "quota_version": 1
+    },
+    {
+      "lease_id": "L-A-WAIT",
+      "node_id": "node-a",
+      "units": 3,
+      "priority": 60,
+      "hold_ms": 120,
+      "quota_version": 1
+    },
+    {
+      "lease_id": "L-B-HOLD",
+      "node_id": "node-b",
+      "units": 3,
+      "priority": 50,
+      "hold_ms": 60000,
+      "quota_version": 1
+    },
+    {
+      "lease_id": "L-C-HIGH",
+      "node_id": "node-c",
+      "units": 4,
+      "priority": 90,
+      "hold_ms": 60000,
+      "quota_version": 1
+    },
+    {
+      "lease_id": "L-C-LOW",
+      "node_id": "node-c",
+      "units": 4,
+      "priority": 40,
+      "hold_ms": 60000,
+      "quota_version": 1
+    },
+    {
+      "lease_id": "L-DEPENDS",
+      "node_id": "node-c",
+      "units": 1,
+      "priority": 10,
+      "hold_ms": 1000,
+      "quota_version": 1,
+      "references": ["L-C-LOW"]
+    },
+    {
+      "lease_id": "L-V2-NEW",
+      "node_id": "node-b",
+      "units": 3,
+      "priority": 70,
+      "hold_ms": 1000,
+      "quota_version": 2
+    }
+  ],
+  "quota_versions": [
+    {
+      "quota_version": 1,
+      "global_budget": 10,
+      "nodes": {
+        "node-a": {"quota": 6, "max_active": 1},
+        "node-b": {"quota": 6, "max_active": 2},
+        "node-c": {"quota": 4, "max_active": 2}
+      }
+    },
+    {
+      "quota_version": 2,
+      "global_budget": 8,
+      "nodes": {
+        "node-a": {"quota": 4, "max_active": 2},
+        "node-b": {"quota": 5, "max_active": 1},
+        "node-c": {"quota": 4, "max_active": 1}
+      }
+    }
+  ]
+}

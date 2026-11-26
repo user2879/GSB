@@ -1,0 +1,3234 @@
+{
+  "current_view": {
+    "decisions": [
+      {
+        "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+        "boundary_set": [
+          "L-A-LONG",
+          "L-A-WAIT",
+          "L-B-HOLD",
+          "L-C-HIGH",
+          "L-C-LOW"
+        ],
+        "candidates": [
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 7,
+              "global_remaining": 10,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-a",
+              "node_margin": 3,
+              "node_max_active": 1,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 30,
+            "lease_id": "L-A-LONG",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 30,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 30,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 700,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 80
+            },
+            "water_index_fp": 80
+          },
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 7,
+              "global_remaining": 10,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-a",
+              "node_margin": 3,
+              "node_max_active": 1,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 30,
+            "lease_id": "L-A-WAIT",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 30,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 30,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 700,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 80
+            },
+            "water_index_fp": 80
+          },
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 1,
+              "concurrency_remaining": 2,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 7,
+              "global_remaining": 10,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-b",
+              "node_margin": 3,
+              "node_max_active": 2,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 30,
+            "lease_id": "L-B-HOLD",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 30,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 30,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 700,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 80
+            },
+            "water_index_fp": 80
+          },
+          {
+            "budget_boundary": true,
+            "capacity": {
+              "concurrency_margin": 1,
+              "concurrency_remaining": 2,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 6,
+              "global_remaining": 10,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-c",
+              "node_margin": 0,
+              "node_max_active": 2,
+              "node_quota": 4,
+              "node_remaining": 4,
+              "node_used": 0
+            },
+            "global_level_fp": 40,
+            "lease_id": "L-C-HIGH",
+            "minimum_abs_margin_units": 0,
+            "node_level_fp": 100,
+            "water": {
+              "global_level_fp": 40,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 40,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 600,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 400,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 100,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 100,
+                "quota_q": 400,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 0,
+                "saturated": false,
+                "truncation_remainder_denominator": 4,
+                "truncation_remainder_numerator": 0,
+                "used_q": 400,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 140
+            },
+            "water_index_fp": 140
+          },
+          {
+            "budget_boundary": true,
+            "capacity": {
+              "concurrency_margin": 1,
+              "concurrency_remaining": 2,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 6,
+              "global_remaining": 10,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-c",
+              "node_margin": 0,
+              "node_max_active": 2,
+              "node_quota": 4,
+              "node_remaining": 4,
+              "node_used": 0
+            },
+            "global_level_fp": 40,
+            "lease_id": "L-C-LOW",
+            "minimum_abs_margin_units": 0,
+            "node_level_fp": 100,
+            "water": {
+              "global_level_fp": 40,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 40,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 600,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 400,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 100,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 100,
+                "quota_q": 400,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 0,
+                "saturated": false,
+                "truncation_remainder_denominator": 4,
+                "truncation_remainder_numerator": 0,
+                "used_q": 400,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 140
+            },
+            "water_index_fp": 140
+          }
+        ],
+        "error_affected": true,
+        "error_bound": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.04,
+          "bound_units_exact": "4/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.0,
+            "quantization_truncation": 1.0,
+            "scheduling_order": 0.0
+          },
+          "segments_ulp": {
+            "generation_reorder": 0,
+            "quantization_truncation": 4,
+            "scheduling_order": 0
+          },
+          "total_bound_ulp": 4
+        },
+        "strict_water_winner": "L-A-LONG",
+        "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+        "winner": "L-C-HIGH"
+      },
+      {
+        "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+        "boundary_set": [
+          "L-A-LONG",
+          "L-A-WAIT",
+          "L-B-HOLD"
+        ],
+        "candidates": [
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 3,
+              "global_remaining": 6,
+              "global_used": 4,
+              "node_active": 0,
+              "node_id": "node-a",
+              "node_margin": 3,
+              "node_max_active": 1,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 70,
+            "lease_id": "L-A-LONG",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 70,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 70,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 700,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 120
+            },
+            "water_index_fp": 120
+          },
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 3,
+              "global_remaining": 6,
+              "global_used": 4,
+              "node_active": 0,
+              "node_id": "node-a",
+              "node_margin": 3,
+              "node_max_active": 1,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 70,
+            "lease_id": "L-A-WAIT",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 70,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 70,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 700,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 120
+            },
+            "water_index_fp": 120
+          },
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 1,
+              "concurrency_remaining": 2,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 3,
+              "global_remaining": 6,
+              "global_used": 4,
+              "node_active": 0,
+              "node_id": "node-b",
+              "node_margin": 3,
+              "node_max_active": 2,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 70,
+            "lease_id": "L-B-HOLD",
+            "minimum_abs_margin_units": 3,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 70,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 70,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 700,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 120
+            },
+            "water_index_fp": 120
+          }
+        ],
+        "error_affected": true,
+        "error_bound": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.05,
+          "bound_units_exact": "5/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.0,
+            "quantization_truncation": 0.8,
+            "scheduling_order": 0.2
+          },
+          "segments_ulp": {
+            "generation_reorder": 0,
+            "quantization_truncation": 4,
+            "scheduling_order": 1
+          },
+          "total_bound_ulp": 5
+        },
+        "strict_water_winner": "L-A-LONG",
+        "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+        "winner": "L-A-LONG"
+      },
+      {
+        "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+        "boundary_set": [
+          "L-B-HOLD"
+        ],
+        "candidates": [
+          {
+            "budget_boundary": true,
+            "capacity": {
+              "concurrency_margin": 1,
+              "concurrency_remaining": 2,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 0,
+              "global_remaining": 3,
+              "global_used": 7,
+              "node_active": 0,
+              "node_id": "node-b",
+              "node_margin": 3,
+              "node_max_active": 2,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 100,
+            "lease_id": "L-B-HOLD",
+            "minimum_abs_margin_units": 0,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 100,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 100,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 0,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 1000,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 150
+            },
+            "water_index_fp": 150
+          }
+        ],
+        "error_affected": true,
+        "error_bound": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.05,
+          "bound_units_exact": "5/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.0,
+            "quantization_truncation": 0.8,
+            "scheduling_order": 0.2
+          },
+          "segments_ulp": {
+            "generation_reorder": 0,
+            "quantization_truncation": 4,
+            "scheduling_order": 1
+          },
+          "total_bound_ulp": 5
+        },
+        "strict_water_winner": "L-B-HOLD",
+        "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+        "winner": "L-B-HOLD"
+      },
+      {
+        "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+        "boundary_set": [
+          "L-A-WAIT"
+        ],
+        "candidates": [
+          {
+            "budget_boundary": true,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 10,
+              "global_margin": 0,
+              "global_remaining": 3,
+              "global_used": 7,
+              "node_active": 0,
+              "node_id": "node-a",
+              "node_margin": 3,
+              "node_max_active": 1,
+              "node_quota": 6,
+              "node_remaining": 6,
+              "node_used": 0
+            },
+            "global_level_fp": 100,
+            "lease_id": "L-A-WAIT",
+            "minimum_abs_margin_units": 0,
+            "node_level_fp": 50,
+            "water": {
+              "global_level_fp": 100,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 100,
+                "quota_q": 1000,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 0,
+                "saturated": false,
+                "truncation_remainder_denominator": 10,
+                "truncation_remainder_numerator": 0,
+                "used_q": 1000,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 50,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 50,
+                "quota_q": 600,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 300,
+                "saturated": false,
+                "truncation_remainder_denominator": 6,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 150
+            },
+            "water_index_fp": 150
+          }
+        ],
+        "error_affected": true,
+        "error_bound": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.06,
+          "bound_units_exact": "6/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.166667,
+            "quantization_truncation": 0.666667,
+            "scheduling_order": 0.166667
+          },
+          "segments_ulp": {
+            "generation_reorder": 1,
+            "quantization_truncation": 4,
+            "scheduling_order": 1
+          },
+          "total_bound_ulp": 6
+        },
+        "strict_water_winner": "L-A-WAIT",
+        "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+        "winner": "L-A-WAIT"
+      },
+      {
+        "basis": "unique minimum projected fixed-point water index",
+        "boundary_set": [
+          "L-V2-NEW"
+        ],
+        "candidates": [
+          {
+            "budget_boundary": false,
+            "capacity": {
+              "concurrency_margin": 0,
+              "concurrency_remaining": 1,
+              "fits": true,
+              "global_budget": 8,
+              "global_margin": 5,
+              "global_remaining": 8,
+              "global_used": 0,
+              "node_active": 0,
+              "node_id": "node-b",
+              "node_margin": 2,
+              "node_max_active": 1,
+              "node_quota": 5,
+              "node_remaining": 5,
+              "node_used": 0
+            },
+            "global_level_fp": 37,
+            "lease_id": "L-V2-NEW",
+            "minimum_abs_margin_units": 2,
+            "node_level_fp": 60,
+            "water": {
+              "global_level_fp": 37,
+              "global_report": {
+                "factor": 100,
+                "level_fp": 37,
+                "quota_q": 800,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 500,
+                "saturated": false,
+                "truncation_remainder_denominator": 8,
+                "truncation_remainder_numerator": 4,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "node_level_fp": 60,
+              "node_report": {
+                "factor": 100,
+                "level_fp": 60,
+                "quota_q": 500,
+                "ratio_ulp_error_bound": "less_than_1_level_fp",
+                "remaining_q": 200,
+                "saturated": false,
+                "truncation_remainder_denominator": 5,
+                "truncation_remainder_numerator": 0,
+                "used_q": 300,
+                "zero_quota_convention": null
+              },
+              "water_index_fp": 97
+            },
+            "water_index_fp": 97
+          }
+        ],
+        "error_affected": false,
+        "error_bound": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.06,
+          "bound_units_exact": "6/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.166667,
+            "quantization_truncation": 0.666667,
+            "scheduling_order": 0.166667
+          },
+          "segments_ulp": {
+            "generation_reorder": 1,
+            "quantization_truncation": 4,
+            "scheduling_order": 1
+          },
+          "total_bound_ulp": 6
+        },
+        "strict_water_winner": "L-V2-NEW",
+        "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+        "winner": "L-V2-NEW"
+      }
+    ],
+    "generation_audit": {
+      "L-A-LONG": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "L-A-WAIT": [
+        1,
+        2
+      ],
+      "L-B-HOLD": [
+        1,
+        2
+      ],
+      "L-C-HIGH": [
+        1,
+        2
+      ],
+      "L-C-LOW": [
+        0
+      ],
+      "L-V2-NEW": [
+        1,
+        2
+      ]
+    },
+    "invariant_violations": [],
+    "leases": [
+      {
+        "active_slot": false,
+        "arrival_seq": 11,
+        "charged_units": 0,
+        "deadline_monotonic_ms": 17931131,
+        "generation_current": 2,
+        "granted_monotonic_ms": 17930131,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 11,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-V2-NEW",
+            "monotonic_ms": 17930125,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 11,
+            "from_state": "queued",
+            "generation_after": 1,
+            "generation_before": 0,
+            "generation_used": 1,
+            "lease_id": "L-V2-NEW",
+            "monotonic_ms": 17930131,
+            "reason": "node_apply_accepted",
+            "to_state": "granted"
+          },
+          {
+            "error_code": null,
+            "event_seq": 12,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-V2-NEW",
+            "monotonic_ms": 17930189,
+            "reason": "user_release",
+            "to_state": "released"
+          }
+        ],
+        "hold_ms": 1000,
+        "last_event_seq": 12,
+        "lease_id": "L-V2-NEW",
+        "node_id": "node-b",
+        "ownership_version": 1,
+        "priority": 70,
+        "quota_version": 2,
+        "references": [],
+        "stale": false,
+        "state": "released",
+        "units": 3,
+        "wait_end_ms": 17930126,
+        "wait_ms": 1,
+        "wait_start_ms": 17930125
+      }
+    ],
+    "quota_version": 2,
+    "view_replacements": [
+      {
+        "at_ms": 17930085,
+        "cancel_set": [
+          "L-C-LOW"
+        ],
+        "from_version": 1,
+        "revoke_set": [
+          "L-B-HOLD",
+          "L-C-HIGH"
+        ],
+        "rule": "whole_replacement_no_merge",
+        "to_version": 2
+      }
+    ],
+    "water": {
+      "factor": 100,
+      "fixed_point_rules": {
+        "cap": 9223372036854775807,
+        "integer_format": "signed-64-bit fixed-point compatible",
+        "multiplication_division": "integer arithmetic only in capacity and boundary decisions",
+        "overflow": "saturate to cap and mark saturated=true",
+        "truncation": "floor division for nonnegative quantities"
+      },
+      "global": {
+        "budget_units": 8,
+        "factor": 100,
+        "level_fp": 0,
+        "quota_q": 800,
+        "ratio_ulp_error_bound": "less_than_1_level_fp",
+        "remaining_q": 800,
+        "remaining_units": 8,
+        "saturated": false,
+        "truncation_remainder_denominator": 8,
+        "truncation_remainder_numerator": 0,
+        "used_q": 0,
+        "used_units": 0,
+        "zero_quota_convention": null
+      },
+      "global_aggregation_error_bound_fp": 4,
+      "node_comparison_error_bound_fp": 2,
+      "nodes": {
+        "node-a": {
+          "active_leases": 0,
+          "factor": 100,
+          "level_fp": 0,
+          "max_active": 2,
+          "node_id": "node-a",
+          "quota_q": 400,
+          "quota_units": 4,
+          "ratio_ulp_error_bound": "less_than_1_level_fp",
+          "remaining_q": 400,
+          "remaining_units": 4,
+          "saturated": false,
+          "truncation_remainder_denominator": 4,
+          "truncation_remainder_numerator": 0,
+          "used_q": 0,
+          "used_units": 0,
+          "zero_quota_convention": null
+        },
+        "node-b": {
+          "active_leases": 0,
+          "factor": 100,
+          "level_fp": 0,
+          "max_active": 1,
+          "node_id": "node-b",
+          "quota_q": 500,
+          "quota_units": 5,
+          "ratio_ulp_error_bound": "less_than_1_level_fp",
+          "remaining_q": 500,
+          "remaining_units": 5,
+          "saturated": false,
+          "truncation_remainder_denominator": 5,
+          "truncation_remainder_numerator": 0,
+          "used_q": 0,
+          "used_units": 0,
+          "zero_quota_convention": null
+        },
+        "node-c": {
+          "active_leases": 0,
+          "factor": 100,
+          "level_fp": 0,
+          "max_active": 1,
+          "node_id": "node-c",
+          "quota_q": 400,
+          "quota_units": 4,
+          "ratio_ulp_error_bound": "less_than_1_level_fp",
+          "remaining_q": 400,
+          "remaining_units": 4,
+          "saturated": false,
+          "truncation_remainder_denominator": 4,
+          "truncation_remainder_numerator": 0,
+          "used_q": 0,
+          "used_units": 0,
+          "zero_quota_convention": null
+        }
+      },
+      "scale_exponent": 2,
+      "single_lease_quantization": {
+        "L-A-LONG": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 75,
+          "direct_quantized_q": 300,
+          "equivalent_units_error_bound_decimal": 0.04,
+          "equivalent_units_error_bound_exact": "4/100",
+          "lease_units": 3,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-A-WAIT": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 75,
+          "direct_quantized_q": 300,
+          "equivalent_units_error_bound_decimal": 0.04,
+          "equivalent_units_error_bound_exact": "4/100",
+          "lease_units": 3,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-B-HOLD": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 60,
+          "direct_quantized_q": 300,
+          "equivalent_units_error_bound_decimal": 0.05,
+          "equivalent_units_error_bound_exact": "5/100",
+          "lease_units": 3,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-C-HIGH": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 100,
+          "direct_quantized_q": 400,
+          "equivalent_units_error_bound_decimal": 0.04,
+          "equivalent_units_error_bound_exact": "4/100",
+          "lease_units": 4,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-C-LOW": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 100,
+          "direct_quantized_q": 400,
+          "equivalent_units_error_bound_decimal": 0.04,
+          "equivalent_units_error_bound_exact": "4/100",
+          "lease_units": 4,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-DEPENDS": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 25,
+          "direct_quantized_q": 100,
+          "equivalent_units_error_bound_decimal": 0.04,
+          "equivalent_units_error_bound_exact": "4/100",
+          "lease_units": 1,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        },
+        "L-V2-NEW": {
+          "derived_truncation_residual": 0,
+          "derived_water_level_fp": 60,
+          "direct_quantized_q": 300,
+          "equivalent_units_error_bound_decimal": 0.05,
+          "equivalent_units_error_bound_exact": "5/100",
+          "lease_units": 3,
+          "ratio_error_bound_fp": 1,
+          "single_lease_quantization_error_units": 0
+        }
+      },
+      "synthetic_error": {
+        "attribution": "dominant",
+        "bound_units_decimal": 0.06,
+        "bound_units_exact": "6/100",
+        "dominant_segment": "quantization_truncation",
+        "dominant_threshold": 0.6,
+        "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+        "segment_shares": {
+          "generation_reorder": 0.166667,
+          "quantization_truncation": 0.666667,
+          "scheduling_order": 0.166667
+        },
+        "segments_ulp": {
+          "generation_reorder": 1,
+          "quantization_truncation": 4,
+          "scheduling_order": 1
+        },
+        "total_bound_ulp": 6
+      }
+    }
+  },
+  "events_path": "/home/zsl/feedback/uidfc5909d3-default-384/samples/events.ndjson",
+  "invariant_violations": [],
+  "ledger": {
+    "cursor": 15,
+    "entries": 15,
+    "path": "/home/zsl/feedback/uidfc5909d3-default-384/ledger/demo.sqlite3"
+  },
+  "ok": true,
+  "results": [
+    {
+      "expectation_met": true,
+      "lease_id": "L-A-LONG",
+      "ledger_seq": 4,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 6,
+        "from_state": "granted",
+        "generation_after": 2,
+        "generation_before": 1,
+        "generation_used": 1,
+        "lease_id": "L-A-LONG",
+        "monotonic_ms": 17929859,
+        "reason": "user_renew",
+        "to_state": "renewed"
+      }
+    },
+    {
+      "error_code": "E_STALE",
+      "expectation_met": true,
+      "lease_id": "L-A-LONG",
+      "ledger_seq": 5,
+      "ok": false,
+      "response": {
+        "action": "renew",
+        "current_generation": 2,
+        "error": "E_STALE",
+        "generation_after": 2,
+        "generation_before": 2,
+        "generation_used": 1,
+        "lease_id": "L-A-LONG",
+        "message": "generation label does not match current node label",
+        "monotonic_ms": 17929867,
+        "ok": false
+      }
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-A-LONG",
+      "ledger_seq": 6,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 8,
+        "from_state": "renewed",
+        "generation_after": 3,
+        "generation_before": 2,
+        "generation_used": 2,
+        "lease_id": "L-A-LONG",
+        "monotonic_ms": 17929879,
+        "reason": "user_renew",
+        "to_state": "renewed"
+      }
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-A-LONG",
+      "ledger_seq": 7,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 9,
+        "from_state": "renewed",
+        "generation_after": 4,
+        "generation_before": 3,
+        "generation_used": 3,
+        "lease_id": "L-A-LONG",
+        "monotonic_ms": 17929904,
+        "reason": "user_release",
+        "to_state": "released"
+      }
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-A-WAIT",
+      "ledger_seq": 9,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": null,
+        "from_state": "granted",
+        "generation_after": 2,
+        "generation_before": 1,
+        "generation_used": 1,
+        "lease_id": "L-A-WAIT",
+        "monotonic_ms": 17930048,
+        "reason": "hold_timeout_monotonic_deadline",
+        "to_state": "expired"
+      }
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-B-HOLD",
+      "ledger_seq": 10,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 10,
+        "from_state": "granted",
+        "generation_after": 2,
+        "generation_before": 1,
+        "generation_used": 1,
+        "lease_id": "L-B-HOLD",
+        "monotonic_ms": 17930090,
+        "reason": "quota_upgrade_whole_replacement:1->2",
+        "to_state": "revoked"
+      }
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-C-HIGH",
+      "ledger_seq": 11,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 10,
+        "from_state": "granted",
+        "generation_after": 2,
+        "generation_before": 1,
+        "generation_used": 1,
+        "lease_id": "L-C-HIGH",
+        "monotonic_ms": 17930100,
+        "reason": "quota_upgrade_whole_replacement:1->2",
+        "to_state": "revoked"
+      }
+    },
+    {
+      "canceled_pending": [
+        "L-C-LOW"
+      ],
+      "invalidation": {
+        "invalid_lease_ids": [
+          "L-A-LONG",
+          "L-A-WAIT",
+          "L-B-HOLD",
+          "L-V2-NEW",
+          "L-C-HIGH",
+          "L-C-LOW",
+          "L-DEPENDS"
+        ],
+        "invalid_set": [
+          {
+            "lease_id": "L-A-LONG",
+            "node_id": "node-a"
+          },
+          {
+            "lease_id": "L-A-WAIT",
+            "node_id": "node-a"
+          },
+          {
+            "lease_id": "L-B-HOLD",
+            "node_id": "node-b"
+          },
+          {
+            "lease_id": "L-V2-NEW",
+            "node_id": "node-b"
+          },
+          {
+            "lease_id": "L-C-HIGH",
+            "node_id": "node-c"
+          },
+          {
+            "lease_id": "L-C-LOW",
+            "node_id": "node-c"
+          },
+          {
+            "lease_id": "L-DEPENDS",
+            "node_id": "node-c"
+          }
+        ],
+        "ordering": "node_id_asc,then_lease_id_asc",
+        "propagation_steps": [
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-A-LONG",
+            "node_id": "node-a",
+            "reason": "quota_version_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-A-WAIT",
+            "node_id": "node-a",
+            "reason": "quota_version_binding",
+            "target": "lease:L-A-WAIT"
+          },
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-B-HOLD",
+            "node_id": "node-b",
+            "reason": "quota_version_binding",
+            "target": "lease:L-B-HOLD"
+          },
+          {
+            "basis": "lease.quota_version=2 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-V2-NEW",
+            "node_id": "node-b",
+            "reason": "quota_version_binding",
+            "target": "lease:L-V2-NEW"
+          },
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-C-HIGH",
+            "node_id": "node-c",
+            "reason": "quota_version_binding",
+            "target": "lease:L-C-HIGH"
+          },
+          {
+            "basis": "L-DEPENDS declares generation dependency on L-C-LOW",
+            "from": "lease:L-DEPENDS",
+            "lease_id": "L-C-LOW",
+            "node_id": "node-c",
+            "reason": "generation_reference_reverse",
+            "target": "lease:L-C-LOW"
+          },
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-C-LOW",
+            "node_id": "node-c",
+            "reason": "quota_version_binding",
+            "target": "lease:L-C-LOW"
+          },
+          {
+            "basis": "L-DEPENDS.references includes L-C-LOW",
+            "from": "lease:L-C-LOW",
+            "lease_id": "L-DEPENDS",
+            "node_id": "node-c",
+            "reason": "lease_reference",
+            "target": "lease:L-DEPENDS"
+          },
+          {
+            "basis": "lease.quota_version=1 bound_to_policy<=2",
+            "from": "version:2",
+            "lease_id": "L-DEPENDS",
+            "node_id": "node-c",
+            "reason": "quota_version_binding",
+            "target": "lease:L-DEPENDS"
+          },
+          {
+            "basis": "event 1 acts on lease L-A-LONG",
+            "from": "event:1",
+            "lease_id": "L-A-LONG",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "event 6 acts on lease L-A-LONG",
+            "from": "event:6",
+            "lease_id": "L-A-LONG",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "event 7 acts on lease L-A-LONG",
+            "from": "event:7",
+            "lease_id": "L-A-LONG",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "event 8 acts on lease L-A-LONG",
+            "from": "event:8",
+            "lease_id": "L-A-LONG",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "event 9 acts on lease L-A-LONG",
+            "from": "event:9",
+            "lease_id": "L-A-LONG",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-LONG"
+          },
+          {
+            "basis": "event 1 references lease L-A-LONG",
+            "from": "lease:L-A-LONG",
+            "lease_id": "L-A-LONG",
+            "reason": "event_reference",
+            "target": "event:1"
+          },
+          {
+            "basis": "event 6 references lease L-A-LONG",
+            "from": "lease:L-A-LONG",
+            "lease_id": "L-A-LONG",
+            "reason": "event_reference",
+            "target": "event:6"
+          },
+          {
+            "basis": "event 7 references lease L-A-LONG",
+            "from": "lease:L-A-LONG",
+            "lease_id": "L-A-LONG",
+            "reason": "event_reference",
+            "target": "event:7"
+          },
+          {
+            "basis": "event 8 references lease L-A-LONG",
+            "from": "lease:L-A-LONG",
+            "lease_id": "L-A-LONG",
+            "reason": "event_reference",
+            "target": "event:8"
+          },
+          {
+            "basis": "event 9 references lease L-A-LONG",
+            "from": "lease:L-A-LONG",
+            "lease_id": "L-A-LONG",
+            "reason": "event_reference",
+            "target": "event:9"
+          },
+          {
+            "basis": "event 2 acts on lease L-A-WAIT",
+            "from": "event:2",
+            "lease_id": "L-A-WAIT",
+            "reason": "event_lease_binding",
+            "target": "lease:L-A-WAIT"
+          },
+          {
+            "basis": "event 2 references lease L-A-WAIT",
+            "from": "lease:L-A-WAIT",
+            "lease_id": "L-A-WAIT",
+            "reason": "event_reference",
+            "target": "event:2"
+          },
+          {
+            "basis": "event 3 acts on lease L-B-HOLD",
+            "from": "event:3",
+            "lease_id": "L-B-HOLD",
+            "reason": "event_lease_binding",
+            "target": "lease:L-B-HOLD"
+          },
+          {
+            "basis": "event 3 references lease L-B-HOLD",
+            "from": "lease:L-B-HOLD",
+            "lease_id": "L-B-HOLD",
+            "reason": "event_reference",
+            "target": "event:3"
+          },
+          {
+            "basis": "event 4 acts on lease L-C-HIGH",
+            "from": "event:4",
+            "lease_id": "L-C-HIGH",
+            "reason": "event_lease_binding",
+            "target": "lease:L-C-HIGH"
+          },
+          {
+            "basis": "event 4 references lease L-C-HIGH",
+            "from": "lease:L-C-HIGH",
+            "lease_id": "L-C-HIGH",
+            "reason": "event_reference",
+            "target": "event:4"
+          },
+          {
+            "basis": "event 5 acts on lease L-C-LOW",
+            "from": "event:5",
+            "lease_id": "L-C-LOW",
+            "reason": "event_lease_binding",
+            "target": "lease:L-C-LOW"
+          },
+          {
+            "basis": "event 5 references lease L-C-LOW",
+            "from": "lease:L-C-LOW",
+            "lease_id": "L-C-LOW",
+            "reason": "event_reference",
+            "target": "event:5"
+          },
+          {
+            "basis": "event 11 acts on lease L-V2-NEW",
+            "from": "event:11",
+            "lease_id": "L-V2-NEW",
+            "reason": "event_lease_binding",
+            "target": "lease:L-V2-NEW"
+          },
+          {
+            "basis": "event 12 acts on lease L-V2-NEW",
+            "from": "event:12",
+            "lease_id": "L-V2-NEW",
+            "reason": "event_lease_binding",
+            "target": "lease:L-V2-NEW"
+          },
+          {
+            "basis": "event 11 references lease L-V2-NEW",
+            "from": "lease:L-V2-NEW",
+            "lease_id": "L-V2-NEW",
+            "reason": "event_reference",
+            "target": "event:11"
+          },
+          {
+            "basis": "event 12 references lease L-V2-NEW",
+            "from": "lease:L-V2-NEW",
+            "lease_id": "L-V2-NEW",
+            "reason": "event_reference",
+            "target": "event:12"
+          },
+          {
+            "basis": "event 10 upgrades quota_version to 2",
+            "from": "version:2",
+            "reason": "version_upgrade_event",
+            "target": "event:10"
+          }
+        ],
+        "recompute_scope": {
+          "current_view": "whole_replacement_not_merge",
+          "only_subset": [
+            "L-A-LONG",
+            "L-A-WAIT",
+            "L-B-HOLD",
+            "L-V2-NEW",
+            "L-C-HIGH",
+            "L-C-LOW",
+            "L-DEPENDS"
+          ],
+          "stable_output": true
+        },
+        "seeds": [
+          "version:2"
+        ]
+      },
+      "ledger_seq": 13,
+      "ok": true,
+      "revoked": [
+        {
+          "expectation_met": true,
+          "lease_id": "L-B-HOLD",
+          "ledger_seq": 10,
+          "ok": true,
+          "transition": {
+            "error_code": null,
+            "event_seq": 10,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-B-HOLD",
+            "monotonic_ms": 17930090,
+            "reason": "quota_upgrade_whole_replacement:1->2",
+            "to_state": "revoked"
+          }
+        },
+        {
+          "expectation_met": true,
+          "lease_id": "L-C-HIGH",
+          "ledger_seq": 11,
+          "ok": true,
+          "transition": {
+            "error_code": null,
+            "event_seq": 10,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-C-HIGH",
+            "monotonic_ms": 17930100,
+            "reason": "quota_upgrade_whole_replacement:1->2",
+            "to_state": "revoked"
+          }
+        }
+      ],
+      "type": "upgrade_quota",
+      "version": 2
+    },
+    {
+      "expectation_met": true,
+      "lease_id": "L-V2-NEW",
+      "ledger_seq": 15,
+      "ok": true,
+      "transition": {
+        "error_code": null,
+        "event_seq": 12,
+        "from_state": "granted",
+        "generation_after": 2,
+        "generation_before": 1,
+        "generation_used": 1,
+        "lease_id": "L-V2-NEW",
+        "monotonic_ms": 17930189,
+        "reason": "user_release",
+        "to_state": "released"
+      }
+    }
+  ],
+  "spec_path": "/home/zsl/feedback/uidfc5909d3-default-384/samples/spec.json",
+  "stale_view": {
+    "archives": [
+      {
+        "active_lease_ids": [
+          "L-B-HOLD",
+          "L-C-HIGH"
+        ],
+        "marked_at_ms": 17930085,
+        "pending_lease_ids": [
+          "L-C-LOW"
+        ],
+        "quota_version": 1,
+        "status": "stale_excluded_from_current_summary",
+        "trajectories": {
+          "L-B-HOLD": {
+            "active_slot": true,
+            "arrival_seq": 3,
+            "charged_units": 3,
+            "deadline_monotonic_ms": 17989841,
+            "generation_current": 1,
+            "granted_monotonic_ms": 17929841,
+            "history": [
+              {
+                "error_code": null,
+                "event_seq": 3,
+                "from_state": "declared",
+                "generation_after": null,
+                "generation_before": null,
+                "generation_used": null,
+                "lease_id": "L-B-HOLD",
+                "monotonic_ms": 17929805,
+                "reason": "apply_received_wait_for_capacity",
+                "to_state": "queued"
+              },
+              {
+                "error_code": null,
+                "event_seq": 3,
+                "from_state": "queued",
+                "generation_after": 1,
+                "generation_before": 0,
+                "generation_used": 1,
+                "lease_id": "L-B-HOLD",
+                "monotonic_ms": 17929841,
+                "reason": "node_apply_accepted",
+                "to_state": "granted"
+              }
+            ],
+            "hold_ms": 60000,
+            "last_event_seq": 3,
+            "lease_id": "L-B-HOLD",
+            "node_id": "node-b",
+            "ownership_version": 1,
+            "priority": 50,
+            "quota_version": 1,
+            "references": [],
+            "stale": false,
+            "state": "granted",
+            "units": 3,
+            "wait_end_ms": 17929809,
+            "wait_ms": 4,
+            "wait_start_ms": 17929805
+          },
+          "L-C-HIGH": {
+            "active_slot": true,
+            "arrival_seq": 4,
+            "charged_units": 4,
+            "deadline_monotonic_ms": 17989841,
+            "generation_current": 1,
+            "granted_monotonic_ms": 17929841,
+            "history": [
+              {
+                "error_code": null,
+                "event_seq": 4,
+                "from_state": "declared",
+                "generation_after": null,
+                "generation_before": null,
+                "generation_used": null,
+                "lease_id": "L-C-HIGH",
+                "monotonic_ms": 17929805,
+                "reason": "apply_received_wait_for_capacity",
+                "to_state": "queued"
+              },
+              {
+                "error_code": null,
+                "event_seq": 4,
+                "from_state": "queued",
+                "generation_after": 1,
+                "generation_before": 0,
+                "generation_used": 1,
+                "lease_id": "L-C-HIGH",
+                "monotonic_ms": 17929841,
+                "reason": "node_apply_accepted",
+                "to_state": "granted"
+              }
+            ],
+            "hold_ms": 60000,
+            "last_event_seq": 4,
+            "lease_id": "L-C-HIGH",
+            "node_id": "node-c",
+            "ownership_version": 1,
+            "priority": 90,
+            "quota_version": 1,
+            "references": [],
+            "stale": false,
+            "state": "granted",
+            "units": 4,
+            "wait_end_ms": 17929807,
+            "wait_ms": 2,
+            "wait_start_ms": 17929805
+          },
+          "L-C-LOW": {
+            "active_slot": false,
+            "arrival_seq": 5,
+            "charged_units": 0,
+            "deadline_monotonic_ms": null,
+            "generation_current": 0,
+            "granted_monotonic_ms": null,
+            "history": [
+              {
+                "error_code": null,
+                "event_seq": 5,
+                "from_state": "declared",
+                "generation_after": null,
+                "generation_before": null,
+                "generation_used": null,
+                "lease_id": "L-C-LOW",
+                "monotonic_ms": 17929805,
+                "reason": "apply_received_wait_for_capacity",
+                "to_state": "queued"
+              }
+            ],
+            "hold_ms": 60000,
+            "last_event_seq": 5,
+            "lease_id": "L-C-LOW",
+            "node_id": "node-c",
+            "ownership_version": 1,
+            "priority": 40,
+            "quota_version": 1,
+            "references": [],
+            "stale": false,
+            "state": "queued",
+            "units": 4,
+            "wait_end_ms": null,
+            "wait_ms": null,
+            "wait_start_ms": 17929805
+          }
+        },
+        "water_at_replacement": {
+          "factor": 100,
+          "fixed_point_rules": {
+            "cap": 9223372036854775807,
+            "integer_format": "signed-64-bit fixed-point compatible",
+            "multiplication_division": "integer arithmetic only in capacity and boundary decisions",
+            "overflow": "saturate to cap and mark saturated=true",
+            "truncation": "floor division for nonnegative quantities"
+          },
+          "global": {
+            "budget_units": 10,
+            "factor": 100,
+            "level_fp": 70,
+            "quota_q": 1000,
+            "ratio_ulp_error_bound": "less_than_1_level_fp",
+            "remaining_q": 300,
+            "remaining_units": 3,
+            "saturated": false,
+            "truncation_remainder_denominator": 10,
+            "truncation_remainder_numerator": 0,
+            "used_q": 700,
+            "used_units": 7,
+            "zero_quota_convention": null
+          },
+          "global_aggregation_error_bound_fp": 4,
+          "node_comparison_error_bound_fp": 2,
+          "nodes": {
+            "node-a": {
+              "active_leases": 0,
+              "factor": 100,
+              "level_fp": 0,
+              "max_active": 1,
+              "node_id": "node-a",
+              "quota_q": 600,
+              "quota_units": 6,
+              "ratio_ulp_error_bound": "less_than_1_level_fp",
+              "remaining_q": 600,
+              "remaining_units": 6,
+              "saturated": false,
+              "truncation_remainder_denominator": 6,
+              "truncation_remainder_numerator": 0,
+              "used_q": 0,
+              "used_units": 0,
+              "zero_quota_convention": null
+            },
+            "node-b": {
+              "active_leases": 1,
+              "factor": 100,
+              "level_fp": 50,
+              "max_active": 2,
+              "node_id": "node-b",
+              "quota_q": 600,
+              "quota_units": 6,
+              "ratio_ulp_error_bound": "less_than_1_level_fp",
+              "remaining_q": 300,
+              "remaining_units": 3,
+              "saturated": false,
+              "truncation_remainder_denominator": 6,
+              "truncation_remainder_numerator": 0,
+              "used_q": 300,
+              "used_units": 3,
+              "zero_quota_convention": null
+            },
+            "node-c": {
+              "active_leases": 1,
+              "factor": 100,
+              "level_fp": 100,
+              "max_active": 2,
+              "node_id": "node-c",
+              "quota_q": 400,
+              "quota_units": 4,
+              "ratio_ulp_error_bound": "less_than_1_level_fp",
+              "remaining_q": 0,
+              "remaining_units": 0,
+              "saturated": false,
+              "truncation_remainder_denominator": 4,
+              "truncation_remainder_numerator": 0,
+              "used_q": 400,
+              "used_units": 4,
+              "zero_quota_convention": null
+            }
+          },
+          "scale_exponent": 2,
+          "single_lease_quantization": {
+            "L-A-LONG": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 50,
+              "direct_quantized_q": 300,
+              "equivalent_units_error_bound_decimal": 0.06,
+              "equivalent_units_error_bound_exact": "6/100",
+              "lease_units": 3,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-A-WAIT": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 50,
+              "direct_quantized_q": 300,
+              "equivalent_units_error_bound_decimal": 0.06,
+              "equivalent_units_error_bound_exact": "6/100",
+              "lease_units": 3,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-B-HOLD": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 50,
+              "direct_quantized_q": 300,
+              "equivalent_units_error_bound_decimal": 0.06,
+              "equivalent_units_error_bound_exact": "6/100",
+              "lease_units": 3,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-C-HIGH": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 100,
+              "direct_quantized_q": 400,
+              "equivalent_units_error_bound_decimal": 0.04,
+              "equivalent_units_error_bound_exact": "4/100",
+              "lease_units": 4,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-C-LOW": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 100,
+              "direct_quantized_q": 400,
+              "equivalent_units_error_bound_decimal": 0.04,
+              "equivalent_units_error_bound_exact": "4/100",
+              "lease_units": 4,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-DEPENDS": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 25,
+              "direct_quantized_q": 100,
+              "equivalent_units_error_bound_decimal": 0.04,
+              "equivalent_units_error_bound_exact": "4/100",
+              "lease_units": 1,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            },
+            "L-V2-NEW": {
+              "derived_truncation_residual": 0,
+              "derived_water_level_fp": 50,
+              "direct_quantized_q": 300,
+              "equivalent_units_error_bound_decimal": 0.06,
+              "equivalent_units_error_bound_exact": "6/100",
+              "lease_units": 3,
+              "ratio_error_bound_fp": 1,
+              "single_lease_quantization_error_units": 0
+            }
+          },
+          "synthetic_error": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.06,
+            "bound_units_exact": "6/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.166667,
+              "quantization_truncation": 0.666667,
+              "scheduling_order": 0.166667
+            },
+            "segments_ulp": {
+              "generation_reorder": 1,
+              "quantization_truncation": 4,
+              "scheduling_order": 1
+            },
+            "total_bound_ulp": 6
+          }
+        }
+      }
+    ],
+    "leases": [
+      {
+        "active_slot": false,
+        "arrival_seq": 1,
+        "charged_units": 0,
+        "deadline_monotonic_ms": 17934879,
+        "generation_current": 4,
+        "granted_monotonic_ms": 17929834,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 1,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-A-LONG",
+            "monotonic_ms": 17929805,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 1,
+            "from_state": "queued",
+            "generation_after": 1,
+            "generation_before": 0,
+            "generation_used": 1,
+            "lease_id": "L-A-LONG",
+            "monotonic_ms": 17929834,
+            "reason": "node_apply_accepted",
+            "to_state": "granted"
+          },
+          {
+            "error_code": null,
+            "event_seq": 6,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-A-LONG",
+            "monotonic_ms": 17929859,
+            "reason": "user_renew",
+            "to_state": "renewed"
+          },
+          {
+            "error_code": null,
+            "event_seq": 8,
+            "from_state": "renewed",
+            "generation_after": 3,
+            "generation_before": 2,
+            "generation_used": 2,
+            "lease_id": "L-A-LONG",
+            "monotonic_ms": 17929879,
+            "reason": "user_renew",
+            "to_state": "renewed"
+          },
+          {
+            "error_code": null,
+            "event_seq": 9,
+            "from_state": "renewed",
+            "generation_after": 4,
+            "generation_before": 3,
+            "generation_used": 3,
+            "lease_id": "L-A-LONG",
+            "monotonic_ms": 17929904,
+            "reason": "user_release",
+            "to_state": "released"
+          }
+        ],
+        "hold_ms": 5000,
+        "last_event_seq": 9,
+        "lease_id": "L-A-LONG",
+        "node_id": "node-a",
+        "ownership_version": 1,
+        "priority": 80,
+        "quota_version": 1,
+        "references": [],
+        "stale": true,
+        "state": "released",
+        "units": 3,
+        "wait_end_ms": 17929808,
+        "wait_ms": 3,
+        "wait_start_ms": 17929805
+      },
+      {
+        "active_slot": false,
+        "arrival_seq": 2,
+        "charged_units": 0,
+        "deadline_monotonic_ms": 17930036,
+        "generation_current": 2,
+        "granted_monotonic_ms": 17929916,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 2,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-A-WAIT",
+            "monotonic_ms": 17929805,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 2,
+            "from_state": "queued",
+            "generation_after": 1,
+            "generation_before": 0,
+            "generation_used": 1,
+            "lease_id": "L-A-WAIT",
+            "monotonic_ms": 17929916,
+            "reason": "node_apply_accepted",
+            "to_state": "granted"
+          },
+          {
+            "error_code": null,
+            "event_seq": null,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-A-WAIT",
+            "monotonic_ms": 17930048,
+            "reason": "hold_timeout_monotonic_deadline",
+            "to_state": "expired"
+          }
+        ],
+        "hold_ms": 120,
+        "last_event_seq": null,
+        "lease_id": "L-A-WAIT",
+        "node_id": "node-a",
+        "ownership_version": 1,
+        "priority": 60,
+        "quota_version": 1,
+        "references": [],
+        "stale": true,
+        "state": "expired",
+        "units": 3,
+        "wait_end_ms": 17929910,
+        "wait_ms": 105,
+        "wait_start_ms": 17929805
+      },
+      {
+        "active_slot": false,
+        "arrival_seq": 3,
+        "charged_units": 0,
+        "deadline_monotonic_ms": 17989841,
+        "generation_current": 2,
+        "granted_monotonic_ms": 17929841,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 3,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-B-HOLD",
+            "monotonic_ms": 17929805,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 3,
+            "from_state": "queued",
+            "generation_after": 1,
+            "generation_before": 0,
+            "generation_used": 1,
+            "lease_id": "L-B-HOLD",
+            "monotonic_ms": 17929841,
+            "reason": "node_apply_accepted",
+            "to_state": "granted"
+          },
+          {
+            "error_code": null,
+            "event_seq": 10,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-B-HOLD",
+            "monotonic_ms": 17930090,
+            "reason": "quota_upgrade_whole_replacement:1->2",
+            "to_state": "revoked"
+          }
+        ],
+        "hold_ms": 60000,
+        "last_event_seq": 10,
+        "lease_id": "L-B-HOLD",
+        "node_id": "node-b",
+        "ownership_version": 1,
+        "priority": 50,
+        "quota_version": 1,
+        "references": [],
+        "stale": true,
+        "state": "revoked",
+        "units": 3,
+        "wait_end_ms": 17929809,
+        "wait_ms": 4,
+        "wait_start_ms": 17929805
+      },
+      {
+        "active_slot": false,
+        "arrival_seq": 4,
+        "charged_units": 0,
+        "deadline_monotonic_ms": 17989841,
+        "generation_current": 2,
+        "granted_monotonic_ms": 17929841,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 4,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-C-HIGH",
+            "monotonic_ms": 17929805,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 4,
+            "from_state": "queued",
+            "generation_after": 1,
+            "generation_before": 0,
+            "generation_used": 1,
+            "lease_id": "L-C-HIGH",
+            "monotonic_ms": 17929841,
+            "reason": "node_apply_accepted",
+            "to_state": "granted"
+          },
+          {
+            "error_code": null,
+            "event_seq": 10,
+            "from_state": "granted",
+            "generation_after": 2,
+            "generation_before": 1,
+            "generation_used": 1,
+            "lease_id": "L-C-HIGH",
+            "monotonic_ms": 17930100,
+            "reason": "quota_upgrade_whole_replacement:1->2",
+            "to_state": "revoked"
+          }
+        ],
+        "hold_ms": 60000,
+        "last_event_seq": 10,
+        "lease_id": "L-C-HIGH",
+        "node_id": "node-c",
+        "ownership_version": 1,
+        "priority": 90,
+        "quota_version": 1,
+        "references": [],
+        "stale": true,
+        "state": "revoked",
+        "units": 4,
+        "wait_end_ms": 17929807,
+        "wait_ms": 2,
+        "wait_start_ms": 17929805
+      },
+      {
+        "active_slot": false,
+        "arrival_seq": 5,
+        "charged_units": 0,
+        "deadline_monotonic_ms": null,
+        "generation_current": 0,
+        "granted_monotonic_ms": null,
+        "history": [
+          {
+            "error_code": null,
+            "event_seq": 5,
+            "from_state": "declared",
+            "generation_after": null,
+            "generation_before": null,
+            "generation_used": null,
+            "lease_id": "L-C-LOW",
+            "monotonic_ms": 17929805,
+            "reason": "apply_received_wait_for_capacity",
+            "to_state": "queued"
+          },
+          {
+            "error_code": null,
+            "event_seq": 10,
+            "from_state": "queued",
+            "generation_after": 0,
+            "generation_before": 0,
+            "generation_used": null,
+            "lease_id": "L-C-LOW",
+            "monotonic_ms": 17930105,
+            "reason": "quota_upgrade_cancels_pending:1->2",
+            "to_state": "revoked"
+          }
+        ],
+        "hold_ms": 60000,
+        "last_event_seq": 10,
+        "lease_id": "L-C-LOW",
+        "node_id": "node-c",
+        "ownership_version": 1,
+        "priority": 40,
+        "quota_version": 1,
+        "references": [],
+        "stale": true,
+        "state": "revoked",
+        "units": 4,
+        "wait_end_ms": null,
+        "wait_ms": null,
+        "wait_start_ms": 17929805
+      },
+      {
+        "active_slot": false,
+        "arrival_seq": null,
+        "charged_units": 0,
+        "deadline_monotonic_ms": null,
+        "generation_current": 0,
+        "granted_monotonic_ms": null,
+        "history": [],
+        "hold_ms": 1000,
+        "last_event_seq": null,
+        "lease_id": "L-DEPENDS",
+        "node_id": "node-c",
+        "ownership_version": 1,
+        "priority": 10,
+        "quota_version": 1,
+        "references": [
+          "L-C-LOW"
+        ],
+        "stale": true,
+        "state": "declared",
+        "units": 1,
+        "wait_end_ms": null,
+        "wait_ms": null,
+        "wait_start_ms": null
+      }
+    ],
+    "note": "stale ownership, water and trajectories are excluded from current summary",
+    "quota_version": "<2"
+  },
+  "verification": {
+    "cursor": 15,
+    "entry_count": 15,
+    "final_view": {
+      "decisions": [
+        {
+          "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+          "boundary_set": [
+            "L-A-LONG",
+            "L-A-WAIT",
+            "L-B-HOLD",
+            "L-C-HIGH",
+            "L-C-LOW"
+          ],
+          "candidates": [
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 7,
+                "global_remaining": 10,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-a",
+                "node_margin": 3,
+                "node_max_active": 1,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 30,
+              "lease_id": "L-A-LONG",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 30,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 30,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 700,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 80
+              },
+              "water_index_fp": 80
+            },
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 7,
+                "global_remaining": 10,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-a",
+                "node_margin": 3,
+                "node_max_active": 1,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 30,
+              "lease_id": "L-A-WAIT",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 30,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 30,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 700,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 80
+              },
+              "water_index_fp": 80
+            },
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 1,
+                "concurrency_remaining": 2,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 7,
+                "global_remaining": 10,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-b",
+                "node_margin": 3,
+                "node_max_active": 2,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 30,
+              "lease_id": "L-B-HOLD",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 30,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 30,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 700,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 80
+              },
+              "water_index_fp": 80
+            },
+            {
+              "budget_boundary": true,
+              "capacity": {
+                "concurrency_margin": 1,
+                "concurrency_remaining": 2,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 6,
+                "global_remaining": 10,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-c",
+                "node_margin": 0,
+                "node_max_active": 2,
+                "node_quota": 4,
+                "node_remaining": 4,
+                "node_used": 0
+              },
+              "global_level_fp": 40,
+              "lease_id": "L-C-HIGH",
+              "minimum_abs_margin_units": 0,
+              "node_level_fp": 100,
+              "water": {
+                "global_level_fp": 40,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 40,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 600,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 400,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 100,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 100,
+                  "quota_q": 400,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 0,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 4,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 400,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 140
+              },
+              "water_index_fp": 140
+            },
+            {
+              "budget_boundary": true,
+              "capacity": {
+                "concurrency_margin": 1,
+                "concurrency_remaining": 2,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 6,
+                "global_remaining": 10,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-c",
+                "node_margin": 0,
+                "node_max_active": 2,
+                "node_quota": 4,
+                "node_remaining": 4,
+                "node_used": 0
+              },
+              "global_level_fp": 40,
+              "lease_id": "L-C-LOW",
+              "minimum_abs_margin_units": 0,
+              "node_level_fp": 100,
+              "water": {
+                "global_level_fp": 40,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 40,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 600,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 400,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 100,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 100,
+                  "quota_q": 400,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 0,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 4,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 400,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 140
+              },
+              "water_index_fp": 140
+            }
+          ],
+          "error_affected": true,
+          "error_bound": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.04,
+            "bound_units_exact": "4/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.0,
+              "quantization_truncation": 1.0,
+              "scheduling_order": 0.0
+            },
+            "segments_ulp": {
+              "generation_reorder": 0,
+              "quantization_truncation": 4,
+              "scheduling_order": 0
+            },
+            "total_bound_ulp": 4
+          },
+          "strict_water_winner": "L-A-LONG",
+          "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+          "winner": "L-C-HIGH"
+        },
+        {
+          "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+          "boundary_set": [
+            "L-A-LONG",
+            "L-A-WAIT",
+            "L-B-HOLD"
+          ],
+          "candidates": [
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 3,
+                "global_remaining": 6,
+                "global_used": 4,
+                "node_active": 0,
+                "node_id": "node-a",
+                "node_margin": 3,
+                "node_max_active": 1,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 70,
+              "lease_id": "L-A-LONG",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 70,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 70,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 700,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 120
+              },
+              "water_index_fp": 120
+            },
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 3,
+                "global_remaining": 6,
+                "global_used": 4,
+                "node_active": 0,
+                "node_id": "node-a",
+                "node_margin": 3,
+                "node_max_active": 1,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 70,
+              "lease_id": "L-A-WAIT",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 70,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 70,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 700,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 120
+              },
+              "water_index_fp": 120
+            },
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 1,
+                "concurrency_remaining": 2,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 3,
+                "global_remaining": 6,
+                "global_used": 4,
+                "node_active": 0,
+                "node_id": "node-b",
+                "node_margin": 3,
+                "node_max_active": 2,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 70,
+              "lease_id": "L-B-HOLD",
+              "minimum_abs_margin_units": 3,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 70,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 70,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 700,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 120
+              },
+              "water_index_fp": 120
+            }
+          ],
+          "error_affected": true,
+          "error_bound": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.05,
+            "bound_units_exact": "5/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.0,
+              "quantization_truncation": 0.8,
+              "scheduling_order": 0.2
+            },
+            "segments_ulp": {
+              "generation_reorder": 0,
+              "quantization_truncation": 4,
+              "scheduling_order": 1
+            },
+            "total_bound_ulp": 5
+          },
+          "strict_water_winner": "L-A-LONG",
+          "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+          "winner": "L-A-LONG"
+        },
+        {
+          "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+          "boundary_set": [
+            "L-B-HOLD"
+          ],
+          "candidates": [
+            {
+              "budget_boundary": true,
+              "capacity": {
+                "concurrency_margin": 1,
+                "concurrency_remaining": 2,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 0,
+                "global_remaining": 3,
+                "global_used": 7,
+                "node_active": 0,
+                "node_id": "node-b",
+                "node_margin": 3,
+                "node_max_active": 2,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 100,
+              "lease_id": "L-B-HOLD",
+              "minimum_abs_margin_units": 0,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 100,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 100,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 0,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 1000,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 150
+              },
+              "water_index_fp": 150
+            }
+          ],
+          "error_affected": true,
+          "error_bound": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.05,
+            "bound_units_exact": "5/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.0,
+              "quantization_truncation": 0.8,
+              "scheduling_order": 0.2
+            },
+            "segments_ulp": {
+              "generation_reorder": 0,
+              "quantization_truncation": 4,
+              "scheduling_order": 1
+            },
+            "total_bound_ulp": 5
+          },
+          "strict_water_winner": "L-B-HOLD",
+          "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+          "winner": "L-B-HOLD"
+        },
+        {
+          "basis": "projected node+global fixed-point water indices within synthetic bound; winner selected by declared tie rule",
+          "boundary_set": [
+            "L-A-WAIT"
+          ],
+          "candidates": [
+            {
+              "budget_boundary": true,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 10,
+                "global_margin": 0,
+                "global_remaining": 3,
+                "global_used": 7,
+                "node_active": 0,
+                "node_id": "node-a",
+                "node_margin": 3,
+                "node_max_active": 1,
+                "node_quota": 6,
+                "node_remaining": 6,
+                "node_used": 0
+              },
+              "global_level_fp": 100,
+              "lease_id": "L-A-WAIT",
+              "minimum_abs_margin_units": 0,
+              "node_level_fp": 50,
+              "water": {
+                "global_level_fp": 100,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 100,
+                  "quota_q": 1000,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 0,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 10,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 1000,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 50,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 50,
+                  "quota_q": 600,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 300,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 6,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 150
+              },
+              "water_index_fp": 150
+            }
+          ],
+          "error_affected": true,
+          "error_bound": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.06,
+            "bound_units_exact": "6/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.166667,
+              "quantization_truncation": 0.666667,
+              "scheduling_order": 0.166667
+            },
+            "segments_ulp": {
+              "generation_reorder": 1,
+              "quantization_truncation": 4,
+              "scheduling_order": 1
+            },
+            "total_bound_ulp": 6
+          },
+          "strict_water_winner": "L-A-WAIT",
+          "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+          "winner": "L-A-WAIT"
+        },
+        {
+          "basis": "unique minimum projected fixed-point water index",
+          "boundary_set": [
+            "L-V2-NEW"
+          ],
+          "candidates": [
+            {
+              "budget_boundary": false,
+              "capacity": {
+                "concurrency_margin": 0,
+                "concurrency_remaining": 1,
+                "fits": true,
+                "global_budget": 8,
+                "global_margin": 5,
+                "global_remaining": 8,
+                "global_used": 0,
+                "node_active": 0,
+                "node_id": "node-b",
+                "node_margin": 2,
+                "node_max_active": 1,
+                "node_quota": 5,
+                "node_remaining": 5,
+                "node_used": 0
+              },
+              "global_level_fp": 37,
+              "lease_id": "L-V2-NEW",
+              "minimum_abs_margin_units": 2,
+              "node_level_fp": 60,
+              "water": {
+                "global_level_fp": 37,
+                "global_report": {
+                  "factor": 100,
+                  "level_fp": 37,
+                  "quota_q": 800,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 500,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 8,
+                  "truncation_remainder_numerator": 4,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "node_level_fp": 60,
+                "node_report": {
+                  "factor": 100,
+                  "level_fp": 60,
+                  "quota_q": 500,
+                  "ratio_ulp_error_bound": "less_than_1_level_fp",
+                  "remaining_q": 200,
+                  "saturated": false,
+                  "truncation_remainder_denominator": 5,
+                  "truncation_remainder_numerator": 0,
+                  "used_q": 300,
+                  "zero_quota_convention": null
+                },
+                "water_index_fp": 97
+              },
+              "water_index_fp": 97
+            }
+          ],
+          "error_affected": false,
+          "error_bound": {
+            "attribution": "dominant",
+            "bound_units_decimal": 0.06,
+            "bound_units_exact": "6/100",
+            "dominant_segment": "quantization_truncation",
+            "dominant_threshold": 0.6,
+            "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+            "segment_shares": {
+              "generation_reorder": 0.166667,
+              "quantization_truncation": 0.666667,
+              "scheduling_order": 0.166667
+            },
+            "segments_ulp": {
+              "generation_reorder": 1,
+              "quantization_truncation": 4,
+              "scheduling_order": 1
+            },
+            "total_bound_ulp": 6
+          },
+          "strict_water_winner": "L-V2-NEW",
+          "tie_rule": "quota_version_desc,priority_desc,lease_id_asc",
+          "winner": "L-V2-NEW"
+        }
+      ],
+      "generation_audit": {
+        "L-A-LONG": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "L-A-WAIT": [
+          1,
+          2
+        ],
+        "L-B-HOLD": [
+          1,
+          2
+        ],
+        "L-C-HIGH": [
+          1,
+          2
+        ],
+        "L-C-LOW": [
+          0
+        ],
+        "L-V2-NEW": [
+          1,
+          2
+        ]
+      },
+      "invariant_violations": [],
+      "leases": [
+        {
+          "active_slot": false,
+          "arrival_seq": 11,
+          "charged_units": 0,
+          "deadline_monotonic_ms": 1320,
+          "generation_current": 2,
+          "granted_monotonic_ms": 320,
+          "history": [
+            {
+              "error_code": null,
+              "event_seq": 11,
+              "from_state": "declared",
+              "generation_after": null,
+              "generation_before": null,
+              "generation_used": null,
+              "lease_id": "L-V2-NEW",
+              "monotonic_ms": 320,
+              "reason": "apply_received_wait_for_capacity",
+              "to_state": "queued"
+            },
+            {
+              "error_code": null,
+              "event_seq": 11,
+              "from_state": "queued",
+              "generation_after": 1,
+              "generation_before": 0,
+              "generation_used": 1,
+              "lease_id": "L-V2-NEW",
+              "monotonic_ms": 320,
+              "reason": "node_apply_accepted",
+              "to_state": "granted"
+            },
+            {
+              "error_code": null,
+              "event_seq": 12,
+              "from_state": "granted",
+              "generation_after": 2,
+              "generation_before": 1,
+              "generation_used": 1,
+              "lease_id": "L-V2-NEW",
+              "monotonic_ms": 380,
+              "reason": "user_release",
+              "to_state": "released"
+            }
+          ],
+          "hold_ms": 1000,
+          "last_event_seq": 12,
+          "lease_id": "L-V2-NEW",
+          "node_id": "node-b",
+          "ownership_version": 1,
+          "priority": 70,
+          "quota_version": 2,
+          "references": [],
+          "stale": false,
+          "state": "released",
+          "units": 3,
+          "wait_end_ms": 320,
+          "wait_ms": 0,
+          "wait_start_ms": 320
+        }
+      ],
+      "quota_version": 2,
+      "view_replacements": [
+        {
+          "at_ms": 280,
+          "cancel_set": [
+            "L-C-LOW"
+          ],
+          "from_version": 1,
+          "revoke_set": [
+            "L-B-HOLD",
+            "L-C-HIGH"
+          ],
+          "rule": "whole_replacement_no_merge",
+          "to_version": 2
+        }
+      ],
+      "water": {
+        "factor": 100,
+        "fixed_point_rules": {
+          "cap": 9223372036854775807,
+          "integer_format": "signed-64-bit fixed-point compatible",
+          "multiplication_division": "integer arithmetic only in capacity and boundary decisions",
+          "overflow": "saturate to cap and mark saturated=true",
+          "truncation": "floor division for nonnegative quantities"
+        },
+        "global": {
+          "budget_units": 8,
+          "factor": 100,
+          "level_fp": 0,
+          "quota_q": 800,
+          "ratio_ulp_error_bound": "less_than_1_level_fp",
+          "remaining_q": 800,
+          "remaining_units": 8,
+          "saturated": false,
+          "truncation_remainder_denominator": 8,
+          "truncation_remainder_numerator": 0,
+          "used_q": 0,
+          "used_units": 0,
+          "zero_quota_convention": null
+        },
+        "global_aggregation_error_bound_fp": 4,
+        "node_comparison_error_bound_fp": 2,
+        "nodes": {
+          "node-a": {
+            "active_leases": 0,
+            "factor": 100,
+            "level_fp": 0,
+            "max_active": 2,
+            "node_id": "node-a",
+            "quota_q": 400,
+            "quota_units": 4,
+            "ratio_ulp_error_bound": "less_than_1_level_fp",
+            "remaining_q": 400,
+            "remaining_units": 4,
+            "saturated": false,
+            "truncation_remainder_denominator": 4,
+            "truncation_remainder_numerator": 0,
+            "used_q": 0,
+            "used_units": 0,
+            "zero_quota_convention": null
+          },
+          "node-b": {
+            "active_leases": 0,
+            "factor": 100,
+            "level_fp": 0,
+            "max_active": 1,
+            "node_id": "node-b",
+            "quota_q": 500,
+            "quota_units": 5,
+            "ratio_ulp_error_bound": "less_than_1_level_fp",
+            "remaining_q": 500,
+            "remaining_units": 5,
+            "saturated": false,
+            "truncation_remainder_denominator": 5,
+            "truncation_remainder_numerator": 0,
+            "used_q": 0,
+            "used_units": 0,
+            "zero_quota_convention": null
+          },
+          "node-c": {
+            "active_leases": 0,
+            "factor": 100,
+            "level_fp": 0,
+            "max_active": 1,
+            "node_id": "node-c",
+            "quota_q": 400,
+            "quota_units": 4,
+            "ratio_ulp_error_bound": "less_than_1_level_fp",
+            "remaining_q": 400,
+            "remaining_units": 4,
+            "saturated": false,
+            "truncation_remainder_denominator": 4,
+            "truncation_remainder_numerator": 0,
+            "used_q": 0,
+            "used_units": 0,
+            "zero_quota_convention": null
+          }
+        },
+        "scale_exponent": 2,
+        "single_lease_quantization": {
+          "L-A-LONG": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 75,
+            "direct_quantized_q": 300,
+            "equivalent_units_error_bound_decimal": 0.04,
+            "equivalent_units_error_bound_exact": "4/100",
+            "lease_units": 3,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-A-WAIT": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 75,
+            "direct_quantized_q": 300,
+            "equivalent_units_error_bound_decimal": 0.04,
+            "equivalent_units_error_bound_exact": "4/100",
+            "lease_units": 3,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-B-HOLD": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 60,
+            "direct_quantized_q": 300,
+            "equivalent_units_error_bound_decimal": 0.05,
+            "equivalent_units_error_bound_exact": "5/100",
+            "lease_units": 3,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-C-HIGH": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 100,
+            "direct_quantized_q": 400,
+            "equivalent_units_error_bound_decimal": 0.04,
+            "equivalent_units_error_bound_exact": "4/100",
+            "lease_units": 4,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-C-LOW": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 100,
+            "direct_quantized_q": 400,
+            "equivalent_units_error_bound_decimal": 0.04,
+            "equivalent_units_error_bound_exact": "4/100",
+            "lease_units": 4,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-DEPENDS": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 25,
+            "direct_quantized_q": 100,
+            "equivalent_units_error_bound_decimal": 0.04,
+            "equivalent_units_error_bound_exact": "4/100",
+            "lease_units": 1,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          },
+          "L-V2-NEW": {
+            "derived_truncation_residual": 0,
+            "derived_water_level_fp": 60,
+            "direct_quantized_q": 300,
+            "equivalent_units_error_bound_decimal": 0.05,
+            "equivalent_units_error_bound_exact": "5/100",
+            "lease_units": 3,
+            "ratio_error_bound_fp": 1,
+            "single_lease_quantization_error_units": 0
+          }
+        },
+        "synthetic_error": {
+          "attribution": "dominant",
+          "bound_units_decimal": 0.06,
+          "bound_units_exact": "6/100",
+          "dominant_segment": "quantization_truncation",
+          "dominant_threshold": 0.6,
+          "rule": "dominant only when numpy share is >= 0.60; otherwise mixed",
+          "segment_shares": {
+            "generation_reorder": 0.166667,
+            "quantization_truncation": 0.666667,
+            "scheduling_order": 0.166667
+          },
+          "segments_ulp": {
+            "generation_reorder": 1,
+            "quantization_truncation": 4,
+            "scheduling_order": 1
+          },
+          "total_bound_ulp": 6
+        }
+      }
+    },
+    "ok": true,
+    "verified_leases": [
+      "L-A-LONG",
+      "L-A-WAIT",
+      "L-B-HOLD",
+      "L-C-HIGH",
+      "L-C-LOW",
+      "L-V2-NEW"
+    ]
+  }
+}

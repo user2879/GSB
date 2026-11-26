@@ -1,0 +1,12 @@
+{"seq":1,"arrival_ms":0,"type":"apply","lease_id":"L-A-LONG"}
+{"seq":2,"arrival_ms":0,"type":"apply","lease_id":"L-A-WAIT"}
+{"seq":3,"arrival_ms":0,"type":"apply","lease_id":"L-B-HOLD"}
+{"seq":4,"arrival_ms":0,"type":"apply","lease_id":"L-C-HIGH"}
+{"seq":5,"arrival_ms":0,"type":"apply","lease_id":"L-C-LOW"}
+{"seq":6,"arrival_ms":25,"type":"renew","lease_id":"L-A-LONG","generation":1}
+{"seq":7,"arrival_ms":45,"type":"renew","lease_id":"L-A-LONG","generation":1,"expect_error":"E_STALE","note":"old label after seq 6 must not advance generation"}
+{"seq":8,"arrival_ms":65,"type":"renew","lease_id":"L-A-LONG","generation":2}
+{"seq":9,"arrival_ms":95,"type":"release","lease_id":"L-A-LONG","generation":3}
+{"seq":10,"arrival_ms":280,"type":"upgrade_quota","quota_version":2}
+{"seq":11,"arrival_ms":320,"type":"apply","lease_id":"L-V2-NEW"}
+{"seq":12,"arrival_ms":380,"type":"release","lease_id":"L-V2-NEW","generation":1}
