@@ -1,0 +1,85 @@
+{
+  "events": [
+    {
+      "seq": 1,
+      "type": "batch",
+      "shard_id": "shard-a",
+      "batch_id": "b-a1",
+      "sample_ids": [1, 2, 3]
+    },
+    {
+      "seq": 2,
+      "type": "batch",
+      "shard_id": "shard-b",
+      "batch_id": "b-b1",
+      "sample_ids": [4, 5]
+    },
+    {
+      "seq": 3,
+      "type": "checkpoint",
+      "checkpoint_id": "cp-base"
+    },
+    {
+      "seq": 4,
+      "type": "advance",
+      "parameter_version": 2
+    },
+    {
+      "seq": 5,
+      "type": "batch",
+      "shard_id": "shard-a",
+      "batch_id": "b-a2",
+      "sample_ids": [2, 3, 4]
+    },
+    {
+      "seq": 6,
+      "type": "batch",
+      "shard_id": "shard-b",
+      "batch_id": "b-b2",
+      "sample_ids": [5, 6]
+    },
+    {
+      "seq": 7,
+      "type": "renew",
+      "shard_id": "shard-a",
+      "batch_id": "b-a1",
+      "lease_version": 1
+    },
+    {
+      "seq": 8,
+      "type": "checkpoint",
+      "checkpoint_id": "cp-v2"
+    },
+    {
+      "seq": 9,
+      "type": "rollback",
+      "checkpoint_id": "cp-base"
+    },
+    {
+      "seq": 10,
+      "type": "batch",
+      "shard_id": "shard-a",
+      "batch_id": "b-a3",
+      "sample_ids": [7, 8]
+    },
+    {
+      "seq": 11,
+      "type": "batch",
+      "shard_id": "shard-b",
+      "batch_id": "b-b3",
+      "sample_ids": [9]
+    },
+    {
+      "seq": 12,
+      "type": "advance",
+      "parameter_version": 3
+    },
+    {
+      "seq": 13,
+      "type": "batch",
+      "shard_id": "shard-a",
+      "batch_id": "b-a4",
+      "sample_ids": [10]
+    }
+  ]
+}

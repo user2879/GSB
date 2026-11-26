@@ -1,0 +1,76 @@
+{
+  "parameter_versions": [
+    {
+      "parameter_version": 1,
+      "generation": 1,
+      "layers": [
+        {
+          "layer_id": "token",
+          "dimension": 4,
+          "scale_factor": 1000,
+          "derived_from": null
+        },
+        {
+          "layer_id": "mix",
+          "dimension": 3,
+          "scale_factor": 1000,
+          "derived_from": "token"
+        },
+        {
+          "layer_id": "out",
+          "dimension": 2,
+          "scale_factor": 1000,
+          "derived_from": "mix"
+        }
+      ]
+    },
+    {
+      "parameter_version": 2,
+      "generation": 2,
+      "layers": [
+        {
+          "layer_id": "token",
+          "dimension": 4,
+          "scale_factor": 1200,
+          "derived_from": null
+        },
+        {
+          "layer_id": "mix",
+          "dimension": 3,
+          "scale_factor": 1000,
+          "derived_from": "token"
+        },
+        {
+          "layer_id": "out",
+          "dimension": 2,
+          "scale_factor": 1000,
+          "derived_from": "mix"
+        }
+      ]
+    },
+    {
+      "parameter_version": 3,
+      "generation": 3,
+      "layers": [
+        {
+          "layer_id": "token",
+          "dimension": 4,
+          "scale_factor": 1000,
+          "derived_from": null
+        },
+        {
+          "layer_id": "mix",
+          "dimension": 4,
+          "scale_factor": 1000,
+          "derived_from": "token"
+        },
+        {
+          "layer_id": "out",
+          "dimension": 2,
+          "scale_factor": 1000,
+          "derived_from": ["token", "mix"]
+        }
+      ]
+    }
+  ]
+}
