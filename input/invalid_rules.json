@@ -1,0 +1,47 @@
+{
+  "active_revision_ids": [
+    "missing"
+  ],
+  "revisions": [
+    {
+      "label": "bad-parent",
+      "ops": [],
+      "parent_id": "no-such-parent",
+      "revision_id": "bad-parent",
+      "seq": 0
+    },
+    {
+      "label": "cycle",
+      "ops": [],
+      "parent_id": "bad-cycle-b",
+      "revision_id": "bad-cycle-a",
+      "seq": 1
+    },
+    {
+      "label": "cycle",
+      "ops": [],
+      "parent_id": "bad-cycle-a",
+      "revision_id": "bad-cycle-b",
+      "seq": 2
+    },
+    {
+      "label": "bad-weight",
+      "ops": [
+        {
+          "intent_id": "weather",
+          "op": "add",
+          "terms": [
+            "北京",
+            "天气"
+          ],
+          "trigger_id": "bad",
+          "weight": 123
+        }
+      ],
+      "parent_id": null,
+      "revision_id": "bad-weight",
+      "seq": 3
+    }
+  ],
+  "schema_version": 1
+}

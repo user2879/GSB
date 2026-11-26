@@ -1,0 +1,279 @@
+{
+  "active_revision_ids": [
+    "r06"
+  ],
+  "revisions": [
+    {
+      "label": "base",
+      "ops": [
+        {
+          "intent_id": "weather",
+          "op": "add",
+          "slot_pattern": [
+            "city",
+            "weather"
+          ],
+          "terms": [
+            "北京",
+            "天气"
+          ],
+          "trigger_id": "t_weather_city",
+          "weight": 1000
+        },
+        {
+          "intent_id": "weather",
+          "op": "add",
+          "slot_pattern": [
+            "date",
+            "weather"
+          ],
+          "terms": [
+            "明天",
+            "天气"
+          ],
+          "trigger_id": "t_weather_tomorrow",
+          "weight": 900
+        },
+        {
+          "intent_id": "nearby",
+          "op": "add",
+          "slot_pattern": [
+            "poi"
+          ],
+          "terms": [
+            "附近",
+            "咖啡",
+            "店"
+          ],
+          "trigger_id": "t_nearby_coffee",
+          "weight": 1100
+        },
+        {
+          "intent_id": "music",
+          "op": "add",
+          "slot_pattern": [
+            "action",
+            "media"
+          ],
+          "terms": [
+            "播放",
+            "音乐"
+          ],
+          "trigger_id": "t_music_play",
+          "weight": 1000
+        },
+        {
+          "intent_id": "navigation",
+          "op": "add",
+          "slot_pattern": [
+            "destination"
+          ],
+          "terms": [
+            "导航",
+            "去",
+            "机场"
+          ],
+          "trigger_id": "t_nav_airport",
+          "weight": 1100
+        }
+      ],
+      "parent_id": null,
+      "revision_id": "r00",
+      "seq": 0
+    },
+    {
+      "label": "add-nearby-hotel-and-adjust-weather",
+      "ops": [
+        {
+          "intent_id": "nearby",
+          "op": "add",
+          "slot_pattern": [
+            "poi"
+          ],
+          "terms": [
+            "周边",
+            "餐厅"
+          ],
+          "trigger_id": "t_nearby_restaurant",
+          "weight": 1000
+        },
+        {
+          "intent_id": "hotel",
+          "op": "add",
+          "slot_pattern": [
+            "action",
+            "lodging"
+          ],
+          "terms": [
+            "预订",
+            "酒店"
+          ],
+          "trigger_id": "t_hotel_book",
+          "weight": 1100
+        },
+        {
+          "op": "update",
+          "slot_pattern": [
+            "city",
+            "weather",
+            "forecast"
+          ],
+          "trigger_id": "t_weather_city",
+          "weight": 1100
+        }
+      ],
+      "parent_id": "r00",
+      "revision_id": "r01",
+      "seq": 1
+    },
+    {
+      "label": "add-news-translate-and-route",
+      "ops": [
+        {
+          "intent_id": "news",
+          "op": "add",
+          "slot_pattern": [
+            "topic"
+          ],
+          "terms": [
+            "股票",
+            "行情"
+          ],
+          "trigger_id": "t_news_stock",
+          "weight": 1100
+        },
+        {
+          "intent_id": "translate",
+          "op": "add",
+          "slot_pattern": [
+            "action",
+            "target_language"
+          ],
+          "terms": [
+            "翻译",
+            "英文"
+          ],
+          "trigger_id": "t_translate",
+          "weight": 1000
+        },
+        {
+          "intent_id": "navigation",
+          "op": "add",
+          "slot_pattern": [
+            "route"
+          ],
+          "terms": [
+            "怎么",
+            "走"
+          ],
+          "trigger_id": "t_nav_route",
+          "weight": 700
+        },
+        {
+          "op": "update",
+          "slot_pattern": [
+            "action",
+            "media"
+          ],
+          "trigger_id": "t_music_play"
+        }
+      ],
+      "parent_id": "r01",
+      "revision_id": "r02",
+      "seq": 2
+    },
+    {
+      "label": "adjust-nearby-delete-route",
+      "ops": [
+        {
+          "op": "update",
+          "slot_pattern": [
+            "poi",
+            "brand"
+          ],
+          "trigger_id": "t_nearby_coffee",
+          "weight": 1200
+        },
+        {
+          "op": "delete",
+          "trigger_id": "t_nav_route"
+        }
+      ],
+      "parent_id": "r02",
+      "revision_id": "r03",
+      "seq": 3
+    },
+    {
+      "label": "music-artist-branch",
+      "ops": [
+        {
+          "intent_id": "music",
+          "op": "add",
+          "slot_pattern": [
+            "action",
+            "artist"
+          ],
+          "terms": [
+            "播放",
+            "周杰伦"
+          ],
+          "trigger_id": "t_music_artist",
+          "weight": 1200
+        },
+        {
+          "op": "update",
+          "trigger_id": "t_weather_tomorrow",
+          "weight": 1000
+        }
+      ],
+      "parent_id": "r03",
+      "revision_id": "r04",
+      "seq": 4
+    },
+    {
+      "label": "hotel-price-sibling",
+      "ops": [
+        {
+          "intent_id": "hotel",
+          "op": "add",
+          "slot_pattern": [
+            "lodging",
+            "price"
+          ],
+          "terms": [
+            "酒店",
+            "价格"
+          ],
+          "trigger_id": "t_hotel_price",
+          "weight": 800
+        },
+        {
+          "op": "update",
+          "trigger_id": "t_weather_city",
+          "weight": 1000
+        }
+      ],
+      "parent_id": "r03",
+      "revision_id": "r05",
+      "seq": 5
+    },
+    {
+      "label": "news-weight-and-delete-old-music",
+      "ops": [
+        {
+          "op": "update",
+          "trigger_id": "t_news_stock",
+          "weight": 1200
+        },
+        {
+          "op": "delete",
+          "trigger_id": "t_music_play"
+        }
+      ],
+      "parent_id": "r04",
+      "revision_id": "r06",
+      "seq": 6
+    }
+  ],
+  "schema_version": 1
+}

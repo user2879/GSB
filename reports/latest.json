@@ -1,0 +1,5242 @@
+{
+  "config_hash": "396e3114e0278fea8dd462cc70ca144c7dd589139be3be3a6947b5cc95772c72",
+  "failures": [],
+  "global_version": 1,
+  "invalidation_by_revision": {
+    "r00": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r01": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r02": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r03": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r04": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r06": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    },
+    "r07": {
+      "match": 0,
+      "merge": 0,
+      "score": 0
+    }
+  },
+  "issues": [],
+  "ledger": {
+    "changed_trigger_ids": [],
+    "invalidations": [],
+    "match_changed_trigger_ids": [],
+    "reuse": [
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "a158a74ab14588264d14dcc9693dec57f9bba55c26c5b3789fd13502786d118e",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q001",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "edc7ff769966f2d0b1f6209e64ab5bbe08b111f6f8e0ad8e5a1ab281a0466877",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q001",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "ddf253b9af91a4b509fc9439822098a54170c799265c8d754b7dcbc072bdb8df",
+        "dependencies": [
+          "t_weather_tomorrow"
+        ],
+        "query_id": "q002",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "150f348e4eb2402342bcfbde1104ae6fe2be599c9f0b0476decfe3b61c1b6203",
+        "dependencies": [
+          "t_weather_tomorrow"
+        ],
+        "query_id": "q002",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "57dd9b327a11bfecc2d258f04bb892df2449728101df956ecbc4a342561d144c",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q003",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "b26120811f01167dc948afc50387916755658c6393f1809a8f65e675562220cc",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q003",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "530bcc7edd5b1722a818ae9569e7e67227f7740918395fc698fe911dae7df3a3",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q004",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "56249b61d21c26bcf3acc9612969b2aff97b330d75f5d2edc9c18296c01c6ffa",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q004",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "97b5801df846ea25e2adfe2017032bd7e2f3b62f58dd524f31c7c921edcd67a5",
+        "dependencies": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q005",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "f5ee9c95ff631aba6c7e806973853be964c9d00917640acdc8243ca52ab736b3",
+        "dependencies": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q005",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "8e31f3db3db8a330d00214359d23c79c38de484b1f9145185bb69f54366c3735",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q006",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "296ff9c3125718146a21edae3d0eea788294232e06383a1df507990212976278",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q006",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "53b9c421c6f22a2f9928dd97f0946c415e7f0e638e4de0f30875533272d74315",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q007",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "7979f7a62141a817d750a643c06825885c85eb303894e35f7f1eb4a5db7db3e5",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q007",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "a485fe5adbe729dc7cf795de4e4821d4fb7fcb341bbe116eb6cabd6accf75bb5",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q008",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "f4263b80d743c66995408af08453f5272a6c10a65b91ab356e62a4c5bbaafd9d",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q008",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "81e545c9d6b32766e7771ec32ea3431504f0d320b5ff4139a2431c28ce0be896",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q009",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "270523ed3190a72de119c024933a87c61e0a84eff808490f84d700fed3c7b2fb",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q009",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "25e8265be229126f7ddd5b03987c2b1aa2eb41aa5e03458048bc3fb0620703ec",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q010",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "fbbbe0a54627a84b7320e8aa6b423d80281ee496b4ad5ee709786537dacb610a",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q010",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "0d3d7d66e279234edc00608b9c7186f68b02bd238ec0af9cd9ec5d341f8edd72",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q011",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "690c32775b821f00df5e202c908679b8ae6898e81083f9ae6b479386ef767226",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q011",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "d764eefc3f4657ea58c104ebcdfbd4b22b5dd897c3cdff0458488225473023da",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q012",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "81c3aceed603e28739f1ded486c58b5b91197f1348bcc916715419dcaa191780",
+        "dependencies": [
+          "t_hotel_book"
+        ],
+        "query_id": "q012",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "2085bacd62d844e89827ff2d063e594f059bd9d636fafb1ca908741f11792aeb",
+        "dependencies": [
+          "t_news_stock"
+        ],
+        "query_id": "q013",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "30ecb8afb3ac90c10d29421a6a480e9c503f64d54b38fa24d451fdddc1c8600d",
+        "dependencies": [
+          "t_news_stock"
+        ],
+        "query_id": "q013",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "338a146e98a141a752f87ac7690958c4c4f02e6b8c7101ec8ce08a04fccd2140",
+        "dependencies": [
+          "t_news_stock"
+        ],
+        "query_id": "q014",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "19fa784a93736c510038a40693f5b43555108dd05feb8863881738699740f31b",
+        "dependencies": [
+          "t_news_stock"
+        ],
+        "query_id": "q014",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "8167b2a2d828874274b270f85c3dc66ce189e9ddac62f5edca2dee12c63919f2",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q015",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "1a6c5a981d3ee7d49558a716d0b12c78d6e0dd500769fcc1c518c01ee500450b",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q015",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "ded63e5d7cdf1a64b54770ea7a5ff1cca9573c8c0d001a87d34bc12cdbfa771a",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q016",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "e42b22eded9fa8d517658385e13d8478f713e543a24e96b178dba4e0d3a891b7",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q016",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "64eb342e53f5cf7dc7a60dc0d40f743d01e80c55c68b7ce3a5a5bcabe02c7c8a",
+        "dependencies": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q017",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "d69a7b9e7aa9712b808c5d8ce3721d70275e1b50da40876f221b216c8dea02e4",
+        "dependencies": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q017",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "9551a288dd8f5ae5c38a0b11a9c195cc8fec71f63eaef578718857be86eab329",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q018",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "ce3ad50ed1737078c9a622cac79cd781ff0cc2c828e1f28820d1ebe1bd4f150e",
+        "dependencies": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q018",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "b5af881894e348723f4b7267953d9bb687fb698d2aa0e12473bee30f2bc7e1c8",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q019",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "c6161babf57fdc26c2e976027b7ae36bfa5f8da3bf80e03266c33b2d5fc149f9",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q019",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "aa0b3b28c37eb3c580de963cb4791ed8ca8e5792952b29e2c9a941393f82228b",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q020",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "82916410876e1456390069bbe2782182da91ee8ccd39287dda74fd619747f3d5",
+        "dependencies": [
+          "t_music_artist"
+        ],
+        "query_id": "q020",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "7484138c12f671751117cb1e7e7f87438592d8ff6d23efcb99477ce6d4ebbe23",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q021",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "7bc8414bc4119c8a15d70a9177fba658a81692ab4f9f494bcd014ead3dee9dd6",
+        "dependencies": [
+          "t_weather_city"
+        ],
+        "query_id": "q021",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "596ec64114f0f8a156a775c4e73309c4f08bacb38ad1e158bc707e36caf1bfff",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q022",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "9b45daece94c29b185c13cab2cf1b7bc394326bd5fba9711866718deeadf9596",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q022",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "f2472208c165c5b7e43b596fca53cc7f33c642889ff528872028621609e7d66b",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q023",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "f7b57aca3799c8c839690ad436497faef1cc86f115b637e85b3f8f85fba2b5b4",
+        "dependencies": [
+          "t_translate"
+        ],
+        "query_id": "q023",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "query_fingerprint_same;match_dependencies_unchanged",
+        "cache_key": "3afc131c5c74a073b163ace379d81e037fc56fcef2f342c72e6085d3b15582f6",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q024",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "match"
+      },
+      {
+        "basis": "query_and_match_keys_same;referenced_trigger_entries_same;quantum_and_threshold_same",
+        "cache_key": "8d14447c033bbbf9fce22bc790439f69250e473c3020f40ecbda61a740730f85",
+        "dependencies": [
+          "t_nav_airport"
+        ],
+        "query_id": "q024",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "score"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "190cae7bd3c868148a0a66f2a9bd962db58efbdb427eee9423c7faa0cf7a62cf",
+        "dependencies": [
+          "q001",
+          "q002",
+          "q003"
+        ],
+        "segment_id": "seg-190cae7bd3c86814",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "93dae0078f61780a8b74fa15382f8e7d74082670f2b9ce3cde481524f133eb79",
+        "dependencies": [
+          "q004",
+          "q005"
+        ],
+        "segment_id": "seg-93dae0078f61780a",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "62b9789f329ae7d150e1c7292b8837293f6f3e68dee247c9d9fc0edad1db7052",
+        "dependencies": [
+          "q006"
+        ],
+        "segment_id": "seg-62b9789f329ae7d1",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "2463b4fb5fe0d8b983663c9120792b78fb35f94c1862fe753b75fea41b5054c9",
+        "dependencies": [
+          "q007",
+          "q008"
+        ],
+        "segment_id": "seg-2463b4fb5fe0d8b9",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "51770a697e80a868d505f587c4dfbc1188c891d28ba49a06ec1ed9fc1c684762",
+        "dependencies": [
+          "q009"
+        ],
+        "segment_id": "seg-51770a697e80a868",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "2601ad1a409542aca39040ea4382165b87bd1c1c913d3559f95861239363e9ff",
+        "dependencies": [
+          "q010"
+        ],
+        "segment_id": "seg-2601ad1a409542ac",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "38dfe8e0684039b6419b44488d9a585722ae88b6fa1389733acc0573ddd513bf",
+        "dependencies": [
+          "q011",
+          "q012"
+        ],
+        "segment_id": "seg-38dfe8e0684039b6",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "5a1293b1b30a369e88e3d2a7f7a4be9c6726f79362288a240525d6cc70884234",
+        "dependencies": [
+          "q013",
+          "q014"
+        ],
+        "segment_id": "seg-5a1293b1b30a369e",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "913d997f48e6c3bc6354a3ca694aec8400fd872da8291f92243f2f23c28eee8d",
+        "dependencies": [
+          "q015"
+        ],
+        "segment_id": "seg-913d997f48e6c3bc",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "eb42f57d27f383f4f73a62b61568524f1423616743db477c6c2e72cef1084944",
+        "dependencies": [
+          "q016",
+          "q017",
+          "q018"
+        ],
+        "segment_id": "seg-eb42f57d27f383f4",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "90df7abd482d9310b1416bfd29772b8cbdc5641c050490f776fc9605fa625812",
+        "dependencies": [
+          "q019",
+          "q020"
+        ],
+        "segment_id": "seg-90df7abd482d9310",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "619d5d958dc02ab9777d143f389244a584657a54e3b24ca23b3f2f51f056a7c0",
+        "dependencies": [
+          "q021"
+        ],
+        "segment_id": "seg-619d5d958dc02ab9",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "f41aeeb1afd3d8f36ae8c09eee0dc19cea008993340285a96465bc702de35cf5",
+        "dependencies": [
+          "q022",
+          "q023"
+        ],
+        "segment_id": "seg-f41aeeb1afd3d8f3",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      },
+      {
+        "basis": "member_score_keys_and_query_fingerprints_same",
+        "cache_key": "d71b734bd7d5d9e0825cd74983a13f5d1eaa1f3a456dc6190e3e9856c93982ac",
+        "dependencies": [
+          "q024"
+        ],
+        "segment_id": "seg-d71b734bd7d5d9e0",
+        "source_generation": "gen-20261126T222058Z-298014-a57171f965",
+        "stage": "merge"
+      }
+    ]
+  },
+  "pending": [],
+  "queries": [
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "weather",
+          "fixed_score": 135.0,
+          "float_intent": "weather",
+          "float_score_margin": 135.0,
+          "high_width_bits": 20,
+          "high_width_intent": "weather",
+          "high_width_margin": 135.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "weather",
+      "match": {
+        "cache_key": "a158a74ab14588264d14dcc9693dec57f9bba55c26c5b3789fd13502786d118e",
+        "char_length": 11,
+        "considered_trigger_ids": [
+          "t_weather_city"
+        ],
+        "query_id": "q001",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 0,
+            "intent_id": "weather",
+            "start": 0,
+            "terms": [
+              "北京",
+              "天气"
+            ],
+            "trigger_id": "t_weather_city"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q001",
+      "score": {
+        "boundary": false,
+        "cache_key": "edc7ff769966f2d0b1f6209e64ab5bbe08b111f6f8e0ad8e5a1ab281a0466877",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 0,
+            "hit_count": 1,
+            "intent_id": "weather",
+            "numerator": 72089600,
+            "trigger_id": "t_weather_city",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8847360,
+        "predicted_intent": "weather",
+        "quantum": 32,
+        "query_id": "q001",
+        "referenced_trigger_ids": [
+          "t_weather_city"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "weather",
+            "margin": 8847360,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-190cae7bd3c86814",
+      "session_id": "s01",
+      "source": "source-a",
+      "terms": [
+        "北京",
+        "天气",
+        "一下",
+        "提醒"
+      ],
+      "text": "北京 天气 一下 提醒",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "weather",
+          "fixed_score": 193.33349609,
+          "float_intent": "weather",
+          "float_score_margin": 193.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "weather",
+          "high_width_margin": 193.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041668561447,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.085069444570763e-06,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "weather",
+      "match": {
+        "cache_key": "ddf253b9af91a4b509fc9439822098a54170c799265c8d754b7dcbc072bdb8df",
+        "char_length": 8,
+        "considered_trigger_ids": [
+          "t_weather_tomorrow"
+        ],
+        "query_id": "q002",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 1,
+            "intent_id": "weather",
+            "start": 0,
+            "terms": [
+              "明天",
+              "天气"
+            ],
+            "trigger_id": "t_weather_tomorrow"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 3
+      },
+      "match_reused": true,
+      "query_id": "q002",
+      "score": {
+        "boundary": false,
+        "cache_key": "150f348e4eb2402342bcfbde1104ae6fe2be599c9f0b0476decfe3b61c1b6203",
+        "contributions": [
+          {
+            "contribution": 21845333,
+            "entry_order": 1,
+            "hit_count": 1,
+            "intent_id": "weather",
+            "numerator": 65536000,
+            "trigger_id": "t_weather_tomorrow",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 12670304,
+        "predicted_intent": "weather",
+        "quantum": 32,
+        "query_id": "q002",
+        "referenced_trigger_ids": [
+          "t_weather_tomorrow"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "weather",
+            "margin": 12670304,
+            "raw_score": 21845333,
+            "score": 21845344,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-190cae7bd3c86814",
+      "session_id": "s01",
+      "source": "source-b",
+      "terms": [
+        "明天",
+        "天气",
+        "一下"
+      ],
+      "text": "明天 天气 一下",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "weather",
+          "fixed_score": 135.0,
+          "float_intent": "weather",
+          "float_score_margin": 135.0,
+          "high_width_bits": 20,
+          "high_width_intent": "weather",
+          "high_width_margin": 135.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "weather",
+      "match": {
+        "cache_key": "57dd9b327a11bfecc2d258f04bb892df2449728101df956ecbc4a342561d144c",
+        "char_length": 10,
+        "considered_trigger_ids": [
+          "t_weather_city"
+        ],
+        "query_id": "q003",
+        "selected": [
+          {
+            "char_end": 8,
+            "char_start": 3,
+            "end": 3,
+            "entry_order": 0,
+            "intent_id": "weather",
+            "start": 1,
+            "terms": [
+              "北京",
+              "天气"
+            ],
+            "trigger_id": "t_weather_city"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q003",
+      "score": {
+        "boundary": false,
+        "cache_key": "b26120811f01167dc948afc50387916755658c6393f1809a8f65e675562220cc",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 0,
+            "hit_count": 1,
+            "intent_id": "weather",
+            "numerator": 72089600,
+            "trigger_id": "t_weather_city",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8847360,
+        "predicted_intent": "weather",
+        "quantum": 32,
+        "query_id": "q003",
+        "referenced_trigger_ids": [
+          "t_weather_city"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "weather",
+            "margin": 8847360,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-190cae7bd3c86814",
+      "session_id": "s01",
+      "source": "source-c",
+      "terms": [
+        "一下",
+        "北京",
+        "天气",
+        "请"
+      ],
+      "text": "一下 北京 天气 请",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "nearby",
+          "fixed_score": 90.0,
+          "float_intent": "nearby",
+          "float_score_margin": 90.0,
+          "high_width_bits": 20,
+          "high_width_intent": "nearby",
+          "high_width_margin": 90.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "nearby",
+      "match": {
+        "cache_key": "530bcc7edd5b1722a818ae9569e7e67227f7740918395fc698fe911dae7df3a3",
+        "char_length": 12,
+        "considered_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q004",
+        "selected": [
+          {
+            "char_end": 7,
+            "char_start": 0,
+            "end": 3,
+            "entry_order": 2,
+            "intent_id": "nearby",
+            "start": 0,
+            "terms": [
+              "附近",
+              "咖啡",
+              "店"
+            ],
+            "trigger_id": "t_nearby_coffee"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q004",
+      "score": {
+        "boundary": false,
+        "cache_key": "56249b61d21c26bcf3acc9612969b2aff97b330d75f5d2edc9c18296c01c6ffa",
+        "contributions": [
+          {
+            "contribution": 15728640,
+            "entry_order": 2,
+            "hit_count": 1,
+            "intent_id": "nearby",
+            "numerator": 78643200,
+            "trigger_id": "t_nearby_coffee",
+            "weight": 1200
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 5898240,
+        "predicted_intent": "nearby",
+        "quantum": 32,
+        "query_id": "q004",
+        "referenced_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "hotel",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "nearby",
+            "margin": 5898240,
+            "raw_score": 15728640,
+            "score": 15728640,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-93dae0078f61780a",
+      "session_id": "s02",
+      "source": "source-a",
+      "terms": [
+        "附近",
+        "咖啡",
+        "店",
+        "帮我",
+        "想"
+      ],
+      "text": "附近 咖啡 店 帮我 想",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "nearby",
+          "fixed_score": 50.0,
+          "float_intent": "nearby",
+          "float_score_margin": 50.0,
+          "high_width_bits": 20,
+          "high_width_intent": "nearby",
+          "high_width_margin": 50.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "nearby",
+      "match": {
+        "cache_key": "97b5801df846ea25e2adfe2017032bd7e2f3b62f58dd524f31c7c921edcd67a5",
+        "char_length": 14,
+        "considered_trigger_ids": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q005",
+        "selected": [
+          {
+            "char_end": 11,
+            "char_start": 6,
+            "end": 4,
+            "entry_order": 5,
+            "intent_id": "nearby",
+            "start": 2,
+            "terms": [
+              "周边",
+              "餐厅"
+            ],
+            "trigger_id": "t_nearby_restaurant"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q005",
+      "score": {
+        "boundary": false,
+        "cache_key": "f5ee9c95ff631aba6c7e806973853be964c9d00917640acdc8243ca52ab736b3",
+        "contributions": [
+          {
+            "contribution": 13107200,
+            "entry_order": 5,
+            "hit_count": 1,
+            "intent_id": "nearby",
+            "numerator": 65536000,
+            "trigger_id": "t_nearby_restaurant",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 3276800,
+        "predicted_intent": "nearby",
+        "quantum": 32,
+        "query_id": "q005",
+        "referenced_trigger_ids": [
+          "t_nearby_restaurant"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "hotel",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "nearby",
+            "margin": 3276800,
+            "raw_score": 13107200,
+            "score": 13107200,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-93dae0078f61780a",
+      "session_id": "s02",
+      "source": "source-b",
+      "terms": [
+        "帮我",
+        "会议",
+        "周边",
+        "餐厅",
+        "设置"
+      ],
+      "text": "帮我 会议 周边 餐厅 设置",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "music",
+          "fixed_score": 221.66650391,
+          "float_intent": "music",
+          "float_score_margin": 221.66666667,
+          "high_width_bits": 20,
+          "high_width_intent": "music",
+          "high_width_margin": 221.66665649,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041668561447,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.1224856323145826e-06,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "music",
+      "match": {
+        "cache_key": "8e31f3db3db8a330d00214359d23c79c38de484b1f9145185bb69f54366c3735",
+        "char_length": 9,
+        "considered_trigger_ids": [
+          "t_music_artist"
+        ],
+        "query_id": "q006",
+        "selected": [
+          {
+            "char_end": 6,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 10,
+            "intent_id": "music",
+            "start": 0,
+            "terms": [
+              "播放",
+              "周杰伦"
+            ],
+            "trigger_id": "t_music_artist"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 3
+      },
+      "match_reused": true,
+      "query_id": "q006",
+      "score": {
+        "boundary": false,
+        "cache_key": "296ff9c3125718146a21edae3d0eea788294232e06383a1df507990212976278",
+        "contributions": [
+          {
+            "contribution": 24029866,
+            "entry_order": 10,
+            "hit_count": 1,
+            "intent_id": "music",
+            "numerator": 72089600,
+            "trigger_id": "t_music_artist",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 14527136,
+        "predicted_intent": "music",
+        "quantum": 32,
+        "query_id": "q006",
+        "referenced_trigger_ids": [
+          "t_music_artist"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "music",
+            "margin": 14527136,
+            "raw_score": 24029866,
+            "score": 24029856,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-62b9789f329ae7d1",
+      "session_id": "s02",
+      "source": "source-c",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "帮我"
+      ],
+      "text": "播放 周杰伦 帮我",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "navigation",
+          "fixed_score": 33.33349609,
+          "float_intent": "navigation",
+          "float_score_margin": 33.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "navigation",
+          "high_width_margin": 33.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041665719276,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.085069444381285e-06,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "navigation",
+      "match": {
+        "cache_key": "53b9c421c6f22a2f9928dd97f0946c415e7f0e638e4de0f30875533272d74315",
+        "char_length": 16,
+        "considered_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "query_id": "q007",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 3,
+            "end": 4,
+            "entry_order": 4,
+            "intent_id": "navigation",
+            "start": 1,
+            "terms": [
+              "导航",
+              "去",
+              "机场"
+            ],
+            "trigger_id": "t_nav_airport"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 6
+      },
+      "match_reused": true,
+      "query_id": "q007",
+      "score": {
+        "boundary": false,
+        "cache_key": "7979f7a62141a817d750a643c06825885c85eb303894e35f7f1eb4a5db7db3e5",
+        "contributions": [
+          {
+            "contribution": 12014933,
+            "entry_order": 4,
+            "hit_count": 1,
+            "intent_id": "navigation",
+            "numerator": 72089600,
+            "trigger_id": "t_nav_airport",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 2184544,
+        "predicted_intent": "navigation",
+        "quantum": 32,
+        "query_id": "q007",
+        "referenced_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "navigation",
+            "margin": 2184544,
+            "raw_score": 12014933,
+            "score": 12014944,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-2463b4fb5fe0d8b9",
+      "session_id": "s03",
+      "source": "source-a",
+      "terms": [
+        "设置",
+        "导航",
+        "去",
+        "机场",
+        "帮我",
+        "提醒"
+      ],
+      "text": "设置 导航 去 机场 帮我 提醒",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "navigation",
+          "fixed_score": 70.0,
+          "float_intent": "navigation",
+          "float_score_margin": 70.0,
+          "high_width_bits": 20,
+          "high_width_intent": "navigation",
+          "high_width_margin": 70.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "navigation",
+      "match": {
+        "cache_key": "a485fe5adbe729dc7cf795de4e4821d4fb7fcb341bbe116eb6cabd6accf75bb5",
+        "char_length": 12,
+        "considered_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "query_id": "q008",
+        "selected": [
+          {
+            "char_end": 7,
+            "char_start": 0,
+            "end": 3,
+            "entry_order": 4,
+            "intent_id": "navigation",
+            "start": 0,
+            "terms": [
+              "导航",
+              "去",
+              "机场"
+            ],
+            "trigger_id": "t_nav_airport"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q008",
+      "score": {
+        "boundary": false,
+        "cache_key": "f4263b80d743c66995408af08453f5272a6c10a65b91ab356e62a4c5bbaafd9d",
+        "contributions": [
+          {
+            "contribution": 14417920,
+            "entry_order": 4,
+            "hit_count": 1,
+            "intent_id": "navigation",
+            "numerator": 72089600,
+            "trigger_id": "t_nav_airport",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 4587520,
+        "predicted_intent": "navigation",
+        "quantum": 32,
+        "query_id": "q008",
+        "referenced_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "navigation",
+            "margin": 4587520,
+            "raw_score": 14417920,
+            "score": 14417920,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-2463b4fb5fe0d8b9",
+      "session_id": "s03",
+      "source": "source-b",
+      "terms": [
+        "导航",
+        "去",
+        "机场",
+        "查",
+        "提醒"
+      ],
+      "text": "导航 去 机场 查 提醒",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "hotel",
+          "fixed_score": 130.0,
+          "float_intent": "hotel",
+          "float_score_margin": 130.0,
+          "high_width_bits": 20,
+          "high_width_intent": "hotel",
+          "high_width_margin": 130.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "hotel",
+      "match": {
+        "cache_key": "81e545c9d6b32766e7771ec32ea3431504f0d320b5ff4139a2431c28ce0be896",
+        "char_length": 10,
+        "considered_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "query_id": "q009",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 6,
+            "intent_id": "hotel",
+            "start": 0,
+            "terms": [
+              "预订",
+              "酒店"
+            ],
+            "trigger_id": "t_hotel_book"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q009",
+      "score": {
+        "boundary": false,
+        "cache_key": "270523ed3190a72de119c024933a87c61e0a84eff808490f84d700fed3c7b2fb",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 6,
+            "hit_count": 1,
+            "intent_id": "hotel",
+            "numerator": 72089600,
+            "trigger_id": "t_hotel_book",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8519680,
+        "predicted_intent": "hotel",
+        "quantum": 32,
+        "query_id": "q009",
+        "referenced_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "hotel",
+            "margin": 8519680,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "navigation",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-51770a697e80a868",
+      "session_id": "s03",
+      "source": "source-c",
+      "terms": [
+        "预订",
+        "酒店",
+        "一下",
+        "想"
+      ],
+      "text": "预订 酒店 一下 想",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "music",
+          "fixed_score": 38.33349609,
+          "float_intent": "music",
+          "float_score_margin": 38.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "music",
+          "high_width_margin": 38.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041665719276,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.1224856321185709e-06,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "music",
+      "match": {
+        "cache_key": "25e8265be229126f7ddd5b03987c2b1aa2eb41aa5e03458048bc3fb0620703ec",
+        "char_length": 15,
+        "considered_trigger_ids": [
+          "t_music_artist"
+        ],
+        "query_id": "q010",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 4,
+            "end": 4,
+            "entry_order": 10,
+            "intent_id": "music",
+            "start": 2,
+            "terms": [
+              "播放",
+              "周杰伦"
+            ],
+            "trigger_id": "t_music_artist"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 6
+      },
+      "match_reused": true,
+      "query_id": "q010",
+      "score": {
+        "boundary": false,
+        "cache_key": "fbbbe0a54627a84b7320e8aa6b423d80281ee496b4ad5ee709786537dacb610a",
+        "contributions": [
+          {
+            "contribution": 12014933,
+            "entry_order": 10,
+            "hit_count": 1,
+            "intent_id": "music",
+            "numerator": 72089600,
+            "trigger_id": "t_music_artist",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 2512224,
+        "predicted_intent": "music",
+        "quantum": 32,
+        "query_id": "q010",
+        "referenced_trigger_ids": [
+          "t_music_artist"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "music",
+            "margin": 2512224,
+            "raw_score": 12014933,
+            "score": 12014944,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-2601ad1a409542ac",
+      "session_id": "s04",
+      "source": "source-a",
+      "terms": [
+        "请",
+        "想",
+        "播放",
+        "周杰伦",
+        "查",
+        "一下"
+      ],
+      "text": "请 想 播放 周杰伦 查 一下",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "hotel",
+          "fixed_score": 75.0,
+          "float_intent": "hotel",
+          "float_score_margin": 75.0,
+          "high_width_bits": 20,
+          "high_width_intent": "hotel",
+          "high_width_margin": 75.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "hotel",
+      "match": {
+        "cache_key": "0d3d7d66e279234edc00608b9c7186f68b02bd238ec0af9cd9ec5d341f8edd72",
+        "char_length": 14,
+        "considered_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "query_id": "q011",
+        "selected": [
+          {
+            "char_end": 11,
+            "char_start": 6,
+            "end": 4,
+            "entry_order": 6,
+            "intent_id": "hotel",
+            "start": 2,
+            "terms": [
+              "预订",
+              "酒店"
+            ],
+            "trigger_id": "t_hotel_book"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q011",
+      "score": {
+        "boundary": false,
+        "cache_key": "690c32775b821f00df5e202c908679b8ae6898e81083f9ae6b479386ef767226",
+        "contributions": [
+          {
+            "contribution": 14417920,
+            "entry_order": 6,
+            "hit_count": 1,
+            "intent_id": "hotel",
+            "numerator": 72089600,
+            "trigger_id": "t_hotel_book",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 4915200,
+        "predicted_intent": "hotel",
+        "quantum": 32,
+        "query_id": "q011",
+        "referenced_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "hotel",
+            "margin": 4915200,
+            "raw_score": 14417920,
+            "score": 14417920,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "navigation",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-38dfe8e0684039b6",
+      "session_id": "s04",
+      "source": "source-b",
+      "terms": [
+        "一下",
+        "提醒",
+        "预订",
+        "酒店",
+        "提醒"
+      ],
+      "text": "一下 提醒 预订 酒店 提醒",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "hotel",
+          "fixed_score": 130.0,
+          "float_intent": "hotel",
+          "float_score_margin": 130.0,
+          "high_width_bits": 20,
+          "high_width_intent": "hotel",
+          "high_width_margin": 130.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "hotel",
+      "match": {
+        "cache_key": "d764eefc3f4657ea58c104ebcdfbd4b22b5dd897c3cdff0458488225473023da",
+        "char_length": 9,
+        "considered_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "query_id": "q012",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 6,
+            "intent_id": "hotel",
+            "start": 0,
+            "terms": [
+              "预订",
+              "酒店"
+            ],
+            "trigger_id": "t_hotel_book"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q012",
+      "score": {
+        "boundary": false,
+        "cache_key": "81c3aceed603e28739f1ded486c58b5b91197f1348bcc916715419dcaa191780",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 6,
+            "hit_count": 1,
+            "intent_id": "hotel",
+            "numerator": 72089600,
+            "trigger_id": "t_hotel_book",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8519680,
+        "predicted_intent": "hotel",
+        "quantum": 32,
+        "query_id": "q012",
+        "referenced_trigger_ids": [
+          "t_hotel_book"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "hotel",
+            "margin": 8519680,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "navigation",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-38dfe8e0684039b6",
+      "session_id": "s04",
+      "source": "source-c",
+      "terms": [
+        "预订",
+        "酒店",
+        "请",
+        "想"
+      ],
+      "text": "预订 酒店 请 想",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "news",
+        "translate",
+        "weather"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "news",
+          "fixed_score": 155.0,
+          "float_intent": "news",
+          "float_score_margin": 155.0,
+          "high_width_bits": 20,
+          "high_width_intent": "news",
+          "high_width_margin": 155.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "news",
+      "match": {
+        "cache_key": "2085bacd62d844e89827ff2d063e594f059bd9d636fafb1ca908741f11792aeb",
+        "char_length": 10,
+        "considered_trigger_ids": [
+          "t_news_stock"
+        ],
+        "query_id": "q013",
+        "selected": [
+          {
+            "char_end": 8,
+            "char_start": 3,
+            "end": 3,
+            "entry_order": 7,
+            "intent_id": "news",
+            "start": 1,
+            "terms": [
+              "股票",
+              "行情"
+            ],
+            "trigger_id": "t_news_stock"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q013",
+      "score": {
+        "boundary": false,
+        "cache_key": "30ecb8afb3ac90c10d29421a6a480e9c503f64d54b38fa24d451fdddc1c8600d",
+        "contributions": [
+          {
+            "contribution": 19660800,
+            "entry_order": 7,
+            "hit_count": 1,
+            "intent_id": "news",
+            "numerator": 78643200,
+            "trigger_id": "t_news_stock",
+            "weight": 1200
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 10158080,
+        "predicted_intent": "news",
+        "quantum": 32,
+        "query_id": "q013",
+        "referenced_trigger_ids": [
+          "t_news_stock"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "news",
+            "margin": 10158080,
+            "raw_score": 19660800,
+            "score": 19660800,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-5a1293b1b30a369e",
+      "session_id": "s05",
+      "source": "source-a",
+      "terms": [
+        "设置",
+        "股票",
+        "行情",
+        "想"
+      ],
+      "text": "设置 股票 行情 想",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "news",
+        "translate",
+        "weather"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "news",
+          "fixed_score": 95.0,
+          "float_intent": "news",
+          "float_score_margin": 95.0,
+          "high_width_bits": 20,
+          "high_width_intent": "news",
+          "high_width_margin": 95.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "news",
+      "match": {
+        "cache_key": "338a146e98a141a752f87ac7690958c4c4f02e6b8c7101ec8ce08a04fccd2140",
+        "char_length": 13,
+        "considered_trigger_ids": [
+          "t_news_stock"
+        ],
+        "query_id": "q014",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 5,
+            "end": 4,
+            "entry_order": 7,
+            "intent_id": "news",
+            "start": 2,
+            "terms": [
+              "股票",
+              "行情"
+            ],
+            "trigger_id": "t_news_stock"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q014",
+      "score": {
+        "boundary": false,
+        "cache_key": "19fa784a93736c510038a40693f5b43555108dd05feb8863881738699740f31b",
+        "contributions": [
+          {
+            "contribution": 15728640,
+            "entry_order": 7,
+            "hit_count": 1,
+            "intent_id": "news",
+            "numerator": 78643200,
+            "trigger_id": "t_news_stock",
+            "weight": 1200
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 6225920,
+        "predicted_intent": "news",
+        "quantum": 32,
+        "query_id": "q014",
+        "referenced_trigger_ids": [
+          "t_news_stock"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "news",
+            "margin": 6225920,
+            "raw_score": 15728640,
+            "score": 15728640,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-5a1293b1b30a369e",
+      "session_id": "s05",
+      "source": "source-b",
+      "terms": [
+        "请",
+        "帮我",
+        "股票",
+        "行情",
+        "会议"
+      ],
+      "text": "请 帮我 股票 行情 会议",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "translate",
+          "fixed_score": 60.0,
+          "float_intent": "translate",
+          "float_score_margin": 60.0,
+          "high_width_bits": 20,
+          "high_width_intent": "translate",
+          "high_width_margin": 60.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "translate",
+      "match": {
+        "cache_key": "8167b2a2d828874274b270f85c3dc66ce189e9ddac62f5edca2dee12c63919f2",
+        "char_length": 13,
+        "considered_trigger_ids": [
+          "t_translate"
+        ],
+        "query_id": "q015",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 5,
+            "end": 4,
+            "entry_order": 8,
+            "intent_id": "translate",
+            "start": 2,
+            "terms": [
+              "翻译",
+              "英文"
+            ],
+            "trigger_id": "t_translate"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q015",
+      "score": {
+        "boundary": false,
+        "cache_key": "1a6c5a981d3ee7d49558a716d0b12c78d6e0dd500769fcc1c518c01ee500450b",
+        "contributions": [
+          {
+            "contribution": 13107200,
+            "entry_order": 8,
+            "hit_count": 1,
+            "intent_id": "translate",
+            "numerator": 65536000,
+            "trigger_id": "t_translate",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 3932160,
+        "predicted_intent": "translate",
+        "quantum": 32,
+        "query_id": "q015",
+        "referenced_trigger_ids": [
+          "t_translate"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "music",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "translate",
+            "margin": 3932160,
+            "raw_score": 13107200,
+            "score": 13107200,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-913d997f48e6c3bc",
+      "session_id": "s05",
+      "source": "source-c",
+      "terms": [
+        "一下",
+        "查",
+        "翻译",
+        "英文",
+        "一下"
+      ],
+      "text": "一下 查 翻译 英文 一下",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "nearby",
+          "fixed_score": 50.0,
+          "float_intent": "nearby",
+          "float_score_margin": 50.0,
+          "high_width_bits": 20,
+          "high_width_intent": "nearby",
+          "high_width_margin": 50.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "nearby",
+      "match": {
+        "cache_key": "ded63e5d7cdf1a64b54770ea7a5ff1cca9573c8c0d001a87d34bc12cdbfa771a",
+        "char_length": 15,
+        "considered_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q016",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 3,
+            "end": 4,
+            "entry_order": 2,
+            "intent_id": "nearby",
+            "start": 1,
+            "terms": [
+              "附近",
+              "咖啡",
+              "店"
+            ],
+            "trigger_id": "t_nearby_coffee"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 6
+      },
+      "match_reused": true,
+      "query_id": "q016",
+      "score": {
+        "boundary": false,
+        "cache_key": "e42b22eded9fa8d517658385e13d8478f713e543a24e96b178dba4e0d3a891b7",
+        "contributions": [
+          {
+            "contribution": 13107200,
+            "entry_order": 2,
+            "hit_count": 1,
+            "intent_id": "nearby",
+            "numerator": 78643200,
+            "trigger_id": "t_nearby_coffee",
+            "weight": 1200
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 3276800,
+        "predicted_intent": "nearby",
+        "quantum": 32,
+        "query_id": "q016",
+        "referenced_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "hotel",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "nearby",
+            "margin": 3276800,
+            "raw_score": 13107200,
+            "score": 13107200,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-eb42f57d27f383f4",
+      "session_id": "s06",
+      "source": "source-a",
+      "terms": [
+        "会议",
+        "附近",
+        "咖啡",
+        "店",
+        "一下",
+        "查"
+      ],
+      "text": "会议 附近 咖啡 店 一下 查",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "nearby",
+          "fixed_score": 183.33349609,
+          "float_intent": "nearby",
+          "float_score_margin": 183.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "nearby",
+          "high_width_margin": 183.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041668561447,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.085069444570763e-06,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "nearby",
+      "match": {
+        "cache_key": "64eb342e53f5cf7dc7a60dc0d40f743d01e80c55c68b7ce3a5a5bcabe02c7c8a",
+        "char_length": 8,
+        "considered_trigger_ids": [
+          "t_nearby_restaurant"
+        ],
+        "query_id": "q017",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 5,
+            "intent_id": "nearby",
+            "start": 0,
+            "terms": [
+              "周边",
+              "餐厅"
+            ],
+            "trigger_id": "t_nearby_restaurant"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 3
+      },
+      "match_reused": true,
+      "query_id": "q017",
+      "score": {
+        "boundary": false,
+        "cache_key": "d69a7b9e7aa9712b808c5d8ce3721d70275e1b50da40876f221b216c8dea02e4",
+        "contributions": [
+          {
+            "contribution": 21845333,
+            "entry_order": 5,
+            "hit_count": 1,
+            "intent_id": "nearby",
+            "numerator": 65536000,
+            "trigger_id": "t_nearby_restaurant",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 12014944,
+        "predicted_intent": "nearby",
+        "quantum": 32,
+        "query_id": "q017",
+        "referenced_trigger_ids": [
+          "t_nearby_restaurant"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "hotel",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "nearby",
+            "margin": 12014944,
+            "raw_score": 21845333,
+            "score": 21845344,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-eb42f57d27f383f4",
+      "session_id": "s06",
+      "source": "source-b",
+      "terms": [
+        "周边",
+        "餐厅",
+        "会议"
+      ],
+      "text": "周边 餐厅 会议",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": true,
+          "float_near_threshold": true
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "nearby",
+          "fixed_score": 0.0,
+          "float_intent": "nearby",
+          "float_score_margin": 0.0,
+          "high_width_bits": 20,
+          "high_width_intent": "nearby",
+          "high_width_margin": 0.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "nearby",
+      "match": {
+        "cache_key": "9551a288dd8f5ae5c38a0b11a9c195cc8fec71f63eaef578718857be86eab329",
+        "char_length": 22,
+        "considered_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "query_id": "q018",
+        "selected": [
+          {
+            "char_end": 13,
+            "char_start": 6,
+            "end": 5,
+            "entry_order": 2,
+            "intent_id": "nearby",
+            "start": 2,
+            "terms": [
+              "附近",
+              "咖啡",
+              "店"
+            ],
+            "trigger_id": "t_nearby_coffee"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 8
+      },
+      "match_reused": true,
+      "query_id": "q018",
+      "score": {
+        "boundary": true,
+        "cache_key": "ce3ad50ed1737078c9a622cac79cd781ff0cc2c828e1f28820d1ebe1bd4f150e",
+        "contributions": [
+          {
+            "contribution": 9830400,
+            "entry_order": 2,
+            "hit_count": 1,
+            "intent_id": "nearby",
+            "numerator": 78643200,
+            "trigger_id": "t_nearby_coffee",
+            "weight": 1200
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 0,
+        "predicted_intent": "nearby",
+        "quantum": 32,
+        "query_id": "q018",
+        "referenced_trigger_ids": [
+          "t_nearby_coffee"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "hotel",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": true,
+            "decision": true,
+            "intent_id": "nearby",
+            "margin": 0,
+            "raw_score": 9830400,
+            "score": 9830400,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-eb42f57d27f383f4",
+      "session_id": "s06",
+      "source": "source-c",
+      "terms": [
+        "设置",
+        "提醒",
+        "附近",
+        "咖啡",
+        "店",
+        "提醒",
+        "设置",
+        "一下"
+      ],
+      "text": "设置 提醒 附近 咖啡 店 提醒 设置 一下",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "music",
+          "fixed_score": 130.0,
+          "float_intent": "music",
+          "float_score_margin": 130.0,
+          "high_width_bits": 20,
+          "high_width_intent": "music",
+          "high_width_margin": 130.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "music",
+      "match": {
+        "cache_key": "b5af881894e348723f4b7267953d9bb687fb698d2aa0e12473bee30f2bc7e1c8",
+        "char_length": 11,
+        "considered_trigger_ids": [
+          "t_music_artist"
+        ],
+        "query_id": "q019",
+        "selected": [
+          {
+            "char_end": 6,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 10,
+            "intent_id": "music",
+            "start": 0,
+            "terms": [
+              "播放",
+              "周杰伦"
+            ],
+            "trigger_id": "t_music_artist"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q019",
+      "score": {
+        "boundary": false,
+        "cache_key": "c6161babf57fdc26c2e976027b7ae36bfa5f8da3bf80e03266c33b2d5fc149f9",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 10,
+            "hit_count": 1,
+            "intent_id": "music",
+            "numerator": 72089600,
+            "trigger_id": "t_music_artist",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8519680,
+        "predicted_intent": "music",
+        "quantum": 32,
+        "query_id": "q019",
+        "referenced_trigger_ids": [
+          "t_music_artist"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "music",
+            "margin": 8519680,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-90df7abd482d9310",
+      "session_id": "s07",
+      "source": "source-a",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "查",
+        "一下"
+      ],
+      "text": "播放 周杰伦 查 一下",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "music",
+          "fixed_score": 221.66650391,
+          "float_intent": "music",
+          "float_score_margin": 221.66666667,
+          "high_width_bits": 20,
+          "high_width_intent": "music",
+          "high_width_margin": 221.66665649,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041668561447,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.1224856323145826e-06,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "music",
+      "match": {
+        "cache_key": "aa0b3b28c37eb3c580de963cb4791ed8ca8e5792952b29e2c9a941393f82228b",
+        "char_length": 9,
+        "considered_trigger_ids": [
+          "t_music_artist"
+        ],
+        "query_id": "q020",
+        "selected": [
+          {
+            "char_end": 6,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 10,
+            "intent_id": "music",
+            "start": 0,
+            "terms": [
+              "播放",
+              "周杰伦"
+            ],
+            "trigger_id": "t_music_artist"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 3
+      },
+      "match_reused": true,
+      "query_id": "q020",
+      "score": {
+        "boundary": false,
+        "cache_key": "82916410876e1456390069bbe2782182da91ee8ccd39287dda74fd619747f3d5",
+        "contributions": [
+          {
+            "contribution": 24029866,
+            "entry_order": 10,
+            "hit_count": 1,
+            "intent_id": "music",
+            "numerator": 72089600,
+            "trigger_id": "t_music_artist",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 14527136,
+        "predicted_intent": "music",
+        "quantum": 32,
+        "query_id": "q020",
+        "referenced_trigger_ids": [
+          "t_music_artist"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "music",
+            "margin": 14527136,
+            "raw_score": 24029866,
+            "score": 24029856,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "translate",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-90df7abd482d9310",
+      "session_id": "s07",
+      "source": "source-b",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "搜索"
+      ],
+      "text": "播放 周杰伦 搜索",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "weather",
+          "fixed_score": 135.0,
+          "float_intent": "weather",
+          "float_score_margin": 135.0,
+          "high_width_bits": 20,
+          "high_width_intent": "weather",
+          "high_width_margin": 135.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "weather",
+      "match": {
+        "cache_key": "7484138c12f671751117cb1e7e7f87438592d8ff6d23efcb99477ce6d4ebbe23",
+        "char_length": 11,
+        "considered_trigger_ids": [
+          "t_weather_city"
+        ],
+        "query_id": "q021",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 0,
+            "intent_id": "weather",
+            "start": 0,
+            "terms": [
+              "北京",
+              "天气"
+            ],
+            "trigger_id": "t_weather_city"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 4
+      },
+      "match_reused": true,
+      "query_id": "q021",
+      "score": {
+        "boundary": false,
+        "cache_key": "7bc8414bc4119c8a15d70a9177fba658a81692ab4f9f494bcd014ead3dee9dd6",
+        "contributions": [
+          {
+            "contribution": 18022400,
+            "entry_order": 0,
+            "hit_count": 1,
+            "intent_id": "weather",
+            "numerator": 72089600,
+            "trigger_id": "t_weather_city",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 8847360,
+        "predicted_intent": "weather",
+        "quantum": 32,
+        "query_id": "q021",
+        "referenced_trigger_ids": [
+          "t_weather_city"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "weather",
+            "margin": 8847360,
+            "raw_score": 18022400,
+            "score": 18022400,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-619d5d958dc02ab9",
+      "session_id": "s07",
+      "source": "source-c",
+      "terms": [
+        "北京",
+        "天气",
+        "帮我",
+        "会议"
+      ],
+      "text": "北京 天气 帮我 会议",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "translate",
+          "fixed_score": 193.33349609,
+          "float_intent": "translate",
+          "float_score_margin": 193.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "translate",
+          "high_width_margin": 193.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041668561447,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.1224856323145826e-06,
+            "raw_delta": 0.00016276041668561447,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "translate",
+      "match": {
+        "cache_key": "596ec64114f0f8a156a775c4e73309c4f08bacb38ad1e158bc707e36caf1bfff",
+        "char_length": 8,
+        "considered_trigger_ids": [
+          "t_translate"
+        ],
+        "query_id": "q022",
+        "selected": [
+          {
+            "char_end": 5,
+            "char_start": 0,
+            "end": 2,
+            "entry_order": 8,
+            "intent_id": "translate",
+            "start": 0,
+            "terms": [
+              "翻译",
+              "英文"
+            ],
+            "trigger_id": "t_translate"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 3
+      },
+      "match_reused": true,
+      "query_id": "q022",
+      "score": {
+        "boundary": false,
+        "cache_key": "9b45daece94c29b185c13cab2cf1b7bc394326bd5fba9711866718deeadf9596",
+        "contributions": [
+          {
+            "contribution": 21845333,
+            "entry_order": 8,
+            "hit_count": 1,
+            "intent_id": "translate",
+            "numerator": 65536000,
+            "trigger_id": "t_translate",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 12670304,
+        "predicted_intent": "translate",
+        "quantum": 32,
+        "query_id": "q022",
+        "referenced_trigger_ids": [
+          "t_translate"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "music",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "translate",
+            "margin": 12670304,
+            "raw_score": 21845333,
+            "score": 21845344,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-f41aeeb1afd3d8f3",
+      "session_id": "s08",
+      "source": "source-a",
+      "terms": [
+        "翻译",
+        "英文",
+        "帮我"
+      ],
+      "text": "翻译 英文 帮我",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "translate",
+          "fixed_score": 60.0,
+          "float_intent": "translate",
+          "float_score_margin": 60.0,
+          "high_width_bits": 20,
+          "high_width_intent": "translate",
+          "high_width_margin": 60.0,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0.0,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "translate",
+      "match": {
+        "cache_key": "f2472208c165c5b7e43b596fca53cc7f33c642889ff528872028621609e7d66b",
+        "char_length": 13,
+        "considered_trigger_ids": [
+          "t_translate"
+        ],
+        "query_id": "q023",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 5,
+            "end": 4,
+            "entry_order": 8,
+            "intent_id": "translate",
+            "start": 2,
+            "terms": [
+              "翻译",
+              "英文"
+            ],
+            "trigger_id": "t_translate"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 5
+      },
+      "match_reused": true,
+      "query_id": "q023",
+      "score": {
+        "boundary": false,
+        "cache_key": "f7b57aca3799c8c839690ad436497faef1cc86f115b637e85b3f8f85fba2b5b4",
+        "contributions": [
+          {
+            "contribution": 13107200,
+            "entry_order": 8,
+            "hit_count": 1,
+            "intent_id": "translate",
+            "numerator": 65536000,
+            "trigger_id": "t_translate",
+            "weight": 1000
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 3932160,
+        "predicted_intent": "translate",
+        "quantum": 32,
+        "query_id": "q023",
+        "referenced_trigger_ids": [
+          "t_translate"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "music",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "news",
+            "margin": -9502720,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9502720
+          },
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "translate",
+            "margin": 3932160,
+            "raw_score": 13107200,
+            "score": 13107200,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-f41aeeb1afd3d8f3",
+      "session_id": "s08",
+      "source": "source-b",
+      "terms": [
+        "会议",
+        "请",
+        "翻译",
+        "英文",
+        "一下"
+      ],
+      "text": "会议 请 翻译 英文 一下",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "diagnostics": {
+        "boundary": {
+          "fixed": false,
+          "float_near_threshold": false
+        },
+        "first_exceeding_stage": null,
+        "flip": {
+          "causes": {
+            "merge_boundary_movement": false,
+            "quantization_rounding": false,
+            "threshold_comparison": false
+          },
+          "fixed_intent": "navigation",
+          "fixed_score": 33.33349609,
+          "float_intent": "navigation",
+          "float_score_margin": 33.33333333,
+          "high_width_bits": 20,
+          "high_width_intent": "navigation",
+          "high_width_margin": 33.33334351,
+          "primary_reason": "none"
+        },
+        "stages": [
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "trigger_match"
+          },
+          {
+            "delta": 0.00016276041665719276,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "intent_score"
+          },
+          {
+            "delta": 1.085069444381285e-06,
+            "raw_delta": 0.00016276041665719276,
+            "stage": "boundary_decision"
+          },
+          {
+            "delta": 0.0,
+            "raw_delta": 0,
+            "stage": "slot_alignment"
+          }
+        ],
+        "tolerance": 0.0005
+      },
+      "ground_truth_intent": "navigation",
+      "match": {
+        "cache_key": "3afc131c5c74a073b163ace379d81e037fc56fcef2f342c72e6085d3b15582f6",
+        "char_length": 16,
+        "considered_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "query_id": "q024",
+        "selected": [
+          {
+            "char_end": 10,
+            "char_start": 3,
+            "end": 4,
+            "entry_order": 4,
+            "intent_id": "navigation",
+            "start": 1,
+            "terms": [
+              "导航",
+              "去",
+              "机场"
+            ],
+            "trigger_id": "t_nav_airport"
+          }
+        ],
+        "suppressed": [],
+        "term_count": 6
+      },
+      "match_reused": true,
+      "query_id": "q024",
+      "score": {
+        "boundary": false,
+        "cache_key": "8d14447c033bbbf9fce22bc790439f69250e473c3020f40ecbda61a740730f85",
+        "contributions": [
+          {
+            "contribution": 12014933,
+            "entry_order": 4,
+            "hit_count": 1,
+            "intent_id": "navigation",
+            "numerator": 72089600,
+            "trigger_id": "t_nav_airport",
+            "weight": 1100
+          }
+        ],
+        "fraction_bits": 16,
+        "margin": 2184544,
+        "predicted_intent": "navigation",
+        "quantum": 32,
+        "query_id": "q024",
+        "referenced_trigger_ids": [
+          "t_nav_airport"
+        ],
+        "scores": [
+          {
+            "boundary": false,
+            "decision": true,
+            "intent_id": "navigation",
+            "margin": 2184544,
+            "raw_score": 12014933,
+            "score": 12014944,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "nearby",
+            "margin": -9830400,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9830400
+          },
+          {
+            "boundary": false,
+            "decision": false,
+            "intent_id": "weather",
+            "margin": -9175040,
+            "raw_score": 0,
+            "score": 0,
+            "threshold": 9175040
+          }
+        ]
+      },
+      "score_reused": true,
+      "segment_id": "seg-d71b734bd7d5d9e0",
+      "session_id": "s08",
+      "source": "source-c",
+      "terms": [
+        "帮我",
+        "导航",
+        "去",
+        "机场",
+        "设置",
+        "帮我"
+      ],
+      "text": "帮我 导航 去 机场 设置 帮我",
+      "turn": 2
+    }
+  ],
+  "recovery": {
+    "committed_generation": "gen-20261126T222058Z-298014-a57171f965",
+    "ignored_staging": [],
+    "policy": "only the generation referenced by current.json is loadable",
+    "resumed_from_committed_snapshot": true,
+    "unreferenced_generations": []
+  },
+  "rules": {
+    "active_revision_ids": [
+      "r07"
+    ],
+    "cache_key": "f986bb69cec0978a0353f07bc86c1800da8c50c413f48b6942bab51bd1eebbe3",
+    "chain_version": "bfb662a68e2dba11295a08cc108977205068b00d6f03672e7784811b2013c5bf",
+    "lineage_revision_ids": [
+      "r00",
+      "r01",
+      "r02",
+      "r03",
+      "r04",
+      "r06",
+      "r07"
+    ],
+    "trigger_count": 9,
+    "triggers": [
+      {
+        "entry_order": 0,
+        "fingerprint": "d0a653c1b82ba59b39b835ca9acac140f0f1d284f3a0bbc72a3a592b4e6eb99d",
+        "intent_id": "weather",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "13e6fc8a3a7ac18f669186d8a6c00f4d18bbbbff8b07862c708a94b335ada4ee",
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "city",
+          "weather",
+          "forecast"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "北京",
+          "天气"
+        ],
+        "trigger_id": "t_weather_city",
+        "weight": 1100
+      },
+      {
+        "entry_order": 1,
+        "fingerprint": "c7b7cc5ba04dc7d6fbaa930316f22b1d335dfa3a1724205bcd3ea5c3333de131",
+        "intent_id": "weather",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "554f41404f85ce05e7c8d1be79eb14ae0e120c9d4116360b0c3bb11242563fbf",
+            "revision_id": "r04"
+          }
+        ],
+        "slot_pattern": [
+          "date",
+          "weather"
+        ],
+        "source_revision": "r04",
+        "terms": [
+          "明天",
+          "天气"
+        ],
+        "trigger_id": "t_weather_tomorrow",
+        "weight": 1000
+      },
+      {
+        "entry_order": 2,
+        "fingerprint": "ce1854fec5a422475d852e94bc11ab2b1cd0d081bcbb15dce8ae923a020f80e3",
+        "intent_id": "nearby",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "5296c3b3e4490aae0a5e55a1c8bfa93e2586b76c54330fc8357b82e87ac7763d",
+            "revision_id": "r03"
+          }
+        ],
+        "slot_pattern": [
+          "poi",
+          "brand"
+        ],
+        "source_revision": "r03",
+        "terms": [
+          "附近",
+          "咖啡",
+          "店"
+        ],
+        "trigger_id": "t_nearby_coffee",
+        "weight": 1200
+      },
+      {
+        "entry_order": 4,
+        "fingerprint": "a1484a19981c53fad7c540f476fa7489f806f12e566ce057d8ba1056a734b807",
+        "intent_id": "navigation",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          }
+        ],
+        "slot_pattern": [
+          "destination"
+        ],
+        "source_revision": "r00",
+        "terms": [
+          "导航",
+          "去",
+          "机场"
+        ],
+        "trigger_id": "t_nav_airport",
+        "weight": 1100
+      },
+      {
+        "entry_order": 5,
+        "fingerprint": "3c468a7db0ef34e1c14e90d72fdc035fcc83a085e209bbdee1f92247369f70b6",
+        "intent_id": "nearby",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "poi"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "周边",
+          "餐厅"
+        ],
+        "trigger_id": "t_nearby_restaurant",
+        "weight": 1000
+      },
+      {
+        "entry_order": 6,
+        "fingerprint": "4f0e91f387e019876328d000287a588baec6afb42fde3b1d8304d847a66dc217",
+        "intent_id": "hotel",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "lodging"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "预订",
+          "酒店"
+        ],
+        "trigger_id": "t_hotel_book",
+        "weight": 1100
+      },
+      {
+        "entry_order": 7,
+        "fingerprint": "23d4a0fe9f9c9c269b7a6b6ef44be8e2dee873e87c52926bf967bec9503ef8f0",
+        "intent_id": "news",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r02"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "9b3496ea12191cf936d11e7b7c17cfeea0aced53fa9cca7167ab1188bfcfbe3e",
+            "revision_id": "r06"
+          }
+        ],
+        "slot_pattern": [
+          "topic"
+        ],
+        "source_revision": "r06",
+        "terms": [
+          "股票",
+          "行情"
+        ],
+        "trigger_id": "t_news_stock",
+        "weight": 1200
+      },
+      {
+        "entry_order": 8,
+        "fingerprint": "e54502f037cd8e123b4e9221455ef6392e2558f669c1ebdb85056396d183ae9d",
+        "intent_id": "translate",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r02"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "target_language"
+        ],
+        "source_revision": "r02",
+        "terms": [
+          "翻译",
+          "英文"
+        ],
+        "trigger_id": "t_translate",
+        "weight": 1000
+      },
+      {
+        "entry_order": 10,
+        "fingerprint": "f1459d53439742ff8ad10cb1603a09c90e61eb7a691e89fd014f8ab30d6f48ff",
+        "intent_id": "music",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r04"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "4b01d268d94aa5d09ae3eeb6e8b92aa028ce07e28cc21ce1866fa25d0d373754",
+            "revision_id": "r07"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "artist"
+        ],
+        "source_revision": "r07",
+        "terms": [
+          "播放",
+          "周杰伦"
+        ],
+        "trigger_id": "t_music_artist",
+        "weight": 1100
+      }
+    ]
+  },
+  "run_id": "gen-20261126T222058Z-298034-acf6e01f3b",
+  "schema_version": 1,
+  "segments": [
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "city",
+          "query_id": "q001",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "weather",
+          "query_id": "q001",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 6,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "date",
+          "query_id": "q002",
+          "start": 5,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 7,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "weather",
+          "query_id": "q002",
+          "start": 6,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 11,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "city",
+          "query_id": "q003",
+          "start": 10,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 12,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "weather",
+          "query_id": "q003",
+          "start": 11,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "190cae7bd3c868148a0a66f2a9bd962db58efbdb427eee9423c7faa0cf7a62cf",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "weather",
+      "query_ids": [
+        "q001",
+        "q002",
+        "q003"
+      ],
+      "segment_id": "seg-190cae7bd3c86814",
+      "session_id": "s01",
+      "start_turn": 0,
+      "terms": [
+        "北京",
+        "天气",
+        "一下",
+        "提醒",
+        "<gap>",
+        "明天",
+        "天气",
+        "一下",
+        "<gap>",
+        "一下",
+        "北京",
+        "天气",
+        "请"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 3,
+          "local_end": 3,
+          "local_start": 0,
+          "name": "poi",
+          "query_id": "q004",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 10,
+          "local_end": 4,
+          "local_start": 2,
+          "name": "poi",
+          "query_id": "q005",
+          "start": 8,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "93dae0078f61780a8b74fa15382f8e7d74082670f2b9ce3cde481524f133eb79",
+      "conflicts": [],
+      "end_turn": 1,
+      "intent": "nearby",
+      "query_ids": [
+        "q004",
+        "q005"
+      ],
+      "segment_id": "seg-93dae0078f61780a",
+      "session_id": "s02",
+      "start_turn": 0,
+      "terms": [
+        "附近",
+        "咖啡",
+        "店",
+        "帮我",
+        "想",
+        "<gap>",
+        "帮我",
+        "会议",
+        "周边",
+        "餐厅",
+        "设置"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q006",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "media",
+          "query_id": "q006",
+          "start": 1,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "62b9789f329ae7d150e1c7292b8837293f6f3e68dee247c9d9fc0edad1db7052",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "music",
+      "query_ids": [
+        "q006"
+      ],
+      "segment_id": "seg-62b9789f329ae7d1",
+      "session_id": "s02",
+      "start_turn": 2,
+      "terms": [
+        "播放",
+        "周杰伦",
+        "帮我"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "route",
+          "query_id": "q007",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "destination",
+          "query_id": "q007",
+          "start": 3,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 8,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "route",
+          "query_id": "q008",
+          "start": 7,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 10,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "destination",
+          "query_id": "q008",
+          "start": 9,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "2463b4fb5fe0d8b983663c9120792b78fb35f94c1862fe753b75fea41b5054c9",
+      "conflicts": [],
+      "end_turn": 1,
+      "intent": "navigation",
+      "query_ids": [
+        "q007",
+        "q008"
+      ],
+      "segment_id": "seg-2463b4fb5fe0d8b9",
+      "session_id": "s03",
+      "start_turn": 0,
+      "terms": [
+        "设置",
+        "导航",
+        "去",
+        "机场",
+        "帮我",
+        "提醒",
+        "<gap>",
+        "导航",
+        "去",
+        "机场",
+        "查",
+        "提醒"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q009",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "lodging",
+          "query_id": "q009",
+          "start": 1,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "51770a697e80a868d505f587c4dfbc1188c891d28ba49a06ec1ed9fc1c684762",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "hotel",
+      "query_ids": [
+        "q009"
+      ],
+      "segment_id": "seg-51770a697e80a868",
+      "session_id": "s03",
+      "start_turn": 2,
+      "terms": [
+        "预订",
+        "酒店",
+        "一下",
+        "想"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 3,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "action",
+          "query_id": "q010",
+          "start": 2,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "media",
+          "query_id": "q010",
+          "start": 3,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "2601ad1a409542aca39040ea4382165b87bd1c1c913d3559f95861239363e9ff",
+      "conflicts": [],
+      "end_turn": 0,
+      "intent": "music",
+      "query_ids": [
+        "q010"
+      ],
+      "segment_id": "seg-2601ad1a409542ac",
+      "session_id": "s04",
+      "start_turn": 0,
+      "terms": [
+        "请",
+        "想",
+        "播放",
+        "周杰伦",
+        "查",
+        "一下"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 3,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "action",
+          "query_id": "q011",
+          "start": 2,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "lodging",
+          "query_id": "q011",
+          "start": 3,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 7,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q012",
+          "start": 6,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 8,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "lodging",
+          "query_id": "q012",
+          "start": 7,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "38dfe8e0684039b6419b44488d9a585722ae88b6fa1389733acc0573ddd513bf",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "hotel",
+      "query_ids": [
+        "q011",
+        "q012"
+      ],
+      "segment_id": "seg-38dfe8e0684039b6",
+      "session_id": "s04",
+      "start_turn": 1,
+      "terms": [
+        "一下",
+        "提醒",
+        "预订",
+        "酒店",
+        "提醒",
+        "<gap>",
+        "预订",
+        "酒店",
+        "请",
+        "想"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 3,
+          "local_end": 3,
+          "local_start": 1,
+          "name": "topic",
+          "query_id": "q013",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 9,
+          "local_end": 4,
+          "local_start": 2,
+          "name": "topic",
+          "query_id": "q014",
+          "start": 7,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "5a1293b1b30a369e88e3d2a7f7a4be9c6726f79362288a240525d6cc70884234",
+      "conflicts": [],
+      "end_turn": 1,
+      "intent": "news",
+      "query_ids": [
+        "q013",
+        "q014"
+      ],
+      "segment_id": "seg-5a1293b1b30a369e",
+      "session_id": "s05",
+      "start_turn": 0,
+      "terms": [
+        "设置",
+        "股票",
+        "行情",
+        "想",
+        "<gap>",
+        "请",
+        "帮我",
+        "股票",
+        "行情",
+        "会议"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 3,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "action",
+          "query_id": "q015",
+          "start": 2,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "target_language",
+          "query_id": "q015",
+          "start": 3,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "913d997f48e6c3bc6354a3ca694aec8400fd872da8291f92243f2f23c28eee8d",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "translate",
+      "query_ids": [
+        "q015"
+      ],
+      "segment_id": "seg-913d997f48e6c3bc",
+      "session_id": "s05",
+      "start_turn": 2,
+      "terms": [
+        "一下",
+        "查",
+        "翻译",
+        "英文",
+        "一下"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 1,
+          "name": "poi",
+          "query_id": "q016",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 9,
+          "local_end": 2,
+          "local_start": 0,
+          "name": "poi",
+          "query_id": "q017",
+          "start": 7,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 16,
+          "local_end": 5,
+          "local_start": 2,
+          "name": "poi",
+          "query_id": "q018",
+          "start": 13,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": "q018:poi",
+          "end": 16,
+          "local_end": 5,
+          "local_start": 2,
+          "name": "wide_fragment",
+          "query_id": "q018",
+          "start": 13,
+          "status": "conflicted"
+        }
+      ],
+      "cache_key": "eb42f57d27f383f4f73a62b61568524f1423616743db477c6c2e72cef1084944",
+      "conflicts": [
+        {
+          "accepted": {
+            "end": 16,
+            "name": "poi",
+            "query_id": "q018",
+            "start": 13
+          },
+          "decision": "overlap_offset_mapping",
+          "priority": [
+            "earlier_query",
+            "longer_span",
+            "query_id",
+            "slot_name"
+          ],
+          "rejected": {
+            "end": 16,
+            "local_end": 5,
+            "local_start": 2,
+            "name": "wide_fragment",
+            "query_id": "q018",
+            "start": 13
+          }
+        }
+      ],
+      "end_turn": 2,
+      "intent": "nearby",
+      "query_ids": [
+        "q016",
+        "q017",
+        "q018"
+      ],
+      "segment_id": "seg-eb42f57d27f383f4",
+      "session_id": "s06",
+      "start_turn": 0,
+      "terms": [
+        "会议",
+        "附近",
+        "咖啡",
+        "店",
+        "一下",
+        "查",
+        "<gap>",
+        "周边",
+        "餐厅",
+        "会议",
+        "<gap>",
+        "设置",
+        "提醒",
+        "附近",
+        "咖啡",
+        "店",
+        "提醒",
+        "设置",
+        "一下"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q019",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "media",
+          "query_id": "q019",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 6,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q020",
+          "start": 5,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 7,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "media",
+          "query_id": "q020",
+          "start": 6,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "90df7abd482d9310b1416bfd29772b8cbdc5641c050490f776fc9605fa625812",
+      "conflicts": [],
+      "end_turn": 1,
+      "intent": "music",
+      "query_ids": [
+        "q019",
+        "q020"
+      ],
+      "segment_id": "seg-90df7abd482d9310",
+      "session_id": "s07",
+      "start_turn": 0,
+      "terms": [
+        "播放",
+        "周杰伦",
+        "查",
+        "一下",
+        "<gap>",
+        "播放",
+        "周杰伦",
+        "搜索"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "city",
+          "query_id": "q021",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "weather",
+          "query_id": "q021",
+          "start": 1,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "619d5d958dc02ab9777d143f389244a584657a54e3b24ca23b3f2f51f056a7c0",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "weather",
+      "query_ids": [
+        "q021"
+      ],
+      "segment_id": "seg-619d5d958dc02ab9",
+      "session_id": "s07",
+      "start_turn": 2,
+      "terms": [
+        "北京",
+        "天气",
+        "帮我",
+        "会议"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 1,
+          "local_end": 1,
+          "local_start": 0,
+          "name": "action",
+          "query_id": "q022",
+          "start": 0,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "target_language",
+          "query_id": "q022",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 7,
+          "local_end": 3,
+          "local_start": 2,
+          "name": "action",
+          "query_id": "q023",
+          "start": 6,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 8,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "target_language",
+          "query_id": "q023",
+          "start": 7,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "f41aeeb1afd3d8f36ae8c09eee0dc19cea008993340285a96465bc702de35cf5",
+      "conflicts": [],
+      "end_turn": 1,
+      "intent": "translate",
+      "query_ids": [
+        "q022",
+        "q023"
+      ],
+      "segment_id": "seg-f41aeeb1afd3d8f3",
+      "session_id": "s08",
+      "start_turn": 0,
+      "terms": [
+        "翻译",
+        "英文",
+        "帮我",
+        "<gap>",
+        "会议",
+        "请",
+        "翻译",
+        "英文",
+        "一下"
+      ]
+    },
+    {
+      "aligned_slots": [
+        {
+          "conflict_with": null,
+          "end": 2,
+          "local_end": 2,
+          "local_start": 1,
+          "name": "route",
+          "query_id": "q024",
+          "start": 1,
+          "status": "accepted"
+        },
+        {
+          "conflict_with": null,
+          "end": 4,
+          "local_end": 4,
+          "local_start": 3,
+          "name": "destination",
+          "query_id": "q024",
+          "start": 3,
+          "status": "accepted"
+        }
+      ],
+      "cache_key": "d71b734bd7d5d9e0825cd74983a13f5d1eaa1f3a456dc6190e3e9856c93982ac",
+      "conflicts": [],
+      "end_turn": 2,
+      "intent": "navigation",
+      "query_ids": [
+        "q024"
+      ],
+      "segment_id": "seg-d71b734bd7d5d9e0",
+      "session_id": "s08",
+      "start_turn": 2,
+      "terms": [
+        "帮我",
+        "导航",
+        "去",
+        "机场",
+        "设置",
+        "帮我"
+      ]
+    }
+  ],
+  "snapshot": {
+    "committed": true,
+    "config_hash": "396e3114e0278fea8dd462cc70ca144c7dd589139be3be3a6947b5cc95772c72",
+    "generation": "gen-20261126T222058Z-298034-acf6e01f3b",
+    "global_version": 1,
+    "manifest_sha256": "24cb9a9ec4cb65dfa73a7652bd9507abe73debc31aeb2b76a794878a64a2f2fb",
+    "state_token": "2d786fec01880d779ecfcd7d15cdb480acd2b7496a184cb9943827b1fa55798c"
+  },
+  "state_token": "2d786fec01880d779ecfcd7d15cdb480acd2b7496a184cb9943827b1fa55798c",
+  "summary": {
+    "boundary_intents": 1,
+    "budget_points_reserved": 0,
+    "business_code_counts": {},
+    "match_reuse_hits": 24,
+    "merge_reuse_hits": 14,
+    "queries_loaded": 24,
+    "queries_pending": 0,
+    "queries_processed": 24,
+    "reuse_hits": 62,
+    "score_reuse_hits": 24,
+    "segments": 14,
+    "source_usage": {}
+  }
+}

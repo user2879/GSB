@@ -1,0 +1,64 @@
+{
+  "allowed": {
+    "fraction_bits": [
+      8,
+      12,
+      16,
+      20
+    ],
+    "quantums": [
+      1,
+      4,
+      16,
+      32,
+      64
+    ],
+    "weights": [
+      600,
+      700,
+      800,
+      900,
+      1000,
+      1100,
+      1200
+    ]
+  },
+  "diagnostics": {
+    "reference_extra_bits": 4,
+    "tolerance": 0.0005
+  },
+  "fallback_intent": "unknown",
+  "fixed_point": {
+    "fraction_bits": 12,
+    "quantum": 16
+  },
+  "global_version": 1,
+  "merge": {
+    "max_turn_gap": 1,
+    "term_gap": 1
+  },
+  "scheduler": {
+    "batch_query_limit": 1000,
+    "match_budget_points": 100000,
+    "source_quotas": {
+      "source-a": 100,
+      "source-b": 100,
+      "source-c": 100
+    },
+    "workers": 4
+  },
+  "schema_version": 1,
+  "thresholds": {
+    "default": 120,
+    "intents": {
+      "hotel": 145,
+      "music": 145,
+      "navigation": 150,
+      "nearby": 150,
+      "news": 145,
+      "translate": 140,
+      "weather": 150
+    },
+    "tie_rule": "accept_on_tie"
+  }
+}

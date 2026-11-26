@@ -1,0 +1,756 @@
+{
+  "queries": [
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "ground_truth_intent": "weather",
+      "priority": 0,
+      "query_id": "q001",
+      "session_id": "s01",
+      "slots": [
+        {
+          "end": 1,
+          "name": "city",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "weather",
+          "start": 1
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "北京",
+        "天气",
+        "一下",
+        "提醒"
+      ],
+      "text": "北京 天气 一下 提醒",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "ground_truth_intent": "weather",
+      "priority": 1,
+      "query_id": "q002",
+      "session_id": "s01",
+      "slots": [
+        {
+          "end": 1,
+          "name": "date",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "weather",
+          "start": 1
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "明天",
+        "天气",
+        "一下"
+      ],
+      "text": "明天 天气 一下",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "ground_truth_intent": "weather",
+      "priority": 2,
+      "query_id": "q003",
+      "session_id": "s01",
+      "slots": [
+        {
+          "end": 2,
+          "name": "city",
+          "start": 1
+        },
+        {
+          "end": 3,
+          "name": "weather",
+          "start": 2
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "一下",
+        "北京",
+        "天气",
+        "请"
+      ],
+      "text": "一下 北京 天气 请",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "ground_truth_intent": "nearby",
+      "priority": 0,
+      "query_id": "q004",
+      "session_id": "s02",
+      "slots": [
+        {
+          "end": 3,
+          "name": "poi",
+          "start": 0
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "附近",
+        "咖啡",
+        "店",
+        "帮我",
+        "想"
+      ],
+      "text": "附近 咖啡 店 帮我 想",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "ground_truth_intent": "nearby",
+      "priority": 1,
+      "query_id": "q005",
+      "session_id": "s02",
+      "slots": [
+        {
+          "end": 4,
+          "name": "poi",
+          "start": 2
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "帮我",
+        "会议",
+        "周边",
+        "餐厅",
+        "设置"
+      ],
+      "text": "帮我 会议 周边 餐厅 设置",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "ground_truth_intent": "music",
+      "priority": 2,
+      "query_id": "q006",
+      "session_id": "s02",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "media",
+          "start": 1
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "帮我"
+      ],
+      "text": "播放 周杰伦 帮我",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "ground_truth_intent": "navigation",
+      "priority": 0,
+      "query_id": "q007",
+      "session_id": "s03",
+      "slots": [
+        {
+          "end": 2,
+          "name": "route",
+          "start": 1
+        },
+        {
+          "end": 4,
+          "name": "destination",
+          "start": 3
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "设置",
+        "导航",
+        "去",
+        "机场",
+        "帮我",
+        "提醒"
+      ],
+      "text": "设置 导航 去 机场 帮我 提醒",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "ground_truth_intent": "navigation",
+      "priority": 1,
+      "query_id": "q008",
+      "session_id": "s03",
+      "slots": [
+        {
+          "end": 1,
+          "name": "route",
+          "start": 0
+        },
+        {
+          "end": 3,
+          "name": "destination",
+          "start": 2
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "导航",
+        "去",
+        "机场",
+        "查",
+        "提醒"
+      ],
+      "text": "导航 去 机场 查 提醒",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "ground_truth_intent": "hotel",
+      "priority": 2,
+      "query_id": "q009",
+      "session_id": "s03",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "lodging",
+          "start": 1
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "预订",
+        "酒店",
+        "一下",
+        "想"
+      ],
+      "text": "预订 酒店 一下 想",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "ground_truth_intent": "hotel",
+      "priority": 0,
+      "query_id": "q010",
+      "session_id": "s04",
+      "slots": [
+        {
+          "end": 2,
+          "name": "action",
+          "start": 1
+        },
+        {
+          "end": 3,
+          "name": "lodging",
+          "start": 2
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "提醒",
+        "预订",
+        "酒店",
+        "想",
+        "设置"
+      ],
+      "text": "提醒 预订 酒店 想 设置",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "ground_truth_intent": "hotel",
+      "priority": 1,
+      "query_id": "q011",
+      "session_id": "s04",
+      "slots": [
+        {
+          "end": 3,
+          "name": "action",
+          "start": 2
+        },
+        {
+          "end": 4,
+          "name": "lodging",
+          "start": 3
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "一下",
+        "提醒",
+        "预订",
+        "酒店",
+        "提醒"
+      ],
+      "text": "一下 提醒 预订 酒店 提醒",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "hotel",
+        "navigation",
+        "nearby"
+      ],
+      "ground_truth_intent": "hotel",
+      "priority": 2,
+      "query_id": "q012",
+      "session_id": "s04",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "lodging",
+          "start": 1
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "预订",
+        "酒店",
+        "请",
+        "想"
+      ],
+      "text": "预订 酒店 请 想",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "news",
+        "translate",
+        "weather"
+      ],
+      "ground_truth_intent": "news",
+      "priority": 0,
+      "query_id": "q013",
+      "session_id": "s05",
+      "slots": [
+        {
+          "end": 3,
+          "name": "topic",
+          "start": 1
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "设置",
+        "股票",
+        "行情",
+        "想"
+      ],
+      "text": "设置 股票 行情 想",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "news",
+        "translate",
+        "weather"
+      ],
+      "ground_truth_intent": "news",
+      "priority": 1,
+      "query_id": "q014",
+      "session_id": "s05",
+      "slots": [
+        {
+          "end": 4,
+          "name": "topic",
+          "start": 2
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "请",
+        "帮我",
+        "股票",
+        "行情",
+        "会议"
+      ],
+      "text": "请 帮我 股票 行情 会议",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "ground_truth_intent": "translate",
+      "priority": 2,
+      "query_id": "q015",
+      "session_id": "s05",
+      "slots": [
+        {
+          "end": 3,
+          "name": "action",
+          "start": 2
+        },
+        {
+          "end": 4,
+          "name": "target_language",
+          "start": 3
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "一下",
+        "查",
+        "翻译",
+        "英文",
+        "一下"
+      ],
+      "text": "一下 查 翻译 英文 一下",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "ground_truth_intent": "nearby",
+      "priority": 0,
+      "query_id": "q016",
+      "session_id": "s06",
+      "slots": [
+        {
+          "end": 4,
+          "name": "poi",
+          "start": 1
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "会议",
+        "附近",
+        "咖啡",
+        "店",
+        "一下",
+        "查"
+      ],
+      "text": "会议 附近 咖啡 店 一下 查",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "ground_truth_intent": "nearby",
+      "priority": 1,
+      "query_id": "q017",
+      "session_id": "s06",
+      "slots": [
+        {
+          "end": 2,
+          "name": "poi",
+          "start": 0
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "周边",
+        "餐厅",
+        "会议"
+      ],
+      "text": "周边 餐厅 会议",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "nearby",
+        "weather",
+        "hotel"
+      ],
+      "ground_truth_intent": "nearby",
+      "priority": 2,
+      "query_id": "q018",
+      "session_id": "s06",
+      "slots": [
+        {
+          "end": 5,
+          "name": "poi",
+          "start": 2
+        },
+        {
+          "end": 5,
+          "name": "wide_fragment",
+          "start": 2
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "设置",
+        "提醒",
+        "附近",
+        "咖啡",
+        "店",
+        "提醒",
+        "设置",
+        "一下"
+      ],
+      "text": "设置 提醒 附近 咖啡 店 提醒 设置 一下",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "ground_truth_intent": "music",
+      "priority": 0,
+      "query_id": "q019",
+      "session_id": "s07",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "media",
+          "start": 1
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "查",
+        "一下"
+      ],
+      "text": "播放 周杰伦 查 一下",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "music",
+        "translate",
+        "news"
+      ],
+      "ground_truth_intent": "music",
+      "priority": 1,
+      "query_id": "q020",
+      "session_id": "s07",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "media",
+          "start": 1
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "播放",
+        "周杰伦",
+        "搜索"
+      ],
+      "text": "播放 周杰伦 搜索",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "weather",
+        "nearby",
+        "news"
+      ],
+      "ground_truth_intent": "weather",
+      "priority": 2,
+      "query_id": "q021",
+      "session_id": "s07",
+      "slots": [
+        {
+          "end": 1,
+          "name": "city",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "weather",
+          "start": 1
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "北京",
+        "天气",
+        "帮我",
+        "会议"
+      ],
+      "text": "北京 天气 帮我 会议",
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "ground_truth_intent": "translate",
+      "priority": 0,
+      "query_id": "q022",
+      "session_id": "s08",
+      "slots": [
+        {
+          "end": 1,
+          "name": "action",
+          "start": 0
+        },
+        {
+          "end": 2,
+          "name": "target_language",
+          "start": 1
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "翻译",
+        "英文",
+        "帮我"
+      ],
+      "text": "翻译 英文 帮我",
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "translate",
+        "music",
+        "news"
+      ],
+      "ground_truth_intent": "translate",
+      "priority": 1,
+      "query_id": "q023",
+      "session_id": "s08",
+      "slots": [
+        {
+          "end": 3,
+          "name": "action",
+          "start": 2
+        },
+        {
+          "end": 4,
+          "name": "target_language",
+          "start": 3
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "会议",
+        "请",
+        "翻译",
+        "英文",
+        "一下"
+      ],
+      "text": "会议 请 翻译 英文 一下",
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "navigation",
+        "nearby",
+        "weather"
+      ],
+      "ground_truth_intent": "navigation",
+      "priority": 2,
+      "query_id": "q024",
+      "session_id": "s08",
+      "slots": [
+        {
+          "end": 2,
+          "name": "route",
+          "start": 1
+        },
+        {
+          "end": 4,
+          "name": "destination",
+          "start": 3
+        }
+      ],
+      "source": "source-c",
+      "terms": [
+        "帮我",
+        "导航",
+        "去",
+        "机场",
+        "设置",
+        "帮我"
+      ],
+      "text": "帮我 导航 去 机场 设置 帮我",
+      "turn": 2
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,78 @@
+{
+  "queries": [
+    {
+      "candidates": [
+        "weather"
+      ],
+      "ground_truth_intent": "weather",
+      "query_id": "good-1",
+      "session_id": "bad-session",
+      "slots": [
+        {
+          "end": 1,
+          "name": "city",
+          "start": 0
+        }
+      ],
+      "source": "source-a",
+      "terms": [
+        "北京",
+        "天气"
+      ],
+      "turn": 0
+    },
+    {
+      "candidates": [
+        "nearby"
+      ],
+      "ground_truth_intent": "nearby",
+      "query_id": "good-1",
+      "session_id": "bad-session",
+      "slots": [],
+      "source": "source-a",
+      "terms": [
+        "附近",
+        "咖啡",
+        "店"
+      ],
+      "turn": 1
+    },
+    {
+      "candidates": [
+        "weather"
+      ],
+      "ground_truth_intent": "weather",
+      "query_id": "bad-term",
+      "session_id": "bad-session",
+      "slots": [],
+      "source": "source-a",
+      "terms": [
+        "北京",
+        "不存在"
+      ],
+      "turn": 2
+    },
+    {
+      "candidates": [
+        "weather"
+      ],
+      "ground_truth_intent": "weather",
+      "query_id": "bad-slot",
+      "session_id": "bad-session",
+      "slots": [
+        {
+          "end": 2,
+          "name": "date",
+          "start": 2
+        }
+      ],
+      "source": "source-b",
+      "terms": [
+        "明天",
+        "天气"
+      ],
+      "turn": 3
+    }
+  ],
+  "schema_version": 1
+}

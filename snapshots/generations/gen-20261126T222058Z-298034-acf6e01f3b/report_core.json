@@ -1,0 +1,274 @@
+{
+  "recovery": {
+    "committed_generation": "gen-20261126T222058Z-298014-a57171f965",
+    "ignored_staging": [],
+    "policy": "only the generation referenced by current.json is loadable",
+    "resumed_from_committed_snapshot": true,
+    "unreferenced_generations": []
+  },
+  "rules": {
+    "active_revision_ids": [
+      "r07"
+    ],
+    "cache_key": "f986bb69cec0978a0353f07bc86c1800da8c50c413f48b6942bab51bd1eebbe3",
+    "chain_version": "bfb662a68e2dba11295a08cc108977205068b00d6f03672e7784811b2013c5bf",
+    "lineage_revision_ids": [
+      "r00",
+      "r01",
+      "r02",
+      "r03",
+      "r04",
+      "r06",
+      "r07"
+    ],
+    "trigger_count": 9,
+    "triggers": [
+      {
+        "entry_order": 0,
+        "fingerprint": "d0a653c1b82ba59b39b835ca9acac140f0f1d284f3a0bbc72a3a592b4e6eb99d",
+        "intent_id": "weather",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "13e6fc8a3a7ac18f669186d8a6c00f4d18bbbbff8b07862c708a94b335ada4ee",
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "city",
+          "weather",
+          "forecast"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "北京",
+          "天气"
+        ],
+        "trigger_id": "t_weather_city",
+        "weight": 1100
+      },
+      {
+        "entry_order": 1,
+        "fingerprint": "c7b7cc5ba04dc7d6fbaa930316f22b1d335dfa3a1724205bcd3ea5c3333de131",
+        "intent_id": "weather",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "554f41404f85ce05e7c8d1be79eb14ae0e120c9d4116360b0c3bb11242563fbf",
+            "revision_id": "r04"
+          }
+        ],
+        "slot_pattern": [
+          "date",
+          "weather"
+        ],
+        "source_revision": "r04",
+        "terms": [
+          "明天",
+          "天气"
+        ],
+        "trigger_id": "t_weather_tomorrow",
+        "weight": 1000
+      },
+      {
+        "entry_order": 2,
+        "fingerprint": "ce1854fec5a422475d852e94bc11ab2b1cd0d081bcbb15dce8ae923a020f80e3",
+        "intent_id": "nearby",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "5296c3b3e4490aae0a5e55a1c8bfa93e2586b76c54330fc8357b82e87ac7763d",
+            "revision_id": "r03"
+          }
+        ],
+        "slot_pattern": [
+          "poi",
+          "brand"
+        ],
+        "source_revision": "r03",
+        "terms": [
+          "附近",
+          "咖啡",
+          "店"
+        ],
+        "trigger_id": "t_nearby_coffee",
+        "weight": 1200
+      },
+      {
+        "entry_order": 4,
+        "fingerprint": "a1484a19981c53fad7c540f476fa7489f806f12e566ce057d8ba1056a734b807",
+        "intent_id": "navigation",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r00"
+          }
+        ],
+        "slot_pattern": [
+          "destination"
+        ],
+        "source_revision": "r00",
+        "terms": [
+          "导航",
+          "去",
+          "机场"
+        ],
+        "trigger_id": "t_nav_airport",
+        "weight": 1100
+      },
+      {
+        "entry_order": 5,
+        "fingerprint": "3c468a7db0ef34e1c14e90d72fdc035fcc83a085e209bbdee1f92247369f70b6",
+        "intent_id": "nearby",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "poi"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "周边",
+          "餐厅"
+        ],
+        "trigger_id": "t_nearby_restaurant",
+        "weight": 1000
+      },
+      {
+        "entry_order": 6,
+        "fingerprint": "4f0e91f387e019876328d000287a588baec6afb42fde3b1d8304d847a66dc217",
+        "intent_id": "hotel",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r01"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "lodging"
+        ],
+        "source_revision": "r01",
+        "terms": [
+          "预订",
+          "酒店"
+        ],
+        "trigger_id": "t_hotel_book",
+        "weight": 1100
+      },
+      {
+        "entry_order": 7,
+        "fingerprint": "23d4a0fe9f9c9c269b7a6b6ef44be8e2dee873e87c52926bf967bec9503ef8f0",
+        "intent_id": "news",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r02"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "9b3496ea12191cf936d11e7b7c17cfeea0aced53fa9cca7167ab1188bfcfbe3e",
+            "revision_id": "r06"
+          }
+        ],
+        "slot_pattern": [
+          "topic"
+        ],
+        "source_revision": "r06",
+        "terms": [
+          "股票",
+          "行情"
+        ],
+        "trigger_id": "t_news_stock",
+        "weight": 1200
+      },
+      {
+        "entry_order": 8,
+        "fingerprint": "e54502f037cd8e123b4e9221455ef6392e2558f669c1ebdb85056396d183ae9d",
+        "intent_id": "translate",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r02"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "target_language"
+        ],
+        "source_revision": "r02",
+        "terms": [
+          "翻译",
+          "英文"
+        ],
+        "trigger_id": "t_translate",
+        "weight": 1000
+      },
+      {
+        "entry_order": 10,
+        "fingerprint": "f1459d53439742ff8ad10cb1603a09c90e61eb7a691e89fd014f8ab30d6f48ff",
+        "intent_id": "music",
+        "provenance": [
+          {
+            "op": "add",
+            "previous_fingerprint": null,
+            "revision_id": "r04"
+          },
+          {
+            "op": "update",
+            "previous_fingerprint": "4b01d268d94aa5d09ae3eeb6e8b92aa028ce07e28cc21ce1866fa25d0d373754",
+            "revision_id": "r07"
+          }
+        ],
+        "slot_pattern": [
+          "action",
+          "artist"
+        ],
+        "source_revision": "r07",
+        "terms": [
+          "播放",
+          "周杰伦"
+        ],
+        "trigger_id": "t_music_artist",
+        "weight": 1100
+      }
+    ]
+  },
+  "summary": {
+    "boundary_intents": 1,
+    "budget_points_reserved": 0,
+    "business_code_counts": {},
+    "match_reuse_hits": 24,
+    "merge_reuse_hits": 14,
+    "queries_loaded": 24,
+    "queries_pending": 0,
+    "queries_processed": 24,
+    "reuse_hits": 62,
+    "score_reuse_hits": 24,
+    "segments": 14,
+    "source_usage": {}
+  }
+}

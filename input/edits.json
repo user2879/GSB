@@ -1,0 +1,74 @@
+{
+  "commands": [
+    {
+      "op": "replace_query",
+      "query": {
+        "candidates": [
+          "music",
+          "translate",
+          "news"
+        ],
+        "ground_truth_intent": "music",
+        "priority": 0,
+        "query_id": "q010",
+        "session_id": "s04",
+        "slots": [
+          {
+            "end": 3,
+            "name": "action",
+            "start": 2
+          },
+          {
+            "end": 4,
+            "name": "media",
+            "start": 3
+          }
+        ],
+        "source": "source-a",
+        "terms": [
+          "请",
+          "想",
+          "播放",
+          "周杰伦",
+          "查",
+          "一下"
+        ],
+        "text": "请 想 播放 周杰伦 查 一下",
+        "turn": 0
+      }
+    },
+    {
+      "op": "add_revision",
+      "revision": {
+        "label": "edit-music-artist-weight",
+        "ops": [
+          {
+            "op": "update",
+            "trigger_id": "t_music_artist",
+            "weight": 1100
+          }
+        ],
+        "parent_id": "r06",
+        "revision_id": "r07",
+        "seq": 7
+      }
+    },
+    {
+      "op": "set_active_revisions",
+      "revision_ids": [
+        "r07"
+      ]
+    },
+    {
+      "fraction_bits": 16,
+      "op": "set_fixed_point",
+      "quantum": 32
+    },
+    {
+      "intent_id": "weather",
+      "op": "set_threshold",
+      "value": 140
+    }
+  ],
+  "schema_version": 1
+}

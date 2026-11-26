@@ -1,0 +1,101 @@
+{
+  "aligned_slots": [
+    {
+      "conflict_with": null,
+      "end": 4,
+      "local_end": 4,
+      "local_start": 1,
+      "name": "poi",
+      "query_id": "q016",
+      "start": 1,
+      "status": "accepted"
+    },
+    {
+      "conflict_with": null,
+      "end": 9,
+      "local_end": 2,
+      "local_start": 0,
+      "name": "poi",
+      "query_id": "q017",
+      "start": 7,
+      "status": "accepted"
+    },
+    {
+      "conflict_with": null,
+      "end": 16,
+      "local_end": 5,
+      "local_start": 2,
+      "name": "poi",
+      "query_id": "q018",
+      "start": 13,
+      "status": "accepted"
+    },
+    {
+      "conflict_with": "q018:poi",
+      "end": 16,
+      "local_end": 5,
+      "local_start": 2,
+      "name": "wide_fragment",
+      "query_id": "q018",
+      "start": 13,
+      "status": "conflicted"
+    }
+  ],
+  "cache_key": "eb42f57d27f383f4f73a62b61568524f1423616743db477c6c2e72cef1084944",
+  "conflicts": [
+    {
+      "accepted": {
+        "end": 16,
+        "name": "poi",
+        "query_id": "q018",
+        "start": 13
+      },
+      "decision": "overlap_offset_mapping",
+      "priority": [
+        "earlier_query",
+        "longer_span",
+        "query_id",
+        "slot_name"
+      ],
+      "rejected": {
+        "end": 16,
+        "local_end": 5,
+        "local_start": 2,
+        "name": "wide_fragment",
+        "query_id": "q018",
+        "start": 13
+      }
+    }
+  ],
+  "end_turn": 2,
+  "intent": "nearby",
+  "query_ids": [
+    "q016",
+    "q017",
+    "q018"
+  ],
+  "segment_id": "seg-eb42f57d27f383f4",
+  "session_id": "s06",
+  "start_turn": 0,
+  "terms": [
+    "会议",
+    "附近",
+    "咖啡",
+    "店",
+    "一下",
+    "查",
+    "<gap>",
+    "周边",
+    "餐厅",
+    "会议",
+    "<gap>",
+    "设置",
+    "提醒",
+    "附近",
+    "咖啡",
+    "店",
+    "提醒",
+    "设置",
+    "一下"
+  ]
+}
