@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topic-ledger-demo"
+version = "1.0.0"
+description = "Deterministic sharded topic sampling and auditable term-allocation ledger"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+topic-ledger = "topic_ledger.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["topic_ledger*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
