@@ -1,0 +1,50 @@
+[
+  {
+    "op": "set_quantization",
+    "fraction_bits": 8,
+    "storage_bits": 32,
+    "quant_level": 1
+  },
+  {
+    "op": "replace_prompt",
+    "frame": 1,
+    "prompt": {
+      "prompt_id": "frame-1-edited",
+      "entities": [
+        "cloud",
+        "gear"
+      ],
+      "attributes": [
+        "violet",
+        "glass",
+        "soft"
+      ]
+    }
+  },
+  {
+    "op": "replace_image",
+    "frame": 0,
+    "path": "images/frame0_alt.png"
+  },
+  {
+    "op": "delete_image",
+    "frame": 2
+  },
+  {
+    "op": "set_weight",
+    "condition": "image",
+    "weight": 1.125
+  },
+  {
+    "op": "set_denoise_steps",
+    "steps": 6
+  },
+  {
+    "op": "set_decode_block_rows",
+    "block_rows": 5
+  },
+  {
+    "op": "set_lease",
+    "ttl_ms": 12000
+  }
+]

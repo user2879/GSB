@@ -1,0 +1,111 @@
+{
+  "direction": "v2-to-v1",
+  "original_v2_document": {
+    "format_version": 2,
+    "records": [
+      {
+        "block": 0,
+        "digest": "6dcd283c274ffb63f006039c9e8d4916d642db80d48dc1423226f5cc0bf2f35a",
+        "extra": {
+          "sample_note": "round-trip me"
+        },
+        "frame": 0,
+        "guide_strength": 0.875,
+        "noise_scheme": "perlin",
+        "precision_tag": "sample-v2-high-precision",
+        "quantization_bits": 10,
+        "quantization_level": 2,
+        "residual": -12,
+        "stage": "denoise",
+        "step": 3
+      },
+      {
+        "block": 0,
+        "digest": "eacece185139d0bc243cfc1d471919357c1895f046001f0e1a004a780dad7ff3",
+        "frame": 0,
+        "guide_strength": 0.8754,
+        "noise_scheme": "uniform",
+        "precision_tag": "sample-v2-block",
+        "quantization_bits": 8,
+        "quantization_level": 1,
+        "residual": 5,
+        "stage": "block",
+        "step": 3
+      }
+    ]
+  },
+  "record_count": 2,
+  "records": [
+    {
+      "block": 0,
+      "frame": 0,
+      "guide_rounding_residual": 0.0,
+      "original_v2_record": {
+        "block": 0,
+        "digest": "6dcd283c274ffb63f006039c9e8d4916d642db80d48dc1423226f5cc0bf2f35a",
+        "extra": {
+          "sample_note": "round-trip me"
+        },
+        "frame": 0,
+        "guide_strength": 0.875,
+        "noise_scheme": "perlin",
+        "precision_tag": "sample-v2-high-precision",
+        "quantization_bits": 10,
+        "quantization_level": 2,
+        "residual": -12,
+        "stage": "denoise",
+        "step": 3
+      },
+      "overwritten_fields": {
+        "extra": {
+          "extra": {
+            "sample_note": "round-trip me"
+          }
+        },
+        "guide_strength": 0.875,
+        "missing_fields": [],
+        "noise_scheme": "perlin",
+        "precision_tag": "sample-v2-high-precision"
+      },
+      "precision_tag": "sample-v2-high-precision",
+      "record_index": 0,
+      "stage": "denoise",
+      "step": 3,
+      "truncated_residual": 0.0,
+      "v1_line_sha256": "e1f7556570ab90e20930f4bd193f976b6e891d5911558bcd151bbdc81b6afa6a"
+    },
+    {
+      "block": 0,
+      "frame": 0,
+      "guide_rounding_residual": 0.00039999999999995595,
+      "original_v2_record": {
+        "block": 0,
+        "digest": "eacece185139d0bc243cfc1d471919357c1895f046001f0e1a004a780dad7ff3",
+        "frame": 0,
+        "guide_strength": 0.8754,
+        "noise_scheme": "uniform",
+        "precision_tag": "sample-v2-block",
+        "quantization_bits": 8,
+        "quantization_level": 1,
+        "residual": 5,
+        "stage": "block",
+        "step": 3
+      },
+      "overwritten_fields": {
+        "extra": {},
+        "guide_strength": 0.8754,
+        "missing_fields": [],
+        "noise_scheme": "uniform",
+        "precision_tag": "sample-v2-block"
+      },
+      "precision_tag": "sample-v2-block",
+      "record_index": 1,
+      "stage": "block",
+      "step": 3,
+      "truncated_residual": 0.00039999999999995595,
+      "v1_line_sha256": "25069b328fa77db2441e8f3bf918f8f0f20b4c400c67495b8fe13526dc88036d"
+    }
+  ],
+  "schema_version": 1,
+  "v1_document_sha256": "869947e4bf61f307fc397469398b28fdb0e8aebc8bdd5d269c5a131ed274f6fc"
+}

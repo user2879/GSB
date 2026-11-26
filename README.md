@@ -1,22 +1,132 @@
-多模态生成小组接手了一块刚划出的空白工作区，其中没有任何代码、配置或样本，首版需要在本机 Linux（WSL Ubuntu）环境中独立落地为可集成的 Python 包与可重复演示。业务对象是本地确定性合成的多模态条件渲染：文本提示由受控词表生成实体与属性列表并经确定性词袋编码得到条件向量，图像条件为固定分辨率 PNG，运动条件为按固定种子生成的分块运动矢量表。渲染管线按条件编码、条件融合、潜变量初始化、逐去噪步生成、逐帧解码与按分块行输出 PNG 串联，全部数值在定点整数域计算。使用者会反复替换条件、调整融合权重与去噪步数，并要求每次编辑后只重算真正受影响的去噪步与分块行；同时渲染推进受本地执行器的租约约束，租约过期必须真实回收而不是延迟等待。
+# mdet-render：确定性定点多模态条件渲染包
 
-任务环境与准备：
-WSL Ubuntu 环境，安装 Python 3.11 及以上版本。
-使用 pip 安装 numpy 与 pytest；Tkinter 随系统 Python 提供，若缺失安装 python3-tk。
-在空工作目录中创建项目根目录、输入样本目录与账本输出目录，准备确定性合成的条件样本、编辑命令文件与租约参数文件。
-运行前确认当前用户对工作目录有读写权限，无需网络与外部服务。
+`mdet-render` 是一个只依赖 Python 标准库与 numpy 的本地 Python 包。它把受控词表文本、RGB PNG 图像和分块运动矢量表编码为定点条件，经过融合、潜变量初始化、逐去噪步生成、逐帧解码与分块行 PNG 输出，形成可重复的多模态渲染管线。
 
-业务要求：
-1. 实现条件样本、渲染配置与编辑命令流的加载校验层：解析提示词词表、PNG 图像条件与分块运动矢量表，校验词项落在受控词表内、条件向量维度与配置一致、PNG 容器头与固定分辨率及像素模式正确、运动矢量表分块行数与配置相容、定点小数位宽与量化档位在允许枚举内；不合规输入须给出业务码并以非零退出码结束，不得静默跳过。
-2. 实现 v1 定宽行与 v2 JSON 两版本逐阶段中间结果的双向解析与转换并统一为同一内部表示，保留来源版本与缺失字段标记：v1 升 v2 时千分比整数引导强度按精确换算转为浮点、整数噪声码按码表映射为命名噪声方案并生成精度标签；v2 降 v1 时浮点四舍五入还原并把截断残差、精度标签与被覆盖字段写入旁路元数据，再升回时须能从旁路还原。
-3. 实现条件编码与条件融合的确定性定点内核：文本条件按受控词表顺序归一化为词袋向量并记录词项命中位置，图像条件经分块颜色均值与梯度统计映射为图像条件向量；融合按条件类型名升序与维度序号升序在定点整数域累加并逐级记录量化步长、整数结果与残差，切换位宽或量化档位必须真实改变中间整数与融合输出。
-4. 实现潜变量初始化与逐去噪步生成内核：初始潜变量由融合条件指纹、种子与配置指纹派生的固定随机源生成，禁止依赖运行时全局随机状态；每个去噪步按固定运算顺序叠加噪声表条目与按引导强度缩放的条件项，并逐步骤记录输出摘要、舍入方向与残差，同一输入在同一档位下多次运行逐字段一致。
-5. 实现逐帧解码与按分块行输出并保证分块边界不互相借用像素：以线性投影把潜变量映射到像素，裁剪到 0-255 后确定性舍入为 uint8 并输出 PNG 字节；分块行数须真实改变解码分块划分与完成顺序，任一分块行的输出只能读取其自身覆盖的潜变量区间。
-6. 实现带到期毫秒与单调递增代次的租约状态机并做真实资源回收：渲染推进前须向本地执行器申请覆盖目标去噪步集合的租约，租约记录签发毫秒、到期毫秒与代次，续期与释放必须携带当前公认代次，代次不匹配即拒绝且代次不前进；超过到期毫秒未续期必须由回收逻辑真正释放执行器占用的工作单元并输出 E_LEASE_EXPIRED，不得以延迟替代资源释放。
-7. 实现基于内容指纹的跨阶段精确失效判定与可复核复用账本：为条件编码、条件融合、每个去噪步、逐帧解码与每个分块行计算由上游内容指纹、参数指纹、量化档位与租约代次派生的缓存键，并记录各自引用的上游产物；修改融合权重或替换单帧条件时只使真正受影响的下游产物失效，未受影响步次必须直接复用持久化产物并逐条记录失效依据与复用命中。
-8. 保证任意命令序列后增量渲染与从空白全量渲染逐帧逐像素一致，并保证任意并发度、任意预算耗尽时机与任意租约回收时机下结果与串行执行逐字段一致：使用线程池并发执行互不依赖的去噪步与分块行解码，最大并发数取自配置且不得超过，每个任务携带由阶段名、帧序号、步序号或分块行号派生的稳定排序键；施加包含提示词替换、图像条件替换与删除、融合权重变更、去噪步数调整、分块行数变更、量化档位切换与租约参数调整的命令序列后，逐帧像素、分块行摘要、缓存键、失效复用清单与待办队列顺序均须与全量渲染一致；调度器按稳定顺序在失效去噪步间分配单批去噪点数预算，超出预算的步次保留在待办队列并以 E_POINT_BUDGET_PENDING 标记，下一批必须优先处理待办。
+实现重点不是“能出图”，而是以下可复核约束：
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- 所有数值路径落在显式定点整数域，随机源由内容指纹派生，不读取 numpy 全局随机状态。
+- v1 定宽行与 v2 JSON 可双向转换；v2 → v1 的舍入残差、精度标签、未知字段进入旁路 sidecar，重新升级可精确还原。
+- 条件、融合、潜变量、每个去噪步、解码计划和每个分块行都有内容寻址缓存键及上游引用。
+- 修改单帧提示词/图像、融合权重、去噪步数、分块行数、量化档位或租约参数时，只重算依赖真正变化的产物。
+- 本地执行器租约包含到期毫秒和单调递增代次；过期检查会立即释放工作单元并产生 `E_LEASE_EXPIRED`，不使用 sleep 延迟回收。
+- 低预算调度按稳定顺序在失效去噪步间分配点数；旧待办优先，未处理步次保留为 `E_POINT_BUDGET_PENDING`。
+- 增量重放与从空白全量渲染在像素、PNG 字节、分块摘要、缓存键与调度顺序上一致。
 
-验收：
-本地样本验证租约回收、双版本转换、逐帧定点输出、增量与全量一致及异常隔离。
+## 环境与安装
+
+要求 Linux / WSL Ubuntu、Python 3.11+、numpy。运行测试另需 pytest。项目不依赖容器、网络或外部服务。
+
+```bash
+python3 --version
+python3 -m pip install -e '.[test]'
+
+# 旧版 pip 若未完成 PEP 517 构建环境，可使用：
+# python3 -m pip install -e . --no-deps --no-build-isolation
+# python3 -m pytest -q
+```
+
+如果系统 Python 缺少 Tkinter，可安装 `python3-tk`；本包核心渲染与测试不需要 GUI。
+
+## 快速开始
+
+```bash
+# 1. 生成确定性样本、编辑命令流与租约参数
+python3 -m mdet_render init-samples --root samples
+
+# 2. 严格校验配置、词表、PNG、运动表，并试跑整条编辑命令流
+python3 -m mdet_render validate \
+  --config samples/config.json \
+  --commands samples/commands.json
+
+# 3. 首次增量渲染 + 8 条编辑逐条重放
+python3 -m mdet_render render \
+  --config samples/config.json \
+  --commands samples/commands.json \
+  --replay-edits \
+  --cache-dir samples/render_cache \
+  --ledger samples/ledger/render.jsonl \
+  --out samples/out
+
+# 4. 完整演示：增量/全量逐字节比较、粗粒度失效审计、租约回收
+python3 -m mdet_render demo --root samples
+```
+
+样本目录还包含 `intermediate_v2.json`、`intermediate.v1` 与对应 sidecar，可直接验证双版本往返：
+
+```bash
+python3 -m mdet_render v2-to-v1 \
+  --input samples/intermediate_v2.json \
+  --output /tmp/intermediate.v1 \
+  --sidecar /tmp/intermediate.v1.sidecar.json
+
+python3 -m mdet_render v1-to-v2 \
+  --input /tmp/intermediate.v1 \
+  --output /tmp/intermediate.restored.json \
+  --sidecar /tmp/intermediate.v1.sidecar.json
+```
+
+`demo` 生成的证据位于：
+
+- `samples/demo/demo_report.json`：比较明细、各编辑轮账本摘要、租约回收事件。
+- `samples/demo/ledger/incremental.jsonl`：每次渲染的复用/失效与调度批次。
+- `samples/demo/incremental_output/` 与 `samples/demo/full_output/`：逐帧和逐分块 PNG。
+- `samples/demo/results.jsonl`：逐编辑结果序列。
+
+## CLI
+
+```text
+mdet-render init-samples  生成样本工作区
+mdet-render validate      校验配置和资源；失败返回非零业务码
+mdet-render render        全量或增量重放渲染
+mdet-render demo          端到端一致性与租约演示
+mdet-render lease-demo    单独验证租约代次、过期与真实回收
+mdet-render v2-to-v1      v2 JSON -> v1 定宽行 + sidecar
+mdet-render v1-to-v2      v1 定宽行 -> v2 JSON（可提供 sidecar）
+```
+
+业务错误统一输出 `{"ok": false, "code": "E_...", ...}` 并返回非零退出码。点预算未完成返回 `E_POINT_BUDGET_PENDING`。
+
+## Python API
+
+```python
+from mdet_render import Renderer, Workspace, load_commands
+
+workspace = Workspace.load("samples/config.json")
+renderer = Renderer(
+    workspace,
+    cache_dir="samples/runtime_cache",
+    ledger_path="samples/ledger/runtime.jsonl",
+)
+try:
+    first = renderer.run(output_dir="samples/out")
+    for command in load_commands("samples/commands.json"):
+        workspace = workspace.apply_command(command)  # 事务式；失败不修改原状态
+        renderer.workspace = workspace
+        result = renderer.run(output_dir="samples/out")
+finally:
+    renderer.close()  # 释放租约工作单元
+```
+
+命令操作包括 `replace_prompt`、`replace_image`、`delete_image`、`set_weight`、`set_denoise_steps`、`set_decode_block_rows`、`set_quantization`、`set_lease`，以及测试用的 `set_point_budget`、`set_max_workers`、`set_guidance_strength`。
+
+## 项目结构
+
+```text
+mdet_render/
+  config.py       配置、枚举、维度与分块相容性校验
+  conditions.py   词表/提示词/PNG/运动表加载与定点编码
+  png.py          严格 PNG 解码（CRC、IHDR、过滤器）与确定性编码
+  fixed.py        定点缩放、量化、舍入与存储范围
+  formats.py      v1 定宽行 / v2 JSON / 旁路 sidecar
+  lease.py        本地执行器、代次、TTL、真实回收
+  cache.py        内容寻址产物库、manifest 与 JSONL 账本
+  renderer.py     管线、并发调度、预算、失效判定与 PNG 输出
+  workspace.py    可编辑状态与事务式命令
+  samples.py      确定性样本和编辑流生成器
+  demo.py         增量/全量/租约端到端演示
+tests/            39 项自动化测试
+samples/          已生成的样本、命令、账本与演示证据
+TECHNICAL.md      格式、缓存键、调度和确定性不变量说明
+```
+
+详细技术约定见 [TECHNICAL.md](TECHNICAL.md)。

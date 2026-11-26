@@ -1,0 +1,71 @@
+{
+  "condition_dim": 40,
+  "decode": {
+    "block_rows": 4,
+    "projection_seed": 9001
+  },
+  "denoise": {
+    "guidance_strength": 0.875,
+    "steps": 8
+  },
+  "execution": {
+    "max_denoise_steps": 32,
+    "max_workers": 3,
+    "point_budget": 27648
+  },
+  "fixed_point": {
+    "fraction_bits": 10,
+    "quant_level": 2,
+    "storage_bits": 32
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "image": "images/frame0.png",
+      "prompt": "prompts/frame0.json"
+    },
+    {
+      "frame": 1,
+      "image": "images/frame1.png",
+      "prompt": "prompts/frame1.json"
+    },
+    {
+      "frame": 2,
+      "image": "images/frame2.png",
+      "prompt": "prompts/frame2.json"
+    }
+  ],
+  "fusion": {
+    "weights": {
+      "image": 0.75,
+      "motion": 0.5,
+      "text": 1.0
+    }
+  },
+  "image_encoding": {
+    "grid_cols": 2,
+    "grid_rows": 4
+  },
+  "latent": {
+    "seed": 481516
+  },
+  "lease": {
+    "ttl_ms": 10000
+  },
+  "motion": "motion.json",
+  "motion_encoding": {
+    "block_cols": 5,
+    "block_rows": 4
+  },
+  "noise": {
+    "seed": 7719,
+    "table_size": 8
+  },
+  "pixel_mode": "RGB",
+  "resolution": {
+    "height": 48,
+    "width": 64
+  },
+  "schema_version": 1,
+  "vocabulary": "vocabulary.json"
+}
