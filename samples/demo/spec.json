@@ -1,0 +1,55 @@
+{
+  "channels": [
+    {
+      "batch_size": 5,
+      "channel_id": "chan-orders",
+      "rate_limit": 6,
+      "topic": "orders"
+    },
+    {
+      "batch_size": 4,
+      "channel_id": "chan-metrics",
+      "rate_limit": 8,
+      "topic": "metrics"
+    }
+  ],
+  "error_margin_ms": 2,
+  "events_file": "events.ndjson",
+  "subscriber_limit": 3,
+  "subscribers": [
+    {
+      "budget_ms": 60,
+      "host": "127.0.0.1",
+      "inflight_event_limit": 8,
+      "port": 20301,
+      "seed": 101,
+      "subscriber_id": "sub-alpha",
+      "topics": [
+        "orders",
+        "metrics"
+      ]
+    },
+    {
+      "budget_ms": 45,
+      "host": "127.0.0.1",
+      "inflight_event_limit": 5,
+      "port": 20302,
+      "seed": 202,
+      "subscriber_id": "sub-beta",
+      "topics": [
+        "orders"
+      ]
+    },
+    {
+      "budget_ms": 50,
+      "host": "127.0.0.1",
+      "inflight_event_limit": 12,
+      "port": 20303,
+      "seed": 303,
+      "subscriber_id": "sub-gamma",
+      "topics": [
+        "metrics"
+      ]
+    }
+  ]
+}
