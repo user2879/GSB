@@ -19,3 +19,24 @@
 
 验收：
 用本地样本验证调度、增量重算与强制终止恢复后的租约归属和水位结论逐字段一致。
+
+---
+
+## 交付实现入口
+
+本目录已包含可运行实现，快速开始：
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m pytest
+python3 -m workbench acceptance --output artifacts/acceptance
+python3 -m workbench gui
+```
+
+- 技术设计与需求映射：`docs/TECHNICAL.md`
+- 实际验证结果：`docs/VALIDATION.md`
+- 示例 JSON 规范：`examples/sample-spec.json`
+- 一键验收报告：`artifacts/acceptance/acceptance-report.json`
+- pytest 实测记录：`artifacts/pytest-validation.txt`
+
+当前实测：`36 passed`；一键验收的并行调度、SIGKILL 恢复、增量失效重算、快照整体替换和空白重建逐字段比较均为 `ok: true`。
