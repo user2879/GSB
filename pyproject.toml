@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gsb-diagnostic-pipeline"
+version = "0.1.0"
+description = "Deterministic columnar block-group skip-index diagnostics and SQLite replay ledger"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.scripts]
+gsb-doctor = "gsb.cli:doctor"
+gsb-pipeline = "gsb.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gsb*"]
+
+[tool.unittest]
+start = "tests"
