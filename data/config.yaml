@@ -1,0 +1,21 @@
+fraction_bits: 8
+gear: 2
+intents:
+- INTENT_BOOK
+- INTENT_REFUND
+- INTENT_QUERY
+- INTENT_SUPPORT
+intent_thresholds:
+  INTENT_BOOK: 5
+  INTENT_REFUND: 6
+  INTENT_QUERY: 4
+  INTENT_SUPPORT: 5
+dedup_threshold_permille: 700
+max_workers: 4
+global_match_budget: 60
+channel_quotas:
+  CH_WEB: 30
+  CH_APP: 30
+  CH_CALL: 30
+per_batch_recompute_limit: 12
+fallback_intent: INTENT_UNKNOWN

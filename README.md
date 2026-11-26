@@ -19,3 +19,46 @@ Linux（WSL Ubuntu）工作目录为空，从零创建项目结构与配置、�
 
 验收：
 用本地样本验证触发词匹配、意图打分、去重与预算调度，并检查增量重算与全量重建逐字段一致。
+
+---
+
+# 实现交付（intent-router）
+
+工作区已从零实现为可集成 Python 包 `src/intent_router/`，配套确定性样本、
+命令流、44 个测试与一键演示。设计见 `docs/DESIGN.md`，验证记录见
+`docs/VERIFICATION.md`。
+
+## 快速开始
+
+```bash
+virtualenv -p python3.11 .venv
+.venv/bin/pip install numpy pyyaml
+
+# 1. 固定种子生成语料/修订链/配置/命令流
+PYTHONPATH=src .venv/bin/python scripts/generate_samples.py --out data
+
+# 2. 能力演示（匹配抑制、半步边界、去重、预算、翻转归因）
+PYTHONPATH=src .venv/bin/python scripts/demo.py
+
+# 3. 全量运行 + 诊断报告
+PYTHONPATH=src .venv/bin/python -m intent_router.cli run --data data
+
+# 4. 编辑命令流增量重放
+PYTHONPATH=src .venv/bin/python -m intent_router.cli replay --data data
+
+# 5. 增量重放 vs 空白全量逐字段一致性
+PYTHONPATH=src .venv/bin/python -m intent_router.cli consistency --data data
+
+# 6. 全部测试
+PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v
+```
+
+## 目录
+
+- `src/intent_router/`：定点、校验、修订链、匹配、打分、去重、账本、调度、
+  归因、快照、引擎、流水线、统计、报告、CLI。
+- `scripts/generate_samples.py`：固定整数种子的确定性样本与命令流生成。
+- `scripts/demo.py`：自包含能力演示。
+- `tests/`：单元、集成、恢复与一致性测试。
+- `data/`：生成的 YAML 语料、修订链、配置、命令流。
+- `artifacts/`：报告、重放与一致性 JSON、原子快照。

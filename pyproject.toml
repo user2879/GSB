@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intent-router"
+version = "0.1.0"
+description = "Deterministic fixed-point Chinese short-text intent routing with auditable ledgers"
+requires-python = ">=3.10"
+dependencies = ["numpy", "PyYAML"]
+
+[project.scripts]
+intent-router = "intent_router.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

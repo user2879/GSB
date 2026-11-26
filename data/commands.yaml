@@ -1,0 +1,71 @@
+commands:
+- seq: 1
+  kind: add_text
+  payload:
+    text_id: TEXT8001
+    tokens:
+    - 客
+    - 服
+    - 投
+    - 诉
+    - 查
+    - 询
+    channel: CH_APP
+    gold_label: INTENT_SUPPORT
+- seq: 2
+  kind: replace_text
+  payload:
+    text_id: TEXT0001
+    tokens:
+    - 退
+    - 票
+    - 改
+    - 签
+    - 查
+    - 询
+    - 账
+    channel: CH_WEB
+    gold_label: INTENT_REFUND
+- seq: 3
+  kind: set_weight
+  payload:
+    entry_id: T_BOOK_2
+    term:
+    - 订
+    - 票
+    weight: 12
+    intent: INTENT_BOOK
+- seq: 4
+  kind: set_dedup_threshold
+  payload:
+    dedup_threshold_permille: 650
+- seq: 5
+  kind: set_gear
+  payload:
+    gear: 4
+- seq: 6
+  kind: set_fraction_bits
+  payload:
+    fraction_bits: 16
+- seq: 7
+  kind: delete_text
+  payload:
+    text_id: TEXT0003
+- seq: 8
+  kind: delete_trigger
+  payload:
+    entry_id: T_QUERY_2
+- seq: 9
+  kind: upsert_trigger
+  payload:
+    entry_id: T_NEW_1
+    term:
+    - 优
+    - 惠
+    - 券
+    weight: 10
+    intent: INTENT_QUERY
+- seq: 10
+  kind: set_head_revision
+  payload:
+    head_id: R-2

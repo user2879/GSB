@@ -1,0 +1,101 @@
+root_id: R-ROOT
+head_id: R-3
+revisions:
+- revision_id: R-1
+  parent_id: R-ROOT
+  sequence: 1
+  ops:
+  - op: upsert
+    entry_id: T_BOOK_1
+    term: &id001
+    - 预
+    - 约
+    weight: 6
+    intent: INTENT_BOOK
+  - op: upsert
+    entry_id: T_BOOK_2
+    term:
+    - 订
+    - 票
+    weight: 7
+    intent: INTENT_BOOK
+  - op: upsert
+    entry_id: T_BOOK_3
+    term:
+    - 机
+    - 票
+    weight: 5
+    intent: INTENT_BOOK
+  - op: upsert
+    entry_id: T_REFUND_1
+    term:
+    - 退
+    - 票
+    weight: 8
+    intent: INTENT_REFUND
+  - op: upsert
+    entry_id: T_REFUND_2
+    term:
+    - 退
+    - 款
+    weight: 9
+    intent: INTENT_REFUND
+- revision_id: R-2
+  parent_id: R-1
+  sequence: 2
+  ops:
+  - op: upsert
+    entry_id: T_QUERY_1
+    term:
+    - 查
+    - 询
+    weight: 6
+    intent: INTENT_QUERY
+  - op: upsert
+    entry_id: T_QUERY_2
+    term:
+    - 账
+    - 单
+    weight: 5
+    intent: INTENT_QUERY
+  - op: upsert
+    entry_id: T_SUPPORT_1
+    term:
+    - 客
+    - 服
+    weight: 7
+    intent: INTENT_SUPPORT
+  - op: upsert
+    entry_id: T_SUPPORT_2
+    term:
+    - 投
+    - 诉
+    weight: 8
+    intent: INTENT_SUPPORT
+  - op: upsert
+    entry_id: T_BOOK_4
+    term:
+    - 预
+    - 约
+    - 订
+    - 票
+    weight: 12
+    intent: INTENT_BOOK
+  - op: upsert
+    entry_id: T_QUERY_3
+    term:
+    - 查
+    - 询
+    - 账
+    - 单
+    weight: 11
+    intent: INTENT_QUERY
+- revision_id: R-3
+  parent_id: R-2
+  sequence: 3
+  ops:
+  - op: upsert
+    entry_id: T_BOOK_1
+    term: *id001
+    weight: 9
+    intent: INTENT_BOOK
