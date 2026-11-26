@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "channels": [
+    {
+      "id": "ch01",
+      "sample_rate_hz": 2000
+    },
+    {
+      "id": "ch02",
+      "sample_rate_hz": 2000
+    }
+  ],
+  "window": {
+    "length": 96,
+    "step": 32,
+    "retention_depth": 12
+  },
+  "bands": [
+    {
+      "name": "low",
+      "low_hz": 0,
+      "high_hz": 80
+    },
+    {
+      "name": "mid",
+      "low_hz": 80,
+      "high_hz": 160
+    },
+    {
+      "name": "high",
+      "low_hz": 160,
+      "high_hz": 320
+    },
+    {
+      "name": "ultra",
+      "low_hz": 320,
+      "high_hz": 600
+    }
+  ],
+  "clustering": {
+    "count": 3,
+    "min_members": 2,
+    "merge_rule": "nearest_l1"
+  },
+  "fixed_point": {
+    "fraction_bits": 16,
+    "quantization_levels": 256
+  },
+  "scheduler": {
+    "batch_point_budget": 10000000,
+    "cluster_point_quota": 10000000
+  },
+  "segment": {
+    "min_windows": 2
+  }
+}
