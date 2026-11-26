@@ -1,0 +1,39 @@
+global_version: 7
+seed: 20261127
+sample_count: 12
+request_count: 4
+candidates_per_request: 3
+dense_dim: 5
+sparse_dim: 3
+
+binning:
+  method: uniform
+  bins: 16
+  allowed_bins: [4, 8, 16, 32]
+  value_max: 1000
+
+quantization:
+  scheme: q3
+  allowed_schemes: [q1, q2, q3, q4]
+  fixed_decimal_bits: 12
+  allowed_fixed_decimal_bits: [8, 12, 16]
+
+model:
+  seed: 99173
+  parameter_version: 12
+  hidden_dim: 3
+  fusion:
+    mode: weighted_average
+    ctr_weight: 3
+    cvr_weight: 2
+    threshold: 0.4505
+
+scheduler:
+  max_workers: 4
+  point_budget: 12
+  request_quota: 3
+  points_per_candidate: 1
+  worker_delay_ms: 5
+
+visibility:
+  delay_cutoff_ms: 15000
