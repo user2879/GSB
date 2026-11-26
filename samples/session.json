@@ -1,0 +1,172 @@
+{
+  "format_version": 1,
+  "global_budget": 4,
+  "shards": [
+    {
+      "shard_id": "shard-a",
+      "host": "127.0.0.1",
+      "port": 39101,
+      "lease_limit": 2,
+      "concurrency_limit": 2,
+      "seed": 1001,
+      "parameter_version": 2,
+      "sample_dim": 4,
+      "lease_ttl_ms": 30000,
+      "layers": [
+        {
+          "layer_id": "a-embed",
+          "input_dim": 4,
+          "output_dim": 3,
+          "scale": 1000,
+          "depends_on": []
+        },
+        {
+          "layer_id": "a-head",
+          "input_dim": 3,
+          "output_dim": 2,
+          "scale": 500,
+          "depends_on": ["a-embed"]
+        }
+      ]
+    },
+    {
+      "shard_id": "shard-b",
+      "host": "127.0.0.1",
+      "port": 39102,
+      "lease_limit": 1,
+      "concurrency_limit": 1,
+      "seed": 2002,
+      "parameter_version": 7,
+      "sample_dim": 3,
+      "lease_ttl_ms": 30000,
+      "layers": [
+        {
+          "layer_id": "b-project",
+          "input_dim": 3,
+          "output_dim": 4,
+          "scale": 1000,
+          "depends_on": []
+        },
+        {
+          "layer_id": "b-head",
+          "input_dim": 4,
+          "output_dim": 2,
+          "scale": 1000,
+          "depends_on": ["b-project"]
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "checkpoint_id": "cp-a-base",
+      "shard_id": "shard-a",
+      "parameter_version": 1,
+      "loss_baseline_digest": "74c25f40f23e4cb9c836e3b3f2a5a58566a6bf514d1407632fa72721d329c473"
+    },
+    {
+      "checkpoint_id": "cp-a-v2",
+      "shard_id": "shard-a",
+      "parameter_version": 2,
+      "loss_baseline_digest": "a5b542e894e4e78cd502ad14c945c4d68a74b2f09dd5ed55031c1eac66b96717"
+    },
+    {
+      "checkpoint_id": "cp-b-base",
+      "shard_id": "shard-b",
+      "parameter_version": 7,
+      "loss_baseline_digest": "45d1311b497bf2b4a84dfe12938deebcc4f4978bcc21e429dd009dc363635171"
+    }
+  ],
+  "batches": [
+    {
+      "batch_id": "a-before-rollback",
+      "shard_id": "shard-a",
+      "sample_ids": [1, 2],
+      "resource_units": 2,
+      "order": 1,
+      "waterline": 100,
+      "checkpoint_id": "cp-a-v2"
+    },
+    {
+      "batch_id": "b-before-rollback",
+      "shard_id": "shard-b",
+      "sample_ids": [5, 6],
+      "resource_units": 1,
+      "order": 2,
+      "waterline": 96,
+      "checkpoint_id": "cp-b-base"
+    },
+    {
+      "batch_id": "a-after-rollback",
+      "shard_id": "shard-a",
+      "sample_ids": [3, 4],
+      "resource_units": 2,
+      "order": 30,
+      "waterline": 104,
+      "depends_on_batches": ["a-before-rollback"]
+    },
+    {
+      "batch_id": "b-after-rollback",
+      "shard_id": "shard-b",
+      "sample_ids": [7],
+      "resource_units": 1,
+      "order": 31,
+      "waterline": 93
+    },
+    {
+      "batch_id": "a-after-second-rollback",
+      "shard_id": "shard-a",
+      "sample_ids": [8],
+      "resource_units": 1,
+      "order": 46,
+      "waterline": 101,
+      "depends_on_batches": ["a-after-rollback"]
+    }
+  ],
+  "events": [
+    {
+      "seq": 10,
+      "type": "commit",
+      "shard_id": "shard-a",
+      "checkpoint_id": "cp-a-v2"
+    },
+    {
+      "seq": 20,
+      "type": "rollback",
+      "shard_id": "shard-a",
+      "checkpoint_id": "cp-a-base"
+    },
+    {
+      "seq": 40,
+      "type": "commit",
+      "shard_id": "shard-a",
+      "checkpoint_id": "cp-a-base"
+    },
+    {
+      "seq": 45,
+      "type": "rollback",
+      "shard_id": "shard-a",
+      "checkpoint_id": "cp-a-v2"
+    },
+    {
+      "seq": 47,
+      "type": "commit",
+      "shard_id": "shard-a",
+      "checkpoint_id": "cp-a-v2"
+    },
+    {
+      "seq": 50,
+      "type": "renew",
+      "shard_id": "shard-a",
+      "lease_id": "lease:shard-a:1",
+      "lease_version": 99,
+      "ttl_ms": 30000
+    },
+    {
+      "seq": 60,
+      "type": "cancel",
+      "shard_id": "shard-b",
+      "lease_id": "lease:shard-b:1"
+    }
+  ]
+}
