@@ -1,0 +1,74 @@
+{
+  "description": "覆盖令牌替换/删除、参数、链增删、段、量化与版本切换",
+  "commands": [
+    {
+      "op": "replace_token",
+      "token_seq": 1,
+      "token": 29
+    },
+    {
+      "op": "update_op_param",
+      "op_seq": 1,
+      "path": "scale_float",
+      "value": 1.25
+    },
+    {
+      "op": "set_segments",
+      "boundaries": [
+        0,
+        2,
+        5,
+        8
+      ]
+    },
+    {
+      "op": "set_quant",
+      "quant_tier": "q3"
+    },
+    {
+      "op": "set_frac_bits",
+      "frac_bits": 16
+    },
+    {
+      "op": "set_version",
+      "exchange_version": "e1"
+    },
+    {
+      "op": "add_operator",
+      "operator": {
+        "seq": 4,
+        "kind": "layer_norm",
+        "name": "diagnostic_re_norm",
+        "inputs": [
+          3
+        ],
+        "scale_float": 1.0,
+        "scale_permille": 1000,
+        "int_bits": 16,
+        "params": {
+          "bias_int": 1
+        }
+      }
+    },
+    {
+      "op": "remove_operator",
+      "op_seq": 4
+    },
+    {
+      "op": "delete_token",
+      "token_seq": 7
+    },
+    {
+      "op": "set_version",
+      "exchange_version": "e2"
+    },
+    {
+      "op": "set_quant",
+      "quant_tier": "q2"
+    },
+    {
+      "op": "set_frac_bits",
+      "frac_bits": 8
+    }
+  ]
+}

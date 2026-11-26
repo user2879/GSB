@@ -1,0 +1,86 @@
+{
+  "format": "chain-e2",
+  "version": "e2-1.0",
+  "chain_seq": 1,
+  "name": "local-fixedpoint-demo",
+  "operators": [
+    {
+      "seq": 0,
+      "kind": "embedding",
+      "name": "embedding",
+      "inputs": [],
+      "scale_float": 1.0,
+      "scale_permille": 1000,
+      "int_bits": 16,
+      "quant_scheme": "qint16",
+      "params": {
+        "table": "splitmix64",
+        "dim": 6
+      },
+      "exchange_meta": {
+        "precision_tag": "sample-exact-1.000"
+      }
+    },
+    {
+      "seq": 1,
+      "kind": "segment_pool",
+      "name": "segment_pool",
+      "inputs": [
+        0
+      ],
+      "scale_float": 1.125,
+      "scale_permille": 1125,
+      "int_bits": 16,
+      "quant_scheme": "qint16",
+      "params": {
+        "pool": "ordered_sum"
+      },
+      "exchange_meta": {
+        "precision_tag": "sample-exact-1.125-from-permille"
+      }
+    },
+    {
+      "seq": 2,
+      "kind": "attention",
+      "name": "multi_head_attention",
+      "inputs": [
+        0,
+        1
+      ],
+      "scale_float": 1.0004,
+      "scale_permille": 1000,
+      "int_bits": 24,
+      "quant_scheme": "qint24",
+      "params": {
+        "temperature_permille": 900
+      },
+      "attention_snapshot": {
+        "heads": 2,
+        "dim": 3,
+        "temperature_permille": 900
+      },
+      "exchange_meta": {
+        "precision_tag": "sample-lossy-1.0004"
+      }
+    },
+    {
+      "seq": 3,
+      "kind": "layer_norm",
+      "name": "layer_norm",
+      "inputs": [
+        2
+      ],
+      "scale_float": 1.094,
+      "scale_permille": 1094,
+      "int_bits": 16,
+      "quant_scheme": "qint16",
+      "params": {
+        "bias_int": 0,
+        "gamma_int": 256
+      },
+      "exchange_meta": {
+        "precision_tag": "sample-exact-1.094"
+      }
+    }
+  ]
+}
