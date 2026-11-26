@@ -1,0 +1,55 @@
+allowed_fraction_bits:
+- 4
+- 8
+- 12
+allowed_quant_profiles:
+- q4
+- q8
+- q12
+chunk_rows: 2
+condition_dim: 16
+denoise_steps: 3
+exchange_version: v2
+fixed_point:
+  allowed_milli_scales:
+  - 1000
+  milli_scale: 1000
+frame_count: 3
+fusion_weights_permille:
+  image: 1000
+  motion: 800
+  text: 1000
+guidance_permille: 1000
+image:
+  height: 32
+  mode: RGB
+  tile_size: 8
+  width: 48
+latent_dim: 16
+max_denoise_points: 100
+max_workers: 4
+motion:
+  block_size: 8
+noise_scheme: lcg
+noise_schemes:
+  counter: 2
+  lcg: 1
+  xor: 3
+projection:
+  coefficient_radius: 32
+  denominator_scale: 32
+  version: linear-v1
+quant_profile: q8
+quant_profiles:
+  q12:
+    fraction_bits: 12
+    scale: 4096
+  q4:
+    fraction_bits: 4
+    scale: 16
+  q8:
+    fraction_bits: 8
+    scale: 256
+schema: mmfm-render-config-v1
+seed: 20261127
+vocab: vocab.json
