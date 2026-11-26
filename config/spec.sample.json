@@ -1,0 +1,171 @@
+{
+  "format_version": 1,
+  "session_scale": 1,
+  "global_budget_units": 24,
+  "max_renewals": 2,
+  "lease_ttl_ms": 2000,
+  "handshake_timeout_ms": 1000,
+  "io_timeout_ms": 3000,
+  "startup_timeout_ms": 8000,
+  "batch_rows": 16,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 39731,
+      "concurrency_quota": 1,
+      "lease_limit": 2,
+      "seed": 110101,
+      "capacity_version": 1,
+      "fixed_point_decimals": 2
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 39732,
+      "concurrency_quota": 1,
+      "lease_limit": 1,
+      "seed": 220202,
+      "capacity_version": 1,
+      "fixed_point_decimals": 1
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 39733,
+      "concurrency_quota": 2,
+      "lease_limit": 3,
+      "seed": 330303,
+      "capacity_version": 1,
+      "fixed_point_decimals": 3
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "s00_a_side",
+      "node_id": "node-a",
+      "depends_on": [],
+      "sample_rows": 32,
+      "resource_units": 3,
+      "priority": 5
+    },
+    {
+      "shard_id": "s01_a_ingest",
+      "node_id": "node-a",
+      "depends_on": [],
+      "sample_rows": 64,
+      "resource_units": 6,
+      "priority": 10
+    },
+    {
+      "shard_id": "s02_b_ingest",
+      "node_id": "node-b",
+      "depends_on": [],
+      "sample_rows": 80,
+      "resource_units": 7,
+      "priority": 10
+    },
+    {
+      "shard_id": "s03_a_transform",
+      "node_id": "node-a",
+      "depends_on": ["s01_a_ingest"],
+      "sample_rows": 48,
+      "resource_units": 5,
+      "priority": 8
+    },
+    {
+      "shard_id": "s04_b_transform",
+      "node_id": "node-b",
+      "depends_on": ["s02_b_ingest"],
+      "sample_rows": 40,
+      "resource_units": 4,
+      "priority": 8
+    },
+    {
+      "shard_id": "s05_c_join",
+      "node_id": "node-c",
+      "depends_on": ["s03_a_transform", "s02_b_ingest"],
+      "sample_rows": 96,
+      "resource_units": 8,
+      "priority": 9
+    },
+    {
+      "shard_id": "s06_c_aggregate",
+      "node_id": "node-c",
+      "depends_on": ["s04_b_transform"],
+      "sample_rows": 72,
+      "resource_units": 6,
+      "priority": 7
+    },
+    {
+      "shard_id": "s07_sink",
+      "node_id": "node-c",
+      "depends_on": ["s05_c_join", "s06_c_aggregate"],
+      "sample_rows": 32,
+      "resource_units": 5,
+      "priority": 5
+    }
+  ],
+  "capacity_versions": [
+    {
+      "version": 1,
+      "parent": null,
+      "session_scale": 1,
+      "global_budget_units": 24,
+      "note": "initial declared caliber",
+      "node_calibers": {
+        "node-a": {
+          "concurrency_quota": 1,
+          "lease_limit": 2,
+          "fixed_point_decimals": 2
+        },
+        "node-b": {
+          "concurrency_quota": 1,
+          "lease_limit": 1,
+          "fixed_point_decimals": 1
+        },
+        "node-c": {
+          "concurrency_quota": 2,
+          "lease_limit": 3,
+          "fixed_point_decimals": 3
+        }
+      }
+    },
+    {
+      "version": 2,
+      "parent": 1,
+      "session_scale": 2,
+      "global_budget_units": 30,
+      "note": "node-a quota and fixed-point caliber evolve",
+      "node_calibers": {
+        "node-a": {
+          "concurrency_quota": 2,
+          "lease_limit": 3,
+          "fixed_point_decimals": 3
+        },
+        "node-b": {
+          "concurrency_quota": 1,
+          "lease_limit": 1,
+          "fixed_point_decimals": 1
+        },
+        "node-c": {
+          "concurrency_quota": 2,
+          "lease_limit": 3,
+          "fixed_point_decimals": 3
+        }
+      }
+    }
+  ],
+  "events": [
+    {"seq": 1, "type": "shard_arrived", "shard_id": "s02_b_ingest"},
+    {"seq": 2, "type": "shard_arrived", "shard_id": "s01_a_ingest"},
+    {"seq": 3, "type": "shard_arrived", "shard_id": "s00_a_side"},
+    {"seq": 4, "type": "shard_arrived", "shard_id": "s04_b_transform"},
+    {"seq": 5, "type": "shard_arrived", "shard_id": "s03_a_transform"},
+    {"seq": 6, "type": "shard_arrived", "shard_id": "s06_c_aggregate"},
+    {"seq": 7, "type": "shard_arrived", "shard_id": "s05_c_join"},
+    {"seq": 8, "type": "shard_arrived", "shard_id": "s07_sink"},
+    {"seq": 9, "type": "renew_lease", "shard_id": "s01_a_ingest", "expected_version": 1},
+    {"seq": 10, "type": "renew_lease", "shard_id": "s01_a_ingest", "expected_version": 2}
+  ]
+}
