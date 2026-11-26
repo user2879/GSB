@@ -1,0 +1,74 @@
+{
+  "shards": [
+    {
+      "shard_id": "s1_raw_a",
+      "node_id": "node-a",
+      "upstreams": [],
+      "resource_units": 2,
+      "capacity_version": "cap-v1",
+      "sample_rows": 96,
+      "batch_size": 32,
+      "state": "active"
+    },
+    {
+      "shard_id": "s2_raw_b",
+      "node_id": "node-b",
+      "upstreams": [],
+      "resource_units": 3,
+      "capacity_version": "cap-v1",
+      "sample_rows": 80,
+      "batch_size": 20,
+      "state": "active"
+    },
+    {
+      "shard_id": "s3_dep_a",
+      "node_id": "node-a",
+      "upstreams": ["s1_raw_a"],
+      "resource_units": 2,
+      "capacity_version": "cap-v1",
+      "sample_rows": 64,
+      "batch_size": 16,
+      "state": "active"
+    },
+    {
+      "shard_id": "s4_dep_c",
+      "node_id": "node-c",
+      "upstreams": ["s2_raw_b"],
+      "resource_units": 2,
+      "capacity_version": "cap-v1",
+      "sample_rows": 72,
+      "batch_size": 24,
+      "state": "active"
+    },
+    {
+      "shard_id": "s5_join_b",
+      "node_id": "node-b",
+      "upstreams": ["s3_dep_a", "s4_dep_c"],
+      "resource_units": 3,
+      "capacity_version": "cap-v1",
+      "sample_rows": 88,
+      "batch_size": 22,
+      "state": "active"
+    },
+    {
+      "shard_id": "s6_independent_c",
+      "node_id": "node-c",
+      "upstreams": [],
+      "resource_units": 2,
+      "capacity_version": "cap-v1",
+      "sample_rows": 48,
+      "batch_size": 16,
+      "state": "active"
+    },
+    {
+      "shard_id": "s7_frozen",
+      "node_id": "node-c",
+      "upstreams": [],
+      "resource_units": 4,
+      "capacity_version": "cap-v1",
+      "sample_rows": 32,
+      "batch_size": 16,
+      "state": "frozen"
+    }
+  ]
+}

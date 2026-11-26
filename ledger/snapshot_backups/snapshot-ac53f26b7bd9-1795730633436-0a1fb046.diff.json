@@ -1,0 +1,141 @@
+[
+  {
+    "new": {
+      "budget_units": 6,
+      "note": "chain revision used by replacement shard s2_raw_b",
+      "parent": "cap-v1",
+      "revision": 2,
+      "version": "cap-v2"
+    },
+    "op": "added",
+    "path": "$.capacity_versions[1]"
+  },
+  {
+    "new": {
+      "at_monotonic_ms": 10,
+      "capacity_version": "cap-v2",
+      "detail": {
+        "parent": "cap-v1"
+      },
+      "event_id": "evt-v2-capacity",
+      "event_type": "capacity_revised",
+      "node_id": null,
+      "sequence": 3,
+      "shard_id": null
+    },
+    "op": "added",
+    "path": "$.events[2]"
+  },
+  {
+    "new": {
+      "at_monotonic_ms": 11,
+      "capacity_version": null,
+      "detail": {
+        "sample_rows": 128
+      },
+      "event_id": "evt-v2-shard",
+      "event_type": "shard_replaced",
+      "node_id": null,
+      "sequence": 4,
+      "shard_id": "s2_raw_b"
+    },
+    "op": "added",
+    "path": "$.events[3]"
+  },
+  {
+    "new": {
+      "at_monotonic_ms": 12,
+      "capacity_version": null,
+      "detail": {
+        "concurrency_quota": 1
+      },
+      "event_id": "evt-v2-quota",
+      "event_type": "quota_changed",
+      "node_id": "node-c",
+      "sequence": 5,
+      "shard_id": null
+    },
+    "op": "added",
+    "path": "$.events[4]"
+  },
+  {
+    "new": 1,
+    "old": 2,
+    "op": "changed",
+    "path": "$.nodes[2].concurrency_quota"
+  },
+  {
+    "new": "demo-v2",
+    "old": "demo-v1",
+    "op": "changed",
+    "path": "$.session.spec_version"
+  },
+  {
+    "new": [],
+    "old": [],
+    "op": "type_changed",
+    "path": "$.shards[0].upstreams"
+  },
+  {
+    "new": "cap-v2",
+    "old": "cap-v1",
+    "op": "changed",
+    "path": "$.shards[1].capacity_version"
+  },
+  {
+    "new": 128,
+    "old": 80,
+    "op": "changed",
+    "path": "$.shards[1].sample_rows"
+  },
+  {
+    "new": [],
+    "old": [],
+    "op": "type_changed",
+    "path": "$.shards[1].upstreams"
+  },
+  {
+    "new": [
+      "s1_raw_a"
+    ],
+    "old": [
+      "s1_raw_a"
+    ],
+    "op": "type_changed",
+    "path": "$.shards[2].upstreams"
+  },
+  {
+    "new": [
+      "s2_raw_b"
+    ],
+    "old": [
+      "s2_raw_b"
+    ],
+    "op": "type_changed",
+    "path": "$.shards[3].upstreams"
+  },
+  {
+    "new": [
+      "s3_dep_a",
+      "s4_dep_c"
+    ],
+    "old": [
+      "s3_dep_a",
+      "s4_dep_c"
+    ],
+    "op": "type_changed",
+    "path": "$.shards[4].upstreams"
+  },
+  {
+    "new": [],
+    "old": [],
+    "op": "type_changed",
+    "path": "$.shards[5].upstreams"
+  },
+  {
+    "new": [],
+    "old": [],
+    "op": "type_changed",
+    "path": "$.shards[6].upstreams"
+  }
+]

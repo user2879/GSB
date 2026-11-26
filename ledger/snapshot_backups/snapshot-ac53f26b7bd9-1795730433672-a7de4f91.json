@@ -1,0 +1,165 @@
+{
+  "content_digest": "cd95fdfa4c51d3f3b18561ce1c170d4e58518124db11afd21731680e2c1ecd3d",
+  "format_version": 1,
+  "payload": {
+    "capacity_versions": [
+      {
+        "budget_units": 6,
+        "note": "initial chained capacity revision",
+        "parent": null,
+        "revision": 1,
+        "version": "cap-v1"
+      }
+    ],
+    "events": [
+      {
+        "at_monotonic_ms": 0,
+        "capacity_version": null,
+        "detail": {
+          "source": "spec/"
+        },
+        "event_id": "evt-0001",
+        "event_type": "spec_loaded",
+        "node_id": null,
+        "sequence": 1,
+        "shard_id": null
+      },
+      {
+        "at_monotonic_ms": 1,
+        "capacity_version": null,
+        "detail": {
+          "policy": "stable-topological-id"
+        },
+        "event_id": "evt-0002",
+        "event_type": "scheduler_tick",
+        "node_id": null,
+        "sequence": 2,
+        "shard_id": null
+      }
+    ],
+    "nodes": [
+      {
+        "concurrency_quota": 2,
+        "fixed_point_scale": 100,
+        "host": "127.0.0.1",
+        "max_leases": 3,
+        "node_id": "node-a",
+        "port": 19091,
+        "processing_delay_ms": 25,
+        "seed": 1701
+      },
+      {
+        "concurrency_quota": 1,
+        "fixed_point_scale": 1000,
+        "host": "127.0.0.1",
+        "max_leases": 2,
+        "node_id": "node-b",
+        "port": 19092,
+        "processing_delay_ms": 35,
+        "seed": 2718
+      },
+      {
+        "concurrency_quota": 2,
+        "fixed_point_scale": 100,
+        "host": "127.0.0.1",
+        "max_leases": 2,
+        "node_id": "node-c",
+        "port": 19093,
+        "processing_delay_ms": 20,
+        "seed": 314159
+      }
+    ],
+    "session": {
+      "global_resource_budget": 6,
+      "handshake_timeout_ms": 1000,
+      "lease_ttl_ms": 5000,
+      "queue_window_ms": 64,
+      "request_timeout_ms": 3000,
+      "scale_exp": 2,
+      "spec_version": "demo-v1",
+      "wait_poll_ms": 10
+    },
+    "shards": [
+      {
+        "batch_size": 32,
+        "capacity_version": "cap-v1",
+        "node_id": "node-a",
+        "resource_units": 2,
+        "sample_rows": 96,
+        "shard_id": "s1_raw_a",
+        "state": "active",
+        "upstreams": []
+      },
+      {
+        "batch_size": 20,
+        "capacity_version": "cap-v1",
+        "node_id": "node-b",
+        "resource_units": 3,
+        "sample_rows": 80,
+        "shard_id": "s2_raw_b",
+        "state": "active",
+        "upstreams": []
+      },
+      {
+        "batch_size": 16,
+        "capacity_version": "cap-v1",
+        "node_id": "node-a",
+        "resource_units": 2,
+        "sample_rows": 64,
+        "shard_id": "s3_dep_a",
+        "state": "active",
+        "upstreams": [
+          "s1_raw_a"
+        ]
+      },
+      {
+        "batch_size": 24,
+        "capacity_version": "cap-v1",
+        "node_id": "node-c",
+        "resource_units": 2,
+        "sample_rows": 72,
+        "shard_id": "s4_dep_c",
+        "state": "active",
+        "upstreams": [
+          "s2_raw_b"
+        ]
+      },
+      {
+        "batch_size": 22,
+        "capacity_version": "cap-v1",
+        "node_id": "node-b",
+        "resource_units": 3,
+        "sample_rows": 88,
+        "shard_id": "s5_join_b",
+        "state": "active",
+        "upstreams": [
+          "s3_dep_a",
+          "s4_dep_c"
+        ]
+      },
+      {
+        "batch_size": 16,
+        "capacity_version": "cap-v1",
+        "node_id": "node-c",
+        "resource_units": 2,
+        "sample_rows": 48,
+        "shard_id": "s6_independent_c",
+        "state": "active",
+        "upstreams": []
+      },
+      {
+        "batch_size": 16,
+        "capacity_version": "cap-v1",
+        "node_id": "node-c",
+        "resource_units": 4,
+        "sample_rows": 32,
+        "shard_id": "s7_frozen",
+        "state": "frozen",
+        "upstreams": []
+      }
+    ]
+  },
+  "read_only": true,
+  "spec_digest": "ac53f26b7bd96caa9946c9b1d9eef3a76814654bc85ad8cd0f3974041688d913",
+  "spec_version": "demo-v1"
+}
