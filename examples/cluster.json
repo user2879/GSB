@@ -1,0 +1,55 @@
+{
+  "format_version": 1,
+  "global_budget": 18,
+  "runtime": {
+    "lease_ttl_ms": 10000,
+    "io_timeout_ms": 3000,
+    "ready_timeout_ms": 6000,
+    "batch_size": 24,
+    "fixed_point_scale": 1000000,
+    "wait_poll_ms": 5
+  },
+  "nodes": [
+    {
+      "node_id": "n-alpha",
+      "host": "127.0.0.1",
+      "port": 39101,
+      "concurrency_quota": 4,
+      "max_leases_per_node": 4,
+      "seed": 10101,
+      "quota_version": 1
+    },
+    {
+      "node_id": "n-beta",
+      "host": "127.0.0.1",
+      "port": 39102,
+      "concurrency_quota": 2,
+      "max_leases_per_node": 2,
+      "seed": 20202,
+      "quota_version": 1
+    },
+    {
+      "node_id": "n-gamma",
+      "host": "127.0.0.1",
+      "port": 39103,
+      "concurrency_quota": 1,
+      "max_leases_per_node": 1,
+      "seed": 30303,
+      "quota_version": 1
+    }
+  ],
+  "shards": [
+    {"shard_id": "s-alpha-base", "dependencies": [], "sample_rows": 96, "resource_units": 3, "priority": 10},
+    {"shard_id": "s-beta-base", "dependencies": [], "sample_rows": 72, "resource_units": 2, "priority": 8},
+    {"shard_id": "s-independent", "dependencies": [], "sample_rows": 48, "resource_units": 2, "priority": 5},
+    {"shard_id": "s-cancel-demo", "dependencies": [], "sample_rows": 24, "resource_units": 1, "priority": 1},
+    {"shard_id": "s-alpha-child", "dependencies": ["s-alpha-base"], "sample_rows": 60, "resource_units": 2, "priority": 4},
+    {"shard_id": "s-beta-child", "dependencies": ["s-beta-base"], "sample_rows": 48, "resource_units": 1, "priority": 7},
+    {"shard_id": "s-join", "dependencies": ["s-alpha-child", "s-beta-child"], "sample_rows": 80, "resource_units": 3, "priority": 2},
+    {"shard_id": "s-v2-fast", "dependencies": [], "sample_rows": 48, "resource_units": 2, "priority": 6},
+    {"shard_id": "s-v2-long", "dependencies": [], "sample_rows": 24, "resource_units": 2, "priority": 6},
+    {"shard_id": "s-rb-child", "dependencies": ["s-v2-long"], "sample_rows": 24, "resource_units": 1, "priority": 1},
+    {"shard_id": "s-rb-grand", "dependencies": ["s-rb-child"], "sample_rows": 24, "resource_units": 1, "priority": 1},
+    {"shard_id": "s-gamma", "dependencies": [], "sample_rows": 36, "resource_units": 1, "priority": 3}
+  ]
+}

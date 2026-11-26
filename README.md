@@ -1,22 +1,113 @@
-一名工程师接到的需求条目要求为本地多节点分片下发平台建立变更风险与回滚诊断组件，而眼下工作目录里只有一个空的根文件夹，代码、配置、本地样本与账本都要在 Linux（WSL Ubuntu）环境首次落地。业务对象是本地分片下发：每个节点是独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议接收携带配额版本与批次样本的分片请求，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用配额版本与单调时钟毫秒耗时。用户在本地 JSON 中声明节点（节点标识、回环端口、整数并发配额、整数每节点租约上限、整数随机种子、配额版本号）、分片清单（分片标识、上游依赖引用、整数样本行数、整数资源单位需求、整数优先级）与全局资源单位预算，并提交一条按到达序号排列的调度事件流：下发、取消、优先权重调整、配额版本升级、节点下线与回滚到历史配额版本。使用者会反复编辑事件流，要求每次编辑后只重算真正受影响的分片与配额水位。
+# Shard Diag：本地分片下发、租约、回滚与重放账本
 
-任务环境与准备：
-在 Linux（WSL Ubuntu）本机创建工作目录并初始化 Python 虚拟环境，确认 python3 --version 可用；无需外部服务、账号或数据集。
-安装依赖：python3 -m pip install numpy==1.26.4（NumPy 用于整数定点分组聚合），Tkinter 与 sqlite3 使用系统自带模块，必要时安装 python3-tk。
-准备本地确定性样本：由任务内声明的整数随机种子生成节点样本与分片批次，全部保存在工作目录内；127.0.0.1 回环端口由声明文件指定并在运行前确认未被占用。
-运行前在本机自检 socket、threading、sqlite3 与 Tkinter 可导入；演示脚本须能在无图形显示环境下以命令行模式完成账本与重放校验。
+一个完全本地、无外部服务的 Python/Linux(WSL) 组件。每个节点是独立子进程，在 `127.0.0.1` 真实 TCP 端口上说 JSON Lines；主进程通过线程池并行调度，维护预算/租约/并发三重约束、单调时钟租约、配额回滚失效传播、定点水位误差和 SQLite 原子账本。
 
-业务要求：
-1. 实现节点声明、分片清单、依赖图、全局预算与事件流的本地 JSON 加载及强校验：节点标识与分片标识唯一，回环端口为 127.0.0.1 字面量且在 1 至 65535 内全局不重复，并发配额、每节点租约上限、资源单位需求与优先级按声明约束逐项校验，依赖引用必须存在且依赖图无环；任一不合法输入须以 E_SPEC 报明首个非法字段与所在对象标识，不得部分加载。
-2. 实现节点子进程编排与真实回环逐行协议：以子进程按声明端口在 127.0.0.1 真实监听，主进程通过真实 TCP 套接字下发含分片标识、配额版本与批次样本的分片请求并回收回执；握手与读取必须使用真实套接字超时，端口占用、超时、回执字段缺失分别以 E_PORT、E_TIMEOUT、E_FIELD 报告，且节点子进程被强制终止后不得残留占用端口的孤儿进程。
-3. 实现按节点种子与分片标识生成确定性样本并以 NumPy 完成整数定点分组聚合，聚合摘要须绑定节点标识、分片标识、样本行数、配额版本与参与行数，由显式可复现规则推导；同一声明在任意下发顺序、任意批次切分与任意并发度下必须得到逐字节一致的聚合摘要与样本字节，并在回执中回带所用聚合口径版本。
-4. 实现分片租约的签发、续约、释放与基于本地单调时钟的真实过期判定：租约含租约标识、分片标识、节点标识、授予时刻、到期时刻、续约次数与租约版本号；到期只能由真实计时判定而非人为延迟，续约须凭租约版本号向节点子进程做乐观校验，版本不符以 E_LEASE 拒绝且不延长到期时刻，节点侧代数不前进。
-5. 实现受全局资源单位预算、每节点租约上限与每节点并发配额三重约束的并行调度：任一时刻在途分片消耗的资源单位之和、单节点活跃租约数与活跃分片数均不得越界，越界前分片必须排队并记录以单调时钟毫秒计量的等待开始与结束；调度须真实投射到工作线程池，逐事件输出放行或排队的判定依据与判定顺序。
-6. 实现回滚到历史配额版本时的唯一归属裁决与失效传播：回滚须整体撤销指向新版本的未到期租约并把水位整体替换为历史版本口径，同一份资源额度在同一时刻不得既被计入到期回收又被计入回滚撤销，也不得被两个分片同时持有；沿分片依赖图与节点引用关系推导全部直接与间接失效分片，按稳定拓扑序与分片标识序输出失效集合与每步传播依据，未失效分片的聚合摘要与租约归属须逐字节保持不变。
-7. 实现以会话缩放因子为参数的定点水位口径与分级误差归因：把资源单位、租约上限与已用量统一量化为定点整数，乘除以整数完成并显式声明截断方向与溢出饱和规则，输出单分片量化误差、逐节点水位比较判定误差界与全局预算聚合误差上界并拆分参与方贡献；当剩余预算与候选分片需求之差或两候选分片的定点水位差落在误差界内时，按稳定拓扑序与分片标识序的显式决胜规则选定结论并标注受误差影响。
-8. 实现 SQLite 账本的原子提交、会话快照的版本识别整体替换恢复与独立重放校验：每完成一个分片结局须在同一事务写入聚合摘要、租约归属、资源占用、水位、配额版本与进度游标，账本携带整数格式版本与内容摘要；重新打开快照时版本或摘要与当前声明不一致须整体替换而非增量合并，节点子进程被强制终止后重启只能依据已完整提交的记录恢复、未提交分片标记为未知并要求重跑，独立校验命令仅读账本与原始声明重推全部授予、续约、回收与回滚裁决，差异以 E_VERIFY 定位到首个不一致分片与字段。
+原始需求逐条保留在 `docs/REQUIREMENTS.md`，实际验证记录见 `docs/VALIDATION.md`。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 快速开始
 
-验收：
-用本地样本验证并行下发、租约归属、回滚整体替换与恢复重放，逐字节可复核且异常码正确。
+```bash
+./scripts/bootstrap.sh
+./scripts/demo.sh
+```
+
+等价的手动命令：
+
+```bash
+python3 --version
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install numpy==1.26.4
+
+python -m shard_diag.cli doctor
+python -m shard_diag.cli validate --spec examples/cluster.json --events examples/events.json
+python -m shard_diag.cli ports    --spec examples/cluster.json
+python -m shard_diag.cli run      --spec examples/cluster.json --events examples/events.json \
+  --ledger .runtime/demo.sqlite --output .runtime/demo-run.json
+python -m shard_diag.cli verify   --spec examples/cluster.json --events examples/events.json \
+  --ledger .runtime/demo.sqlite
+python -m shard_diag.cli recompute --spec examples/cluster.json \
+  --old-events examples/events.json --new-events examples/events_priority_edit.json \
+  --ledger .runtime/demo.sqlite
+python -m unittest discover -s tests
+```
+
+无图形显示环境不需要启动 Tk 窗口；`doctor` 只验证 `tkinter` 可导入，所有验收命令均为 CLI。
+
+## 主要命令
+
+- `doctor`：检查 `socket`、`threading`、`sqlite3`、`numpy==1.26.4`、`tkinter`。
+- `validate`：强校验节点、分片、DAG、预算和事件流，输出声明摘要。
+- `ports`：运行前确认所有端口是 `127.0.0.1` 且未被占用。
+- `samples`：预生成所有“节点 × 分片”的确定性样本和小端原始字节文件。
+- `run`：启动真实节点子进程、线程池调度、TCP/JSONL 聚合、租约、回滚和 SQLite 账本。
+- `verify`：只读账本与原始声明，独立重推样本摘要、容量、租约版本、回滚传播、游标和内容摘要。
+- `recompute`：比较新旧事件流，只对影响集合调用 NumPy，未影响分片复用账本摘要。
+- `recover`：把有授予记录但没有原子结局的分片标记为 `unknown` 并要求重跑。
+- `snapshot`：用 SQLite backup API 导出会话快照。
+- `water`：输出单分片量化误差、节点水位比较界和全局预算误差归因。
+
+## 错误码
+
+| 码 | 触发点 |
+| --- | --- |
+| `E_SPEC` | JSON schema、标识/端口/整数约束、引用、DAG 或事件流不合法；返回首个字段和对象标识。 |
+| `E_PORT` | 回环端口被占用、无法绑定或节点未在声明端口就绪。 |
+| `E_TIMEOUT` | 真实 TCP 连接、握手或 JSONL 读取超过套接字超时。 |
+| `E_FIELD` | 握手/回执缺少必需字段或 JSONL 非法。 |
+| `E_LEASE` | 租约版本不符、已过期、非活跃或节点侧乐观代数校验失败。 |
+| `E_VERIFY` | 独立重放发现摘要、租约、容量、回滚、游标或内容摘要不一致；定位首个分片和字段。 |
+
+## 确定性聚合规则
+
+1. 由节点整数种子和分片 ID 派生混合种子：`sha256("shard-diag-sample-v1\n<seed>\n<shard_id>")[:8]`。
+2. 使用 `numpy.random.RandomState(mixed_seed)` 生成 16 个分组的 `group_index:int64` 和 `measure:int64`。
+3. 测量值乘会话定点缩放因子；乘法为精确整数乘法，超出 signed int64 时饱和到 `±(2^63-1)`。
+4. NumPy `np.add.at` 分组累加计数与定点和；批次只产生可相加的 `counts[16]`、`sums_q[16]`。
+5. 最终摘要规范化为紧凑 JSON 后计算 SHA-256，绑定 `caliber_version`、scale、节点、分片、样本行数、参与行数和配额版本。
+
+因此不同批次大小、下发顺序或工作线程并发度只改变部分聚合到达顺序，不改变可加总后的摘要或样本字节。
+
+## 定点水位与误差
+
+- 原始资源单位：`q = units * scale`，精确乘法，溢出饱和 int64。
+- 比率水位：`q = saturate(floor(numerator * scale / denominator))`；非负数向零/向下截断。
+- 每个分片的归一化预算份额有 `< 1 ulp` 的截断误差。
+- `n` 个参与方的份额求和误差上界为 `< n ulp`，整数进位最多 `n-1 ulp`；报告拆分每个参与方余数和聚合进位。
+- 两个定点水位直接比较的保守误差界为 `2 ulp`；预算剩余份额与候选需求份额同样使用 `2 ulp`。
+- 落在误差界内时，不宣称水位优势，按“优先级降序 → Kahn 稳定拓扑序 → 分片 ID 字典序”决胜，并设置 `error_affected=true`。
+
+## 账本与恢复
+
+账本路径：`.runtime/demo.sqlite`。核心表：
+
+- `shard_outcomes`：分片结局、聚合 JSON/摘要、租约归属、资源前后占用、水位、等待/执行单调时钟毫秒。
+- `lease_events`：授予、续约、回收、取消、回滚撤销和失败裁决。
+- `watermarks`：全局/节点水位和完整误差报告。
+- `event_journal`：按到达序号保存事件哈希、事件体和放行/排队/回滚决策。
+- `progress`：整数游标和状态。
+- `recovery_records`：崩溃恢复出的 `unknown` 分片。
+
+`meta.format_version` 是整数账本格式版本，`meta.spec_digest` 绑定当前声明，`meta.content_digest` 是所有核心表完整规范化行的根摘要。版本或声明摘要不匹配时，`Ledger.open_session` 会整体替换数据库，不做增量合并。
+
+## 进程与端口清理
+
+`NodeManager` 用 `start_new_session=True` 启动节点；强杀时对整个进程组发 `SIGKILL` 并 `wait()`，随后重新 `bind()` 声明端口确认没有孤儿监听。测试 `tests/test_protocol.py` 覆盖了长请求进行中强杀、端口释放和重启。
+
+当前沙箱没有免密 sudo，且基础系统缺 `libtk8.6.so`。已用 `scripts/install-local-tk.sh` 的无 root 替代方案把 `libtcl8.6`、`libtk8.6`、`libxft2`、`libxss1` 解包到 `.sysdeps/root`；`doctor` 会用 `ctypes.RTLD_GLOBAL` 预加载。标准 WSL 推荐直接执行 `sudo apt-get install -y python3-tk`。
+
+## 代码地图
+
+- `shard_diag/spec.py`：JSON schema、强校验、DAG/稳定拓扑序。
+- `shard_diag/determinism.py`：确定性样本、NumPy 分组聚合和摘要。
+- `shard_diag/watermark.py`：定点量化、误差界和稳定决胜键。
+- `shard_diag/protocol.py`：真实 TCP JSONL 握手/读写和错误码。
+- `shard_diag/node_worker.py`：节点子进程入口与租约代数校验。
+- `shard_diag/node_manager.py`：子进程启动、就绪探测、强杀和端口释放。
+- `shard_diag/lease.py`：租约状态机、容量裁决和回滚 CAS。
+- `shard_diag/engine.py`：线程池调度、等待计时、事件处理和原子结局。
+- `shard_diag/ledger.py`：SQLite schema、事务、根摘要和整库替换。
+- `shard_diag/impact.py`：编辑影响面、依赖传播和稳定失效序。
+- `shard_diag/incremental.py`：只重算受影响摘要/水位。
+- `shard_diag/verifier.py`：独立只读重放与 `E_VERIFY` 定位。
+- `tests/`：27 个 unittest 回归，覆盖异常码、真实子进程、容量、过期、回滚、恢复和篡改定位。

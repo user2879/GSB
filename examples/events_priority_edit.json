@@ -1,0 +1,104 @@
+{
+  "events": [
+    {
+      "seq": 1,
+      "type": "dispatch",
+      "shard_id": "s-alpha-base",
+      "node_id": "n-alpha",
+      "batch_size": 24
+    },
+    {
+      "seq": 2,
+      "type": "dispatch",
+      "shard_id": "s-beta-base",
+      "node_id": "n-beta",
+      "batch_size": 24
+    },
+    {
+      "seq": 3,
+      "type": "dispatch",
+      "shard_id": "s-independent",
+      "node_id": "n-beta",
+      "batch_size": 12
+    },
+    {
+      "seq": 4,
+      "type": "dispatch",
+      "shard_id": "s-cancel-demo",
+      "node_id": "n-gamma",
+      "processing_delay_ms": 300
+    },
+    {
+      "seq": 5,
+      "type": "cancel",
+      "shard_id": "s-cancel-demo",
+      "reason": "operator_demo"
+    },
+    {
+      "seq": 6,
+      "type": "dispatch",
+      "shard_id": "s-alpha-child",
+      "node_id": "n-alpha",
+      "batch_size": 20
+    },
+    {
+      "seq": 7,
+      "type": "dispatch",
+      "shard_id": "s-beta-child",
+      "node_id": "n-beta",
+      "batch_size": 16
+    },
+    {
+      "seq": 8,
+      "type": "priority",
+      "shard_id": "s-beta-child",
+      "priority": 123
+    },
+    {
+      "seq": 9,
+      "type": "dispatch",
+      "shard_id": "s-join",
+      "node_id": "n-alpha",
+      "batch_size": 20
+    },
+    {
+      "seq": 10,
+      "type": "dispatch",
+      "shard_id": "s-gamma",
+      "node_id": "n-gamma",
+      "batch_size": 12
+    },
+    {
+      "seq": 11,
+      "type": "quota_upgrade",
+      "node_id": "n-alpha",
+      "quota_version": 2
+    },
+    {
+      "seq": 12,
+      "type": "dispatch",
+      "shard_id": "s-v2-fast",
+      "node_id": "n-alpha",
+      "batch_size": 12
+    },
+    {
+      "seq": 13,
+      "type": "dispatch",
+      "shard_id": "s-v2-long",
+      "node_id": "n-alpha",
+      "batch_size": 12,
+      "processing_delay_ms": 700
+    },
+    {
+      "seq": 14,
+      "type": "rollback",
+      "node_id": "n-alpha",
+      "target_version": 1
+    },
+    {
+      "seq": 15,
+      "type": "node_offline",
+      "node_id": "n-gamma"
+    }
+  ]
+}

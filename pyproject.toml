@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shard-diag"
+version = "1.0.0"
+description = "Local loopback shard delivery, lease, rollback and SQLite replay diagnostics"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+shard-diag = "shard_diag.cli:main"
+
+[tool.setuptools]
+packages = ["shard_diag"]
+
+[tool.unittest]
+start-dir = "tests"
