@@ -1,0 +1,96 @@
+{
+  "format_version": 1,
+  "session_id": "wsl-local-diagnostic-v1",
+  "scale_power": 0,
+  "global_resource_budget": 8,
+  "lease_ttl_ms": 5000,
+  "max_revision_lag": 2,
+  "dispatch_delay_limit_ms": 8,
+  "revision_chain": [201, 202, 203],
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 39101,
+      "concurrency_quota": 2,
+      "lease_limit": 4,
+      "seed": 424242,
+      "capacity_version": 3
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 39102,
+      "concurrency_quota": 1,
+      "lease_limit": 4,
+      "seed": 987654,
+      "capacity_version": 7
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "s1-extract-a",
+      "node_id": "node-a",
+      "dependencies": [],
+      "sample_rows": 120000,
+      "resource_units": 2,
+      "priority": 10
+    },
+    {
+      "shard_id": "s2-extract-b",
+      "node_id": "node-b",
+      "dependencies": [],
+      "sample_rows": 80000,
+      "resource_units": 3,
+      "priority": 5
+    },
+    {
+      "shard_id": "s3-join",
+      "node_id": "node-a",
+      "dependencies": ["s1-extract-a", "s2-extract-b"],
+      "sample_rows": 60000,
+      "resource_units": 4,
+      "priority": 20
+    },
+    {
+      "shard_id": "s4-aggregate",
+      "node_id": "node-a",
+      "dependencies": ["s3-join"],
+      "sample_rows": 40000,
+      "resource_units": 2,
+      "priority": 0
+    },
+    {
+      "shard_id": "s5-boundary-allow",
+      "node_id": "node-a",
+      "dependencies": [],
+      "sample_rows": 4096,
+      "resource_units": 1,
+      "priority": 1
+    },
+    {
+      "shard_id": "s6-boundary-deny-quantized-equal",
+      "node_id": "node-b",
+      "dependencies": [],
+      "sample_rows": 4096,
+      "resource_units": 1,
+      "priority": 1
+    }
+  ],
+  "delay_batches": [
+    {
+      "batch_id": "obs-a-203",
+      "node_id": "node-a",
+      "primary_revision": 203,
+      "replayed_revision": 201,
+      "delay_samples_ms": [8, 8, 8]
+    },
+    {
+      "batch_id": "obs-b-203",
+      "node_id": "node-b",
+      "primary_revision": 203,
+      "replayed_revision": 202,
+      "delay_samples_ms": [9, 9, 9]
+    }
+  ]
+}

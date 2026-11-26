@@ -20,3 +20,14 @@
 
 验收：
 用本地样本验证租约水位、定点误差归因、版本换代整体替换与强制终止后账本重放均一致。
+
+## 交付入口
+
+首版实现位于 `shard_diag/`，本地样本位于 `config/spec.json`，测试位于 `tests/`，技术口径见 `docs/diagnostics.md`。
+
+```bash
+python3 -m pip install numpy==1.26.4
+./scripts/verify.sh
+```
+
+实际验证记录位于 `artifacts/verification-results.txt`。
