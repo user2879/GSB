@@ -1,0 +1,42 @@
+{
+  "injections": [
+    {
+      "injection_id": "INJ-DUP-01",
+      "kind": "duplicate_key_positions",
+      "target_sample": "S001",
+      "stage": "validation",
+      "description": "Append a copy of an existing key position."
+    },
+    {
+      "injection_id": "INJ-BLOCK-02",
+      "kind": "block_incompatible",
+      "target_scheme": "block4_corrected",
+      "stage": "validation",
+      "block_size": 3,
+      "description": "Set block_size=3 for dimension=8."
+    },
+    {
+      "injection_id": "INJ-WIDTH-03",
+      "kind": "width_out_of_range",
+      "stage": "validation",
+      "fraction_bits": 99,
+      "description": "Set fraction_bits outside the declared enum."
+    },
+    {
+      "injection_id": "INJ-NAN-04",
+      "kind": "nonfinite_feature",
+      "target_sample": "S002",
+      "stage": "rotation",
+      "path": "query_vector[3]",
+      "fault_value": "NaN",
+      "description": "Materialize float('nan') in a query feature."
+    },
+    {
+      "injection_id": "INJ-SCHEME-05",
+      "kind": "undeclared_scheme",
+      "target_scheme": "ghost_rope",
+      "stage": "position",
+      "description": "Reference a scheme absent from config.schemes."
+    }
+  ]
+}

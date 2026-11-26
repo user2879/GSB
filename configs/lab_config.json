@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "seed": 388,
+  "dimension": 8,
+  "sample_count": 6,
+  "key_count": 5,
+  "train_length": 8,
+  "target_length": 20,
+  "point_budget": 240,
+  "sample_quota": 80,
+  "concurrency": 3,
+  "extrapolation_bins": [
+    2,
+    4,
+    8,
+    16
+  ],
+  "schemes": [
+    {
+      "name": "rope_standard",
+      "base_frequency": 10000.0,
+      "angle_scale": 1.0,
+      "block_size": 2,
+      "frequency_correction": 0
+    },
+    {
+      "name": "scaled_ntk",
+      "base_frequency": 50000.0,
+      "angle_scale": 0.75,
+      "block_size": 2,
+      "frequency_correction": 1
+    },
+    {
+      "name": "block4_corrected",
+      "base_frequency": 10000.0,
+      "angle_scale": 1.125,
+      "block_size": 4,
+      "frequency_correction": 2
+    }
+  ],
+  "fixed_point": {
+    "signed_bits": 32,
+    "fraction_bits": 12,
+    "accumulator_bits": 64,
+    "quant_level": "nearest"
+  },
+  "tolerances": {
+    "position": {
+      "abs": 5e-05,
+      "rel": 0.002
+    },
+    "rotation": {
+      "abs": 0.002,
+      "rel": 0.02
+    },
+    "dot": {
+      "abs": 0.05,
+      "rel": 0.08
+    },
+    "normalization": {
+      "abs": 0.01,
+      "rel": 0.05
+    }
+  }
+}

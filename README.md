@@ -19,3 +19,17 @@
 
 验收：
 使用本地样本验证多方案位置编码、定点打分与误差归因，并以编辑序列与注入清单核对增量重算、待办保留和阶段快照一致性。
+
+---
+
+## 交付运行入口（首版新增）
+
+完整设计、环境限制与实测结果见 `docs/DELIVERY.md` 和 `docs/VERIFICATION.md`。
+
+```bash
+source .venv/bin/activate
+bash scripts/verify.sh
+python -m rope_lab gui
+```
+
+重新生成首版本地数据：`python -m rope_lab init --root .`。

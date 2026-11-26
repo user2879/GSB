@@ -1,0 +1,10 @@
+{"command_id": "CMD-01-ADD-SCHEME", "op": "add_scheme", "scheme": {"angle_scale": 0.9, "base_frequency": 32000.0, "block_size": 8, "frequency_correction": 3, "name": "experimental_block8"}}
+{"command_id": "CMD-02-BASE", "name": "rope_standard", "op": "update_scheme", "params": {"base_frequency": 20000.0}}
+{"command_id": "CMD-03-SCALE", "name": "scaled_ntk", "op": "update_scheme", "params": {"angle_scale": 1.25}}
+{"command_id": "CMD-04-TRAIN", "op": "set_train_length", "train_length": 10}
+{"command_id": "CMD-05-TARGET", "op": "set_target_length", "target_length": 24}
+{"command_id": "CMD-06-REPLACE", "op": "replace_sample", "sample": {"generator_seed": 458002, "key_positions": [10, 1, 9, 18, 20], "key_vectors": [[-0.13414, 0.362634, -0.032873, 1.435737, 0.342933, 0.36511, 0.025474, 0.273829], [-0.511438, -0.143978, 0.300316, -0.429772, 0.346399, -0.365604, 0.055375, -0.071574], [0.255544, 0.407542, -0.286656, -0.061372, 0.288884, -0.107909, 0.301823, -0.337552], [-0.153837, -0.074677, 1.027295, 0.844194, 0.145038, -0.80435, -0.222835, -0.589987], [0.728531, -0.211626, 0.026808, 0.483174, 0.517739, -0.059716, -0.063978, 0.585126]], "query_position": 7, "query_vector": [0.315946, 0.002964, -0.126052, 0.175875, 0.515732, 0.136105, -0.266818, 0.040761], "sample_id": "S002", "train_length": 6}}
+{"command_id": "CMD-07-FIXED", "fixed_point": {"accumulator_bits": 64, "fraction_bits": 8, "quant_level": "ties_even", "signed_bits": 16}, "op": "set_fixed_point"}
+{"command_id": "CMD-08-BUDGET", "concurrency": 4, "op": "set_scheduling", "point_budget": 400, "sample_quota": 120}
+{"command_id": "CMD-09-DELETE-SAMPLE", "op": "delete_sample", "sample_id": "S005"}
+{"command_id": "CMD-10-REMOVE-SCHEME", "name": "experimental_block8", "op": "remove_scheme"}
