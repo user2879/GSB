@@ -1,0 +1,205 @@
+{
+  "parameter_version": 2,
+  "scale_exponent": 3,
+  "plugins": {
+    "taint_toleration": {
+      "weight_myriad": 2000
+    },
+    "node_affinity": {
+      "weight_myriad": 2500
+    },
+    "pod_anti_affinity": {
+      "weight_myriad": 2500
+    },
+    "resource_fit": {
+      "weight_myriad": 3000
+    }
+  },
+  "nodes": [
+    {
+      "name": "node-a",
+      "labels": {
+        "zone": "east",
+        "rack": "r1",
+        "pool": "general"
+      },
+      "allocatable": {
+        "cpu": 8,
+        "memory": 16384
+      },
+      "taints": []
+    },
+    {
+      "name": "node-b",
+      "labels": {
+        "zone": "east",
+        "rack": "r2",
+        "pool": "general"
+      },
+      "allocatable": {
+        "cpu": 8,
+        "memory": 8192
+      },
+      "taints": [
+        {
+          "key": "dedicated",
+          "value": "ml",
+          "effect": 0
+        }
+      ]
+    },
+    {
+      "name": "node-c",
+      "labels": {
+        "zone": "west",
+        "rack": "r3",
+        "pool": "gpu"
+      },
+      "allocatable": {
+        "cpu": 4,
+        "memory": 4096
+      },
+      "taints": [
+        {
+          "key": "maintenance",
+          "value": "ops",
+          "effect": 1
+        }
+      ]
+    },
+    {
+      "name": "node-d",
+      "labels": {
+        "zone": "west",
+        "rack": "r4",
+        "pool": "gpu-expanded"
+      },
+      "allocatable": {
+        "cpu": 2,
+        "memory": 2048
+      },
+      "taints": []
+    }
+  ],
+  "pods": [
+    {
+      "id": "pod-0001",
+      "labels": {
+        "app": "web",
+        "workload": "api"
+      },
+      "requests": {
+        "cpu": 2,
+        "memory": 1024
+      },
+      "node_affinity": {
+        "hard": [
+          {
+            "key": "zone",
+            "operator": "In",
+            "values": [
+              "east"
+            ]
+          }
+        ],
+        "soft": [
+          {
+            "key": "zone",
+            "operator": "In",
+            "values": [
+              "east"
+            ],
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "pod-0002",
+      "labels": {
+        "app": "web",
+        "workload": "worker"
+      },
+      "requests": {
+        "cpu": 2,
+        "memory": 2048
+      },
+      "tolerations": [
+        {
+          "key": "dedicated",
+          "operator": "Equal",
+          "value": "ml",
+          "effect": 0
+        }
+      ]
+    },
+    {
+      "id": "pod-0003",
+      "labels": {
+        "app": "cache",
+        "workload": "cache"
+      },
+      "requests": {
+        "cpu": 1,
+        "memory": 512
+      },
+      "pod_anti_affinity": {
+        "soft": [
+          {
+            "label_key": "app",
+            "operator": "In",
+            "values": [
+              "web"
+            ],
+            "topology_key": "rack",
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pod-0004",
+      "labels": {
+        "app": "batch",
+        "workload": "batch"
+      },
+      "requests": {
+        "cpu": 1,
+        "memory": 512
+      },
+      "node_affinity": {
+        "soft": [
+          {
+            "key": "zone",
+            "operator": "In",
+            "values": [
+              "west"
+            ],
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "service": {
+    "host": "127.0.0.1",
+    "port_base": 39100,
+    "timeout_ms": 2500,
+    "groups": [
+      {
+        "name": "group-east",
+        "nodes": [
+          "node-a",
+          "node-b"
+        ]
+      },
+      {
+        "name": "group-west",
+        "nodes": [
+          "node-c",
+          "node-d"
+        ]
+      }
+    ]
+  }
+}

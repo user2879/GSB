@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "affinity-scheduler"
+version = "1.0.0"
+description = "Deterministic Kubernetes affinity scheduling and multi-version ledger"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+affinity-scheduler = "affinity_scheduler.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["affinity_scheduler*"]

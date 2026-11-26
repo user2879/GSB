@@ -1,22 +1,144 @@
-工作区在任务开始前只有空的目录层级，没有任何代码、配置或样本，首版全部内容需随本任务一并落地到 WSL Ubuntu 环境。要为 Kubernetes 亲和性调度交付一套可集成的 Python 包与可重复示例，回答同一批 Pod 调度结论在调度记录跨三代交换版本流转、参数版本反复迭代时能否被唯一复核。业务对象是节点与 Pod 队列：节点含标签键值、可分配整数 CPU 与内存单位、污点列表；Pod 含资源请求、节点亲和硬软约束、Pod 反亲和硬软约束与污点容忍集合。每个候选节点由 127.0.0.1 回环 TCP 上以子进程托管的确定性打分服务按整数定点口径用 NumPy 计算亲和得分并回传，主进程按 Filter 与 Score 两阶段聚合出绑定结论。调度记录在磁盘上共存三种历史格式：v1 为定宽文本行，按固定字段宽度记录 Pod 标识、节点名、整数总分与整数否决码；v2 为 JSON，记录命名插件分项、浮点总分与命名决胜依据；v3 为 JSON，增加参数版本序号、缩放因子口径、逐插件权重贡献与整数误差界。旧记录必须能与新产生的记录同账共存，且迁移不得改变既有绑定结论。
+# affinity-scheduler
 
-任务环境与准备：
-在 WSL Ubuntu 上确认 Python 3.11 可用，执行 python3 -m venv .venv 并 source .venv/bin/activate 创建隔离环境。
-在虚拟环境中安装依赖：pip install numpy==1.26.4，其余仅使用标准库（sqlite3、socket、subprocess、tkinter 可选）。
-在空工作区中自行建立 config/、logs/、data/ 目录，本地样本、定宽记录文件与 SQLite 账本均由任务运行过程生成，不依赖外部数据与附件。
-确认回环端口可用（默认取高位端口段），运行前不需要任何网络访问或真实集群环境。
+面向 Kubernetes 亲和性调度的确定性 Python 包与本地可重复示例。它在单机上完成节点/Pod 声明校验、Filter 与 Score 两阶段调度、三代调度记录归一迁移、参数版本失效传播、SQLite 多版本账本、真实回环 TCP 子进程打分和独立核对。
 
-业务要求：
-1. 实现节点、Pod 队列、插件权重与缩放因子声明的本地 JSON 加载及强校验：校验节点名与 Pod 标识唯一、可分配 CPU 与内存为正整数、污点 effect 属于受支持整数集合、权重万分比之和恰为一万、缩放因子为 10 的整数幂且落在 0 至 3，任一不合法须以 E_SPEC 报告并指明首个非法字段路径与来源行号。
-2. 实现调度记录 v1 定宽行、v2 JSON、v3 JSON 三版本格式的编解码与跨版本归一：加载时检测格式版本，未知版本、定宽字段宽度不足、必需字段缺失、总分越界或否决码不在受支持集合须以 E_FORMAT 拒绝；归一结果必须携带来源格式版本、被补齐字段集合与补齐依据，并对旧版本缺省的插件分项按显式默认规则补齐后回溯默认值来源。
-3. 实现 Filter 阶段硬约束判定与 Score 阶段四插件的整数定点打分：按污点容忍、节点亲和硬约束、Pod 反亲和硬约束、可分配余量依次过滤并输出每个被过滤节点的拒绝原因与判定顺序；四个插件各输出 0 至 100 的整数分，加权和以整数乘除完成并显式声明截断方向与溢出饱和规则，分别输出原始分、加权贡献与总分。
-4. 实现跨版本记录迁移与迁移前后结论的逐字节一致性校验：把 v1 与 v2 历史记录在内存中升级为当前版本并按版本号单调递增整体重写，逐条比较迁移前后 Pod 绑定节点、插件分项与否决码；迁移须按记录批次原子提交到本地 SQLite 并更新检查点，强制终止后只能依据检查点续做，已升级记录须保留为只读备份；不一致须以 E_MIGRATE 定位到首个不一致记录标识与字段。
-5. 实现按参数版本组织的候选节点打分回执与确定性子进程编排：以子进程按声明端口为每个候选节点组启动打分服务，主进程通过真实套接字下发含 Pod 标识、节点分项参数与缩放因子的请求行并接收含总分、分项贡献、参数版本与毫秒耗时的回执；握手须有真实套接字超时，端口占用、超时与回执字段缺失分别以 E_PORT、E_TIMEOUT、E_REPLY 报告；同一 Pod 在任意节点枚举顺序下绑定结论必须逐字节一致。
-6. 实现缩放因子或插件权重变更后的失效传播与仅失效子集重算：参数版本号单调递增后须沿节点、Pod、插件权重与回执的引用关系推导受影响 Pod 集合与受影响节点集合，按 Pod 标识序稳定输出失效集合与每步传播依据；仅对失效集合重新打分，未受影响 Pod 的绑定结论、分项贡献与误差界必须逐字节保持不变，并提供校验命令比较增量路径与从零全量重算路径。
-7. 实现多版本调度账本的版本识别、会话快照整体替换与强制终止后的恢复重放校验：账本持久化记录格式版本集合、参数版本、缩放因子口径、逐 Pod 结论摘要与进度游标并携带内容摘要；重新打开快照时版本集合或内容摘要与当前磁盘状态不一致须整体替换账本条目而非增量合并，并稳定列出新增、删除与被替代记录；进程被强制终止后只能依据已提交记录恢复，未提交 Pod 须标记为未知并要求重跑，不得声称能生成强制终止时的退出报告。
-8. 提供结构化异常注入与独立核对工具：支持以命令行参数分别注入调度记录文件损坏、v1 定宽行宽度与声明不符、账本内容摘要不符三类异常，分别以 E_FORMAT、E_WIDTH、E_SNAPSHOT 报告并写入含单调时钟毫秒的结构化日志；独立核对命令只读账本与原始声明，自行完成归一、打分与失效推导，与主流程结论逐项比较，差异须以 E_VERIFY 定位到首个不一致的 Pod 标识、节点名与字段。
+本仓库不依赖容器、真实集群或外部样本。所有节点、Pod、历史记录、SQLite 账本和日志都在本地生成。
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+## 结论
 
-验收：
-用本地样本验证三版本记录归一迁移前后绑定结论逐字节一致、增量与全量重算一致及异常业务码，附运行结果。
+同一批 Pod 的调度结论可以被唯一复核：记录归一时保留格式来源与补齐依据，绑定结论使用排序固定的规范 JSON 字节和 SHA-256；迁移前后逐条比较该字节，参数变更后只复用未失效回执，并由只读账本 + 从零全量重算独立验证。最终验收中 3 条 v1/v2/v3 记录迁移后的结论哈希全部一致，增量与全量逐 Pod 一致，未受影响的 `pod-0002` 结论与回执逐字节不变。
+
+## 交付内容
+
+- `affinity_scheduler/`：可集成 Python 包与 `affinity-scheduler` CLI。
+- `config/`、`data/`、`logs/`：任务运行生成的样本、账本、状态与结构化日志。
+- `tests/`：31 项标准库 `unittest`，覆盖业务错误码、迁移中断、确定性、增量重算与账本恢复。
+- `examples/run_acceptance.py`：从空工作目录自动完成全量验收。
+- `docs/DESIGN.md`：字段口径、整数公式、迁移/失效/账本状态机。
+- `docs/ACCEPTANCE.md`：本机实际运行结果。
+
+## 环境与安装
+
+本机为 WSL2 Ubuntu，确认解释器为 Python 3.11（`3.11.0rc1`）。隔离环境位于 `.venv/`，NumPy 固定为 `1.26.4`。
+
+```bash
+python3 --version
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install numpy==1.26.4
+python -m pip install wheel==0.41.3
+python -m pip install -e . --no-build-isolation
+```
+
+当前镜像的系统 Python 缺少 `ensurepip`，因此首次建 venv 时使用了 `--without-pip`，再把同版本解释器已有的 pip 注入 `.venv`；之后仍用 `.venv` 内 pip 安装 NumPy。`wheel` 仅用于旧版 pip 的 editable 构建，不是运行时依赖。
+
+验证安装：
+
+```bash
+source .venv/bin/activate
+affinity-scheduler --help
+python -c 'import affinity_scheduler, numpy; print(affinity_scheduler.__version__, numpy.__version__)'
+```
+
+## 快速运行
+
+从空目标目录执行一键验收：
+
+```bash
+source .venv/bin/activate
+python examples/run_acceptance.py \
+  --workdir . \
+  --summary-out artifacts/acceptance-result.json
+```
+
+目标目录中的 `config/`、`logs/`、`data/` 必须不存在或为空；脚本不会覆盖已有运行产物。它会选择连续可用的高位回环端口，不访问网络。
+
+分步命令：
+
+```bash
+affinity-scheduler generate-sample --root .
+affinity-scheduler validate-spec --spec config/spec.json
+affinity-scheduler normalize-records --records data/records.jsonl --spec config/spec.json
+affinity-scheduler migrate --records data/records.jsonl --spec config/spec.json \
+  --db data/ledger.sqlite3 --batch-size 1
+
+# 先以参数版本 1 全量建立基线
+affinity-scheduler schedule --spec config/spec.json --records data/records.jsonl \
+  --state data/state.json --ledger data/ledger.sqlite3
+
+# 在覆盖 state 前先比较“增量子集”与“从零全量”
+affinity-scheduler verify-incremental --spec config/spec-v2.json --state data/state.json
+
+# 参数版本 2 只重算失效子集
+affinity-scheduler schedule --spec config/spec-v2.json --records data/records.jsonl \
+  --state data/state.json --ledger data/ledger.sqlite3
+
+# 只读账本 + 从零独立重算
+affinity-scheduler verify --ledger data/ledger.sqlite3 \
+  --spec config/spec-v2.json --records data/records.jsonl
+```
+
+## 样本语义
+
+样本含 4 个节点和 4 个 Pod：
+
+- `node-a`：无污点，`zone=east`，资源充足。
+- `node-b`：`dedicated=ml:NoSchedule`，由 `pod-0002` 容忍。
+- `node-c`：`maintenance=ops:PreferNoSchedule`，参与软性打分。
+- `node-d`：小容量西区节点。
+- `pod-0001`：硬/软节点亲和到 `zone=east`。
+- `pod-0002`：带污点容忍，不依赖节点/Pod 亲和插件。
+- `pod-0003`：软 Pod 反亲和到 `app=web`，拓扑键 `rack`。
+- `pod-0004`：软节点亲和到 `zone=west`。
+
+参数版本 2 把 `node_affinity` 权重从 `3500` 调到 `2500`、`pod_anti_affinity` 从 `1500` 调到 `2500`，权重和仍为 `10000`。因此只有回执中相应插件分项非零的 `pod-0001/0003/0004` 失效；`pod-0002` 原样复用。
+
+## 记录版本
+
+磁盘记录为混合 JSONL/定宽行文件。格式版本按每行检测：
+
+- v1：`v1` + 定宽字段 `pod_id[18] node_name[18] total_score[6] veto_code[4]`，总计 48 字符。
+- v2：JSON，含浮点插件分项、浮点总分、否决码和命名决胜依据。
+- v3：JSON，增加参数版本、`scale_exponent/scale_factor`、逐插件定点贡献和整数误差界。
+
+所有版本归一为 v3 内部表示，并携带 `source_format_version`、`filled_fields` 与逐字段 `basis`。v1 缺省的插件分项使用显式零值，v2 浮点分项按 half-up 取整；补齐来源会进入记录与迁移输出。
+
+## 错误码
+
+| 代码 | 触发点 |
+|---|---|
+| `E_SPEC` | 声明、唯一性、正整数、污点、权重和、缩放因子或版本单调性非法 |
+| `E_FORMAT` | 未知版本、必需字段缺失、JSON/行格式损坏、总分越界、否决码非法 |
+| `E_WIDTH` | v1 定宽行实际宽度与声明宽度不一致 |
+| `E_PORT` | 回环端口被占用或子进程无法绑定 |
+| `E_TIMEOUT` | 握手、连接或回执读取发生真实套接字超时 |
+| `E_REPLY` | 回执字段缺失、身份/参数版本不一致或插件分项不完整 |
+| `E_MIGRATE` | 迁移前后结论不一致，或检查点/备份不可续做 |
+| `E_SNAPSHOT` | 账本版本集合/内容摘要不符，或摘要异常注入 |
+| `E_VERIFY` | 独立重算与账本差异，或其他稳定性对照失败 |
+
+CLI 业务错误以 JSON 输出到 stdout、退出码为 `2`，并写入含 `monotonic_ms` 的 JSONL 日志。
+
+## 测试
+
+```bash
+source .venv/bin/activate
+python -m unittest discover -s tests -v
+```
+
+本机实际结果：`Ran 31 tests ... OK`。完整验收记录见 `docs/ACCEPTANCE.md`。
+
+## 关键口径
+
+- Filter 严格按 `taint_toleration → node_affinity → pod_anti_affinity → resource_fit` 执行，并在每个节点保存逐步轨迹。
+- 四个插件原始分为 `0..100` 整数；贡献为 `floor(score × weight_myriad × 10^e / 10000)`，总分向下截断，操作数受 `int64` 约束并在溢出时饱和。
+- 同一 Pod 的候选节点始终按节点名排序后打分；决胜顺序为总分、四插件原始分、节点名。
+- 稳定结论字节不包含回执毫秒耗时，因此节点枚举顺序和网络调度时序不会改变绑定结论。
+- SQLite 迁移按批原子提交并更新检查点；原记录备份权限为 `0444`。
+- 强制终止后只信已提交账本行；未知 Pod 必须重跑，恢复输出明确 `exit_report_available: false`。
+
+## 边界说明
+
+- 资源余量按当前 Pod 请求与节点可分配量计算，不把队列中其他 Pod 的累计请求从节点容量中扣减；Pod 反亲和会使用本次调度中已确定的绑定。
+- v1 没有插件分项，归一保留原总分并将缺失分项标为零，同时保留完整补齐依据；不臆造历史插件分项。
+- 参数版本号必须单调不减。仅版本号变化而有效权重、缩放因子、节点/Pod 声明均未变时，不强制重打分，只记录 metadata 传播步骤。
