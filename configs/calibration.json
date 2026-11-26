@@ -1,0 +1,54 @@
+{
+  "sample_rate": 16000,
+  "frame_length": 200,
+  "frame_hop": 100,
+  "window_length": 800,
+  "window_hop": 400,
+  "pitch_min_lag": 32,
+  "pitch_max_lag": 240,
+  "pitch_decimation": 4,
+  "cooccur_window": 2,
+  "semantic_weight": 0.35,
+  "acoustic_weight": 0.65,
+  "calibration_gain": 0.25,
+  "half_life_rounds": 4,
+  "decay_num": 7,
+  "decay_den": 8,
+  "emotion_thresholds": {
+    "negative": -0.6,
+    "neutral": 0.0,
+    "positive": 0.6
+  },
+  "emotion_polarity": {
+    "angry": -1,
+    "sad": -1,
+    "calm": 0,
+    "happy": 1
+  },
+  "quantization": {
+    "coarse": {
+      "frac_bits": 8,
+      "total_bits": 32
+    },
+    "fine": {
+      "frac_bits": 10,
+      "total_bits": 33
+    },
+    "reference": {
+      "frac_bits": 14,
+      "total_bits": 40
+    }
+  },
+  "tolerance": {
+    "window": 12,
+    "word": 24,
+    "calibration": 48,
+    "segment": 96
+  },
+  "scheduler": {
+    "max_workers": 3,
+    "batch_budget": 9,
+    "segment_quota": 6,
+    "test_step_delay": 0.0
+  }
+}
