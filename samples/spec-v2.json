@@ -1,0 +1,54 @@
+{
+  "format": "gateway-limit-spec/v1",
+  "session_id": "demo-session-001",
+  "version": 2,
+  "version_effective_from_seq": 11,
+  "scale_exponent": 3,
+  "decision": {
+    "window_ms": 2,
+    "event_count_threshold": 8,
+    "mean_gap_threshold_ms": 4,
+    "work_tolerance_bp": 200,
+    "dominant_threshold_bp": 5000,
+    "batch_size": 4,
+    "tcp_timeout_ms": 2000,
+    "startup_timeout_ms": 5000,
+    "stable_tiebreak": "level_then_seq"
+  },
+  "buckets": [
+    {
+      "bucket_id": "entry",
+      "level": 1,
+      "name": "ingress",
+      "host": "127.0.0.1",
+      "port": 24101,
+      "rate_per_sec": 1200,
+      "burst_capacity": 5,
+      "queue_limit": 2,
+      "packet_len": 1
+    },
+    {
+      "bucket_id": "relay",
+      "level": 2,
+      "name": "relay",
+      "host": "127.0.0.1",
+      "port": 24102,
+      "rate_per_sec": 400,
+      "burst_capacity": 2,
+      "queue_limit": 1,
+      "packet_len": 1
+    },
+    {
+      "bucket_id": "exit",
+      "level": 3,
+      "name": "egress",
+      "host": "127.0.0.1",
+      "port": 24103,
+      "rate_per_sec": 500,
+      "burst_capacity": 3,
+      "queue_limit": 1,
+      "packet_len": 1
+    }
+  ]
+}
+
