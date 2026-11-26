@@ -1,0 +1,259 @@
+{
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 49101,
+      "rate": 10,
+      "burst": 6,
+      "bucket_key": 1001,
+      "seed": 11,
+      "param_version": 1
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 49102,
+      "rate": 8,
+      "burst": 5,
+      "bucket_key": 1002,
+      "seed": 23,
+      "param_version": 1
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 49103,
+      "rate": 12,
+      "burst": 7,
+      "bucket_key": 1003,
+      "seed": 37,
+      "param_version": 1
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "sh-0",
+      "upstream": [],
+      "sample_rows": 200,
+      "weight": 2,
+      "priority": 0
+    },
+    {
+      "shard_id": "sh-1",
+      "upstream": [
+        "sh-0"
+      ],
+      "sample_rows": 160,
+      "weight": 3,
+      "priority": 1
+    },
+    {
+      "shard_id": "sh-2",
+      "upstream": [
+        "sh-0"
+      ],
+      "sample_rows": 120,
+      "weight": 1,
+      "priority": 2
+    },
+    {
+      "shard_id": "sh-3",
+      "upstream": [
+        "sh-1",
+        "sh-2"
+      ],
+      "sample_rows": 240,
+      "weight": 4,
+      "priority": 1
+    },
+    {
+      "shard_id": "sh-4",
+      "upstream": [
+        "sh-3"
+      ],
+      "sample_rows": 90,
+      "weight": 2,
+      "priority": 3
+    }
+  ],
+  "revisions": [
+    {
+      "version": 1,
+      "parent": null,
+      "global_rate": null,
+      "global_burst": null,
+      "node_rates": {},
+      "node_bursts": {},
+      "shard_deps": {},
+      "scale": 100
+    },
+    {
+      "version": 2,
+      "parent": 1,
+      "global_rate": null,
+      "global_burst": null,
+      "node_rates": {
+        "node-a": 16
+      },
+      "node_bursts": {
+        "node-a": 9
+      },
+      "shard_deps": {},
+      "scale": null
+    },
+    {
+      "version": 3,
+      "parent": 2,
+      "global_rate": null,
+      "global_burst": null,
+      "node_rates": {},
+      "node_bursts": {},
+      "shard_deps": {
+        "sh-2": [
+          "sh-0",
+          "sh-1"
+        ]
+      },
+      "scale": 1000
+    },
+    {
+      "version": 4,
+      "parent": 3,
+      "global_rate": 20,
+      "global_burst": 10,
+      "node_rates": {},
+      "node_bursts": {},
+      "shard_deps": {},
+      "scale": null
+    }
+  ],
+  "events": [
+    {
+      "seq": 0,
+      "kind": "dispatch",
+      "ts_ms": 100,
+      "shard_id": "sh-0",
+      "node_id": "node-a",
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 1,
+      "kind": "dispatch",
+      "ts_ms": 300,
+      "shard_id": "sh-1",
+      "node_id": "node-b",
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 2,
+      "kind": "dispatch",
+      "ts_ms": 600,
+      "shard_id": "sh-2",
+      "node_id": "node-c",
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 3,
+      "kind": "cancel",
+      "ts_ms": 900,
+      "shard_id": "sh-0",
+      "node_id": null,
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 4,
+      "kind": "revise",
+      "ts_ms": 1000,
+      "shard_id": null,
+      "node_id": null,
+      "version": 2,
+      "expected_version": null
+    },
+    {
+      "seq": 5,
+      "kind": "dispatch",
+      "ts_ms": 1250,
+      "shard_id": "sh-3",
+      "node_id": "node-a",
+      "version": 2,
+      "expected_version": null
+    },
+    {
+      "seq": 6,
+      "kind": "renew",
+      "ts_ms": 1300,
+      "shard_id": "sh-3",
+      "node_id": null,
+      "version": null,
+      "expected_version": 1
+    },
+    {
+      "seq": 7,
+      "kind": "renew",
+      "ts_ms": 1350,
+      "shard_id": "sh-3",
+      "node_id": null,
+      "version": null,
+      "expected_version": 99
+    },
+    {
+      "seq": 8,
+      "kind": "exhausted",
+      "ts_ms": 1500,
+      "shard_id": "sh-2",
+      "node_id": null,
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 9,
+      "kind": "revise",
+      "ts_ms": 2000,
+      "shard_id": null,
+      "node_id": null,
+      "version": 3,
+      "expected_version": null
+    },
+    {
+      "seq": 10,
+      "kind": "cancel",
+      "ts_ms": 2000,
+      "shard_id": "sh-1",
+      "node_id": null,
+      "version": null,
+      "expected_version": null
+    },
+    {
+      "seq": 11,
+      "kind": "dispatch",
+      "ts_ms": 2300,
+      "shard_id": "sh-4",
+      "node_id": "node-b",
+      "version": 3,
+      "expected_version": null
+    },
+    {
+      "seq": 12,
+      "kind": "revise",
+      "ts_ms": 3000,
+      "shard_id": null,
+      "node_id": null,
+      "version": 4,
+      "expected_version": null
+    },
+    {
+      "seq": 13,
+      "kind": "cancel",
+      "ts_ms": 3200,
+      "shard_id": "sh-4",
+      "node_id": null,
+      "version": null,
+      "expected_version": null
+    }
+  ]
+}
