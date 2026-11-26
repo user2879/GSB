@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantledger"
+version = "0.1.0"
+description = "Deterministic local fixed-point inference workers with leased, versioned receipts"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4"]
+
+[project.scripts]
+quantledger = "quantledger.cli:main"
+
+[tool.setuptools]
+packages = ["quantledger"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

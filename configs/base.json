@@ -1,0 +1,77 @@
+{
+  "batches": [
+    {
+      "batch_id": "b1",
+      "batch_size": 3,
+      "sample_seed": 2101
+    },
+    {
+      "batch_id": "b2",
+      "batch_size": 2,
+      "sample_seed": 2102
+    },
+    {
+      "batch_id": "b3",
+      "batch_size": 4,
+      "sample_seed": 2103
+    }
+  ],
+  "fixture": "quantledger-local-v1",
+  "operator": {
+    "frac_bits": 8,
+    "layers": [
+      {
+        "cols": 4,
+        "group_size": 2,
+        "name": "l1",
+        "rows": 3,
+        "weight_seed": 1101
+      },
+      {
+        "cols": 3,
+        "group_size": 3,
+        "name": "l2",
+        "rows": 2,
+        "weight_seed": 1102
+      },
+      {
+        "cols": 2,
+        "group_size": 2,
+        "name": "l3",
+        "rows": 2,
+        "weight_seed": 1103
+      }
+    ],
+    "quant_level": 8,
+    "revision": 10
+  },
+  "workers": [
+    {
+      "concurrency_quota": 2,
+      "frac_bits": 8,
+      "host": "127.0.0.1",
+      "lease_limit": 2,
+      "port": 19101,
+      "quant_level": 8,
+      "worker_id": "w1"
+    },
+    {
+      "concurrency_quota": 2,
+      "frac_bits": 8,
+      "host": "127.0.0.1",
+      "lease_limit": 3,
+      "port": 19102,
+      "quant_level": 8,
+      "worker_id": "w2"
+    },
+    {
+      "concurrency_quota": 1,
+      "frac_bits": 8,
+      "host": "127.0.0.1",
+      "lease_limit": 1,
+      "port": 19103,
+      "quant_level": 8,
+      "worker_id": "w3"
+    }
+  ]
+}

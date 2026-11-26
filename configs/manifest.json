@@ -1,0 +1,29 @@
+{
+  "base_batches": [
+    "b1",
+    "b2",
+    "b3"
+  ],
+  "command_count": 9,
+  "fixture": "quantledger-local-v1",
+  "instructions": [
+    "python -m quantledger.cli validate --config configs/base.json --commands configs/commands.json",
+    "python -m quantledger.cli verify --config configs/base.json --commands configs/commands.json --runtime runtime/verify",
+    "python -m quantledger.cli diagnose --config configs/base.json --injections configs/injections.json"
+  ],
+  "layers": [
+    "l1",
+    "l2",
+    "l3"
+  ],
+  "ports": [
+    19101,
+    19102,
+    19103
+  ],
+  "workers": [
+    "w1",
+    "w2",
+    "w3"
+  ]
+}

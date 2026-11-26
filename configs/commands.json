@@ -1,0 +1,65 @@
+{
+  "commands": [
+    {
+      "batch": {
+        "batch_id": "b4",
+        "batch_size": 3,
+        "sample_seed": 2104
+      },
+      "seq": 1,
+      "type": "append_batch"
+    },
+    {
+      "layer": "l1",
+      "revision": 11,
+      "seq": 2,
+      "type": "replace_weight",
+      "weight_seed": 3101
+    },
+    {
+      "revision": 12,
+      "seq": 3,
+      "type": "set_quant_level",
+      "value": 16
+    },
+    {
+      "revision": 13,
+      "seq": 4,
+      "type": "set_frac_bits",
+      "value": 10
+    },
+    {
+      "layer": "l2",
+      "revision": 14,
+      "seq": 5,
+      "type": "replace_weight",
+      "weight_seed": 3102
+    },
+    {
+      "seq": 6,
+      "type": "set_lease_limit",
+      "value": 2,
+      "worker_id": "w2"
+    },
+    {
+      "seq": 7,
+      "type": "rollback_revision",
+      "value": 1
+    },
+    {
+      "seq": 8,
+      "type": "set_lease_limit",
+      "value": 3,
+      "worker_id": "w1"
+    },
+    {
+      "batch": {
+        "batch_id": "b5",
+        "batch_size": 2,
+        "sample_seed": 2105
+      },
+      "seq": 9,
+      "type": "append_batch"
+    }
+  ]
+}
