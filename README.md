@@ -1,3 +1,23 @@
+# ShardMesh 实现交付
+
+可集成 Python 包位于 `src/shardmesh/`，测试位于 `tests/`，完整设计、错误码、需求映射和实际验证结果见 `docs/DELIVERY.md`。
+
+快速验证：
+
+```bash
+./scripts/run_demo.sh
+# 或
+python3 -m venv .venv && . .venv/bin/activate
+pip install numpy && pip install -e .
+python -m unittest discover -s tests
+shardmesh verify --dynamic-ports
+shardmesh chaos
+```
+
+当前环境若 `python3 -m venv` 缺少 `ensurepip`，可使用 `virtualenv -p python3 .venv`；Tkinter 运行库缺失时 GUI 命令返回结构化 `E_GUI`，不影响核心验收。
+
+---
+
 工程目录刚划拨下来时只有一个空的根文件夹，没有代码、配置、本地样本或账本，首版要在 WSL Ubuntu 上独立建立为可集成的 Python 包与可重复演示。业务对象是中间件侧的多节点分片下发：每个节点作为独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议接收携带容量版本与批次样本的分片请求，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用容量版本与单调时钟毫秒耗时。用户在本地 JSON 中声明节点（节点标识、回环端口、整数并发配额、整数每节点租约上限、整数随机种子、容量版本号）与分片清单（分片标识、上游依赖引用、整数样本行数、整数资源单位需求、整数优先级），并声明全局资源单位预算、整数缩放因子与一条按到达序号排列的下发与参数变更事件流。真正难的地方在于：配额水位以定点整数计量，量化截断与依赖失效同时影响放行判定与聚合结论，单次参数变更既要沿依赖图精确界定失效子集，又要在不可区分的预算边界上给出唯一裁决，还要在子进程被强制终止后仅凭持久化账本复现同一结论。
 
 任务环境与准备：

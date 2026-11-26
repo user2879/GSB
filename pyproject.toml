@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shardmesh"
+version = "0.1.0"
+description = "Deterministic multi-node shard delivery, quota, lease and ledger replay demo"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.scripts]
+shardmesh = "shardmesh.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
