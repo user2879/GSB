@@ -1,0 +1,13 @@
+{"op": "set_quantization", "frac_digits": 4, "level": "fine"}
+{"op": "update_weights", "role_weights_permille": {"host": 970}}
+{"op": "set_dedup_threshold", "value": 600}
+{"op": "replace_event", "event": {"event_id": "E006", "event_type": "meeting", "tokens": ["maya", "chen", "meets", "zhou", "lin", "at", "meridian", "university", "in", "london"], "trigger_span": [2, 3], "arguments": [{"arg_id": "E006-A1", "role": "guest", "start": 0, "end": 2, "confidence_permille": 650}, {"arg_id": "E006-A2", "role": "guest", "start": 3, "end": 5, "confidence_permille": 640}, {"arg_id": "E006-A3", "role": "place", "start": 9, "end": 10, "confidence_permille": 760}], "relations": []}}
+{"op": "add_events", "events": [{"event_id": "E008", "event_type": "meeting", "tokens": ["consortium", "meets", "at", "museum", "in", "beijing", "q3"], "trigger_span": [1, 2], "arguments": [{"arg_id": "E008-A1", "role": "host", "start": 0, "end": 1, "confidence_permille": 830}, {"arg_id": "E008-A2", "role": "place", "start": 3, "end": 4, "confidence_permille": 770}, {"arg_id": "E008-A3", "role": "time", "start": 5, "end": 6, "confidence_permille": 720}], "relations": []}]}
+{"op": "add_revision", "revision": {"revision_id": "rev-draft-delete", "parent_revision": "rev-3", "version": 4, "note": "temporary draft used to verify revision deletion", "event_types": {"acquisition": {"trigger_terms": ["acquires", "completes acquisition", "acquisition"], "roles": ["buyer", "target", "price", "time", "place", "advisor"], "required_roles": ["buyer", "target"], "mutex_groups": [["buyer", "advisor"]]}, "funding": {"trigger_terms": ["investment", "funding", "leads investment"], "roles": ["investor", "lead_investor", "recipient", "amount", "time", "place", "topic"], "required_roles": ["investor", "recipient"], "mutex_groups": [["investor", "lead_investor"]]}, "meeting": {"trigger_terms": ["hosts", "meets", "meeting"], "roles": ["host", "guest", "place", "time", "topic"], "required_roles": ["host"], "mutex_groups": [["host", "guest"]]}, "award": {"trigger_terms": ["honors", "prize ceremony", "award"], "roles": ["winner", "nominee", "presenter", "prize", "place", "time"], "required_roles": ["winner"], "mutex_groups": [["winner", "nominee"]]}}}, "activate": false}
+{"op": "delete_revision", "revision_id": "rev-draft-delete"}
+{"op": "update_role_rules", "revision_id": "rev-4", "parent_revision_id": "rev-3", "version": 4, "event_type": "meeting", "required_roles": [], "mutex_groups": []}
+{"op": "rollback_revision", "revision_id": "rev-2"}
+{"op": "rollback_revision", "revision_id": "rev-4"}
+{"op": "delete_event", "event_id": "E004"}
+{"op": "set_quantization", "frac_digits": 3, "level": "coarse"}
+{"op": "set_budget", "max_workers": 3}

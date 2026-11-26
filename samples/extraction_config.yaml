@@ -1,0 +1,48 @@
+# Deterministic extraction configuration; indentation YAML subset.
+active_revision_id: "rev-3"
+random_seed: 20261127
+quantization:
+  frac_digits: 3
+  level: standard
+  rounding: half_up
+  level_multipliers:
+    fine: 1
+    standard: 5
+    coarse: 25
+extraction:
+  window_tokens: 6
+  fragment_min_tokens: 1
+  fragment_max_tokens: 4
+  ideal_fragment_tokens: 2
+  raw_weight_permille: 500
+  role_weight_permille: 300
+  distance_weight_permille: 100
+  length_weight_permille: 100
+role_weights_permille:
+  buyer: 930
+  target: 900
+  investor: 920
+  lead_investor: 910
+  recipient: 890
+  host: 940
+  guest: 820
+  winner: 880
+  nominee: 800
+  presenter: 760
+  place: 700
+  time: 700
+  amount: 860
+  topic: 720
+  price: 850
+  advisor: 680
+decision:
+  accept_threshold_permille: 600
+merge:
+  dedup_threshold_permille: 650
+budget:
+  max_workers: 4
+  global_arg_score_points: 200
+  per_event_arg_quota: 30
+  max_trigger_matches_per_batch: 20
+snapshot_dir: "artifacts/snapshots"
+ledger_path: "artifacts/ledger.json"

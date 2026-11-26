@@ -1,0 +1,45 @@
+{
+  "injections": [
+    {
+      "injection_id": "INJ-OFFSET-001",
+      "event_id": "E001",
+      "stage": "validation",
+      "fault_type": "offset_out_of_bounds",
+      "target_arg_id": "E001-A3",
+      "business_code": "E_SCHEMA_INVALID"
+    },
+    {
+      "injection_id": "INJ-CONF-002",
+      "event_id": "E003",
+      "stage": "argument",
+      "fault_type": "bad_confidence",
+      "target_arg_id": "E003-A2",
+      "business_code": "E_SCHEMA_INVALID"
+    },
+    {
+      "injection_id": "INJ-REL-003",
+      "event_id": "E005",
+      "stage": "reference",
+      "fault_type": "missing_relation_arg",
+      "target_relation_id": "R004",
+      "business_code": "E_SCHEMA_INVALID"
+    },
+    {
+      "injection_id": "INJ-ROLE-004",
+      "event_id": "E007",
+      "stage": "adjudication",
+      "fault_type": "unknown_role",
+      "target_arg_id": "E007-A1",
+      "role": "injected_ghost_role",
+      "business_code": "E_SCHEMA_INVALID"
+    },
+    {
+      "injection_id": "INJ-CHAIN-005",
+      "revision_id": "rev-3",
+      "stage": "schema",
+      "fault_type": "broken_revision_chain",
+      "missing_parent": "rev-missing-injected",
+      "business_code": "E_SCHEMA_INVALID"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arg-review-ledger"
+version = "1.0.0"
+description = "Deterministic event-argument review, incremental fingerprint ledger, budgets and staged snapshots"
+requires-python = ">=3.11"
+dependencies = ["numpy", "pytest"]
+
+[project.scripts]
+arg-review = "arg_review.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

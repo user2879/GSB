@@ -20,3 +20,41 @@
 
 验收：
 用本地样本核对触发匹配、论元裁决与增量复用，确认编辑后结果与全量运行逐字段一致。
+
+---
+
+## 交付实现入口
+
+本目录已包含可运行实现，详细设计见 `docs/TECHNICAL_NOTES.md`，实际验证结果见
+`docs/VERIFICATION.md`。
+
+```bash
+# 当前环境因系统缺少 ensurepip，使用 virtualenv 创建等价 .venv
+virtualenv -p python3.11 .venv
+source .venv/bin/activate
+pip install numpy pytest
+pip install -e .
+
+bash scripts/run_acceptance.sh
+```
+
+常用分项命令：
+
+```bash
+python scripts/generate_samples.py
+python scripts/check_loopback.py
+pytest -q
+arg-review run --samples samples --state-dir artifacts
+arg-review verify-edits
+arg-review diagnose
+```
+
+核心目录：
+
+- `src/arg_review/`：加载校验、触发、定点量化、裁决、引用合并、账本、调度、快照和 CLI。
+- `samples/`：固定种子 `20261127` 生成的 JSONL/JSON/YAML 样本与编辑/注入流。
+- `tests/`：25 个 pytest 用例。
+- `artifacts/ledger.json`：内容指纹复用账本。
+- `artifacts/edit_equivalence_report.json`：13 步增量/全量逐字段等价报告。
+- `artifacts/diagnostic_report.json`：业务码、阶段故障码、预算、复用和注入命中报告。
+- `artifacts/snapshots/current`：整体替换后的当前阶段快照。

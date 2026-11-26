@@ -1,0 +1,314 @@
+{
+  "active_revision_id": "rev-3",
+  "revisions": [
+    {
+      "revision_id": "rev-1",
+      "parent_revision": null,
+      "version": 1,
+      "note": "initial deterministic synthesis schema",
+      "event_types": {
+        "acquisition": {
+          "trigger_terms": [
+            "acquires",
+            "completes acquisition",
+            "acquisition"
+          ],
+          "roles": [
+            "buyer",
+            "target",
+            "price",
+            "time",
+            "place",
+            "advisor"
+          ],
+          "required_roles": [
+            "buyer",
+            "target"
+          ],
+          "mutex_groups": [
+            [
+              "buyer",
+              "advisor"
+            ]
+          ]
+        },
+        "funding": {
+          "trigger_terms": [
+            "investment",
+            "funding",
+            "leads investment"
+          ],
+          "roles": [
+            "investor",
+            "lead_investor",
+            "recipient",
+            "amount",
+            "time",
+            "place",
+            "topic"
+          ],
+          "required_roles": [
+            "investor",
+            "recipient"
+          ],
+          "mutex_groups": [
+            [
+              "investor",
+              "lead_investor"
+            ]
+          ]
+        },
+        "meeting": {
+          "trigger_terms": [
+            "hosts",
+            "meets",
+            "meeting"
+          ],
+          "roles": [
+            "host",
+            "guest",
+            "place",
+            "time",
+            "topic"
+          ],
+          "required_roles": [
+            "host"
+          ],
+          "mutex_groups": []
+        },
+        "award": {
+          "trigger_terms": [
+            "honors",
+            "prize ceremony",
+            "award"
+          ],
+          "roles": [
+            "winner",
+            "nominee",
+            "presenter",
+            "prize",
+            "place",
+            "time"
+          ],
+          "required_roles": [
+            "winner"
+          ],
+          "mutex_groups": [
+            [
+              "winner",
+              "nominee"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "revision_id": "rev-2",
+      "parent_revision": "rev-1",
+      "version": 2,
+      "note": "add shanghai meeting trigger",
+      "event_types": {
+        "acquisition": {
+          "trigger_terms": [
+            "acquires",
+            "completes acquisition",
+            "acquisition"
+          ],
+          "roles": [
+            "buyer",
+            "target",
+            "price",
+            "time",
+            "place",
+            "advisor"
+          ],
+          "required_roles": [
+            "buyer",
+            "target"
+          ],
+          "mutex_groups": [
+            [
+              "buyer",
+              "advisor"
+            ]
+          ]
+        },
+        "funding": {
+          "trigger_terms": [
+            "investment",
+            "funding",
+            "leads investment"
+          ],
+          "roles": [
+            "investor",
+            "lead_investor",
+            "recipient",
+            "amount",
+            "time",
+            "place",
+            "topic"
+          ],
+          "required_roles": [
+            "investor",
+            "recipient"
+          ],
+          "mutex_groups": [
+            [
+              "investor",
+              "lead_investor"
+            ]
+          ]
+        },
+        "meeting": {
+          "trigger_terms": [
+            "hosts",
+            "meets",
+            "meeting",
+            "shanghai meeting"
+          ],
+          "roles": [
+            "host",
+            "guest",
+            "place",
+            "time",
+            "topic"
+          ],
+          "required_roles": [
+            "host"
+          ],
+          "mutex_groups": []
+        },
+        "award": {
+          "trigger_terms": [
+            "honors",
+            "prize ceremony",
+            "award"
+          ],
+          "roles": [
+            "winner",
+            "nominee",
+            "presenter",
+            "prize",
+            "place",
+            "time"
+          ],
+          "required_roles": [
+            "winner"
+          ],
+          "mutex_groups": [
+            [
+              "winner",
+              "nominee"
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "revision_id": "rev-3",
+      "parent_revision": "rev-2",
+      "version": 3,
+      "note": "make host and guest mutually exclusive",
+      "event_types": {
+        "acquisition": {
+          "trigger_terms": [
+            "acquires",
+            "completes acquisition",
+            "acquisition"
+          ],
+          "roles": [
+            "buyer",
+            "target",
+            "price",
+            "time",
+            "place",
+            "advisor"
+          ],
+          "required_roles": [
+            "buyer",
+            "target"
+          ],
+          "mutex_groups": [
+            [
+              "buyer",
+              "advisor"
+            ]
+          ]
+        },
+        "funding": {
+          "trigger_terms": [
+            "investment",
+            "funding",
+            "leads investment"
+          ],
+          "roles": [
+            "investor",
+            "lead_investor",
+            "recipient",
+            "amount",
+            "time",
+            "place",
+            "topic"
+          ],
+          "required_roles": [
+            "investor",
+            "recipient"
+          ],
+          "mutex_groups": [
+            [
+              "investor",
+              "lead_investor"
+            ]
+          ]
+        },
+        "meeting": {
+          "trigger_terms": [
+            "hosts",
+            "meets",
+            "meeting"
+          ],
+          "roles": [
+            "host",
+            "guest",
+            "place",
+            "time",
+            "topic"
+          ],
+          "required_roles": [
+            "host"
+          ],
+          "mutex_groups": [
+            [
+              "host",
+              "guest"
+            ]
+          ]
+        },
+        "award": {
+          "trigger_terms": [
+            "honors",
+            "prize ceremony",
+            "award"
+          ],
+          "roles": [
+            "winner",
+            "nominee",
+            "presenter",
+            "prize",
+            "place",
+            "time"
+          ],
+          "required_roles": [
+            "winner"
+          ],
+          "mutex_groups": [
+            [
+              "winner",
+              "nominee"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}
