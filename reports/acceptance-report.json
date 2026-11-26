@@ -1,0 +1,2121 @@
+{
+  "concurrency_and_budgets": {
+    "budget_cases": {
+      "point_budget": {
+        "business_codes": {
+          "E_BUDGET_PENDING": 32,
+          "E_INPUT_INVALID": 0,
+          "OK": 1
+        },
+        "fingerprint": "3849e574242e7b2b7b5712433feb02bb0228f277836ff98240f287e2ca5ba5ef",
+        "passed": true,
+        "pending": 32
+      },
+      "resume_priority": {
+        "fingerprint_match_full": true,
+        "first_pending": 34,
+        "passed": true,
+        "resumed_pending": 0
+      },
+      "voxel_subdivision_budget": {
+        "business_codes": {
+          "E_BUDGET_PENDING": 1,
+          "E_INPUT_INVALID": 0,
+          "OK": 1
+        },
+        "fingerprint": "138dfd658795829538b86b96e12835f3bd39dbab2b5e8888018310393a4946ff",
+        "passed": true,
+        "pending": 1
+      }
+    },
+    "passed": true,
+    "worker_determinism": true,
+    "worker_fingerprints": {
+      "1": "dcd2bd5030e06f874b2800681c301f5f4c9ca3a9d16b2fe55bae41609a8c3f45",
+      "2": "dcd2bd5030e06f874b2800681c301f5f4c9ca3a9d16b2fe55bae41609a8c3f45",
+      "4": "dcd2bd5030e06f874b2800681c301f5f4c9ca3a9d16b2fe55bae41609a8c3f45"
+    }
+  },
+  "diagnostics": {
+    "boundary": {
+      "attribution_summary": {
+        "decision_flip": 5,
+        "depth_consistency": 4,
+        "feature_quantization": 11,
+        "flip_source:depth_consistency": 3,
+        "flip_source:feature_quantization": 2,
+        "isolated_exceeded:depth_consistency": 12,
+        "isolated_exceeded:feature_quantization": 11,
+        "isolated_exceeded:triangulation_residual": 9,
+        "isolated_exceeded:voxel_subdivision": 2,
+        "within_tolerance": 65
+      },
+      "coarse_counts": {
+        "free": 60,
+        "occupied": 20,
+        "pending": 0,
+        "subdivided": 0,
+        "total": 80
+      },
+      "coarse_quant_level": "Q2",
+      "flip_examples": [
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1925,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1930,
+          "reference_status": "subdivided",
+          "sort_path": [
+            0,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 5,
+          "voxel_id": "v0_0_1"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1925,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1930,
+          "reference_status": "subdivided",
+          "sort_path": [
+            0,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 5,
+          "voxel_id": "v0_1_1"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 352,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": "feature_quantization",
+          "level": 0,
+          "normal_score_q": 1318,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1340,
+          "reference_status": "subdivided",
+          "sort_path": [
+            2,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 22,
+          "voxel_id": "v2_1_1"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 226,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1270,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1044,
+          "reference_status": "subdivided",
+          "sort_path": [
+            3,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 226,
+          "voxel_id": "v3_0_1"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": true,
+          "depth_delta_q": 166,
+          "feature_delta_q": 352,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": "feature_quantization",
+          "level": 0,
+          "normal_score_q": 1501,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1335,
+          "reference_status": "subdivided",
+          "sort_path": [
+            3,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 166,
+          "voxel_id": "v3_1_1"
+        }
+      ],
+      "probe_threshold_q": 1925,
+      "records": [
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_0"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1925,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1930,
+          "reference_status": "subdivided",
+          "sort_path": [
+            0,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 5,
+          "voxel_id": "v0_0_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_2"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            0,
+            0,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            0,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_0_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_0"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1925,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1930,
+          "reference_status": "subdivided",
+          "sort_path": [
+            0,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 5,
+          "voxel_id": "v0_1_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_2"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": false,
+          "depth_delta_q": 55,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            0,
+            1,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            0,
+            1,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            0,
+            1,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v0_1_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_0"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 51,
+          "feature_delta_q": 384,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 262,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 262,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_2"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            0,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            0,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 18,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            0,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_0_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_0"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 51,
+          "feature_delta_q": 288,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 753,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 751,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 2,
+          "voxel_id": "v1_1_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_2"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 55,
+          "feature_delta_q": 256,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            1,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 55,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_6"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 256,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            1,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            1,
+            1,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_8"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 18,
+          "feature_delta_q": 256,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            1,
+            1,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 55,
+          "voxel_delta_q": 0,
+          "voxel_id": "v1_1_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_0"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 51,
+          "feature_delta_q": 192,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 906,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 927,
+          "reference_status": "occupied",
+          "sort_path": [
+            2,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 21,
+          "voxel_id": "v2_0_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_2"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            0,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_0_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_0"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": true,
+          "depth_delta_q": 51,
+          "feature_delta_q": 352,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": "feature_quantization",
+          "level": 0,
+          "normal_score_q": 1318,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1340,
+          "reference_status": "subdivided",
+          "sort_path": [
+            2,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 22,
+          "voxel_id": "v2_1_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_2"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 55,
+          "feature_delta_q": 288,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            2,
+            1,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 55,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            2,
+            1,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            2,
+            1,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v2_1_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_0"
+        },
+        {
+          "attribution": "depth_consistency",
+          "decision_flip": true,
+          "depth_delta_q": 226,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": "depth_consistency",
+          "flip_source": "depth_consistency",
+          "level": 0,
+          "normal_score_q": 1270,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1044,
+          "reference_status": "subdivided",
+          "sort_path": [
+            3,
+            0,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 226,
+          "voxel_id": "v3_0_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_2"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_3"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            0,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_0_9"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            0
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_0"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": true,
+          "depth_delta_q": 166,
+          "feature_delta_q": 352,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": "feature_quantization",
+          "level": 0,
+          "normal_score_q": 1501,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 1335,
+          "reference_status": "subdivided",
+          "sort_path": [
+            3,
+            1,
+            1
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 51,
+          "voxel_delta_q": 166,
+          "voxel_id": "v3_1_1"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            2
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_2"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 59,
+          "feature_delta_q": 288,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 577,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 576,
+          "reference_status": "occupied",
+          "sort_path": [
+            3,
+            1,
+            3
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 59,
+          "voxel_delta_q": 1,
+          "voxel_id": "v3_1_3"
+        },
+        {
+          "attribution": "feature_quantization",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 288,
+          "first_exceeded_stage": "feature_quantization",
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "occupied",
+          "reference_score_normalized_q": 0,
+          "reference_status": "occupied",
+          "sort_path": [
+            3,
+            1,
+            4
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_4"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            5
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_5"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            6
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_6"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            7
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_7"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            8
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_8"
+        },
+        {
+          "attribution": "within_tolerance",
+          "decision_flip": false,
+          "depth_delta_q": 0,
+          "feature_delta_q": 0,
+          "first_exceeded_stage": null,
+          "flip_source": null,
+          "level": 0,
+          "normal_score_q": 0,
+          "normal_status": "free",
+          "reference_score_normalized_q": 0,
+          "reference_status": "free",
+          "sort_path": [
+            3,
+            1,
+            9
+          ],
+          "tolerance_q": 32,
+          "triangulation_delta_q": 0,
+          "voxel_delta_q": 0,
+          "voxel_id": "v3_1_9"
+        }
+      ],
+      "reference_counts": {
+        "free": 89,
+        "occupied": 47,
+        "pending": 0,
+        "subdivided": 8,
+        "total": 144
+      },
+      "reference_frac_bits": 11,
+      "target_voxel_id": "v0_0_1",
+      "triggered": true
+    },
+    "boundary_triggered": true,
+    "default_counts": {
+      "decision_flip": 4,
+      "depth_consistency": 2,
+      "flip_source:depth_consistency": 2,
+      "flip_source:voxel_subdivision": 2,
+      "isolated_exceeded:depth_consistency": 2,
+      "isolated_exceeded:voxel_subdivision": 2,
+      "voxel_subdivision": 2,
+      "within_tolerance": 92
+    }
+  },
+  "edit_parity": {
+    "business_code_counts": {
+      "E_BUDGET_PENDING": 0,
+      "E_INPUT_INVALID": 3,
+      "OK": 1
+    },
+    "canonical_ledger_entries": 293,
+    "command_count": 12,
+    "command_error_count": 3,
+    "first_diff": null,
+    "full_fingerprint": "f1ad562cb5444cb10811d90f33d75e3105a5fe1e9959757a50e17afd05015262",
+    "incremental_fingerprint": "f1ad562cb5444cb10811d90f33d75e3105a5fe1e9959757a50e17afd05015262",
+    "passed": true,
+    "step_summaries": [
+      {
+        "fingerprint": "a6ed938bba387cf3",
+        "index": 0,
+        "input_errors": 0,
+        "op": "replace_view",
+        "pending": 0
+      },
+      {
+        "fingerprint": "7830dcd630fa821e",
+        "index": 1,
+        "input_errors": 0,
+        "op": "set_extrinsic",
+        "pending": 0
+      },
+      {
+        "fingerprint": "466c98ac5030f46c",
+        "index": 2,
+        "input_errors": 0,
+        "op": "set_param",
+        "pending": 0
+      },
+      {
+        "fingerprint": "71cc9c6afddd69ba",
+        "index": 3,
+        "input_errors": 0,
+        "op": "set_param",
+        "pending": 0
+      },
+      {
+        "fingerprint": "608124443cfb9f57",
+        "index": 4,
+        "input_errors": 0,
+        "op": "set_param",
+        "pending": 0
+      },
+      {
+        "fingerprint": "d0ff48a2bd8a141c",
+        "index": 5,
+        "input_errors": 0,
+        "op": "set_param",
+        "pending": 0
+      },
+      {
+        "fingerprint": "f718bd3e56468bed",
+        "index": 6,
+        "input_errors": 0,
+        "op": "add_view",
+        "pending": 0
+      },
+      {
+        "fingerprint": "546ffe7c23118bd0",
+        "index": 7,
+        "input_errors": 0,
+        "op": "replace_view",
+        "pending": 0
+      },
+      {
+        "fingerprint": "8f29ef30187d016a",
+        "index": 8,
+        "input_errors": 0,
+        "op": "remove_view",
+        "pending": 0
+      },
+      {
+        "fingerprint": "c64b001f6c6b3199",
+        "index": 9,
+        "input_errors": 1,
+        "op": "replace_view",
+        "pending": 0
+      },
+      {
+        "fingerprint": "84473d032ec8b035",
+        "index": 10,
+        "input_errors": 2,
+        "op": "set_param",
+        "pending": 0
+      },
+      {
+        "fingerprint": "f1ad562cb5444cb1",
+        "index": 11,
+        "input_errors": 3,
+        "op": "frobnicate",
+        "pending": 0
+      }
+    ]
+  },
+  "environment": {
+    "executable": "/home/zsl/.feedback/python-base/bin/python",
+    "numpy": "1.26.4",
+    "pillow": "10.3.0",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.11.0rc1",
+    "tkinter": "available"
+  },
+  "main_run": {
+    "business_code_counts": {
+      "E_BUDGET_PENDING": 0,
+      "E_INPUT_INVALID": 0,
+      "OK": 1
+    },
+    "depth_conflicts": {
+      "v0": 0,
+      "v1": 0,
+      "v2": 0,
+      "v3": 0
+    },
+    "feature_counts": {
+      "v0": 103,
+      "v1": 116,
+      "v2": 115,
+      "v3": 110
+    },
+    "fingerprint": "d15bce9354d1aa369f90a2fb44ae6b223af7b1f0c64725eb66a72c61f5b2d71d",
+    "match_counts": {
+      "v0|v1": 9,
+      "v0|v2": 11,
+      "v1|v2": 12,
+      "v2|v3": 7
+    },
+    "triangulation": {
+      "accepted": 37,
+      "rejected": 2
+    },
+    "voxel_counts": {
+      "free": 70,
+      "occupied": 24,
+      "pending": 0,
+      "subdivided": 2,
+      "total": 96
+    }
+  },
+  "passed": true,
+  "precise_invalidation": {
+    "checks": {
+      "affected_pair_v0_v1_not_hit": true,
+      "replaced_feature_v1_rebuilt": true,
+      "unrelated_feature_v0_hit": true,
+      "unrelated_pair_v2_v3_hit": true
+    },
+    "passed": true
+  },
+  "recovery": {
+    "broken_code": "E_SNAPSHOT_CORRUPT",
+    "broken_decision": "rebuild",
+    "healthy_decision": "resume_with_snapshot",
+    "passed": true,
+    "stale_staging_ignored": 1
+  }
+}

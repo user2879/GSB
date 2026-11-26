@@ -1,0 +1,16 @@
+{
+  "commands": [
+    {"op": "replace_view", "view_id": "v1", "variant": 7},
+    {"op": "set_extrinsic", "view_id": "v2", "center": [14, 0, 0]},
+    {"op": "set_param", "key": "min_parallax", "value": 6},
+    {"op": "set_param", "key": "voxel_size", "value": 12},
+    {"op": "set_param", "key": "residual_threshold", "value": 1200},
+    {"op": "set_param", "key": "quant_level", "value": "Q2"},
+    {"op": "add_view", "view_id": "v4", "sequence": 4, "pair_with": ["v3"]},
+    {"op": "replace_view", "view_id": "v2", "variant": 3},
+    {"op": "remove_view", "view_id": "v3"},
+    {"op": "replace_view", "view_id": "missing-view", "variant": 1},
+    {"op": "set_param", "key": "min_parallax", "value": 0},
+    {"op": "frobnicate", "view_id": "v0"}
+  ]
+}

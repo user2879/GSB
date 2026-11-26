@@ -19,3 +19,22 @@
 
 验收：
 用本地合成多视图样本验证增量重建与全量重建逐字段一致，并给出误差归因与恢复判定报告。
+
+---
+
+## 交付运行入口
+
+实现与需求映射见 `TECHNICAL_NOTES.md`。常用命令：
+
+```bash
+python scripts/check_environment.py
+python -m mdr.cli init-sample --root .
+python -m mdr.cli run --root .
+python -m unittest discover -s tests -v
+python scripts/run_acceptance.py
+python -m mdr.tk_app --root .
+```
+
+最新实际验收结论见 `reports/acceptance-report.md`；机器可读结果见
+`reports/acceptance-report.json` 与 `reports/diagnostic-report.json`。
+编辑命令流示例见 `commands/acceptance-edits.json`。

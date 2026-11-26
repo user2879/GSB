@@ -1,0 +1,62 @@
+{
+  "allowed_frac_bits": [
+    8,
+    10,
+    11,
+    12,
+    16
+  ],
+  "allowed_quant_levels": [
+    "Q0",
+    "Q1",
+    "Q2"
+  ],
+  "budgets": {
+    "global_point_budget": 256,
+    "max_subdivisions_per_batch": 64,
+    "max_workers": 4,
+    "view_point_quota": 96
+  },
+  "depth_background_z": 220,
+  "depth_radius": 5,
+  "descriptor_max_distance": 240,
+  "diagnostic_tolerance_q": 32,
+  "feature_nms_distance": 4,
+  "feature_patch_radius": 2,
+  "feature_score_threshold": 1400,
+  "frac_bits": 10,
+  "height": 72,
+  "max_subdivision_depth": 2,
+  "min_parallax": 4,
+  "mode": "RGB",
+  "occupancy_min_depth": 6,
+  "occupancy_min_tri": 1,
+  "quant_level": "Q1",
+  "quant_shifts": {
+    "Q0": 0,
+    "Q1": 4,
+    "Q2": 7
+  },
+  "residual_threshold": 1800,
+  "schema_version": 1,
+  "score_weights": {
+    "depth": 1,
+    "residual": 1
+  },
+  "seed": 400,
+  "tie_rules": {
+    "depth_conflict": "minimum_depth_then_view_order_then_pixel_lex",
+    "rounding": "half_step_ties_toward_zero",
+    "stable_order": "view_index_asc_then_x_asc_then_y_asc"
+  },
+  "voxel_bounds": {
+    "max_x": 40,
+    "max_y": 16,
+    "max_z": 200,
+    "min_x": -24,
+    "min_y": -16,
+    "min_z": 40
+  },
+  "voxel_size": 16,
+  "width": 96
+}
