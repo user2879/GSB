@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "events": [
+    {"seq": 1, "type": "grant", "lease_id": "lease-alpha", "artifact_key": "art-alpha", "quota_version": 1, "ttl_ms": 600000},
+    {"seq": 2, "type": "grant", "lease_id": "lease-beta", "artifact_key": "art-beta", "quota_version": 1, "ttl_ms": 250},
+    {"seq": 3, "type": "grant", "lease_id": "lease-gamma", "artifact_key": "art-gamma", "quota_version": 1, "ttl_ms": 600000},
+    {"seq": 4, "type": "grant", "lease_id": "lease-delta", "artifact_key": "art-delta", "quota_version": 1, "ttl_ms": 600000},
+
+    {"seq": 5, "type": "write", "lease_id": "lease-alpha", "shard_index": 0, "generation": 1},
+    {"seq": 6, "type": "write", "lease_id": "lease-alpha", "shard_index": 1, "generation": 1},
+    {"seq": 7, "type": "write", "lease_id": "lease-alpha", "shard_index": 2, "generation": 1},
+    {"seq": 8, "type": "write", "lease_id": "lease-beta", "shard_index": 0, "generation": 1},
+    {"seq": 9, "type": "write", "lease_id": "lease-beta", "shard_index": 1, "generation": 1},
+    {"seq": 10, "type": "write", "lease_id": "lease-gamma", "shard_index": 0, "generation": 1},
+    {"seq": 11, "type": "write", "lease_id": "lease-gamma", "shard_index": 1, "generation": 1},
+    {"seq": 12, "type": "write", "lease_id": "lease-delta", "shard_index": 0, "generation": 1},
+
+    {"seq": 13, "type": "read", "lease_id": "lease-alpha", "shard_index": 0, "generation": 1},
+    {"seq": 14, "type": "read", "lease_id": "lease-alpha", "shard_index": 1, "generation": 1},
+    {"seq": 15, "type": "read", "lease_id": "lease-alpha", "shard_index": 2, "generation": 1},
+    {"seq": 16, "type": "read", "lease_id": "lease-beta", "shard_index": 0, "generation": 1},
+    {"seq": 17, "type": "read", "lease_id": "lease-beta", "shard_index": 1, "generation": 1},
+    {"seq": 18, "type": "read", "lease_id": "lease-gamma", "shard_index": 0, "generation": 1},
+    {"seq": 19, "type": "read", "lease_id": "lease-gamma", "shard_index": 1, "generation": 1},
+    {"seq": 20, "type": "read", "lease_id": "lease-delta", "shard_index": 0, "generation": 1},
+
+    {"seq": 21, "type": "renew", "lease_id": "lease-alpha", "generation": 1, "ttl_ms": 600000},
+    {"seq": 22, "type": "renew", "lease_id": "lease-alpha", "generation": 1, "expect_error": "E_STALE"},
+    {"seq": 23, "type": "renew", "lease_id": "lease-alpha", "generation": 2, "ttl_ms": 600000},
+    {"seq": 24, "type": "release", "lease_id": "lease-gamma", "generation": 1},
+    {"seq": 25, "type": "expire", "lease_id": "lease-beta", "generation": 1},
+    {"seq": 26, "type": "quota_bump", "quota_version": 2},
+    {"seq": 27, "type": "grant", "lease_id": "lease-alpha2", "artifact_key": "art-alpha", "quota_version": 2, "ttl_ms": 600000},
+    {"seq": 28, "type": "write", "lease_id": "lease-alpha2", "shard_index": 0, "generation": 1},
+    {"seq": 29, "type": "read", "lease_id": "lease-alpha2", "shard_index": 0, "generation": 1}
+  ]
+}

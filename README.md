@@ -20,3 +20,37 @@
 
 验收：
 用本地样本验证跨节点租约代数归属裁决与配额回收唯一性，并在节点被强制终止后按账本重放出可逐字节复核的容量水位结论。
+
+---
+
+# 实现交付
+
+代码位于 `cacheflow/`，测试位于 `tests/`，技术规则见 `docs/TECH_NOTES.md`，实际验证结果见 `docs/VALIDATION.md`。
+
+```bash
+# 环境（本机缺少 ensurepip 时使用 --without-pip 后引导 pip）
+python3 -m venv .venv
+.venv/bin/python -m pip install numpy pytest
+
+# 强校验样本
+.venv/bin/python -m cacheflow validate
+
+# 真实启动 3 个 127.0.0.1 节点、跑完整 JSONL/TCP 流水线并写 SQLite
+.venv/bin/python -m cacheflow run --work-dir workspace/sample
+
+# 只读账本 + 原始声明重放校验
+.venv/bin/python -m cacheflow replay --ledger workspace/sample/cacheflow.sqlite3
+
+# 配额/节点集合演进与全量重建比对
+.venv/bin/python -m cacheflow evolve --cutoff-seq 20
+.venv/bin/python -m cacheflow evolve --evolution examples/evolution-node-removal.json --cutoff-seq 24
+
+# 动态端口样本 + SIGKILL + 未知请求回收 + 字节级重放验收
+.venv/bin/python -m cacheflow accept --work-dir workspace/acceptance
+
+# 全部测试与一键验证
+.venv/bin/python -m pytest -q
+./scripts/verify.sh
+```
+
+关键错误码：`E_SPEC`、`E_PORT`、`E_TIMEOUT`、`E_FIELD`、`E_STALE`、`E_GEN`、`E_DIVERGE`、`E_VERIFY`。

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cacheflow-ledger"
+version = "1.0.0"
+description = "Deterministic loopback multi-node artifact cache pipeline with SQLite replay"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+cacheflow = "cacheflow.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cacheflow*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
