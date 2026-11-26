@@ -1,0 +1,63 @@
+{
+  "config_hash": "747bb643b601228ad3972042271d98eff1083d30d38f4b986f758d0f04f14418",
+  "extras": [
+    {
+      "annotation": "samples/annotations/page_a.alt.truth-v1.json",
+      "image": "samples/page_a.alt.png",
+      "image_sha256": "ef7110ceff678d1f1cfc6744c32c4a28618cf4540e3d845a67f1e19d8fa3a360",
+      "keypoints": 20,
+      "manifest": "samples/page_a.alt.manifest.json",
+      "sample_id": "page_a",
+      "stem": "page_a.alt"
+    },
+    {
+      "annotation": "samples/annotations/page_c.truth-v1.json",
+      "image": "samples/page_c.png",
+      "image_sha256": "c72d32458c9f8b8f3609031c8e57c61d468ca2111703b681fec2db655f7f8f99",
+      "keypoints": 9,
+      "manifest": "samples/page_c.manifest.json",
+      "sample_id": "page_c",
+      "stem": "page_c"
+    }
+  ],
+  "quantization_flip": {
+    "annotation": "samples/annotations/quantization_flip.truth-v1.json",
+    "config": "configs/quantization-flip.yaml",
+    "config_hash": "e5b66d3e4a52d7858b29dae4e437d4b4c1d04b8f48bd0c3c4572bf27b9da7e0c",
+    "dataset": "samples/quantization_flip.dataset.yaml",
+    "expected": {
+      "Q10": "曰",
+      "Q4": "己",
+      "Q6": "曰",
+      "Q8": "曰"
+    },
+    "image": "samples/quantization_flip.png",
+    "image_sha256": "ed201feb7c70b2a23f9ddad625f5998f33d99186fca99ef44916dc0c8b29a0c2",
+    "keypoints": 1,
+    "manifest": "samples/quantization_flip.manifest.json",
+    "sample_id": "quantization_flip",
+    "template_version": "bitmap-flip-v1",
+    "templates": "fonts/bitmap-flip-v1.json"
+  },
+  "samples": [
+    {
+      "annotation_v1": "samples/annotations/page_a.truth-v1.json",
+      "annotation_v2": "samples/annotations/page_a.ann-v2.json",
+      "image": "samples/page_a.png",
+      "image_sha256": "2aa156c265bcd7a29e509cb058ec2d32a493d95a4ce44dbf1091677925eb4abe",
+      "keypoints": 20,
+      "sample_id": "page_a"
+    },
+    {
+      "annotation_v1": "samples/annotations/page_b.truth-v1.json",
+      "annotation_v2": "samples/annotations/page_b.ann-v2.json",
+      "image": "samples/page_b.png",
+      "image_sha256": "6dcd32546264bb427508dd26abb6411330e06bfda2c80bd5eaa43385187f259d",
+      "keypoints": 16,
+      "sample_id": "page_b"
+    }
+  ],
+  "schema_version": 1,
+  "seed": 20261127,
+  "template_version": "bitmap-v1"
+}

@@ -1,0 +1,21 @@
+schema_version: 1
+injections:
+  - id: INJ-01
+    kind: truncated_png
+    sample_id: page_a
+    reason: PNG IEND/data chunk is truncated after copy
+  - id: INJ-02
+    kind: non_integer_keypoint
+    sample_id: page_a
+    keypoint_id: page_a-c0-r0
+    reason: truth keypoint x is replaced by a fractional value
+  - id: INJ-03
+    kind: template_variant_dimension
+    char: 古
+    variant_index: 0
+    reason: declared bitmap width disagrees with row width
+  - id: INJ-04
+    kind: quantization_out_of_range
+    level: Q99
+    fixed_bits: 99
+    reason: quantization level and fixed bit width are outside allowed enums

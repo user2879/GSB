@@ -1,0 +1,39 @@
+schema_version: 1
+layout:
+  width: 320
+  height: 256
+  pixel_mode: L
+window:
+  width: 32
+  height: 32
+  stride_x: 16
+  stride_y: 16
+quantization:
+  level: Q8
+  fixed_bits: 8
+thresholds:
+  ink: 180
+  candidate_score: 1
+  cc_merge_gap: 7
+  component_tone_tolerance: 64
+  component_min_area: 1
+  component_max_span: 36
+  split_min_gap: 1
+  confidence_score_weight: 4
+  confidence_residual_weight: 1
+  tolerance_fixed: 4000
+recognition:
+  template_version: bitmap-v1
+  template_width: 12
+  template_height: 12
+  variant_weights:
+  - 64
+  - 2
+  - 1
+  max_workers: 4
+  reading_conflict_priority:
+  - CROSS_COLUMN
+  - MISORDER
+  - MISSING
+budget:
+  max_template_points: 40000

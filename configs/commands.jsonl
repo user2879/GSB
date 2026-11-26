@@ -1,0 +1,12 @@
+{"seq":1,"op":"set_window","width":32,"height":32,"stride_x":16,"stride_y":16}
+{"seq":2,"op":"set_quantization","level":"Q6"}
+{"seq":3,"op":"set_threshold","name":"cc_merge_gap","value":6}
+{"seq":4,"op":"replace_annotation_version","sample_id":"page_a","annotation":"annotations/page_a.ann-v2.json"}
+{"seq":5,"op":"replace_image","sample_id":"page_a","manifest":"page_a.alt.manifest.json","annotation":"annotations/page_a.alt.truth-v1.json"}
+{"seq":6,"op":"replace_annotation_version","sample_id":"page_b","annotation":"annotations/page_b.ann-v2.json"}
+{"seq":7,"op":"add_sample","sample_id":"page_c","manifest":"page_c.manifest.json","annotation":"annotations/page_c.truth-v1.json"}
+{"seq":8,"op":"delete_sample","sample_id":"page_c"}
+{"seq":9,"op":"set_quantization","level":"Q8"}
+{"seq":10,"op":"set_window","width":32,"height":32,"stride_x":8,"stride_y":8}
+{"seq":11,"op":"set_threshold","name":"component_tone_tolerance","value":60}
+{"seq":12,"op":"set_budget","max_template_points":40000}
