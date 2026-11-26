@@ -20,3 +20,32 @@
 
 验收：
 使用本地确定性卷与快照样本验证回滚、逐块校验、失效子集重算与强制终止后的账本重放一致性，并附运行结果。
+
+---
+
+# 首版实现快速入口
+
+本目录已交付可运行的 `blockledger` Python 包、确定性样本、SQLite 权威账本、子进程校验/强杀、失效子集重算、独立重放命令和 16 个自动化测试。
+
+```bash
+python3 -m venv .venv                 # 若系统缺少 ensurepip，见 docs/OPERATIONS.md
+. .venv/bin/activate
+pip install -r requirements.txt
+
+bash scripts/acceptance.sh | tee artifacts/acceptance-output.txt
+```
+
+常用命令：
+
+```bash
+python -m blockledger validate --spec samples/spec.json
+python -m blockledger run --spec samples/spec.json
+python -m blockledger verify --spec samples/spec.json
+python -m blockledger invalidate --spec samples/spec.json --change samples/change-write.json
+python -m unittest discover -s tests
+```
+
+- 运行手册：`docs/OPERATIONS.md`
+- 实际验收结果：`docs/VERIFICATION-RESULTS.md`
+- 完整命令输出：`artifacts/acceptance-output.txt`
+- 可选 Tkinter：`python -m blockledger gui-check`；当前精简 WSL 环境缺少 Tk 动态库时会按要求跳过，核心 CLI 不受影响。

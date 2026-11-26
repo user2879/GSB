@@ -10,4 +10,16 @@ secrets.json
 node_modules/
 .venv/
 venv/
+.venv.broken.*/
 __pycache__/
+*.pyc
+.pytest_cache/
+
+# Local runtime data; deterministic reports under artifacts/ are kept.
+ledger/*.sqlite
+ledger/*.sqlite-wal
+ledger/*.sqlite-shm
+ledger/backups/
+snapshots/content/
+snapshots/live/
+snapshots/work/
