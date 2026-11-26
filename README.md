@@ -20,3 +20,15 @@ WSL Ubuntu 环境，已安装 Python 3.11（建议以 python3 -m venv .venv 创�
 
 验收：
 用本地声明与确定性样本验证跨版本回执归一、租约唯一归属、失效子集重算与强制终止后重放结论一致，并附运行结果。
+
+---
+
+## 交付实现指引
+
+- 设计与验证细节见 `TECHNICAL_NOTES.md`，可复现演示输出见 `artifacts/demo_run.log`。
+- 建环境（本机无 `python3.11-venv`，用 virtualenv）：
+  `python3 -m virtualenv .venv && .venv/bin/pip install -r requirements.txt`
+- 端到端演示：`.venv/bin/python demo/run_demo.py`
+- 全量测试：`.venv/bin/python -m pytest tests/ -q`（53 passed）
+- 核心包位于 `src/ckpt_diag/`，本地声明样例生成于 `artifacts/demo/spec.json`，
+  历史回执样例位于 `receipts/`。
