@@ -1,0 +1,19 @@
+{
+  "script_version": 2,
+  "entries": [
+    {"event_seq": 1000, "type": "ack", "ack_count": 1, "delay_ms": 1},
+    {"event_seq": 1001, "type": "ack", "ack_count": 1, "delay_ms": 3},
+    {"event_seq": 1002, "type": "ack", "ack_count": 1, "delay_ms": 1},
+    {"event_seq": 1003, "type": "dup_ack", "dup_count": 3, "delay_ms": 0},
+    {"event_seq": 1004, "type": "ack", "ack_count": 2, "delay_ms": 2},
+    {"event_seq": 1005, "type": "delay", "ack_count": 1, "delay_ms": 5},
+    {"event_seq": 1006, "type": "ack", "ack_count": 1, "delay_ms": 2},
+    {"event_seq": 1007, "type": "loss", "delay_ms": 0},
+    {"event_seq": 1008, "type": "ack", "ack_count": 2, "delay_ms": 3},
+    {"event_seq": 1009, "type": "delay", "ack_count": 1, "delay_ms": 4},
+    {"event_seq": 1010, "type": "reorder", "ack_count": 1, "delay_ms": 1, "order": [1010, 1009]},
+    {"event_seq": 1011, "type": "ack", "ack_count": 1, "delay_ms": 2},
+    {"event_seq": 1012, "type": "ack", "ack_count": 1, "delay_ms": 1},
+    {"event_seq": 1013, "type": "dup_ack", "dup_count": 3, "delay_ms": 0}
+  ]
+}

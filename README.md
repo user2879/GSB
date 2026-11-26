@@ -19,3 +19,24 @@
 
 验收：
 用本地样本核对三版回执归一、拥塞观测推进与强制终止恢复重放的可复现一致性。
+
+---
+
+## 交付实现入口
+
+首版代码、配置、样本、测试、SQLite 账本样例和技术说明已在本目录建立。
+
+- 一键验证：`./scripts/reproduce.sh`
+- 交付说明：`docs/DELIVERY.md`
+- 实际验证记录：`docs/VALIDATION.md`
+- 总体验收产物：`artifacts/demo/validation_report.json`
+- 三版回执样本：`samples/receipts_o1.txt`、`samples/receipts_o2.jsonl`、`samples/receipts_o3.jsonl`
+
+常用命令：
+
+```bash
+PYTHONPATH=src .venv/bin/tcp-observer validate-spec --config configs/session.json
+PYTHONPATH=src .venv/bin/tcp-observer check-script --config configs/session_gap.json
+PYTHONPATH=src .venv/bin/tcp-observer normalize --file samples/receipts_o3.jsonl
+PYTHONPATH=src .venv/bin/tcp-observer all --out artifacts/demo
+```
