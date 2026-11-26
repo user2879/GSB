@@ -1,0 +1,353 @@
+{
+  "all_fragments_arrived": true,
+  "arrival_cursor": 4,
+  "batch_summaries": [],
+  "budget_consumed_total": 0,
+  "business_code_counts": {
+    "E_AUDIO_FORMAT": 0,
+    "E_FIELD_TRUNCATED": 0,
+    "E_POINT_BUDGET_PENDING": 0,
+    "E_QUOTA_EXCEEDED": 0,
+    "E_SCHEMA": 0
+  },
+  "config": {
+    "adjudication": {
+      "frame_endpoint_threshold_ppm": 480000,
+      "min_command_ms": 120,
+      "min_overlap_frames": 1,
+      "tie_half_step_ppm": 500
+    },
+    "analysis": {
+      "allowed_frac_bits": [
+        4,
+        6,
+        8
+      ],
+      "allowed_quant_scales": [
+        100,
+        1000,
+        2000
+      ],
+      "frac_bits": 6,
+      "frame_length": 400,
+      "frame_shift": 160,
+      "mel_bands": 12,
+      "posterior_quantum_ppm": 1000,
+      "quant_scale": 1000,
+      "window_length": 2400,
+      "window_shift": 1200
+    },
+    "bits_per_sample": 16,
+    "channels": 1,
+    "endpoint": {
+      "frame_length": 400,
+      "frame_shift": 160,
+      "high_energy": 0.02,
+      "low_energy": 0.006,
+      "min_silence_ms": 100,
+      "min_speech_ms": 80
+    },
+    "global_version": 7,
+    "receipt": {
+      "default_quant_scheme": "permille",
+      "field_widths": {
+        "command_code": 5,
+        "confidence": 6,
+        "interval_id": 12,
+        "speaker_id": 8
+      },
+      "quant_schemes": [
+        "permille",
+        "float32",
+        "q6_scale1000"
+      ]
+    },
+    "sample_rate": 16000,
+    "scheduler": {
+      "max_workers": 4,
+      "per_interval_quota": 1000,
+      "point_budget": 42,
+      "point_cost": 1
+    },
+    "schema_version": 1,
+    "seed": 20261127
+  },
+  "config_hash": "6d2e47f5dff7e73463fa2b3ab96b7a0565265311394f063baeb9a11e5fe4e1f2",
+  "config_path": "demo/sample/config.json",
+  "conversation_id": "demo-20261127",
+  "diagnostic_report": {
+    "active_frame_count": 0,
+    "all_fragments_arrived": true,
+    "arrival_cursor": 4,
+    "audio_issues": [],
+    "boundary_frame_count": 0,
+    "boundary_frames": [],
+    "budget_consumed_total": 0,
+    "business_code_counts": {
+      "E_AUDIO_FORMAT": 0,
+      "E_FIELD_TRUNCATED": 0,
+      "E_POINT_BUDGET_PENDING": 0,
+      "E_QUOTA_EXCEEDED": 0,
+      "E_SCHEMA": 0
+    },
+    "cache": {
+      "invalidation_count": 0,
+      "invalidation_entries": [],
+      "miss_count": 1,
+      "reuse_count": 0,
+      "reuse_entries": []
+    },
+    "candidate_count": 0,
+    "command_conclusions": null,
+    "complete": false,
+    "config_hash": "6d2e47f5dff7e73463fa2b3ab96b7a0565265311394f063baeb9a11e5fe4e1f2",
+    "contested_frame_count": 0,
+    "conversation_id": "demo-20261127",
+    "final_digest": null,
+    "fragment_cursor": 4,
+    "frame_count": 0,
+    "frames_digest": null,
+    "global_version": 7,
+    "interval_evidence": null,
+    "interval_evidence_count": 0,
+    "interval_truth_match_count": 0,
+    "last_batch": null,
+    "last_error": null,
+    "manifest_hash": "ebe6c3114c185e5e85473a4177cb0ce06ec2850a99350833902963994effef82",
+    "multi_source_window_count": 0,
+    "overlap_frame_count": 0,
+    "pending_count": 0,
+    "receipts": {
+      "generated_a1_count": 0,
+      "generated_a1_digest": null,
+      "generated_a2_count": 0,
+      "generated_a2_digest": null,
+      "generated_roundtrip_ok": null,
+      "input_a1_count": 4,
+      "input_a2_count": 4,
+      "input_normalized_digest": "04dc2fda7deedc5b356f729089aaf6a1fbc29fdf8d291623205f1f7a32455f2d",
+      "input_normalized_equal": true
+    },
+    "schema": 1,
+    "stages": {
+      "adjudication": "pending",
+      "attribution": "pending",
+      "endpoint": "pending",
+      "features": "pending",
+      "parse": "complete",
+      "posterior": "pending"
+    },
+    "status": "running"
+  },
+  "endpoint": null,
+  "final": null,
+  "fragment_cursor": 4,
+  "global_version": 7,
+  "last_batch": null,
+  "last_error": null,
+  "ledger": {
+    "entries": {
+      "parse:global": {
+        "cache_id": "parse:global",
+        "dependencies": {
+          "audio": {
+            "F001": "73d0115197167823c9a92d94fea60cd0a842f74612af96412928dce7c33a0568",
+            "F002": "fa74a8f6d5804e870e9261b6c8e28e87c4bdf96855de575571bc38e96539f655",
+            "F003": "2ab70db5e5eac2773fba0515e644b527e31c1f68cc500afc45f29a016dafba58",
+            "F004": "af0c69a7a87a56ab340913f9f2071b210c00d9633def5ff48b2d115aed545349"
+          },
+          "config_hash": "6d2e47f5dff7e73463fa2b3ab96b7a0565265311394f063baeb9a11e5fe4e1f2",
+          "global_version": 7,
+          "manifest_hash": "ebe6c3114c185e5e85473a4177cb0ce06ec2850a99350833902963994effef82",
+          "receipts": {
+            "a1": [
+              {
+                "command_code": 1,
+                "command_name": "开灯",
+                "endpoint_confidence": 0.923,
+                "interval_id": "I001",
+                "missing_fields": [
+                  "quant_scheme"
+                ],
+                "quant_scheme": "permille",
+                "source_version": "a1",
+                "speaker_id": "S01"
+              },
+              {
+                "command_code": 2,
+                "command_name": "升温",
+                "endpoint_confidence": 0.876,
+                "interval_id": "I002",
+                "missing_fields": [
+                  "quant_scheme"
+                ],
+                "quant_scheme": "permille",
+                "source_version": "a1",
+                "speaker_id": "S02"
+              },
+              {
+                "command_code": 3,
+                "command_name": "关灯",
+                "endpoint_confidence": 0.942,
+                "interval_id": "I003",
+                "missing_fields": [
+                  "quant_scheme"
+                ],
+                "quant_scheme": "permille",
+                "source_version": "a1",
+                "speaker_id": "S03"
+              },
+              {
+                "command_code": 4,
+                "command_name": "播放",
+                "endpoint_confidence": 0.898,
+                "interval_id": "I004",
+                "missing_fields": [
+                  "quant_scheme"
+                ],
+                "quant_scheme": "permille",
+                "source_version": "a1",
+                "speaker_id": "S01"
+              }
+            ],
+            "a2": [
+              {
+                "command_code": 1,
+                "command_name": "开灯",
+                "endpoint_confidence": 0.923,
+                "interval_id": "I001",
+                "missing_fields": [],
+                "quant_scheme": "permille",
+                "source_version": "a2",
+                "speaker_id": "S01"
+              },
+              {
+                "command_code": 2,
+                "command_name": "升温",
+                "endpoint_confidence": 0.876,
+                "interval_id": "I002",
+                "missing_fields": [],
+                "quant_scheme": "permille",
+                "source_version": "a2",
+                "speaker_id": "S02"
+              },
+              {
+                "command_code": 3,
+                "command_name": "关灯",
+                "endpoint_confidence": 0.942,
+                "interval_id": "I003",
+                "missing_fields": [],
+                "quant_scheme": "permille",
+                "source_version": "a2",
+                "speaker_id": "S03"
+              },
+              {
+                "command_code": 4,
+                "command_name": "播放",
+                "endpoint_confidence": 0.898,
+                "interval_id": "I004",
+                "missing_fields": [],
+                "quant_scheme": "permille",
+                "source_version": "a2",
+                "speaker_id": "S01"
+              }
+            ]
+          },
+          "skipped": []
+        },
+        "key": "8cef823f6a8ad23fcbaf139a32d3f8fc76e2fb7104261cb6ffd9fd1d43469425",
+        "payload": {
+          "all_fragments_arrived": true,
+          "arrival_cursor": 4,
+          "audio_issues": [],
+          "command_count": 6,
+          "command_stream_count": 4,
+          "config_hash": "6d2e47f5dff7e73463fa2b3ab96b7a0565265311394f063baeb9a11e5fe4e1f2",
+          "conversation_id": "demo-20261127",
+          "fragment_count": 4,
+          "fragment_cursor": 4,
+          "interval_count": 4,
+          "loaded_fragment_ids": [
+            "F001",
+            "F002",
+            "F003",
+            "F004"
+          ],
+          "receipt_a1_count": 4,
+          "receipt_a2_count": 4,
+          "receipt_comparison_ok": true,
+          "skipped_fragment_ids": [],
+          "speaker_count": 3,
+          "structure_hash": "ebe6c3114c185e5e85473a4177cb0ce06ec2850a99350833902963994effef82",
+          "total_fragment_count": 4,
+          "valid_fragment_count": 4
+        },
+        "refs": {
+          "conversation_id": "demo-20261127"
+        },
+        "stable_key": [
+          "stage",
+          "parse"
+        ],
+        "stage": "parse"
+      }
+    },
+    "invalidation_audit": [],
+    "miss_audit": [
+      {
+        "cache_id": "parse:global",
+        "key": "8cef823f6a8ad23fcbaf139a32d3f8fc76e2fb7104261cb6ffd9fd1d43469425",
+        "refs": {
+          "conversation_id": "demo-20261127"
+        },
+        "stable_key": [
+          "stage",
+          "parse"
+        ],
+        "stage": "parse"
+      }
+    ],
+    "reuse_audit": []
+  },
+  "manifest_hash": "ebe6c3114c185e5e85473a4177cb0ce06ec2850a99350833902963994effef82",
+  "manifest_path": "demo/sample/manifest.json",
+  "parse_summary": {
+    "all_fragments_arrived": true,
+    "arrival_cursor": 4,
+    "audio_issues": [],
+    "command_count": 6,
+    "command_stream_count": 4,
+    "config_hash": "6d2e47f5dff7e73463fa2b3ab96b7a0565265311394f063baeb9a11e5fe4e1f2",
+    "conversation_id": "demo-20261127",
+    "fragment_count": 4,
+    "fragment_cursor": 4,
+    "interval_count": 4,
+    "loaded_fragment_ids": [
+      "F001",
+      "F002",
+      "F003",
+      "F004"
+    ],
+    "receipt_a1_count": 4,
+    "receipt_a2_count": 4,
+    "receipt_comparison_ok": true,
+    "skipped_fragment_ids": [],
+    "speaker_count": 3,
+    "structure_hash": "ebe6c3114c185e5e85473a4177cb0ce06ec2850a99350833902963994effef82",
+    "total_fragment_count": 4,
+    "valid_fragment_count": 4
+  },
+  "pending": [],
+  "schema": 1,
+  "snapshot_revision": 1,
+  "stage_status": {},
+  "stages": {
+    "adjudication": "pending",
+    "attribution": "pending",
+    "endpoint": "pending",
+    "features": "pending",
+    "parse": "complete",
+    "posterior": "pending"
+  },
+  "windows": []
+}

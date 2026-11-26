@@ -1,0 +1,62 @@
+{
+  "adjudication": {
+    "frame_endpoint_threshold_ppm": 480000,
+    "min_command_ms": 120,
+    "min_overlap_frames": 1,
+    "tie_half_step_ppm": 500
+  },
+  "analysis": {
+    "allowed_frac_bits": [
+      4,
+      6,
+      8
+    ],
+    "allowed_quant_scales": [
+      100,
+      1000,
+      2000
+    ],
+    "frac_bits": 8,
+    "frame_length": 400,
+    "frame_shift": 160,
+    "mel_bands": 12,
+    "posterior_quantum_ppm": 1000,
+    "quant_scale": 1000,
+    "window_length": 2400,
+    "window_shift": 1200
+  },
+  "bits_per_sample": 16,
+  "channels": 1,
+  "endpoint": {
+    "frame_length": 400,
+    "frame_shift": 160,
+    "high_energy": 0.02,
+    "low_energy": 0.006,
+    "min_silence_ms": 100,
+    "min_speech_ms": 80
+  },
+  "global_version": 8,
+  "receipt": {
+    "default_quant_scheme": "permille",
+    "field_widths": {
+      "command_code": 5,
+      "confidence": 6,
+      "interval_id": 12,
+      "speaker_id": 8
+    },
+    "quant_schemes": [
+      "permille",
+      "float32",
+      "q6_scale1000"
+    ]
+  },
+  "sample_rate": 16000,
+  "scheduler": {
+    "max_workers": 4,
+    "per_interval_quota": 1000,
+    "point_budget": 42,
+    "point_cost": 1
+  },
+  "schema_version": 1,
+  "seed": 20261127
+}

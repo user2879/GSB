@@ -1,0 +1,311 @@
+{
+  "command_stream": [
+    {
+      "char_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command_code": 1,
+      "interval_id": "I001",
+      "turn_index": 0
+    },
+    {
+      "char_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command_code": 2,
+      "interval_id": "I002",
+      "turn_index": 1
+    },
+    {
+      "char_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command_code": 3,
+      "interval_id": "I003",
+      "turn_index": 2
+    },
+    {
+      "char_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command_code": 4,
+      "interval_id": "I004",
+      "turn_index": 3
+    }
+  ],
+  "commands": [
+    {
+      "allowed_chars": [
+        "打",
+        "开",
+        "灯",
+        "光"
+      ],
+      "code": 1,
+      "name": "开灯",
+      "phrase": "打开灯光"
+    },
+    {
+      "allowed_chars": [
+        "调",
+        "高",
+        "温",
+        "度"
+      ],
+      "code": 2,
+      "name": "升温",
+      "phrase": "调高温度"
+    },
+    {
+      "allowed_chars": [
+        "关",
+        "闭",
+        "灯",
+        "光"
+      ],
+      "code": 3,
+      "name": "关灯",
+      "phrase": "关闭灯光"
+    },
+    {
+      "allowed_chars": [
+        "播",
+        "放",
+        "音",
+        "乐"
+      ],
+      "code": 4,
+      "name": "播放",
+      "phrase": "播放音乐"
+    },
+    {
+      "allowed_chars": [
+        "停",
+        "止",
+        "播",
+        "放"
+      ],
+      "code": 5,
+      "name": "停止",
+      "phrase": "停止播放"
+    },
+    {
+      "allowed_chars": [
+        "降",
+        "低",
+        "温",
+        "度"
+      ],
+      "code": 6,
+      "name": "降温",
+      "phrase": "降低温度"
+    }
+  ],
+  "conversation_id": "demo-20261127",
+  "fragments": [
+    {
+      "arrival_index": 0,
+      "arrival_time_ms": 1200,
+      "audio_file": "audio/F001.wav",
+      "capture_start_ms": 1000,
+      "id": "F001",
+      "interval_id": "I001"
+    },
+    {
+      "arrival_index": 1,
+      "arrival_time_ms": 1887,
+      "audio_file": "audio/F002.wav",
+      "capture_start_ms": 1687,
+      "id": "F002",
+      "interval_id": "I002"
+    },
+    {
+      "arrival_index": 2,
+      "arrival_time_ms": 2637,
+      "audio_file": "audio/F003.wav",
+      "capture_start_ms": 2437,
+      "id": "F003",
+      "interval_id": "I003"
+    },
+    {
+      "arrival_index": 3,
+      "arrival_time_ms": 3356,
+      "audio_file": "audio/F004.wav",
+      "capture_start_ms": 3156,
+      "id": "F004",
+      "interval_id": "I004"
+    }
+  ],
+  "intervals": [
+    {
+      "chars": [
+        {
+          "char": "打",
+          "end_sample": 4100,
+          "index": 0,
+          "start_sample": 480
+        },
+        {
+          "char": "开",
+          "end_sample": 7860,
+          "index": 1,
+          "start_sample": 4240
+        },
+        {
+          "char": "灯",
+          "end_sample": 11620,
+          "index": 2,
+          "start_sample": 8000
+        },
+        {
+          "char": "光",
+          "end_sample": 15380,
+          "index": 3,
+          "start_sample": 11760
+        }
+      ],
+      "end_sample": 16000,
+      "id": "I001",
+      "speaker_id": "S01",
+      "start_sample": 0,
+      "text": "打开灯光",
+      "truth_command_code": 1
+    },
+    {
+      "chars": [
+        {
+          "char": "调",
+          "end_sample": 4100,
+          "index": 0,
+          "start_sample": 480
+        },
+        {
+          "char": "高",
+          "end_sample": 7860,
+          "index": 1,
+          "start_sample": 4240
+        },
+        {
+          "char": "温",
+          "end_sample": 11620,
+          "index": 2,
+          "start_sample": 8000
+        },
+        {
+          "char": "度",
+          "end_sample": 15380,
+          "index": 3,
+          "start_sample": 11760
+        }
+      ],
+      "end_sample": 27000,
+      "id": "I002",
+      "speaker_id": "S02",
+      "start_sample": 11000,
+      "text": "调高温度",
+      "truth_command_code": 2
+    },
+    {
+      "chars": [
+        {
+          "char": "关",
+          "end_sample": 4100,
+          "index": 0,
+          "start_sample": 480
+        },
+        {
+          "char": "闭",
+          "end_sample": 7860,
+          "index": 1,
+          "start_sample": 4240
+        },
+        {
+          "char": "灯",
+          "end_sample": 11620,
+          "index": 2,
+          "start_sample": 8000
+        },
+        {
+          "char": "光",
+          "end_sample": 15380,
+          "index": 3,
+          "start_sample": 11760
+        }
+      ],
+      "end_sample": 39000,
+      "id": "I003",
+      "speaker_id": "S03",
+      "start_sample": 23000,
+      "text": "关闭灯光",
+      "truth_command_code": 3
+    },
+    {
+      "chars": [
+        {
+          "char": "播",
+          "end_sample": 3850,
+          "index": 0,
+          "start_sample": 480
+        },
+        {
+          "char": "放",
+          "end_sample": 7360,
+          "index": 1,
+          "start_sample": 3990
+        },
+        {
+          "char": "音",
+          "end_sample": 10870,
+          "index": 2,
+          "start_sample": 7500
+        },
+        {
+          "char": "乐",
+          "end_sample": 14380,
+          "index": 3,
+          "start_sample": 11010
+        }
+      ],
+      "end_sample": 49500,
+      "id": "I004",
+      "speaker_id": "S01",
+      "start_sample": 34500,
+      "text": "播放音乐",
+      "truth_command_code": 4
+    }
+  ],
+  "receipts": {
+    "a1": "receipts/evidence.a1",
+    "a2": "receipts/evidence.a2.json"
+  },
+  "seed": 20261127,
+  "speakers": [
+    {
+      "display_name": "说话人甲",
+      "id": "S01",
+      "trust_ppm": 900000
+    },
+    {
+      "display_name": "说话人乙",
+      "id": "S02",
+      "trust_ppm": 870000
+    },
+    {
+      "display_name": "说话人丙",
+      "id": "S03",
+      "trust_ppm": 840000
+    }
+  ]
+}
