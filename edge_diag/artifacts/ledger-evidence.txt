@@ -1,0 +1,45 @@
+== meta ==
+{'key': 'format_version', 'value': '1'}
+{'key': 'spec_digest', 'value': '7643a9c1ea26e501b0251004f4c1e65fd705cbfef393a63373343b9a4a59bee7'}
+{'key': 'session_id', 'value': 'edge-demo-001'}
+{'key': 'budget_used', 'value': '1792'}
+
+== progress ==
+{'id': 1, 'last_committed_seq': 18, 'spec_digest': '7643a9c1ea26e501b0251004f4c1e65fd705cbfef393a63373343b9a4a59bee7', 'format_version': 1}
+
+== ownership 归属裁决 ==
+{'node_id': 'node-a', 'slot_index': 0, 'reason': 'grant', 'basis': 'event#1 授予，配额版本 7', 'seq': 1, 'quota_version': 7}
+{'node_id': 'node-a', 'slot_index': 1, 'reason': 'grant', 'basis': 'event#2 授予，配额版本 7', 'seq': 2, 'quota_version': 7}
+{'node_id': 'node-b', 'slot_index': 0, 'reason': 'grant', 'basis': 'event#3 授予，配额版本 7', 'seq': 3, 'quota_version': 7}
+{'node_id': 'node-a', 'slot_index': 1, 'reason': 'released', 'basis': 'event#6 显式 released，归属释放回空闲池', 'seq': 6, 'quota_version': 7}
+{'node_id': 'node-c', 'slot_index': 0, 'reason': 'grant', 'basis': 'event#4 授予，配额版本 3', 'seq': 4, 'quota_version': 3}
+{'node_id': 'node-a', 'slot_index': 2, 'reason': 'grant', 'basis': 'event#5 授予，配额版本 7', 'seq': 5, 'quota_version': 7}
+{'node_id': 'node-c', 'slot_index': 0, 'reason': 'quota_recycle', 'basis': '配额版本换代 3->4，旧版本活跃租约全部回收', 'seq': 9, 'quota_version': 4}
+{'node_id': 'node-c', 'slot_index': 1, 'reason': 'grant', 'basis': 'event#10 授予，配额版本 4', 'seq': 10, 'quota_version': 4}
+{'node_id': 'node-a', 'slot_index': 2, 'reason': 'cancelled', 'basis': 'event#13 显式 cancelled，归属释放回空闲池', 'seq': 13, 'quota_version': 7}
+{'node_id': 'node-c', 'slot_index': 1, 'reason': 'expired', 'basis': 'monotonic now_ms=14352359 >= expire_ms=14352358', 'seq': 14, 'quota_version': 4}
+{'node_id': 'node-b', 'slot_index': 0, 'reason': 'released', 'basis': 'event#14 显式 released，归属释放回空闲池', 'seq': 14, 'quota_version': 7}
+{'node_id': 'node-b', 'slot_index': 1, 'reason': 'grant', 'basis': 'event#16 授予，配额版本 7', 'seq': 16, 'quota_version': 7}
+{'node_id': 'node-b', 'slot_index': 1, 'reason': 'quota_recycle', 'basis': '配额版本换代 7->8，旧版本活跃租约全部回收', 'seq': 18, 'quota_version': 8}
+
+== waits 真实等待 ==
+{'seq': 1, 'node_id': 'node-a', 'wait_start_ms': 14350514, 'wait_end_ms': 14350514, 'granted': 1, 'wait_delta_ms': 0}
+{'seq': 2, 'node_id': 'node-a', 'wait_start_ms': 14350514, 'wait_end_ms': 14350514, 'granted': 1, 'wait_delta_ms': 0}
+{'seq': 3, 'node_id': 'node-b', 'wait_start_ms': 14350515, 'wait_end_ms': 14350515, 'granted': 1, 'wait_delta_ms': 0}
+{'seq': 4, 'node_id': 'node-c', 'wait_start_ms': 14352262, 'wait_end_ms': 14352262, 'granted': 1, 'wait_delta_ms': 0}
+{'seq': 5, 'node_id': 'node-a', 'wait_start_ms': 14352262, 'wait_end_ms': 14352286, 'granted': 1, 'wait_delta_ms': 24}
+{'seq': 10, 'node_id': 'node-c', 'wait_start_ms': 14352328, 'wait_end_ms': 14352328, 'granted': 1, 'wait_delta_ms': 0}
+{'seq': 16, 'node_id': 'node-b', 'wait_start_ms': 14352381, 'wait_end_ms': 14352381, 'granted': 1, 'wait_delta_ms': 0}
+
+== unknown_batches ==
+{'batch_id': 'batch-000001', 'seq': 1, 'node_id': 'node-a', 'resolved': 'committed'}
+{'batch_id': 'batch-000002', 'seq': 2, 'node_id': 'node-a', 'resolved': 'committed'}
+{'batch_id': 'batch-000003', 'seq': 3, 'node_id': 'node-b', 'resolved': 'committed'}
+{'batch_id': 'batch-000007', 'seq': 4, 'node_id': 'node-c', 'resolved': 'committed'}
+{'batch_id': 'batch-000009', 'seq': 5, 'node_id': 'node-a', 'resolved': 'committed'}
+{'batch_id': 'batch-000012', 'seq': 10, 'node_id': 'node-c', 'resolved': 'committed'}
+{'batch_id': 'batch-000015', 'seq': 16, 'node_id': 'node-b', 'resolved': 'committed'}
+
+== 约束复核 ==
+active total 1
+budget_used 1792

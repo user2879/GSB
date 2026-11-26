@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edge-cache-diag"
+version = "1.0.0"
+description = "边缘缓存分片下发诊断工作台（租约/双路回收/崩溃恢复/可复核账本）"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4"]
+
+[tool.setuptools]
+packages = ["edge_cache", "edge_cache.tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["edge_cache/tests"]
+addopts = "-q"

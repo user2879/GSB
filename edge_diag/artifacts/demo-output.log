@@ -1,0 +1,838 @@
+==> [1/4] 生成确定性声明与事件样本
+样本已生成: samples/demo_spec.json
+==> [2/4] 启动节点子进程，运行下发、续约、双路回收与预算约束
+{
+  "outcome": {
+    "crashed_at": null,
+    "results": [
+      {
+        "seq": 2,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000002",
+          "node_id": "node-a",
+          "shard_id": "video-1080#s0001",
+          "content_key": "video-1080",
+          "shard_index": 1,
+          "grant_ms": 14348348,
+          "expire_ms": 14378348,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 7,
+          "slot_index": 1,
+          "state": "reclaimed:released"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-a",
+          "lease_id": "lease-000002",
+          "shard_id": "video-1080#s0001",
+          "content_key": "video-1080",
+          "shard_index": 1,
+          "quota_version": 7,
+          "digest": "dacbb9ca3431c5fd042e1b81eb8309d4eb3ba52c487c1d255e63ffebb05c7816",
+          "byte_hash": "0x26931cf219e3bf3b",
+          "fp_sum": 131143,
+          "fp_sqsum": 87696361,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 0
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 1,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000001",
+          "node_id": "node-a",
+          "shard_id": "video-1080#s0000",
+          "content_key": "video-1080",
+          "shard_index": 0,
+          "grant_ms": 14348347,
+          "expire_ms": 14378347,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 7,
+          "slot_index": 0,
+          "state": "active"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-a",
+          "lease_id": "lease-000001",
+          "shard_id": "video-1080#s0000",
+          "content_key": "video-1080",
+          "shard_index": 0,
+          "quota_version": 7,
+          "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+          "byte_hash": "0xc81f2b761dd290bc",
+          "fp_sum": 127708,
+          "fp_sqsum": 85214046,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 6,
+        "action": "released",
+        "lease_id": "lease-000002"
+      },
+      {
+        "seq": 3,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000003",
+          "node_id": "node-b",
+          "shard_id": "video-1080#s0002",
+          "content_key": "video-1080",
+          "shard_index": 2,
+          "grant_ms": 14348349,
+          "expire_ms": 14378417,
+          "renew_count": 1,
+          "lease_version": 2,
+          "quota_version": 7,
+          "slot_index": 0,
+          "state": "reclaimed:released"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-b",
+          "lease_id": "lease-000003",
+          "shard_id": "video-1080#s0002",
+          "content_key": "video-1080",
+          "shard_index": 2,
+          "quota_version": 7,
+          "digest": "ecc8451c9ef309f4cfb815acdd117569b0ec15797a2a0b8eff0d2c4869499a67",
+          "byte_hash": "0xfe591eb192b0cfb3",
+          "fp_sum": 125569,
+          "fp_sqsum": 83250597,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 4,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000004",
+          "node_id": "node-c",
+          "shard_id": "index-meta#s0000",
+          "content_key": "index-meta",
+          "shard_index": 0,
+          "grant_ms": 14348349,
+          "expire_ms": 14378349,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 3,
+          "slot_index": 0,
+          "state": "reclaimed:quota_recycle"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-c",
+          "lease_id": "lease-000004",
+          "shard_id": "index-meta#s0000",
+          "content_key": "index-meta",
+          "shard_index": 0,
+          "quota_version": 3,
+          "digest": "534a08801998a17f393a30768d7e29904acce31cad74c4364d10ad78d181767d",
+          "byte_hash": "0x7ee73b4361a4b821",
+          "fp_sum": 131835,
+          "fp_sqsum": 88986693,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 7,
+        "action": "read",
+        "receipt": {
+          "ok": true,
+          "op": "read",
+          "node_id": "node-a",
+          "lease_id": "lease-000001",
+          "shard_id": "video-1080#s0000",
+          "content_key": "video-1080",
+          "shard_index": 0,
+          "quota_version": 7,
+          "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+          "byte_hash": "0xc81f2b761dd290bc",
+          "fp_sum": 127708,
+          "fp_sqsum": 85214046,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        }
+      },
+      {
+        "seq": 8,
+        "action": "renew",
+        "lease": {
+          "lease_id": "lease-000003",
+          "node_id": "node-b",
+          "shard_id": "video-1080#s0002",
+          "content_key": "video-1080",
+          "shard_index": 2,
+          "grant_ms": 14348349,
+          "expire_ms": 14378417,
+          "renew_count": 1,
+          "lease_version": 2,
+          "quota_version": 7,
+          "slot_index": 0,
+          "state": "active"
+        }
+      },
+      {
+        "seq": 5,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000005",
+          "node_id": "node-a",
+          "shard_id": "index-meta#s0000",
+          "content_key": "index-meta",
+          "shard_index": 0,
+          "grant_ms": 14348403,
+          "expire_ms": 14378403,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 7,
+          "slot_index": 2,
+          "state": "reclaimed:cancelled"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-a",
+          "lease_id": "lease-000005",
+          "shard_id": "index-meta#s0000",
+          "content_key": "index-meta",
+          "shard_index": 0,
+          "quota_version": 7,
+          "digest": "ae1d9ce877a3794f753741b8aebf293d7e867739b45b47e7414bb6ef4bfe69fc",
+          "byte_hash": "0x7ee73b4361a4b821",
+          "fp_sum": 119327,
+          "fp_sqsum": 75909871,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        },
+        "wait_ms": 53
+      },
+      {
+        "seq": 9,
+        "action": "quota_change",
+        "recycled": 1
+      },
+      {
+        "seq": 11,
+        "action": "read",
+        "receipt": {
+          "ok": true,
+          "op": "read",
+          "node_id": "node-a",
+          "lease_id": "lease-000001",
+          "shard_id": "video-1080#s0000",
+          "content_key": "video-1080",
+          "shard_index": 0,
+          "quota_version": 7,
+          "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+          "byte_hash": "0xc81f2b761dd290bc",
+          "fp_sum": 127708,
+          "fp_sqsum": 85214046,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        }
+      },
+      {
+        "seq": 10,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000006",
+          "node_id": "node-c",
+          "shard_id": "video-1080#s0003",
+          "content_key": "video-1080",
+          "shard_index": 3,
+          "grant_ms": 14348442,
+          "expire_ms": 14348472,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 4,
+          "slot_index": 1,
+          "state": "reclaimed:expired"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-c",
+          "lease_id": "lease-000006",
+          "shard_id": "video-1080#s0003",
+          "content_key": "video-1080",
+          "shard_index": 3,
+          "quota_version": 4,
+          "digest": "770b0831f5d9e9f7fe08f1834dc7f62216c818b1c338eab2d7cc5fa494d4f079",
+          "byte_hash": "0xb538793931d3ed11",
+          "fp_sum": 128636,
+          "fp_sqsum": 86368122,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 0
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 12,
+        "action": "read",
+        "receipt": {
+          "ok": true,
+          "op": "read",
+          "node_id": "node-c",
+          "lease_id": "lease-000006",
+          "shard_id": "video-1080#s0003",
+          "content_key": "video-1080",
+          "shard_index": 3,
+          "quota_version": 4,
+          "digest": "770b0831f5d9e9f7fe08f1834dc7f62216c818b1c338eab2d7cc5fa494d4f079",
+          "byte_hash": "0xb538793931d3ed11",
+          "fp_sum": 128636,
+          "fp_sqsum": 86368122,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        }
+      },
+      {
+        "seq": 13,
+        "action": "cancelled",
+        "lease_id": "lease-000005"
+      },
+      {
+        "seq": 14,
+        "action": "released",
+        "lease_id": "lease-000003"
+      },
+      {
+        "seq": 15,
+        "action": "rejected",
+        "type": "renew",
+        "code": "E_LEASE",
+        "error": "E_LEASE: 续约目标不存在活跃租约 (at event#15.node-b.video-1080#s0002)",
+        "location": "event#15.node-b.video-1080#s0002"
+      },
+      {
+        "seq": 17,
+        "action": "read",
+        "receipt": {
+          "ok": true,
+          "op": "read",
+          "node_id": "node-a",
+          "lease_id": "lease-000001",
+          "shard_id": "video-1080#s0000",
+          "content_key": "video-1080",
+          "shard_index": 0,
+          "quota_version": 7,
+          "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+          "byte_hash": "0xc81f2b761dd290bc",
+          "fp_sum": 127708,
+          "fp_sqsum": 85214046,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 1
+        }
+      },
+      {
+        "seq": 16,
+        "action": "grant",
+        "lease": {
+          "lease_id": "lease-000007",
+          "node_id": "node-b",
+          "shard_id": "index-meta#s0001",
+          "content_key": "index-meta",
+          "shard_index": 1,
+          "grant_ms": 14348494,
+          "expire_ms": 14348994,
+          "renew_count": 0,
+          "lease_version": 1,
+          "quota_version": 7,
+          "slot_index": 1,
+          "state": "reclaimed:quota_recycle"
+        },
+        "receipt": {
+          "ok": true,
+          "op": "write",
+          "node_id": "node-b",
+          "lease_id": "lease-000007",
+          "shard_id": "index-meta#s0001",
+          "content_key": "index-meta",
+          "shard_index": 1,
+          "quota_version": 7,
+          "digest": "242563850f4b99e31c690289553f862d5fa8b534d65be725b92267332f4b33b8",
+          "byte_hash": "0x7d6874936ec723ca",
+          "fp_sum": 130764,
+          "fp_sqsum": 88813006,
+          "sample_count": 256,
+          "session_scale": 1000,
+          "elapsed_ms": 0
+        },
+        "wait_ms": 0
+      },
+      {
+        "seq": 18,
+        "action": "quota_change",
+        "recycled": 1
+      }
+    ]
+  },
+  "water": {
+    "global_active": 1,
+    "global_limit": 4,
+    "budget_used": 1792,
+    "byte_budget": 2048,
+    "nodes": [
+      {
+        "node_id": "node-a",
+        "quota_version": 7,
+        "capacity_slots": 3,
+        "used_slots": 1,
+        "per_node_limit": 2,
+        "active_leases": 1,
+        "active": [
+          {
+            "lease_id": "lease-000001",
+            "shard_id": "video-1080#s0000",
+            "slot_index": 0,
+            "expire_ms": 14378347,
+            "renew_count": 0,
+            "lease_version": 1
+          }
+        ]
+      },
+      {
+        "node_id": "node-b",
+        "quota_version": 8,
+        "capacity_slots": 2,
+        "used_slots": 0,
+        "per_node_limit": 2,
+        "active_leases": 0,
+        "active": []
+      },
+      {
+        "node_id": "node-c",
+        "quota_version": 4,
+        "capacity_slots": 2,
+        "used_slots": 0,
+        "per_node_limit": 2,
+        "active_leases": 0,
+        "active": []
+      }
+    ],
+    "last_committed_seq": 18
+  }
+}
+{
+  "verify": {
+    "ok": true,
+    "events_replayed": 21,
+    "last_committed_seq": 18
+  }
+}
+==> [3/4] 强制终止 node-b 后依据账本恢复并续跑
+{
+  "phase": "before_crash",
+  "crashed_at": 3,
+  "committed": [
+    1,
+    2,
+    3
+  ],
+  "last_committed_seq": 3
+}
+{
+  "phase": "recovered",
+  "last_committed_seq": 3,
+  "unknown_batches": [
+    {
+      "batch_id": "batch-000001",
+      "seq": 1,
+      "node_id": "node-a",
+      "shard_id": "video-1080#s0000",
+      "slot_index": 0,
+      "marked_ms": 14350514,
+      "resolved": "committed"
+    },
+    {
+      "batch_id": "batch-000002",
+      "seq": 2,
+      "node_id": "node-a",
+      "shard_id": "video-1080#s0001",
+      "slot_index": 1,
+      "marked_ms": 14350514,
+      "resolved": "committed"
+    },
+    {
+      "batch_id": "batch-000003",
+      "seq": 3,
+      "node_id": "node-b",
+      "shard_id": "video-1080#s0002",
+      "slot_index": 0,
+      "marked_ms": 14350515,
+      "resolved": "committed"
+    }
+  ],
+  "active_leases_restored": 3
+}
+{
+  "phase": "after_recovery",
+  "crashed_at": null,
+  "results": [
+    {
+      "seq": 6,
+      "action": "released",
+      "lease_id": "lease-000002"
+    },
+    {
+      "seq": 7,
+      "action": "read",
+      "receipt": {
+        "ok": true,
+        "op": "read",
+        "node_id": "node-a",
+        "lease_id": "lease-000001",
+        "shard_id": "video-1080#s0000",
+        "content_key": "video-1080",
+        "shard_index": 0,
+        "quota_version": 7,
+        "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+        "byte_hash": "0xc81f2b761dd290bc",
+        "fp_sum": 127708,
+        "fp_sqsum": 85214046,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      }
+    },
+    {
+      "seq": 4,
+      "action": "grant",
+      "lease": {
+        "lease_id": "lease-000007",
+        "node_id": "node-c",
+        "shard_id": "index-meta#s0000",
+        "content_key": "index-meta",
+        "shard_index": 0,
+        "grant_ms": 14352262,
+        "expire_ms": 14382262,
+        "renew_count": 0,
+        "lease_version": 1,
+        "quota_version": 3,
+        "slot_index": 0,
+        "state": "reclaimed:quota_recycle"
+      },
+      "receipt": {
+        "ok": true,
+        "op": "write",
+        "node_id": "node-c",
+        "lease_id": "lease-000007",
+        "shard_id": "index-meta#s0000",
+        "content_key": "index-meta",
+        "shard_index": 0,
+        "quota_version": 3,
+        "digest": "534a08801998a17f393a30768d7e29904acce31cad74c4364d10ad78d181767d",
+        "byte_hash": "0x7ee73b4361a4b821",
+        "fp_sum": 131835,
+        "fp_sqsum": 88986693,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      },
+      "wait_ms": 0
+    },
+    {
+      "seq": 8,
+      "action": "renew",
+      "lease": {
+        "lease_id": "lease-000003",
+        "node_id": "node-b",
+        "shard_id": "video-1080#s0002",
+        "content_key": "video-1080",
+        "shard_index": 2,
+        "grant_ms": 14350515,
+        "expire_ms": 14382305,
+        "renew_count": 1,
+        "lease_version": 2,
+        "quota_version": 7,
+        "slot_index": 0,
+        "state": "active"
+      }
+    },
+    {
+      "seq": 5,
+      "action": "grant",
+      "lease": {
+        "lease_id": "lease-000008",
+        "node_id": "node-a",
+        "shard_id": "index-meta#s0000",
+        "content_key": "index-meta",
+        "shard_index": 0,
+        "grant_ms": 14352286,
+        "expire_ms": 14382286,
+        "renew_count": 0,
+        "lease_version": 1,
+        "quota_version": 7,
+        "slot_index": 2,
+        "state": "reclaimed:cancelled"
+      },
+      "receipt": {
+        "ok": true,
+        "op": "write",
+        "node_id": "node-a",
+        "lease_id": "lease-000008",
+        "shard_id": "index-meta#s0000",
+        "content_key": "index-meta",
+        "shard_index": 0,
+        "quota_version": 7,
+        "digest": "ae1d9ce877a3794f753741b8aebf293d7e867739b45b47e7414bb6ef4bfe69fc",
+        "byte_hash": "0x7ee73b4361a4b821",
+        "fp_sum": 119327,
+        "fp_sqsum": 75909871,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 0
+      },
+      "wait_ms": 24
+    },
+    {
+      "seq": 9,
+      "action": "quota_change",
+      "recycled": 1
+    },
+    {
+      "seq": 11,
+      "action": "read",
+      "receipt": {
+        "ok": true,
+        "op": "read",
+        "node_id": "node-a",
+        "lease_id": "lease-000001",
+        "shard_id": "video-1080#s0000",
+        "content_key": "video-1080",
+        "shard_index": 0,
+        "quota_version": 7,
+        "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+        "byte_hash": "0xc81f2b761dd290bc",
+        "fp_sum": 127708,
+        "fp_sqsum": 85214046,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      }
+    },
+    {
+      "seq": 10,
+      "action": "grant",
+      "lease": {
+        "lease_id": "lease-000009",
+        "node_id": "node-c",
+        "shard_id": "video-1080#s0003",
+        "content_key": "video-1080",
+        "shard_index": 3,
+        "grant_ms": 14352328,
+        "expire_ms": 14352358,
+        "renew_count": 0,
+        "lease_version": 1,
+        "quota_version": 4,
+        "slot_index": 1,
+        "state": "reclaimed:expired"
+      },
+      "receipt": {
+        "ok": true,
+        "op": "write",
+        "node_id": "node-c",
+        "lease_id": "lease-000009",
+        "shard_id": "video-1080#s0003",
+        "content_key": "video-1080",
+        "shard_index": 3,
+        "quota_version": 4,
+        "digest": "770b0831f5d9e9f7fe08f1834dc7f62216c818b1c338eab2d7cc5fa494d4f079",
+        "byte_hash": "0xb538793931d3ed11",
+        "fp_sum": 128636,
+        "fp_sqsum": 86368122,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      },
+      "wait_ms": 0
+    },
+    {
+      "seq": 12,
+      "action": "read",
+      "receipt": {
+        "ok": true,
+        "op": "read",
+        "node_id": "node-c",
+        "lease_id": "lease-000009",
+        "shard_id": "video-1080#s0003",
+        "content_key": "video-1080",
+        "shard_index": 3,
+        "quota_version": 4,
+        "digest": "770b0831f5d9e9f7fe08f1834dc7f62216c818b1c338eab2d7cc5fa494d4f079",
+        "byte_hash": "0xb538793931d3ed11",
+        "fp_sum": 128636,
+        "fp_sqsum": 86368122,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      }
+    },
+    {
+      "seq": 13,
+      "action": "cancelled",
+      "lease_id": "lease-000008"
+    },
+    {
+      "seq": 14,
+      "action": "released",
+      "lease_id": "lease-000003"
+    },
+    {
+      "seq": 15,
+      "action": "rejected",
+      "type": "renew",
+      "code": "E_LEASE",
+      "error": "E_LEASE: 续约目标不存在活跃租约 (at event#15.node-b.video-1080#s0002)",
+      "location": "event#15.node-b.video-1080#s0002"
+    },
+    {
+      "seq": 17,
+      "action": "read",
+      "receipt": {
+        "ok": true,
+        "op": "read",
+        "node_id": "node-a",
+        "lease_id": "lease-000001",
+        "shard_id": "video-1080#s0000",
+        "content_key": "video-1080",
+        "shard_index": 0,
+        "quota_version": 7,
+        "digest": "8887807a04d21a6ef20f4348b6e2f02e36b00947dda475e688daffabb02ad59a",
+        "byte_hash": "0xc81f2b761dd290bc",
+        "fp_sum": 127708,
+        "fp_sqsum": 85214046,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      }
+    },
+    {
+      "seq": 16,
+      "action": "grant",
+      "lease": {
+        "lease_id": "lease-000010",
+        "node_id": "node-b",
+        "shard_id": "index-meta#s0001",
+        "content_key": "index-meta",
+        "shard_index": 1,
+        "grant_ms": 14352381,
+        "expire_ms": 14352881,
+        "renew_count": 0,
+        "lease_version": 1,
+        "quota_version": 7,
+        "slot_index": 1,
+        "state": "reclaimed:quota_recycle"
+      },
+      "receipt": {
+        "ok": true,
+        "op": "write",
+        "node_id": "node-b",
+        "lease_id": "lease-000010",
+        "shard_id": "index-meta#s0001",
+        "content_key": "index-meta",
+        "shard_index": 1,
+        "quota_version": 7,
+        "digest": "242563850f4b99e31c690289553f862d5fa8b534d65be725b92267332f4b33b8",
+        "byte_hash": "0x7d6874936ec723ca",
+        "fp_sum": 130764,
+        "fp_sqsum": 88813006,
+        "sample_count": 256,
+        "session_scale": 1000,
+        "elapsed_ms": 1
+      },
+      "wait_ms": 0
+    },
+    {
+      "seq": 18,
+      "action": "quota_change",
+      "recycled": 1
+    }
+  ],
+  "water": {
+    "global_active": 1,
+    "global_limit": 4,
+    "budget_used": 1792,
+    "byte_budget": 2048,
+    "nodes": [
+      {
+        "node_id": "node-a",
+        "quota_version": 7,
+        "capacity_slots": 3,
+        "used_slots": 1,
+        "per_node_limit": 2,
+        "active_leases": 1,
+        "active": [
+          {
+            "lease_id": "lease-000001",
+            "shard_id": "video-1080#s0000",
+            "slot_index": 0,
+            "expire_ms": 14380514,
+            "renew_count": 0,
+            "lease_version": 1
+          }
+        ]
+      },
+      {
+        "node_id": "node-b",
+        "quota_version": 8,
+        "capacity_slots": 2,
+        "used_slots": 0,
+        "per_node_limit": 2,
+        "active_leases": 0,
+        "active": []
+      },
+      {
+        "node_id": "node-c",
+        "quota_version": 4,
+        "capacity_slots": 2,
+        "used_slots": 0,
+        "per_node_limit": 2,
+        "active_leases": 0,
+        "active": []
+      }
+    ],
+    "last_committed_seq": 18
+  }
+}
+{
+  "verify": {
+    "ok": true,
+    "events_replayed": 21,
+    "last_committed_seq": 18
+  }
+}
+==> [4/4] 独立只读重放校验
+{
+  "ok": true,
+  "events_replayed": 21,
+  "last_committed_seq": 18
+}
+==> 演示完成。打开界面: python -m edge_cache.cli ui --spec samples/demo_spec.json --db state/ledger.sqlite3
