@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "feature_columns": [
+    "base_signal",
+    "strong_correlated",
+    "collinear_left",
+    "collinear_right",
+    "independent_noise",
+    "mixed_signal"
+  ],
+  "fixed_point": {
+    "decimal_places": 9,
+    "quant_level": 1,
+    "accum_rounding_margin": 3
+  },
+  "accumulation": {
+    "arithmetic": "ordered_python_integer",
+    "order": ["target_column_asc", "source_column_asc", "sample_id_asc"],
+    "rounding_margin": 3,
+    "caliber": "stable nested order; explicit integer rounding per MAC contribution"
+  },
+  "correlation_threshold": 0.9,
+  "collinearity_threshold": 0.995,
+  "attribution_tolerance": 0.000001,
+  "scheduler": {
+    "worker_count": 4,
+    "mac_budget_per_batch": 240,
+    "single_column_quota": 90
+  },
+  "cache_dir": "ledger/cache",
+  "ledger_path": "ledger/reuse_ledger.json",
+  "lineage_path": "ledger/lineage.json",
+  "snapshot_dir": "snapshots",
+  "paths": {
+    "ridge": {
+      "penalty": "ridge",
+      "alphas": [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0],
+      "min_alpha": 0.0,
+      "max_alpha": 100.0,
+      "spacing": "geometric",
+      "spacing_value": 2.0,
+      "solver": {
+        "coefficient_tolerance": 1e-10,
+        "max_iterations": 100,
+        "pivot_abs_threshold": 1000000,
+        "fallback_factor": 0.5,
+        "max_fallbacks": 4,
+        "zero_half_step_policy": "zero",
+        "convergence_boundary_policy": "converge"
+      }
+    },
+    "lasso": {
+      "penalty": "lasso",
+      "alphas": [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0],
+      "min_alpha": 0.0,
+      "max_alpha": 100.0,
+      "spacing": "geometric",
+      "spacing_value": 2.0,
+      "solver": {
+        "coefficient_tolerance": 1e-9,
+        "max_iterations": 500,
+        "pivot_abs_threshold": 1000000,
+        "fallback_factor": 0.5,
+        "max_fallbacks": 4,
+        "zero_half_step_policy": "zero",
+        "convergence_boundary_policy": "converge"
+      }
+    }
+  }
+}
