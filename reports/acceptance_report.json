@@ -1,0 +1,214 @@
+{
+  "baseline": {
+    "conflicts": 0,
+    "failures": 0,
+    "keypoints": 159,
+    "samples": 6,
+    "windows": 2070
+  },
+  "budget": {
+    "first_pending": "sample_001:c2",
+    "first_pending_count": 5,
+    "ok": true,
+    "priority_ok": true,
+    "quota_events": 7,
+    "quota_ok": true
+  },
+  "command_replay": {
+    "ok": true,
+    "steps": [
+      {
+        "same": true,
+        "step": "baseline"
+      },
+      {
+        "op": "update_config",
+        "same": true,
+        "step": 2
+      },
+      {
+        "op": "update_config",
+        "same": true,
+        "step": 3
+      },
+      {
+        "op": "replace_annotation_version",
+        "same": true,
+        "step": 4
+      },
+      {
+        "op": "replace_annotation_version",
+        "same": true,
+        "step": 5
+      },
+      {
+        "op": "update_config",
+        "same": true,
+        "step": 6
+      },
+      {
+        "op": "replace_image",
+        "same": true,
+        "step": 7
+      },
+      {
+        "op": "add_image",
+        "same": true,
+        "step": 8
+      },
+      {
+        "op": "delete_image",
+        "same": true,
+        "step": 9
+      },
+      {
+        "op": "set_budget",
+        "same": true,
+        "step": 10
+      },
+      {
+        "op": "set_lease_limit",
+        "same": true,
+        "step": 11
+      },
+      {
+        "op": "set_budget",
+        "same": true,
+        "step": 12
+      },
+      {
+        "op": "update_config",
+        "same": true,
+        "step": 13
+      }
+    ]
+  },
+  "concurrency": {
+    "ok": true,
+    "ordered_helper": true,
+    "runs": [
+      {
+        "keypoints": 82,
+        "workers": 1
+      },
+      {
+        "keypoints": 82,
+        "workers": 2
+      },
+      {
+        "keypoints": 82,
+        "workers": 4
+      }
+    ]
+  },
+  "environment": {
+    "loopback_tcp": {
+      "host": "127.0.0.1",
+      "ok": true,
+      "port": 44918
+    },
+    "multiprocessing": {
+      "ok": true,
+      "start_method": "fork"
+    },
+    "numpy": {
+      "ok": true,
+      "version": "2.4.6"
+    },
+    "python": {
+      "executable": "/home/zsl/feedback/uidfc5909d3-default-357/.venv/bin/python",
+      "ok": true,
+      "version": "3.11.0rc1"
+    },
+    "tkinter": {
+      "ok": true,
+      "tk_version": "8.6.12"
+    }
+  },
+  "gui_smoke": {
+    "ok": true
+  },
+  "injection": {
+    "all_injections_hit": true,
+    "good_samples_isolated": true,
+    "results": [
+      {
+        "code": "E_SAMPLE_INVALID",
+        "failure": {
+          "code": "E_SAMPLE_INVALID",
+          "injection_id": "INJ-PNG-TRUNC-001",
+          "reasons": [
+            "truncated b'IDAT' chunk"
+          ],
+          "target": "samples/inj_png_trunc.png"
+        },
+        "hit": true,
+        "injection_id": "INJ-PNG-TRUNC-001",
+        "kind": "truncate_png_data_chunk"
+      },
+      {
+        "code": "E_SAMPLE_INVALID",
+        "failure": {
+          "code": "E_SAMPLE_INVALID",
+          "injection_id": "INJ-KP-NONINT-002",
+          "reasons": [
+            "keypoints[0] x/y must be integers"
+          ],
+          "target": "truth/inj_kp_nonint.json"
+        },
+        "hit": true,
+        "injection_id": "INJ-KP-NONINT-002",
+        "kind": "noninteger_keypoint_x"
+      },
+      {
+        "code": "E_SAMPLE_INVALID",
+        "failure": {
+          "code": "E_SAMPLE_INVALID",
+          "injection_id": "INJ-ORDER-SKIP-003",
+          "reasons": [
+            "reading_order must be continuous 1..N without duplicates or gaps"
+          ],
+          "target": "truth/inj_order_skip.json"
+        },
+        "hit": true,
+        "injection_id": "INJ-ORDER-SKIP-003",
+        "kind": "reading_order_gap"
+      },
+      {
+        "code": "E_SAMPLE_INVALID",
+        "failure": {
+          "code": "E_SAMPLE_INVALID",
+          "reasons": [
+            "unknown quant_gear: 'unknown_quant_gear'"
+          ],
+          "target": "/home/zsl/feedback/uidfc5909d3-default-357/injection_lab/configs/invalid_quant_workbench.json"
+        },
+        "hit": true,
+        "injection_id": "INJ-QUANT-UNKNOWN-004",
+        "kind": "unknown_quant_gear"
+      }
+    ]
+  },
+  "lease_reclamation": {
+    "expired_events": [
+      {
+        "at_ms": 7911423,
+        "code": "E_LEASE_EXPIRED",
+        "expired_at_ms": 7911343,
+        "generation": 1,
+        "lease_id": "lease-d69d7dac555d577a",
+        "reaped_at_ms": 7911423,
+        "released_points": 7,
+        "target": "sample-x:c0"
+      }
+    ],
+    "ok": true,
+    "stale_generation_code": "E_LEASE_GENERATION"
+  },
+  "ok": true,
+  "pytest": {
+    "ok": true,
+    "returncode": 0,
+    "tail": ".................                                                        [100%]\n17 passed in 46.13s\n\n"
+  }
+}

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vertical-workbench"
+version = "1.0.0"
+description = "Deterministic diagnostic workbench for vertical classical-text keypoint localization"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+vertical-workbench = "vertical_workbench.cli:main"
+vertical-workbench-gui = "vertical_workbench.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

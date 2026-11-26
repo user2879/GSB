@@ -1,0 +1,87 @@
+{
+  "all_injections_hit": true,
+  "business_code_counts": {
+    "E_COMPARISON_LIMIT": 0,
+    "E_CONFIG_INVALID": 0,
+    "E_LEASE_EXPIRED": 0,
+    "E_LEASE_GENERATION": 0,
+    "E_LEASE_LIMIT": 0,
+    "E_POINT_BUDGET_PENDING": 0,
+    "E_QUOTA_EXCEEDED": 0,
+    "E_SAMPLE_INVALID": 3,
+    "OK": 0
+  },
+  "engine_failure_count": 3,
+  "good_sample_ids": [
+    "sample_001",
+    "sample_002",
+    "sample_003",
+    "sample_004"
+  ],
+  "good_samples_isolated": true,
+  "injection_results": [
+    {
+      "code": "E_SAMPLE_INVALID",
+      "failure": {
+        "code": "E_SAMPLE_INVALID",
+        "injection_id": "INJ-PNG-TRUNC-001",
+        "reasons": [
+          "truncated b'IDAT' chunk"
+        ],
+        "target": "samples/inj_png_trunc.png"
+      },
+      "hit": true,
+      "injection_id": "INJ-PNG-TRUNC-001",
+      "kind": "truncate_png_data_chunk"
+    },
+    {
+      "code": "E_SAMPLE_INVALID",
+      "failure": {
+        "code": "E_SAMPLE_INVALID",
+        "injection_id": "INJ-KP-NONINT-002",
+        "reasons": [
+          "keypoints[0] x/y must be integers"
+        ],
+        "target": "truth/inj_kp_nonint.json"
+      },
+      "hit": true,
+      "injection_id": "INJ-KP-NONINT-002",
+      "kind": "noninteger_keypoint_x"
+    },
+    {
+      "code": "E_SAMPLE_INVALID",
+      "failure": {
+        "code": "E_SAMPLE_INVALID",
+        "injection_id": "INJ-ORDER-SKIP-003",
+        "reasons": [
+          "reading_order must be continuous 1..N without duplicates or gaps"
+        ],
+        "target": "truth/inj_order_skip.json"
+      },
+      "hit": true,
+      "injection_id": "INJ-ORDER-SKIP-003",
+      "kind": "reading_order_gap"
+    },
+    {
+      "code": "E_SAMPLE_INVALID",
+      "failure": {
+        "code": "E_SAMPLE_INVALID",
+        "reasons": [
+          "unknown quant_gear: 'unknown_quant_gear'"
+        ],
+        "target": "/home/zsl/feedback/uidfc5909d3-default-357/injection_lab/configs/invalid_quant_workbench.json"
+      },
+      "hit": true,
+      "injection_id": "INJ-QUANT-UNKNOWN-004",
+      "kind": "unknown_quant_gear"
+    }
+  ],
+  "lab": "/home/zsl/feedback/uidfc5909d3-default-357/injection_lab",
+  "processed_sample_ids": [
+    "sample_001",
+    "sample_002",
+    "sample_003",
+    "sample_004"
+  ],
+  "suite": "vertical-workbench-injection/v1"
+}
