@@ -1,0 +1,104 @@
+{
+  "format_version": 1,
+  "capacity_version": "cap-v1",
+  "fixed_scale": 1000,
+  "global_budget": 6,
+  "max_workers": 3,
+  "lease_ttl_ms": 2500,
+  "handshake_timeout_ms": 1200,
+  "io_timeout_ms": 1200,
+  "poll_interval_ms": 2,
+  "nodes": [
+    {
+      "id": "node-a",
+      "host": "127.0.0.1",
+      "port": 48761,
+      "seed": 1101,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "quota": 10,
+      "used": 2,
+      "fixed_scale": 1000
+    },
+    {
+      "id": "node-b",
+      "host": "127.0.0.1",
+      "port": 48762,
+      "seed": 2202,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "quota": 8,
+      "used": 1,
+      "fixed_scale": 1000
+    },
+    {
+      "id": "node-c",
+      "host": "127.0.0.1",
+      "port": 48763,
+      "seed": 3303,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "quota": 6,
+      "used": 0,
+      "fixed_scale": 10000
+    },
+    {
+      "id": "node-d",
+      "host": "127.0.0.1",
+      "port": 48764,
+      "seed": 4404,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "quota": 7,
+      "used": 1,
+      "fixed_scale": 1000
+    }
+  ],
+  "shards": [
+    {
+      "id": "raw-a",
+      "node_id": "node-a",
+      "dependencies": [],
+      "demand": 3,
+      "sample_count": 48,
+      "group_count": 4,
+      "batch_size": 7
+    },
+    {
+      "id": "raw-b",
+      "node_id": "node-b",
+      "dependencies": [],
+      "demand": 3,
+      "sample_count": 40,
+      "group_count": 5,
+      "batch_size": 6
+    },
+    {
+      "id": "raw-d",
+      "node_id": "node-d",
+      "dependencies": [],
+      "demand": 2,
+      "sample_count": 24,
+      "group_count": 3,
+      "batch_size": 5
+    },
+    {
+      "id": "join-ab",
+      "node_id": "node-c",
+      "dependencies": ["raw-a", "raw-b"],
+      "demand": 2,
+      "sample_count": 30,
+      "group_count": 3,
+      "batch_size": 4
+    },
+    {
+      "id": "report",
+      "node_id": "node-d",
+      "dependencies": ["join-ab", "raw-d"],
+      "demand": 2,
+      "sample_count": 20,
+      "group_count": 2,
+      "batch_size": 3
+    }
+  ]
+}

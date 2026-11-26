@@ -1,21 +1,187 @@
-平台组刚把一块空目录划给这次首版，除根文件夹外没有任何代码、配置或本地样本，全部内容都要在这台 Linux（WSL Ubuntu）开发机上首次建立。要交付一套可集成的 Python 包与可重复演示，用于诊断本地多节点分片下发场景中配额水位的定点误差传播与依赖失效边界。业务对象是多节点分片计算：每个节点是独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议接收携带容量版本与批次样本的分片请求，按自身声明的整数定点口径对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用容量版本与单调时钟毫秒耗时；用户在本地 JSON 中声明节点、分片清单及其上游依赖、全局资源单位预算与配额参数。运维侧会反复修改节点配额、分片资源需求与定点缩放因子，并要求每次变更后只重算真正受影响的分片。核心矛盾在于：水位比例以整数定点计算，比较判定在误差不可区分时必须给出稳定可复核的结论，而依赖链上的失效传播又要求未受影响分片的聚合摘要逐字节不变。
+# GSB fixed-point shard diagnostics
 
-任务环境与准备：
-确认运行于 Linux（WSL Ubuntu），Python 3.10 及以上可用。
-安装依赖：pip install numpy 与 SQLite 支持（标准库 sqlite3）及 Tkinter（sudo apt install python3-tk）；NumPy 版本无特殊要求，均使用整数定点运算。
-工作区只需空的项目根目录，所有代码、配置与确定性样本由本任务自行建立；不依赖外部账号、网络站点或预置数据文件。
+`gsb-diagnostics` is a Python 3.10+ package for diagnosing fixed-point quota
+watermarks, dependency invalidation and durable scheduling in a local
+multi-node shard workload. Every node is a real child process listening on a
+literal `127.0.0.1` TCP socket. Requests and replies use newline-delimited JSON.
+All quota, watermark and arbitration decisions use Python integers or NumPy
+integer arrays; no float is used as a decision path.
 
-业务要求：
-1. 实现节点声明、分片清单与依赖引用、容量版本与调度预算参数的本地 JSON 加载及强校验：节点标识与分片标识唯一，回环端口为 127.0.0.1 字面量且全局不重复，并发配额与每节点租约上限为整数，依赖引用存在且依赖图无环，缩放因子属于受支持整数集合，不合规分别以 E_SPEC 与 E_DEPEND 报告并指明首个非法条目。
-2. 实现节点子进程编排与真实回环协议通信：子进程在声明端口真实监听，父进程通过真实 TCP 套接字下发含分片标识、容量版本与批次样本的请求，接收含节点标识、分片标识、容量版本、聚合摘要与单调时钟毫秒耗时的回执；握手与读取均使用真实套接字超时，端口占用、握手超时与回执字段缺失分别以 E_PORT、E_TIMEOUT、E_PROTO 报告。
-3. 实现基于节点随机种子与分片标识的确定性样本生成，并以 NumPy 完成整数定点分组聚合：聚合摘要须绑定节点标识、分片标识、样本行数、容量版本与参与行数，由显式可复现规则推导；同一声明在任意下发顺序、任意批次切分与任意并发度下必须得到逐位一致的样本字节与聚合摘要。
-4. 实现以会话缩放因子为参数的水位口径：把资源单位、租约上限与已用量统一量化为定点整数，水位比例与余量以整数乘除计算，显式声明截断方向与溢出饱和规则，并给出单分片量化误差、逐节点水位比较判定误差界与全局预算聚合误差上界，把总误差拆分为量化截断、比较判定与聚合累加三段贡献并给出主导段判定规则。
-5. 实现预算边界上的不可区分裁决：当剩余预算与候选分片需求之差、或两候选分片的定点水位差落在合成误差界内时，按稳定拓扑序与分片标识序的显式决胜规则选定放行者并标注受误差影响；须完整输出所采用的决胜依据、两候选的水位向量与差值、误差界及判定来源，且不得以浮点比较替代整数判定。
-6. 实现容量版本或配额参数演进后的失效传播与仅失效子集重算：沿分片依赖图与节点引用关系推导全部直接与间接失效分片，按稳定拓扑序输出失效集合与每步传播依据；未失效分片的聚合摘要、租约归属与水位记录必须逐字节保持不变，并提供与从空白全量重建的逐字段一致性校验，差异以 E_DIVERGE 定位到首个不一致分片与字段。
-7. 实现受全局资源单位预算、每节点租约上限与每节点并发配额三重约束的并行调度，其中租约签发、续约与基于本地单调时钟的真实过期判定须真实投射到工作线程池，任一时刻在途分片消耗之和、单节点活跃租约数与活跃分片数均不得越界；越界前必须排队并记录以单调时钟毫秒计量的等待开始与结束，且同一份容量权益不得在到期回收与配额变更回收之间被重复归属。
-8. 实现账本在 SQLite 的原子提交、会话快照的版本识别整体替换恢复与强制终止后的重放校验：每完成一个分片结局须在同一事务写入聚合摘要、租约归属、资源占用、水位、误差归因与进度游标并携带整数格式版本与内容摘要；重新打开快照时版本或摘要不一致须整体替换而非增量合并，进程被强制终止后重启只能依据已完整提交记录恢复，未提交分片标记为未知并要求重跑且先回收其配额，不得声称能生成强制终止时的退出报告。
+## Delivered components
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+- Strict local JSON loader with stable first-error paths (`E_SPEC`, `E_DEPEND`).
+- Deterministic samples derived from node seed and shard id, with NumPy `int64`
+  grouped aggregation and SHA-256 content/aggregate digests.
+- Real child-process TCP runtime with startup, handshake and read deadlines
+  (`E_PORT`, `E_TIMEOUT`, `E_PROTO`).
+- Fixed-point watermarks, explicit truncation/saturation policy, three-part
+  error accounting and stable arbitration evidence.
+- Dependency-aware invalidation, incremental recomputation, byte-preservation
+  checks and first-field divergence reporting (`E_DIVERGE`).
+- Thread-pool scheduler enforcing global units, per-node lease count and
+  per-node concurrency, with monotonic lease renewal/expiry and wait logs.
+- SQLite atomic outcome ledger, whole-snapshot replacement and forced-kill
+  recovery with quota reclamation (`E_SNAPSHOT` for invalid snapshots).
 
-验收：
-用本地样本验证水位定点计算、失效传播、配额调度与快照恢复重放一致，并覆盖异常码。
+## Environment and installation
+
+Validated locally on:
+
+- Linux/WSL Ubuntu, Python `3.11.0rc1` (the package requires Python `>=3.10`)
+- NumPy `1.26.4`
+- SQLite `3.37.2` from the standard library
+
+The acceptance demo is headless and does not import Tkinter. The current
+development image has no `python3-tk`/`libtk8.6` and `sudo` requires a
+password, so no GUI is required or claimed. If a local Tk UI is wanted, install
+it separately with `sudo apt install python3-tk`.
+
+```bash
+python3 -m pip install .
+# or, without installation (and for source-tree edits):
+PYTHONPATH=src python3 -m gsb --help
+```
+
+The wheel build was also verified directly on the supplied old pip 20.3.4
+toolchain. If a very old pip fails its editable-install bootstrap, use the
+regular wheel install above or `PYTHONPATH=src`.
+
+## Repeatable acceptance demo
+
+```bash
+PYTHONPATH=src python3 -m gsb demo \
+  --spec examples/spec.json \
+  --evolved-spec examples/spec_evolved.json \
+  --workdir artifacts/demo
+```
+
+The command exits with status `0` and prints `PASS`. It writes the complete
+evidence to `artifacts/demo/report.json`, including:
+
+- integer water vectors and error bounds for an indistinguishable water case;
+- an exact residual tie in the budget arbiter;
+- actual lease issue/renew/release events and `global_budget` queue waits;
+- quota-evolution invalidation with only `raw-a`, `join-ab`, `report` rerun;
+- byte-preserved results for `raw-b` and `raw-d`;
+- field-by-field consistency against a blank full rebuild;
+- whole snapshot restoration over a stale session version;
+- a real `SIGKILL`-equivalent child exit after a committed lease reservation,
+  followed by recovery and quota reclamation;
+- live coverage of `E_SPEC`, `E_DEPEND`, `E_PORT`, `E_TIMEOUT`, `E_PROTO` and
+  `E_DIVERGE`.
+
+Individual commands:
+
+```bash
+PYTHONPATH=src python3 -m gsb validate examples/spec.json
+PYTHONPATH=src python3 -m gsb run \
+  --spec examples/spec.json --ledger artifacts/run.db --session-version 1
+PYTHONPATH=src python3 -m gsb recover \
+  --ledger artifacts/run.db --session-version 1
+```
+
+## Spec format
+
+See `examples/spec.json` for a complete declaration. Unknown fields are
+rejected. The root fields are:
+
+| Field | Meaning |
+| --- | --- |
+| `format_version` | Integer schema version; currently exactly `1`. |
+| `capacity_version` | Opaque non-empty capacity generation identifier. |
+| `fixed_scale` | Session fixed scale; one of `100`, `1000`, `10000`, `100000`. |
+| `global_budget` | Global resource-unit budget, positive integer. |
+| `max_workers` | Worker-pool size. |
+| `lease_ttl_ms` | Lease TTL measured with `time.monotonic_ns()`. |
+| `handshake_timeout_ms` | TCP connect/handshake deadline. |
+| `io_timeout_ms` | Per-request socket read deadline. |
+| `poll_interval_ms` | Scheduler wake-up interval. |
+| `nodes` | Non-empty node declarations. |
+| `shards` | Non-empty shard declarations. |
+
+Each node declares `id`, literal `host: "127.0.0.1"`, globally unique `port`,
+integer `seed`, integer `concurrency`, integer `lease_limit`, positive integer
+`quota`, non-negative integer `used <= quota`, and a supported `fixed_scale`.
+
+Each shard declares `id`, existing `node_id`, existing upstream
+`dependencies`, positive integer `demand`, `sample_count`, `group_count` and
+`batch_size`. Node ids, shard ids and ports are unique. The dependency graph is
+checked for missing references and cycles in declaration order.
+
+## Package integration
+
+```python
+from gsb import ClusterRuntime, Ledger, load_spec, plan_invalidation
+
+old_spec = load_spec("examples/spec.json")
+new_spec = load_spec("examples/spec_evolved.json")
+
+with Ledger("artifacts/live.db", session_version=1) as ledger:
+    with ClusterRuntime(old_spec, ledger=ledger, session_version=1) as runtime:
+        initial = runtime.execute()
+
+# A new session/ledger is used for an evolved declaration.  Only the invalid
+# closure is recomputed; records outside it are imported and byte-checked.
+plan = plan_invalidation(old_spec, new_spec)
+```
+
+Useful modules: `gsb.spec`, `gsb.fixed`, `gsb.arbitration`,
+`gsb.invalidation`, `gsb.runtime`, `gsb.scheduler`, `gsb.ledger`,
+`gsb.samples`, `gsb.client`.
+
+## Fixed-point policy
+
+For non-negative integer units `U`, quota `Q`, lease limit `L`, and session
+scale `S`:
+
+```text
+used_fp      = U * S
+quota_fp     = Q * S
+lease_fp     = L * S
+utilization  = floor(U * S / Q)
+headroom     = floor((Q - U) * S / Q)
+```
+
+The intermediate products are exact Python integers. A final quotient above
+signed 64-bit `MAX_I64` saturates at `MAX_I64`; truncation is floor division for
+the non-negative domain. Ratios retain their remainder, so each ratio has a
+strict truncation error below one fixed unit.
+
+For `n` nodes, the declared decomposition is:
+
+- quantization truncation: `2n` fixed units (`utilization` + `headroom`);
+- comparison decision: `2` fixed units for two candidates;
+- aggregation accumulation: `n` fixed units when summing node watermarks;
+- total: `3n + 2` fixed units.
+
+The dominant segment is the largest component; ties prefer quantization, then
+comparison, then aggregation. See `docs/DESIGN.md` for the full derivation.
+
+## Stability and durability rules
+
+- Ready shards are ordered by stable Kahn topological rank, then shard id.
+- Equal or error-indistinguishable water is decided by the same stable key and
+  marked `error_affected: true`; the complete evidence record is returned.
+- Integer budget residuals are exact resource units. Ambiguity at the resource
+  boundary therefore occurs at exact residual ties unless the caller supplies
+  a valid fixed-bound conversion.
+- A stopped lease transitions accounting at most once. Expiry of a still-running
+  worker places its capacity in quarantine until worker exit, preventing
+  overcommit and double reclamation.
+- Every committed shard record carries `format_version`, `content_digest`,
+  aggregate/sample digests, lease attribution, units, water, error attribution
+  and an integer progress cursor in one SQLite transaction.
+- Snapshot restoration is always a whole-file replacement, never an incremental
+  merge. Recovery only trusts complete record transactions and explicitly
+  returns `exit_report_available: false` after forcible termination.
+
+## Tests and actual results
+
+```bash
+PYTHONPATH=src python3 -m pytest -q
+```
+
+Result on 2026-11-27: `37 passed`. The demo result is `PASS`; captured evidence
+is in `artifacts/demo/report.json` and summarized in
+`docs/VALIDATION.md`. No Docker, external account, remote target or network
+site is used.
