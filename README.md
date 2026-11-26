@@ -1,3 +1,29 @@
+# Edge Shard Diagnostics
+
+可独立复核的云原生边缘推理分片调度诊断实现。快速开始：
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate
+pip install numpy==1.26.4
+python scripts/generate_demo.py --check
+./scripts/acceptance.sh
+```
+
+常用复核入口：
+
+- 强校验：`.venv/bin/python -m edge_shard_diag validate-spec`
+- 三格式回执：`.venv/bin/python -m edge_shard_diag receipts`
+- 真实 TCP 调度：`.venv/bin/python -m edge_shard_diag run`
+- 增量/全量一致性：`.venv/bin/python -m edge_shard_diag verify-incremental`
+- SIGKILL 恢复：`.venv/bin/python -m edge_shard_diag verify-recovery`
+- Tkinter 界面：`.venv/bin/python -m edge_shard_diag ui`
+
+设计与错误码见 `docs/ARCHITECTURE.md`，实际测试结果见 `docs/VALIDATION.md`，机器可读报告见 `artifacts/validation-report.json`。
+
+---
+
+## 原始任务说明
+
 客户希望在正式上线前拿到一份能独立复核的边缘推理分片调度诊断实现，而当前交给团队的工作区只是一个刚建好的空目录，代码、配置、确定性样本、权威账本与演示界面都要在这一版里从零落地。业务对象是云原生边缘推理分片下发：节点以子进程方式在 127.0.0.1 回环 TCP 上以 JSON 行协议接收携带容量版本与批次样本的分片请求，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用容量版本与单调时钟毫秒耗时。分发回执在磁盘上并存三种历史交换格式：d1 为定宽行，仅记录节点序号、分片序号区间与聚合摘要前若干字符；d2 增加容量版本、所用的整数定点缩放因子与耗时毫秒；d3 再增加分片在批次内的稳定名次、被覆盖的重复投递引用与样本摘要快照。使用者会反复增删节点、替换单条样本、调整容量版本与缩放因子，并要求每次编辑后只重算真正受影响的分片与回执归一结论。真正的耦合在于三件事互相牵动：容量版本换代要求配额与租约口径整体替换，而放大缩放因子会改变定点水位比较结论，回执归一的采纳顺序又取决于容量版本与格式版本的先后，因此版本识别、租约归属与定点误差归因必须共用同一份账本语义。
 
 任务环境与准备：

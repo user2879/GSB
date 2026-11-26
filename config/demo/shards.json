@@ -1,0 +1,61 @@
+{
+  "shards": [
+    {
+      "id": "shard-0001",
+      "node_id": "node-a",
+      "batch_id": "batch-407",
+      "seq_start": 1001,
+      "seq_end": 1002,
+      "resource_units": 2,
+      "dependencies": [],
+      "sample_ids": [
+        "sample-407-001",
+        "sample-407-002"
+      ]
+    },
+    {
+      "id": "shard-0002",
+      "node_id": "node-b",
+      "batch_id": "batch-407",
+      "seq_start": 2001,
+      "seq_end": 2002,
+      "resource_units": 2,
+      "dependencies": [
+        "shard-0001"
+      ],
+      "sample_ids": [
+        "sample-407-003"
+      ]
+    },
+    {
+      "id": "shard-0003",
+      "node_id": "node-c",
+      "batch_id": "batch-407",
+      "seq_start": 3001,
+      "seq_end": 3002,
+      "resource_units": 2,
+      "dependencies": [
+        "shard-0001"
+      ],
+      "sample_ids": [
+        "sample-407-004"
+      ]
+    },
+    {
+      "id": "shard-0004",
+      "node_id": "node-a",
+      "batch_id": "batch-407",
+      "seq_start": 4001,
+      "seq_end": 4003,
+      "resource_units": 3,
+      "dependencies": [
+        "shard-0002",
+        "shard-0003"
+      ],
+      "sample_ids": [
+        "sample-407-005",
+        "sample-407-006"
+      ]
+    }
+  ]
+}

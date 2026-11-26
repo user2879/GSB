@@ -1,0 +1,42 @@
+{
+  "versions": [
+    {
+      "version": 1,
+      "parent_version": null,
+      "budget_units": 3,
+      "node_limits": {
+        "node-a": {
+          "concurrency_quota": 2,
+          "lease_limit": 2
+        },
+        "node-b": {
+          "concurrency_quota": 1,
+          "lease_limit": 1
+        },
+        "node-c": {
+          "concurrency_quota": 2,
+          "lease_limit": 2
+        }
+      }
+    },
+    {
+      "version": 2,
+      "parent_version": 1,
+      "budget_units": 12,
+      "node_limits": {
+        "node-a": {
+          "concurrency_quota": 3,
+          "lease_limit": 3
+        },
+        "node-b": {
+          "concurrency_quota": 2,
+          "lease_limit": 2
+        },
+        "node-c": {
+          "concurrency_quota": 1,
+          "lease_limit": 1
+        }
+      }
+    }
+  ]
+}
