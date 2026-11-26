@@ -1,0 +1,23 @@
+{
+  "sample_seed": 20261126,
+  "request_count": 24,
+  "input_dim": 8,
+  "hidden_dim": 16,
+  "output_dim": 8,
+  "batch_size": 4,
+  "fixed_point": {
+    "frac_bits": 8,
+    "word_bits": 32,
+    "rounding": "floor",
+    "saturation": "saturate"
+  },
+  "workers": [
+    {"worker_id": "w0", "seed": 101},
+    {"worker_id": "w1", "seed": 202}
+  ],
+  "scheduler": {
+    "global_limit": 4,
+    "per_worker_limit": 2,
+    "timeout_ms": 5000
+  }
+}
