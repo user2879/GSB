@@ -20,3 +20,22 @@
 
 验收：
 在本地确定性样本上验证解码、双版本互转、增量与全量一致及预算受限调度，并附注入异常的诊断报告。
+
+---
+
+# 交付说明（本版实现）
+
+本目录已落地为可运行的定点解码采样链组件。快速开始：
+
+```bash
+python3 -m virtualenv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/run_demo.py
+python -m pytest
+```
+
+- 源码：`src/decchain/`（设计见 `docs/DESIGN.md`）
+- 配置/样本：`config/`、`samples/`
+- 账本与产物：`ledger/`、`artifacts/`
+- 验证记录：`docs/VERIFICATION.md`（40 个测试全过，含增量=全量、并发=串行、
+  双版本往返、预算调度与注入诊断）

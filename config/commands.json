@@ -1,0 +1,18 @@
+{
+  "commands": [
+    {"command": "append_step", "request_id": "R001", "seq_id": 1,
+     "step_index": 4, "logprobs": {"100": -0.4, "101": -1.1, "102": -2.2,
+                                    "103": -3.0, "104": -4.4}},
+    {"command": "replace_step", "request_id": "R001", "seq_id": 1,
+     "step_index": 2, "logprobs": {"100": -0.1, "101": -0.7, "102": -1.9,
+                                    "103": -2.6, "104": -3.8}},
+    {"command": "set_top_p", "request_id": "R001", "top_p_mille": 800},
+    {"command": "set_top_k", "request_id": "R001", "top_k": 4},
+    {"command": "set_temperature", "request_id": "R002", "seq_id": 1,
+     "temperature": 1.3},
+    {"command": "set_quantization", "request_id": "R001",
+     "width": 5, "tier": "FLOOR"},
+    {"command": "set_exchange_version", "request_id": "R001",
+     "exchange_version": "v1"}
+  ]
+}
