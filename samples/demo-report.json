@@ -1,0 +1,277 @@
+{
+  "adoption_blob_sha256": "03f2a3cf16cb86a8d2a96b6de065ef0724e7183f046d420c44d7cf203a7cc9f2",
+  "authoritative_blob_sha256": "03f2a3cf16cb86a8d2a96b6de065ef0724e7183f046d420c44d7cf203a7cc9f2",
+  "crash_recovery": {
+    "crash_seq": 7,
+    "restored": {
+      "candidates": 9,
+      "cursor": 14,
+      "leases": 3,
+      "unknown_requests": [
+        {
+          "object_key": "obj-beta",
+          "op": "upload",
+          "reason": "node force-killed before commit",
+          "seq": 7
+        }
+      ]
+    },
+    "unknown_requests": [
+      {
+        "object_key": "obj-beta",
+        "op": "upload",
+        "reason": "node force-killed before commit",
+        "seq": 7
+      }
+    ]
+  },
+  "divergence": "none",
+  "evolution": {
+    "affected_keys": [
+      "obj-alpha",
+      "obj-beta"
+    ],
+    "affected_shards": [
+      [
+        "obj-alpha",
+        0
+      ],
+      [
+        "obj-beta",
+        1
+      ]
+    ],
+    "incremental_vs_full_mismatches": [],
+    "propagation_steps": [
+      {
+        "affected": "node-1",
+        "basis": "version 1 -> 2",
+        "order": 1,
+        "relation": "meta-version",
+        "source": "node-1"
+      },
+      {
+        "affected": "obj-alpha#0",
+        "basis": "placement references affected node",
+        "order": 2,
+        "relation": "node->object",
+        "source": "node-1"
+      },
+      {
+        "affected": "obj-beta#1",
+        "basis": "placement references affected node",
+        "order": 3,
+        "relation": "node->object",
+        "source": "node-1"
+      }
+    ],
+    "unaffected_candidate_count": 6
+  },
+  "expiry": {
+    "committed_during_processing": {
+      "node-1": 1
+    },
+    "final_explicit_reap": {
+      "node-1": 0,
+      "node-2": 0,
+      "node-3": 0
+    },
+    "total_expired_lease_events": 1
+  },
+  "fast_reads": {
+    "obj-alpha": {
+      "adopted_count": 3,
+      "elapsed_ms": 0,
+      "lease_watermark": {
+        "active": 0,
+        "max_lease_version": 2,
+        "min_expires_ms": null,
+        "total": 2
+      }
+    },
+    "obj-beta": {
+      "adopted_count": 2,
+      "elapsed_ms": 0,
+      "lease_watermark": {
+        "active": 0,
+        "max_lease_version": 1,
+        "min_expires_ms": null,
+        "total": 1
+      }
+    },
+    "obj-gamma": {
+      "adopted_count": 1,
+      "elapsed_ms": 0,
+      "lease_watermark": {
+        "active": 0,
+        "max_lease_version": null,
+        "min_expires_ms": null,
+        "total": 0
+      }
+    }
+  },
+  "ledger": {
+    "content_digest": "5baac586a22f28cba68ef51455f1805b825126c46963e621a9cbe5257b01119c",
+    "cursor": 18,
+    "event_count": 17,
+    "format_version": 3,
+    "path": "samples/shardmeta-ledger.sqlite3"
+  },
+  "normalization": {
+    "by_format": {
+      "fmt1": {
+        "fill_basis": {
+          "commit_cursor": "default-zero:absent-below-c3",
+          "content_check": "empty:absent-below-c3",
+          "merge_id": "synthetic:line+digest",
+          "meta_version": "default-zero:absent-in-c1",
+          "parent_merge_id": "root:no-parent-declared",
+          "shard_bytes": "default-zero:absent-in-c1"
+        },
+        "filled_fields": [
+          "commit_cursor",
+          "content_check",
+          "merge_id",
+          "meta_version",
+          "parent_merge_id",
+          "shard_bytes"
+        ],
+        "merge_id": "F1-000002-08d3c565"
+      },
+      "fmt2": {
+        "fill_basis": {
+          "commit_cursor": "default-zero:absent-below-c3",
+          "content_check": "empty:absent-below-c3",
+          "parent_merge_id": "root:no-parent-declared"
+        },
+        "filled_fields": [
+          "commit_cursor",
+          "content_check",
+          "parent_merge_id"
+        ],
+        "merge_id": "C2-beta-0"
+      },
+      "fmt3": {
+        "fill_basis": {},
+        "filled_fields": [],
+        "merge_id": "C3-alpha-0-reup"
+      }
+    },
+    "record_count": 7
+  },
+  "request_results": [
+    {
+      "elapsed_ms": 23,
+      "op": "grant",
+      "seq": 1,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 38,
+      "op": "upload",
+      "seq": 2,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 26,
+      "op": "grant",
+      "seq": 3,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 23,
+      "op": "renew",
+      "seq": 4,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 31,
+      "op": "upload",
+      "seq": 5,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 17,
+      "op": "grant",
+      "seq": 6,
+      "status": "ok"
+    },
+    {
+      "node": "node-2",
+      "op": "upload",
+      "seq": 7,
+      "status": "unknown-rerun"
+    },
+    {
+      "detail_keys": [
+        "checksum",
+        "merge_id",
+        "node_elapsed_ms"
+      ],
+      "op": "upload",
+      "seq": 7,
+      "status": "rerun-ok"
+    },
+    {
+      "elapsed_ms": 13,
+      "op": "read",
+      "seq": 8,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 49,
+      "op": "grant",
+      "seq": 9,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 17,
+      "op": "abort",
+      "seq": 10,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 6,
+      "op": "read",
+      "seq": 11,
+      "status": "ok"
+    },
+    {
+      "elapsed_ms": 5,
+      "op": "read",
+      "seq": 12,
+      "status": "ok"
+    }
+  ],
+  "samples": {
+    "c1": "samples/metadata.c1.txt",
+    "c2": "samples/metadata.c2.jsonl",
+    "c3": "samples/metadata.c3.jsonl",
+    "nodes": "samples/nodes.json",
+    "objects": "samples/objects.json",
+    "requests": "samples/requests.jsonl"
+  },
+  "steps": [
+    "started node subprocesses on 127.0.0.1"
+  ],
+  "tk_smoke": {
+    "reads": [
+      {
+        "key": "obj-alpha",
+        "latency_ms": 0,
+        "status": "status=adopted  rejected=3  leases active=0/2  min_expires_ms=None  max_lease_version=2  (served from view cache, no recompute)"
+      },
+      {
+        "key": "obj-beta",
+        "latency_ms": 0,
+        "status": "status=adopted  rejected=1  leases active=0/1  min_expires_ms=None  max_lease_version=1  (served from view cache, no recompute)"
+      },
+      {
+        "key": "obj-gamma",
+        "latency_ms": 0,
+        "status": "status=adopted  rejected=0  leases active=0/0  min_expires_ms=None  max_lease_version=None  (served from view cache, no recompute)"
+      }
+    ],
+    "smoke": true
+  }
+}

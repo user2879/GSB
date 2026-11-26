@@ -1,0 +1,12 @@
+{"object_key": "obj-alpha", "op": "grant", "seq": 1, "shard_index": 0, "ttl_ms": 300}
+{"object_key": "obj-alpha", "op": "upload", "seq": 2, "shard_index": 0}
+{"object_key": "obj-alpha", "op": "grant", "seq": 3, "shard_index": 1, "ttl_ms": 300}
+{"expected_lease_version": 1, "lease_id": "resolved-at-runtime", "object_key": "obj-alpha", "op": "renew", "runtime_lease": true, "seq": 4, "shard_index": 1, "ttl_ms": 300}
+{"object_key": "obj-alpha", "op": "upload", "seq": 5, "shard_index": 1}
+{"object_key": "obj-beta", "op": "grant", "seq": 6, "shard_index": 0, "ttl_ms": 120}
+{"object_key": "obj-beta", "op": "upload", "seq": 7, "shard_index": 0}
+{"object_key": "obj-alpha", "op": "read", "seq": 8}
+{"object_key": "obj-gamma", "op": "grant", "seq": 9, "shard_index": 0, "ttl_ms": 300}
+{"lease_id": "resolved-at-runtime", "object_key": "obj-gamma", "op": "abort", "runtime_lease": true, "seq": 10, "shard_index": 0}
+{"object_key": "obj-beta", "op": "read", "seq": 11}
+{"object_key": "obj-gamma", "op": "read", "seq": 12}

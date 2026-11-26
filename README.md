@@ -20,3 +20,26 @@
 
 验收：
 使用本地样本验证跨格式归一、并入裁决、租约与强制终止恢复，附运行结果。
+
+---
+
+## 交付物与快速上手（实现部分）
+
+- Python 包：`shardmeta/`（强校验、三格式归一、租约、节点子进程回环通信、并入裁决、
+  缓存视图/权威重算、演进失效、SQLite 账本与崩溃恢复、Tkinter 快速视图）。
+- 测试：`tests/`，共 39 个 unittest，覆盖业务要求 1–8 与 E_SPEC/E_FORMAT/E_LEASE/
+  E_PORT/E_TIMEOUT/E_REPLY/E_DIVERGE。
+- 固定种子样本：`samples/`（`nodes.json`、`objects.json`、`requests.jsonl`、
+  `metadata.c1.txt`、`metadata.c2.jsonl`、`metadata.c3.jsonl`）。
+- 技术说明：`docs/DESIGN.md`；端到端报告：`samples/demo-report.json`。
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install numpy   # 本环境用 virtualenv 等价创建
+DISPLAY=:99 ./run_demo.sh                              # 测试 + 端到端演示 + 无头 Tk 冒烟
+.venv/bin/python -m unittest discover -s tests -v      # 仅跑测试
+.venv/bin/python -m shardmeta.demo --report samples/demo-report.json
+```
+
+实测：39/39 测试通过；三节点真实子进程 + 回环 JSONL；跨格式归一 7 条；强制终止 seq=7
+后标记 unknown 并按已提交账本恢复重跑；真实单调时钟到期回收；缓存视图与权威重算
+blob sha256 一致（divergence=none）；演进仅失效受影响分片且增量/全量零字段差异。
