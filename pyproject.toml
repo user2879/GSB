@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fxrender"
+version = "0.1.0"
+description = "Deterministic fixed-point multimodal conditional render pipeline with incremental reuse"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "Pillow>=10", "PyYAML>=6.0"]
+
+[project.scripts]
+fxrender = "fxrender.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fxrender = ["py.typed"]
