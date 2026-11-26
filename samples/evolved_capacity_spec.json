@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "session_id": "local-shard-demo",
+  "scale_factor": 10,
+  "budget": {
+    "resource_units": 40
+  },
+  "scheduling": {
+    "lease_ttl_ms": 5000,
+    "request_timeout_ms": 5000,
+    "handshake_timeout_ms": 8000,
+    "poll_interval_ms": 10,
+    "round_boundary": 100
+  },
+  "nodes": [
+    {
+      "node_id": "n1",
+      "host": "127.0.0.1",
+      "port": 19091,
+      "concurrency": 2,
+      "lease_limit": 3,
+      "seed": 1101,
+      "capacity_version": 1,
+      "fixed_scale": 1000,
+      "processing_delay_ms": 20
+    },
+    {
+      "node_id": "n2",
+      "host": "127.0.0.1",
+      "port": 19092,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "seed": 2202,
+      "capacity_version": 1,
+      "fixed_scale": 100,
+      "processing_delay_ms": 15
+    },
+    {
+      "node_id": "n3",
+      "host": "127.0.0.1",
+      "port": 19093,
+      "concurrency": 1,
+      "lease_limit": 2,
+      "seed": 3303,
+      "capacity_version": 3,
+      "fixed_scale": 10000,
+      "processing_delay_ms": 25
+    }
+  ],
+  "shards": [
+    {
+      "shard_id": "s1",
+      "node_id": "n1",
+      "dependencies": [],
+      "rows": 64,
+      "resource_units": 15,
+      "priority": 100
+    },
+    {
+      "shard_id": "s2",
+      "node_id": "n2",
+      "dependencies": [],
+      "rows": 48,
+      "resource_units": 14,
+      "priority": 90
+    },
+    {
+      "shard_id": "s3",
+      "node_id": "n3",
+      "dependencies": [],
+      "rows": 32,
+      "resource_units": 12,
+      "priority": 80
+    },
+    {
+      "shard_id": "s4",
+      "node_id": "n1",
+      "dependencies": ["s1", "s2"],
+      "rows": 72,
+      "resource_units": 18,
+      "priority": 70
+    },
+    {
+      "shard_id": "s5",
+      "node_id": "n2",
+      "dependencies": ["s3"],
+      "rows": 40,
+      "resource_units": 10,
+      "priority": 60
+    },
+    {
+      "shard_id": "s6",
+      "node_id": "n3",
+      "dependencies": ["s4", "s5"],
+      "rows": 56,
+      "resource_units": 8,
+      "priority": 50
+    }
+  ]
+}

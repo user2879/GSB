@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gsb-local-shards"
+version = "1.0.0"
+description = "Deterministic local multi-node shard delivery, scheduling, reconciliation and recovery lab"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+gsb = "gsb.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["gsb*"]

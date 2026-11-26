@@ -1,23 +1,83 @@
-接手时项目根目录只有一个空文件夹，需求条目之外没有任何代码、配置或样本，首个可运行版本需要在 Linux（WSL Ubuntu）环境里自行建立。业务对象是本地多节点分片下发：每个节点作为独立子进程，在 127.0.0.1 回环 TCP 上以 JSON 行协议接收携带容量版本与批次样本的分片请求，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做分组聚合，回传聚合摘要、所用容量版本与单调时钟毫秒耗时。用户在本地 JSON 中声明节点（节点标识、回环端口、整数并发配额、整数每节点租约上限、整数随机种子、容量版本号）、分片清单（分片标识、上游依赖引用、整数样本行数、整数资源单位需求、整数优先级）以及全局资源单位预算与每轮调度边界。核心冲突在于定点水位量化与预算边界互相牵动：缩放因子一变，多个分片的放行判定同时在预算边界附近翻转；容量版本换代既要撤销旧租约，又不能与到期回收重复计入同一份容量权益。
+# GSB 本地多节点分片下发与恢复实验室
 
-任务环境与准备：
-安装 Linux（WSL Ubuntu）并创建空项目根目录，确认 python3 --version 可用（建议 3.10 及以上）。
-使用 python3 -m venv .venv 创建虚拟环境并激活，执行 pip install numpy 安装 NumPy（建议 1.24 及以上）。
-SQLite 使用 Python 标准库 sqlite3 自带版本，确认能创建本地数据库文件即可；Tkinter 使用系统自带 python3-tk。
-准备本地 JSON 声明样本：节点声明、分片清单与调度预算参数，全部使用固定整数种子生成，不依赖网络与外部账号。
-确认 127.0.0.1 回环端口可自由监听，运行前检查端口冲突；所有测试均在本机执行。
+纯本地、无 Docker、无外部账号的 Python 3.10+ 项目。节点是真实独立子进程，在 `127.0.0.1` 上使用逐行 JSON（JSON Lines）通信；父进程用线程池调度，并实现租约、三重配额、定点水位裁决、失效增量重算、SQLite 原子账本、`SIGKILL` 后恢复和独立重放校验。
 
-业务要求：
-1. 实现节点声明、分片清单、依赖图与调度预算的本地 JSON 加载及强校验：节点标识与分片标识唯一，回环端口为 127.0.0.1 字面量且全局不重复，并发配额与每节点租约上限为非负整数，依赖引用存在且依赖图无环，资源单位需求与样本行数为正整数，缩放因子属于受支持整数幂；任一不合法须以 E_SPEC 报明首个违规字段与位置。
-2. 实现节点子进程编排与逐行协议：子进程按声明端口真实监听，父进程通过真实 TCP 套接字下发含分片标识、容量版本与批次样本的分片请求，并接收含节点标识、分片标识、容量版本、聚合摘要与单调时钟毫秒耗时的回执；握手与读取使用真实套接字超时，端口占用与超时分别以 E_PORT 与 E_TIMEOUT 报告。
-3. 实现分片租约的签发、续约与基于本地单调时钟的真实过期判定：租约含租约标识、分片标识、节点标识、授予时刻、到期时刻与租约版本号；续约须凭租约版本号向节点子进程做乐观校验，版本不符以 E_LEASE 拒绝且不延长到期时刻，到期由真实计时判定而非人为延迟。
-4. 实现受全局资源单位预算、每节点租约上限与每节点并发配额三重约束的并行调度：任一时刻在途分片消耗的资源单位之和不得超出全局预算，单节点活跃租约数与活跃分片数不得超出各自上限；配额或预算耗尽时分片排队并记录以单调时钟毫秒计量的等待开始与结束，调度须真实投射到工作线程池且不得绕过配额。
-5. 实现以会话缩放因子把资源单位、租约上限与已用量统一量化为定点整数的水位口径，乘除以整数完成并显式声明截断方向与溢出饱和规则；须给出单分片量化误差、逐节点水位比较判定误差界与全局预算聚合误差上界，并把误差界拆分到量化截断、逐节点累加与阈值比较三段贡献。
-6. 实现预算边界上的不可区分裁决与陈旧结论防护：当剩余预算与候选分片需求之差、或两候选分片的定点水位差落在合成误差界内时，按稳定拓扑序与分片标识序的显式决胜规则选定放行者并标注受误差影响；容量版本递增后旧版本下的水位记录、调度轨迹与放行结论整体标记为陈旧且不参与展示，当前视图整体替换而非逐条修补。
-7. 实现容量版本或分片参数演进后的失效传播与仅失效子集重算，并提供与从空白全量重建的逐字段一致性校验：沿分片依赖图与节点引用关系推导全部直接与间接失效分片，按稳定拓扑序输出失效集合与每步传播依据；未失效分片的聚合摘要与账本记录逐字节保持不变，增量路径与全量重建路径逐分片比较聚合摘要、水位、租约归属与传播依据，不一致以 E_DIVERGE 定位首个差异。
-8. 实现账本原子提交、会话快照的版本识别整体替换恢复与独立重放校验：每完成一个分片结局须在同一 SQLite 事务中写入聚合摘要、租约归属、资源占用、水位、容量版本与进度游标，账本携带整数格式版本与内容摘要；进程被强制终止后重启只能依据已完整提交记录恢复，未提交分片标记为未知并要求重跑且先回收其占用预算，独立校验命令仅读账本与原始声明重推全部结局，不一致以 E_VERIFY 定位首个差异。
+## 快速开始
 
-执行约束：不使用 Docker 或其他容器环境；使用本地确定性样本验证，不访问未授权目标。按上述任务意图交付相应代码、测试或技术说明，记录实际验证结果。
+```bash
+python3 --version
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 
-验收：
-用本地样本验证定点水位误差归因、预算边界裁决、失效传播与强制终止后账本重放一致。
+# 如果 Debian/Ubuntu/WSL 提示 ensurepip 不可用：
+# sudo apt install python3.11-venv python3-tk
+# 或使用仓库已验证的 virtualenv：virtualenv .venv && .venv/bin/pip install -r requirements.txt
+
+python -m gsb validate samples/local_spec.json
+python -m gsb ports samples/local_spec.json
+python -m gsb run samples/local_spec.json \
+  --db artifacts/demo/ledger.db \
+  --snapshot artifacts/demo/snapshot.json \
+  --log-dir artifacts/demo/node-logs
+python -m gsb verify --spec samples/local_spec.json --db artifacts/demo/ledger.db
+```
+
+一键验收：
+
+```bash
+bash scripts/acceptance.sh
+# 或指定输出目录
+bash scripts/acceptance.sh artifacts/acceptance-latest
+```
+
+最近一次实际结果：25 个测试全部通过；样例 6 分片真实 TCP 运行、独立校验、容量版本演进和增量/全量比对均成功。完整记录见 `artifacts/validation-report.txt`。
+
+## 常用命令
+
+- `python -m gsb validate samples/local_spec.json`：强校验 JSON 声明，失败输出 `E_SPEC`、首个 `field` 与 `position`。
+- `python -m gsb ports samples/local_spec.json`：监听前检查回环端口冲突，占用输出 `E_PORT`。
+- `python -m gsb run <spec> --db <sqlite> [--snapshot <json>] [--log-dir <dir>]`：启动节点子进程并在线程池中完成调度。
+- `python -m gsb verify --spec <spec> --db <sqlite>`：以只读 SQLite 连接和原始声明重推全部结局，首个差异输出 `E_VERIFY`。
+- `python -m gsb recover --spec <spec> --db <sqlite>`：回收上次进程遗留的 active 租约并列出未知分片。
+- `python -m gsb evolve --old <old.json> --new <new.json> --workdir <dir>`：旧账本增量演进，并与空白全量重建逐字段比较，差异输出 `E_DIVERGE`。
+- `python -m gsb fixedpoint-report`：输出定点误差三段归因和预算边界在不同缩放因子下的翻转。
+- `python -m gsb gui --snapshot <json>`：可选 Tkinter 快照查看器；当前最小 WSL 镜像缺少 `libtk8.6.so` 时会返回 `E_TK` 和安装提示。
+
+也可以安装控制台命令：`pip install -e .` 后使用 `gsb ...`。
+
+## 声明样例
+
+`samples/local_spec.json` 包含 3 个节点、6 个 DAG 分片、全局预算 40。初始两个分片占用 29 单位，第三个分片需要 12 单位，因此会真实经历 `global_budget` 排队和等待计时。`samples/evolved_capacity_spec.json` 将 `n3` 的容量版本从 2 提升到 3，用于验证失效传播。
+
+支持的关键字段：
+
+- 节点：`node_id`、`host`（可省略，必须为 `127.0.0.1`）、`port`、`concurrency`/`concurrency_quota`、`lease_limit`/`max_leases`、`seed`、`capacity_version`、可选 `fixed_scale`、`processing_delay_ms`。
+- 分片：`shard_id`、`dependencies`/`depends_on`、`rows`、`resource_units`/`units`、`priority`、可选 `node_id`/`node_ref`。
+- 预算：整数 `budget` 或 `{"budget": {"resource_units": N}}`；调度边界在 `scheduling.round_boundary`、`round_boundary_ms` 中声明。
+
+## 错误码
+
+- `E_SPEC`：声明、引用、唯一性、DAG、整数范围或缩放因子不合法。
+- `E_PORT`：回环端口无法绑定或已被占用。
+- `E_TIMEOUT`：TCP 建连、握手或 JSON-line 读取超时。
+- `E_LEASE`：租约版本不符、状态不可续约或已过期。
+- `E_DIVERGE`：增量路径与空白全量重建的首个字段差异。
+- `E_VERIFY`：只读账本重放发现首个不一致。
+
+## 代码地图
+
+- `gsb/spec.py`：JSON 加载与强校验。
+- `gsb/graph.py`：稳定拓扑序、节点引用和失效传播。
+- `gsb/fixedpoint.py`：定点量化、饱和规则、误差界和边界裁决。
+- `gsb/node.py`：节点子进程入口、NumPy 聚合和 JSON-lines 服务。
+- `gsb/cluster.py`：子进程启动、端口/握手超时和 TCP 调用。
+- `gsb/lease.py`：租约版本、单调时钟过期和一次性容量释放。
+- `gsb/scheduler.py`：`ThreadPoolExecutor`、预算/租约/并发三重约束。
+- `gsb/ledger.py`：SQLite 原子事务、游标、占用事件和恢复。
+- `gsb/snapshot.py`：带格式版本/摘要的快照与整体替换视图。
+- `gsb/reconcile.py`：失效子集增量重算和全量一致性比较。
+- `gsb/verify.py`：只读独立重放校验。
+- `tests/`：25 个单元与集成测试，包含真实超时、真实 TCP 和 `SIGKILL` 恢复。
+
+数学口径、误差拆分和恢复协议见 `docs/TECHNICAL.md`。
