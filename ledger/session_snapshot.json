@@ -1,0 +1,614 @@
+{
+  "content_digest": "sha256:ed0638e915b001a56d13385818377e8281ff9d6ff95e74863847284a6dfb3902",
+  "format_version": 1,
+  "snapshot_version": 6,
+  "state": {
+    "format_version": 1,
+    "leases": [
+      {
+        "content_digest": "278a0e80ac820dd709b5b941e783ec10413f4e06a884778ea947da9b5788d54e",
+        "expires_monotonic_ns": 5481413375185,
+        "expires_wall_ms": 1795734453347,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5451413375185,
+        "granted_wall_ms": 1795734423347,
+        "lease_id": "lease:shard-a:g1",
+        "lease_version": 1,
+        "node_id": "node-a",
+        "quota_version": 3,
+        "shard_id": "shard-a",
+        "status": "unknown_reclaimed"
+      },
+      {
+        "content_digest": "8c49069574a9934f2da33a971c83301bce051c4052cb1426d1df5f0f3ee6d2e6",
+        "expires_monotonic_ns": 5482299240486,
+        "expires_wall_ms": 1795734454233,
+        "format_version": 1,
+        "grant_number": 2,
+        "granted_monotonic_ns": 5452299240486,
+        "granted_wall_ms": 1795734424233,
+        "lease_id": "lease:shard-a:g2",
+        "lease_version": 1,
+        "node_id": "node-a",
+        "quota_version": 3,
+        "shard_id": "shard-a",
+        "status": "completed"
+      },
+      {
+        "content_digest": "257bfef65d265fca4aba4be236f24044f35ff84c3cb1bae007c84ee9ced23377",
+        "expires_monotonic_ns": 5482348424031,
+        "expires_wall_ms": 1795734454282,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5452348424031,
+        "granted_wall_ms": 1795734424282,
+        "lease_id": "lease:shard-b:g1",
+        "lease_version": 1,
+        "node_id": "node-b",
+        "quota_version": 3,
+        "shard_id": "shard-b",
+        "status": "completed"
+      },
+      {
+        "content_digest": "1a26ad4bcd3a6f3d73491d034cbd966d44f6c211538eff0c72b525934b11dfa0",
+        "expires_monotonic_ns": 5482397576646,
+        "expires_wall_ms": 1795734454331,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5452397576646,
+        "granted_wall_ms": 1795734424331,
+        "lease_id": "lease:shard-c:g1",
+        "lease_version": 1,
+        "node_id": "node-c",
+        "quota_version": 3,
+        "shard_id": "shard-c",
+        "status": "completed"
+      },
+      {
+        "content_digest": "6c6137c62b02a1247f27f0842dc5b864dc93f59e559f430ffe3bc872ca8fd123",
+        "expires_monotonic_ns": 5482410371086,
+        "expires_wall_ms": 1795734454344,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5452410371086,
+        "granted_wall_ms": 1795734424344,
+        "lease_id": "lease:shard-d:g1",
+        "lease_version": 1,
+        "node_id": "node-a",
+        "quota_version": 3,
+        "shard_id": "shard-d",
+        "status": "completed"
+      },
+      {
+        "content_digest": "5be4d428877d33078724a27cdedd78c32807abc6a5d9280ab5562894ec379b94",
+        "expires_monotonic_ns": 5482459390380,
+        "expires_wall_ms": 1795734454393,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5452459390380,
+        "granted_wall_ms": 1795734424393,
+        "lease_id": "lease:shard-e:g1",
+        "lease_version": 1,
+        "node_id": "node-b",
+        "quota_version": 3,
+        "shard_id": "shard-e",
+        "status": "completed"
+      },
+      {
+        "content_digest": "b6927f0505237bc4f210b2b76c23ee525215c773dafe9233cd31298be50545d5",
+        "expires_monotonic_ns": 5482548553823,
+        "expires_wall_ms": 1795734454482,
+        "format_version": 1,
+        "grant_number": 1,
+        "granted_monotonic_ns": 5452548553823,
+        "granted_wall_ms": 1795734424482,
+        "lease_id": "lease:shard-f:g1",
+        "lease_version": 1,
+        "node_id": "node-c",
+        "quota_version": 3,
+        "shard_id": "shard-f",
+        "status": "completed"
+      }
+    ],
+    "outcomes": {
+      "shard-a": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482299240486,
+          "granted_monotonic_ns": 5452299240486,
+          "lease_id": "lease:shard-a:g2",
+          "lease_version": 1,
+          "node_id": "node-a",
+          "shard_id": "shard-a"
+        },
+        "progress_cursor": {
+          "completed_count": 1,
+          "last_shard_id": "shard-a",
+          "last_topology_index": 0,
+          "snapshot_version": 1
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 100,
+            "loss_digest": "ld1:218547da60c5ca9d4967b0a78ac89ad6f06496eb1f39ed97b7ca4ddc29a914f2",
+            "main_recomputed_digest": "ld1:218547da60c5ca9d4967b0a78ac89ad6f06496eb1f39ed97b7ca4ddc29a914f2",
+            "mean_loss_q": 6797,
+            "node_id": "node-a",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:dc182faea61fca1143f47930964d7307e41b60384ed1a0b2cb490b0e97a8befc",
+            "participating_rows": 12,
+            "quota_version": 3,
+            "sample_digest": "sd1:bd46f8d1ab8e7fc3095c97af9f67bc54c6ace2842ebabb055d1605171c52165d",
+            "shard_id": "shard-a",
+            "sum_loss_q": 81575,
+            "sum_squared_residuals": 8157500,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 4,
+          "monotonic_ns": 4216785,
+          "node_id": "node-a",
+          "quota_version": 3,
+          "shard_id": "shard-a",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-a:g2",
+          "resource_units": 4,
+          "shard_id": "shard-a",
+          "status_at_commit": "committed_then_released"
+        }
+      },
+      "shard-b": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482348424031,
+          "granted_monotonic_ns": 5452348424031,
+          "lease_id": "lease:shard-b:g1",
+          "lease_version": 1,
+          "node_id": "node-b",
+          "shard_id": "shard-b"
+        },
+        "progress_cursor": {
+          "completed_count": 2,
+          "last_shard_id": "shard-b",
+          "last_topology_index": 1,
+          "snapshot_version": 2
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 1000,
+            "loss_digest": "ld1:56d41e5e237099e005560ea2a74bc2b1bcd2ab850fd4c92f2817721449d2df4b",
+            "main_recomputed_digest": "ld1:56d41e5e237099e005560ea2a74bc2b1bcd2ab850fd4c92f2817721449d2df4b",
+            "mean_loss_q": 88416,
+            "node_id": "node-b",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:9e2090e17a81171ee6255a20cfe4dcb54dada9c5dcc8e4063a0e9fe0fc183ced",
+            "participating_rows": 10,
+            "quota_version": 3,
+            "sample_digest": "sd1:120f33675124deed3e900b7c548d2d704c3f1de9712be8e79518b8cc297faed6",
+            "shard_id": "shard-b",
+            "sum_loss_q": 884162,
+            "sum_squared_residuals": 884162000,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 4,
+          "monotonic_ns": 4003532,
+          "node_id": "node-b",
+          "quota_version": 3,
+          "shard_id": "shard-b",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-b:g1",
+          "resource_units": 4,
+          "shard_id": "shard-b",
+          "status_at_commit": "committed_then_released"
+        }
+      },
+      "shard-c": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482397576646,
+          "granted_monotonic_ns": 5452397576646,
+          "lease_id": "lease:shard-c:g1",
+          "lease_version": 1,
+          "node_id": "node-c",
+          "shard_id": "shard-c"
+        },
+        "progress_cursor": {
+          "completed_count": 3,
+          "last_shard_id": "shard-c",
+          "last_topology_index": 2,
+          "snapshot_version": 3
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 1024,
+            "loss_digest": "ld1:d90d69998c4694e8dee23e3108c32024fa4c6522f7c14bba96d03f61c592d4ac",
+            "main_recomputed_digest": "ld1:d90d69998c4694e8dee23e3108c32024fa4c6522f7c14bba96d03f61c592d4ac",
+            "mean_loss_q": 70432,
+            "node_id": "node-c",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:49da7342e1c48c612d52bf5516ebe3a2a819ada6036bf417550d520904fa3e3b",
+            "participating_rows": 8,
+            "quota_version": 3,
+            "sample_digest": "sd1:606d837b4b73c763660c38ed255cc3d32ea3c282a1520c27ab54f6d7c99e5414",
+            "shard_id": "shard-c",
+            "sum_loss_q": 563458,
+            "sum_squared_residuals": 576980992,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 2,
+          "monotonic_ns": 2935626,
+          "node_id": "node-c",
+          "quota_version": 3,
+          "shard_id": "shard-c",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-c:g1",
+          "resource_units": 2,
+          "shard_id": "shard-c",
+          "status_at_commit": "committed_then_released"
+        }
+      },
+      "shard-d": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482410371086,
+          "granted_monotonic_ns": 5452410371086,
+          "lease_id": "lease:shard-d:g1",
+          "lease_version": 1,
+          "node_id": "node-a",
+          "shard_id": "shard-d"
+        },
+        "progress_cursor": {
+          "completed_count": 4,
+          "last_shard_id": "shard-d",
+          "last_topology_index": 3,
+          "snapshot_version": 4
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 100,
+            "loss_digest": "ld1:7b9389fdd09ee6db22682f6feca82021d498d529ecabcfb97997caa45c52f75b",
+            "main_recomputed_digest": "ld1:7b9389fdd09ee6db22682f6feca82021d498d529ecabcfb97997caa45c52f75b",
+            "mean_loss_q": 4814,
+            "node_id": "node-a",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:dc182faea61fca1143f47930964d7307e41b60384ed1a0b2cb490b0e97a8befc",
+            "participating_rows": 6,
+            "quota_version": 3,
+            "sample_digest": "sd1:1d171eb4a64fa1a442c1038126d239cdf087963f6342ea7032767e95caf9ab64",
+            "shard_id": "shard-d",
+            "sum_loss_q": 28887,
+            "sum_squared_residuals": 2888750,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 2,
+          "monotonic_ns": 2020923,
+          "node_id": "node-a",
+          "quota_version": 3,
+          "shard_id": "shard-d",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-d:g1",
+          "resource_units": 2,
+          "shard_id": "shard-d",
+          "status_at_commit": "committed_then_released"
+        }
+      },
+      "shard-e": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482459390380,
+          "granted_monotonic_ns": 5452459390380,
+          "lease_id": "lease:shard-e:g1",
+          "lease_version": 1,
+          "node_id": "node-b",
+          "shard_id": "shard-e"
+        },
+        "progress_cursor": {
+          "completed_count": 5,
+          "last_shard_id": "shard-e",
+          "last_topology_index": 4,
+          "snapshot_version": 5
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 1000,
+            "loss_digest": "ld1:2f4a9f89844a94edbc3f6133d484c929ee0e16561442cfed084871a5f1193511",
+            "main_recomputed_digest": "ld1:2f4a9f89844a94edbc3f6133d484c929ee0e16561442cfed084871a5f1193511",
+            "mean_loss_q": 108668,
+            "node_id": "node-b",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:9e2090e17a81171ee6255a20cfe4dcb54dada9c5dcc8e4063a0e9fe0fc183ced",
+            "participating_rows": 6,
+            "quota_version": 3,
+            "sample_digest": "sd1:cb1c33866e14ad250b3f5e3757d3bd47a5e6fb903063b8eeb00e4a963d2faaba",
+            "shard_id": "shard-e",
+            "sum_loss_q": 652012,
+            "sum_squared_residuals": 652012400,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 2,
+          "monotonic_ns": 2192980,
+          "node_id": "node-b",
+          "quota_version": 3,
+          "shard_id": "shard-e",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-e:g1",
+          "resource_units": 2,
+          "shard_id": "shard-e",
+          "status_at_commit": "committed_then_released"
+        }
+      },
+      "shard-f": {
+        "format_version": 1,
+        "lease_attribution": {
+          "expires_monotonic_ns": 5482548553823,
+          "granted_monotonic_ns": 5452548553823,
+          "lease_id": "lease:shard-f:g1",
+          "lease_version": 1,
+          "node_id": "node-c",
+          "shard_id": "shard-f"
+        },
+        "progress_cursor": {
+          "completed_count": 6,
+          "last_shard_id": "shard-f",
+          "last_topology_index": 5,
+          "snapshot_version": 6
+        },
+        "quota_version": 3,
+        "receipt": {
+          "clock": "time.monotonic_ns",
+          "lease_version": 1,
+          "loss_summary": {
+            "algorithm": "int-fixed-forward-v1",
+            "fixed_scale": 1024,
+            "loss_digest": "ld1:a45c4a25029298e11719ac874349858677e83564c046f84f7e9f131eff3f8263",
+            "main_recomputed_digest": "ld1:a45c4a25029298e11719ac874349858677e83564c046f84f7e9f131eff3f8263",
+            "mean_loss_q": 46435,
+            "node_id": "node-c",
+            "overflow": "saturate_to_signed_int64_after_exact_accumulation",
+            "overflow_saturated": false,
+            "param_digest": "pd1:49da7342e1c48c612d52bf5516ebe3a2a819ada6036bf417550d520904fa3e3b",
+            "participating_rows": 9,
+            "quota_version": 3,
+            "sample_digest": "sd1:0d87b8ffebdb5fceb9c221156f6c17781e3f1be8c65a7f2e2478f8c2ce17eee8",
+            "shard_id": "shard-f",
+            "sum_loss_q": 417922,
+            "sum_squared_residuals": 427952384,
+            "truncation": "nonnegative_floor_divide; signed_divide_toward_zero"
+          },
+          "monotonic_ms": 3,
+          "monotonic_ns": 3752495,
+          "node_id": "node-c",
+          "quota_version": 3,
+          "shard_id": "shard-f",
+          "type": "receipt"
+        },
+        "resource_occupancy": {
+          "lease_id": "lease:shard-f:g1",
+          "resource_units": 1,
+          "shard_id": "shard-f",
+          "status_at_commit": "committed_then_released"
+        }
+      }
+    },
+    "progress_cursor": {
+      "completed_count": 6,
+      "content_digest": "56db879e988359640bca81493a763dd7e66a361fa6e0c5e2f198476d50c96320",
+      "format_version": 1,
+      "id": 1,
+      "last_shard_id": "shard-f",
+      "last_topology_index": 5,
+      "snapshot_version": 6,
+      "updated_wall_ms": 1795734424503
+    },
+    "resource_holdings": [
+      {
+        "content_digest": "d7e4384979ced57c8fad350780057a5599b9d691481859fe1e784f3ea6b9a34e",
+        "lease_id": "lease:shard-a:g1",
+        "node_id": "node-a",
+        "resource_units": 4,
+        "shard_id": "shard-a",
+        "status": "reclaimed_unknown"
+      },
+      {
+        "content_digest": "61ff17ae5272c3a560b455894a935f2dc36ed19e177772798d0a2c27133c13a4",
+        "lease_id": "lease:shard-a:g2",
+        "node_id": "node-a",
+        "resource_units": 4,
+        "shard_id": "shard-a",
+        "status": "released_committed"
+      },
+      {
+        "content_digest": "1dba1e2ab4a936093c0be20172f3894bb4fcea60943a3481675a13f9351681b2",
+        "lease_id": "lease:shard-b:g1",
+        "node_id": "node-b",
+        "resource_units": 4,
+        "shard_id": "shard-b",
+        "status": "released_committed"
+      },
+      {
+        "content_digest": "c5bec24b0ae0edc5ecfa6be0cab8c3bd09bd7c6117e6e659b73b64ac6222cf93",
+        "lease_id": "lease:shard-c:g1",
+        "node_id": "node-c",
+        "resource_units": 2,
+        "shard_id": "shard-c",
+        "status": "released_committed"
+      },
+      {
+        "content_digest": "30acc7dc27a12d2fa15a672cecaba41804226fba63781f057ab158489f7a2aae",
+        "lease_id": "lease:shard-d:g1",
+        "node_id": "node-a",
+        "resource_units": 2,
+        "shard_id": "shard-d",
+        "status": "released_committed"
+      },
+      {
+        "content_digest": "9361ede819acf88e1fa1024e5c3cae387daa5e5f628a083297d0caad3ea15e15",
+        "lease_id": "lease:shard-e:g1",
+        "node_id": "node-b",
+        "resource_units": 2,
+        "shard_id": "shard-e",
+        "status": "released_committed"
+      },
+      {
+        "content_digest": "715f1cc41e3004028ea80b481f6c6f3b5a85b1745e96be56eb8901916654a949",
+        "lease_id": "lease:shard-f:g1",
+        "node_id": "node-c",
+        "resource_units": 1,
+        "shard_id": "shard-f",
+        "status": "released_committed"
+      }
+    ],
+    "shard_states": {
+      "shard-a": {
+        "content_digest": "sha256:662b3e6e6eaad7593f029a3b262dbfef23cb6e92c00ee646e4726553dcea47fe",
+        "current_lease_id": "lease:shard-a:g2",
+        "shard_id": "shard-a",
+        "status": "committed",
+        "updated_wall_ms": 1795734424252
+      },
+      "shard-b": {
+        "content_digest": "sha256:abe4ced1ea02e11de6df9b1512070cc691f5a322875ce13518bcfd8980818c25",
+        "current_lease_id": "lease:shard-b:g1",
+        "shard_id": "shard-b",
+        "status": "committed",
+        "updated_wall_ms": 1795734424299
+      },
+      "shard-c": {
+        "content_digest": "sha256:9ce5711522451abccd69fd047c227469fa6f85206932fb8e5a586df19b9fba5d",
+        "current_lease_id": "lease:shard-c:g1",
+        "shard_id": "shard-c",
+        "status": "committed",
+        "updated_wall_ms": 1795734424358
+      },
+      "shard-d": {
+        "content_digest": "sha256:e00498bc0faf26545366ddf0dc7e6c122e3afac631f939a4272a40ce0f363140",
+        "current_lease_id": "lease:shard-d:g1",
+        "shard_id": "shard-d",
+        "status": "committed",
+        "updated_wall_ms": 1795734424407
+      },
+      "shard-e": {
+        "content_digest": "sha256:de1e1265ded63d3ec6609e2609c516cde4c595d43b9e70be5de0bece3d640899",
+        "current_lease_id": "lease:shard-e:g1",
+        "shard_id": "shard-e",
+        "status": "committed",
+        "updated_wall_ms": 1795734424447
+      },
+      "shard-f": {
+        "content_digest": "sha256:0b36502a007af1e7a78b016cd47bcbbc4cc328a268eead2f29d2eb2f4de62032",
+        "current_lease_id": "lease:shard-f:g1",
+        "shard_id": "shard-f",
+        "status": "committed",
+        "updated_wall_ms": 1795734424503
+      }
+    },
+    "snapshot_version": 6,
+    "water_records": [
+      {
+        "content_digest": "099c414739ed4df495aa45618fc99ae4a403699789f8559142bfcc2dc8b6818f",
+        "quota_version": 3,
+        "record_key": "current:global",
+        "scope": "global_water",
+        "shard_id": "shard-a"
+      },
+      {
+        "content_digest": "4a8cda2f8c79d7e9e70da9029b2e822270bdf316dce0a0a9e113d34ead52d852",
+        "quota_version": 3,
+        "record_key": "current:node:node-a",
+        "scope": "node_water",
+        "shard_id": "shard-a"
+      },
+      {
+        "content_digest": "2b82436d892017decd871ab01fd8d43f15c4cdcf75498124374d8286dd853ea0",
+        "quota_version": 3,
+        "record_key": "current:node:node-b",
+        "scope": "node_water",
+        "shard_id": "shard-b"
+      },
+      {
+        "content_digest": "892046cf84a158a3c1abead9e1b4b643da6bd1cb122c8e83c34251916acd1ba3",
+        "quota_version": 3,
+        "record_key": "current:node:node-c",
+        "scope": "node_water",
+        "shard_id": "shard-c"
+      },
+      {
+        "content_digest": "57ab9ae38f713edc16494099a312bea32502335cde0606bbea12a489c08817e0",
+        "quota_version": 3,
+        "record_key": "shard:shard-a",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-a"
+      },
+      {
+        "content_digest": "3c100e3aae10a2019263bc2fa0e9f94f25ca06c500ab9a1da5a7e709cd4f104e",
+        "quota_version": 3,
+        "record_key": "shard:shard-b",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-b"
+      },
+      {
+        "content_digest": "7a9b6740caf58114346c5b6528a635080cd1646820e00102dbf7ee468325c8d8",
+        "quota_version": 3,
+        "record_key": "shard:shard-c",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-c"
+      },
+      {
+        "content_digest": "7e8eedaf53d5d4b78a522edcfd22097626d9631aa8d5d6495ce0d1ba4e52492b",
+        "quota_version": 3,
+        "record_key": "shard:shard-d",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-d"
+      },
+      {
+        "content_digest": "b6b68990b193c39095739879b4a8ef7d1de436e3a51a1888545ae6b86e164937",
+        "quota_version": 3,
+        "record_key": "shard:shard-e",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-e"
+      },
+      {
+        "content_digest": "0e2775024741f2cac282f1edebf908f487029bd5c50fc252a4b1417a15966b2e",
+        "quota_version": 3,
+        "record_key": "shard:shard-f",
+        "scope": "shard_completion_water",
+        "shard_id": "shard-f"
+      }
+    ]
+  }
+}

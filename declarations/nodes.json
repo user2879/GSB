@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 39671,
+      "seed": 1701,
+      "fixed_scale": 100,
+      "weights_q": [100, -200, 150, 50],
+      "bias_q": 25,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "startup_timeout_ms": 5000,
+      "socket_timeout_ms": 2000
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 39672,
+      "seed": 2702,
+      "fixed_scale": 1000,
+      "weights_q": [900, -2100, 1600, -400],
+      "bias_q": 120,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "startup_timeout_ms": 5000,
+      "socket_timeout_ms": 2000
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 39673,
+      "seed": 3703,
+      "fixed_scale": 1024,
+      "weights_q": [1024, -2048, 1024, 0],
+      "bias_q": 16,
+      "concurrency": 2,
+      "lease_limit": 2,
+      "startup_timeout_ms": 5000,
+      "socket_timeout_ms": 2000
+    }
+  ]
+}

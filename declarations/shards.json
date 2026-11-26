@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "shards": [
+    {
+      "shard_id": "shard-a",
+      "node_id": "node-a",
+      "upstream": [],
+      "sample_rows": 12,
+      "resource_units": 4,
+      "priority": 0,
+      "batch_count_hint": 3
+    },
+    {
+      "shard_id": "shard-b",
+      "node_id": "node-b",
+      "upstream": [],
+      "sample_rows": 10,
+      "resource_units": 4,
+      "priority": 0,
+      "batch_count_hint": 2
+    },
+    {
+      "shard_id": "shard-c",
+      "node_id": "node-c",
+      "upstream": ["shard-a", "shard-b"],
+      "sample_rows": 8,
+      "resource_units": 2,
+      "priority": 0,
+      "batch_count_hint": 2
+    },
+    {
+      "shard_id": "shard-d",
+      "node_id": "node-a",
+      "upstream": ["shard-a"],
+      "sample_rows": 6,
+      "resource_units": 2,
+      "priority": 0,
+      "batch_count_hint": 2
+    },
+    {
+      "shard_id": "shard-e",
+      "node_id": "node-b",
+      "upstream": ["shard-b"],
+      "sample_rows": 6,
+      "resource_units": 2,
+      "priority": 0,
+      "batch_count_hint": 2
+    },
+    {
+      "shard_id": "shard-f",
+      "node_id": "node-c",
+      "upstream": ["shard-c", "shard-d", "shard-e"],
+      "sample_rows": 9,
+      "resource_units": 1,
+      "priority": 0,
+      "batch_count_hint": 3
+    },
+    {
+      "shard_id": "shard-missing",
+      "node_id": "node-c",
+      "upstream": ["ghost-upstream"],
+      "sample_rows": 4,
+      "resource_units": 1,
+      "priority": -10,
+      "batch_count_hint": 1
+    }
+  ]
+}

@@ -1,3 +1,38 @@
+# 本地推理分片下发诊断应用
+
+本目录已包含可运行实现：Python 标准库 + NumPy + SQLite + 真实回环 TCP 子进程，提供 CLI、Tkinter 界面、自动化测试和一键验收。
+
+快速复核：
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m pytest -q
+python3 -m shard_diag.cli validate
+python3 -m shard_diag.cli acceptance
+python3 -m shard_diag.cli gui
+```
+
+关键文档：
+
+- `docs/TECHNICAL_NOTES.md`：架构、摘要公式、水位误差、失效传播、租约互斥、快照与重放规则。
+- `docs/VERIFICATION.md`：2026-11-27 的实际测试与验收结果。
+- `artifacts/acceptance-result.json`：16/16 端到端检查的结构化证据。
+- `artifacts/pytest-output.txt`：11 个测试全部通过的原始输出。
+
+常用命令：
+
+```bash
+python3 -m shard_diag.cli regenerate-samples
+python3 -m shard_diag.cli plan
+python3 -m shard_diag.cli run --batch-size 3
+python3 -m shard_diag.cli replay
+python3 -m shard_diag.cli propagate --changed-shard shard-a
+python3 -m shard_diag.cli replace-sample shard-a 0 '[4,-3,2,1]' 7
+python3 -m shard_diag.cli set-scale 100
+```
+
+---
+
 工作目录刚被划拨时只有一个空根文件夹，代码、声明文件、确定性样本与账本都要在本版一并建立到 WSL Ubuntu 环境，形成可独立复核的本地推理分片下发诊断应用。业务对象是多节点推理分片下发：每个推理节点以子进程方式在 127.0.0.1 回环 TCP 上以 JSON 行协议接收分片批次，按自身声明的整数定点口径用 NumPy 对固定整数种子生成的样本做前向与损失累加，回传损失摘要、所用配额版本与单调时钟毫秒耗时。分片之间带有上游依赖引用，配额以版本链演进，每个版本显式引用父版本并可增删节点配额、单批资源单位需求与资源单位预算；使用者会反复增删分片、替换单份样本、修改配额版本与定点缩放因子，要求每次编辑后只重新调度真正受影响的就绪分片，并且强制终止后已提交结局仍可被原样复核。
 
 任务环境与准备：
