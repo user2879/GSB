@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edge-cache-shard-delivery"
+version = "1.0.0"
+description = "Local multi-node shard delivery with lease algebra, receipt formats and snapshots"
+requires-python = ">=3.11"
+dependencies = ["numpy==1.26.4"]
+
+[project.optional-dependencies]
+test = ["pytest==8.2.2"]
+
+[project.scripts]
+edge-cache = "edge_cache.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[pytest]
+testpaths = ["tests"]
+addopts = "-ra"

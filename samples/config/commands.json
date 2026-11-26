@@ -1,0 +1,20 @@
+[
+  {"name": "replace_shard", "args": {"shard_id": "s3", "seed": 3031, "size_units": 2}},
+  {"name": "set_quota_version", "args": {"node_id": "node-b", "quota_version": "q3"}},
+  {"name": "set_fixed_point", "args": {"node_id": "node-c", "fixed_point": 2}},
+  {"name": "format_roundtrip", "args": {"format": "c1"}},
+  {"name": "format_roundtrip", "args": {"format": "c2"}},
+  {"name": "add_node", "args": {
+    "node_id": "node-d",
+    "port": 20004,
+    "quota_version": "q2",
+    "fixed_point": 4,
+    "quant_level": 1,
+    "lease_limit": 2,
+    "capacity_slots": 6,
+    "soft_watermark_permille": 500,
+    "hard_watermark_permille": 900
+  }},
+  {"name": "remove_node", "args": {"node_id": "node-d"}},
+  {"name": "format_roundtrip", "args": {"format": "c3"}}
+]

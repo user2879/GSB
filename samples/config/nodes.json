@@ -1,0 +1,39 @@
+{
+  "global_concurrency": 4,
+  "batch_point_budget": 40,
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "port": 20001,
+      "quota_version": "q3",
+      "fixed_point": 4,
+      "quant_level": 1,
+      "lease_limit": 2,
+      "capacity_slots": 8,
+      "soft_watermark_permille": 500,
+      "hard_watermark_permille": 900
+    },
+    {
+      "node_id": "node-b",
+      "port": 20002,
+      "quota_version": "q2",
+      "fixed_point": 2,
+      "quant_level": 2,
+      "lease_limit": 2,
+      "capacity_slots": 6,
+      "soft_watermark_permille": 600,
+      "hard_watermark_permille": 900
+    },
+    {
+      "node_id": "node-c",
+      "port": 20003,
+      "quota_version": "q1",
+      "fixed_point": 0,
+      "quant_level": 5,
+      "lease_limit": 2,
+      "capacity_slots": 10,
+      "soft_watermark_permille": 500,
+      "hard_watermark_permille": 800
+    }
+  ]
+}

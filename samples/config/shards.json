@@ -1,0 +1,7 @@
+[
+  {"shard_id": "s1", "index": 1, "size_units": 1, "seed": 101, "sample_size": 128, "upstream": []},
+  {"shard_id": "s2", "index": 2, "size_units": 2, "seed": 202, "sample_size": 96, "upstream": ["s1"]},
+  {"shard_id": "s3", "index": 3, "size_units": 3, "seed": 303, "sample_size": 64, "upstream": ["s1"]},
+  {"shard_id": "s4", "index": 4, "size_units": 2, "seed": 404, "sample_size": 80, "upstream": ["s2", "s3"]},
+  {"shard_id": "s5", "index": 5, "size_units": 1, "seed": 505, "sample_size": 48, "upstream": ["s4"]}
+]

@@ -20,3 +20,17 @@
 
 验收：
 用本地节点子进程与样本验证租约代数链、三格式往返、增量与全量一致及强制终止后快照恢复。
+
+---
+
+## 快速开始（首版实现）
+
+```bash
+source .venv/bin/activate
+pip install -e .
+python -m edge_cache validate --config samples/config
+python -m edge_cache run --config samples/config --work-dir .local/run
+python -m pytest -q
+```
+
+实现说明见 `docs/DESIGN.md`，实际验证记录见 `docs/VALIDATION.md`。
