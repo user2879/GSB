@@ -1,0 +1,55 @@
+{
+  "active_scheme": "rope_base",
+  "budget": {
+    "batch_point_budget": 96,
+    "sample_quota_points": 64
+  },
+  "concurrency": {
+    "workers": 2
+  },
+  "dimension": 8,
+  "fixed_point": {
+    "frac_bits": 20,
+    "level_shifts": [
+      0,
+      3,
+      6,
+      9
+    ],
+    "quant_level": 1
+  },
+  "schema_version": 1,
+  "schemes": [
+    {
+      "angle_scale": 1.0,
+      "base_freq": 10000.0,
+      "block_size": 2,
+      "correction_level": 0,
+      "name": "rope_base"
+    },
+    {
+      "angle_scale": 0.75,
+      "base_freq": 50000.0,
+      "block_size": 2,
+      "correction_level": 2,
+      "name": "rope_flash"
+    },
+    {
+      "angle_scale": 1.15,
+      "base_freq": 10000.0,
+      "block_size": 4,
+      "correction_level": 1,
+      "name": "rope_block4"
+    }
+  ],
+  "seed": 393,
+  "snapshot_dir": "artifacts/snapshots",
+  "target_length": 48,
+  "tolerances": {
+    "dot": 0.02,
+    "normalization": 0.005,
+    "position": 0.002,
+    "rotation": 0.008
+  },
+  "train_length": 12
+}

@@ -1,0 +1,10 @@
+{"line": 1, "name": "rope_flash", "op": "switch_scheme"}
+{"line": 2, "name": "rope_base", "op": "switch_scheme"}
+{"line": 3, "name": "rope_base", "op": "update_scheme", "params": {"base_freq": 12000.0}}
+{"line": 4, "name": "rope_flash", "op": "update_scheme", "params": {"angle_scale": 0.825}}
+{"line": 5, "op": "add_scheme", "scheme": {"angle_scale": 1.05, "base_freq": 24000.0, "block_size": 4, "correction_level": 2, "name": "rope_added"}}
+{"line": 6, "op": "set_lengths", "target_length": 64, "train_length": 16}
+{"line": 7, "op": "replace_sample", "sample": {"id": "s002", "key_positions": [14, 21, 27, 32, 36, 39], "key_vectors": [[-0.519241, -0.243453, 0.021479, 0.029549, 0.264814, -0.032624, 0.5673, 0.169342], [0.290478, 0.264365, 0.419441, -0.528219, 0.353302, 0.671249, 0.130275, -0.698759], [-0.300524, 0.667079, -0.421524, 0.02515, 0.581167, -0.208303, 0.102679, 0.301452], [-0.233087, -0.258777, 0.288104, 0.033083, 0.44931, 0.171874, 0.320509, 0.335928], [0.272885, -0.03564, -0.180825, 0.55014, 0.189206, -0.412341, -0.861144, 0.546955], [0.242207, -0.489423, 0.847552, -0.653921, -0.022146, -0.006492, -0.197648, 0.044237]], "query_position": 40, "query_vector": [-0.106524, -0.21279, 0.01941, 0.614497, -0.469719, 0.580784, 0.377568, 0.326321], "seed": 2411, "train_length": 16}}
+{"id": "s006", "line": 8, "op": "delete_sample"}
+{"frac_bits": 12, "line": 9, "op": "set_fixed_point", "quant_level": 3}
+{"frac_bits": 20, "line": 10, "op": "set_fixed_point", "quant_level": 1}
