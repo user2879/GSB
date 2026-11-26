@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "views": [
+    {
+      "name": "original",
+      "language": "zh-CN"
+    },
+    {
+      "name": "translation",
+      "language": "en-US"
+    }
+  ],
+  "allowed_languages": [
+    "zh-CN",
+    "en-US"
+  ],
+  "fields": [
+    "title",
+    "body"
+  ],
+  "field_weights": {
+    "title": 3,
+    "body": 1
+  },
+  "field_order": [
+    "title",
+    "body"
+  ],
+  "top_k": 3,
+  "saturation_k": 2,
+  "language_weights": {
+    "original": "1.20",
+    "translation": "0.90"
+  },
+  "fixed_point": {
+    "frac_bits": 16,
+    "quant_tier": "nearest",
+    "reference_extra_bits": 8
+  },
+  "budget": {
+    "batch_points": 40,
+    "query_quota_points": 40
+  }
+}
