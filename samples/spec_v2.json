@@ -1,0 +1,153 @@
+{
+  "format_version": 1,
+  "global": {
+    "concurrency_limit": 3,
+    "lease_limit_per_node": 2,
+    "lease_ttl_ms": 1200,
+    "socket_timeout_ms": 800,
+    "available_quota": 300000,
+    "block_weight": 4,
+    "max_unknown_batch_evictions": 8,
+    "block_weight_quantum_ppm": 250,
+    "dominant_threshold_ppm": 500000
+  },
+  "nodes": [
+    {
+      "node_id": "node-a",
+      "host": "127.0.0.1",
+      "port": 29341,
+      "seed": 17,
+      "fixed_scale": 1000,
+      "block_count": 20,
+      "lease_limit": 2
+    },
+    {
+      "node_id": "node-b",
+      "host": "127.0.0.1",
+      "port": 29342,
+      "seed": 29,
+      "fixed_scale": 2000,
+      "block_count": 20,
+      "lease_limit": 2
+    },
+    {
+      "node_id": "node-c",
+      "host": "127.0.0.1",
+      "port": 29343,
+      "seed": 41,
+      "fixed_scale": 500,
+      "block_count": 20,
+      "lease_limit": 2
+    }
+  ],
+  "quota_revisions": [
+    {
+      "revision_id": 100,
+      "node_id": "node-a",
+      "parent_revision": null,
+      "quota": 8000,
+      "fragment_rate_ppm": 1000000,
+      "block_rate_ppm": 450000
+    },
+    {
+      "revision_id": 101,
+      "node_id": "node-a",
+      "parent_revision": 100,
+      "quota": 5600,
+      "fragment_rate_ppm": 1000000,
+      "block_rate_ppm": 620000
+    },
+    {
+      "revision_id": 102,
+      "node_id": "node-b",
+      "parent_revision": null,
+      "quota": 5000,
+      "fragment_rate_ppm": 750000,
+      "block_rate_ppm": 500000
+    },
+    {
+      "revision_id": 103,
+      "node_id": "node-b",
+      "parent_revision": 102,
+      "quota": 4500,
+      "fragment_rate_ppm": 1000000,
+      "block_rate_ppm": 650000
+    },
+    {
+      "revision_id": 104,
+      "node_id": "node-c",
+      "parent_revision": null,
+      "quota": 5000,
+      "fragment_rate_ppm": 1000000,
+      "block_rate_ppm": 550000
+    }
+  ],
+  "fragments": [
+    {
+      "fragment_id": "frag-a-001",
+      "node_id": "node-a",
+      "batch_id": "batch-a-001",
+      "sequence": 1,
+      "block_count": 20,
+      "evict_blocks": 3,
+      "quota_revision": 101,
+      "corrupt_blocks": {
+        "4": 9
+      }
+    },
+    {
+      "fragment_id": "frag-a-002",
+      "node_id": "node-a",
+      "batch_id": "batch-a-002",
+      "sequence": 2,
+      "block_count": 20,
+      "evict_blocks": 2,
+      "quota_revision": 101,
+      "corrupt_blocks": {}
+    },
+    {
+      "fragment_id": "frag-b-001",
+      "node_id": "node-b",
+      "batch_id": "batch-b-001",
+      "sequence": 1,
+      "block_count": 20,
+      "evict_blocks": 2,
+      "quota_revision": 103,
+      "corrupt_blocks": {}
+    },
+    {
+      "fragment_id": "frag-b-002",
+      "node_id": "node-b",
+      "batch_id": "batch-b-002",
+      "sequence": 2,
+      "block_count": 20,
+      "evict_blocks": 1,
+      "quota_revision": 103,
+      "corrupt_blocks": {
+        "12": -7
+      }
+    },
+    {
+      "fragment_id": "frag-c-001",
+      "node_id": "node-c",
+      "batch_id": "batch-c-001",
+      "sequence": 1,
+      "block_count": 20,
+      "evict_blocks": 2,
+      "quota_revision": 104,
+      "corrupt_blocks": {}
+    },
+    {
+      "fragment_id": "frag-c-002",
+      "node_id": "node-c",
+      "batch_id": "batch-c-002",
+      "sequence": 2,
+      "block_count": 20,
+      "evict_blocks": 1,
+      "quota_revision": 104,
+      "corrupt_blocks": {
+        "2": 11
+      }
+    }
+  ]
+}
