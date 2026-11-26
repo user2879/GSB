@@ -1,0 +1,62 @@
+{
+  "config_version": "cfg-2026-11-27-v1",
+  "domains": [
+    {
+      "name": "alpha",
+      "sampling_weight": 0.2,
+      "target_ratio": 0.4,
+      "quota": 40
+    },
+    {
+      "name": "beta",
+      "sampling_weight": 0.8,
+      "target_ratio": 0.35,
+      "quota": 40
+    },
+    {
+      "name": "gamma",
+      "sampling_weight": 0.6,
+      "target_ratio": 0.25,
+      "quota": 40
+    }
+  ],
+  "missing_bitmap_width": 6,
+  "missing_rules": [
+    {
+      "code": "MISSING_PRIMARY_FIELD",
+      "position": 0,
+      "config_field": "missing_rules[primary].position"
+    }
+  ],
+  "cleaning": {
+    "min_total_token_count": 5
+  },
+  "dedup": {
+    "similarity_threshold_permille": 800,
+    "shard_size": 6,
+    "score_weights_permille": {
+      "token_volume": 300,
+      "completeness": 500,
+      "domain_weight": 200
+    },
+    "score_token_cap": 16
+  },
+  "sampling": {
+    "sample_count": 12,
+    "seed": 20261127
+  },
+  "fixed_point": {
+    "decimal_width": 6,
+    "quantization_tier": "floor"
+  },
+  "concurrency": {
+    "max_workers": 4,
+    "cleaning_workers": 4,
+    "dedup_workers": 4
+  },
+  "budgets": {
+    "global_units": 100000,
+    "domain_quota": 100,
+    "shard_comparison_limit": 120
+  }
+}

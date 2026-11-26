@@ -1,3 +1,33 @@
+# GSB 确定性样本账本流水线
+
+本目录已包含可运行实现、固定种子样本/配置生成器、单元测试和验收脚本。
+
+- 设计与账本/恢复语义：`docs/TECHNICAL_DESIGN.md`
+- 实际验收结果：`docs/VERIFICATION_RESULTS.md`
+- 机器可读报告：`artifacts/acceptance_report.json`
+
+快速验证：
+
+```bash
+python3 --version
+python3 -m pip install -r requirements.txt
+python3 scripts/generate_fixtures.py
+python3 -m pytest -q tests/test_pipeline.py
+python3 scripts/verify_acceptance.py
+```
+
+常用运行：
+
+```bash
+python3 -m gsb.cli run --config configs/pipeline.json --samples data/batches --state state --workers 2
+python3 -m gsb.cli apply-edits --source-root . --output-dir /tmp/gsb-edited --commands data/edits/command_stream.jsonl --through 1
+python3 -m gsb.cli ui --state state   # 可选，需要系统 python3-tk/tk8.6
+```
+
+业务码：`E_INPUT_INVALID`、`E_BUDGET_PENDING`、`E_DOMAIN_QUOTA_EXCEEDED`、`E_SHARD_COMPARISON_LIMIT`、`E_VERSION_CONFLICT`、`E_SNAPSHOT_CORRUPT`。
+
+---
+
 立项条目已经批复，交给一名工程师独立完成，而工作目录里只有一个空根文件夹，代码、配置、本地样本与账本都还没有落地。业务对象是本地确定性合成的训练样本流：每个领域按整数种子生成带词项计数、长度分布与缺失位图的文档批次，按批次滚动到达；清洗与加权配置声明各领域采样权重、近重复相似度阈值、分片大小、定点计量口径与各阶段并发上限。样本要经清洗、近重复去重、加权采样与配比汇总四个阶段，产出逐样本结论与可复核账本。真正的难点在于权重与分片去重互相牵动：调整某领域采样权重会改变多个分片的近重复簇构成，而每轮的近重复相似度又在定点整数域比较，阈值与分片边界变动会同时使清洗结论、去重代表样本与配比汇总成批失效，账本必须能说明每条结论引用了哪个配置版本与哪些上游产物。
 
 任务环境与准备：
